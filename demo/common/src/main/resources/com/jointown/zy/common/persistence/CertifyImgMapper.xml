@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.CertifyImgDao" >
+  <resultMap id="CertifyImg" type="com.jointown.zy.common.model.CertifyImg">
+    <id column="IMG_ID" property="imgId" jdbcType="NUMERIC" />
+    <result column="CERTIFY_ID" property="certifyId" jdbcType="NUMERIC" />
+    <result column="TYPE" property="type" jdbcType="NUMERIC" />
+    <result column="PATH" property="path" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Insert_List">
+  		IMG_ID,CERTIFY_ID,TYPE,PATH,CREATE_TIME,UPDATE_TIME,STATUS
+  </sql>
+  <select id="findCertifyImgByCertifyId" parameterType="String" resultMap="CertifyImg">
+  		select <include refid="Insert_List" /> from boss.uc_certify_img where certify_id = #{certifyId,jdbcType=NUMERIC} and status=0
+  	
+  </select>
+  
+  <select id="findCertifyImgByCertifyIdAndType" parameterType="map" resultMap="CertifyImg">
+  		select <include refid="Insert_List" /> from boss.uc_certify_img where certify_id = #{certifyId,jdbcType=NUMERIC} and type=#{type,jdbcType=NUMERIC} and status=0
+  	
+  </select>
+  
+   <update id="updateCertifyImg" parameterType="com.jointown.zy.common.model.CertifyImg">
+        update boss.UC_CERTIFY_IMG
+		<set >
+			TYPE = #{type,jdbcType=NUMERIC},
+			PATH = #{path,jdbcType=VARCHAR},
+			UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			STATUS = #{status,jdbcType=NUMERIC}
+	    </set>
+        WHERE IMG_ID = #{imgId,jdbcType=NUMERIC}
+  </update>
+   <update id="updateAllCertifyImg" parameterType="com.jointown.zy.common.model.CertifyImg">
+        update boss.UC_CERTIFY_IMG
+		<set >
+			STATUS = 1
+	    </set>
+        WHERE CERTIFY_ID = #{certifyId,jdbcType=NUMERIC}
+  </update>
+  
+  <!-- 更新一张图片对应的小图、大图、原图 的状态-->
+  <!-- ldp-->
+  <update id="updateAllTypeCertifyImg" parameterType="map">
+  	<![CDATA[
+  		update boss.UC_CERTIFY_IMG
+		set STATUS = 1
+        WHERE CERTIFY_ID = #{certifyId,jdbcType=NUMERIC} and status = 0 and type in(#{type},#{smallType},#{bigType})
+  	]]>
+  </update>
+  <!-- 根据认证ID，图片类型查询图片 -->
+  <!-- ldp -->
+  <select id="findAllTypeImgByCertifyId" parameterType="map" resultMap="CertifyImg">
+  	<![CDATA[
+  		select * from boss.UC_CERTIFY_IMG
+  		where CERTIFY_ID = #{certifyId,jdbcType=NUMERIC} and status = 0 and type in(#{type},#{smallType},#{bigType})
+  	]]>
+  </select>
+  
+  <insert id="insertCertifyImg" parameterType="com.jointown.zy.common.model.CertifyImg">
+  		insert into boss.UC_CERTIFY_IMG (
+  		<include refid="Insert_List" />
+		)
+  		values(boss.seq_uc_certify_img.nextval,
+  		#{certifyId,jdbcType=NUMERIC},
+  		#{type,jdbcType=NUMERIC},
+  		#{path,jdbcType=VARCHAR},
+  		#{createTime,jdbcType=TIMESTAMP},
+  		#{updateTime,jdbcType=TIMESTAMP},
+  		0)
+  </insert>
+</mapper>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.WxOpinionDao">
+
+	<!--  默认查询结果映射  aizhengdong 2015.7.13 -->
+	<resultMap id="WxOpinionResult" type="com.jointown.zy.common.model.WxOpinion">
+		<id column="OP_ID" property="opId" jdbcType="DECIMAL" />
+		<result column="OP_NAME" property="opName" jdbcType="VARCHAR" />
+		<result column="OP_PHONE" property="opPhone" jdbcType="VARCHAR" />
+		<result column="OP_PIC_URL" property="opPicUrl" jdbcType="VARCHAR" />
+		<result column="OP_MEMO" property="opMemo" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="DECIMAL" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATER" property="updater" jdbcType="DECIMAL" />
+	</resultMap>
+	
+	<!--  意见查询 WxOpinionVo  aizhengdong 2015.8.25 -->
+	<resultMap id="WxOpinionVoResult" type="com.jointown.zy.common.vo.WxOpinionVo">
+		<id column="OP_ID" property="opId" jdbcType="DECIMAL" />
+		<result column="OP_NAME" property="opName" jdbcType="VARCHAR" />
+		<result column="OP_PHONE" property="opPhone" jdbcType="VARCHAR" />
+		<result column="OP_PIC_URL" property="opPicUrl" jdbcType="VARCHAR" />
+		<result column="OP_MEMO" property="opMemo" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="DECIMAL" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATER_NAME" property="updaterName" jdbcType="VARCHAR" />
+	</resultMap>	
+
+	<sql id="Base_Column_List">
+		OP_ID, OP_NAME, OP_PHONE, OP_PIC_URL, OP_MEMO, "STATUS", CREATE_TIME, UPDATE_TIME, UPDATER
+	</sql>
+	
+	<!--  添加方法  aizhengdong 2015.7.13  -->
+	<insert id="insert" parameterType="com.jointown.zy.common.model.WxOpinion">
+		insert into WEIXIN.WX_OPINION (
+		<include refid="Base_Column_List" />
+		)
+		values (
+		WEIXIN.SEQ_WX_OPINION.nextval, 
+		#{opName, jdbcType=VARCHAR},
+		#{opPhone, jdbcType=VARCHAR}, 
+		#{opPicUrl, jdbcType=VARCHAR},
+		#{opMemo, jdbcType=VARCHAR},
+		#{status, jdbcType=DECIMAL},
+		#{createTime, jdbcType=TIMESTAMP},
+		#{updateTime, jdbcType=TIMESTAMP},
+		#{updater, jdbcType=DECIMAL})
+	</insert>
+	
+	<!--  删除方法  aizhengdong 2015.8.27 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    	delete from WEIXIN.WX_OPINION where OP_ID = #{opId, jdbcType=DECIMAL}
+	</delete>
+  
+	<!--  更新选中字段   aizhengdong 2015.7.13  -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.jointown.zy.common.model.WxOpinion">
+		update WEIXIN.WX_OPINION
+		<set>
+			<if test="opName != null">
+				OP_NAME = #{opName, jdbcType=DECIMAL},
+			</if>
+			<if test="opPhone != null">
+				OP_PHONE = #{opPhone, jdbcType=VARCHAR},
+			</if>
+			<if test="opPicUrl != null">
+				OP_PIC_URL = #{opPicUrl, jdbcType=VARCHAR},
+			</if>
+			<if test="opMemo != null">
+				OP_MEMO = #{opMemo, jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				"STATUS" = #{status,jdbcType=DECIMAL},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime, jdbcType=TIMESTAMP},
+			</if>
+			<if test="updater != null">
+				UPDATER = #{updater, jdbcType=DECIMAL},
+			</if>
+		</set>
+		where OP_ID = #{opId, jdbcType=DECIMAL}
+	</update>
+
+	<!--  根据ID查询记录  aizhengdong 2015.7.13  -->
+	<select id="selectByPrimaryKey" resultMap="WxOpinionResult" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from WEIXIN.WX_OPINION where OP_ID = #{opId, jdbcType=DECIMAL}
+	</select>
+	
+	<!--  获取满足条件的记录  aizhengdong 2015.7.13  -->
+	<select id="selectWxOpinionByCondition" resultMap="WxOpinionResult" parameterType="com.jointown.zy.common.model.Page">
+		select * from(
+			select * from (
+				select  OP_ID,
+						OP_NAME,
+						OP_PHONE,
+						OP_PIC_URL, 
+						"STATUS", 
+						CREATE_TIME
+					from WEIXIN.WX_OPINION
+					where STATUS = '0'
+					order by CREATE_TIME desc
+			)
+			union all	
+			select * from (
+				select  OP_ID,
+						OP_NAME,
+						OP_PHONE,
+						OP_PIC_URL, 
+						"STATUS", 
+						CREATE_TIME
+					from WEIXIN.WX_OPINION
+					where STATUS = '1'
+					order by CREATE_TIME desc
+			)
+		)
+		
+		where 1=1
+		<if test="params.wxOpinionSearchDto.userName != null and params.wxOpinionSearchDto.userName != ''">
+			and instr(OP_NAME, #{params.wxOpinionSearchDto.userName, jdbcType=VARCHAR}) > 0
+		</if>
+        <!-- 查询条件：创建时间 -->
+        <if test="params.wxOpinionSearchDto.startDate != null and params.wxOpinionSearchDto.startDate != ''">
+        	and CREATE_TIME >= to_date(#{params.wxOpinionSearchDto.startDate}, 'yyyy-mm-dd hh24:mi:ss') 
+        </if>
+        <if test="params.wxOpinionSearchDto.endDate != null and params.wxOpinionSearchDto.endDate != ''">
+        	and CREATE_TIME <![CDATA[<=]]> to_date(#{params.wxOpinionSearchDto.endDate}, 'yyyy-mm-dd hh24:mi:ss')
+        </if>
+	</select>
+	
+</mapper>

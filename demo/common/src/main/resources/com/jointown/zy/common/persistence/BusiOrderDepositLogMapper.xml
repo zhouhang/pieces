@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BusiOrderDepositLogDao">
+	<resultMap id="BaseResultMap" type="com.jointown.zy.common.model.BusiOrderDepositLog">
+		<id column="ID" property="id" jdbcType="DECIMAL" />
+	    <result column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+	    <result column="DEPOSIT_AMOUNT" property="depositAmount" jdbcType="DECIMAL" />
+	    <result column="SELLER_ID" property="sellerId" jdbcType="DECIMAL" />
+	    <result column="SELLER_AMOUNT" property="sellerAmount" jdbcType="DECIMAL" />
+	    <result column="BUYER_ID" property="buyerId" jdbcType="DECIMAL" />
+	    <result column="BUYER_AMOUNT" property="buyerAmount" jdbcType="DECIMAL" />
+	    <result column="PLATFORM_AMOUNT" property="platformAmount" jdbcType="DECIMAL" />
+	    <result column="DEPOSIT_TYPE" property="depositType" jdbcType="TIMESTAMP" />
+	    <result column="OPERATION_RESULT" property="operationResult" jdbcType="DECIMAL" />
+	    <result column="RESULT_REMARK" property="resultRemark" jdbcType="VARCHAR" />
+	    <result column="OPERATTOR_ID" property="operattorId" jdbcType="DECIMAL" />
+	    <result column="OPERATTOR_IP" property="operattorIp" jdbcType="VARCHAR" />
+	    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<sql id="BaseColumns" >
+		ID, ORDER_ID, DEPOSIT_AMOUNT, SELLER_ID, SELLER_AMOUNT, BUYER_ID,BUYER_AMOUNT, PLATFORM_AMOUNT,
+		DEPOSIT_TYPE, OPERATION_RESULT, RESULT_REMARK, OPERATTOR_ID, OPERATTOR_IP, CREATETIME
+	</sql>
+	
+	<insert id="insertDepositLog" parameterType="com.jointown.zy.common.model.BusiOrderDepositLog">
+		insert into ZYC.BUSI_ORDER_DEPOSIT_LOG (
+			<include refid="BaseColumns"/>
+		)
+		values (
+			ZYC.SEQ_BUSI_ORDER_DEPOSIT_LOG.nextval,
+			#{orderId,jdbcType=VARCHAR},
+			#{depositAmount,jdbcType=DECIMAL},
+			#{sellerId,jdbcType=DECIMAL},
+			#{sellerAmount,jdbcType=DECIMAL},
+			#{buyerId,jdbcType=DECIMAL},
+			#{buyerAmount,jdbcType=DECIMAL},
+			#{platformAmount,jdbcType=DECIMAL},
+			#{depositType,jdbcType=DECIMAL},
+			#{operationResult,jdbcType=DECIMAL},
+			#{resultRemark,jdbcType=VARCHAR},
+			#{operattorId,jdbcType=DECIMAL},
+			#{operattorIp,jdbcType=VARCHAR},
+			#{createtime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+</mapper>

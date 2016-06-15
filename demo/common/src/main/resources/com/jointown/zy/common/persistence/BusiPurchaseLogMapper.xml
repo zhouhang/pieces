@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BusiPurchaseLogDao" >
+  <resultMap id="BaseResultMap" type="com.jointown.zy.common.model.BusiPurchaseLog" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="PURCHASE_ID" property="purchaseId" jdbcType="VARCHAR" />
+    <result column="PURCHASE_CODE" property="purchaseCode" jdbcType="VARCHAR" />
+    <result column="OPERATOR" property="operator" jdbcType="VARCHAR" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="OPTYPE" property="optype" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="PURCHASE_SNAPSHOT" property="purchaseSnapshot" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectByPurchaseId" resultMap="BaseResultMap" >
+    select <include refid="Base_Column_List" /> from ZYC.BUSI_PURCHASE_LOG where PURCHASE_ID =#{PURCHASE_ID}
+  </select>
+  <sql id="Base_Column_List" >
+    ID, PURCHASE_ID, PURCHASE_CODE, "OPERATOR", REMARKS, OPTYPE, CREATE_TIME, UPDATE_TIME, 
+    PURCHASE_SNAPSHOT
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ZYC.BUSI_PURCHASE_LOG
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ZYC.BUSI_PURCHASE_LOG
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.jointown.zy.common.model.BusiPurchaseLog" >
+    insert into ZYC.BUSI_PURCHASE_LOG (ID, PURCHASE_ID, PURCHASE_CODE, 
+      "OPERATOR", REMARKS, OPTYPE, 
+      CREATE_TIME, UPDATE_TIME, PURCHASE_SNAPSHOT
+      )
+    values (ZYC.SEQ_BUSI_PURCHASE_LOG.nextval, #{purchaseId,jdbcType=VARCHAR}, #{purchaseCode,jdbcType=VARCHAR}, 
+      #{operator,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, #{optype,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{purchaseSnapshot,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jointown.zy.common.model.BusiPurchaseLog" >
+    insert into ZYC.BUSI_PURCHASE_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      PURCHASE_ID,
+      PURCHASE_CODE,
+      "OPERATOR",
+      REMARKS,
+      OPTYPE,
+      CREATE_TIME,
+      UPDATE_TIME,
+      PURCHASE_SNAPSHOT,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=DECIMAL},
+      #{purchaseId,jdbcType=VARCHAR},
+      #{purchaseCode,jdbcType=VARCHAR},
+      #{operator,jdbcType=VARCHAR},
+      #{remarks,jdbcType=VARCHAR},
+      #{optype,jdbcType=DECIMAL},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+      #{purchaseSnapshot,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jointown.zy.common.model.BusiPurchaseLog" >
+    update ZYC.BUSI_PURCHASE_LOG
+    <set >
+      <if test="purchaseId != null" >
+        PURCHASE_ID = #{purchaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseCode != null" >
+        PURCHASE_CODE = #{purchaseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        "OPERATOR" = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="optype != null" >
+        OPTYPE = #{optype,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchaseSnapshot != null" >
+        PURCHASE_SNAPSHOT = #{purchaseSnapshot,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jointown.zy.common.model.BusiPurchaseLog" >
+    update ZYC.BUSI_PURCHASE_LOG
+    set PURCHASE_ID = #{purchaseId,jdbcType=VARCHAR},
+      PURCHASE_CODE = #{purchaseCode,jdbcType=VARCHAR},
+      "OPERATOR" = #{operator,jdbcType=VARCHAR},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      OPTYPE = #{optype,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      PURCHASE_SNAPSHOT = #{purchaseSnapshot,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <!-- add by fanyuna 2015.11.23 批量插入 -->
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into ZYC.BUSI_PURCHASE_LOG (ID, PURCHASE_ID, PURCHASE_CODE, 
+      "OPERATOR", REMARKS, OPTYPE, 
+      CREATE_TIME, UPDATE_TIME, PURCHASE_SNAPSHOT
+      )
+     select ZYC.SEQ_BUSI_PURCHASE_LOG.nextval,A.* from (
+      <foreach collection="list" item="item" index="index" separator="UNION">
+      SELECT 
+     #{item.purchaseId,jdbcType=VARCHAR}, #{item.purchaseCode,jdbcType=VARCHAR}, 
+      #{item.operator,jdbcType=VARCHAR}, #{item.remarks,jdbcType=VARCHAR}, #{item.optype,jdbcType=DECIMAL}, 
+      #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.purchaseSnapshot,jdbcType=VARCHAR}
+     from dual
+      </foreach>
+      )A
+  </insert>
+</mapper>

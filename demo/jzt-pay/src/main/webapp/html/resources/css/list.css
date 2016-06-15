@@ -1,0 +1,272 @@
+@charset "utf-8";
+/* CSS Document */
+/*
+ * lujing 2015.1.20交易列表
+ * changed by zhouli at 2015.1.21
+*/
+.area-192{width: 192px;}
+.box-1{border: 1px solid #e5e5e5;}
+.title-1{
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #e5e5e5;
+    line-height: 38px;
+    padding-left: 18px;
+    font-weight: bold;
+}
+.title-2{
+    font-size: 14px;
+    color: #333;
+    line-height: 38px;
+    text-align: center;
+    font-weight: bold;
+}
+.price-search{padding: 10px 0;}
+.price-inventory{height:34px; border-top: 1px solid #e5e5e5;}
+.price-inventory ul{}
+.price-inventory li{
+    line-height: 34px;
+    color: #666; 
+	float:left;
+	height:34px;
+	text-align:center;
+    border-right: 1px solid #ddd;
+    line-height: 36px;
+    padding: 0 16px;
+    cursor: pointer;
+}
+.price-inventory li:hover{  color: #D61B1B; text-decoration:underline;}
+.price-inventory .arrows_red{
+	display: inline-block;
+	background-position: 0 -56px;
+	margin-left: 5px;
+	width: 10px;
+	height: 10px;
+	vertical-align: middle;
+}
+.price-inventory .arrows_red.cur{background-position: 0 -29px;}
+.price-inventory .arrows_gray{
+	display: inline-block;
+	background-position: -14px -29px;
+	margin-left: 5px;
+	width: 10px;
+	height: 10px;
+	vertical-align: middle;
+}
+.price-inventory .arrows_gray.cur{background-position: -68px -47px;}
+.price-inventory i{ 
+    background-image: url(../images/icon-1.png);
+}
+.price-inventory span{ 
+	font-size:12px;
+	color: #666;
+	padding-left:16px;
+	padding-right:16px;
+	padding-top:9px; 
+	padding-bottom:9px;
+}
+.price-inventory .text_right{margin-left:550px;}
+.price-inventory b{color: #dd0202;}
+.price-search li{
+    line-height: 30px;
+    color: #666; 
+	float:left;
+	margin-top:10px;
+	margin-bottom:10px;	
+}
+.price-search span{ margin-left:15px;}
+.text-price{
+    border: 1px solid #ddd;
+    font-size: 12px;
+    color: #474e5d;
+    padding-left: 5px;
+    line-height: 24px;
+    height: 24px;
+}
+.gray-price{
+    border: 1px solid #dddddd;
+    font-size: 12px;
+    color: #ccc;
+    padding-left: 5px;
+    line-height: 24px;
+    height: 24px;
+}
+.text1{ width:90px}
+.text2{ width:150px;}
+.text3{
+    width: 120px;
+    height: 27px;
+    line-height: 27px;
+    background-image: url(../images/jzt-boss/datepiker.png);
+    background-repeat: no-repeat;
+    background-position: 100px 4px;
+}
+.btn-search {
+    color: #fff;
+    background: #c90301;
+    background: -webkit-gradient(linear, left top, left bottom, from(#db0403), to(#b80302));
+    background: -moz-linear-gradient(top,  #db0403,  #b80302);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#db0403', endColorstr='#b80302');
+    padding:4px 15px;
+    -webkit-box-border-radius: 3px;
+       -moz-box-border-radius: 3px;
+                border-radius: 3px;
+    font-size: 12px;
+    border: 1px solid #b80302;
+}
+.price-search li i{ color:#909090; margin:4px;}
+.price_list li{
+    border-bottom: 1px dotted #dbdbdb;
+    padding: 10px 0;
+    height: 125px;
+}
+.price_list li.tit-th{
+    height: 24px;
+    border-bottom: 0 none;
+    padding: 5px 0 0 0;
+}
+.price_list li .img{ cursor: pointer;}
+.price_list li .img img{
+    float: left;
+    border: 1px solid #ddd;
+    width: 120px;
+    height: 120px;
+    padding: 1px;
+    margin-right: 30px;
+
+}
+.price_list li .img:hover img{opacity: .6;}
+.price_list li .tit{
+    color:#1e50a2;
+    font-size:14px;
+    font-weight:bold;
+    margin-right:30px;
+    line-height: 24px;
+    max-height: 48px;
+    overflow: hidden;
+}
+.price_list li .tit2{
+    color: #333;
+    line-height: 24px;
+}
+.price_list li .tit3{
+    background: #3399cc;
+    padding: 3px;
+    color: #fff;
+    display: inline;
+    font-size: 10px;
+}
+.price_list li .bz-box span{
+    display: inline-block;
+    *display: inline;
+    zoom:1;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    line-height: 22px;
+    color: #fff;
+    margin-top: 10px;
+}
+.price_list li .bz-box .zhi{background: #f5aa00;}
+.price_list li .bz-box .xian{background: #f54f00;}
+.price_list li .bz-box .cheng{background: #61af00;}
+.price_list li .attr{
+    padding-top: 12px;
+    color: #888;
+}
+.price_list li .attr span{
+    display: inline-block;
+    width: 190px;
+    padding-right: 10px;
+    line-height: 16px;
+    height: 16px;
+    overflow: hidden;
+}
+.price_list li .wid_1{width: 590px;}
+.price_list li .wid_2{width: 135px;}
+
+/* 分类展开折叠 */
+.class-list dl{background: url("../images/list.png") repeat-y left;}
+.class-list dl dt{
+    float: left;
+    width: 116px;
+    text-align: center;
+    color: #333;
+    line-height: 26px;
+    font-weight: bold;
+    padding: 8px 0 12px;
+}
+.class-list dl dt,
+.class-list dl dd{height: 20px; overflow: hidden;}
+.class-list dl.up dt,
+.class-list dl.up dd{height: auto;}
+.class-list dl dd{
+    float: left;
+    padding: 8px 0 12px;
+    width: 880px;
+}
+.class-list dl dd a{
+    padding: 0 18px;
+    display: inline-block;
+    *display: inline;
+    zoom:1;
+    line-height: 26px;
+    color: #333;
+}
+.class-list dl dd a:hover{color: #d61b1b;}
+.class-list .open-down{
+    border: #e5e5e5 1px solid;
+    border-top: 0 none;
+    width: 126px;
+    height: 25px;
+    line-height: 18px;
+    background: #fff;
+    text-align: center;
+    cursor: pointer;
+    margin: -1px auto 0;
+}
+.class-list .open-down i{
+    background-position: -51px -47px;
+    display: inline-block;
+    *display: inline;
+    zoom:1;
+    vertical-align: middle;
+    width: 7px;
+    height: 5px;
+    margin-left: 5px;
+}
+.class-list .open-down i.up{
+    background-position: -96px -64px;
+}
+.class-list .breed{
+    background: url("../images/breed.png") repeat-y left;
+    height: auto;
+    width: auto;
+    padding-bottom: 5px;
+}
+.class-list .breed.cur{height: 140px; overflow: hidden;}
+.class-list .breed li{
+    border-bottom: 1px dotted #d8d8d8;
+}
+.class-list .breed li.bn{border-bottom: 0 none;}
+.class-list .breed li span{
+    display: inline-block;
+    *display: inline;
+    zoom:1;
+    padding: 5px 0;
+    line-height: 28px;
+    vertical-align: top;
+}
+.class-list .breed li .tit{
+    width: 65px;
+    padding: 5px 0 5px 20px;
+}
+.class-list .breed li .cont{
+    width: 900px;
+}
+.class-list .breed li .cont a{
+    padding: 0 15px;
+    color: #363636;
+}
+.class-list .breed li .cont a:hover,.class-list .breed li .cont a.hover{color: #d61b1b;}
+

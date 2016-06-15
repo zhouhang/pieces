@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.UcUserCertifyDao">
+	<resultMap id="UcUserCertify" type="com.jointown.zy.common.model.UcUserCertify">
+		<id column="USER_ID" property="userId" jdbcType="INTEGER" />
+		<result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+		<result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+		<result column="CERTIFY_ID" property="certifyId" jdbcType="INTEGER"/>
+		<result column="SUBMIT_TIME" property="submitTime" jdbcType="TIMESTAMP" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="TYPE" property="type" jdbcType="INTEGER" />
+		<result column="PROPERTY" property="property" jdbcType="INTEGER" />
+		<result column="STATUS" property="status" jdbcType="INTEGER" />
+		<result column="USERSTATUS" property="userStatus" jdbcType="INTEGER" />
+		<result column="DEAL_TYPE" property="dealType" jdbcType="VARCHAR" />
+		<result column="DEAL_ROLE" property="dealRole" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="UcPersonCertify" type="com.jointown.zy.common.model.UcPersonCertify" >
+		<result column="CERTIFY_ID" property="certifyId" jdbcType="INTEGER"/>
+		<result column="USER_ID" property="userId" jdbcType="INTEGER"/>
+		<result column="NAME" property="name" jdbcType="VARCHAR"/>
+		<result column="IDCARD" property="idCard" jdbcType="VARCHAR"/>
+		<result column="STATUS" property="status" jdbcType="INTEGER"/>
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP"/>
+		<result column="SUBMIT_TIME" property="submitTime" jdbcType="TIMESTAMP"/>
+		<result column="APPROVE_TIME" property="approveTime" jdbcType="TIMESTAMP"/>
+		<result column="APPROVERID" property="approverId" jdbcType="INTEGER"/>
+		<result column="REJECTMEMO" property="rejectMemo" jdbcType="INTEGER"/>
+	</resultMap>
+	
+
+	<!-- 根据条件查询认证会员 -->
+	<select id="searchCertifyUcUsersByCondition" parameterType="com.jointown.zy.common.model.Page" resultMap="UcUserCertify">
+		<![CDATA[
+			select * from boss.UC_CERTIFY_V where 1=1
+		]]>
+		<if test="params.mobileNo != null and '' != params.mobileNo">
+			<![CDATA[
+				AND mobile = #{params.mobileNo}
+			]]>
+		</if>
+		<if test="params.userName != null and '' != params.userName">
+			<![CDATA[
+			   AND user_name like '%${params.userName}%'
+			]]>
+		</if>
+		<if test="params.realName != null and '' != params.realName">
+			<![CDATA[
+			   AND name like '%${params.realName}%'
+			]]>
+		</if>
+		<if test="params.certifyType != null and '' != params.certifyType">
+			<![CDATA[
+				AND type = #{params.certifyType}
+			]]>
+		</if>
+		<if test="params.userType != null and '' != params.userType">
+			<![CDATA[
+				AND property = #{params.userType}
+			]]>
+		</if>
+		<if test="params.dealType != null and '' != params.dealType">
+			<![CDATA[
+				AND deal_type = #{params.dealType}
+			]]>
+		</if>
+		<if test="params.submitStartDate != null and '' != params.submitStartDate">
+			<![CDATA[
+				AND submit_time > to_date(#{params.submitStartDate},'yyyy-mm-dd hh24:mi:ss')
+			]]>
+		</if>
+		<if test="params.submitEndDate != null and '' != params.submitEndDate">
+			<![CDATA[
+				AND submit_time < to_date(#{params.submitEndDate},'yyyy-mm-dd hh24:mi:ss')
+			]]>
+		</if>
+		<![CDATA[
+			AND userstatus not in (1) order by status, submit_time desc
+		]]>
+	</select>
+	
+	<!-- 根据会员认证Id查询认证会员信息 -->
+	<select id="getCertifyUcUserInfoByCertifyId" parameterType="String" resultMap="UcPersonCertify">
+		<![CDATA[
+			select * from boss.uc_user_certify where certify_id = #{certifyId}
+		]]>
+	</select>
+	
+	<!-- 根据会员Id查询认证会员信息 -->
+	<select id="getCertifyUcUserInfoByUserId" parameterType="String" resultMap="UcPersonCertify">
+		<![CDATA[
+			select * from boss.uc_user_certify where user_id = #{userId} and status!=2 and rownum =1
+		]]>
+	</select>
+	
+	<!-- 根据会员Id查询认证会员信息 -->
+	<select id="getCertifyUcUserInfoByUserId1" parameterType="String" resultMap="UcPersonCertify">
+		<![CDATA[
+			select * from boss.uc_user_certify where user_id = #{userId} and rownum =1
+		]]>
+	</select>
+	
+	<!-- 个人会员认证资料提交 -->
+	<insert id="insertPersonCertifyInfo" parameterType="com.jointown.zy.common.model.UcPersonCertify">
+		<![CDATA[
+			insert into boss.uc_user_certify
+			(CERTIFY_ID,USER_ID,NAME,IDCARD,STATUS,CREATE_TIME,UPDATE_TIME,SUBMIT_TIME,APPROVE_TIME,APPROVERID,REJECTMEMO)
+			values(#{certifyId,jdbcType=INTEGER},
+			#{userId,jdbcType=INTEGER},
+			#{name,jdbcType=VARCHAR},
+			#{idCard,jdbcType=VARCHAR},
+			#{status,jdbcType=INTEGER},
+			#{createTime,jdbcType=TIMESTAMP},
+			#{updateTime,jdbcType=TIMESTAMP},
+			#{submitTime,jdbcType=TIMESTAMP},
+			#{approveTime,jdbcType=TIMESTAMP},
+			#{approverId,jdbcType=INTEGER},
+			0
+			)
+		]]>
+	</insert>
+	
+	<!-- 个人会员认证    通过，不通过 -->
+	<update id="updatePersonCertify" parameterType="com.jointown.zy.common.model.UcPersonCertify">
+	    <![CDATA[
+	    	update boss.uc_user_certify set
+	    	NAME = #{name},
+	    	IDCARD = #{idCard},
+	    	STATUS = #{status},
+	    	UPDATE_TIME = #{updateTime},
+	    	APPROVE_TIME = #{approveTime},
+	    	APPROVERID = #{approverId},
+	    	REJECTMEMO = #{rejectMemo}
+	    	where CERTIFY_ID = #{certifyId} and USER_ID = #{userId} and status <> 1
+	    ]]>
+	</update>
+	
+	<!-- 个人会员审核通过后，修改资料 -->
+	<update id="updatePersonCertifyInfoPassAfter" parameterType="com.jointown.zy.common.model.UcPersonCertify">
+		<![CDATA[
+	    	update boss.uc_user_certify set
+	    	NAME = #{name},
+	    	IDCARD = #{idCard},
+	    	UPDATE_TIME = #{updateTime}
+	    	where USER_ID = #{userId} and CERTIFY_ID = #{certifyId} and status = 1
+	    ]]>
+	</update>
+	
+	<!-- 重新提交个人会员认证资料 -->
+	<update id="updatePersonCertifyInfo" parameterType="com.jointown.zy.common.model.UcPersonCertify">
+		<![CDATA[
+	    	update boss.uc_user_certify set
+	    	NAME = #{name},
+	    	IDCARD = #{idCard},
+	    	STATUS = 0,
+	    	SUBMIT_TIME = #{submitTime},
+	    	UPDATE_TIME = #{updateTime},
+	    	REJECTMEMO = 0
+	    	where CERTIFY_ID = #{certifyId} and USER_ID = #{userId} and status = 2
+	    ]]>
+	</update>
+	
+	<!-- 修改会员认证状态 -->
+	<update id="updateUcUserCertifyStatusByUserId" parameterType="String">
+		<![CDATA[
+			update boss.uc_user set
+			CERTIFY = #{certifyStatus}
+			where user_id=#{userId} and status <> 1 
+		]]>
+	</update>
+</mapper>

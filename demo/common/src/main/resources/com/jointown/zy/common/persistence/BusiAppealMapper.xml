@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BusiAppealDao" >
+	<sql id="BaseSql">
+		APPEALID,
+		ORDERID,
+		REASON,
+		APPEALTYPE,
+		EXAMINESTATE,
+		CREATETIME,
+		UPDATETIME,
+		APPEALOR,
+		EVIDENCE_PIC,
+		REJECT_REASON
+	</sql>
+	
+	<resultMap id="BaseResultMap" type="com.jointown.zy.common.model.BusiAppeal" >
+	    <id column="APPEALID" property="appealId" jdbcType="DECIMAL" />
+	    <result column="ORDERID" property="orderId" jdbcType="VARCHAR" />
+	    <result column="REASON" property="reason" jdbcType="VARCHAR" />
+	    <result column="APPEALTYPE" property="appealType" jdbcType="DECIMAL" />
+	    <result column="EVIDENCE_PIC" property="evidencePic" jdbcType="VARCHAR" />
+	    <result column="EXAMINESTATE" property="examineState" jdbcType="DECIMAL" />
+	    <result column="CREATETIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATETIME" property="updateTime" jdbcType="TIMESTAMP" />
+	    <result column="APPEALOR" property="appealor" jdbcType="DECIMAL" />
+	    <result column="REJECT_REASON" property="rejectReason" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <resultMap id="selectOrderCancelListByPageMap" type="com.jointown.zy.common.vo.BossOrderCancelListVo" >
+	    <id column="ORDERID" property="orderId" jdbcType="VARCHAR" />
+	    <result column="USERNAME" property="applicantName" jdbcType="VARCHAR" />
+	    <result column="REALNAME" property="applicantRealName" jdbcType="DECIMAL" />
+	    <result column="MOBILE" property="applicantMobile" jdbcType="VARCHAR" />
+	    <result column="ORDERSTATE" property="orderState" jdbcType="DECIMAL" />
+	    <result column="EXAMINESTATE" property="examineState" jdbcType="DECIMAL" />
+	    <result column="CREATETIME" property="applicantDate" jdbcType="TIMESTAMP" />
+	    <result column="APPEALTYPE" property="cancelType" jdbcType="DECIMAL" />
+	    <!-- add by fanyuna 2015.07.30 增加买家、卖家业务员名称 -->
+	    <result column="sellerSalesmanName" property="sellerSalesmanName" jdbcType="VARCHAR" />
+	    <result column="buyerSalesmanName" property="buyerSalesmanName" jdbcType="VARCHAR" />
+	    <!-- add by ldp 2015.08.18 增加买家、卖家真实名称、卖家联系方式、标题、订单总价、实际付款 -->
+	    <result column="TITLE" property="title" jdbcType="VARCHAR"/>
+	    <result column="SELLERNAME" property="seller" jdbcType="VARCHAR"/>
+	    <result column="SELLERREALNAME" property="sellerRealName" jdbcType="VARCHAR"/>
+	    <result column="SELLERMOBILER" property="sellerMobile" jdbcType="VARCHAR"/>
+	    <result column="TOTALPRICE" property="totalPrice" jdbcType="DECIMAL"/>
+	    <result column="ACTUAL_PAYMENT" property="actualPayment" jdbcType="DECIMAL"/>
+    </resultMap>
+    
+	<!-- 订单申诉详情VO-->
+	  <resultMap id="BusiAppealVo" type="com.jointown.zy.common.vo.BusiAppealVo" >
+	    <id column="APPEALID" property="appealid" jdbcType="DECIMAL" />
+	    <result column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+	    <result column="REASON" property="reason" jdbcType="VARCHAR" />
+	    <result column="APPEALTYPE" property="appealtype" jdbcType="DECIMAL" />
+	    <result column="EXAMINESTATE" property="examinestate" jdbcType="DECIMAL" />
+	    <result column="EVIDENCE_PIC" property="evidencepics" jdbcType="VARCHAR" />
+	    <result column="REJECT_REASON" property="rejectreason" jdbcType="VARCHAR" />
+	    
+	    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+	    <result column="UNITPRICE" property="unitprice" jdbcType="DECIMAL" />
+	    <result column="DICT_VALUE" property="dictvalue" jdbcType="VARCHAR" />
+	    <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+	    <result column="TOTALPRICE" property="totalprice" jdbcType="DECIMAL" />
+	    <result column="WAREHOUSENAME" property="warehousename" jdbcType="VARCHAR" />
+	    <result column="PATH" property="path" jdbcType="VARCHAR" />
+	  </resultMap>    
+    
+    <!-- 后台交易取消审核列表查询 -->
+    <select id="selectOrderCancelListByPage" parameterType="com.jointown.zy.common.model.Page" resultMap="selectOrderCancelListByPageMap">
+    	select
+    		a.ORDERID,
+    		d.TITLE,			<!-- add by ldp 2015.08.18 增加 标题 -->
+    		c.USER_NAME as USERNAME,
+    		c.COMPANYNAME as REALNAME,
+    		c.MOBILE,
+    		<!-- add by ldp 2015.08.18 增加买家、卖家真实名称、卖家联系方式、订单总价、实际付款  -->
+    		e.USER_NAME as SELLERNAME,
+    		e.COMPANYNAME as SELLERREALNAME,
+    		e.MOBILE as SELLERMOBILER,
+    		b.TOTALPRICE,
+    		b.ACTUAL_PAYMENT,
+    		
+    		b.ORDERSTATE,
+    		a.EXAMINESTATE,
+    		a.CREATETIME,
+    		a.APPEALTYPE,
+    		u.user_name as sellerSalesmanName,  <!-- 订单卖家业务员 -->
+			u1.user_name as buyerSalesmanName   <!-- 订单买家业务员 -->
+    	from
+    	(	select <include refid="BaseSql"/> from ZYC.BUSI_APPEAL
+    		<where>
+	    		<if test="params.bossOrderCancelListDto.orderId != null and '' != params.bossOrderCancelListDto.orderId">
+	    			and ORDERID = #{params.bossOrderCancelListDto.orderId}
+	    		</if>
+	    		<if test="params.bossOrderCancelListDto.examineState != null and '' != params.bossOrderCancelListDto.examineState">
+	    			and EXAMINESTATE = #{params.bossOrderCancelListDto.examineState}
+	    		</if>
+	    		<if test="params.bossOrderCancelListDto.applyStartDate != null and '' != params.bossOrderCancelListDto.applyStartDate">
+					and CREATETIME <![CDATA[>=]]> to_date(#{params.bossOrderCancelListDto.applyStartDate},'yyyy-mm-dd')
+				</if>
+				<if test="params.bossOrderCancelListDto.applyEndDate != null and '' != params.bossOrderCancelListDto.applyEndDate">
+					and CREATETIME <![CDATA[<]]> (to_date(#{params.bossOrderCancelListDto.applyEndDate},'yyyy-mm-dd') + 1)
+				</if>
+	    	</where>
+    	) a
+    	left join ZYC.BUSI_ORDER b on b.ORDERID = a.ORDERID
+    	left join BOSS.UC_USER c on c.USER_ID = a.APPEALOR
+    	<!-- add by ldp 2015.08.18-->
+    	left join ZYC.BUSI_LISTING d on b.LISTINGID = d.LISTINGID
+    	left join BOSS.UC_USER e on e.USER_ID = b.USERID
+    	<!-- add by fanyuna 2015.07.30 增加订单的买家、卖家业务员 -->
+    	left join zyc.busi_order_salesman m on a.ORDERID=m.orderid
+		left join boss.boss_user u on u.user_id=m.seller_salesmanid 
+		left join boss.boss_user u1 on u1.user_id=m.buyer_salesmanid
+    	<where>
+    		<if test="params.bossOrderCancelListDto.orderState != null and '' != params.bossOrderCancelListDto.orderState">
+    			b.ORDERSTATE = #{params.bossOrderCancelListDto.orderState}
+    		</if>
+    		<!-- add by fanyuna 2015.07.30 增加业务员名称匹配 -->
+    		<if test="params.bossOrderCancelListDto.salesmanName != null and '' != params.bossOrderCancelListDto.salesmanName">
+    			and (instr(u.user_name, #{params.bossOrderCancelListDto.salesmanName}) <![CDATA[>]]> 0 or instr(u1.user_name, #{params.bossOrderCancelListDto.salesmanName}) <![CDATA[>]]> 0)
+    		</if>
+    	</where>
+    	order by a.CREATETIME desc
+    </select>
+    
+    <resultMap id="selectOrderCancelInfoByIdMap" type="com.jointown.zy.common.vo.BossOrderCancelInfoVo" >
+	    <id column="ORDERID" property="orderId" jdbcType="VARCHAR" />
+	    <result column="REASON" property="reason" jdbcType="VARCHAR" />
+	    <result column="APPEALTYPE" property="appealType" jdbcType="DECIMAL" />
+	    <result column="EVIDENCE_PIC" property="evidencePic" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!-- 后台交易取消审核列表页申请详情查询 -->
+    <select id="selectOrderCancelInfoById" parameterType="java.lang.String" resultMap="selectOrderCancelInfoByIdMap">
+    	select
+    		ORDERID,
+    		REASON,
+    		APPEALTYPE,
+    		EVIDENCE_PIC
+    	from
+    		ZYC.BUSI_APPEAL
+    	where
+    		ORDERID = #{orderId}
+    </select>
+    
+    <select id="selectBusiAppealByOrderId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    	select
+    		<include refid="BaseSql"/>
+    	from
+    		ZYC.BUSI_APPEAL
+    	where
+    		ORDERID = #{orderId}
+    </select>
+    
+    <!-- 后台交易取消审核列表页驳回申请 -->
+    <update id="updateRejectReason" parameterType="com.jointown.zy.common.model.BusiAppeal">
+    	update
+    		ZYC.BUSI_APPEAL
+    	set
+    		REJECT_REASON = #{rejectReason},
+    		EXAMINESTATE = #{examineState},
+    		UPDATETIME = #{updateTime}
+    	where
+    		ORDERID = #{orderId}
+    </update>
+    
+    <!-- 根据订单ID，修改订单申诉状态 -->
+    <update id="updateExamineStateById" parameterType="com.jointown.zy.common.model.BusiAppeal">
+    	update
+    		ZYC.BUSI_APPEAL
+    	set
+    		EXAMINESTATE = #{examineState},
+    		UPDATETIME = #{updateTime}
+    	where
+    		ORDERID = #{orderId}
+    </update>
+    
+  <!-- 查询订单申诉详情-->	
+  <select id="selectBusiAppealVoByOrderId" resultMap="BusiAppealVo" parameterType="java.util.Map" >
+    select l.TITLE,o.ORDERID,o.UNITPRICE,d.DICT_VALUE,o.AMOUNT,o.TOTALPRICE,h.WAREHOUSENAME,q.PATH,a.APPEALTYPE,a.EXAMINESTATE,a.REASON,a.EVIDENCE_PIC,a.REJECT_REASON 
+    from ZYC.BUSI_APPEAL a
+	left join ZYC.BUSI_ORDER o on a.ORDERID = o.ORDERID
+	left join ZYC.BUSI_LISTING l on o.LISTINGID = l.LISTINGID 
+	left join ZYC.BUSI_WHLIST w on l.WLID = w.WLID
+	left join ZYC.BUSI_QUALITYPIC q on w.WLID = q.WLID
+	left join ZYC.BUSI_WAREHOUSE h on w.WAREHOUSEID = h.WAREHOUSEID
+	left join BOSS.DICT_INFO d on w.WLUNIT = d.DICT_CODE
+    where o.ORDERID = #{orderId,jdbcType=VARCHAR}
+    	<if test="userId != null and userId != ''">
+    	and o.USERID = #{userId,jdbcType=VARCHAR}
+    	</if>
+    	<if test="buyer != null and buyer != ''">
+    	and o.BUYER = #{buyer,jdbcType=VARCHAR}
+    	</if>
+    	and q.PICINDEX = 1
+  </select>
+  
+  <!-- 插入申述数据 -->
+  <insert id="insertBusiAppeal" parameterType="com.jointown.zy.common.model.BusiAppeal">
+	insert into ZYC.BUSI_APPEAL(<include refid="BaseSql"/>)
+	<trim prefix="values (" suffix=")" suffixOverrides="," >
+		ZYC.seq_busi_appeal.NEXTVAL,
+		#{orderId,jdbcType=VARCHAR},
+		#{reason,jdbcType=VARCHAR},
+		#{appealType,jdbcType=DECIMAL},
+		#{examineState,jdbcType=DECIMAL},
+		sysdate,
+		sysdate,
+		#{appealor,jdbcType=DECIMAL},
+		#{evidencePic,jdbcType=VARCHAR},
+		#{rejectReason,jdbcType=VARCHAR}
+	</trim> 
+  </insert>
+</mapper>

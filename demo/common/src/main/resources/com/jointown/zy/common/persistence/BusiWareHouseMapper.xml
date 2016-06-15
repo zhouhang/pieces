@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BusiWareHouseDao" >
+  <resultMap id="BusiWareHouse" type="com.jointown.zy.common.model.BusiWareHouse">
+    <id column="WAREHOUSEID" property="wareHouseId" jdbcType="VARCHAR" />
+    <result column="WAREHOUSENAME" property="wareHouseName" jdbcType="VARCHAR" />
+    <result column="WAREHOUSECODE" property="wareHouseCode" jdbcType="VARCHAR" />
+    <result column="WAREHOUSEDES" property="wareHouseDes" jdbcType="VARCHAR" />
+    <result column="WAREHOUSEURL" property="wareHouseUrl" jdbcType="VARCHAR" />
+    <!-- 仓库表增加仓库类型、类别、地区、地址、联系人、联系电话、状态字段  -->
+    <result column="PROVINCE" property="province" jdbcType="VARCHAR" />
+    <result column="WHTYPE" property="whtype" jdbcType="VARCHAR" />
+    <result column="WHCATEGORY" property="whcategory" jdbcType="VARCHAR" />
+    <result column="WHADDRESS" property="whaddress" jdbcType="VARCHAR" />
+    <result column="WHCONTACT" property="whcontact" jdbcType="VARCHAR" />
+    <result column="WHTELEPHONE" property="whtelephone" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <resultMap id="BusiWareHouseVo" type="com.jointown.zy.common.vo.BusiWareHouseVo">
+    <id column="WAREHOUSEID" property="wareHouseId" jdbcType="VARCHAR" />
+    <result column="WAREHOUSENAME" property="wareHouseName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <insert id="insertBusiWareHouse" parameterType="com.jointown.zy.common.model.BusiWareHouse">
+  		insert into ZYC.BUSI_WAREHOUSE (WAREHOUSEID,WAREHOUSENAME,WAREHOUSECODE,WAREHOUSEDES,WAREHOUSEURL,
+  										PROVINCE, WHTYPE,WHCATEGORY, WHADDRESS, WHCONTACT,WHTELEPHONE, "STATUS")
+  		values(
+  		#{wareHouseId,jdbcType=VARCHAR},
+  		#{wareHouseName,jdbcType=VARCHAR},
+  		#{wareHouseCode,jdbcType=VARCHAR},
+  		#{wareHouseDes,jdbcType=VARCHAR},
+  		#{wareHouseUrl,jdbcType=VARCHAR},
+  		#{province,jdbcType=VARCHAR},
+  		#{whtype,jdbcType=VARCHAR}, 
+        #{whcategory,jdbcType=VARCHAR},
+        #{whaddress,jdbcType=VARCHAR},
+        #{whcontact,jdbcType=VARCHAR}, 
+        #{whtelephone,jdbcType=VARCHAR},
+        #{status,jdbcType=DECIMAL}
+  		)
+  </insert>
+  <update id="updateBusiWareHouseById" parameterType="com.jointown.zy.common.model.BusiWareHouse">
+        update ZYC.BUSI_WAREHOUSE set
+		WAREHOUSEID = #{wareHouseId,jdbcType=VARCHAR},
+		WAREHOUSENAME = #{wareHouseName,jdbcType=VARCHAR},
+		WAREHOUSECODE = #{wareHouseCode,jdbcType=VARCHAR},
+		WAREHOUSEDES = #{wareHouseDes,jdbcType=VARCHAR},
+		WAREHOUSEURL = #{wareHouseUrl,jdbcType=VARCHAR},
+        WHTYPE = #{whtype,jdbcType=VARCHAR},
+      	WHCATEGORY = #{whcategory,jdbcType=VARCHAR},
+     	 WHADDRESS = #{whaddress,jdbcType=VARCHAR},
+      	WHCONTACT = #{whcontact,jdbcType=VARCHAR},
+      	WHTELEPHONE = #{whtelephone,jdbcType=VARCHAR},
+      "STATUS" = #{status,jdbcType=DECIMAL}
+        where WAREHOUSEID = #{wareHouseId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jointown.zy.common.model.BusiWareHouse" >
+    update ZYC.BUSI_WAREHOUSE
+    <set >
+      <if test="wareHouseName != null" >
+        WAREHOUSENAME = #{wareHouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="wareHouseCode != null" >
+        WAREHOUSECODE = #{wareHouseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wareHouseUrl != null" >
+        WAREHOUSEURL = #{wareHouseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        PROVINCE = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="whtype != null" >
+        WHTYPE = #{whtype,jdbcType=VARCHAR},
+      </if>
+      <if test="whcategory != null" >
+        WHCATEGORY = #{whcategory,jdbcType=VARCHAR},
+      </if>
+      <if test="whaddress != null" >
+        WHADDRESS = #{whaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="whcontact != null" >
+        WHCONTACT = #{whcontact,jdbcType=VARCHAR},
+      </if>
+      <if test="whtelephone != null" >
+        WHTELEPHONE = #{whtelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        "STATUS" = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="wareHouseDes != null" >
+        WAREHOUSEDES = #{wareHouseDes,jdbcType=CLOB},
+      </if>
+    </set>
+    where WAREHOUSEID = #{wareHouseId,jdbcType=VARCHAR}
+  </update>
+  <update id="deleteBusiWareHouseById" parameterType="com.jointown.zy.common.model.BusiWareHouse">
+        delete from ZYC.BUSI_WAREHOUSE
+       	where WAREHOUSEID = #{wareHouseId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectBusiWareHouses" resultMap="BusiWareHouseVo">
+       select * from ZYC.BUSI_WAREHOUSE
+  </select>
+  <select id="selectBusiWareHousesByTree" resultMap="BusiWareHouseVo">
+       select wareHouseId,wareHouseName from ZYC.BUSI_WAREHOUSE
+  </select>
+  <select id="selectBusiWareHouseById" parameterType="string" resultMap="BusiWareHouseVo">
+       select * from ZYC.BUSI_WAREHOUSE where WAREHOUSEID = #{wareHouseId,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectBusiWareHousesByCondition" parameterType="com.jointown.zy.common.model.Page" resultMap="BusiWareHouseVo">
+        select * from ZYC.BUSI_WAREHOUSE where
+        <if test="params.wareHouseId != null and params.wareHouseId != ''">
+        	and WAREHOUSEID like '%${params.wareHouseId}%' 
+        </if>
+        <if test="params.wareHouseName != null and params.wareHouseName != ''">
+        	and WAREHOUSENAME like '%${params.wareHouseName}%' 
+        </if>
+        <if test="params.wareHouseCode != null and params.wareHouseCode != ''">
+        	and WAREHOUSECODE like '%${params.wareHouseCode}%' 
+        </if>
+   </select>
+
+<select id="selectAllMasket" resultType="java.lang.String">
+	select distinct warehousename from ZYC.busi_warehouse
+</select>
+
+
+<select id="selectBusiWareHouseByUserId" parameterType="string"
+	resultMap="BusiWareHouseVo">
+	select distinct a.warehouseid,a.warehousename
+		from ZYC.busi_warehouse a, ZYC.busi_whlist b
+	where a.warehouseid = b.warehouseid
+			and b.userid =#{userId,jdbcType=NUMERIC}
+</select>
+
+<!-- add by fanyuna 删除仓库 -->
+<delete id="delWarehouseById" parameterType="java.lang.String">
+	delete from ZYC.BUSI_WAREHOUSE
+       	where WAREHOUSEID = #{wareHouseId,jdbcType=VARCHAR}
+</delete>   
+
+</mapper>

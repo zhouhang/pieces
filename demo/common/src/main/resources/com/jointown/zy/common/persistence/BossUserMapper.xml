@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BossUserDao" >
+  <resultMap id="BossUser" type="com.jointown.zy.common.model.BossUser">
+    <id column="USER_ID" property="userId" jdbcType="NUMERIC" />
+    <result column="USER_CODE" property="userCode" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="USER_NO" property="userNo" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="SALT" property="salt" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="ROLENAME" property="roleName" jdbcType="VARCHAR" />
+    <result column="ORG_ID" property="orgId" jdbcType="NUMERIC" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="EXPIRE_TIME" property="expireTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="findBossUser"  resultMap="BossUser">
+        select * from boss.boss_user where status!= 1
+   </select>
+   <select id="findBossUserByUserCode" parameterType="map" resultMap="BossUser" >
+	   <choose>
+			<when test="ignoreStatus != null and 'true' == ignoreStatus">  
+                <![CDATA[
+                    select * from boss.boss_user where user_code=#{userCode,jdbcType=VARCHAR} order by status
+				]]>  
+            </when>  
+            <otherwise>
+            	<![CDATA[
+            		select * from boss.boss_user where user_code=#{userCode,jdbcType=VARCHAR} and status <> 1
+				]]> 
+            </otherwise>
+		</choose>
+   </select>
+   <select id="findBossUserById" parameterType="string" resultMap="BossUser">
+        select * from boss.boss_user where user_id=#{userId,jdbcType=NUMERIC}
+   </select>
+   <select id="findBossUserByMobile" parameterType="string" resultMap="BossUser">
+        select * from boss.boss_user where mobile=#{mobile,jdbcType=VARCHAR} and status != 1
+   </select>
+   
+   <select id="findCurAndSubBossUserByOrgId" parameterType="string" resultMap="BossUser">
+		select u.* from boss.boss_user u 
+		where u.status!=1 and exists 
+		(SELECT 1  from boss.boss_org o 
+		where o.status=0 and u.org_id=o.org_id 
+		CONNECT BY  o.parent_id= PRIOR o.org_id start with o.org_id=#{orgId,jdbcType=NUMERIC})
+   </select>
+   
+   <select id="findBossUserByOrgId" parameterType="string" resultMap="BossUser">
+        select * from boss.boss_user where org_id=#{orgId,jdbcType=NUMERIC} and status != 1
+   </select>
+   <select id="findBossUsersByCondition" parameterType="com.jointown.zy.common.model.Page" resultMap="BossUser">
+        select boss.boss_user.*,getRoleString(boss.boss_user.user_code) as roleName 
+        from boss.boss_user where status != 1
+        <if test="params.userCode != null and params.userCode != ''">
+        	and user_code like '%${params.userCode}%' 
+        </if>
+        <if test="params.userName != null and params.userName != ''">
+        	and user_name like '%${params.userName}%' 
+        </if>
+        <if test="params.orgId != null and params.orgId != ''">
+        	and org_id = #{params.orgId,jdbcType=NUMERIC} 
+        </if>
+        <if test="params.roleId != null and params.roleId != ''">
+        	and exists (
+				select 1 from boss.boss_user_role where role_id in (#{params.roleId,jdbcType=VARCHAR}) and boss.boss_user_role.user_id=boss.boss_user.user_id and boss.boss_user_role.status!=1
+			) 
+        </if>
+        order by boss.boss_user.update_time desc
+   </select>
+  <insert id="insertBossUser" parameterType="com.jointown.zy.common.model.BossUser">
+  		insert into boss.boss_user (user_id,user_code,user_name,password,salt,mobile,org_id,create_time,update_time,status)
+  		values(boss.seq_boss_user.nextval,
+  		#{userCode,jdbcType=VARCHAR},
+  		#{userName,jdbcType=VARCHAR},
+  		#{password,jdbcType=VARCHAR},
+  		#{salt,jdbcType=VARCHAR},
+  		#{mobile,jdbcType=VARCHAR},
+  		#{orgId,jdbcType=NUMERIC},
+  		#{createTime,jdbcType=TIMESTAMP},
+  		#{updateTime,jdbcType=TIMESTAMP},
+  		#{status,jdbcType=INTEGER})
+  </insert>
+  <update id="updateBossUser" parameterType="com.jointown.zy.common.model.BossUser">
+        update boss.boss_user
+		<set >
+	        <if test="userName != null">
+	        	user_name = #{userName,jdbcType=VARCHAR},
+	        </if>
+	        <if test="mobile != null">
+	        	mobile = #{mobile,jdbcType=VARCHAR},
+	        </if>
+	        <if test="orgId != null">
+	        	org_id = #{orgId,jdbcType=NUMERIC},
+	        </if>
+	        <if test="password != null">
+	        	password = #{password,jdbcType=VARCHAR},
+	        </if>
+	        <if test="salt != null">
+	        	salt = #{salt,jdbcType=VARCHAR},
+	        </if>
+	        <if test="updateTime != null">
+	        	update_time = #{updateTime,jdbcType=VARCHAR},
+	        </if>
+	        <if test="status != null">
+	        	status = #{status,jdbcType=INTEGER},
+	        </if>
+	    </set>
+        WHERE user_id = #{userId,jdbcType=NUMERIC}
+  </update>
+  <update id="deleteBossUser" parameterType="com.jointown.zy.common.model.BossUser">
+        update boss.boss_user set
+        status = 1
+        WHERE user_id = #{userId,jdbcType=NUMERIC}
+  </update>
+  <!-- add by fanyuna 2015.07.29 根据用户ID获取用户信息 根据条件决定是否忽略状态 -->
+  <select id="findBossUserByUserId" parameterType="map" resultMap="BossUser" >
+	   <choose>
+			<when test="ignoreStatus != null and 'true' == ignoreStatus">  
+                <![CDATA[
+                    select * from boss.boss_user where user_id=#{userId,jdbcType=VARCHAR} order by status
+				]]>  
+            </when>  
+            <otherwise>
+            	<![CDATA[
+            		select * from boss.boss_user where user_id=#{userId,jdbcType=VARCHAR} and status <> 1
+				]]> 
+            </otherwise>
+		</choose>
+   </select>
+</mapper>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.CompanyCertifyDao" >
+  <resultMap id="CompanyCertify" type="com.jointown.zy.common.model.CompanyCertify">
+    <id column="CERTIFY_ID" property="certifyId" jdbcType="NUMERIC" />
+    <result column="USER_ID" property="userId" jdbcType="NUMERIC" />
+    <result column="COMPANY_NAME" property="companyName" jdbcType="VARCHAR" />
+    <result column="ORG_CODE" property="orgCode" jdbcType="VARCHAR" />
+    <result column="PRESIDENT_NAME" property="presidentName" jdbcType="VARCHAR" />
+    <result column="LICENCE_CODE" property="licenceCode" jdbcType="VARCHAR" />
+    <result column="LICENCE_STARTDATE" property="licenceStartdate" jdbcType="TIMESTAMP" />
+    <result column="LICENCE_ENDDATE" property="licenceEnddate" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="SUBMIT_TIME" property="submitTime" jdbcType="TIMESTAMP" />
+    <result column="APPROVE_TIME" property="approveTime" jdbcType="TIMESTAMP" />
+    <result column="APPROVERID" property="approverid" jdbcType="INTEGER" />
+    <result column="REGISTERED_CAPITAL" property="registeredCapital" jdbcType="INTEGER" />
+    <result column="LICENCE_DATE" property="licenceDate" jdbcType="TIMESTAMP" />
+    <result column="REJECTMEMO" property="rejectmemo" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Check_List">
+  		CERTIFY_ID,USER_ID,COMPANY_NAME,PRESIDENT_NAME,LICENCE_CODE,LICENCE_STARTDATE,LICENCE_ENDDATE,ORG_CODE,STATUS,REGISTERED_CAPITAL,LICENCE_DATE,REJECTMEMO
+  </sql>
+  <sql id="Insert_List">
+  		CERTIFY_ID,USER_ID,COMPANY_NAME,ORG_CODE,PRESIDENT_NAME,LICENCE_CODE,LICENCE_STARTDATE,LICENCE_ENDDATE,STATUS,CREATE_TIME,UPDATE_TIME,SUBMIT_TIME,APPROVE_TIME,APPROVERID,REGISTERED_CAPITAL,LICENCE_DATE,REJECTMEMO
+  </sql>
+  
+  <select id="findCompanyCertifyByUserId"  resultMap="CompanyCertify">
+        select 
+        <include refid="Check_List" />
+		from boss.UC_COMPANY_CERTIFY where USER_ID = #{userId,jdbcType=NUMERIC} and status!=2 and rownum =1
+   </select>
+     <select id="findReallyCompanyCertifyByUserId" parameterType="Integer" resultMap="CompanyCertify">
+        select 
+        <include refid="Check_List" />
+		from boss.UC_COMPANY_CERTIFY where USER_ID = #{userId,jdbcType=NUMERIC} and status=1
+   </select>
+   <select id="findCompanyCertifyByUserId1" parameterType="Integer" resultMap="CompanyCertify">
+        select 
+        <include refid="Check_List" />
+		from boss.UC_COMPANY_CERTIFY where USER_ID = #{userId,jdbcType=NUMERIC}
+   </select>
+   
+  <select id="findSeqNext"  resultType="Integer">
+        select boss.seq_uc_certify.nextval from dual
+   </select>
+  <insert id="insertCompanyCertify" parameterType="com.jointown.zy.common.model.CompanyCertify">
+  		insert into boss.UC_COMPANY_CERTIFY (
+  		<include refid="Insert_List" />
+		)
+  		values(#{certifyId,jdbcType=NUMERIC},
+  		#{userId,jdbcType=NUMERIC},
+  		#{companyName,jdbcType=VARCHAR},
+  		#{orgCode,jdbcType=VARCHAR},
+  		#{presidentName,jdbcType=VARCHAR},
+  		#{licenceCode,jdbcType=VARCHAR},
+  		#{licenceStartdate,jdbcType=TIMESTAMP},
+  		#{licenceEnddate,jdbcType=TIMESTAMP},
+  		#{status,jdbcType=INTEGER},
+  		#{createTime,jdbcType=TIMESTAMP},
+  		#{updateTime,jdbcType=TIMESTAMP},
+  		#{submitTime,jdbcType=TIMESTAMP},
+  		#{approveTime,jdbcType=TIMESTAMP},
+  		#{approverid,jdbcType=INTEGER},
+  		#{registeredCapital,jdbcType=INTEGER},
+  		#{licenceDate,jdbcType=TIMESTAMP},
+  		0)
+  </insert>
+  <!-- 企业认证审核  -->
+  <update id="updateCompanyCertify" parameterType="com.jointown.zy.common.model.CompanyCertify">
+  	<![CDATA[
+	  	update boss.UC_COMPANY_CERTIFY set
+	  		COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+	  		ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+	  		PRESIDENT_NAME = #{presidentName,jdbcType=VARCHAR},
+	  		LICENCE_CODE = #{licenceCode,jdbcType=VARCHAR},
+	  		LICENCE_STARTDATE = #{licenceStartdate,jdbcType=TIMESTAMP},
+	  		LICENCE_ENDDATE = #{licenceEnddate,jdbcType=TIMESTAMP},
+	  		STATUS = #{status,jdbcType=INTEGER},
+	  		UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+	  		APPROVE_TIME = #{approveTime,jdbcType=TIMESTAMP},
+	  		APPROVERID = #{approverid,jdbcType=INTEGER},
+	  		PROPERTY = #{property,jdbcType=INTEGER},
+	  		REGISTERED_CAPITAL = #{registeredCapital,jdbcType=INTEGER},
+	  		LICENCE_DATE = #{licenceDate,jdbcType=TIMESTAMP},
+	  		REJECTMEMO = #{rejectmemo,jdbcType=INTEGER}
+	  	where user_id = #{userId} and certify_id=#{certifyId} and status <> 1	
+  	]]>
+  </update>
+  
+  <!-- 通过认证后保存资料 -->
+  <update id="updateCompanyCertifyInfoAfterPass" parameterType="com.jointown.zy.common.model.CompanyCertify">
+  	<![CDATA[
+  		update boss.UC_COMPANY_CERTIFY set
+  		COMPANY_NAME = #{companyName,jdbcType=VARCHAR},
+  		ORG_CODE = #{orgCode,jdbcType=VARCHAR},
+  		PRESIDENT_NAME = #{presidentName,jdbcType=VARCHAR},
+  		LICENCE_CODE = #{licenceCode,jdbcType=VARCHAR},
+  		LICENCE_STARTDATE = #{licenceStartdate,jdbcType=TIMESTAMP},
+  		LICENCE_ENDDATE = #{licenceEnddate,jdbcType=TIMESTAMP},
+  		UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+  		PROPERTY = #{property,jdbcType=INTEGER},
+  		REGISTERED_CAPITAL = #{registeredCapital,jdbcType=INTEGER},
+  		LICENCE_DATE = #{licenceDate,jdbcType=TIMESTAMP}
+  		where user_id=#{userId} and certify_id = #{certifyId} and status = 1
+  	]]>
+  </update>
+  
+  <!-- 根据企业认证Id查询企业信息 -->
+  <select id="findCompanyCertifyByCertifyId"  parameterType="Integer" resultMap="CompanyCertify">
+        select 
+        <include refid="Check_List" />
+		from boss.UC_COMPANY_CERTIFY where certify_id = #{certifyId,jdbcType=NUMERIC}
+   </select>
+  
+</mapper>

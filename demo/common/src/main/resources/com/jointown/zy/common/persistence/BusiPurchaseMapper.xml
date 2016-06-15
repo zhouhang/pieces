@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BusiPurchaseDao" >
+  <resultMap id="BaseResultMap" type="com.jointown.zy.common.model.BusiPurchase" >
+    <id column="PURCHASE_ID" property="purchaseId" jdbcType="VARCHAR" />
+    <result column="PURCHASE_CODE" property="purchaseCode" jdbcType="VARCHAR" />
+    <result column="PURCHASER" property="purchaser" jdbcType="VARCHAR" />
+    <result column="PURCHASER_ORG" property="purchaserOrg" jdbcType="VARCHAR" />
+    <result column="CONTACT" property="contact" jdbcType="VARCHAR" />
+    <result column="CONTACT_PHONE" property="contactPhone" jdbcType="VARCHAR" />
+    <result column="BREED_ID" property="breedId" jdbcType="DECIMAL" />
+    <result column="BREED_NAME" property="breedName" jdbcType="VARCHAR" />
+    <result column="QUANTITY" property="quantity" jdbcType="VARCHAR" />
+    <result column="WUNIT_CODE" property="wunitCode" jdbcType="VARCHAR" />
+    <result column="STANDARD_LEVEL" property="standardLevel" jdbcType="VARCHAR" />
+    <result column="ORIGIN" property="origin" jdbcType="VARCHAR" />
+    <result column="QUALITY_DESCRIPTION" property="qualityDescription" jdbcType="VARCHAR" />
+    <!-- 
+    <result column="DELIVERY_PROVINCE" property="deliveryProvince" jdbcType="VARCHAR" />
+    <result column="DELIVERY_CITY" property="deliveryCity" jdbcType="VARCHAR" />
+    <result column="DELIVERY_DISTRICT" property="deliveryDistrict" jdbcType="VARCHAR" /> -->
+    <result column="DELIVERY_ADDRESS" property="deliveryAddress" jdbcType="VARCHAR" />
+    <result column="EXPECT_DELIVERY_TIME" property="expectDeliveryTime" jdbcType="TIMESTAMP" />
+    <result column="VALID_PERIOD" property="validPeriod" jdbcType="VARCHAR" />
+    <result column="RECEIPT_CODE" property="receiptCode" jdbcType="VARCHAR" />
+    <result column="RECEIPT" property="receipt" jdbcType="VARCHAR" />
+    <result column="NOTE" property="note" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="IS_VALID" property="isValid" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="OPERATOR" property="operator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="AUDITOR" property="auditor" jdbcType="VARCHAR" />
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="FIRST_AUDIT_TIME" property="firstAuditTime" jdbcType="TIMESTAMP" />
+    <result column="ADOPTED_QUOTE_ID" property="adoptedQuoteId" jdbcType="VARCHAR" />
+    <result column="REJECT_REASON" property="rejectReason" jdbcType="VARCHAR" />
+    <!--  <collection property="busiPurchaseLogsPurchaseId" ofType="com.jointown.zy.common.model.BusiPurchaseLog" column="PURCHASE_ID" select="com.jointown.zy.common.dao.BusiPurchaseLogDao.selectByPurchaseId" />
+    <collection property="busiQuotesPurchaseId" ofType="com.jointown.zy.common.model.BusiQuote" column="PURCHASE_ID" select="com.jointown.zy.common.dao.BusiQuoteDao.selectByPurchaseId" /> -->
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    PURCHASE_ID, PURCHASE_CODE, PURCHASER, PURCHASER_ORG, CONTACT, CONTACT_PHONE, BREED_ID, 
+    BREED_NAME,QUANTITY, WUNIT_CODE, STANDARD_LEVEL, ORIGIN, QUALITY_DESCRIPTION,  DELIVERY_ADDRESS, 
+    EXPECT_DELIVERY_TIME, VALID_PERIOD, RECEIPT_CODE, RECEIPT, NOTE, "STATUS", IS_VALID, CREATE_TIME, "OPERATOR", UPDATE_TIME, 
+    AUDITOR, AUDIT_TIME, FIRST_AUDIT_TIME, ADOPTED_QUOTE_ID,REJECT_REASON
+  </sql>
+   
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ZYC.BUSI_PURCHASE
+    where PURCHASE_ID = #{purchaseId,jdbcType=VARCHAR} and IS_VALID = 'Y'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ZYC.BUSI_PURCHASE
+    where PURCHASE_ID = #{purchaseId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jointown.zy.common.model.BusiPurchase" >
+  	<selectKey resultType="java.lang.String" keyProperty="purchaseId" order="BEFORE">
+   	select ZYC.SEQ_BUSI_PURCHASE.nextval as PURCHASE_ID
+   		from dual
+  	</selectKey>
+    insert into ZYC.BUSI_PURCHASE (PURCHASE_ID, PURCHASE_CODE, PURCHASER, 
+      PURCHASER_ORG, CONTACT, CONTACT_PHONE, 
+      BREED_ID, BREED_NAME,QUANTITY, WUNIT_CODE, 
+      STANDARD_LEVEL, ORIGIN, QUALITY_DESCRIPTION, 
+      DELIVERY_ADDRESS, EXPECT_DELIVERY_TIME, VALID_PERIOD, 
+      RECEIPT_CODE, RECEIPT, NOTE, 
+      "STATUS", IS_VALID, CREATE_TIME, 
+      "OPERATOR", UPDATE_TIME, AUDITOR, 
+      AUDIT_TIME, FIRST_AUDIT_TIME, ADOPTED_QUOTE_ID,REJECT_REASON
+      )
+    values (#{purchaseId,jdbcType=VARCHAR}, #{purchaseCode,jdbcType=VARCHAR}, #{purchaser,jdbcType=VARCHAR}, 
+      #{purchaserOrg,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, #{contactPhone,jdbcType=VARCHAR}, 
+      #{breedId,jdbcType=DECIMAL}, #{breedName,jdbcType=VARCHAR},#{quantity,jdbcType=VARCHAR}, #{wunitCode,jdbcType=VARCHAR}, 
+      #{standardLevel,jdbcType=VARCHAR}, #{origin,jdbcType=VARCHAR}, #{qualityDescription,jdbcType=VARCHAR}, 
+      #{deliveryAddress,jdbcType=VARCHAR}, #{expectDeliveryTime,jdbcType=TIMESTAMP}, #{validPeriod,jdbcType=VARCHAR}, 
+      #{receiptCode,jdbcType=VARCHAR}, #{receipt,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, 
+      #{status,jdbcType=DECIMAL}, #{isValid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{operator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{auditor,jdbcType=VARCHAR}, 
+      #{auditTime,jdbcType=TIMESTAMP}, #{firstAuditTime,jdbcType=TIMESTAMP}, #{adoptedQuoteId,jdbcType=VARCHAR}, #{rejectReason,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jointown.zy.common.model.BusiPurchase" >
+    insert into ZYC.BUSI_PURCHASE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      PURCHASE_ID,
+      PURCHASE_CODE,
+      PURCHASER,
+      PURCHASER_ORG,
+      CONTACT,
+      CONTACT_PHONE,
+      BREED_ID,
+      BREED_NAME,
+      QUANTITY,
+      WUNIT_CODE,
+      STANDARD_LEVEL,
+      ORIGIN,
+      QUALITY_DESCRIPTION,
+      DELIVERY_ADDRESS,
+      EXPECT_DELIVERY_TIME,
+      VALID_PERIOD,
+      RECEIPT_CODE,
+      RECEIPT,
+      NOTE,
+      "STATUS",
+      IS_VALID,
+      CREATE_TIME,
+      "OPERATOR",
+      UPDATE_TIME,
+      AUDITOR,
+      AUDIT_TIME,
+      FIRST_AUDIT_TIME,
+      ADOPTED_QUOTE_ID,
+      REJECT_REASON,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{purchaseId,jdbcType=VARCHAR},
+      #{purchaseCode,jdbcType=VARCHAR},
+      #{purchaser,jdbcType=VARCHAR},
+      #{purchaserOrg,jdbcType=VARCHAR},
+      #{contact,jdbcType=VARCHAR},
+      #{contactPhone,jdbcType=VARCHAR},
+      #{breedId,jdbcType=DECIMAL},
+      #{breedName,jdbcType=VARCHAR},
+      #{quantity,jdbcType=VARCHAR},
+      #{wunitCode,jdbcType=VARCHAR},
+      #{standardLevel,jdbcType=VARCHAR},
+      #{origin,jdbcType=VARCHAR},
+      #{qualityDescription,jdbcType=VARCHAR},
+      #{deliveryAddress,jdbcType=VARCHAR},
+      #{expectDeliveryTime,jdbcType=TIMESTAMP},
+      #{validPeriod,jdbcType=VARCHAR},
+      #{receiptCode,jdbcType=VARCHAR},
+      #{receipt,jdbcType=VARCHAR},
+      #{note,jdbcType=VARCHAR},
+      #{status,jdbcType=DECIMAL},
+      #{isValid,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{operator,jdbcType=VARCHAR},
+      #{updateTime,jdbcType=TIMESTAMP},
+      #{auditor,jdbcType=VARCHAR},
+      #{auditTime,jdbcType=TIMESTAMP},
+      #{firstAuditTime,jdbcType=TIMESTAMP},
+      #{adoptedQuoteId,jdbcType=VARCHAR},
+      #{rejectReason,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jointown.zy.common.model.BusiPurchase" >
+    update ZYC.BUSI_PURCHASE
+    <set >
+      <if test="purchaseCode != null" >
+        PURCHASE_CODE = #{purchaseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaser != null" >
+        PURCHASER = #{purchaser,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaserOrg != null" >
+        PURCHASER_ORG = #{purchaserOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        CONTACT = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="contactPhone != null" >
+        CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="breedId != null" >
+        BREED_ID = #{breedId,jdbcType=DECIMAL},
+      </if>
+      <if test="breedName != null" >
+        BREED_NAME = #{breedName,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null" >
+        QUANTITY = #{quantity,jdbcType=VARCHAR},
+      </if>
+      <if test="wunitCode != null" >
+        WUNIT_CODE = #{wunitCode,jdbcType=VARCHAR},
+      </if>
+      <if test="standardLevel != null" >
+        STANDARD_LEVEL = #{standardLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="origin != null" >
+        ORIGIN = #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityDescription != null" >
+        QUALITY_DESCRIPTION = #{qualityDescription,jdbcType=VARCHAR},
+      </if>
+      
+      <if test="deliveryAddress != null" >
+        DELIVERY_ADDRESS = #{deliveryAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="expectDeliveryTime != null" >
+        EXPECT_DELIVERY_TIME = #{expectDeliveryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validPeriod != null" >
+        VALID_PERIOD = #{validPeriod,jdbcType=VARCHAR},
+      </if>
+      <if test="receiptCode != null" >
+        RECEIPT_CODE = #{receiptCode,jdbcType=VARCHAR},
+      </if>
+      <if test="receipt != null" >
+        RECEIPT = #{receipt,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        NOTE = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        "STATUS" = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="isValid != null" >
+        IS_VALID = #{isValid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null" >
+        "OPERATOR" = #{operator,jdbcType=VARCHAR},
+      </if>
+      <!-- <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+       </if>  -->
+       UPDATE_TIME =sysdate,
+      <if test="auditor != null" >
+        AUDITOR = #{auditor,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null" >
+        AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="firstAuditTime != null" >
+        FIRST_AUDIT_TIME = #{firstAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adoptedQuoteId != null" >
+        ADOPTED_QUOTE_ID = #{adoptedQuoteId,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectReason != null" >
+        REJECT_REASON = #{rejectReason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PURCHASE_ID = #{purchaseId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jointown.zy.common.model.BusiPurchase" >
+    update ZYC.BUSI_PURCHASE
+    set PURCHASE_CODE = #{purchaseCode,jdbcType=VARCHAR},
+      PURCHASER = #{purchaser,jdbcType=VARCHAR},
+      PURCHASER_ORG = #{purchaserOrg,jdbcType=VARCHAR},
+      CONTACT = #{contact,jdbcType=VARCHAR},
+      CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR},
+      BREED_ID = #{breedId,jdbcType=DECIMAL},
+      BREED_NAME= #{breedName,jdbcType=VARCHAR},
+      QUANTITY = #{quantity,jdbcType=VARCHAR},
+      WUNIT_CODE = #{wunitCode,jdbcType=VARCHAR},
+      STANDARD_LEVEL = #{standardLevel,jdbcType=VARCHAR},
+      ORIGIN = #{origin,jdbcType=VARCHAR},
+      QUALITY_DESCRIPTION = #{qualityDescription,jdbcType=VARCHAR},
+      DELIVERY_ADDRESS = #{deliveryAddress,jdbcType=VARCHAR},
+      EXPECT_DELIVERY_TIME = #{expectDeliveryTime,jdbcType=TIMESTAMP},
+      VALID_PERIOD = #{validPeriod,jdbcType=VARCHAR},
+      RECEIPT_CODE = #{receiptCode,jdbcType=VARCHAR},
+      RECEIPT = #{receipt,jdbcType=VARCHAR},
+      NOTE = #{note,jdbcType=VARCHAR},
+      "STATUS" = #{status,jdbcType=DECIMAL},
+      IS_VALID = #{isValid,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      "OPERATOR" = #{operator,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      AUDITOR = #{auditor,jdbcType=VARCHAR},
+      AUDIT_TIME = #{auditTime,jdbcType=TIMESTAMP},
+      FIRST_AUDIT_TIME = #{firstAuditTime,jdbcType=TIMESTAMP},
+      ADOPTED_QUOTE_ID = #{adoptedQuoteId,jdbcType=VARCHAR},
+      REJECT_REASON = #{rejectReason,jdbcType=VARCHAR}
+    where PURCHASE_ID = #{purchaseId,jdbcType=VARCHAR}
+  </update>
+  
+  <sql id="Column_List_A" >
+    a.PURCHASE_ID, a.PURCHASE_CODE, a.PURCHASER, a.PURCHASER_ORG, a.CONTACT, a.CONTACT_PHONE, a.BREED_ID, 
+    a.BREED_NAME,a.QUANTITY, a.WUNIT_CODE, a.STANDARD_LEVEL, a.ORIGIN, a.QUALITY_DESCRIPTION,  a.DELIVERY_ADDRESS, 
+    a.EXPECT_DELIVERY_TIME, a.VALID_PERIOD, a.RECEIPT_CODE, a.RECEIPT, a.NOTE, a."STATUS", a.IS_VALID, a.CREATE_TIME, a."OPERATOR", a.UPDATE_TIME, 
+    a.AUDITOR, a.AUDIT_TIME, a.FIRST_AUDIT_TIME, a.ADOPTED_QUOTE_ID,a.REJECT_REASON
+  </sql>
+  <resultMap id="purchaseResultMap" type="com.jointown.zy.common.vo.BusiPurchaseVo" extends="com.jointown.zy.common.dao.BusiPurchaseDao.BaseResultMap">
+  	<result column="WUNIT_NAME" property="wunitName" jdbcType="VARCHAR" />
+  	<result column="TRADERS_NAME" property="tradersName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="purchaseManageResultMap" type="com.jointown.zy.common.vo.BusiPurchaseVo" extends="com.jointown.zy.common.dao.BusiPurchaseDao.BaseResultMap">
+  	<result column="WUNIT_NAME" property="wunitName" jdbcType="VARCHAR" />
+  	<result column="overTime" property="overTime" jdbcType="TIMESTAMP" />
+  	<result column="minQuotePrice" property="minQuotePrice" jdbcType="DECIMAL" />
+  	
+  </resultMap>
+  
+  <!-- 后台审核采购列表查询 -->
+  <select id="selectPurchaseAuditPage" parameterType="com.jointown.zy.common.model.Page" resultMap="purchaseResultMap">
+  	select 
+    	<include refid="Column_List_A" />, b.DICT_VALUE as WUNIT_NAME, d.USER_NAME as TRADERS_NAME
+    from ZYC.BUSI_PURCHASE a
+    left join BOSS.DICT_INFO b on (b.DICT_CODE = a.WUNIT_CODE)
+    left join BOSS.UC_USER c on (c.USER_NAME = a.PURCHASER and c.STATUS = 0)
+    left join BOSS.BOSS_USER d on (c.SALESMANID = d.USER_ID)
+    <where>
+    	a.IS_VALID = 'Y'
+   		<if test="params.query.purchaseCode != null and '' != params.query.purchaseCode">
+   			and a.PURCHASE_CODE = #{params.query.purchaseCode}
+   		</if>
+   		<if test="params.query.breedName != null and '' != params.query.breedName">
+   			and instr(a.BREED_NAME, #{params.query.breedName}) <![CDATA[>]]> 0 
+   		</if>
+   		<if test="params.query.purchaseOrg != null and '' != params.query.purchaseOrg">
+   			and instr(a.PURCHASER_ORG, #{params.query.purchaseOrg}) <![CDATA[>]]> 0 
+   		</if>
+   		<if test="params.query.purchaser != null and '' != params.query.purchaser">
+   			and instr(a.PURCHASER, #{params.query.purchaser}) <![CDATA[>]]> 0
+   		</if>
+   		<choose>
+   			<when test="params.query.auditStatus != null and '' != params.query.auditStatus">
+   				and a."STATUS" = #{params.query.auditStatus}
+   			</when>
+   			<otherwise>
+   				and a."STATUS" in (0, -10)
+   			</otherwise>
+   		</choose>
+   		<if test="params.query.createTimeStart != null and '' != params.query.createTimeStart">
+			and a.CREATE_TIME <![CDATA[>]]> to_date(#{params.query.createTimeStart},'yyyy-mm-dd')
+		</if>
+		<if test="params.query.createTimeEnd != null and '' != params.query.createTimeEnd">
+			and a.CREATE_TIME <![CDATA[<]]> to_date(#{params.query.createTimeEnd},'yyyy-mm-dd') + 1
+		</if>
+   	</where>
+   	order by a."STATUS" desc, a.CREATE_TIME desc
+  </select>
+  
+  <!-- 后台审核采购详情查询 -->
+  <select id="selectPurchaseDetail" parameterType="String" resultMap="purchaseResultMap">
+  	select 
+    	<include refid="Column_List_A" />, b.DICT_VALUE as WUNIT_NAME
+    from ZYC.BUSI_PURCHASE a
+    left join BOSS.DICT_INFO b on (b.DICT_CODE = a.WUNIT_CODE)
+    where a.PURCHASE_ID = #{purchaseId} and a.IS_VALID = 'Y'
+  </select>
+  
+    <!-- 后台采购信息管理列表查询 -->
+  <select id="selectPurchaseManagePage" parameterType="com.jointown.zy.common.model.Page" resultMap="purchaseResultMap">
+  	select 
+    	<include refid="Column_List_A" />, b.DICT_VALUE as WUNIT_NAME, d.USER_NAME as TRADERS_NAME
+    from ZYC.BUSI_PURCHASE a
+    left join BOSS.DICT_INFO b on (b.DICT_CODE = a.WUNIT_CODE)
+    left join BOSS.UC_USER c on (c.USER_NAME = a.PURCHASER and c.STATUS = 0)
+    left join BOSS.BOSS_USER d on(c.SALESMANID = d.USER_ID)
+    <where>
+    	a.IS_VALID = 'Y'
+   		<if test="params.query.purchaseCode != null and '' != params.query.purchaseCode">
+   			and a.PURCHASE_CODE = #{params.query.purchaseCode}
+   		</if>
+   		<if test="params.query.breedName != null and '' != params.query.breedName">
+   			and instr(a.BREED_NAME, #{params.query.breedName}) <![CDATA[>]]> 0 
+   		</if>
+   		<if test="params.query.purchaseOrg != null and '' != params.query.purchaseOrg">
+   			and instr(a.PURCHASER_ORG, #{params.query.purchaseOrg}) <![CDATA[>]]> 0 
+   		</if>
+   		<if test="params.query.purchaser != null and '' != params.query.purchaser">
+   			and instr(a.PURCHASER, #{params.query.purchaser}) <![CDATA[>]]> 0
+   		</if>
+   		<choose>
+   			<when test="params.query.status != null and '' != params.query.status">
+   				and a."STATUS" = #{params.query.status}
+   			</when>
+   			<otherwise>
+   				and a."STATUS" not in (0, -10)
+   			</otherwise>
+   		</choose>
+   		<if test="params.query.publishTimeStart != null and '' != params.query.publishTimeStart">
+			and a.CREATE_TIME <![CDATA[>]]> to_date(#{params.query.publishTimeStart},'yyyy-mm-dd')
+		</if>
+		<if test="params.query.publishTimeEnd != null and '' != params.query.publishTimeEnd">
+			and a.CREATE_TIME <![CDATA[<]]> to_date(#{params.query.publishTimeEnd},'yyyy-mm-dd') + 1
+		</if>
+		<if test="params.query.tradersName != null and '' != params.query.tradersName">
+   			and instr(d.USER_NAME, #{params.query.tradersName}) <![CDATA[>]]> 0
+   		</if>
+   	</where>
+   	order by a.CREATE_TIME desc
+  </select>
+  
+  <!-- 根据采购批次号查询采购信息 -->
+  <select id="selectPurchaseByCode" parameterType="String" resultMap="BaseResultMap">
+  	select 
+    	<include refid="Base_Column_List" />
+    from ZYC.BUSI_PURCHASE
+    where PURCHASE_CODE = #{purchaseCode} and IS_VALID = 'Y'
+  </select>
+  
+  <resultMap id="purchaseMobileEmailMsgMap" type="com.jointown.zy.common.vo.BusiPurchaseMobileEmailMsgVo" extends="com.jointown.zy.common.dao.BusiPurchaseDao.BaseResultMap">
+  	<result column="TRADERS_NAME" property="tradersName" jdbcType="VARCHAR" />
+  	<result column="TRADERS_MOBILE" property="tradersMobile" jdbcType="VARCHAR" />
+  	<result column="TRADERS_EMAIL" property="tradersEmail" jdbcType="VARCHAR" />
+  	<result column="PURCHASER_MOBILE" property="purchaserMobile" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 发送短信邮件时，需要查询的相关信息 -->
+  <select id="selectPurchaseMobileEmailMsgById" parameterType="String" resultMap="purchaseMobileEmailMsgMap">
+  	select 
+    	<include refid="Column_List_A" />, d.USER_NAME as TRADERS_NAME, d.MOBILE as TRADERS_MOBILE, d.EMAIL as TRADERS_EMAIL, c.MOBILE as PURCHASER_MOBILE
+    from ZYC.BUSI_PURCHASE a
+    left join BOSS.UC_USER c on (c.USER_NAME = a.PURCHASER  and c.STATUS = 0)
+    left join BOSS.BOSS_USER d on(c.SALESMANID = d.USER_ID)
+    where PURCHASE_ID = #{purchaseId} and IS_VALID = 'Y'
+  </select>
+  
+  <resultMap id="expiredPurchaseResultMap" type="com.jointown.zy.common.vo.BusiPurchaseVo" extends="com.jointown.zy.common.dao.BusiPurchaseDao.BaseResultMap">
+  	<result column="OVER_TIME" property="overTime" jdbcType="TIMESTAMP" />
+  	<result column="TRADERS_NAME" property="tradersName" jdbcType="VARCHAR" />
+  	<result column="TRADERS_EMAIL" property="tradersEmail" jdbcType="VARCHAR" />
+  	<result column="TRADERS_MOBILE" property="tradersMobile" jdbcType="VARCHAR" />
+  	<result column="PURCHASER_MOBILE" property="purchaserMobile" jdbcType="VARCHAR" />
+  	<result column="MIN_QUOTE_PRICE" property="minQuotePrice" jdbcType="DECIMAL" />
+  	<result column="QUOTE_COUNT" property="quoteCount" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <!-- 过期的采购批次信息 -->
+  <select id="selectExpiredPurchaseInfo" resultMap="expiredPurchaseResultMap">
+  	 select <include refid="Column_List_A" />,
+  	 	a.CREATE_TIME+to_number(a.VALID_PERIOD) as OVER_TIME,
+  	 	pur.QUOTE_COUNT,pur.MIN_QUOTE_PRICE,u.mobile as PURCHASER_MOBILE,bu.user_code as TRADERS,bu.user_name as TRADERS_NAME,bu.email as TRADERS_EMAIL,bu.mobile as TRADERS_MOBILE
+	  from (
+	  select p.PURCHASE_ID,p.PURCHASE_CODE,count(q.quote_id) as QUOTE_COUNT,min(q.QUOTE_PRICE) as MIN_QUOTE_PRICE
+		from zyc.busi_purchase p 
+		left join zyc.busi_quote q on p.purchase_id = q.purchase_id and q.IS_VALID='Y'
+		where p.IS_VALID='Y' and p."STATUS" IN(10,20) 
+		and sysdate >= (p.CREATE_TIME+to_number(p.VALID_PERIOD))
+	  group by p.PURCHASE_ID,p.PURCHASE_CODE 
+	  ) pur
+	  inner join zyc.busi_purchase a on a.purchase_id = pur.purchase_id
+	  left join BOSS.UC_USER u on a.purchaser = u.user_name and u.status=0
+	  left join BOSS.BOSS_USER bu on u.salesmanid = bu.user_id and bu.status=0
+	  order by a.CREATE_TIME
+  </select>
+  
+   <!-- 过期采购 -->
+  <update id="expirePurchaseByPurchaseId" parameterType="java.lang.String" >
+    update ZYC.BUSI_PURCHASE
+    set "STATUS" = -20,UPDATE_TIME = sysdate
+    where PURCHASE_Id = #{purchaseId,jdbcType=VARCHAR}
+  </update>
+  
+  <resultMap id="recentlyPurchasesMap" type="com.jointown.zy.common.vo.BusiPurchaseVo" extends="com.jointown.zy.common.dao.BusiPurchaseDao.BaseResultMap">
+  	<result column="WUNIT_NAME" property="wunitName" jdbcType="VARCHAR" />
+  	<result column="PURCHASE_PRICE" property="purchasePrice" jdbcType="DECIMAL" />
+  	<result column="PURCHASE_PASSEDDAY" property="dealSuccessPassedDay"/>
+  </resultMap>
+  <!-- 前台查询最近成交的采购-->
+  <select id="selectRecentlyPurchases" parameterType="java.util.Map" resultMap="recentlyPurchasesMap">
+  	<if test="maxCount != null">
+    	select * from (
+    </if>
+	  	select 
+	    	<include refid="Column_List_A" />, b.DICT_VALUE as WUNIT_NAME, c.QUOTE_PRICE as PURCHASE_PRICE, TRUNC(SYSDATE) - TRUNC(a.UPDATE_TIME) as PURCHASE_PASSEDDAY
+	    from ZYC.BUSI_PURCHASE a
+	    left join BOSS.DICT_INFO b on (b.DICT_CODE = a.WUNIT_CODE)
+	    left join ZYC.BUSI_QUOTE c on (c.QUOTE_ID = a.ADOPTED_QUOTE_ID)
+	    where a.IS_VALID = 'Y' and a."STATUS" in (30)
+	    order by a.UPDATE_TIME desc
+    <if test="maxCount != null">
+    	) where rownum <![CDATA[<=]]> #{maxCount}
+    </if>
+  </select>
+  
+  <!-- add by fanyuna 2015.10.20 用户中心管理采购列表 -->
+  <select id="getPurchaseManagePage" parameterType="com.jointown.zy.common.model.Page" resultMap="purchaseManageResultMap">
+  	select 
+  		  <include refid="Column_List_A" />,
+  		  overTime,
+  		  minQuotePrice,
+  		  b.DICT_VALUE as WUNIT_NAME 
+    from 
+  		  (
+  		  select 
+  		  	<include refid="Base_Column_List" />,
+  		  	p.create_time+to_number(p.VALID_PERIOD) as overTime,
+  		  	(select min(QUOTE_PRICE) from zyc.busi_quote where purchase_id=p.purchase_id  and IS_VALID='Y') as minQuotePrice
+  		  from zyc.busi_purchase p  where p.is_valid='Y' and p.purchaser=#{params.purchaser,jdbcType=VARCHAR}
+  		  ) a 
+	left join BOSS.DICT_INFO b on (b.DICT_CODE = a.WUNIT_CODE)
+	where 1=1 
+		<if test="params.busiPurchaseSearchDto.purchaseCode != null and '' != params.busiPurchaseSearchDto.purchaseCode">
+   			and a.PURCHASE_CODE = #{params.busiPurchaseSearchDto.purchaseCode,jdbcType=VARCHAR}
+   		</if>
+   		<if test="params.busiPurchaseSearchDto.breedName != null and '' != params.busiPurchaseSearchDto.breedName">
+   			and instr(a.BREED_NAME, #{params.busiPurchaseSearchDto.breedName,jdbcType=VARCHAR}) <![CDATA[>]]> 0 
+   		</if>
+   		<if test="params.busiPurchaseSearchDto.status != null and '' != params.busiPurchaseSearchDto.status">
+   				and a."STATUS" = #{params.busiPurchaseSearchDto.status,jdbcType=VARCHAR}
+   		</if>
+		<if test="params.busiPurchaseSearchDto.createTimeStart != null and '' != params.busiPurchaseSearchDto.createTimeStart">
+			and a.create_time <![CDATA[>=]]> to_date(#{params.busiPurchaseSearchDto.createTimeStart,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss')
+		</if>
+		<if test="params.busiPurchaseSearchDto.createTimeEnd != null and '' != params.busiPurchaseSearchDto.createTimeEnd">
+			and a.create_time <![CDATA[<=]]> to_date(#{params.busiPurchaseSearchDto.createTimeEnd,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss')
+		</if>
+    	order by a.create_time desc
+  </select>
+  
+  <!-- 同类采购 显示与此采购单的采购品种相同的，最新通过审核的5条采购信息 -->
+  <select id="selectSamePurchase" parameterType="String" resultMap="purchaseResultMap">
+  	select * from(select 
+    	<include refid="Column_List_A" />, b.DICT_VALUE as WUNIT_NAME
+    from ZYC.BUSI_PURCHASE a
+    left join BOSS.DICT_INFO b on (b.DICT_CODE = a.WUNIT_CODE)
+    where a.BREED_ID = #{breedId} and a.IS_VALID = 'Y'
+    order by a.AUDIT_TIME desc nulls last) where  rownum <![CDATA[<]]> 6
+  </select>
+  <!-- 同类采购 显示与此采购单的采购品种相同的，最新通过审核的5条采购信息 -->
+  <select id="selectSameBreedPurchase" parameterType="String" resultMap="purchaseResultMap">
+   select * from(
+    select 
+     a.*, b.DICT_VALUE as WUNIT_NAME
+    from ZYC.BUSI_PURCHASE a
+    left join BOSS.DICT_INFO b on (b.DICT_CODE = a.WUNIT_CODE)
+    where a.BREED_NAME = #{breedName} and a.IS_VALID = 'Y'
+    order by a.AUDIT_TIME desc nulls last) where rownum <![CDATA[<]]> 6
+  </select>
+  <!--业务员关联的采购  -->
+   <select id="selectPurOfSaler" parameterType="String" resultMap="BaseResultMap">
+  	select  
+    	<include refid="Column_List_A" />
+    from ZYC.BUSI_PURCHASE a
+    left join BOSS.UC_USER c on (c.USER_NAME = a.PURCHASER  and c.STATUS = 0)
+    left join BOSS.BOSS_USER d on (c.SALESMANID = d.USER_ID)
+    where d.USER_NAME = #{saleName} and a.IS_VALID = 'Y'
+    order by a.AUDIT_TIME desc
+  </select>
+  <!-- 没绑定业务员的采购统计(显示系统默认指定业务员) -->
+ <select id="selectPurOfSalerNull"  resultMap="BaseResultMap">
+ select  *
+    from ZYC.BUSI_PURCHASE a
+    left join BOSS.UC_USER c on (c.USER_NAME = a.PURCHASER  and c.STATUS = 0)
+    where c.SALESMANID='' or c.SALESMANID is null
+    order by a.AUDIT_TIME desc
+ </select>
+     <!-- 报价后  采购 状态改为 洽谈中-->
+  <update id="negotiaPurchaseByPurchaseCode" parameterType="java.lang.String" >
+    update ZYC.BUSI_PURCHASE
+    set "STATUS" = 20,UPDATE_TIME = sysdate
+    where PURCHASE_ID = #{purchaseId,jdbcType=VARCHAR}
+  </update>
+  
+ <!-- 首页 最新采购数据 -->
+ <select id="queryHomePageNewPurchase" resultMap="BaseResultMap">
+		select * from (select a.purchase_id,
+		               a.BREED_NAME,
+		               a.QUANTITY,
+		               b.dict_value as WUNIT_CODE,
+		               a.VALID_PERIOD,
+		               a.UPDATE_TIME
+		          from zyc.busi_purchase a, boss.dict_info b
+		         where a.wunit_code = b.DICT_CODE
+		           and a.status in (10, 20)
+		           and a.wunit_code in ('kg', 'ton')
+		           and a.is_valid = 'Y'
+		           and a.quantity <![CDATA[!='0']]>
+		           and a.quantity is not null
+		         order by a.update_time desc)
+		 where rownum <![CDATA[ <= ]]> 30 
+  </select>
+  
+  <!-- 首页2.0大货采购数据 -->
+  <select id="queryPurchaseInfo" resultMap="BaseResultMap">
+		 	select 
+		 			*
+		   		from (
+		   	select   a.purchase_id,
+	                 a.BREED_NAME,
+	                 a.STANDARD_LEVEL,
+	                 a.ORIGIN,
+	                 a.QUANTITY,
+	                 b.dict_value as WUNIT_CODE,
+	                 a.RECEIPT,
+	                 a.UPDATE_TIME
+		           from zyc.busi_purchase a, boss.dict_info b
+		          where a.wunit_code = b.DICT_CODE
+		            and a.status in (10, 20) 
+		            and a.wunit_code in ('kg','ton')
+					and a.is_valid = 'Y'
+					and a.quantity <![CDATA[!='0']]>
+					and a.quantity is not null 
+		          order by a.QUANTITY desc, a.breed_name, a.update_time desc)
+		 		  where <![CDATA[rownum <= 100]]>
+	  </select>
+	  
+	  <select id="queryBigPurchase" resultMap="BaseResultMap" >
+		  	select 
+		  			*
+	 			 from (
+	        select  a.purchase_id,
+	                b.BREED_NAME,
+	                b.STANDARD_LEVEL,
+	                b.ORIGIN,
+	                b.QUANTITY,
+	                c.dict_value as WUNIT_CODE,
+	                b.RECEIPT,
+	                a.SORTNO,
+	                b.UPDATE_TIME
+	          from  boss.homepage_purchase a,
+	                zyc.busi_purchase      b,
+	                boss.dict_info         c
+	         where a.PURCHASE_ID = b.PURCHASE_ID
+	           and b.wunit_code = c.DICT_CODE
+	           and a.type = '20'
+	           and a.status = 0
+	           and b.status in (10, 20)
+	           and b.wunit_code in ('kg','ton')
+			   and b.is_valid = 'Y'
+			   and b.quantity <![CDATA[!='0']]>
+			   and b.quantity is not null 
+	         order by a.SORTNO)
+	 	     where <![CDATA[rownum <= 9]]>
+	  </select>
+	 <!-- 首页2.0大货采购数据 -->
+	<!-- add by fanyuna 2015.11.23 批量插入采购单 -->
+	<insert id="batchInsert" parameterType="java.util.List" >
+    insert into ZYC.BUSI_PURCHASE (PURCHASE_ID, PURCHASE_CODE, PURCHASER, 
+      PURCHASER_ORG, CONTACT, CONTACT_PHONE, 
+      BREED_ID, BREED_NAME,QUANTITY, WUNIT_CODE, 
+      STANDARD_LEVEL, ORIGIN, QUALITY_DESCRIPTION, 
+      DELIVERY_ADDRESS, EXPECT_DELIVERY_TIME, VALID_PERIOD, 
+      RECEIPT_CODE, RECEIPT, NOTE, 
+      "STATUS", IS_VALID, CREATE_TIME, 
+      "OPERATOR", UPDATE_TIME, AUDITOR, 
+      AUDIT_TIME, FIRST_AUDIT_TIME, ADOPTED_QUOTE_ID,REJECT_REASON
+      )
+      select ZYC.SEQ_BUSI_PURCHASE.nextval,A.* from (
+      <foreach collection="list" item="item" index="index" separator="UNION">
+      SELECT 
+      #{item.purchaseCode,jdbcType=VARCHAR}, #{item.purchaser,jdbcType=VARCHAR}, 
+      #{item.purchaserOrg,jdbcType=VARCHAR}, #{item.contact,jdbcType=VARCHAR}, #{item.contactPhone,jdbcType=VARCHAR}, 
+      #{item.breedId,jdbcType=DECIMAL}, #{item.breedName,jdbcType=VARCHAR},#{item.quantity,jdbcType=VARCHAR}, #{item.wunitCode,jdbcType=VARCHAR}, 
+      #{item.standardLevel,jdbcType=VARCHAR}, #{item.origin,jdbcType=VARCHAR}, #{item.qualityDescription,jdbcType=VARCHAR}, 
+      #{item.deliveryAddress,jdbcType=VARCHAR}, #{item.expectDeliveryTime,jdbcType=TIMESTAMP}, #{item.validPeriod,jdbcType=VARCHAR}, 
+      #{item.receiptCode,jdbcType=VARCHAR}, #{item.receipt,jdbcType=VARCHAR}, #{item.note,jdbcType=VARCHAR}, 
+      #{item.status,jdbcType=DECIMAL}, #{item.isValid,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, 
+      #{item.operator,jdbcType=VARCHAR}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.auditor,jdbcType=VARCHAR}, 
+      #{item.auditTime,jdbcType=TIMESTAMP}, #{item.firstAuditTime,jdbcType=TIMESTAMP}, #{item.adoptedQuoteId,jdbcType=VARCHAR}, #{item.rejectReason,jdbcType=VARCHAR}
+      from dual
+      </foreach>
+      )A
+  </insert>
+</mapper>

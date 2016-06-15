@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BossOrderDao" >
+	<sql id="BaseSql">
+		ORDERID,
+		USERID,
+		BUYER,
+		WLID,
+		LISTINGID,
+		UNITPRICE,
+		AMOUNT,
+		DEPOSIT,
+		ACTUAL_PAYMENT,
+		VOLUME,
+		TOTALPRICE,
+		DISCOUNTPRICE,
+		ORDERSTATE,
+		APPEALSTATE,
+		CREATETIME,
+		UPDATETIME,
+		HASBILL,
+		EXPIRETIME,
+		ORDER_TYPE
+	</sql>
+	
+	<resultMap id="BaseResultMap" type="com.jointown.zy.common.model.BusiOrder" >
+	    <id column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+	    <result column="USERID" property="userid" jdbcType="DECIMAL" />
+	    <result column="BUYER" property="buyer" jdbcType="DECIMAL" />
+	    <result column="WLID" property="wlid" jdbcType="VARCHAR" />
+	    <result column="LISTINGID" property="listingid" jdbcType="VARCHAR" />
+	    <result column="UNITPRICE" property="unitprice" jdbcType="DECIMAL" />
+	    <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+	    <result column="DEPOSIT" property="deposit" jdbcType="DECIMAL" />
+	    <result column="ACTUAL_PAYMENT" property="actualPayment" jdbcType="DECIMAL" />
+	    <result column="VOLUME" property="volume" jdbcType="DECIMAL" />
+	    <result column="TOTALPRICE" property="totalprice" jdbcType="DECIMAL" />
+	    <result column="DISCOUNTPRICE" property="discountprice" jdbcType="DECIMAL" />
+	    <result column="ORDERSTATE" property="orderstate" jdbcType="DECIMAL" />
+	    <result column="APPEALSTATE" property="appealstate" jdbcType="DECIMAL" />
+	    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATETIME" property="updatetime" jdbcType="TIMESTAMP" />
+	    <result column="HASBILL" property="hasbill" jdbcType="DECIMAL" />
+	    <result column="EXPIRETIME" property="expiretime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <resultMap id="selectOrderListByPageMap" type="com.jointown.zy.common.vo.BossOrderListVo" >
+	    <id column="ORDERID" property="orderId" jdbcType="VARCHAR" />
+	    <result column="LISTINGID" property="listingId" jdbcType="VARCHAR" />
+	    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+	    <result column="UNITPRICE" property="unitPrice" jdbcType="DECIMAL" />
+	    <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+	    <result column="VOLUME" property="volume" jdbcType="DECIMAL" />
+	    <result column="TOTALPRICE" property="totalPrice" jdbcType="DECIMAL" />
+	    <result column="ACTUAL_PAYMENT" property="actualPayment" jdbcType="DECIMAL" />
+	    <result column="WLUNIT" property="wlunit" jdbcType="VARCHAR" />
+	    <result column="BUYERNAME" property="buyerName" jdbcType="VARCHAR" />
+	    <result column="BUYERREALNAME" property="buyerRealName" jdbcType="VARCHAR" />
+	    <result column="BUYERMOBILE" property="buyerMobile" jdbcType="VARCHAR" />
+	    <result column="SALERNAME" property="salerName" jdbcType="VARCHAR" />
+	    <result column="SALERREALNAME" property="salerRealName" jdbcType="VARCHAR" />
+	    <result column="SALERMOBILE" property="salerMobile" jdbcType="VARCHAR" />
+	    <result column="CREATETIME" property="orderDate" jdbcType="TIMESTAMP" />
+	    <result column="ORDERSTATE" property="orderState" jdbcType="DECIMAL" />
+	    <result column="UPDATETIME" property="updateTime" jdbcType="TIMESTAMP"/>
+	    <!-- add by fanyuna 2015.07.30 增加买家、卖家业务员姓名 -->
+	    <result column="buyerSalesmanName" property="buyerSalemanName" jdbcType="VARCHAR" />
+	    <result column="sellerSalesmanName" property="sellerSalemanName" jdbcType="VARCHAR" />
+	    <result column="EXPIRETIME" property="expireTime" jdbcType="TIMESTAMP"/>
+	    <result column="DEPOSIT" property="deposit" jdbcType="DECIMAL" />
+	    <result column="EXAMINESTATE" property="examineState" jdbcType="DECIMAL" />
+	    <!-- add by zhaohang 2015.09.10 增加订单类型、账期结束时间 -->
+	    <result column="ORDER_TYPE" property="orderType" jdbcType="DECIMAL" />
+	    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP"/>
+	    <!-- add by shangcuijuan 2015-11-18 增加品种 -->
+	     <result column="BREED_NAME" property="breedname" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!-- add by fanyuna 订单相关的买家、卖家、买家业务员、卖家业务员信息VO -->
+    <resultMap type="com.jointown.zy.common.vo.OrderMobileEmailVo" id="orderMobileEmailMap">
+    	<id column="orderid" property="orderId" jdbcType="VARCHAR" />
+    	<id column="buyer" property="buyerId" jdbcType="DECIMAL" />
+    	<id column="buyerName" property="buyerName" jdbcType="VARCHAR" />
+    	<id column="buyerTel" property="buyerMobile" jdbcType="VARCHAR" />
+    	<id column="buyerEmail" property="buyerEmail" jdbcType="VARCHAR" />
+    	<id column="buyer_salesmanid" property="buyerSalesmanId" jdbcType="DECIMAL" />
+    	<id column="buyerSalesmanName" property="buyerSalesmanName" jdbcType="VARCHAR" />
+    	<id column="buyerSalesmanTel" property="buyerSalesmanMobile" jdbcType="VARCHAR" />
+    	<id column="buyerSalesmanEmail" property="buyerSalesmanEmail" jdbcType="VARCHAR" />
+    	<id column="userid" property="sellerId" jdbcType="DECIMAL" />
+    	<id column="sellerName" property="sellerName" jdbcType="VARCHAR" />
+    	<id column="sellerTel" property="sellerMobile" jdbcType="VARCHAR" />
+    	<id column="sellerEmail" property="sellerEmail" jdbcType="VARCHAR" />
+    	<id column="seller_salesmanid" property="sellerSalesmanId" jdbcType="DECIMAL" />
+    	<id column="sellerSalesmanName" property="sellerSalesmanName" jdbcType="VARCHAR" />
+    	<id column="sellerSalesmanTel" property="sellerSalesmanMobile" jdbcType="VARCHAR" />
+    	<id column="sellerSalesmanEmail" property="sellerSalesmanEmail" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <!-- 后台订单列表查询 -->
+    <!-- add by fanyuna 2015.12.1 增加付款方式查询条件 -->
+    <select id="selectOrderListByPage" parameterType="com.jointown.zy.common.model.Page" resultMap="selectOrderListByPageMap">
+    	select
+    		a.ORDERID,
+    		a.LISTINGID,
+    		f.TITLE,
+    		NVL(a.UNITPRICE,0) as UNITPRICE,
+    		NVL(a.AMOUNT,0) as AMOUNT,
+    		NVL(a.VOLUME,0) as VOLUME,
+    		NVL(a.TOTALPRICE,0) as TOTALPRICE,
+    		NVL(a.ACTUAL_PAYMENT,0) as ACTUAL_PAYMENT,
+    		c.DICT_VALUE as WLUNIT,
+    		d.USER_NAME as BUYERNAME,
+    		d.COMPANYNAME as BUYERREALNAME,
+    		d.MOBILE as BUYERMOBILE,
+    		e.USER_NAME as SALERNAME,
+    		e.COMPANYNAME as SALERREALNAME,
+    		e.MOBILE as SALERMOBILE,
+    		a.CREATETIME,
+    		a.ORDERSTATE,
+    		a.UPDATETIME,
+    		u.user_name as sellerSalesmanName,
+    		u1.user_name as buyerSalesmanName,
+    		a.EXPIRETIME,
+    		NVL(a.DEPOSIT,0) as DEPOSIT,
+    		NVL(g.EXAMINESTATE,0) as EXAMINESTATE,
+    		a.ORDER_TYPE,
+    		h.END_TIME,
+ 			i.breed_name         <!--2015-11-18 add by shangcuijuan  挂牌品种   -->
+    	from
+    	(	select <include refid="BaseSql"/> from ZYC.BUSI_ORDER
+    		<where>
+	    		<if test="params.bossOrderListDto.orderId != null and '' != params.bossOrderListDto.orderId">
+	    			ORDERID = #{params.bossOrderListDto.orderId}
+	    		</if>
+	    		<if test="params.bossOrderListDto.listingId != null and '' != params.bossOrderListDto.listingId">
+	    			and LISTINGID = #{params.bossOrderListDto.listingId}
+	    		</if>
+	    		<if test="params.bossOrderListDto.orderState != null and '' != params.bossOrderListDto.orderState">
+	    			and ORDERSTATE = #{params.bossOrderListDto.orderState}
+	    		</if>
+	    		<if test="params.bossOrderListDto.orderStartDate != null and '' != params.bossOrderListDto.orderStartDate">
+					and CREATETIME <![CDATA[>=]]> to_date(#{params.bossOrderListDto.orderStartDate},'yyyy-mm-dd')
+				</if>
+				<if test="params.bossOrderListDto.orderEndDate != null and '' != params.bossOrderListDto.orderEndDate">
+					and CREATETIME <![CDATA[<]]> (to_date(#{params.bossOrderListDto.orderEndDate},'yyyy-mm-dd') + 1)
+				</if>
+				 <!-- add by fanyuna 2015.12.1 增加付款方式查询条件 -->
+				<if test="params.bossOrderListDto.payWay != null and '' != params.bossOrderListDto.payWay">
+					<if test="params.bossOrderListDto.payWay ==1"><!-- 付款方式为保证金 -->
+	    				and ORDER_TYPE in (1,2)
+	    			</if>
+	    			<if test="params.bossOrderListDto.payWay ==2"><!-- 付款方式为全款 -->
+	    				and ORDER_TYPE=3
+	    			</if>
+	    		</if>
+				
+	    	</where>
+    	) a
+    	left join ZYC.BUSI_WHLIST b on b.WLID = a.WLID
+    	left join BOSS.DICT_INFO c on c.DICT_CODE = b.WLUNIT
+    	left join BOSS.UC_USER d on d.USER_ID = a.BUYER
+    	left join BOSS.UC_USER e on e.USER_ID = a.USERID
+    	<!-- update by fanyuna 2015.07.30 增加买家、卖家业务员姓名 start-->
+    	left join  zyc.busi_order_salesman m on m.orderid=a.orderid
+    	left join boss.boss_user u on u.user_id=m.seller_salesmanid
+    	left join boss.boss_user u1 on u1.user_id=m.buyer_salesmanid
+    	<!-- update by fanyuna 2015.07.30 增加买家、卖家业务员姓名 end-->
+    	left join ZYC.BUSI_LISTING f on f.LISTINGID = a.LISTINGID
+    	left join ZYC.BUSI_APPEAL g on g.ORDERID = a.ORDERID
+    	<!-- add by zhaohang 2015.09.10 增加账期详情 -->
+    	left join ZYC.BUSI_TERM_ORDER_DETAIL h on h.ORDERID = a.ORDERID
+    	<!-- add by shangcuijuan 2015-11-18 品种 -->
+    	left join BOSS.BREED i on f.breedid = i.breed_id
+    	<where>
+    		<!-- update by fanyuna 2015.07.30 增加业务员姓名条件搜索 start-->
+    		<if test="params.bossOrderListDto.salesmanName != null and '' != params.bossOrderListDto.salesmanName">
+	    		instr(u.user_name, #{params.bossOrderListDto.salesmanName}) <![CDATA[>]]> 0 or instr(u1.user_name, #{params.bossOrderListDto.salesmanName}) <![CDATA[>]]> 0
+	    	</if>
+	    	<!-- update by fanyuna 2015.07.30 增加业务员姓名条件搜索 end-->
+	    	
+	    	<!-- update by zhaohang 2015.08.10 增加标题、买方、卖方条件搜索 start-->
+	    	<if test="params.bossOrderListDto.title != null and '' != params.bossOrderListDto.title">
+	    		instr(f.TITLE, #{params.bossOrderListDto.title}) <![CDATA[>]]> 0
+	    	</if>
+	    	<if test="params.bossOrderListDto.buyerName != null and '' != params.bossOrderListDto.buyerName">
+	    		instr(d.USER_NAME, #{params.bossOrderListDto.buyerName}) <![CDATA[>]]> 0
+	    	</if>
+	    	<if test="params.bossOrderListDto.sellerName != null and '' != params.bossOrderListDto.sellerName">
+	    		instr(e.USER_NAME, #{params.bossOrderListDto.sellerName}) <![CDATA[>]]> 0
+	    	</if>
+	    	<!-- update by zhaohang 2015.08.10 增加标题、买方、卖方条件搜索 end-->
+	    	 <!-- update by shangcuijuan 2015-11-18 增加品种条件搜索 -->
+	    	<if test="params.bossOrderListDto.breedname != null and params.bossOrderListDto.breedname != ''">
+      		    instr(i.breed_name, #{params.bossOrderListDto.breedname}) <![CDATA[>]]> 0
+    		</if>
+    	</where>
+    	order by a.Updatetime desc , a.CREATETIME desc
+    </select>
+    
+    <resultMap id="selectOrderInfoByIdMap" type="com.jointown.zy.common.vo.BossOrderInfoVo" >
+	    <id column="ORDERID" property="orderId" jdbcType="VARCHAR" />
+	    <result column="LISTINGID" property="listingId" jdbcType="VARCHAR" />
+	    <result column="CREATETIME" property="orderDate" jdbcType="TIMESTAMP" />
+	    <result column="PATH" property="goodsPic" jdbcType="VARCHAR" />
+	    <result column="TITLE" property="goodsTitle" jdbcType="VARCHAR" />
+	    <result column="UNITPRICE" property="unitPrice" jdbcType="DECIMAL" />
+	    <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+	    <result column="VOLUME" property="volume" jdbcType="DECIMAL" />
+	    <result column="TOTALPRICE" property="totalPrice" jdbcType="DECIMAL" />
+	    <result column="ACTUAL_PAYMENT" property="actualPayment" jdbcType="DECIMAL" />
+	    <result column="WLUNIT" property="wlunit" jdbcType="VARCHAR" />
+	    <result column="ORDERSTATE" property="orderState" jdbcType="DECIMAL" />
+    </resultMap>
+    
+    <!-- 后台订单详情查询 -->
+    <select id="selectOrderInfoById" parameterType="java.lang.String" resultMap="selectOrderInfoByIdMap">
+    	select
+    		a.LISTINGID,
+    		a.ORDERID,
+    		a.CREATETIME,
+    		e.PATH,
+    		b.TITLE,
+    		NVL(a.UNITPRICE,0) as UNITPRICE,
+    		NVL(a.AMOUNT,0) as AMOUNT,
+    		NVL(a.VOLUME,0) as VOLUME,
+    		d.DICT_VALUE as WLUNIT,
+    		NVL(a.TOTALPRICE,0) as TOTALPRICE,
+    		NVL(a.ACTUAL_PAYMENT,0) as ACTUAL_PAYMENT,
+    		a.ORDERSTATE
+    	from
+    	(	select <include refid="BaseSql"/> from ZYC.BUSI_ORDER
+    		where ORDERID = #{orderId}
+    	) a
+    	left join ZYC.BUSI_LISTING b on b.LISTINGID = a.LISTINGID
+    	left join ZYC.BUSI_WHLIST c on c.WLID = a.WLID
+    	left join BOSS.DICT_INFO d on d.DICT_CODE = c.WLUNIT
+    	left join ZYC.BUSI_QUALITYPIC e on (a.WLID = e.WLID and e.PICINDEX = 1)
+    </select>
+    
+    <!-- 后台订单查询页修改过期时间 -->
+    <update id="updateOrderExpireTime" parameterType="com.jointown.zy.common.model.BusiOrder">
+    	update
+    		ZYC.BUSI_ORDER
+    	set
+    		EXPIRETIME = #{expiretime},
+    		UPDATETIME = #{updatetime}
+    	where
+    		ORDERID = #{orderid}
+    </update>
+    
+    <!-- 根据ID，修改订单状态 -->
+    <update id="updateOrderStateById" parameterType="com.jointown.zy.common.model.BusiOrder">
+    	update
+    		ZYC.BUSI_ORDER
+    	set
+    		ORDERSTATE = #{orderstate},
+    		UPDATETIME = #{updatetime}
+    	where
+    		ORDERID = #{orderid} and ORDERSTATE <![CDATA[<>]]> #{orderstate}
+    </update>
+    
+    <!-- 检索备货状态中的过期订单 -->
+    <!-- update by fanyuna 2015.09.07 增加ORDER_TYPE=1条件，即只针对普通订单，账期订单不过期 -->
+    <select id="selectOverdueOrderList" parameterType="java.util.Map" resultMap="BaseResultMap">
+    	<if test="count != null">
+	    	select <include refid="BaseSql"/> from (
+	    </if>
+	    select <include refid="BaseSql"/>
+		  from (select *
+		          from ZYC.BUSI_ORDER
+		         where ORDERSTATE = #{orderState}
+		           and ORDER_TYPE=1 <!-- 普通订单 -->
+		           and APPEALSTATE = 0
+		           and EXPIRETIME is not null
+		           and EXPIRETIME <![CDATA[<]]> #{nowDate}
+		        union
+		        select a.*
+		          from ZYC.BUSI_ORDER a, ZYC.BUSI_APPEAL b
+		         where a.ORDERID = b.ORDERID
+		           and a.ORDER_TYPE=1 <!-- 普通订单 -->
+		           and b.EXAMINESTATE = 3
+		           and a.ORDERSTATE = #{orderState}
+		           and a.APPEALSTATE = 1
+		           and a.EXPIRETIME is not null
+		           and a.EXPIRETIME <![CDATA[<]]> #{nowDate})
+		 order by EXPIRETIME DESC
+    	<if test="count != null">
+	    	) where rownum <![CDATA[<=]]> #{count}
+	    </if>
+    </select>
+    
+    <!-- 根据订单号修改保证金 add by ldp -->
+	<update id="updateOrderDepositByOrderId" parameterType="com.jointown.zy.common.model.BusiOrder">
+		update ZYC.BUSI_ORDER
+		set 
+			DEPOSIT = #{deposit,jdbcType=DECIMAL},
+			UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+		where
+			ORDERID = #{orderid,jdbcType=VARCHAR} and ORDERSTATE = 0
+	</update>
+	
+	<!-- 根据订单号将订单转为账期订单 -->
+	<update id="updateTermOrder" parameterType="com.jointown.zy.common.model.BusiOrder">
+		update ZYC.BUSI_ORDER
+		set 
+			ORDER_TYPE = 2,
+			UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+		where
+			ORDERID = #{orderid,jdbcType=VARCHAR} and ORDER_TYPE = 1
+	</update>
+	
+	<!-- 根据订单号查询相关买卖双方及业务员信息 -->
+	<select id="selectOrderMobileEmail" parameterType="java.lang.String" resultMap="orderMobileEmailMap">
+		select od.*,m.buyer_salesmanid,m.seller_salesmanid,u.mobile sellerTel,u1.mobile buyerTel,bu.mobile sellerSalesmanTel,bu1.mobile buyerSalesmanTel,u.user_name sellerName,u1.user_name buyerName,bu.user_code sellerSalesmanName,bu1.user_code buyerSalesmanName,u.email sellerEmail,u1.email buyerEmail,bu.email sellerSalesmanEmail,bu1.email buyerSalesmanEmail  from 
+		(
+		 select o.orderid,o.userid,o.buyer from zyc.busi_order o where o.orderid=#{orderid,jdbcType=VARCHAR}
+		 ) od
+			left join 
+		      (select buyer_salesmanid,seller_salesmanid,orderid  from zyc.busi_order_salesman) m 
+		      on od.orderid=m.orderid
+		      left join 
+		      boss.uc_user u 
+		      on u.user_id=od.userid
+		      left join 
+		      boss.uc_user u1
+		      on u1.user_id=od.buyer
+				left join
+				boss.boss_user bu
+				on bu.user_id=m.seller_salesmanid
+				left join 
+				boss.boss_user bu1
+				on bu1.user_id=m.buyer_salesmanid
+		
+	</select>
+</mapper>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.persistence.BreedAccountMapper">
+	<resultMap id="breedAccount" type="com.jointown.zy.common.model.BreedAccountModel">
+		<result column="BREED_ID" property="breedId" jdbcType="VARCHAR"/>
+	    <result column="BREED_CODE" property="breedCode" jdbcType="VARCHAR"/>
+		<result column="BREED_NAME" property="breedName" jdbcType="VARCHAR" />
+		<result column="UNIT" property="unit" jdbcType="VARCHAR" />
+		<result column="WHLIST_TOTAL" property="whlistTotal" jdbcType="VARCHAR" />
+		<result column="WHLIST_USER_AMOUNT" property="whlistUserAmount" jdbcType="VARCHAR" />
+		<result column="WHLIST_AMOUNT" property="whlistAmount" jdbcType="VARCHAR"/>
+		<result column="LISTING_TOTAL" property="listingTotal" jdbcType="VARCHAR"/>
+		<result column="LISTING_USER_AMOUNT" property="listingUserAmount" jdbcType="NUMERIC"/>
+		<result column="LISTING_AMOUNT" property="listingAmount" jdbcType="NUMERIC"/>
+		<result column="ORDER_TOTAL" property="orderTotal" jdbcType="VARCHAR"/>
+		<result column="ORDER_USER_AMOUNT" property="orderUserAmount" jdbcType="VARCHAR"/>
+		<result column="ORDER_TOTAL_MONEY" property="orderTotalMoney" jdbcType="NUMERIC"/>
+		<result column="ORDER_AMOUNT" property="orderAmount" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<resultMap id="breedAccountCount" type="com.jointown.zy.common.vo.BreedAccountCountVo">
+		<result column="WHLIST_COUNT" property="whlistCount" jdbcType="VARCHAR"/>
+		<result column="LISTING_COUNT" property="listingCount" jdbcType="VARCHAR"/>
+		<result column="ORDER_COUNT" property="orderCount" jdbcType="VARCHAR"/>
+	</resultMap>
+	 
+	 <select id="getPageList"  resultMap="breedAccount"  parameterType="com.jointown.zy.common.model.Page">
+	 	select * from (
+	 		select 	
+	 				   t1.BREED_ID,
+				       t2.BREED_NAME,
+				       t3.DICT_VALUE as unit,        
+				       t2.BREED_CODE,
+				       sum(t1.WHLIST_TOTAL) as WHLIST_TOTAL,
+				       sum(t1.WHLIST_USER_AMOUNT) as WHLIST_USER_AMOUNT,
+				       sum(t1.WHLIST_AMOUNT) as WHLIST_AMOUNT ,
+				       sum(t1.LISTING_TOTAL) as LISTING_TOTAL,
+				       sum(t1.LISTING_USER_AMOUNT) as LISTING_USER_AMOUNT,
+				       sum(t1.LISTING_AMOUNT) as LISTING_AMOUNT,
+				       sum(t1.ORDER_TOTAL) as ORDER_TOTAL,
+				       sum(t1.ORDER_USER_AMOUNT) as ORDER_USER_AMOUNT,
+				       sum(t1.ORDER_TOTAL_MONEY) as ORDER_TOTAL_MONEY,
+				       sum(t1.ORDER_AMOUNT) as ORDER_AMOUNT
+	 		from (
+					 select 
+					    sum(w.intotal) as whlist_total, 
+		                count(distinct w.userid) as whlist_user_amount, 
+		                count(distinct w.wlid) as whlist_amount,
+		                null as listing_total,
+		                null as listing_user_amount,
+		                null as listing_amount,
+		                null as order_total,
+                        null as order_total_money,
+                        null as order_user_amount,
+                        null as order_amount,
+		                w.breedcode as breed_id,
+		                w.wlunit    as unit
+		         	 from zyc.busi_whlist w
+					 where
+						w.pwlid is null
+						<if test="params.dto.startTime != null and params.dto.startTime != ''">
+	    					and w.CREATETIME &gt;= to_date(#{params.dto.startTime},'yyyy-mm-dd hh24:mi:ss') 
+	    				</if>
+					    <if test="params.dto.endTime != null and params.dto.endTime != ''">
+					    	and to_date(#{params.dto.endTime},'yyyy-mm-dd hh24:mi:ss') &gt;   w.CREATETIME
+					    </if>
+					 GROUP BY w.breedcode, w.wlunit
+				union all
+					select 
+					   null as whlist_total,
+		               null as whlist_user_amount,
+		               null as whlist_amount,
+		               sum(l.first_amount) as listing_total, 
+		               count(distinct l.userid) as listing_user_amount, 
+		               count(distinct l.listingid) as listing_amount,
+		               null as order_total,
+                       null as order_total_money,
+                       null as order_user_amount,
+                       null as order_amount,
+		               l.breedid as breed_id,
+		               w.wlunit  as unit
+	          		from zyc.busi_listing l, zyc.busi_whlist w
+					<where>
+						nvl(l.FIRST_AMOUNT, 0) > 0 
+						and l.wlid = w.wlid
+						<if test="params.dto.startTime != null and params.dto.startTime != ''">
+	    					and l.FIRST_EXAMINETIME &gt;= to_date(#{params.dto.startTime},'yyyy-mm-dd hh24:mi:ss') 
+	    				</if>
+					    <if test="params.dto.endTime != null and params.dto.endTime != ''">
+					    	and to_date(#{params.dto.endTime},'yyyy-mm-dd hh24:mi:ss') &gt;  l.FIRST_EXAMINETIME
+					    </if>
+					</where>
+         			 GROUP BY l.breedid, w.wlunit
+				union all
+					select
+			         null as whlist_total,
+			         null as whlist_user_amount,
+			         null as whlist_amount,
+			         null as listing_total,
+			         null as listing_user_amount,
+			         null as listing_amount,
+			         sum(c.volume) as order_total, 
+			         sum(c.actual_payment) as order_total_money, 
+			         count(distinct c.userid) as order_user_amount, 
+			         count(distinct c.orderid) as order_amount,
+			         c.breedcode as breed_id,
+			         c.wlunit as unit
+			         from (select b.breedcode,
+	                       b.wlunit,
+	                       a.orderid,
+	                       a.userid,
+	                       a.volume,
+	                       a.actual_payment,
+	                       a.updatetime
+	                  from zyc.busi_order a, zyc.busi_whlist b
+	                 where a.wlid = b.wlid
+	                   and a.orderstate = 1
+	                union
+	                select b.breedcode,
+	                       b.wlunit,
+	                       null,
+	                       a.buyer,
+	                       0,
+	                       0,
+	                       a.updatetime
+	                  from zyc.busi_order a, zyc.busi_whlist b
+							where a.wlid = b.wlid
+	                   		and a.orderstate = 1) c
+	              <where>
+	              	<if test="params.dto.startTime != null and params.dto.startTime != ''">
+	    					and c.UPDATETIME &gt;= to_date(#{params.dto.startTime},'yyyy-mm-dd hh24:mi:ss') 
+	    				</if>
+					    <if test="params.dto.endTime != null and params.dto.endTime != ''">
+					    	and to_date(#{params.dto.endTime},'yyyy-mm-dd hh24:mi:ss') &gt;  c.UPDATETIME
+					    </if> 
+	              </where>
+         		  GROUP BY c.breedcode, c.wlunit) t1,
+					boss.breed t2,
+	       			boss.dict_info t3
+	 				WHERE t1.breed_id = t2.breed_id(+)
+	   				and t1.unit = t3.dict_code(+)
+				<if test="params.dto.breedInfo!=null and params.dto.breedInfo!='' ">
+				  	and ((t2.BREED_NAME like CONCAT(CONCAT('%',#{params.dto.breedInfo}),'%') or t2.BREED_CODE like CONCAT(CONCAT('%',#{params.dto.breedInfo}),'%')))
+				</if>
+				   GROUP BY 
+				       t1.BREED_ID,
+				       t2.BREED_NAME,
+				       t3.DICT_VALUE,        
+				       t2.BREED_CODE
+				       order by t1.BREED_ID)
+	 </select>
+	 
+	 <select id="getBreedAccountCount" resultMap="breedAccountCount"  parameterType="com.jointown.zy.common.dto.BreedAccountDto">
+		select
+			sum(t1.whlist_count)  as WHLIST_COUNT,
+			sum(t1.listing_count) as LISTING_COUNT,
+			sum(t1.order_count)   as ORDER_COUNT
+		from (
+			select sum(w.intotal) as whlist_count,
+				null as listing_count,
+				null as order_count,
+				w.breedcode as breed_id,
+				w.wlunit as unit
+				from zyc.busi_whlist w
+				where 
+					w.pwlid is null
+				<if test="startTime != null and startTime != ''">
+   					and w.CREATETIME &gt;= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss') 
+   				</if>
+			    <if test="endTime != null and endTime != ''">
+			    	and to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss') &gt;   w.CREATETIME
+			    </if>
+				group by w.breedcode, w.wlunit
+			union all
+
+			select
+					null as whlist_count,
+					sum(l.first_amount) as listing_count,
+					null as order_count,
+					l.breedid as breed_id,
+					w.wlunit as unit
+			from zyc.busi_listing l,zyc.busi_whlist w
+					where nvl(l.FIRST_AMOUNT, 0) > 0 
+					and l.wlid=w.wlid
+					<if test="startTime != null and startTime != ''">
+    					and l.FIRST_EXAMINETIME &gt;= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss') 
+    				</if>
+				    <if test="endTime != null and endTime != ''">
+				    	and to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss') &gt;  l.FIRST_EXAMINETIME
+				    </if>
+					group by l.breedid, w.wlunit
+
+			union all
+			select
+					null as whlist_count,
+					null as listing_count,
+					sum(c.volume) as order_count,
+					c.breedcode as breed_id,
+					c.wlunit as unit
+				from (
+					select b.breedcode,
+						b.wlunit,
+						a.volume,
+						a.updatetime
+					from zyc.busi_order a, zyc.busi_whlist b
+						where a.wlid = b.wlid
+						and a.orderstate = 1 ) c
+				<where>
+	              	<if test="startTime != null and startTime != ''">
+    					and c.UPDATETIME &gt;= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss') 
+    				</if>
+				    <if test="endTime != null and endTime != ''">
+				    	and to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss') &gt;  c.UPDATETIME
+				    </if> 
+	            </where>
+			group by c.breedcode,c.wlunit ) t1,
+			boss.breed t2,
+			boss.dict_info t3
+			where t1.breed_id = t2.breed_id(+)
+			and t1.unit = t3.dict_code(+)
+			and t1.unit = 'kg'
+			<if test="breedInfo!=null and breedInfo!='' ">
+			  	and ((t2.BREED_NAME like CONCAT(CONCAT('%',#{breedInfo}),'%') or t2.BREED_CODE like CONCAT(CONCAT('%',#{breedInfo}),'%')))
+			</if>
+	 </select>
+</mapper>

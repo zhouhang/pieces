@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.CmsArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.jointown.zy.common.model.CmsArticle" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="CATEGORY_ID" property="categoryId" jdbcType="DECIMAL" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="LINK" property="link" jdbcType="VARCHAR" />
+    <result column="COLOR" property="color" jdbcType="VARCHAR" />
+    <result column="IMAGE" property="image" jdbcType="VARCHAR" />
+    <result column="KEYWORDS" property="keywords" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="WEIGHT" property="weight" jdbcType="DECIMAL" />
+    <result column="WEIGHT_DATE" property="weightDate" jdbcType="TIMESTAMP" />
+    <result column="HITS" property="hits" jdbcType="DECIMAL" />
+    <result column="POSID" property="posid" jdbcType="VARCHAR" />
+    <result column="CUSTOM_CONTENT_VIEW" property="customContentView" jdbcType="VARCHAR" />
+    <result column="CREATE_BY" property="createBy" jdbcType="VARCHAR" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_BY" property="updateBy" jdbcType="VARCHAR" />
+    <result column="UPDATE_DATE" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+    <result column="DEL_FLAG" property="delFlag" jdbcType="DECIMAL" />
+    <result column="TO_FROM" property="toFrom" jdbcType="DECIMAL" />
+    <result column="ART_DATA_ID" property="artDataId" jdbcType="DECIMAL" />
+    <association property="cmsArticleDataArtDataId" column="artDataId" select="com.jointown.zy.common.dao.CmsArticleDataMapper.selectByPrimaryKey" />
+    <association property="cmsCategoryCategoryId" column="categoryId" select="com.jointown.zy.common.dao.CmsCategoryMapper.selectByPrimaryKey" />
+  </resultMap>
+  <select id="selectByArtDataId" resultMap="BaseResultMap" >
+    select <include refid="Base_Column_List" /> from ZYC.CMS_ARTICLE where ART_DATA_ID =#{ART_DATA_ID}
+  </select>
+  <select id="selectByCategoryId" resultMap="BaseResultMap" >
+    select <include refid="Base_Column_List" /> from ZYC.CMS_ARTICLE where CATEGORY_ID =#{CATEGORY_ID}
+  </select>
+  <resultMap id="ResultMapWithBLOBs" type="com.jointown.zy.common.model.CmsArticle" extends="BaseResultMap" >
+    <result column="VIEW_CONFIG" property="viewConfig" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, CATEGORY_ID, TITLE, LINK, COLOR, IMAGE, KEYWORDS, DESCRIPTION, WEIGHT, WEIGHT_DATE, 
+    HITS, POSID, CUSTOM_CONTENT_VIEW, CREATE_BY, CREATE_DATE, UPDATE_BY, UPDATE_DATE, 
+    REMARKS, DEL_FLAG, TO_FROM, ART_DATA_ID
+  </sql>
+  <sql id="Blob_Column_List" >
+    VIEW_CONFIG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ZYC.CMS_ARTICLE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ZYC.CMS_ARTICLE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.jointown.zy.common.model.CmsArticle" >
+    insert into ZYC.CMS_ARTICLE (ID, CATEGORY_ID, TITLE, 
+      LINK, COLOR, IMAGE, 
+      KEYWORDS, DESCRIPTION, WEIGHT, 
+      WEIGHT_DATE, HITS, POSID, 
+      CUSTOM_CONTENT_VIEW, CREATE_BY, CREATE_DATE, 
+      UPDATE_BY, UPDATE_DATE, REMARKS, 
+      DEL_FLAG, TO_FROM, ART_DATA_ID, 
+      VIEW_CONFIG)
+    values (SEQ_CMS_ART.nextval, #{categoryId,jdbcType=DECIMAL}, #{title,jdbcType=VARCHAR}, 
+      #{link,jdbcType=VARCHAR}, #{color,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
+      #{keywords,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{weight,jdbcType=DECIMAL}, 
+      #{weightDate,jdbcType=TIMESTAMP}, #{hits,jdbcType=DECIMAL}, #{posid,jdbcType=VARCHAR}, 
+      #{customContentView,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, 
+      #{delFlag,jdbcType=DECIMAL}, #{toFrom,jdbcType=DECIMAL}, #{artDataId,jdbcType=DECIMAL}, 
+      #{viewConfig,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jointown.zy.common.model.CmsArticle" >
+    insert into ZYC.CMS_ARTICLE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      CATEGORY_ID,
+      TITLE,
+      LINK,
+      COLOR,
+      IMAGE,
+      KEYWORDS,
+      DESCRIPTION,
+      WEIGHT,
+      WEIGHT_DATE,
+      HITS,
+      POSID,
+      CUSTOM_CONTENT_VIEW,
+      CREATE_BY,
+      CREATE_DATE,
+      UPDATE_BY,
+      UPDATE_DATE,
+      REMARKS,
+      DEL_FLAG,
+      TO_FROM,
+      ART_DATA_ID,
+      VIEW_CONFIG,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      SEQ_CMS_ART.nextval,
+      #{categoryId,jdbcType=DECIMAL},
+      #{title,jdbcType=VARCHAR},
+      #{link,jdbcType=VARCHAR},
+      #{color,jdbcType=VARCHAR},
+      #{image,jdbcType=VARCHAR},
+      #{keywords,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR},
+      #{weight,jdbcType=DECIMAL},
+      #{weightDate,jdbcType=TIMESTAMP},
+      #{hits,jdbcType=DECIMAL},
+      #{posid,jdbcType=VARCHAR},
+      #{customContentView,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=DECIMAL},
+      #{toFrom,jdbcType=DECIMAL},
+      #{artDataId,jdbcType=DECIMAL},
+      #{viewConfig,jdbcType=CLOB},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jointown.zy.common.model.CmsArticle" >
+    update ZYC.CMS_ARTICLE
+    <set >
+      <if test="categoryId != null" >
+        CATEGORY_ID = #{categoryId,jdbcType=DECIMAL},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        LINK = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="color != null" >
+        COLOR = #{color,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        IMAGE = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        KEYWORDS = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null" >
+        WEIGHT = #{weight,jdbcType=DECIMAL},
+      </if>
+      <if test="weightDate != null" >
+        WEIGHT_DATE = #{weightDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="hits != null" >
+        HITS = #{hits,jdbcType=DECIMAL},
+      </if>
+      <if test="posid != null" >
+        POSID = #{posid,jdbcType=VARCHAR},
+      </if>
+      <if test="customContentView != null" >
+        CUSTOM_CONTENT_VIEW = #{customContentView,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        DEL_FLAG = #{delFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="toFrom != null" >
+        TO_FROM = #{toFrom,jdbcType=DECIMAL},
+      </if>
+      <if test="artDataId != null" >
+        ART_DATA_ID = #{artDataId,jdbcType=DECIMAL},
+      </if>
+      <if test="viewConfig != null" >
+        VIEW_CONFIG = #{viewConfig,jdbcType=CLOB},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jointown.zy.common.model.CmsArticle" >
+    update ZYC.CMS_ARTICLE
+    set CATEGORY_ID = #{categoryId,jdbcType=DECIMAL},
+      TITLE = #{title,jdbcType=VARCHAR},
+      LINK = #{link,jdbcType=VARCHAR},
+      COLOR = #{color,jdbcType=VARCHAR},
+      IMAGE = #{image,jdbcType=VARCHAR},
+      KEYWORDS = #{keywords,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      WEIGHT = #{weight,jdbcType=DECIMAL},
+      WEIGHT_DATE = #{weightDate,jdbcType=TIMESTAMP},
+      HITS = #{hits,jdbcType=DECIMAL},
+      POSID = #{posid,jdbcType=VARCHAR},
+      CUSTOM_CONTENT_VIEW = #{customContentView,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      DEL_FLAG = #{delFlag,jdbcType=DECIMAL},
+      TO_FROM = #{toFrom,jdbcType=DECIMAL},
+      ART_DATA_ID = #{artDataId,jdbcType=DECIMAL},
+      VIEW_CONFIG = #{viewConfig,jdbcType=CLOB}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jointown.zy.common.model.CmsArticle" >
+    update ZYC.CMS_ARTICLE
+    set CATEGORY_ID = #{categoryId,jdbcType=DECIMAL},
+      TITLE = #{title,jdbcType=VARCHAR},
+      LINK = #{link,jdbcType=VARCHAR},
+      COLOR = #{color,jdbcType=VARCHAR},
+      IMAGE = #{image,jdbcType=VARCHAR},
+      KEYWORDS = #{keywords,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      WEIGHT = #{weight,jdbcType=DECIMAL},
+      WEIGHT_DATE = #{weightDate,jdbcType=TIMESTAMP},
+      HITS = #{hits,jdbcType=DECIMAL},
+      POSID = #{posid,jdbcType=VARCHAR},
+      CUSTOM_CONTENT_VIEW = #{customContentView,jdbcType=VARCHAR},
+      CREATE_BY = #{createBy,jdbcType=VARCHAR},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
+      UPDATE_DATE = #{updateDate,jdbcType=TIMESTAMP},
+      REMARKS = #{remarks,jdbcType=VARCHAR},
+      DEL_FLAG = #{delFlag,jdbcType=DECIMAL},
+      TO_FROM = #{toFrom,jdbcType=DECIMAL},
+      ART_DATA_ID = #{artDataId,jdbcType=DECIMAL}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

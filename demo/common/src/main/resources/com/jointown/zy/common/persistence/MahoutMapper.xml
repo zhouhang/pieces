@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.MahoutDao">
+	
+	<resultMap type="com.jointown.zy.common.model.PreferenceData" id="PreferenceDataMap">
+		<result property="userId" column="USER_ID"/>
+		<result property="itemId" column="ITEM_ID"/>
+		<result property="times" column="TIMES"/>
+	</resultMap>
+	
+	<!-- 查询所有挂牌 -->
+	<select id="getAllPreference" resultMap="PreferenceDataMap">
+		select a.userid as USER_ID,TO_NUMBER(a.listingid) as ITEM_ID,count(a.listingid) as TIMES from 
+		(select o.buyer as userid,l.listingid from zyc.busi_listing l
+			left join zyc.busi_order o on o.listingid = l.listingid
+			where o.buyer is not null and l.listingflag=2
+			union all
+			select c.userid as userid,l.listingid as times from zyc.busi_listing l
+			left join zyc.busi_collection c on c.listingid = l.listingid
+			where c.userid is not null and l.listingflag=2
+		) a
+		group by a.userid,a.listingid
+		order by a.userid
+	</select>
+	
+</mapper>

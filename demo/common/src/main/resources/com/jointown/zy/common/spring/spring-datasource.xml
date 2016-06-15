@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+					 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+					 http://www.springframework.org/schema/context
+					 http://www.springframework.org/schema/context/spring-context-3.0.xsd
+					 http://www.springframework.org/schema/aop
+					 http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+					 http://www.springframework.org/schema/tx 
+					 http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+	<!-- 数据源 -->
+	<bean id="C3P0DataSourceFather" class="com.mchange.v2.c3p0.ComboPooledDataSource" abstract="true" >
+		<property name="driverClass" value="${jdbc.driverClass}" />
+		<property name="autoCommitOnClose" value="${jdbc.autoCommitOnClose}" />
+		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
+		<property name="acquireIncrement" value="${jdbc.acquireIncrement}" />
+		<!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 -->
+		<property name="acquireRetryAttempts" value="${jdbc.acquireRetryAttempts}" />
+		<!--两次连接中间隔时间，单位毫秒。Default: 1000 -->
+		<property name="acquireRetryDelay" value="${jdbc.acquireRetryDelay}" />
+		<!--JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的statements 属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面的因素。 
+			如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭。Default: 0 -->
+		<property name="maxStatements" value="${jdbc.maxStatements}" />
+		<!-- 当连接池用完时客户端调用getConnection()后等待获取新连接的时间，超时后将抛出SQLException,如设为0则无限期等待。单位毫秒。Default:0 -->
+		<property name="checkoutTimeout" value="${jdbc.checkoutTimeout}" />
+		<!--初始化时获取三个连接，取值应在minPoolSize与maxPoolSize之间。 Default: 3 -->
+		<property name="initialPoolSize" value="${jdbc.initialPoolSize}" />
+		<!-- 最小连接数 -->
+		<property name="minPoolSize" value="${jdbc.minPoolSize}" />
+		<!--连接池中保留的最大连接数。Default: 15 -->
+		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
+		<!--最大空闲时间,60秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
+		<property name="maxIdleTime" value="${jdbc.maxIdleTime}" />
+		
+		<property name="maxIdleTimeExcessConnections" value="${jdbc.maxIdleTimeExcessConnections}" />
+		
+		<property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}" />
+
+	</bean>
+
+
+	<!-- 主库数据 
+	<bean id="dataSource" parent="C3P0DataSourceFather">
+		<property name="jdbcUrl" value="${db.jdbcUrl}" />
+		<property name="user" value="${db.user}" />
+		<property name="password" value="${db.password}" />
+	</bean>
+	-->
+	
+	<!--启用阿里连接池20150121  -->
+	<!-- add by biran 新增阿里的druid连接池  暂时不用-->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">   
+	    <!-- 基本属性 url、user、password -->  
+	    <property name="url" value="${db.jdbcUrl}" />  
+	    <property name="username" value="${db.user}" />  
+	    <property name="password" value="${db.password}" />  
+	        
+	    <!-- 配置初始化大小、最小、最大 -->  
+	    <property name="initialSize" value="1" />  
+	    <property name="minIdle" value="1" />   
+	    <property name="maxActive" value="20" />  
+	   
+	    <!-- 配置获取连接等待超时的时间 -->  
+	    <property name="maxWait" value="60000" />  
+	   
+	    <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->  
+	    <property name="timeBetweenEvictionRunsMillis" value="60000" />  
+	   
+	    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->  
+	    <property name="minEvictableIdleTimeMillis" value="300000" />  
+	    
+	    <property name="validationQuery" value="SELECT 'x'" />  
+	    <property name="testWhileIdle" value="true" />  
+	    <property name="testOnBorrow" value="false" />  
+	    <property name="testOnReturn" value="false" />  
+	   
+	    <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->  
+	    <property name="poolPreparedStatements" value="true" />  
+	    <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />  
+	   
+	    <!-- 配置监控统计拦截的filters，去掉后监控界面sql无法统计 -->  
+	    <property name="filters" value="stat" />   
+	</bean>  
+<!-- add end-->
+
+	<!-- scan for mappers and let them be autowired -->
+	<!-- <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"> <property 
+		name="basePackage" value="com.jointown.zy.common.dao.uc.interfaces" /> </bean> -->
+
+	<!-- pagination interceptor -->
+	<bean name="pageInterceptor" class="com.jointown.zy.common.interceptor.PageInterceptor">
+		<property name="databaseType" value="oracle"/>
+	</bean>
+	<!-- define the SqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations"
+			value="classpath:com/jointown/zy/common/persistence/**/*.xml" />
+		<property name="typeAliasesPackage" value="com.jointown.zy.common.model" />
+		<property name="plugins">
+	        <list>
+	            <ref bean="pageInterceptor" />
+	        </list>
+        </property>
+	</bean>
+
+	<!-- define the SqlSessionTemplate -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+	
+	<!-- transaction manager, use JtaTransactionManager for global tx -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+      <property name="transactionManager">
+        <ref bean="transactionManager"/>
+      </property>
+    </bean>
+	
+	<!-- AOP based transaction management -->
+    <aop:config>
+        <aop:pointcut id="serviceMethod" expression="execution(* com.jointown.zy.common.service.impl.*.*(..))"/>
+        <aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice"/>
+    </aop:config>
+    
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="create*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="cancel*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="alter*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="remove*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="execute*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="*" propagation="SUPPORTS"/>
+        </tx:attributes>
+    </tx:advice>
+
+</beans>

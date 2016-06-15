@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.EastYcPriceMapper">
+
+	<resultMap type="com.jointown.zy.common.vo.EastYcPriceTodayVo" id="TodayResultMap">
+		<result column="YCNAM" property="ycnam" jdbcType="VARCHAR" />
+		<result column="PRICE" property="price" jdbcType="VARCHAR" />
+		<result column="GUIGE" property="guige" jdbcType="VARCHAR" />
+		<result column="CHANDI" property="chandi" jdbcType="VARCHAR" />
+	</resultMap>
+	<resultMap type="com.jointown.zy.common.vo.EastYcPriceHistoryVo" id="HistoryResultMap">
+		<result column="YCNAM" property="ycnam" jdbcType="VARCHAR" />
+		<result column="PRICE" property="price" jdbcType="VARCHAR" />
+		<result column="GUIGE" property="guige" jdbcType="VARCHAR" />
+		<result column="CHANDI" property="chandi" jdbcType="VARCHAR" />
+		<result column="TTM" property="ttm" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<!-- 查询今日价格 -->
+	<!-- 
+	<select id="selectPriceBy" parameterType="java.util.Map" resultMap="TodayResultMap">
+		select * from (
+			select r.guige,r.chandi,trim(to_char(r.price,999999990.99)) price,r.YCNAM,row_number() over(partition by r.chandi order by r.price asc) rn
+          	from (
+          		select a.guige, a.chandi,a.ycid, round(b.pri, 2) price, c.YCNAM
+                  from weixin.east_pinzhong        a,
+                       weixin.east_yc_price_today  b,
+                       weixin.east_yaocai          c
+                 where a.pzid(+) = b.pzid and a.ycid = c.ycid(+)
+			<if test="chandi != null and chandi != ''">
+				and a.chandi = #{chandi,jdbcType=VARCHAR}
+			</if>
+			<if test="yc != null and yc != ''">
+				and c.ycnam = #{yc,jdbcType=VARCHAR}
+			</if>
+				order by a.chandi asc, a.ycid asc, a.guige asc, price desc) r
+		) where <![CDATA[rn >=#{start,jdbcType=DECIMAL} and rn<=#{end,jdbcType=DECIMAL}]]>
+	</select>
+	-->
+	
+	<!-- 查询历史价格 -->
+	<!-- 
+	<select id="selectPriceHistoryBy" parameterType="java.util.Map" resultMap="HistoryResultMap">
+	select * from (
+		select	yc.ycnam,
+				s.guige,
+				trim(to_char(s.price,999999990.99)) price,
+				s.chandi,
+				s.ttm,
+				row_number() over(partition by s.ttm order by s.price asc) rn
+		from (
+				select t.*, pz.ycid, pz.guige, pz.chandi
+				from weixin.east_pinzhong pz
+				right join 
+					(
+					select concat(concat(concat(to_char(t.dtm, 'yyyy'), '年'),to_char(dtm, 'mm')), '月') as ttm,
+							round(avg(t.pri), 2) price,
+							t.pzid
+					from weixin.east_yc_price t
+					where 	t.dtm between trunc(add_months(last_day(sysdate), -11)) and trunc(last_day(sysdate))
+							group by concat(concat(concat(to_char(t.dtm, 'yyyy'),'年'),to_char(dtm, 'mm')),'月'),t.pzid
+						order by concat(concat(concat(to_char(t.dtm, 'yyyy'), '年'),to_char(dtm, 'mm')),'月') desc
+					) t
+				on t.pzid = pz.pzid
+				where 1 = 1
+				<if test="chandi != null and chandi != ''">
+					and pz.chandi = #{chandi,jdbcType=VARCHAR}
+				</if>
+			) s
+		left join weixin.east_yaocai yc
+		on s.ycid = yc.ycid
+		where 1=1
+		<if test="yc != null and yc != ''">
+    	 	and yc.ycnam = #{yc,jdbcType=VARCHAR}
+    	</if>
+		order by s.ttm desc
+	) where <![CDATA[rn >=#{start,jdbcType=DECIMAL} and rn<#{end,jdbcType=DECIMAL}]]>
+	</select>
+	 -->
+	 
+	<!-- start 查询今日价格    by aizhengdong at 2015/04/14 -->
+	<select id="selectPriceBy" parameterType="java.util.Map" resultMap="TodayResultMap">
+	  select *
+		  from (select row_number() over(partition by pz.chandi order by pri.pri) row_id,
+		               yc.ycnam,
+		               pz.guige,
+		               pz.chandi,
+		               trim(to_char(pri.pri, 999999990.99)) price
+		          from WEIXIN.East_Yc_Price_Today pri
+		          left join WEIXIN.East_Pinzhong pz
+		            on pri.pzid = pz.pzid
+		          left join WEIXIN.East_Yaocai yc
+		            on pz.ycid = yc.ycid
+		         where 1=1
+		         <if test="yc != null and yc != ''">
+					and yc.ycnam = #{yc,jdbcType=VARCHAR}
+				</if>
+		         order by pz.chandi)
+		 where row_id between #{start,jdbcType=DECIMAL} and #{end,jdbcType=DECIMAL}
+	</select> 
+	<!-- end 查询今日价格    by aizhengdong at 2015/04/14 -->
+	 
+	<!-- start 查询所有历史价格    by aizhengdong at 2015/04/23 -->
+	<select id="selectAllPriceByBreedName" parameterType="java.lang.String" resultMap="HistoryResultMap">
+			select 
+                      trim(to_char(pri.pri, 999999990.99)) price,
+                      to_char(pri.dtm, 'yyyy/mm/dd') ttm
+                 from
+                 (select * from WEIXIN.east_yc_price 
+				  union all
+				  select * from WEIXIN.east_yc_price_history) pri
+                 left join WEIXIN.East_Pinzhong pz
+                   on pri.pzid = pz.pzid
+                 left join WEIXIN.East_Yaocai yc
+                   on pz.ycid = yc.ycid
+                where pz.mrflg = '1'
+	 			  and yc.ycnam = #{breedName, jdbcType=VARCHAR}
+      		order by pri.dtm
+	</select>
+	<!-- end 查询所有历史价格    by aizhengdong at 2015/04/23 -->
+	 
+	<!-- start 按年份查询历史价格    by aizhengdong at 2015/04/14 -->
+	<select id="selectPriceHistoryBy" parameterType="java.util.Map" resultMap="HistoryResultMap">
+	  select 
+              sp.ycnam,
+              sp.guige,
+              sp.chandi,
+              trim(to_char(sp.pri, 999999990.99)) price,
+              sp.ttm
+         from (select yc.ycnam,
+                      pz.guige,
+                      pz.chandi,
+                      round(avg(pri.pri), 1) pri,
+                      concat(concat(concat(to_char(pri.dtm, 'yyyy'), '年'), to_char(pri.dtm, 'mm')), '月') ttm
+                 from 
+                 (select * from WEIXIN.east_yc_price 
+				  union all
+				  select * from WEIXIN.east_yc_price_history) pri
+                 left join WEIXIN.East_Pinzhong pz
+                   on pri.pzid = pz.pzid
+                 left join WEIXIN.East_Yaocai yc
+                   on pz.ycid = yc.ycid
+                where pz.mrflg = '1'
+                <if test="yc != null and yc != ''">
+	 				 and yc.ycnam = #{yc,jdbcType=VARCHAR}
+				</if>
+                     and pri.dtm between trunc(add_months(last_day(#{startdate,jdbcType=DECIMAL}), -11)) 
+                     and trunc(last_day(#{startdate,jdbcType=DECIMAL}))
+                group by concat(concat(concat(to_char(pri.dtm, 'yyyy'), '年'), to_char(pri.dtm, 'mm')), '月'),
+                         yc.ycnam,
+                         pz.guige,
+                         pz.chandi) sp
+      		order by sp.ttm desc, sp.pri
+	</select>
+	<!-- end 按年份查询历史价格    by aizhengdong at 2015/04/14 -->
+	
+</mapper>
+	

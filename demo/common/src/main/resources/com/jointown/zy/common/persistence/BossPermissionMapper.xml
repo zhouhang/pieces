@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BossPermissionDao">
+	<resultMap id="BossPermission" type="com.jointown.zy.common.model.BossPermission">
+		<id column="PERMISSION_ID" property="permissionId" jdbcType="INTEGER" />
+		<result column="PERMISSION_NAME" property="permissionName"
+			jdbcType="VARCHAR" />
+		<result column="PARENT_ID" property="parentId" jdbcType="INTEGER" />
+		<result column="TYPE" property="type" jdbcType="INTEGER" />
+		<result column="OPERATION_RESOURCE" property="operationResource"
+			jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="INTEGER" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="SORTNO" property="sortNo" jdbcType="VARCHAR" />
+		<result column="CLASSNAME" property="className" jdbcType="VARCHAR" />
+		<result column="PATH" property="path" jdbcType="VARCHAR" />
+		<result column="PARENT_NAME" property="parentName" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+
+	<!-- 查询所有权限 -->
+	<select id="findAllbossPermission" resultMap="BossPermission">
+		select * from
+		boss.boss_permission where status = 0 order by permission_id desc
+	</select>
+
+	<!-- 修改指定ID主键的type -->
+	<select id="updatebossPermissionForPath" parameterType="java.lang.Integer"
+		resultMap="BossPermission">
+		update boss_permission  b set b.path=
+		(
+		 select c.path||'/' from boss_permission c
+		 where c.permission_id=b.parent_id
+		)||b.permission_id,
+		b.type=
+		nvl((
+		 select c.type+1 from boss_permission c
+		 where c.permission_id=b.parent_id
+		),0)
+		 where b.permission_id=#{permissionId}
+		
+	</select>
+
+	<!-- 修改指定ID主键的权限信息 -->
+	<update id="updateBossPermission" parameterType="com.jointown.zy.common.model.BossPermission">
+		update boss.boss_permission
+		<set>
+			<if test="permissionName != null">
+				permission_name = #{permissionName,jdbcType=VARCHAR},
+			</if>
+			<if test="operationResource != null">
+				operation_resource =
+				#{operationResource,jdbcType=VARCHAR},
+			</if>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=NUMERIC},
+			</if>
+			<if test="sortNo != null">
+				sortno = #{sortNo,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=VARCHAR},
+			</if>
+		</set>
+		WHERE permission_id = #{permissionId,jdbcType=NUMERIC}
+	</update>
+
+	<!-- 查找子结点个数 -->
+	<select id="findBossPermissionByNoteNumber" parameterType="java.lang.Integer"
+		resultMap="BossPermission">
+		select * from boss.boss_permission where parent_id =
+		#{permissionId,jdbcType=NUMERIC} and status = 0
+	</select>
+
+
+
+	<!-- 删除权限 -->
+	<update id="bossPermissionByUpdateStatus" parameterType="map">
+		update boss.boss_permission
+		<set>
+			status = 1
+		</set>
+		WHERE permission_id = #{permissionId,jdbcType=NUMERIC}
+	</update>
+
+	<!-- 查询所有权限,不是按钮权限（含）以下的节点权限 -->
+	<select id="findAllBossPermissionForType" resultMap="BossPermission">
+		select *
+		from boss.boss_permission where status = 0 and 3>type order by
+		update_time desc
+	</select>
+
+	<!-- 分页根据参数page查询所有角色 -->
+	<select id="findBossPermissionByPage" parameterType="com.jointown.zy.common.model.Page"
+		resultMap="BossPermission">
+		select * from (select
+		a.permission_id,a.permission_name,a.parent_id,a.create_time,a.operation_resource,a.sortno,a.path,b.permission_name
+		as parent_name,a.update_time
+		from boss.boss_permission a, boss.boss_permission b
+		where a.parent_id=b.permission_id
+		and a.status = 0
+		<if test="params.operationResource != null and params.operationResource != ''">
+		and a.operation_resource like '%'||#{params.operationResource,jdbcType=VARCHAR}||'%'
+		</if>		
+		union
+		
+		select
+		c.permission_id,c.permission_name,c.parent_id,c.create_time,c.operation_resource,c.sortno,c.path,'无上级'
+		as parent_name,c.update_time
+		from boss.boss_permission c
+		where c.parent_id = 0 and c.status = 0
+		<if test="params.operationResource != null and params.operationResource != ''">
+		and c.operation_resource like '%'||#{params.operationResource,jdbcType=VARCHAR}||'%'
+		</if>		
+		)
+		order by update_time desc
+	</select>
+
+	<!-- 分页权限名称查询 -->
+	<select id="findBossPermissionByPermissionCodeByPage"
+		parameterType="com.jointown.zy.common.model.Page" resultMap="BossPermission">
+		select * from (select
+		a.permission_id,a.permission_name,a.parent_id,a.create_time,a.operation_resource,a.sortno,a.path,
+		b.permission_name as parent_name,a.update_time
+		from
+		boss.boss_permission a, boss.boss_permission b
+		where a.permission_name
+		like
+		'%'||#{params.permissionName,jdbcType=VARCHAR}||'%' and
+		a.parent_id=b.permission_id
+		and a.status = 0
+		<if test="params.operationResource != null and params.operationResource != ''">
+		and a.operation_resource like '%'||#{params.operationResource,jdbcType=VARCHAR}||'%'
+		</if>
+		union
+		
+		select
+		c.permission_id,c.permission_name,c.parent_id,c.create_time,c.operation_resource,c.sortno,c.path,'无上级'
+		as parent_name,c.update_time
+		from boss.boss_permission c
+		where c.parent_id = 0 and c.status = 0 and c.permission_name
+		like
+		'%'||#{params.permissionName,jdbcType=VARCHAR}||'%'
+		<if test="params.operationResource != null and params.operationResource != ''">
+		and c.operation_resource like '%'||#{params.operationResource,jdbcType=VARCHAR}||'%'
+		</if>		
+		)
+		order by update_time desc
+	</select>
+
+
+	<!-- 分页上级名称查询 -->
+	<select id="findBossPermissionByParentIdByPage"
+		parameterType="com.jointown.zy.common.model.Page" resultMap="BossPermission">
+		select * from (select
+		a.permission_id,a.permission_name,a.parent_id,a.create_time,a.operation_resource,a.sortno,
+		b.permission_name as parent_name,a.update_time
+		from
+		boss.boss_permission a, boss.boss_permission b
+		where b.permission_name
+		like
+		'%'||#{params.parentName,jdbcType=VARCHAR}||'%' and a.status = 0
+		and a.parent_id=b.permission_id
+		<if test="params.operationResource != null and params.operationResource != ''">
+		and a.operation_resource like '%'||#{params.operationResource,jdbcType=VARCHAR}||'%'
+		</if>
+		union
+		
+		select
+		c.permission_id,c.permission_name,c.parent_id,c.create_time,c.operation_resource,c.sortno,'无上级'
+		as parent_name,c.update_time
+		from boss.boss_permission c
+		where c.parent_id = 0 and c.status = 0 and '无上级'
+		like
+		'%'||#{params.parentName,jdbcType=VARCHAR}||'%'
+		<if test="params.operationResource != null and params.operationResource != ''">
+		and c.operation_resource like '%'||#{params.operationResource,jdbcType=VARCHAR}||'%'
+		</if>		
+		)
+		order by update_time desc
+	</select>
+
+	<!-- 分页权限名称和父名称查询 -->
+	<select id="findBossPermissionByPermissionAndParentIdByPage"
+		parameterType="com.jointown.zy.common.model.Page" resultMap="BossPermission">
+		select * from (select
+		a.permission_id,a.permission_name,a.parent_id,a.create_time,a.operation_resource,a.sortno,a.path
+		b.permission_name as parent_name,a.update_time
+		from
+		boss.boss_permission a, boss.boss_permission b
+		where a.permission_name
+		like
+		'%'||#{params.permissionName,jdbcType=VARCHAR}||'%' and a.parent_id = #{params.parentId} and
+		a.parent_id=b.permission_id
+		and a.status = 0
+		<if test="params.operationResource != null and params.operationResource != ''">
+		and a.operation_resource like '%'||#{params.operationResource,jdbcType=VARCHAR}||'%'
+		</if>
+		union
+		
+		select
+		c.permission_id,c.permission_name,c.parent_id,c.create_time,c.operation_resource,c.sortno,c.path,'无上级'
+		as parent_name,c.update_time
+		from boss.boss_permission c
+		where c.parent_id = 0 and c.status = 0 and  c.permission_name
+		like
+		'%'||#{params.permissionName,jdbcType=VARCHAR}||'%'
+		<if test="params.operationResource != null and params.operationResource != ''">
+		and c.operation_resource like '%'||#{params.operationResource,jdbcType=VARCHAR}||'%'
+		</if>
+		)
+		order by update_time desc
+		
+	</select>
+
+
+
+
+	<!-- 权限名称查询 -->
+	<select id="findBossPermissionByPermissionCode" parameterType="string"
+		resultMap="BossPermission">
+		select * from boss.boss_permission where status = 0 and
+		permission_name = #{permissionName}
+	</select>
+
+	<!-- 权限权限名称查询 -->
+	<select id="findBossPermissionByPermissionCodeForUpdate"
+		parameterType="map" resultMap="BossPermission">
+		select * from boss.boss_permission where
+		status = 0 and permission_id != #{permissionId} and permission_name =
+		#{permissionName}
+	</select>
+
+	<!-- 通过权限名称查询 -->
+	<select id="findBossPermissionByPermissionName" parameterType="String"
+		resultMap="BossPermission">
+		select * from boss.boss_permission where status = 0 and
+		permission_name=#{permissionName}
+	</select>
+
+	<!-- 根据父权限名称查询 -->
+	<select id="findBossPermissionByParentName" parameterType="string"
+		resultMap="BossPermission">
+		select * from boss.boss_permission where status = 0 and
+		permission_name =#{parentName}
+	</select>
+
+	<!-- 查找主键最大值 -->
+	<select id="getIdMax" resultMap="BossPermission">
+		select * from
+		boss.boss_permission order by permission_id desc
+	</select>
+
+	<!-- 显示权限的父权限名称的主键找权限 -->
+	<select id="findBossPermissionByIdForParentName" parameterType="java.lang.Integer"
+		resultMap="BossPermission">
+		select
+		a.permission_id,a.permission_name,a.parent_id,a.create_time,a.operation_resource,a.sortno,
+		b.permission_name as parent_name,a.update_time,a.type,a.path
+		from
+		boss.boss_permission a, boss.boss_permission b
+		where
+		a.permission_id=#{id} and a.parent_id=b.permission_id(+)
+		and a.status = 0
+	</select>
+
+	<!-- 主键找权限 -->
+	<select id="findBossPermissionByid" parameterType="java.lang.Integer"
+		resultMap="BossPermission">
+		select * from boss.boss_permission where status = 0 and
+		permission_id=#{id}
+	</select>
+
+	<!-- 通过后台人员ID 查找对应权限（所有） -->
+	<select id="findBossPermissionByUserCode" parameterType="string"
+		resultMap="BossPermission">
+		select * from boss.boss_permission_v where
+		user_code=#{usercode} order by
+		sortno
+	</select>
+	
+	
+	<!-- 通过后台人员 ,查找对应权限（所有）,BOSSREALM2使用 -->
+	<select id="findBossPermissionByUserCode4BossRealm" parameterType="string"
+		resultMap="BossPermission">
+		select a.permission_id,
+			decode(a.type,3,b.permission_name||'-'||a.permission_name,a.permission_name) as permission_name,a.parent_id,a.operation_resource,a.type,a.status,a.create_time,a.update_time,a.sortno,a.classname
+			from boss.boss_permission_v  a,boss.boss_permission b
+			where a.parent_id=b.permission_id(+)
+			and a.user_code=#{usercode} order by
+		    a.sortno
+	</select>
+	
+	
+
+	<!-- 通过后台人员ID 查找对应0级权限（系统） -->
+	<select id="findLevel0BossPermissionByUserCode" parameterType="string"
+		resultMap="BossPermission">
+		select * from boss.boss_permission_v where
+		user_code=#{usercode} and type=0
+		order by sortno
+	</select>
+
+	<!-- 查找所有0级权限（系统） -->
+	<select id="findAllLevel0BossPermission" resultMap="BossPermission">
+		select * from
+		boss.boss_permission where type=0 and status=0 order by sortno
+	</select>
+
+
+	<!-- 通过父ID 查找对应下级权限 -->
+	<select id="findBossPermissionByParentid" parameterType="java.lang.Integer"
+		resultMap="BossPermission">
+		select * from boss.boss_permission where
+		parent_id=#{parentid} and status=0
+		order by sortno
+	</select>
+
+	<!-- 通过父ID，类型 查找对应下级权限 -->
+	<select id="findBossPermissionByParentidAndType" parameterType="map"
+		resultMap="BossPermission">
+		select a.*,decode(b.role_id,null,0,'',0,1) as isPermissioned
+		from boss.boss_permission a,
+		(select * from boss_role_permission where
+		role_id=#{roleId} and status=0) b
+		where
+		a.permission_id=b.permission_id(+)
+		and a.parent_id=#{parentId}
+		and
+		a.type=#{type}
+		and a.status=0 order by a.sortno
+	</select>
+
+
+
+	<!-- 通过0级（系统） 查找对应的2级菜单 -->
+	<!-- <select id="findLevel2BossPermissionByParentid" parameterType="map" 
+		resultMap="BossPermission"> select b.* from boss.boss_permission a,boss.boss_permission_v 
+		b where 1=1 and a.parent_id=#{parentId} and b.user_code=#{usercode} and a.permission_id=b.parent_id 
+		and a.status=0 and b.status=0 order by b.sortno </select> -->
+
+	<!-- 根据1级菜单查询2级菜单 -->
+	<select id="findLevel2BossPermissionByParentid" parameterType="map"
+		resultMap="BossPermission">
+		select * from boss.boss_permission_v bpv
+		where
+		bpv.user_code=#{usercode} and bpv.parent_id=#{parentId} and
+		bpv.status=0 and bpv.type=2 order by bpv.sortno
+	</select>
+
+
+	<!-- 根据0级菜单查询1级菜单 -->
+	<select id="findLevel1BossPermissionByParentid" parameterType="map"
+		resultMap="BossPermission">
+		select * from boss.boss_permission_v bpv
+		where
+		bpv.user_code=#{userCode} and bpv.parent_id=#{id} and bpv.status=0
+		and
+		bpv.type=1 order by bpv.sortno
+	</select>
+
+	<!-- 通过用户名，查找对应的3级按钮权限，格式：菜单名-按钮名 -->
+	<select id="findBossPermissionLeve3ByUserCode" parameterType="string"
+		resultMap="BossPermission">
+		select b.permission_name||'-'||a.permission_name as
+		permission_name,
+		a.permission_id,
+		a.parent_id,
+		a.type,
+		a.sortno
+		from
+		boss.boss_permission_v a,boss.boss_permission b
+		where
+		a.parent_id=b.permission_id
+		and a.user_code=#{usercode}
+		and a.type=3
+		and
+		a.status=0
+		order by a.sortno
+	</select>
+
+	<!-- 通过资源URL查询Permission -->
+	<select id="findBossPermissionByResource" parameterType="string"
+		resultMap="BossPermission">
+		select *
+		from boss.boss_permission a where
+		operation_resource=#{Resource}
+		and a.status=0
+	</select>
+
+	<insert id="addBossPermission" parameterType="com.jointown.zy.common.model.BossPermission">
+		insert into
+		boss.BOSS_PERMISSION (PERMISSION_ID, PERMISSION_NAME,
+		PARENT_ID,"TYPE", OPERATION_RESOURCE, "STATUS",CREATE_TIME,
+		UPDATE_TIME, SORTNO,CLASSNAME,PATH
+		) values
+		(seq_boss_permission.nextval,
+		#{permissionName,jdbcType=VARCHAR},
+		#{parentId,jdbcType=INTEGER},
+		#{type,jdbcType=INTEGER},
+		#{operationResource,jdbcType=VARCHAR},
+		#{status,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{sortNo,jdbcType=VARCHAR},
+		#{className,jdbcType=VARCHAR},
+		#{path,jdbcType=VARCHAR})
+	</insert>
+</mapper>

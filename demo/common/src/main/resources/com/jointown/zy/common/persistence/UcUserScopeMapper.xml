@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.UcUserScopeDao">
+	<resultMap id="UcUserScope" type="com.jointown.zy.common.model.UcUserScope">
+		<id column="SCOPE_ID" property="scopeId" jdbcType="NUMERIC" />
+		<result column="USER_ID" property="userId" jdbcType="INTEGER" />
+		<result column="DEAL_TYPE" property="dealType" jdbcType="INTEGER" />
+		<result column="DEAL_ROLE" property="dealRole" jdbcType="INTEGER" />
+		<result column="SCALE" property="scale" jdbcType="INTEGER" />
+		<result column="PROVINCE_CODE" property="provinceCode" jdbcType="VARCHAR" />
+		<result column="CITY_CODE" property="cityCode" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+		<result column="ZIP_CODE" property="zipCode" jdbcType="VARCHAR" />
+		<result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+		<result column="FAX" property="fax" jdbcType="VARCHAR" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="CREATERID" property="createrId" jdbcType="INTEGER" />
+		<result column="UPDATERID" property="updaterId" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<resultMap id="BreedResultMap" type="com.jointown.zy.common.model.Breed">
+		<id column="BREED_ID" property="breedId" jdbcType="DECIMAL" />
+		<result column="BREED_NAME" property="breedName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="UcUserBreedResultMap" type="com.jointown.zy.common.model.UcUserBreed">
+		<result column="USER_ID" property="userId" jdbcType="INTEGER" />
+		<result column="BREED_NAME" property="breedName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Sql">
+		SCOPE_ID,USER_ID,DEAL_TYPE,DEAL_ROLE,SCALE,PROVINCE_CODE,CITY_CODE,ADDRESS,ZIP_CODE,AREA_CODE,FAX,CREATE_TIME,UPDATE_TIME,CREATERID,UPDATERID
+	</sql>
+	
+	<!-- 添加经营信息 -->
+ 	<insert id="addUcUserScope" parameterType="com.jointown.zy.common.model.UcUserScope">
+ 		insert into boss.uc_user_scope(
+ 			<include refid="Base_Sql"/>
+ 		) values(boss.SEQ_UC_USER_SCOPE.nextval,
+ 			#{userId,jdbcType=BIGINT},
+ 			#{dealType,jdbcType=INTEGER},
+ 			#{dealRole,jdbcType=INTEGER},
+ 			#{scale,jdbcType=INTEGER},
+ 			#{provinceCode,jdbcType=VARCHAR},
+ 			#{cityCode,jdbcType=VARCHAR},
+ 			#{address,jdbcType=VARCHAR},
+ 			#{zipCode,jdbcType=VARCHAR},
+ 			#{areaCode,jdbcType=VARCHAR},
+ 			#{fax,jdbcType=VARCHAR},
+ 			#{createTime,jdbcType=TIMESTAMP},
+ 			#{updateTime,jdbcType=TIMESTAMP},
+ 			#{createrId,jdbcType=INTEGER},
+ 			#{updaterId,jdbcType=INTEGER}
+ 		)
+ 	</insert>
+ 	
+ 	<!-- 根据会员ID查询经营信息 -->
+ 	<select id="selectUcUserScopeByUserId" parameterType="Long" resultMap="UcUserScope">
+ 		select * from boss.uc_user_scope 
+ 		where USER_ID = #{userId}
+ 	</select>
+ 	
+ 	<!-- 修改经营信息 -->
+ 	<update id="updateUcUserScopeById" parameterType="com.jointown.zy.common.model.UcUserScope">
+ 		update boss.uc_user_scope
+ 		<trim prefix="SET" suffixOverrides=",">
+	 		<if test="dealType !=null and dealType!=''">
+	 			DEAL_TYPE = #{dealType,jdbcType=INTEGER},
+	 		</if>
+	 		<if test="dealRole !=null and dealRole!=''">
+	 			DEAL_ROLE = #{dealRole,jdbcType=INTEGER},
+	 		</if>
+	 		<if test="scale != null and scale !=''">
+	 			SCALE = #{scale,jdbcType=INTEGER},
+	 		</if>
+	 		<if test="provinceCode !=null and provinceCode !=''">
+	 			PROVINCE_CODE=#{provinceCode,jdbcType=VARCHAR},
+	 		</if>
+	 		<if test="cityCode != null and cityCode!=''">
+	 			CITY_CODE = #{cityCode,jdbcType=VARCHAR},
+	 		</if>
+	 		<if test="address!=null and address!=''">
+	 			ADDRESS = #{address,jdbcType=VARCHAR},
+	 		</if>
+	 		<if test="zipCode!=null and zipCode!=''">
+	 			ZIP_CODE = #{zipCode,jdbcType=VARCHAR},
+	 		</if>
+	 		<if test="areaCode!=null and areaCode!=''">
+	 			AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+	 		</if>
+	 		<if test="fax != null and fax !=''">
+	 			FAX = #{fax,jdbcType=VARCHAR},
+	 		</if>
+	 		<if test="updateTime !=null and updateTime !=''">
+	 			UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+	 		</if>
+	 		<if test="createrId != null and createrId !=''">
+	 			CREATERID = #{createrId,jdbcType=INTEGER},
+	 		</if>
+	 		<if test="updaterId != null and updaterId !=''">
+	 			UPDATERID = #{updaterId,jdbcType=INTEGER},
+	 		</if>
+ 		</trim>
+ 		where SCOPE_ID = #{scopeId}
+ 	</update>
+	
+	
+	<!-- 品种名查询 -->
+	<select id="selectBreeds" parameterType="java.lang.String" resultMap="BreedResultMap" >
+			SELECT
+				BREED_ID, 
+				BREED_NAME
+			FROM  
+				boss.breed t1 where 1=1
+				and t1.status=1
+				<if test="_parameter !=null and _parameter!=''">
+					and t1.BREED_NAME like '%${_parameter}%' 
+				</if>
+	</select>
+	
+	<!-- 品种名查询 -->
+	<select id="selectBreedsByUserId" parameterType="Long" resultMap="UcUserBreedResultMap" >
+			SELECT
+				USER_ID, 
+				BREED_NAME
+			FROM  
+				boss.uc_user_breed t1 where 1=1
+				and t1.status=1
+				and t1.USER_ID = #{userId}
+	</select>
+	
+</mapper>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BossPermissionDao" >
+  <resultMap id="BossRolePermission" type="com.jointown.zy.common.model.BossRolePermission" >
+    <id column="PERMISSION_ID" property="permissionId" jdbcType="INTEGER" />
+    <id column="ROLE_ID" property="roleId" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+   
+ 
+ 	<!-- 查询权限角色关联表，得到使用该权限的条数 -->
+	<select id="findBossPermissionByRoleNumber" parameterType="java.lang.Integer"
+		resultMap="BossRolePermission">
+		select * from boss.boss_role_permission where permission_id
+		= #{permissionId,jdbcType=NUMERIC} and status = 0
+	</select>
+ 
+  <insert id="addBossRolePermission" parameterType="com.jointown.zy.common.model.BossRolePermission" >
+    insert into BOSS.BOSS_ROLE_PERMISSION (PERMISSION_ID, ROLE_ID, "STATUS", 
+      CREATE_TIME, UPDATE_TIME
+      )
+    values (
+			#{permissionId,jdbcType=INTEGER}, 
+			#{roleId,jdbcType=INTEGER}, 
+      		#{status,jdbcType=INTEGER}, 
+      		#{createTime,jdbcType=TIMESTAMP}, 
+      		#{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  
+    <!--  删除该用户下，该0级权限下，所有下级权限（1,2,3级）-->
+   <update id="deleBossRolePermissionByLevel0Id" parameterType="map">
+       update boss.boss_role_permission set status=1,update_time=#{now} 
+       where role_id=#{roleId} 
+       and status=0
+        and permission_id in (
+        	 select permission_id from boss_permission 
+       		start with permission_id=#{parentId} connect by  parent_id=prior permission_id
+			)
+  </update>
+  
+  <!-- 通过主键找角色权限 --> 
+   <select id="findBossRolePermissionByPK"  resultMap="BossRolePermission" parameterType="map">
+        select * from boss.boss_role_permission where   role_id=#{roleId} and PERMISSION_ID=#{permissionId}
+   </select>
+   
+   
+     <!-- 通过第2级菜单，找到第1级目录,参数：0级系统ID,角色ID --> 
+   <select id="findBossRolePermissionLevel"  resultMap="BossRolePermission" parameterType="map">
+  		 select b.parent_id as permission_id 
+        from boss.boss_permission b
+        where exists 
+        ( select 1 from boss.boss_role_permission a
+       where   a.role_id=#{roleId} 
+        and a.status=0
+        and a.permission_id=b.permission_id)
+         and b.status=0
+	    and b.type=#{sonType} 
+	    start with b.permission_id=#{parentId} connect by  b.parent_id=prior b.permission_id
+	    group by  b.parent_id 
+   </select>
+   
+  
+   <!-- 通过主键更新角色权限 --> 
+   <update id="UpdateBossRolePermissionByPK" parameterType="com.jointown.zy.common.model.BossRolePermission">
+        update boss.boss_role_permission set
+        "STATUS" = #{status},
+        UPDATE_TIME = #{updateTime} 
+        WHERE role_id=#{roleId} 
+        and PERMISSION_ID=#{permissionId}
+  </update>
+</mapper>

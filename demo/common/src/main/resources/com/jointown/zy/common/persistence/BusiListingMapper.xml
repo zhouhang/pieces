@@ -1,0 +1,817 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BusiListingDao" >
+  <resultMap id="BaseResultMap" type="com.jointown.zy.common.model.BusiListing" >
+    <id column="LISTINGID" property="listingid" jdbcType="VARCHAR" />
+    <result column="USERID" property="userid" jdbcType="DECIMAL" />
+    <result column="BREEDID" property="breedid" jdbcType="DECIMAL" />
+    <result column="WLID" property="wlid" jdbcType="VARCHAR" />
+    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+    <result column="LOWUNITPRICE" property="lowunitprice" jdbcType="DECIMAL" />
+    <result column="BILLPRICE" property="billprice" jdbcType="DECIMAL" />
+    <result column="LISTINGAMOUNT" property="listingamount" jdbcType="DECIMAL" />
+    <result column="SURPLUSES" property="surpluses" jdbcType="DECIMAL" />
+    <result column="MINSALES" property="minsales" jdbcType="DECIMAL" />
+    <result column="LISTINGTIMELIMIT" property="listingtimelimit" jdbcType="DECIMAL" />
+    <result column="HASBILL" property="hasbill" jdbcType="DECIMAL" />
+    <result column="LISTINGFLAG" property="listingflag" jdbcType="DECIMAL" />
+    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="UPDATETIME" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="EXAMINETIME" property="examinetime" jdbcType="TIMESTAMP" />
+    <result column="ISRECOMMEND" property="isrecommend" jdbcType="DECIMAL" />
+    <result column="RECOMMEND" property="recommend" jdbcType="TIMESTAMP" />
+    <result column="EXAMINECONTENT" property="examinecontent" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 我的挂牌列表 -->
+  <resultMap id="Listing" type="com.jointown.zy.common.vo.BusiListingVo">
+  	<result column="WLID" property="wlid" jdbcType="VARCHAR" />
+  	<result column="LISTINGID" property="listingid" jdbcType="VARCHAR" />
+  	<result column="USERID" property="userid" jdbcType="DECIMAL" />
+  	<result column="USER_NAME" property="username" jdbcType="VARCHAR" />
+  	<result column="TITLE" property="title" jdbcType="VARCHAR" />
+  	<result column="WAREHOUSENAME" property="warehousename" jdbcType="VARCHAR" />
+  	<result column="DICT_VALUE" property="dictvalue" jdbcType="VARCHAR" />
+  	<result column="ORDERNUM" property="ordernum" jdbcType="DECIMAL" />
+  	<result column="LISTINGAMOUNT" property="listingamount" jdbcType="DECIMAL" />
+  	<result column="SURPLUSES" property="surpluses" jdbcType="DECIMAL" />
+  	<result column="MINSALES" property="minsales" jdbcType="DECIMAL" />
+  	<result column="LISTINGTIMELIMIT" property="listingtimelimit" jdbcType="DECIMAL" />
+  	<result column="HASBILL" property="hasbill" jdbcType="DECIMAL" />
+  	<result column="LOWUNITPRICE" property="lowunitprice" jdbcType="DECIMAL" />
+  	<result column="BILLPRICE" property="billprice" jdbcType="DECIMAL" />
+  	<result column="TOTALPRICE" property="totalprice" jdbcType="DECIMAL" />
+  	<result column="LISTINGFLAG" property="listingflag" jdbcType="DECIMAL" />
+  	<result column="ISRECOMMEND" property="isrecommend" jdbcType="DECIMAL" />
+  	<result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+  	<result column="UPDATETIME" property="updatetime" jdbcType="TIMESTAMP" />
+  	<result column="EXAMINETIME" property="examinetime" jdbcType="TIMESTAMP" />
+  	<result column="EXPIRETIME" property="expiretime" jdbcType="TIMESTAMP" />
+  	<result column="EXAMINECONTENT" property="examinecontent" jdbcType="VARCHAR" />
+  	 <!--  2015-11-18 add by shangcuijuan 挂牌品种 breed_name -->
+   <result column="BREED_NAME" property="breedname" jdbcType="VARCHAR" />
+  </resultMap>
+ 
+  <select id="selectSingleListing" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    LISTINGID, 
+    USERID, 
+    BREEDID, 
+    WLID, 
+    TITLE, 
+    LOWUNITPRICE, 
+    BILLPRICE, 
+    LISTINGAMOUNT,
+    SURPLUSES, 
+    MINSALES, 
+    LISTINGTIMELIMIT,
+    HASBILL,
+    LISTINGFLAG, 
+    CREATETIME, 
+    UPDATETIME, 
+    EXAMINETIME, 
+    ISRECOMMEND, 
+    RECOMMEND, 
+    EXAMINECONTENT 
+    from ZYC.BUSI_LISTING
+    where 
+    LISTINGID = #{listingid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete 
+    from 
+    ZYC.BUSI_LISTING
+    where 
+    LISTINGID = #{listingid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insertListing" parameterType="com.jointown.zy.common.model.BusiListing" >
+    <selectKey resultType="java.lang.String" keyProperty="listingid" order="BEFORE">
+	   	select to_char(sysdate,'yyyyMMdd')||ZYC.SEQ_BUSI_LISTING.nextval as listingid from dual
+  	 </selectKey>
+    insert into 
+    ZYC.BUSI_LISTING (
+	    LISTINGID, 
+	    USERID, 
+	    BREEDID, 
+	    WLID, 
+	    TITLE, 
+	    LOWUNITPRICE, 
+	    BILLPRICE, 
+	    LISTINGAMOUNT,
+	    SURPLUSES, 
+	    MINSALES,
+	    LISTINGTIMELIMIT, 
+	    HASBILL, 
+	    LISTINGFLAG, 
+	    CREATETIME, 
+	    UPDATETIME, 
+	    EXAMINETIME, 
+	    ISRECOMMEND, 
+	    RECOMMEND, 
+	    EXAMINECONTENT
+    )
+    values (
+      #{listingid,jdbcType=DECIMAL}, 
+      #{userid,jdbcType=DECIMAL}, 
+      #{breedid,jdbcType=DECIMAL}, 
+      #{wlid,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, 
+      #{lowunitprice,jdbcType=DECIMAL}, 
+      #{billprice,jdbcType=DECIMAL}, 
+      #{listingamount,jdbcType=DECIMAL}, 
+      #{surpluses,jdbcType=DECIMAL},
+      #{minsales,jdbcType=DECIMAL}, 
+      #{listingtimelimit,jdbcType=DECIMAL}, 
+      #{hasbill,jdbcType=DECIMAL}, 
+      #{listingflag,jdbcType=DECIMAL}, 
+      <choose>  
+        <when test="createtime != null">  
+            #{createtime,jdbcType=TIMESTAMP},
+        </when>  
+        <otherwise>  
+            sysdate,
+        </otherwise>  
+      </choose>
+      <choose>  
+        <when test="updatetime != null">  
+            #{updatetime,jdbcType=TIMESTAMP},
+        </when>  
+        <otherwise>  
+            sysdate,
+        </otherwise>  
+      </choose>
+      #{examinetime,jdbcType=TIMESTAMP}, 
+      #{isrecommend,jdbcType=DECIMAL}, 
+      #{recommend,jdbcType=TIMESTAMP}, 
+      #{examinecontent,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jointown.zy.common.model.BusiListing" >
+    <selectKey resultType="java.lang.String" keyProperty="listingid" order="BEFORE">
+	   	select to_char(sysdate,'yyyyMMdd')||ZYC.SEQ_BUSI_LISTING.nextval as listingid from dual
+  	 </selectKey>
+    insert into ZYC.BUSI_LISTING
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      LISTINGID,
+      USERID,
+      BREEDID,
+      WLID,
+      TITLE,
+      LOWUNITPRICE,
+      BILLPRICE,
+      LISTINGAMOUNT,
+      SURPLUSES,
+      MINSALES,
+      LISTINGTIMELIMIT,
+      HASBILL,
+      LISTINGFLAG,
+      CREATETIME,
+      UPDATETIME,
+      EXAMINETIME,
+      ISRECOMMEND,
+      RECOMMEND,
+      EXAMINECONTENT,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{listingid,jdbcType=DECIMAL},
+      #{userid,jdbcType=DECIMAL},
+      #{breedid,jdbcType=DECIMAL},
+      #{wlid,jdbcType=VARCHAR},
+      #{title,jdbcType=VARCHAR},
+      #{lowunitprice,jdbcType=DECIMAL},
+      #{billprice,jdbcType=DECIMAL},
+      #{listingamount,jdbcType=DECIMAL},
+      #{surpluses,jdbcType=DECIMAL},
+      #{minsales,jdbcType=DECIMAL},
+      #{listingtimelimit,jdbcType=DECIMAL},
+      #{hasbill,jdbcType=DECIMAL},
+      #{listingflag,jdbcType=DECIMAL},
+      sysdate,
+      sysdate,
+      #{examinetime,jdbcType=TIMESTAMP},
+      #{isrecommend,jdbcType=DECIMAL},
+      #{recommend,jdbcType=TIMESTAMP},
+      #{examinecontent,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <!--全表选择性字段更新-->
+  <update id="updateByIdSelective" parameterType="com.jointown.zy.common.model.BusiListing" >
+    update ZYC.BUSI_LISTING
+    <set >
+      <if test="userid != null" >
+        USERID = #{userid,jdbcType=DECIMAL},
+      </if>
+      <if test="breedid != null" >
+        BREEDID = #{breedid,jdbcType=DECIMAL},
+      </if>
+      <if test="wlid != null" >
+        WLID = #{wlid,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        TITLE = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="lowunitprice != null" >
+        LOWUNITPRICE = #{lowunitprice,jdbcType=DECIMAL},
+      </if>
+      <if test="billprice != null" >
+        BILLPRICE = #{billprice,jdbcType=DECIMAL},
+      </if>
+      <if test="listingamount != null" >
+        LISTINGAMOUNT = #{listingamount,jdbcType=DECIMAL},
+      </if>
+      <if test="surpluses != null" >
+        SURPLUSES = #{surpluses,jdbcType=DECIMAL},
+      </if>
+      <if test="minsales != null" >
+        MINSALES = #{minsales,jdbcType=DECIMAL},
+      </if>
+      <if test="listingtimelimit != null" >
+        LISTINGTIMELIMIT = #{listingtimelimit,jdbcType=DECIMAL},
+      </if>
+      <if test="hasbill != null" >
+        HASBILL = #{hasbill,jdbcType=DECIMAL},
+      </if>
+      <if test="listingflag != null" >
+        LISTINGFLAG = #{listingflag,jdbcType=DECIMAL},
+      </if>
+      <if test="createtime != null" >
+        CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <choose>  
+        <when test="updatetime != null">  
+            UPDATETIME = #{updatetime,jdbcType=TIMESTAMP},
+        </when>  
+        <otherwise>  
+            UPDATETIME = sysdate,
+        </otherwise>  
+      </choose>
+      <if test="examinetime != null" >
+        EXAMINETIME = #{examinetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isrecommend != null" >
+        ISRECOMMEND = #{isrecommend,jdbcType=DECIMAL},
+      </if>
+      <if test="recommend != null" >
+        RECOMMEND = #{recommend,jdbcType=TIMESTAMP},
+      </if>
+      <if test="examinecontent != null" >
+        EXAMINECONTENT = #{examinecontent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where LISTINGID = #{listingid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jointown.zy.common.model.BusiListing" >
+    update ZYC.BUSI_LISTING
+    set USERID = #{userid,jdbcType=DECIMAL},
+      BREEDID = #{breedid,jdbcType=DECIMAL},
+      WLID = #{wlid,jdbcType=VARCHAR},
+      TITLE = #{title,jdbcType=VARCHAR},
+      LOWUNITPRICE = #{lowunitprice,jdbcType=DECIMAL},
+      BILLPRICE = #{billprice,jdbcType=DECIMAL},
+      LISTINGAMOUNT = #{listingamount,jdbcType=DECIMAL},
+      SURPLUSES = #{surpluses,jdbcType=DECIMAL},
+      MINSALES = #{minsales,jdbcType=DECIMAL},
+      LISTINGTIMELIMIT = #{listingtimelimit,jdbcType=DECIMAL},
+      HASBILL = #{hasbill,jdbcType=DECIMAL},
+      LISTINGFLAG = #{listingflag,jdbcType=DECIMAL},
+      CREATETIME = #{createtime,jdbcType=TIMESTAMP},
+      UPDATETIME = sysdate,
+      EXAMINETIME = #{examinetime,jdbcType=TIMESTAMP},
+      ISRECOMMEND = #{isrecommend,jdbcType=DECIMAL},
+      RECOMMEND = #{recommend,jdbcType=TIMESTAMP},
+      EXAMINECONTENT = #{examinecontent,jdbcType=VARCHAR}
+    where LISTINGID = #{listingid,jdbcType=VARCHAR}
+  </update>
+  
+  <!--我的挂牌查询-->
+  <select id="selectListingsByCondition" parameterType="com.jointown.zy.common.model.Page" resultMap="Listing">
+	  select
+	  	 x.ORDERNUM,  
+	     x.examinecontent,
+	     x.wlid,
+	     x.breed_name,
+	     x.listingid,
+	     x.userid,
+	     x.title,
+	     x.warehousename,
+	     x.dict_value,
+	     x.listingamount,
+	     x.surpluses,
+	     x.listingtimelimit,
+	     x.lowunitprice,
+	     x.totalprice,
+	     x.listingflag,
+	     x.createtime,
+	     x.updatetime,
+	     (x.examinetime + x.listingtimelimit) as EXPIRETIME
+	   FROM  
+	       (select
+	       t.ORDERNUM,
+	       t.examinecontent,
+	       t.wlid,
+	       br.breed_name,
+	       t.listingid,
+	       t.userid,
+	       t.title,
+	       w.warehousename,
+	       d.dict_value,
+	       t.listingamount,
+	       t.surpluses,
+	       t.listingtimelimit,
+	       t.lowunitprice,
+	       TO_CHAR(NVL(NULL,(t.listingamount * t.lowunitprice)),'FM99999999999999999999999999999999990.000000') as totalprice,
+	       t.listingflag,
+	       t.createtime,
+	       t.updatetime,
+	       t.examinetime
+	       from (select NVL(d.ORDERNUM,0) ORDERNUM,l.examinecontent,l.listingid,l.userid,l.listingamount,l.surpluses,l.listingtimelimit,l.lowunitprice,l.createtime,l.updatetime,l.examinetime,l.listingflag,l.wlid,l.title from ZYC.BUSI_LISTING l
+	       left join (select o.LISTINGID,count(1) as ORDERNUM from ZYC.BUSI_ORDER o where o.orderstate != 2 group by o.LISTINGID) d
+		   on l.listingid = d.listingid 
+		   <if test="params.userid != null and params.userid != ''">
+		      where l.userid=#{params.userid}
+		   </if>
+	     )t 
+	  left join 
+	  ZYC.BUSI_WHLIST wh  
+	    on t.wlid=wh.wlid 
+	  left join 
+	  ZYC.BUSI_WAREHOUSE w 
+	    on wh.warehouseid = w.warehouseid
+	    left join 
+	    BOSS.BREED br  
+	      on wh.breedcode = br.breed_id 
+	    left join 
+	    BOSS.DICT_INFO d 
+	      on wh.wlunit = d.DICT_CODE)x 
+	    where 1=1
+	    <if test="params.orderflag != null and params.orderflag != ''">
+	    	<if test="params.orderflag == 0">
+			   	and x.ORDERNUM = 0
+		    </if>
+		   	<if test="params.orderflag > 0">
+			   	and x.ORDERNUM > 0
+		    </if>
+	    </if>
+		<if test="params.listingflag != null and params.listingflag != ''">
+	        and x.LISTINGFLAG =#{params.listingflag}
+	    </if>
+	    <if test="params.startdate != null and params.startdate != ''">
+	    	and x.CREATETIME > to_date(#{params.startdate},'yyyy-mm-dd hh24:mi:ss') 
+	    </if>
+	    <if test="params.enddate != null and params.enddate != ''">
+	    	and to_date(#{params.enddate},'yyyy-mm-dd hh24:mi:ss') > x.CREATETIME  
+	    </if>
+	   	<if test="params.breedname != null and params.breedname != ''">
+	      	and x.BREED_NAME like CONCAT(CONCAT('%', #{params.breedname, jdbcType=VARCHAR}),'%')
+	    </if>
+	 	ORDER BY x.createtime DESC,x.listingid desc
+   </select>
+   
+ <!--后台BOSS挂牌-->
+  <select id="selectListingsNotExaminels" parameterType="com.jointown.zy.common.model.Page" resultMap="Listing">
+    select 
+    t.listingid,
+    t.wlid,
+    t.userid,
+    u.user_name,
+    t.breedid,
+    t.title,
+    t.listingamount,
+    t.lowunitprice,
+    t.billprice,
+    t.minsales,
+    t.listingtimelimit,
+    t.hasbill,
+	t.createtime,
+	t.updatetime,
+	t.examinetime,
+	(t.examinetime + t.listingtimelimit) as expiretime,
+	t.isrecommend,
+	i.dict_value,
+	t.examinecontent,
+	t.listingflag,
+	y.salesman,
+ 	b.breed_name         <!--2015-11-18 add by shangcuijuan  挂牌品种   -->
+	FROM 
+		(select b.wlid,b.listingid,b.userid,b.breedid,b.title,b.listingamount,b.lowunitprice,b.billprice,b.minsales,b.listingtimelimit,b.hasbill,
+		b.createtime,b.updatetime,b.examinetime,(b.examinetime + b.listingtimelimit) as expiretime,b.isrecommend,b.examinecontent,b.listingflag
+	 	from ZYC.BUSI_LISTING b
+	 	<if test="params.busiListingSearchDto.listingflag != null and params.busiListingSearchDto.listingflag != '' and params.busiListingSearchDto.listingflag !='-1'">
+	      	where b.listingflag = #{params.busiListingSearchDto.listingflag, jdbcType=DECIMAL}
+	    </if>
+	    <if test="params.busiListingSearchDto.listingflag != null and params.busiListingSearchDto.listingflag != '' and params.busiListingSearchDto.listingflag =='-1'">
+	      	where b.listingflag in (1,2,4)
+	    </if>
+	 	)t
+	 	<!-- 业务员查询 -->
+	left join (select s.listingid,u.user_name as salesman 
+			from ZYC.BUSI_LISTING_SALESMAN s, BOSS.BOSS_USER   u
+            where s.salesmanid = u.user_id(+)) y
+    on t.listingid = y.listingid 
+ 	left join 
+ 	BOSS.UC_USER u on t.userid=u.user_id
+ 	left join 
+ 	ZYC.BUSI_WHLIST w on t.WLID = w.WLID
+ 	left join 
+ 	BOSS.DICT_INFO i on w.WLUNIT = i.DICT_CODE
+ 	left join BOSS.BREED b on t.breedid = b.breed_id
+ 	where 1=1
+    <if test="params.busiListingSearchDto.listingid != null and params.busiListingSearchDto.listingid != ''">
+        and t.LISTINGID like CONCAT(CONCAT('%', #{params.busiListingSearchDto.listingid, jdbcType=VARCHAR}),'%')
+    </if>
+    <if test="params.busiListingSearchDto.wlid != null and params.busiListingSearchDto.wlid != ''">
+        and t.WLID like CONCAT(CONCAT('%', #{params.busiListingSearchDto.wlid, jdbcType=VARCHAR}),'%')
+    </if>
+    <if test="params.busiListingSearchDto.title != null and params.busiListingSearchDto.title != ''">
+      	and t.TITLE like CONCAT(CONCAT('%', #{params.busiListingSearchDto.title, jdbcType=VARCHAR}),'%')
+    </if>
+    <if test="params.busiListingSearchDto.userinfo != null and params.busiListingSearchDto.userinfo != ''">
+      	and (u.USER_NAME like CONCAT(CONCAT('%', #{params.busiListingSearchDto.userinfo, jdbcType=VARCHAR}),'%') or u.MOBILE = #{params.busiListingSearchDto.userinfo, jdbcType=VARCHAR})
+    </if>
+    <if test="params.busiListingSearchDto.listingtimelimit != null and params.busiListingSearchDto.listingtimelimit != ''">
+      	and t.LISTINGTIMELIMIT = #{params.busiListingSearchDto.listingtimelimit, jdbcType=DECIMAL}
+    </if>
+    <if test="params.busiListingSearchDto.startlistingdate != null and params.busiListingSearchDto.startlistingdate != ''">
+    	and t.CREATETIME >= to_date(#{params.busiListingSearchDto.startlistingdate},'yyyy-mm-dd hh24:mi:ss') 
+    </if>
+    <if test="params.busiListingSearchDto.endlistingdate != null and params.busiListingSearchDto.endlistingdate != ''">
+    	and to_date(#{params.busiListingSearchDto.endlistingdate},'yyyy-mm-dd hh24:mi:ss') >= t.CREATETIME  
+    </if>
+    <if test="params.busiListingSearchDto.startoverduedate != null and params.busiListingSearchDto.startoverduedate != ''">
+    	and (t.EXAMINETIME+t.LISTINGTIMELIMIT) >= to_date(#{params.busiListingSearchDto.startoverduedate},'yyyy-mm-dd hh24:mi:ss') 
+    </if>
+    <if test="params.busiListingSearchDto.endoverduedate != null and params.busiListingSearchDto.endoverduedate != ''">
+    	and to_date(#{params.busiListingSearchDto.endoverduedate},'yyyy-mm-dd hh24:mi:ss') >= (t.EXAMINETIME+t.LISTINGTIMELIMIT)  
+    </if>
+    <if test="params.busiListingSearchDto.salesman != null and params.busiListingSearchDto.salesman != ''">
+    	and y.salesman like CONCAT(CONCAT('%', #{params.busiListingSearchDto.salesman, jdbcType=VARCHAR}),'%')
+    </if>
+     <if test="params.busiListingSearchDto.breedname != null and params.busiListingSearchDto.breedname != ''">
+      	and b.breed_name like CONCAT(CONCAT('%', #{params.busiListingSearchDto.breedname, jdbcType=VARCHAR}),'%')
+    </if>
+	   order by t.createtime desc,t.listingid desc
+   </select>
+   
+   <!-- 下架挂牌 -->
+   <update id="updateListingState" parameterType="java.lang.String" >
+    	update ZYC.BUSI_LISTING set LISTINGFLAG = 4,SURPLUSES = 0,UPDATETIME = sysdate where LISTINGID = #{listingid,jdbcType=VARCHAR} and LISTINGFLAG = 2
+   </update>
+   
+   <!-- 是否推荐 -->
+   <update id="updateListingRecommend" parameterType="com.jointown.zy.common.model.BusiListing" >
+    	update ZYC.BUSI_LISTING set ISRECOMMEND = #{isrecommend,jdbcType=DECIMAL},RECOMMEND = sysdate,UPDATETIME=sysdate  where LISTINGID = #{listingid,jdbcType=VARCHAR} and LISTINGFLAG = 2
+   </update>
+   
+   <!-- 审核状态 -->
+   <update id="updateListingFlag" parameterType="com.jointown.zy.common.model.BusiListing" >
+    	update ZYC.BUSI_LISTING set LISTINGFLAG = #{listingflag,jdbcType=DECIMAL},EXAMINECONTENT = #{examinecontent,jdbcType=VARCHAR},EXAMINETIME = sysdate,UPDATETIME=sysdate where LISTINGID = #{listingid,jdbcType=VARCHAR} and LISTINGFLAG = 0
+   </update>
+   
+   <!-- 更新仓单可挂数量 -->
+   <update id="updateWlsurPlus" parameterType="com.jointown.zy.common.model.BusiListing" >
+    	update ZYC.BUSI_WHLIST set WLSURPLUS = WLSURPLUS +　#{surpluses,jdbcType=DECIMAL},UPDATETIME = sysdate where WLID = #{wlid,jdbcType=VARCHAR} and WLTOTAL >= (WLSURPLUS +　#{surpluses,jdbcType=DECIMAL}) and WLFLAG = 0
+   </update>
+   
+   <!-- 更新挂牌可摘数量 -->
+   <update id="updateListingSurplusByOrderAmount" parameterType="com.jointown.zy.common.model.BusiListing">
+       update ZYC.BUSI_LISTING
+       set
+          SURPLUSES = SURPLUSES + #{surpluses,jdbcType=DECIMAL},
+          UPDATETIME = #{updatetime}
+       where
+          LISTINGID = #{listingid}
+          and LISTINGAMOUNT <![CDATA[>=]]> (SURPLUSES + #{surpluses,jdbcType=DECIMAL})
+   </update>
+   
+   <resultMap type="com.jointown.zy.common.vo.BusiGoodsSellerVo" id="selectGoodsSellerInfoMap">
+  	<id column="USERID" property="sellerId"/>
+  	<!-- <result column="CERTIFY_NAME" property="name" /> -->
+  	<result column="NAME" property="name" />
+  	<!-- <result column="CERTIFY" property="certify" /> -->
+  	<result column="MOBILE" property="mobilephone"/>
+  	<!-- <result column="CREATETIME" property="registTime"/> -->
+  	<result column="DEALCOUNT" property="dealCount"/>
+  	<result column="GOODSCOUNT" property="goodsCount"/>
+  </resultMap>
+  
+  <!-- 查询挂牌商品的左上方信息-->
+  <select id="selectGoodsSellerInfo" resultMap="selectGoodsSellerInfoMap" parameterType="string">
+  	<!-- select
+  		a.USERID,
+  		b.COMPANYNAME,
+  		b.MOBILE,
+  		to_char(b.CREATE_TIME, 'yyyy-MM-dd') as CREATETIME,
+  		(select count(*) from ZYC.BUSI_ORDER where USERID = a.USERID and ORDERSTATE = 1) as DEALCOUNT,
+  		(select count(*) from zyc.BUSI_LISTING where USERID = a.USERID and LISTINGFLAG =2) as GOODSCOUNT
+  	from 
+  		(select LISTINGID,USERID from ZYC.BUSI_LISTING where LISTINGID = #{listingid}) a
+  	join
+  		BOSS.UC_USER b
+  	on (a.USERID = b.USER_ID) -->
+  	<!-- select
+  		a.USERID,
+  		b.CERTIFY,
+  		case when b.CERTIFY=1 then (select name from boss.uc_user_certify where user_id=a.USERID)
+      when b.CERTIFY=2 then (select COMPANY_NAME from boss.UC_COMPANY_CERTIFY where user_id=a.USERID) end as CERTIFY_NAME,
+  		b.MOBILE,
+  		to_char(b.CREATE_TIME, 'yyyy-MM-dd') as CREATETIME,
+  		(select count(*) from ZYC.BUSI_ORDER where USERID = a.USERID and ORDERSTATE = 1) as DEALCOUNT,
+  		(select count(*) from zyc.BUSI_LISTING where USERID = a.USERID and LISTINGFLAG =2) as GOODSCOUNT
+  	from 
+  		(select LISTINGID,USERID from ZYC.BUSI_LISTING where LISTINGID = #{listingid}) a
+  	join
+  		BOSS.UC_USER b
+  	on (a.USERID = b.USER_ID) -->
+  	<!-- 货主信息修改为专属业务经理 -->
+  	select
+  		a.USERID,
+  		c.USER_NAME as NAME,
+  		c.MOBILE,
+  		(select count(*) from ZYC.BUSI_ORDER where USERID = a.USERID and ORDERSTATE = 1) as DEALCOUNT,
+  		(select count(*) from zyc.BUSI_LISTING where USERID = a.USERID and LISTINGFLAG =2) as GOODSCOUNT
+  	from 
+  		(select LISTINGID,USERID from ZYC.BUSI_LISTING where LISTINGID = #{listingid}) a
+  	left join BOSS.UC_USER b on (b.USER_ID = a.USERID and b.STATUS = 0)
+    left join BOSS.BOSS_USER c on(b.SALESMANID = c.USER_ID)
+  </select>
+  
+ <resultMap type="com.jointown.zy.common.vo.BusiGoodsInfoVo" id="selectGoodsInfoMap">
+ 	<id column="LISTINGID" property="listingid"/>
+  	<result column="TITLE" property="title"/>
+  	<result column="LOWUNITPRICE" property="nobillPrice"/>
+  	<result column="BILLPRICE" property="billPrice"/>
+  	<result column="DICT_VALUE" property="unitname"/>
+  	<result column="GRADE" property="grade"/>
+  	<result column="LISTINGAMOUNT" property="amount"/>
+  	<result column="MINSALES" property="minsalesAmount"/>
+  	<result column="HASBILL" property="hasbill"/>
+  	<result column="ORIGIN" property="origin"/>
+  	<result column="PACKINGWAY" property="packingway"/>
+  	<result column="WLID" property="wlid"/>
+  	<result column="WAREHOUSENAME" property="warehouseName"/>
+  	<result column="MAINPARACTER" property="mainpapacter"/>
+  	<result column="DETAILED" property="detailed"/>
+  	<result column="WATER" property="moisture"/>
+  	<result column="ASH" property="ash"/>
+  	<result column="SULFURDIOXIDEIN" property="sulfurDioxideIn"/>
+  	<result column="CONTENTCHECK" property="contentCheck"/>
+  	<result column="MAXSALES" property="maxsalesAmount"/>
+  	<result column="USERID" property="userId"/>
+  	<result column="BREEDID" property="breedId"/>
+  	<result column="BREED_NAME" property="breedName"/><!-- add by Calvin.wh 2015.10.28 -->
+  	<result column="LISTINGFLAG" property="listingFlag" />
+  	<result column="CHECK_NUMBER" property="checkNumber" jdbcType="VARCHAR"/>
+  	<result column="LEVEL_EVA" property="levelEva" jdbcType="VARCHAR"/>
+  	<result column="SURPLUSES" property="surpluses" jdbcType="DECIMAL"/>
+  	<result column="EXAMINETIME" property="examintime" jdbcType="DECIMAL"/>
+  	<collection property="goodsPicList" select="com.jointown.zy.common.dao.BusiQualityPicDao.selectAllPicByWLID"
+  	 column="WLID" javaType="ArrayList" ofType="BusiQualityPic"/>
+  	<collection property="busiQualityItem" select="com.jointown.zy.common.dao.BusiQualityItemDao.selectByInfoId"
+  	 column="QUALITY_INFO_ID" javaType="ArrayList" ofType="BusiQualityItem"/>
+  </resultMap>
+  
+  <!-- 查询挂牌商品的信息（包括基本信息、交收信息、质检信息、图片）  -->
+  <select id="selectGoodsInfo" resultMap="selectGoodsInfoMap" parameterType="string">
+  		  	select
+  		a.LISTINGID,
+  		a.WLID,
+  		a.USERID,
+  		a.BREEDID,
+  		f.BREED_NAME,
+  		a.TITLE,
+  		a.LOWUNITPRICE,
+  		a.BILLPRICE,
+  		a.LISTINGAMOUNT,
+  		a.MINSALES,
+  		a.HASBILL,
+  		a.LISTINGFLAG,
+  		a.SURPLUSES,
+  		b.ORIGIN,
+  		b.PACKINGWAY,
+  		c.DICT_VALUE,
+  		d.WAREHOUSENAME,
+  		e.GRADE,
+  		e.CHECK_NUMBER,
+  		e.LEVEL_EVA,
+  		e.QUALITY_INFO_ID,
+  		a.SURPLUSES,
+  		a.EXAMINETIME
+  	from
+  		(select LISTINGID,WLID,USERID,BREEDID,TITLE,LOWUNITPRICE,BILLPRICE,LISTINGAMOUNT,MINSALES,HASBILL,LISTINGFLAG,SURPLUSES,EXAMINETIME from ZYC.BUSI_LISTING where LISTINGID = #{listingid}) a
+  	join
+  		ZYC.BUSI_WHLIST b
+  	on (a.WLID = b.WLID and b.WLFLAG = 0)
+  	left join 
+  		BOSS.DICT_INFO c
+    on (b.WLUNIT = c.DICT_CODE)
+    left join
+    	ZYC.BUSI_WAREHOUSE d
+    on (b.WAREHOUSEID = d.WAREHOUSEID)
+    left  join
+    	ZYC.BUSI_QUALITY_INFO e
+    on (a.WLID = e.WLID)
+    left join 
+    	BOSS.breed f
+    on (a.breedid = f.breed_id)
+  </select>
+  
+  <!-- 定时器所需查询所有过期的挂牌中的挂牌信息 update by wangjunhu-->
+  <select id="selectNotExpiredListings" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+	select title,listingid,listingflag,wlid,userid,examinetime,listingtimelimit,surpluses,breedid from ZYC.BUSI_LISTING  where listingflag=2 
+	<if test="_parameter == 0">
+	   	and (examinetime+listingtimelimit) <![CDATA[<=]]> sysdate
+    </if>
+	<if test="_parameter > 0">
+	   	and to_char(examinetime+listingtimelimit-#{_parameter},'yyyy-mm-dd hh24') = to_char(sysdate,'yyyy-mm-dd hh24')
+    </if>
+  </select>
+  
+  <!--
+  	 原 查询挂牌商品的信息（包括基本信息、交收信息、质检信息、图片） 
+  <select id="selectGoodsInfo" resultMap="selectGoodsInfoMap" parameterType="string">
+  	select
+  		a.LISTINGID,
+  		a.WLID,
+  		a.USERID,
+  		a.BREEDID,
+  		a.TITLE,
+  		a.LOWUNITPRICE,
+  		a.BILLPRICE,
+  		a.LISTINGAMOUNT,
+  		a.MINSALES,
+  		a.HASBILL,
+  		a.LISTINGFLAG,
+  		a.SURPLUSES,
+  		b.ORIGIN,
+  		b.PACKINGWAY,
+  		c.DICT_VALUE,
+  		d.WAREHOUSENAME,
+  		e.MAINPARACTER,
+  		e.GRADE,
+  		e.DETAILED,
+  		e.WATER,
+  		e.ASH,
+  		e.SULFURDIOXIDEIN,
+  		e.CONTENTCHECK,
+  		(select (a.LISTINGAMOUNT - nvl(sum(AMOUNT),0)) from ZYC.BUSI_ORDER where LISTINGID = a.LISTINGID and ORDERSTATE <![CDATA[<>]]> 2) as MAXSALES
+  	from
+  		(select LISTINGID,WLID,USERID,BREEDID,TITLE,LOWUNITPRICE,BILLPRICE,LISTINGAMOUNT,MINSALES,HASBILL,LISTINGFLAG,SURPLUSES from ZYC.BUSI_LISTING where LISTINGID = #{listingid}) a
+  	join
+  		ZYC.BUSI_WHLIST b
+  	on (a.WLID = b.WLID and b.WLFLAG = 0)
+  	left join 
+  		BOSS.DICT_INFO c
+    on (b.WLUNIT = c.DICT_CODE)
+    left join
+    	ZYC.BUSI_WAREHOUSE d
+    on (b.WAREHOUSEID = d.WAREHOUSEID)
+    left join
+    	ZYC.BUSI_QUALITY_INFO e
+    on (a.WLID = e.WLID)
+  </select>-->
+  
+  <resultMap type="com.jointown.zy.common.vo.BusiGoodsRecommenVo" id="selectGoodsRecommenListMap">
+  	<id column="LISTINGID" property="listingid"/>
+  	<result column="TITLE" property="title"/>
+  	<result column="LOWUNITPRICE" property="price"/>
+  	<result column="DICT_VALUE" property="unitName"/>
+  	<result column="PATH" property="picPath"/>
+  </resultMap>
+  
+  <!-- 首页查询推荐商品中正常商品的基本信息，包括规格、等级 -->
+  <select id="selectRecommenGoods" resultMap="selectGoodsRecommenListMap" parameterType="int">
+	  select * from (
+	  	select
+	  		a.LISTINGID,
+	  		a.TITLE,
+	  		a.LOWUNITPRICE,
+	  		c.DICT_VALUE,
+	  		d.PATH
+	  	from
+	  		(select LISTINGID,TITLE,LOWUNITPRICE,WLID,RECOMMEND from ZYC.BUSI_LISTING where LISTINGFLAG = 2 and ISRECOMMEND = 1) a
+	  	join
+	  		ZYC.BUSI_WHLIST b
+	  	on (a.WLID = b.WLID)
+	  	join
+	  		BOSS.DICT_INFO c
+	  	on (b.WLUNIT = c.DICT_CODE)
+	  	join
+	  		ZYC.BUSI_QUALITYPIC d
+	  	on (a.WLID = d.WLID and d.PICINDEX = 1)
+	  	order by a.RECOMMEND )
+	  where ROWNUM <![CDATA[<=]]> #{count}
+  </select>
+  
+  <!-- 查询平台推荐的挂牌商品 -->
+  <select id="selectGoodsRecommenList" resultMap="selectGoodsRecommenListMap" parameterType="int">
+	select * from 
+      (select rownum as rn,
+             a.TITLE ,
+             c.dict_value,
+             f.path,  
+             a.lowunitprice, 
+             c.dict_value as dictvalue,
+             d.origin,
+             e.grade,
+             a.listingamount || c.dict_value as listingamount,
+             a.listingid
+        from 
+             zyc.busi_listing      a
+             left join zyc.busi_qualitypic  f on a.wlid = f.wlid and f.picindex=1
+             left join  zyc.busi_quality_info  e on a.wlid = e.wlid,
+             boss.breed            b,
+             boss.dict_info        c,
+             zyc.busi_whlist       d
+       	 where 
+       	 a.breedid = b.breed_id
+         and b.breed_count_unit = c.dict_code
+         and a.wlid = d.wlid
+           and a.listingflag = 2
+           and a.isrecommend = 1
+           and a.SURPLUSES > 0
+           )
+      where <![CDATA[rn <= #{count,jdbcType=DECIMAL}]]>
+  </select>
+   <!-- 查询挂牌商品是否已经售完-->
+   <select id="selectGoodsOrderState" parameterType="String" resultType="Integer">
+   		select count(l.listingid) from ZYC.BUSI_LISTING l where l.listingid = #{listingid,jdbcType=VARCHAR} and l.listingamount=(select nvl(sum(o.amount),0) from ZYC.BUSI_ORDER o where o.orderstate=1 and o.listingid = #{listingid,jdbcType=VARCHAR})
+   </select>
+   
+   <!-- 获取指定品种，挂牌中，价格最低的 4个挂牌：标题、散货图、未开发票价格、单位  add by fanyuna 2015.10.14-->
+   <select id="selectListingByBreed" parameterType="java.util.Map" resultType="java.util.Map">
+   		select bl.listingid,bl.title,bl.lowunitprice,p.path,d.dict_value from (
+		select * from (
+		select l.listingid,l.title,l.lowunitprice,l.wlid from zyc.busi_listing l where l.breedid=#{breedId,jdbcType=DECIMAL}  and l.listingflag=#{listingflag,jdbcType=DECIMAL}
+		order by l.LOWUNITPRICE 
+		) where  <![CDATA[ rownum<=#{num,jdbcType=DECIMAL} ]]>
+		) bl
+		left join 
+		zyc.busi_whlist w on bl.wlid=w.wlid
+		left join 
+		zyc.busi_qualitypic p on w.wlid=p.wlid and p.picindex=#{picindex,jdbcType=DECIMAL}
+		left join 
+		boss.dict_info d on w.wlunit=d.dict_code
+   </select>
+   
+ 
+    <!-- add 2015-8-4 微信/我的挂牌/挂牌剩余量、我的挂牌被摘总量 ，单位：吨-->
+   <select id="getSurplusesAndVolume" parameterType="hashmap" resultType="hashmap">
+   		select 
+			(select 
+			nvl(sum(decode(w.wlunit,'ton',l.surpluses,'kg',l.surpluses/1000.00,'g',l.surpluses/1000000.00,'tiao',0,l.surpluses/1000.00)),0)
+			from zyc.busi_listing l
+			left join zyc.busi_whlist w on l.wlid = w.wlid
+			 where l.USERID =#{userid,jdbcType=DECIMAL} and l.listingflag=#{listingflag,jdbcType=DECIMAL}) as surpluses,
+			 (select 
+			nvl(sum(decode(w.wlunit,'ton',o.VOLUME,'kg',o.VOLUME/1000.00,'g',o.VOLUME/1000000.00,'tiao',0,o.VOLUME/1000.00)),0) 
+			from zyc.busi_order o
+			  left join zyc.busi_whlist w on o.wlid = w.wlid
+			   where o.userid=#{userid,jdbcType=DECIMAL} and o.ORDERSTATE=#{orderstate,jdbcType=DECIMAL}) as volume 
+	    from dual
+   </select>
+   
+   <!--历史挂牌-->
+   <select id="findHistoryListing" parameterType="com.jointown.zy.common.model.Page" resultMap="Listing">
+		select 
+		* 
+		from 
+		(
+			select l.listingid,l.title,l.lowunitprice, 
+			(l.examinetime + l.listingtimelimit) as expiretime,l.listingflag,
+			(select count(1) ORDERNUM  from zyc.busi_order o
+			 where o.listingid = l.listingid and o.orderstate != 2) as ORDERNUM,
+			 d.dict_value
+			from zyc.busi_listing l 
+			left join 
+		    ZYC.BUSI_WHLIST wh  
+			    on l.wlid=wh.wlid 
+			  left join 
+			  ZYC.BUSI_WAREHOUSE w 
+			    on wh.warehouseid = w.warehouseid
+			    left join 
+			    BOSS.BREED br  
+			      on wh.breedcode = br.breed_id 
+			    left join 
+			    BOSS.DICT_INFO d 
+			      on br.breed_count_unit = d.DICT_CODE
+			where 
+			l.userid=#{params.userid, jdbcType=DECIMAL} 
+			<!--1表示添加挂牌时查看该用户所有正在挂牌中、已下架的挂牌-->
+			<if test="params.op== 1">
+				and l.listingflag in(2,4)
+			</if>
+			<!--2表示查看、编辑挂牌时根据仓单id 查看该用户所有的挂牌-->
+			<if test="params.op== 2">
+				and l.wlid = #{params.wlid, jdbcType=VARCHAR}
+			</if>
+			<if test="params.listingid != null">
+				and l.listingid != #{params.listingid, jdbcType=VARCHAR}
+			</if>	
+		order by l.examinetime desc,l.listingid desc
+		)	
+   </select>
+        
+   <!-- 后台审核时，更新第一次审核的信息-->
+   <update id="updateListingFirstExamineInfo" parameterType="com.jointown.zy.common.model.BusiListing" >
+    	update ZYC.BUSI_LISTING set first_examinetime=EXAMINETIME,first_amount=listingamount where first_examinetime is null and  LISTINGID = #{listingid,jdbcType=VARCHAR}   and LISTINGFLAG = 2
+   </update>
+</mapper>

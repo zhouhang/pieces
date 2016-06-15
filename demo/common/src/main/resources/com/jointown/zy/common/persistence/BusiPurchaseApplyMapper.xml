@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BusiPurchaseApplyDao" >
+  <resultMap id="BaseResultMap" type="com.jointown.zy.common.model.BusiPurchaseApply" >
+    <id column="PURCHASE_ID" property="purchaseId" jdbcType="DECIMAL" />
+    <result column="BREED_NAME" property="breedName" jdbcType="VARCHAR" />
+    <result column="BREED_STANDARD_LEVEL" property="breedStandardLevel" jdbcType="VARCHAR" />
+    <result column="BREED_AMOUNT" property="breedAmount" jdbcType="VARCHAR" />
+    <result column="BREED_PRICE" property="breedPrice" jdbcType="VARCHAR" />
+    <result column="BREED_PLACE" property="breedPlace" jdbcType="VARCHAR" />
+    <result column="BREED_DESC" property="breedDesc" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="APPLY_NAME" property="applyName" jdbcType="VARCHAR" />
+    <result column="APPLY_MOBILE" property="applyMobile" jdbcType="DECIMAL" />
+    <result column="APPLY_RESOURCE" property="applyResource" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- 后台求购信息管理：查询采购信息  by aizhengdong 2015.06.19  start -->
+  <resultMap id="selectBusiPurchaseApplyById" type="com.jointown.zy.common.vo.BusiPurchaseApplyVo" >
+    <result column="PURCHASE_ID" property="purchaseId" jdbcType="DECIMAL" />
+    <result column="APPLY_NAME" property="applyName" jdbcType="VARCHAR" />
+    <result column="APPLY_MOBILE" property="applyMobile" jdbcType="VARCHAR" />
+    <result column="BREED_NAME" property="breedName" jdbcType="VARCHAR" />
+    <result column="BREED_STANDARD_LEVEL" property="breedStandardLevel" jdbcType="VARCHAR" />
+    <result column="BREED_PRICE" property="breedPrice" jdbcType="VARCHAR" />
+    <result column="BREED_AMOUNT" property="breedAmount" jdbcType="VARCHAR" />
+    <result column="BREED_PLACE" property="breedPlace" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="APPROVER_NAME" property="approverName" jdbcType="VARCHAR" />
+    <result column="APPROVE_TIME" property="approveTime" jdbcType="TIMESTAMP" />
+    <result column="APPLY_RESOURCE" property="applyResource" jdbcType="VARCHAR" />
+    <result column="DEPICT" property="depict" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 后台求购信息管理：查询采购信息  by aizhengdong 2015.06.19  end -->
+  
+  <sql id="Base_Column_List" >
+    PURCHASE_ID, BREED_NAME, BREED_STANDARD_LEVEL, BREED_AMOUNT, BREED_PRICE, BREED_PLACE, 
+    BREED_DESC, "STATUS", CREATE_TIME, UPDATE_TIME, APPLY_NAME, APPLY_MOBILE, APPLY_RESOURCE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ZYC.BUSI_PURCHASE_APPLY
+    where PURCHASE_ID = #{purchaseId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ZYC.BUSI_PURCHASE_APPLY
+    where PURCHASE_ID = #{purchaseId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.jointown.zy.common.model.BusiPurchaseApply" >
+    insert into ZYC.BUSI_PURCHASE_APPLY (PURCHASE_ID, BREED_NAME, BREED_STANDARD_LEVEL, 
+      BREED_AMOUNT, BREED_PRICE, BREED_PLACE, 
+      BREED_DESC, "STATUS", CREATE_TIME, 
+      UPDATE_TIME, APPLY_NAME, APPLY_MOBILE, APPLY_RESOURCE
+      )
+    values (ZYC.SEQ_BUSI_PURCHASE_APPLY.NEXTVAL, #{breedName,jdbcType=VARCHAR}, #{breedStandardLevel,jdbcType=VARCHAR}, 
+      #{breedAmount,jdbcType=VARCHAR}, #{breedPrice,jdbcType=VARCHAR}, #{breedPlace,jdbcType=VARCHAR}, 
+      #{breedDesc,jdbcType=VARCHAR}, #{status,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{applyName,jdbcType=VARCHAR}, #{applyMobile,jdbcType=DECIMAL}, #{applyResource,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <!-- 增加 APPROVER,APPROVE_TIME,DEPICT字段  by aizhengdong 2015.06.17  start -->
+  <insert id="insertSelective" parameterType="com.jointown.zy.common.model.BusiPurchaseApply" >
+    insert into ZYC.BUSI_PURCHASE_APPLY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      PURCHASE_ID,
+      BREED_NAME,
+      BREED_STANDARD_LEVEL,
+      BREED_AMOUNT,
+      BREED_PRICE,
+      BREED_PLACE,
+      BREED_DESC,
+      "STATUS",
+      CREATE_TIME,
+      UPDATE_TIME,
+      APPLY_NAME,
+      APPLY_MOBILE,
+      APPLY_RESOURCE,
+      APPROVER,
+      APPROVE_TIME,
+      DEPICT,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      ZYC.SEQ_BUSI_PURCHASE_APPLY.NEXTVAL,
+      #{breedName,jdbcType=VARCHAR},
+      #{breedStandardLevel,jdbcType=VARCHAR},
+      #{breedAmount,jdbcType=VARCHAR},
+      #{breedPrice,jdbcType=VARCHAR},
+      #{breedPlace,jdbcType=VARCHAR},
+      #{breedDesc,jdbcType=VARCHAR},
+      #{status,jdbcType=DECIMAL},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+      #{applyName,jdbcType=VARCHAR},
+      #{applyMobile,jdbcType=DECIMAL},
+      #{applyResource,jdbcType=VARCHAR},
+      #{approver,jdbcType=DECIMAL},
+      #{approveTime,jdbcType=TIMESTAMP},
+      #{depict,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <!-- 增加 APPROVER,APPROVE_TIME,DEPICT字段  by aizhengdong 2015.06.17  end -->
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.jointown.zy.common.model.BusiPurchaseApply" >
+    update ZYC.BUSI_PURCHASE_APPLY
+    <set >
+      <if test="breedName != null" >
+        BREED_NAME = #{breedName,jdbcType=VARCHAR},
+      </if>
+      <if test="breedStandardLevel != null" >
+        BREED_STANDARD_LEVEL = #{breedStandardLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="breedAmount != null" >
+        BREED_AMOUNT = #{breedAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="breedPrice != null" >
+        BREED_PRICE = #{breedPrice,jdbcType=VARCHAR},
+      </if>
+      <if test="breedPlace != null" >
+        BREED_PLACE = #{breedPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="breedDesc != null" >
+        BREED_DESC = #{breedDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        "STATUS" = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyName != null" >
+        APPLY_NAME = #{applyName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyMobile != null" >
+        APPLY_MOBILE = #{applyMobile,jdbcType=DECIMAL},
+      </if>
+      <if test="applyResource != null" >
+        APPLY_RESOURCE = #{applyResource,jdbcType=VARCHAR},
+      </if>
+      <!-- 增加备注,处理人,处理时间字段  by aizhengdong 2015.06.15  start -->
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="approveTime != null" >
+        APPROVE_TIME = #{approveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approver != null" >
+        APPROVER = #{approver,jdbcType=DECIMAL},
+      </if>
+      <!-- 增加备注,处理人,处理时间字段  by aizhengdong 2015.06.15  end -->
+    </set>
+    where PURCHASE_ID = #{purchaseId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jointown.zy.common.model.BusiPurchaseApply" >
+    update ZYC.BUSI_PURCHASE_APPLY
+    set BREED_NAME = #{breedName,jdbcType=VARCHAR},
+      BREED_STANDARD_LEVEL = #{breedStandardLevel,jdbcType=VARCHAR},
+      BREED_AMOUNT = #{breedAmount,jdbcType=VARCHAR},
+      BREED_PRICE = #{breedPrice,jdbcType=VARCHAR},
+      BREED_PLACE = #{breedPlace,jdbcType=VARCHAR},
+      BREED_DESC = #{breedDesc,jdbcType=VARCHAR},
+      "STATUS" = #{status,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      APPLY_NAME = #{applyName,jdbcType=VARCHAR},
+      APPLY_MOBILE = #{applyMobile,jdbcType=DECIMAL},
+      APPLY_RESOURCE = #{applyResource,jdbcType=VARCHAR}
+    where PURCHASE_ID = #{purchaseId,jdbcType=DECIMAL}
+  </update>
+  
+	<!-- 后台求购信息管理：查询单条采购信息  by aizhengdong 2015.06.19  start  -->
+	<select id="selectBusiPurchaseApplyById" parameterType="java.lang.Long" resultMap="selectBusiPurchaseApplyById">
+		 select bpa.PURCHASE_ID,
+		        bpa.APPLY_NAME,
+		        to_char(bpa.APPLY_MOBILE) APPLY_MOBILE,
+		        bpa.APPLY_RESOURCE,
+		        bpa.BREED_NAME,
+		        bpa.BREED_STANDARD_LEVEL,
+		        bpa.BREED_PRICE,
+		        bpa.BREED_AMOUNT,
+		        bpa.BREED_PLACE,
+		        bpa.CREATE_TIME,
+		        bpa.UPDATE_TIME,
+		        bpa.STATUS,
+		        bpa.APPROVE_TIME,
+		        bpa.DEPICT,
+		        bu.USER_NAME as APPROVER_NAME
+		   from ZYC.BUSI_PURCHASE_APPLY bpa
+		   left join BOSS.BOSS_USER bu
+		     on bpa.APPROVER = bu.USER_ID
+		  where bpa.PURCHASE_ID = #{purchaseId, jdbcType=DECIMAL}
+	</select>
+	<!-- 后台求购信息管理：查询单条采购信息  by aizhengdong 2015.06.19  end  -->
+</mapper>

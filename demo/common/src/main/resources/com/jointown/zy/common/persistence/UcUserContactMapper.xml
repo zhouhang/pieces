@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.UcUserContactDao">
+	<resultMap id="UcUserContact" type="com.jointown.zy.common.model.UcUserContact">
+		<id column="CONTACT_ID" property="contactId" jdbcType="NUMERIC" />
+		<result column="USER_ID" property="userId" jdbcType="BIGINT" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="SEX" property="sex" jdbcType="INTEGER" />
+		<result column="DEPARTMENT" property="department" jdbcType="VARCHAR" />
+		<result column="JOB" property="job" jdbcType="VARCHAR" />
+		<result column="PHONE" property="phone" jdbcType="VARCHAR" />
+		<result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+		<result column="EMAIL" property="email" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="INTEGER" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="CREATERID" property="createrId" jdbcType="INTEGER" />
+		<result column="UPDATERID" property="updaterId" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="Base_Sql">
+		CONTACT_ID,USER_ID,NAME,SEX,DEPARTMENT,JOB,PHONE,MOBILE,EMAIL,STATUS,CREATE_TIME,UPDATE_TIME,CREATERID,UPDATERID
+	</sql>
+	
+	<!-- 添加联系人信息 -->
+ 	<insert id="addUcUserContact" parameterType="com.jointown.zy.common.model.UcUserContact">
+ 		insert into boss.uc_user_contact(
+ 			<include refid="Base_Sql"/>
+ 		)values(boss.SEQ_UC_USER_CONTACT.nextval,
+ 			#{userId,jdbcType=BIGINT},
+ 			#{name,jdbcType=VARCHAR},
+ 			#{sex,jdbcType=INTEGER},
+ 			#{department,jdbcType=VARCHAR},
+ 			#{job,jdbcType=VARCHAR},
+ 			#{phone,jdbcType=VARCHAR},
+ 			#{mobile,jdbcType=VARCHAR},
+ 			#{email,jdbcType=VARCHAR},
+ 			#{status,jdbcType=INTEGER},
+ 			#{createTime,jdbcType=TIMESTAMP},
+ 			#{updateTime,jdbcType=TIMESTAMP},
+ 			#{createrId,jdbcType=INTEGER},
+ 			#{updaterId,jdbcType=INTEGER}
+ 		)
+ 	</insert>
+	
+	<!-- 根据会员id获取联系人信息 -->
+	<select id="selectUcUserContactsByUserId" parameterType="Long" resultMap="UcUserContact">
+		<![CDATA[
+			select * from boss.UC_USER_CONTACT where STATUS=1 and user_id=#{userId}
+		]]>
+	</select>
+	
+	<!-- 逻辑删除联系人信息 -->
+	<update id="delUcUserContactByUserId" parameterType="com.jointown.zy.common.model.UcUserContact">
+		UPDATE BOSS.UC_USER_CONTACT
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="status != null">
+				STATUS = #{status,jdbcType=INTEGER},
+			</if>
+		</trim>
+		WHERE USER_ID = #{userId,jdbcType=BIGINT}
+	</update>
+	
+	<!-- 根据会员Id更新联系状态（软删除） -->
+	<update id="updateUcUserContact" parameterType="map">
+		<![CDATA[
+			update boss.UC_USER_CONTACT
+			set
+			STATUS = #{status},
+			UPDATE_TIME = #{updateTime}
+			where USER_ID = #{userId} and STATUS=1
+		]]>
+	</update>
+</mapper>

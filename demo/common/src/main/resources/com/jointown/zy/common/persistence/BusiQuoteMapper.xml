@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BusiQuoteDao" >
+
+  <sql id="Base_Column_List" >
+    QUOTE_ID, PURCHASE_ID, PURCHASE_CODE, QUOTE_PRICE, QUOTE_DESCRIPTION, QUOTER, PHONE, 
+    "STATUS", IS_VALID, CREATE_TIME, "OPERATOR", UPDATE_TIME
+  </sql>
+  
+  <resultMap id="BaseResultMap" type="com.jointown.zy.common.model.BusiQuote" >
+    <id column="QUOTE_ID" property="quoteId" jdbcType="VARCHAR" />
+    <result column="PURCHASE_ID" property="purchaseId" jdbcType="VARCHAR" />
+    <result column="PURCHASE_CODE" property="purchaseCode" jdbcType="VARCHAR" />
+    <result column="QUOTE_PRICE" property="quotePrice" jdbcType="DECIMAL" />
+    <result column="QUOTE_DESCRIPTION" property="quoteDescription" jdbcType="VARCHAR" />
+    <result column="QUOTER" property="quoter" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="IS_VALID" property="isValid" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="OPERATOR" property="operator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <!--  <association property="busiPurchasePurchaseId" column="purchaseId" select="com.jointown.zy.common.dao.BusiPurchaseMapper.selectByPrimaryKey" />-->
+  </resultMap>
+  
+  <select id="selectByPurchaseId" resultMap="BaseResultMap" >
+    select <include refid="Base_Column_List" /> from ZYC.BUSI_QUOTE where PURCHASE_ID =#{PURCHASE_ID}
+  </select>
+  
+  <resultMap id="selectQuoteListByPageMap" type="com.jointown.zy.common.vo.BusiQuoteVo" >
+	<id column="QUOTE_ID" property="quoteId" jdbcType="VARCHAR" />
+    <result column="PURCHASE_ID" property="purchaseId" jdbcType="VARCHAR" />
+    <result column="PURCHASE_CODE" property="purchaseCode" jdbcType="VARCHAR" />
+    <result column="QUOTE_PRICE" property="quotePrice" jdbcType="DECIMAL" />
+    <result column="QUOTE_DESCRIPTION" property="quoteDescription" jdbcType="VARCHAR" />
+    <result column="QUOTER" property="quoter" jdbcType="VARCHAR" />
+    <result column="PHONE" property="phone" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="IS_VALID" property="isValid" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="OPERATOR" property="operator" jdbcType="VARCHAR" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />   
+    
+    <result column="USER_NAME" property="username" jdbcType="VARCHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+    <result column="BREED_NAME" property="breedname" jdbcType="VARCHAR" />
+  </resultMap>
+    
+   <!-- 查询报价记录列表 -->
+    <select id="selectQuoteListByCondition" parameterType="com.jointown.zy.common.model.Page" resultMap="selectQuoteListByPageMap">
+    	select
+			 o.QUOTE_ID,
+			 o.PURCHASE_ID,
+			 o.PURCHASE_CODE,
+			 o.QUOTE_PRICE,
+			 o.QUOTE_DESCRIPTION,
+			 o.QUOTER,
+			 o.PHONE, 
+		     o."STATUS", 
+		     o.IS_VALID,
+		     o.CREATE_TIME,
+		     o."OPERATOR", 
+		     o.UPDATE_TIME,
+		     b.USER_NAME,  <!--采购业务员 -->
+		     b.MOBILE, <!--采购业务员电话 -->
+		     p.BREED_NAME
+		    <!--  e.BREED_NAME --> <!-- 品种名称 -->
+    	from ZYC.BUSI_QUOTE o
+    	left join ZYC.BUSI_PURCHASE p ON o.PURCHASE_ID=p.PURCHASE_ID  <!-- 采购表 -->
+		left join BOSS.UC_USER u on (p.PURCHASER = u.user_name and u.STATUS = 0) <!-- 会员表 -->
+		left join BOSS.BOSS_USER b on u.SALESMANID=b.USER_ID    <!-- 会员对应的业务员表 -->
+		<!--left join BOSS.BREED e on p.BREED_ID=e.BREED_ID  -->         <!-- 品种表 -->
+		where 1 = 1
+    	<if test="params.quoter != null and '' != params.quoter">
+	    	and o.QUOTER = #{params.quoter}
+	    </if>
+	    <if test="params.breedname != null and '' != params.breedname">
+	   		 and p.BREED_NAME = #{params.breedname}
+	    	<!-- and e.BREED_NAME = #{params.breedname} -->
+	    </if>
+	     <if test="params.status != null and '' != params.status and '-1' != params.status">
+	    	and o."STATUS" = #{params.status}
+	    </if> 
+	      <if test="params.status == 0 ">
+	    	and o."STATUS" = 0
+	    </if> 
+	    <if test="params.StartDate != null and '' != params.StartDate">
+			and o.CREATE_TIME <![CDATA[>]]> to_date(#{params.StartDate},'yyyy-mm-dd hh24:mi:ss')
+		</if>
+		<if test="params.EndDate != null and '' != params.EndDate">
+			and o.CREATE_TIME <![CDATA[<]]> to_date(#{params.EndDate},'yyyy-mm-dd hh24:mi:ss') + 1
+		</if>
+      order by o.CREATE_TIME desc
+    </select>
+    
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ZYC.BUSI_QUOTE
+    where QUOTE_ID = #{quoteId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ZYC.BUSI_QUOTE
+    where QUOTE_ID = #{quoteId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jointown.zy.common.model.BusiQuote" >
+    insert into ZYC.BUSI_QUOTE (QUOTE_ID, PURCHASE_ID, PURCHASE_CODE, 
+      QUOTE_PRICE, QUOTE_DESCRIPTION, QUOTER, 
+      PHONE, "STATUS", IS_VALID, 
+      CREATE_TIME, "OPERATOR", UPDATE_TIME
+      )
+    values (ZYC.SEQ_BUSI_QUOTE.nextval, #{purchaseId,jdbcType=VARCHAR}, #{purchaseCode,jdbcType=VARCHAR}, 
+      #{quotePrice,jdbcType=DECIMAL}, #{quoteDescription,jdbcType=VARCHAR}, #{quoter,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{status,jdbcType=DECIMAL}, #{isValid,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertQuoteInfo" parameterType="com.jointown.zy.common.model.BusiQuote" >
+    insert into ZYC.BUSI_QUOTE(QUOTE_ID,PURCHASE_ID, PURCHASE_CODE, 
+      QUOTE_PRICE, QUOTE_DESCRIPTION, QUOTER, 
+      PHONE, "STATUS", IS_VALID, 
+      CREATE_TIME, "OPERATOR", UPDATE_TIME)
+       values(ZYC.SEQ_BUSI_QUOTE.nextval,
+      #{purchaseId,jdbcType=VARCHAR},
+      #{purchaseCode,jdbcType=VARCHAR},
+      #{quotePrice,jdbcType=DECIMAL},
+      #{quoteDescription,jdbcType=VARCHAR},
+      #{quoter,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR},
+       0,
+      'Y',
+      sysdate,
+      '',
+      sysdate
+   )
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jointown.zy.common.model.BusiQuote" >
+    update ZYC.BUSI_QUOTE
+    <set >
+      <if test="purchaseId != null" >
+        PURCHASE_ID = #{purchaseId,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseCode != null" >
+        PURCHASE_CODE = #{purchaseCode,jdbcType=VARCHAR},
+      </if>
+      <if test="quotePrice != null" >
+        QUOTE_PRICE = #{quotePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="quoteDescription != null" >
+        QUOTE_DESCRIPTION = #{quoteDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="quoter != null" >
+        QUOTER = #{quoter,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        PHONE = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        "STATUS" = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="isValid != null" >
+        IS_VALID = #{isValid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null" >
+        "OPERATOR" = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where QUOTE_ID = #{quoteId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jointown.zy.common.model.BusiQuote" >
+    update ZYC.BUSI_QUOTE
+    set PURCHASE_ID = #{purchaseId,jdbcType=VARCHAR},
+      PURCHASE_CODE = #{purchaseCode,jdbcType=VARCHAR},
+      QUOTE_PRICE = #{quotePrice,jdbcType=DECIMAL},
+      QUOTE_DESCRIPTION = #{quoteDescription,jdbcType=VARCHAR},
+      QUOTER = #{quoter,jdbcType=VARCHAR},
+      PHONE = #{phone,jdbcType=VARCHAR},
+      "STATUS" = #{status,jdbcType=DECIMAL},
+      IS_VALID = #{isValid,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      "OPERATOR" = #{operator,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where QUOTE_ID = #{quoteId,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 根据采购信息ID，分页查询报价信息  update by fanyuna 判断如果order参数不为空且为status时，则先按status字段倒序，再按创建时间倒序-->
+  <select id="selectQuotePageByPurchaseId"  parameterType="com.jointown.zy.common.model.Page" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from ZYC.BUSI_QUOTE
+    where PURCHASE_ID = #{params.purchaseId} and IS_VALID = 'Y'
+    order by
+    <if test="params.order != null and params.order=='status'" >
+         status desc,
+      </if> 
+     CREATE_TIME desc
+  </select>
+  
+  <!-- 根据采购信息ID，更新除指定的报价信息外的报价 -->
+  <update id="updateQuoteByPurchaseIdAndQuoteId" parameterType="com.jointown.zy.common.model.BusiQuote" >
+  	update ZYC.BUSI_QUOTE
+    set
+      "STATUS" = #{status,jdbcType=DECIMAL},
+      "OPERATOR" = #{operator,jdbcType=VARCHAR},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where
+      PURCHASE_ID = #{purchaseId,jdbcType=VARCHAR}
+      and QUOTE_ID <![CDATA[<>]]> #{quoteId,jdbcType=VARCHAR}
+      and IS_VALID = 'Y'
+  </update>
+  
+  <!-- 根据 采购批次号得到报价信息 -->
+    <select id="selectQuoteListByPurchaseCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ZYC.BUSI_QUOTE
+    where PURCHASE_CODE = #{PURCHASE_CODE,jdbcType=VARCHAR}
+    order by QUOTE_PRICE asc
+  </select>
+</mapper>

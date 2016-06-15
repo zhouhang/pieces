@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<bean id="casSubjectFactory" class="org.apache.shiro.cas.CasSubjectFactory"/>
+
+    <bean id="casRealm" class="com.jointown.zy.web.shiro.MyCasRealm">
+        <property name="cachingEnabled" value="true"/>
+        <property name="authenticationCachingEnabled" value="true"/>
+        <property name="authenticationCacheName" value="${jointown.shiro.realm.cache.name.authentication}"/>
+        <property name="authorizationCachingEnabled" value="true"/>
+         <property name="authorizationCacheName" value="${jointown.shiro.realm.cache.name.authorization}"/>
+        <property name="casServerUrlPrefix" value="${jointown.shiro.cas.urlprefix}"/>
+        <property name="casService" value="${jointown.shiro.cas.casservice}"/>
+    </bean>
+
+	<bean id="casFilter" class="com.jointown.zy.web.shiro.MyCasFilter">
+        <property name="failureUrl" value="${jointown.shiro.filter.url.unauthenticated}"/>
+    </bean>
+    
+    <bean id="userFilter" class="com.jointown.zy.web.shiro.UcUserFilter" />
+    
+    <bean id="userAuthFilter" class="com.jointown.zy.web.shiro.UcUserAuthFilter" />
+</beans>

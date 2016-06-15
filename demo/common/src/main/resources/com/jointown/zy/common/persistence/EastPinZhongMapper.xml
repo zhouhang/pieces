@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.EastPinZhongMapper" >
+ <resultMap id="BaseResultMap" type="com.jointown.zy.common.vo.EastPinZhongVo">
+	<result column="PZID" property="pzid" jdbcType="DECIMAL" />
+	<result column="YCID" property="ycid" jdbcType="DECIMAL" />
+	<result column="GUIGE" property="guige" jdbcType="VARCHAR" />
+	<result column="CHANDI" property="chandi" jdbcType="VARCHAR" />
+ </resultMap>
+ <select id="selectAllChandi" resultType="String">
+ 	select t.CHANDI from weixin.EAST_PINZHONG t group by t.CHANDI
+ </select>
+</mapper>

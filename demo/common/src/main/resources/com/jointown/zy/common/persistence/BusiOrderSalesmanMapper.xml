@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BusiOrderSalesmanDao" >
+  <resultMap id="BaseResultMap" type="com.jointown.zy.common.model.BusiOrderSalesman" >
+    <id column="INFO_ID" property="infoId" jdbcType="DECIMAL" />
+    <result column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+    <result column="BUYER_SALESMANID" property="buyerSalesmanid" jdbcType="DECIMAL" />
+    <result column="BUYER_ORGID" property="buyerOrgid" jdbcType="DECIMAL" />
+    <result column="BUYER_ORGS" property="buyerOrgs" jdbcType="VARCHAR" />
+    <result column="SELLER_SALESMANID" property="sellerSalesmanid" jdbcType="DECIMAL" />
+    <result column="SELLER_ORGID" property="sellerOrgid" jdbcType="DECIMAL" />
+    <result column="SELLER_ORGS" property="sellerOrgs" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    INFO_ID, ORDERID, NVL(BUYER_SALESMANID,0) AS BUYER_SALESMANID, BUYER_ORGID, BUYER_ORGS, NVL(SELLER_SALESMANID,0) AS SELLER_SALESMANID, SELLER_ORGID, 
+    SELLER_ORGS
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ZYC.BUSI_ORDER_SALESMAN
+    where INFO_ID = #{infoId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ZYC.BUSI_ORDER_SALESMAN
+    where INFO_ID = #{infoId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.jointown.zy.common.model.BusiOrderSalesman" >
+  	<selectKey keyProperty="infoId" resultType="java.lang.Long" order="BEFORE">
+    		select  ZYC.SEQ_BUSI_ORDER_SALESMAN.nextval as INFO_ID from dual
+    </selectKey>
+    insert into ZYC.BUSI_ORDER_SALESMAN (INFO_ID, ORDERID, BUYER_SALESMANID, 
+      BUYER_ORGID, BUYER_ORGS, SELLER_SALESMANID, 
+      SELLER_ORGID, SELLER_ORGS)
+    values (#{infoId,jdbcType=DECIMAL}, #{orderid,jdbcType=VARCHAR}, #{buyerSalesmanid,jdbcType=DECIMAL}, 
+      #{buyerOrgid,jdbcType=DECIMAL}, #{buyerOrgs,jdbcType=VARCHAR}, #{sellerSalesmanid,jdbcType=DECIMAL}, 
+      #{sellerOrgid,jdbcType=DECIMAL}, #{sellerOrgs,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jointown.zy.common.model.BusiOrderSalesman" >
+    insert into ZYC.BUSI_ORDER_SALESMAN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      INFO_ID,
+      ORDERID,
+      BUYER_SALESMANID,
+      BUYER_ORGID,
+      BUYER_ORGS,
+      SELLER_SALESMANID,
+      SELLER_ORGID,
+      SELLER_ORGS,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{infoId,jdbcType=DECIMAL},
+      #{orderid,jdbcType=VARCHAR},
+      #{buyerSalesmanid,jdbcType=DECIMAL},
+      #{buyerOrgid,jdbcType=DECIMAL},
+      #{buyerOrgs,jdbcType=VARCHAR},
+      #{sellerSalesmanid,jdbcType=DECIMAL},
+      #{sellerOrgid,jdbcType=DECIMAL},
+      #{sellerOrgs,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jointown.zy.common.model.BusiOrderSalesman" >
+    update ZYC.BUSI_ORDER_SALESMAN
+    <set >
+      <if test="orderid != null" >
+        ORDERID = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerSalesmanid != null" >
+        BUYER_SALESMANID = #{buyerSalesmanid,jdbcType=DECIMAL},
+      </if>
+      <if test="buyerOrgid != null" >
+        BUYER_ORGID = #{buyerOrgid,jdbcType=DECIMAL},
+      </if>
+      <if test="buyerOrgs != null" >
+        BUYER_ORGS = #{buyerOrgs,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerSalesmanid != null" >
+        SELLER_SALESMANID = #{sellerSalesmanid,jdbcType=DECIMAL},
+      </if>
+      <if test="sellerOrgid != null" >
+        SELLER_ORGID = #{sellerOrgid,jdbcType=DECIMAL},
+      </if>
+      <if test="sellerOrgs != null" >
+        SELLER_ORGS = #{sellerOrgs,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where INFO_ID = #{infoId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jointown.zy.common.model.BusiOrderSalesman" >
+    update ZYC.BUSI_ORDER_SALESMAN
+    set ORDERID = #{orderid,jdbcType=VARCHAR},
+      BUYER_SALESMANID = #{buyerSalesmanid,jdbcType=DECIMAL},
+      BUYER_ORGID = #{buyerOrgid,jdbcType=DECIMAL},
+      BUYER_ORGS = #{buyerOrgs,jdbcType=VARCHAR},
+      SELLER_SALESMANID = #{sellerSalesmanid,jdbcType=DECIMAL},
+      SELLER_ORGID = #{sellerOrgid,jdbcType=DECIMAL},
+      SELLER_ORGS = #{sellerOrgs,jdbcType=VARCHAR}
+    where INFO_ID = #{infoId,jdbcType=DECIMAL}
+  </update>
+  
+
+   <select id="selectByOrderid" resultMap="BaseResultMap" parameterType="String" >
+    select 
+   		 <include refid="Base_Column_List" />
+    from ZYC.BUSI_ORDER_SALESMAN
+    where  orderid=#{orderid}
+  </select>
+  
+</mapper>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.JztTaskDao" >
+  <resultMap id="BaseResultMap" type="com.jointown.zy.common.model.JztTask" >
+    <result column="TASKID" property="taskid" jdbcType="VARCHAR" />
+    <result column="TASKTYPE" property="tasktype" jdbcType="DECIMAL" />
+    <result column="TASKNAME" property="taskname" jdbcType="VARCHAR" />
+    <result column="JOBCLASS" property="jobclass" jdbcType="VARCHAR" />
+    <result column="CRONEXPRESSION" property="cronexpression" jdbcType="VARCHAR" />
+    <result column="ISENABLE" property="isenable" jdbcType="DECIMAL" />
+    <result column="TASKREMARK" property="taskremark" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="UPDATETIME" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TASKID, TASKTYPE, TASKNAME, JOBCLASS, CRONEXPRESSION, ISENABLE, TASKREMARK, CREATETIME, 
+    UPDATETIME
+  </sql>
+  <!--查询所有的任务列表-->
+  <select id="selectTaskList" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List" /> from ZYC.JZT_TASK order by createtime asc
+  </select>
+  
+  <insert id="insertTask" parameterType="com.jointown.zy.common.model.JztTask" >
+    insert into ZYC.JZT_TASK (TASKID, TASKTYPE, TASKNAME, 
+      JOBCLASS, CRONEXPRESSION, ISENABLE, 
+      TASKREMARK, CREATETIME, UPDATETIME
+      )
+    values (#{taskid,jdbcType=VARCHAR}, #{tasktype,jdbcType=DECIMAL}, #{taskname,jdbcType=VARCHAR}, 
+      #{jobclass,jdbcType=VARCHAR}, #{cronexpression,jdbcType=VARCHAR}, #{isenable,jdbcType=DECIMAL}, 
+      #{taskremark,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{updatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jointown.zy.common.model.JztTask" >
+    insert into ZYC.JZT_TASK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      TASKID,
+      TASKTYPE,
+      TASKNAME,
+      JOBCLASS,
+      CRONEXPRESSION,
+      ISENABLE,
+      TASKREMARK,
+      CREATETIME,
+      UPDATETIME,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{taskid,jdbcType=VARCHAR},
+      #{tasktype,jdbcType=DECIMAL},
+      #{taskname,jdbcType=VARCHAR},
+      #{jobclass,jdbcType=VARCHAR},
+      #{cronexpression,jdbcType=VARCHAR},
+      #{isenable,jdbcType=DECIMAL},
+      #{taskremark,jdbcType=VARCHAR},
+      #{createtime,jdbcType=TIMESTAMP},
+      #{updatetime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  
+</mapper>

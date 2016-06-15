@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BusiTermOrderDetailDao" >
+  <resultMap id="BaseResultMap" type="com.jointown.zy.common.model.BusiTermOrderDetail" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+    <result column="NOTE" property="note" jdbcType="VARCHAR" />
+    <result column="START_TIME" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="OPERATOR" property="operator" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, ORDERID, NOTE, START_TIME, END_TIME, "OPERATOR", CREATE_TIME
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from ZYC.BUSI_TERM_ORDER_DETAIL
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from ZYC.BUSI_TERM_ORDER_DETAIL
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jointown.zy.common.model.BusiTermOrderDetail" >
+    insert into ZYC.BUSI_TERM_ORDER_DETAIL (ID, ORDERID, NOTE, 
+      START_TIME, END_TIME, "OPERATOR", 
+      CREATE_TIME)
+    values (ZYC.SEQ_BUSI_TERM_ORDER_DETAIL.nextval, #{orderid,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, 
+      #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{operator,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jointown.zy.common.model.BusiTermOrderDetail" >
+    insert into ZYC.BUSI_TERM_ORDER_DETAIL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      ORDERID,
+      NOTE,
+      START_TIME,
+      END_TIME,
+      "OPERATOR",
+      CREATE_TIME,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      ZYC.SEQ_BUSI_TERM_ORDER_DETAIL.nextval,
+      #{orderid,jdbcType=VARCHAR},
+      #{note,jdbcType=VARCHAR},
+      #{startTime,jdbcType=TIMESTAMP},
+      #{endTime,jdbcType=TIMESTAMP},
+      #{operator,jdbcType=DECIMAL},
+      #{createTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jointown.zy.common.model.BusiTermOrderDetail" >
+    update ZYC.BUSI_TERM_ORDER_DETAIL
+    <set >
+      <if test="orderid != null" >
+        ORDERID = #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        NOTE = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operator != null" >
+        "OPERATOR" = #{operator,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jointown.zy.common.model.BusiTermOrderDetail" >
+    update ZYC.BUSI_TERM_ORDER_DETAIL
+    set ORDERID = #{orderid,jdbcType=VARCHAR},
+      NOTE = #{note,jdbcType=VARCHAR},
+      START_TIME = #{startTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      "OPERATOR" = #{operator,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 根据订单编号查询账期详情 -->
+  <select id="selectTermOrderByOrderId" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from ZYC.BUSI_TERM_ORDER_DETAIL
+    where ORDERID = #{orderId,jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BusiWarehouseApplyDao" >
+  <resultMap id="BaseResultMap" type="com.jointown.zy.common.model.BusiWarehouseApply" >
+    <id column="WAREHOUSE_ID" property="warehouseId" jdbcType="DECIMAL" />
+    <result column="BREED_NAME" property="breedName" jdbcType="VARCHAR" />
+    <result column="BREED_AMOUNT" property="breedAmount" jdbcType="VARCHAR" />
+    <result column="WAREHOUSE_TYPE" property="warehouseType" jdbcType="VARCHAR" />
+    <result column="WAREHOUSE_AREA" property="warehouseArea" jdbcType="VARCHAR" />
+     <result column="WAREHOUSE_ADDRESS" property="warehouseAddress" jdbcType="VARCHAR" />
+    <result column="EXPECTED_SERVICE" property="expectedService" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="APPLY_NAME" property="applyName" jdbcType="VARCHAR" />
+    <result column="APPLY_MOBILE" property="applyMobile" jdbcType="DECIMAL" />
+    <result column="APPLY_RESOURCE" property="applyResource" jdbcType="VARCHAR" />
+    <result column="BREEDID" property="breedId" jdbcType="INTEGER"/>
+  </resultMap>
+  
+  <resultMap id="AreaVo" type="com.jointown.zy.common.vo.AreaVo">
+  	<id column="CODE" property="code" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="FIRSTCODE" property="firstcode" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <!-- wanghao add by 2015 06 17  -->
+  <resultMap id="BreedResultMap" type="com.jointown.zy.common.model.Breed">
+	<id column="BREED_ID" property="breedId" jdbcType="DECIMAL" />
+	<result column="BREED_NAME" property="breedName" jdbcType="VARCHAR" />
+	<result column="BREED_CNAME" property="breedCname" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    WAREHOUSE_ID, BREED_NAME, BREED_AMOUNT, WAREHOUSE_TYPE, WAREHOUSE_AREA, WAREHOUSE_ADDRESS, EXPECTED_SERVICE, "STATUS", 
+    CREATE_TIME, UPDATE_TIME, APPLY_NAME, APPLY_MOBILE, APPLY_RESOURCE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ZYC.BUSI_WAREHOUSE_APPLY
+    where WAREHOUSE_ID = #{warehouseId,jdbcType=DECIMAL}
+  </select>
+  
+  	<!-- 查询品种信息 -->
+	<select id="selectBreedName" parameterType="java.lang.String" resultMap="BreedResultMap" >
+			SELECT
+				BREED_ID, 
+				BREED_NAME,
+				BREED_CNAME 
+			FROM  
+				boss.breed t1 where 1=1
+			<if test="_parameter !=null and _parameter!=''">
+				and (t1.BREED_NAME = #{_parameter} OR t1.BREED_CNAME = #{_parameter})
+			</if>
+				and t1.status=1
+	</select>
+	
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ZYC.BUSI_WAREHOUSE_APPLY
+    where WAREHOUSE_ID = #{warehouseId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.jointown.zy.common.model.BusiWarehouseApply" >
+    insert into ZYC.BUSI_WAREHOUSE_APPLY (WAREHOUSE_ID, BREED_NAME, BREED_AMOUNT, 
+      WAREHOUSE_TYPE, WAREHOUSE_AREA, WAREHOUSE_ADDRESS, EXPECTED_SERVICE, "STATUS", 
+      CREATE_TIME, UPDATE_TIME, APPLY_NAME, APPLY_MOBILE, APPLY_RESOURCE)
+    values (ZYC.SEQ_BUSI_WAREHOUSE_APPLY.NEXTVAL, #{breedName,jdbcType=VARCHAR}, #{breedAmount,jdbcType=VARCHAR}, 
+      #{warehouseType,jdbcType=VARCHAR}, #{warehouseArea,jdbcType=VARCHAR}, #{warehouseAddress,jdbcType=VARCHAR}, #{expectedService,jdbcType=VARCHAR}, #{status,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{applyName,jdbcType=VARCHAR}, 
+      #{applyMobile,jdbcType=DECIMAL}, #{applyResource,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jointown.zy.common.model.BusiWarehouseApply" >
+    insert into ZYC.BUSI_WAREHOUSE_APPLY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      WAREHOUSE_ID,
+      BREED_NAME,
+      BREED_AMOUNT,
+      WAREHOUSE_TYPE,
+      WAREHOUSE_AREA,
+      WAREHOUSE_ADDRESS,
+      EXPECTED_SERVICE,
+      "STATUS",
+      CREATE_TIME,
+      UPDATE_TIME,
+      APPLY_NAME,
+      APPLY_MOBILE,
+      APPLY_RESOURCE,
+      BREEDID,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      ZYC.SEQ_BUSI_WAREHOUSE_APPLY.NEXTVAL,
+      #{breedName,jdbcType=VARCHAR},
+      #{breedAmount,jdbcType=VARCHAR},
+      #{warehouseType,jdbcType=VARCHAR},
+      #{warehouseArea,jdbcType=VARCHAR},
+      #{warehouseAddress,jdbcType=VARCHAR},
+      #{expectedService,jdbcType=VARCHAR},
+      #{status,jdbcType=DECIMAL},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+      #{applyName,jdbcType=VARCHAR},
+      #{applyMobile,jdbcType=DECIMAL},
+      #{applyResource,jdbcType=VARCHAR},
+      #{breedId,jdbcType=INTEGER},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jointown.zy.common.model.BusiWarehouseApply" >
+    update ZYC.BUSI_WAREHOUSE_APPLY
+    <set >
+      <if test="breedName != null" >
+        BREED_NAME = #{breedName,jdbcType=VARCHAR},
+      </if>
+      <if test="breedAmount != null" >
+        BREED_AMOUNT = #{breedAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseType != null" >
+        WAREHOUSE_TYPE = #{warehouseType,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseArea != null" >
+        WAREHOUSE_AREA = #{warehouseArea,jdbcType=VARCHAR},
+      </if>
+      <if test="warehouseAddress != null" >
+        WAREHOUSE_ADDRESS = #{warehouseAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="expectedService != null" >
+        EXPECTED_SERVICE = #{expectedService,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        "STATUS" = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyName != null" >
+        APPLY_NAME = #{applyName,jdbcType=VARCHAR},
+      </if>
+      <if test="applyMobile != null" >
+        APPLY_MOBILE = #{applyMobile,jdbcType=DECIMAL},
+      </if>
+      <if test="applyResource != null" >
+        APPLY_RESOURCE = #{applyResource,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where WAREHOUSE_ID = #{warehouseId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jointown.zy.common.model.BusiWarehouseApply" >
+    update ZYC.BUSI_WAREHOUSE_APPLY
+    set BREED_NAME = #{breedName,jdbcType=VARCHAR},
+      BREED_AMOUNT = #{breedAmount,jdbcType=VARCHAR},
+      WAREHOUSE_TYPE = #{warehouseType,jdbcType=VARCHAR},
+      WAREHOUSE_AREA = #{warehouseArea,jdbcType=VARCHAR},
+      WAREHOUSE_ADDRESS = #{warehouseAddress,jdbcType=VARCHAR},
+      EXPECTED_SERVICE = #{expectedService,jdbcType=VARCHAR},
+      "STATUS" = #{status,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      APPLY_NAME = #{applyName,jdbcType=VARCHAR},
+      APPLY_MOBILE = #{applyMobile,jdbcType=DECIMAL},
+      APPLY_RESOURCE = #{applyResource,jdbcType=VARCHAR}
+    where WAREHOUSE_ID = #{warehouseId,jdbcType=DECIMAL}
+  </update>
+  
+  <select id="selectAreasByCondition" parameterType="com.jointown.zy.common.vo.AreaVo" resultMap="AreaVo">
+       select CODE,NAME,TYPE,FIRSTCODE from ZYC.AREA
+       <where>
+       	<if test="code != null" >
+	    	CODE = #{code,jdbcType=VARCHAR}
+	    </if>
+	    <if test="name != null" >
+	    	and NAME = #{name,jdbcType=VARCHAR}
+	    </if>
+	    <if test="type != null" >
+	    	and TYPE = #{type,jdbcType=VARCHAR}
+	    </if>
+	    <if test="firstcode != null" >
+	    	and FIRSTCODE = #{firstcode,jdbcType=VARCHAR}
+	    </if>
+       </where>
+   </select>
+</mapper>

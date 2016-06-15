@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.WxAdDao">
+	<resultMap id="WxAd" type="com.jointown.zy.common.model.WxAd">
+		<id column="AD_ID" property="adId" jdbcType="DECIMAL" />
+		<result column="AD_TYPE" property="adType" jdbcType="DECIMAL" />
+		<result column="AD_POSTION_NAME" property="adPostionName"
+			jdbcType="VARCHAR" />
+		<result column="AD_TITLE" property="adTitle" jdbcType="VARCHAR" />
+		<result column="AD_MEMO" property="adMemo" jdbcType="VARCHAR" />
+		<result column="AD_URL" property="adUrl" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="DECIMAL" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="CREATER" property="creater" jdbcType="DECIMAL" />
+		<result column="UPDATER" property="updater" jdbcType="DECIMAL" />
+	</resultMap>
+	<resultMap id="WxAdVo" type="com.jointown.zy.common.vo.WxAdVo">
+		<id column="AD_ID" property="adId" jdbcType="DECIMAL" />
+		<result column="AD_TYPE" property="adType" jdbcType="DECIMAL" />
+		<result column="AD_POSTION_NAME" property="adPostionName"
+			jdbcType="VARCHAR" />
+		<result column="AD_TITLE" property="adTitle" jdbcType="VARCHAR" />
+		<result column="AD_MEMO" property="adMemo" jdbcType="VARCHAR" />
+		<result column="AD_URL" property="adUrl" jdbcType="VARCHAR" />
+		<result column="STATUS" property="status" jdbcType="DECIMAL" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="CREATER" property="creater" jdbcType="VARCHAR" />
+		<result column="UPDATER" property="updater" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		AD_ID, AD_TYPE, AD_POSTION_NAME, AD_TITLE, AD_MEMO, AD_URL,
+		"STATUS",
+		CREATE_TIME, UPDATE_TIME,
+		CREATER, UPDATER
+	</sql>
+
+	<!-- lichenxiao 得到当前广告 -->
+	<select id="selectByPrimaryKey" resultMap="WxAdVo"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from WEIXIN.WX_AD
+		where AD_ID = #{adId,jdbcType=DECIMAL}
+	</select>
+	<!-- lichenxiao -->
+
+	<!-- lichenxiao 通过广告位置得到广告 #{adPostionName,jdbcType=VARCHAR}-->
+	<select id="selectByPostionName" resultMap="WxAdVo"
+		parameterType="string">
+		select
+		<include refid="Base_Column_List" />
+		from WEIXIN.WX_AD
+		where AD_POSTION_NAME = #{adPostionName,jdbcType=VARCHAR} and "STATUS" = 0
+	</select>
+	<!-- lichenxiao -->
+	
+	<!-- lichenxiao -->
+	<insert id="insertSelective" parameterType="com.jointown.zy.common.model.WxAd">
+		insert into WEIXIN.WX_AD
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			AD_ID,
+			AD_TYPE,
+			AD_POSTION_NAME,
+			AD_TITLE,
+			AD_MEMO,
+			AD_URL,
+			"STATUS",
+			CREATE_TIME,
+			UPDATE_TIME,
+			CREATER,
+			UPDATER,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			WEIXIN.SEQ_WX_AD.nextval,
+			#{adType,jdbcType=DECIMAL},
+			#{adPostionName,jdbcType=VARCHAR},
+			#{adTitle,jdbcType=VARCHAR},
+			#{adMemo,jdbcType=VARCHAR},
+			#{adUrl,jdbcType=VARCHAR},
+			0,
+			#{createTime,jdbcType=TIMESTAMP},
+			#{updateTime,jdbcType=TIMESTAMP},
+			#{creater,jdbcType=DECIMAL},
+			#{updater,jdbcType=DECIMAL},
+		</trim>
+	</insert>
+	<!-- lichenxiao -->
+
+	<!-- lichenxiao -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.jointown.zy.common.model.WxAd">
+		update WEIXIN.WX_AD
+		<set>
+			<if test="adType != null">
+				AD_TYPE = #{adType,jdbcType=VARCHAR},
+			</if>
+			<if test="adPostionName != null">
+				AD_POSTION_NAME = #{adPostionName,jdbcType=VARCHAR},
+			</if>
+			<if test="adTitle != null">
+				AD_TITLE = #{adTitle,jdbcType=VARCHAR},
+			</if>
+			<if test="adMemo != null">
+				AD_MEMO = #{adMemo,jdbcType=VARCHAR},
+			</if>
+			<if test="adUrl != null">
+				AD_URL = #{adUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				"STATUS" = #{status,jdbcType=DECIMAL},
+			</if>
+			<if test="createTime != null">
+				CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateTime != null">
+				UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creater != null">
+				CREATER = #{creater,jdbcType=DECIMAL},
+			</if>
+			<if test="updater != null">
+				UPDATER = #{updater,jdbcType=DECIMAL},
+			</if>
+		</set>
+		where AD_ID = #{adId,jdbcType=DECIMAL}
+	</update>
+	<!-- lichenxiao -->
+
+	<!-- lichenxiao -->
+	<select id="selectWxAdsByCondition" parameterType="com.jointown.zy.common.model.Page"
+		resultMap="WxAdVo">
+		select * from (select wx.AD_ID, wx.AD_TYPE, wx.AD_POSTION_NAME,
+		wx.AD_TITLE, wx.AD_MEMO, wx.AD_URL, wx.STATUS, wx.CREATE_TIME,
+		wx.UPDATE_TIME,
+		(select u.USER_NAME from BOSS.BOSS_USER u where u.USER_ID = wx.CREATER) as
+		CREATER,
+		(select u.USER_NAME from BOSS.BOSS_USER u where u.USER_ID =
+		wx.UPDATER) as UPDATER
+		from WEIXIN.WX_AD wx where wx.STATUS = 0
+		<if
+			test="params.wxAdSearchDto.adType != null">
+			and wx.AD_TYPE like CONCAT(CONCAT('%', #{params.wxAdSearchDto.adType,
+			jdbcType=DECIMAL}),'%')
+		</if>
+		<if
+			test="params.wxAdSearchDto.adPostionName != null and params.wxAdSearchDto.adPostionName != ''">
+			and wx.AD_POSTION_NAME like CONCAT(CONCAT('%', #{params.wxAdSearchDto.adPostionName,
+			jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="params.wxAdSearchDto.adTitle != null and params.wxAdSearchDto.adTitle != ''">
+			and wx.AD_TITLE like CONCAT(CONCAT('%', #{params.wxAdSearchDto.adTitle,
+			jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="params.wxAdSearchDto.adMemo != null and params.wxAdSearchDto.adMemo != ''">
+			and wx.AD_MEMO like CONCAT(CONCAT('%', #{params.wxAdSearchDto.adMemo,
+			jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="params.wxAdSearchDto.adUrl != null and params.wxAdSearchDto.adUrl != ''">
+			and wx.AD_URL like CONCAT(CONCAT('%', #{params.wxAdSearchDto.adUrl,
+			jdbcType=VARCHAR}),'%')
+		</if>
+		<if
+			test="params.wxAdSearchDto.startWxAdDate != null and params.wxAdSearchDto.startWxAdDate != ''">
+			and wx.CREATE_TIME >=
+			to_date(#{params.wxAdSearchDto.startWxAdDate},'yyyy-mm-dd
+			hh24:mi:ss')
+		</if>
+		<if
+			test="params.wxAdSearchDto.endWxAdDate != null and params.wxAdSearchDto.endWxAdDate != ''">
+			and to_date(#{params.wxAdSearchDto.endWxAdDate},'yyyy-mm-dd
+			hh24:mi:ss')
+			>= wx.CREATE_TIME
+		</if>
+		) wx order by wx.UPDATE_TIME desc
+	</select>
+	<!-- lichenxiao -->
+
+
+
+	<!-- lichenxiao 查询符合对象条件的数量 -->
+	<select id="selectByCondition" parameterType="com.jointown.zy.common.model.WxAd"
+		resultType="java.lang.Integer">
+		select count(*) from WEIXIN.WX_AD where "STATUS" = 0
+		<if test="adId != null and adId != ''">
+			and AD_ID != #{adId,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<!-- lichenxiao -->
+</mapper>

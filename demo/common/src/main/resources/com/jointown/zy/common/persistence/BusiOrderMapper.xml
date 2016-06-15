@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BusiOrderDao" >
+	<sql id="BaseSql">
+		ORDERID,
+		USERID,
+		BUYER,
+		WLID,
+		LISTINGID,
+		UNITPRICE,
+		AMOUNT,
+		DEPOSIT,
+		TOTALPRICE,
+		DISCOUNTPRICE,
+		ORDERSTATE,
+		APPEALSTATE,
+		CREATETIME,
+		UPDATETIME,
+		HASBILL,
+		VOLUME,
+		ACTUAL_PAYMENT,
+		EXPIRETIME,
+		<!-- add by fanyuna 2015.09.07 增加订单类型、分割标识 -->
+		ORDER_TYPE,
+		SPLIT_FLAG
+	</sql>
+	
+	<resultMap id="BaseResultMap" type="com.jointown.zy.common.model.BusiOrder" >
+	    <id column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+	    <result column="USERID" property="userid" jdbcType="DECIMAL" />
+	    <result column="BUYER" property="buyer" jdbcType="DECIMAL" />
+	    <result column="WLID" property="wlid" jdbcType="VARCHAR" />
+	    <result column="LISTINGID" property="listingid" jdbcType="VARCHAR" />
+	    <result column="UNITPRICE" property="unitprice" jdbcType="DECIMAL" />
+	    <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+	    <result column="DEPOSIT" property="deposit" jdbcType="DECIMAL" />
+	    <result column="TOTALPRICE" property="totalprice" jdbcType="DECIMAL" />
+	    <result column="DISCOUNTPRICE" property="discountprice" jdbcType="DECIMAL" />
+	    <result column="ORDERSTATE" property="orderstate" jdbcType="DECIMAL" />
+	    <result column="APPEALSTATE" property="appealstate" jdbcType="DECIMAL" />
+	    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATETIME" property="updatetime" jdbcType="TIMESTAMP" />
+	    <result column="HASBILL" property="hasbill" jdbcType="DECIMAL" />
+	    <result column="VOLUME" property="volume" jdbcType="DECIMAL" />
+	    <result column="ACTUAL_PAYMENT" property="actualPayment" jdbcType="DECIMAL" />
+	    <result column="EXPIRETIME" property="expiretime" jdbcType="TIMESTAMP" />
+	    <!-- add by fanyuna 2015.09.07 增加订单类型、分割标识 -->
+	    <result column="ORDER_TYPE" property="orderType" jdbcType="DECIMAL" />
+	    <result column="SPLIT_FLAG" property="splitFlag" jdbcType="DECIMAL" />
+    </resultMap>
+    
+    <resultMap id="selectOrderListByPageMap" type="com.jointown.zy.common.vo.BusiOrderVo" >
+	    <id column="ORDERID" property="orderid" jdbcType="VARCHAR" />
+	    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+	    <result column="BUYERNAME" property="buyername" jdbcType="VARCHAR" />
+	    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATETIME" property="updatetime" jdbcType="TIMESTAMP" />
+	    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+	    <result column="UNITPRICE" property="unitprice" jdbcType="DECIMAL" />
+	    <result column="DICT_VALUE" property="wlunit" jdbcType="VARCHAR" />
+	    <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+	    <result column="TOTALPRICE" property="totalprice" jdbcType="DECIMAL" />
+	    <result column="DISCOUNTPRICE" property="discountprice" jdbcType="DECIMAL" />
+	    <result column="ORDERSTATE" property="orderstate" jdbcType="DECIMAL" />
+	    <result column="PATH" property="path" jdbcType="VARCHAR" />
+	    <!-- add by fanyuna -->
+	    <result column="LISTINGID" property="listingid" jdbcType="VARCHAR" />
+	    <result column="VOLUME" property="volume" jdbcType="DECIMAL" />
+	    <result column="ACTUAL_PAYMENT" property="actualPayment" jdbcType="DECIMAL" />
+	    <!-- add by guoyb -->
+	    <result column="BUYER" property="buyerId" jdbcType="DECIMAL" />
+	    <result column="USERID" property="userId" jdbcType="DECIMAL" />
+	    <result column="DEPOSIT" property="deposit" jdbcType="DECIMAL" />
+	    <result column="EXPIRETIME" property="expiretime" jdbcType="TIMESTAMP" />
+	    <result column="EXAMINESTATE" property="examineState" jdbcType="DECIMAL" />
+	    <!-- add by shangcuijuan 2015.09.09 增加订单类型、分割标识 -->
+	    <result column="ORDER_TYPE" property="orderType" jdbcType="DECIMAL" />
+	    <result column="SPLIT_FLAG" property="splitFlag" jdbcType="DECIMAL" />
+	    <!-- add by shangcuijuan 2015.09.10增加账期订单开始时间，结束时间 -->
+	    <result column="START_TIME" property="startTime" jdbcType="TIMESTAMP" />
+	    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    
+    <!-- start 根据品种名称查询订单列表   by aizhengdong at 2015/03/31--> 
+    <resultMap id="selectOrderListByBreedNameMap" type="com.jointown.zy.common.vo.BusiOrderVo" >
+	    <result column="BREED_NAME" property="breedName" jdbcType="VARCHAR" />  <!-- 品种名称 -->
+	    <result column="GRADE" property="grade" jdbcType="VARCHAR" />           <!-- 品种规格 -->
+	    <result column="UNITPRICE" property="unitprice" jdbcType="DECIMAL" />   <!-- 单价 -->
+	    <result column="AMOUNT" property="amount" jdbcType="DECIMAL" />         <!-- 数量-->
+	    <result column="DICT_VALUE" property="wlunit" jdbcType="VARCHAR" />     <!-- 数量单位-->
+    </resultMap>
+    <!-- end 根据品种名称查询订单列表   by aizhengdong at 2015/03/31--> 
+    
+    <insert id="insertOrderInfo" parameterType="com.jointown.zy.common.model.BusiOrder">
+    	<selectKey keyProperty="orderid" resultType="string" order="BEFORE">
+    		select 'ZYC' || to_char(#{createtime},'yyyymmdd') || ZYC.SEQ_BUSI_ORDER.nextval as ORDERID from dual
+    	</selectKey>
+    	insert into ZYC.BUSI_ORDER(<include refid="BaseSql"/>) values(
+    		#{orderid,jdbcType=VARCHAR},
+    		#{userid,jdbcType=DECIMAL},
+    		#{buyer,jdbcType=DECIMAL},
+    		#{wlid,jdbcType=VARCHAR},
+    		#{listingid,jdbcType=VARCHAR},
+    		#{unitprice,jdbcType=DECIMAL},
+    		#{amount,jdbcType=DECIMAL},
+    		#{deposit,jdbcType=DECIMAL},
+    		#{totalprice,jdbcType=DECIMAL},
+    		#{discountprice,jdbcType=DECIMAL},
+    		#{orderstate,jdbcType=DECIMAL},
+    		0,
+    		sysdate,
+    		sysdate,
+    		#{hasbill,jdbcType=DECIMAL},
+			0,
+			0,
+			#{expiretime,jdbcType=TIMESTAMP},
+			#{orderType,jdbcType=DECIMAL},
+			#{splitFlag,jdbcType=DECIMAL}
+    	)
+    </insert>
+    
+    <!-- 查询我的购买记录列表中所有洽谈中的记录 -->
+    <select id="selectMyOrdering" parameterType="hashmap" resultMap="BaseResultMap">
+    	select <include refid="BaseSql"/>
+    	from ZYC.BUSI_ORDER
+	    where
+	    ORDERSTATE = #{orderstate,jdbcType=DECIMAL} 
+    	and USERID = #{userid}
+    	and LISTINGID = #{listingid}
+	</select>
+	    		
+    <!-- 查询我的购买记录列表 -->
+    <!-- 改为查看订单 -->
+    <select id="selectOrderListByPage" parameterType="com.jointown.zy.common.model.Page" resultMap="selectOrderListByPageMap">
+    	select 
+    		a.ORDERID,
+    		a.CREATETIME,
+    		a.UPDATETIME,
+    		a.LISTINGID,
+    		b.TITLE,
+    		a.UNITPRICE,
+    		d.DICT_VALUE,
+    		a.AMOUNT,
+    		a.TOTALPRICE,
+    		a.DISCOUNTPRICE,
+    		a.ORDERSTATE,
+    		e.PATH,
+    		a.VOLUME,
+    		a.ACTUAL_PAYMENT,
+    		a.BUYER,
+    		a.USERID,
+    		a.APPEALSTATE,
+    		a.DEPOSIT,
+    		a.EXPIRETIME,
+    		<!-- add by shangcuijuan 2015.09.09 增加订单类型、分割标识 -->
+    		a.ORDER_TYPE,
+    		a.SPLIT_FLAG,
+    		<!-- add by shangcuijuan 2015.09.10 增加账期订单开始时间，结束时间 -->
+    		g.START_TIME,
+    		g.END_TIME,
+			nvl(to_char(f.EXAMINESTATE),'0') as EXAMINESTATE
+    	from
+	    	(select <include refid="BaseSql"/> from ZYC.BUSI_ORDER
+	    	<where>1=1  
+	    		<if test="params.orderid != null and '' != params.orderid">
+	    			and ORDERID = #{params.orderid}
+	    		</if>
+	    		<if test="params.userid != null and '' != params.userid">
+	    			and USERID = #{params.userid}
+	    		</if>
+	    		<if test="params.buyer != null and '' != params.buyer">
+	    			and BUYER = #{params.buyer}
+	    		</if>
+	    		<if test="params.orderstate != null">
+	    			and ORDERSTATE = #{params.orderstate}
+	    		</if>
+	    		<if test="params.orderStartDate != null and '' != params.orderStartDate">
+					and CREATETIME <![CDATA[>]]> to_date(#{params.orderStartDate},'yyyy-mm-dd hh24:mi:ss')
+				</if>
+				<if test="params.orderEndDate != null and '' != params.orderEndDate">
+					and CREATETIME <![CDATA[<]]> to_date(#{params.orderEndDate},'yyyy-mm-dd hh24:mi:ss') + 1
+				</if>
+				<if test="params.orderStartPrice != null and '' != params.orderStartPrice">
+					and TOTALPRICE <![CDATA[>=]]> #{params.orderStartPrice}
+				</if>
+				<if test="params.orderEndPrice != null and '' != params.orderEndPrice">
+					and TOTALPRICE <![CDATA[<=]]> #{params.orderEndPrice}
+				</if>
+	    	</where>) a
+    	join 
+    		(select LISTINGID,TITLE,BREEDID from ZYC.BUSI_LISTING
+    		<where>
+	    		<if test="params.title != null and '' != params.title">
+	    			TITLE like '%' || #{params.title} || '%'
+	    		</if>
+	    	</where>) b
+    	on (a.LISTINGID = b.LISTINGID)
+    	<!-- 关联品种名称 add by ldp 2015-08-18 -->
+		left join 
+			(select BREED_ID, BREED_NAME from BOSS.breed) g
+		on (b.BREEDID = g.BREED_ID)
+    	left join ZYC.BUSI_WHLIST c
+    	on (a.WLID = c.WLID)
+    	left join BOSS.DICT_INFO d
+    	on (c.WLUNIT = d.DICT_CODE)
+    	left join ZYC.BUSI_QUALITYPIC e
+    	on (a.WLID = e.WLID and e.PICINDEX = 1)
+		left join ZYC.BUSI_APPEAL f
+		on (a.ORDERID = f.ORDERID)
+		<!-- 账期订单详情表 add by shangcuijuan 2015-09-10 -->
+		left join ZYC.BUSI_TERM_ORDER_DETAIL g
+		on (a.ORDERID = g.ORDERID)
+		<where>
+			<if test="params.breedName != null and ''!=params.breedName">
+				g.BREED_NAME like '%${params.breedName}%'
+			</if>
+		</where>
+    	order by a.CREATETIME desc
+    </select>
+    
+    <!-- 取消洽谈中的订单 -->
+    <update id="cancelOrderById" parameterType="com.jointown.zy.common.model.BusiOrder">
+    	update ZYC.BUSI_ORDER set ORDERSTATE = 2, UPDATETIME = #{updatetime,jdbcType=TIMESTAMP} where ORDERID = #{orderid} and ORDERSTATE = 0
+    </update>
+    
+    <!-- 删除已关闭的订单 -->
+    <update id="deleteColosedOrderById" parameterType="com.jointown.zy.common.model.BusiOrder">
+    	delete from ZYC.BUSI_ORDER where ORDERID = #{orderid} and ORDERSTATE = -1
+    </update>
+    
+    <!-- 查询购买记录列表 -->
+    <select id="selectOrderListByCondition" parameterType="com.jointown.zy.common.model.Page" resultMap="selectOrderListByPageMap">
+    	select * from (select o.ORDERID,(select u.user_name from BOSS.UC_USER u where u.user_id = o.userid) as USERNAME,
+	    	(select u.user_name from BOSS.UC_USER u where u.user_id = o.buyer) as BUYERNAME,
+	    	o.buyer,
+	    	l.TITLE,
+	    	o.UNITPRICE,
+	    	o.AMOUNT,
+	    	o.DISCOUNTPRICE,
+	    	i.DICT_VALUE,
+	    	o.CREATETIME,
+	    	o.ORDERSTATE,
+	    	o.ORDER_TYPE,<!-- add by shangcuijuan 2015.09.09 增加订单类型、分割标识 -->
+    		o.SPLIT_FLAG
+    	from ZYC.BUSI_ORDER o
+    	left join ZYC.BUSI_WHLIST w on o.WLID = w.WLID
+    	left join BOSS.DICT_INFO i on w.WLUNIT = i.DICT_CODE
+    	left join ZYC.BUSI_LISTING l on o.LISTINGID = l.LISTINGID
+		left join BOSS.UC_USER u on o.USERID = u.user_id
+		where 1 = 1
+    	<if test="params.busiOrderSearchDto.orderid != null and params.busiOrderSearchDto.orderid != ''">
+        	and o.ORDERID like CONCAT(CONCAT('%', #{params.busiOrderSearchDto.orderid, jdbcType=VARCHAR}),'%')
+        </if>
+		<if test="params.busiOrderSearchDto.title != null and params.busiOrderSearchDto.title != ''">
+        	and l.TITLE like CONCAT(CONCAT('%', #{params.busiOrderSearchDto.title, jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="params.busiOrderSearchDto.orderstate != null">
+        	and o.ORDERSTATE = #{params.busiOrderSearchDto.orderstate}
+        </if>
+        <if test="params.busiOrderSearchDto.startlistingdate != null and params.busiOrderSearchDto.startlistingdate != ''">
+        	and l.CREATETIME >= to_date(#{params.busiOrderSearchDto.startlistingdate},'yyyy-mm-dd hh24:mi:ss') 
+        </if>
+        <if test="params.busiOrderSearchDto.endlistingdate != null and params.busiOrderSearchDto.endlistingdate != ''">
+        	and to_date(#{params.busiOrderSearchDto.endlistingdate},'yyyy-mm-dd hh24:mi:ss') >= l.CREATETIME  
+        </if>
+      ) order by CREATETIME desc
+    </select>
+    
+  <!--全表选择性字段更新-->
+  <update id="updateByIdSelective" parameterType="com.jointown.zy.common.model.BusiOrder" >
+    update ZYC.BUSI_ORDER
+    <set >
+      <if test="userid != null" >
+        USERID = #{userid,jdbcType=DECIMAL},
+      </if>
+      <if test="buyer != null" >
+        BUYER = #{buyer,jdbcType=DECIMAL},
+      </if>
+      <if test="wlid != null" >
+        WLID = #{wlid,jdbcType=VARCHAR},
+      </if>
+      <if test="listingid != null" >
+        LISTINGID = #{listingid,jdbcType=VARCHAR},
+      </if>
+      <if test="unitprice != null" >
+        UNITPRICE = #{unitprice,jdbcType=DECIMAL},
+      </if>
+      <if test="amount != null" >
+        AMOUNT = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="deposit != null" >
+        DEPOSIT = #{deposit,jdbcType=DECIMAL},
+      </if>
+      <if test="totalprice != null" >
+        TOTALPRICE = #{totalprice,jdbcType=DECIMAL},
+      </if>
+      <if test="discountprice != null" >
+        DISCOUNTPRICE = #{discountprice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderstate != null" >
+        ORDERSTATE = #{orderstate,jdbcType=DECIMAL},
+      </if>
+      <if test="appealstate != null" >
+        APPEALSTATE = #{appealstate,jdbcType=DECIMAL},
+      </if>
+      UPDATETIME = sysdate,
+      <if test="hasbill != null" >
+        HASBILL = #{hasbill,jdbcType=DECIMAL},
+      </if>
+      <if test="volume != null">
+      	VOLUME = #{volume,jdbcType=DECIMAL},
+      </if>
+      <if test="actualPayment != null">
+      	ACTUAL_PAYMENT = #{actualPayment,jdbcType=DECIMAL},
+      </if>
+      <if test="expiretime != null">
+      	EXPIRETIME = #{expiretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderType != null" >
+        ORDER_TYPE = #{orderType,jdbcType=DECIMAL},
+      </if>
+      <if test="splitFlag != null" >
+        SPLIT_FLAG = #{splitFlag,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where ORDERID = #{orderid,jdbcType=VARCHAR}
+  </update>
+  
+   <!-- 更新交易状态 -->
+   <update id="updateOrderState" parameterType="com.jointown.zy.common.model.BusiOrder" >
+    	update ZYC.BUSI_ORDER set ORDERSTATE = #{orderstate,jdbcType=DECIMAL},UPDATETIME = sysdate  where ORDERID = #{orderid,jdbcType=VARCHAR} and ORDERSTATE = 0
+   </update>
+   
+   <!-- 交易取消修改APPEALSTATE为1 add by guoyb-->
+   <update id="updateOrderAppealState" parameterType="com.jointown.zy.common.model.BusiOrder" >
+    	update ZYC.BUSI_ORDER set APPEALSTATE=1,UPDATETIME = sysdate  where ORDERID = #{orderid,jdbcType=VARCHAR} and ORDERSTATE = 5 and APPEALSTATE <![CDATA[<>]]> 1
+   </update>
+   
+    <!-- 更新交易总价 -->
+   <update id="updateDiscountPrice" parameterType="com.jointown.zy.common.model.BusiOrder" >
+    	update ZYC.BUSI_ORDER set DISCOUNTPRICE = #{discountprice,jdbcType=DECIMAL},UPDATETIME = sysdate  where ORDERID = #{orderid,jdbcType=VARCHAR} and TOTALPRICE >= #{discountprice,jdbcType=DECIMAL} and ORDERSTATE = 1
+   </update>
+   
+   <resultMap type="com.jointown.zy.common.vo.BusiGoodsOrderVo" id="selectGoodsOrderListMap">
+   		<id column="ORDERID" property="orderid"/>
+   		<result column="AMOUNT" property="buyAmount"/>
+   		<result column="UNITPRICE" property="unitprice"/>
+   		<result column="BUYTIME" property="buyTime"/>
+   		<result column="ORDERSTATE" property="orderState"/>
+   		<result column="COMPANYNAME" property="buyerName"/>
+   		<result column="DICT_VALUE" property="unitName"/>
+   </resultMap>
+   
+   <!-- 查询挂牌商品的购买记录 -->
+   <select id="selectGoodsOrderList" parameterType="com.jointown.zy.common.model.Page" resultMap="selectGoodsOrderListMap">
+   		select
+   			a.ORDERID,
+   			a.AMOUNT,
+   			a.UNITPRICE,
+   			<!-- to_char(a.CREATETIME, 'yyyy-mm-dd hh24:mi:ss') as BUYTIME,-->
+   			to_char(a.CREATETIME, 'yyyy-mm-dd') as BUYTIME,
+   			a.ORDERSTATE,
+   			e.comp as COMPANYNAME,
+   			<!--  b.COMPANYNAME,-->
+   			d.DICT_VALUE
+   		from 
+   			(select ORDERID,WLID,BUYER,AMOUNT,UNITPRICE,CREATETIME,ORDERSTATE from ZYC.BUSI_ORDER where LISTINGID = #{params.listingid} <!-- and ORDERSTATE <![CDATA[<>]]> 2  -->) a
+   		join
+   			BOSS.UC_USER b
+   		on (a.BUYER = b.USER_ID)
+   		join 
+   			ZYC.BUSI_WHLIST c
+    	on (a.WLID = c.WLID)
+    	join 
+    		BOSS.DICT_INFO d
+    	on (c.WLUNIT = d.DICT_CODE)
+    	<!-- add by ldp 2015.09.22 -->
+    	join
+	    	<![CDATA[
+	    		(select user_id,companyname,certify,
+					(case
+					 when  length(companyname)>1  then substr(companyname, 0, 1) || '**'
+					 else companyname
+					 end) as comp
+					from boss.uc_user)]]> e 
+    	on (a.BUYER = e.user_id)
+    	order by a.CREATETIME DESC
+   </select>
+   
+   <!-- 查询购买记录的信息 -->
+   <select id="selectBusiOrderById" parameterType="String" resultMap="BaseResultMap">
+   		select <include refid="BaseSql" /> from ZYC.BUSI_ORDER where ORDERID = #{orderid,jdbcType=VARCHAR}
+   </select>
+   
+  <!-- start 根据品种名称查询订单列表   by aizhengdong at 2015/03/31 -->
+  <select id="selectOrderListByBreedName" parameterType="java.util.Map" resultMap="selectOrderListByBreedNameMap">
+   select * from (select ROWNUM r,
+                   b.BREED_NAME, 
+			   	   bq.GRADE, 
+			   	   bo.UNITPRICE, 
+			   	   bo.AMOUNT, 
+			   	   di.DICT_VALUE
+				   from ZYC.BUSI_ORDER bo
+				   left join ZYC.BUSI_LISTING bl on bo.LISTINGID = bl.LISTINGID
+				   left join ZYC.BUSI_QUALITYINFO bq on bo.WLID = bq.WLID
+				   left join ZYC.BUSI_WHLIST bw on bo.WLID = bw.WLID
+				   left join BOSS.BREED b on bw.BREEDCODE = b.BREED_ID
+				   left join BOSS.DICT_INFO di on bw.WLUNIT = di.DICT_CODE
+				   where bo.ORDERSTATE = '1'
+				  	  <if test="breedName != null and breedName != ''">
+				  	     and b.BREED_NAME like CONCAT(CONCAT('%', #{breedName, jdbcType=VARCHAR}),'%')
+				 	  </if>
+				   order by bl.EXAMINETIME desc
+				  )
+    where <![CDATA[r >= #{start, jdbcType=DECIMAL} and r < #{end, jdbcType=DECIMAL}]]> 
+   </select>
+   <!-- end 根据品种名称查询订单列表   by aizhengdong at 2015/03/31 -->
+   
+    <!-- 查询全部符合条件的订单 add by wangjunhu-->
+    <select id="selectBusiOrdersByAttributes" parameterType="com.jointown.zy.common.model.BusiOrder" resultMap="BaseResultMap">
+    	select <include refid="BaseSql"/>
+    	from ZYC.BUSI_ORDER
+    	<where>
+    		<if test="userid != null and '' != userid">
+    			USERID = #{userid,jdbcType=DECIMAL}
+    		</if>
+    		<if test="orderstate != null">
+    			and ORDERSTATE = #{orderstate,jdbcType=DECIMAL}
+    		</if>
+    		<if test="listingid != null and '' != listingid">
+    			and LISTINGID = #{listingid,jdbcType=VARCHAR}
+    		</if>
+    	</where>
+	</select>
+	
+	<!-- 查询全部已下单状态的过期订单 add by wangjunhu-->
+	<!-- update by fanyuna 2015.09.07 增加条件 and ORDER_TYPE=1 即只针对普通订单，账期订单不过期 -->
+	<select id="selectOverTimeOrdersByPlaced" parameterType="int" resultMap="BaseResultMap">
+    	select ORDERID from ZYC.BUSI_ORDER
+    	where ORDERSTATE = 0 and (CREATETIME+#{afterDays,jdbcType=DECIMAL}) <![CDATA[<=]]> sysdate
+    	and ORDER_TYPE=1
+	</select>
+	
+	<!-- WMS冻结成功后，更新订单属性 -->
+	<update id="updateOrderByWmsFreezeSuccess" parameterType="com.jointown.zy.common.model.BusiOrder">
+		update ZYC.BUSI_ORDER
+		set
+			TOTALPRICE = trunc((UNITPRICE * #{volume,jdbcType=DECIMAL}), 2),
+			VOLUME = #{volume,jdbcType=DECIMAL},
+			ORDERSTATE = #{orderstate,jdbcType=DECIMAL},
+			EXPIRETIME = #{expiretime,jdbcType=TIMESTAMP},
+			UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+		where
+			ORDERID = #{orderid,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="selectCertifyName" parameterType="int" resultType="string">
+    	select boss.get_certify_name(#{userid,jdbcType=DECIMAL}) from dual
+	</select>
+	
+	<!-- 查询到期的未付尾款的账期订单id、账期起止时间  add by fanyuna 2015.09.08 -->
+	<select id="selectSoonTermOrder" parameterType="java.util.Map" resultType="java.util.Map">
+			select o.orderid,d.start_time,d.end_time from zyc.busi_order o inner join zyc.busi_term_order_detail d on o.order_type=2 and  o.orderid=d.orderid and o.ORDERSTATE=5 
+			and (to_date(to_char(d.end_time,'yyyy-mm-dd')||' '||#{hms,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss')-(#{beforeDays,jdbcType=DECIMAL})) <![CDATA[<=]]> sysdate
+			and not exists (select 1 from zyc.busi_order_log l where o.orderid=l.orderid and l.optype=#{optype,jdbcType=DECIMAL})
+			
+	</select>
+	
+	<!-- 根据卖家ID查询所有订单数量  add by ldp 2015.09.21-->
+	<select id="selectOrdersCountByUserId" parameterType="long" resultType="java.lang.Integer">
+		select count(*) from zyc.busi_order where userId=#{userId}
+	</select>
+</mapper>

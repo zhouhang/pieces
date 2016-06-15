@@ -1,0 +1,745 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.WxSupplyDao" >
+  <resultMap id="WxSupply" type="com.jointown.zy.common.model.WxSupply" >
+    <id column="SUPPLY_ID" property="supplyId" jdbcType="DECIMAL" />
+    <result column="USER_ID" property="userId" jdbcType="DECIMAL" />
+    <result column="BREED_ID" property="breedId" jdbcType="DECIMAL" />
+    <result column="BREED_NAME" property="breedName" jdbcType="VARCHAR" />
+    <result column="STANDARD_LEVEL_ID" property="standardLevelId" jdbcType="DECIMAL" />
+    <result column="BREED_STANDARD_LEVEL" property="breedStandardLevel" jdbcType="VARCHAR" />
+    <result column="PRICE" property="price" jdbcType="DECIMAL" />
+    <result column="PRICE_UNIT" property="priceUnit" jdbcType="VARCHAR" />
+    <result column="QTY" property="qty" jdbcType="DECIMAL" />
+    <result column="QTY_UNIT" property="qtyUnit" jdbcType="VARCHAR" />
+    <result column="PLACE_ID" property="placeId" jdbcType="DECIMAL" />
+    <result column="BREED_PLACE" property="breedPlace" jdbcType="VARCHAR" />
+    <result column="WHID" property="whid" jdbcType="DECIMAL" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="APPROVE_TIME" property="approveTime" jdbcType="TIMESTAMP" />
+    <result column="APPROVER" property="approver" jdbcType="DECIMAL" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+    <result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="USER_MOBILE" property="userMobile" jdbcType="VARCHAR" />
+    <result column="SYPPLY_RESOURCE" property="sypplyResource" jdbcType="DECIMAL" />
+    <result column="REMARKS" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="WxSupplyBreedVo" type="com.jointown.zy.common.vo.WxSupplyBreedVo" >
+  	<result column="BREED_ID" property="breedId" jdbcType="DECIMAL" />
+    <result column="BREED_NAME" property="breedName" jdbcType="VARCHAR" />
+    <result column="BREED_STANDARD_LEVEL" property="breedStandardLevels" jdbcType="VARCHAR" />
+    <result column="QTY_UNIT" property="qtyUnit" jdbcType="VARCHAR" />
+    <result column="BREED_PLACE" property="breedPlaces" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <resultMap id="WxSupplyVo" type="com.jointown.zy.common.vo.WxSupplyVo" >
+    <id column="SUPPLY_ID" property="supplyId" jdbcType="DECIMAL" />
+    <result column="BREED_NAME" property="breedName" jdbcType="VARCHAR" />
+    <result column="BREED_STANDARD_LEVEL" property="breedStandardLevel" jdbcType="VARCHAR" />
+    <result column="PRICE" property="price" jdbcType="DECIMAL" />
+    <result column="PRICE_UNIT" property="priceUnit" jdbcType="VARCHAR" />
+    <result column="QTY" property="qty" jdbcType="DECIMAL" />
+  	<result column="QTY_UNIT" property="qtyUnit" jdbcType="VARCHAR" />
+    <result column="BREED_PLACE" property="breedPlace" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="AREA_CODE" property="areaCode" jdbcType="VARCHAR" />
+	<result column="AREA_NAME" property="areaName" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="APPROVE_TIME" property="approveTime" jdbcType="TIMESTAMP" />
+    <result column="UC_USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="UC_USER_MOBILE" property="userMobile" jdbcType="VARCHAR" />
+    <result column="BOSS_USER_NAME" property="approverName" jdbcType="VARCHAR" />
+    <!--start author:lichenxiao addtime:2015年6月12日下午  H5页面查询供应信息中的珍药网平台的数据，需要将数量和单位合并成一个字段 -->
+    <result column="SHUL" property="qtyUnitQty" jdbcType="VARCHAR" /> 
+    <!--end author:lichenxiao addtime:2015年6月12日下午  H5页面查询供应信息中的珍药网平台的数据，需要将数量和单位合并成一个字段 -->
+    <!--add by wangjunhu 2015年6月15日：将价格和单位合并成一个字段、新增信息来源字段 -->
+    <result column="JIAG" property="priceUnitPrice" jdbcType="VARCHAR" /> 
+    <result column="SYPPLY_RESOURCE" property="sypplyResource" jdbcType="DECIMAL" />
+    
+    <collection property= "picList" select = "com.jointown.zy.common.dao.WxSupplyPicDao.selectAllPicBySupplyId" column= "SUPPLY_ID" javaType="ArrayList" ofType = "WxSupplyPic"/> 
+  </resultMap>
+
+  <!-- 作者：lichenxiao 作用：用于通过品种表去从的方式查询东网的产地信息  添加时间：2015年4月13日-->
+  	<resultMap id="VoResultMap" type="com.jointown.zy.common.vo.WxPriceVo" >
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="AREA" property="area" jdbcType="VARCHAR" />
+		<result column="GRADE" property="grade" jdbcType="VARCHAR" />
+		<result column="AMOUNT" property="amount" jdbcType="DECIMAL" />
+		<result column="PRICE" property="price" jdbcType="VARCHAR" /> 
+		<result column="AMOUNTUNIT" property="amountUnit" jdbcType="VARCHAR" />
+		<result column="DTM" property="dtm" jdbcType="VARCHAR" /> 
+		
+	</resultMap>
+  <!-- 作者：lichenxiao 作用：用于通过品种表去从的方式查询东网的产地信息  添加时间：2015年4月13日-->
+   <resultMap id="BaseResultMap" type="com.jointown.zy.common.vo.EastPinZhongVo">
+	<result column="PZID" property="pzid" jdbcType="DECIMAL" />
+	<result column="YCID" property="ycid" jdbcType="DECIMAL" />
+	<result column="GUIGE" property="guige" jdbcType="VARCHAR" />
+	<result column="CHANDI" property="chandi" jdbcType="VARCHAR" />
+ </resultMap>
+
+  <sql id="Base_Column_List" >
+    SUPPLY_ID, USER_ID, BREED_ID, BREED_NAME, STANDARD_LEVEL_ID, BREED_STANDARD_LEVEL, 
+    PRICE, PRICE_UNIT, QTY, QTY_UNIT, PLACE_ID, BREED_PLACE, WHID, "STATUS", CREATE_TIME, 
+    UPDATE_TIME, APPROVE_TIME, APPROVER, AREA_CODE, AREA_NAME, USER_NAME, USER_MOBILE, 
+    SYPPLY_RESOURCE,REMARKS
+  </sql>
+ <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from WEIXIN.WX_SUPPLY
+    where SUPPLY_ID = #{supplyId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from WEIXIN.WX_SUPPLY
+    where SUPPLY_ID = #{supplyId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.jointown.zy.common.model.WxSupply" >
+    insert into WEIXIN.WX_SUPPLY (SUPPLY_ID, USER_ID, BREED_ID, 
+      BREED_NAME, STANDARD_LEVEL_ID, BREED_STANDARD_LEVEL, 
+      PRICE, PRICE_UNIT, QTY, 
+      QTY_UNIT, PLACE_ID, BREED_PLACE, 
+      WHID, "STATUS", CREATE_TIME, 
+      UPDATE_TIME, APPROVE_TIME, APPROVER, 
+      AREA_CODE, AREA_NAME, USER_NAME, 
+      USER_MOBILE, SYPPLY_RESOURCE, REMARKS)
+    values (WEIXIN.SEQ_WX_SUPPLY.nextval, #{userId,jdbcType=DECIMAL}, #{breedId,jdbcType=DECIMAL}, 
+      #{breedName,jdbcType=VARCHAR}, #{standardLevelId,jdbcType=DECIMAL}, #{breedStandardLevel,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DECIMAL}, #{priceUnit,jdbcType=VARCHAR}, #{qty,jdbcType=DECIMAL}, 
+      #{qtyUnit,jdbcType=VARCHAR}, #{placeId,jdbcType=DECIMAL}, #{breedPlace,jdbcType=VARCHAR}, 
+      #{whid,jdbcType=DECIMAL}, #{status,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{approveTime,jdbcType=TIMESTAMP}, #{approver,jdbcType=DECIMAL}, 
+      #{areaCode,jdbcType=VARCHAR}, #{areaName,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{userMobile,jdbcType=VARCHAR}, #{sypplyResource,jdbcType=DECIMAL}, #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jointown.zy.common.model.WxSupply" >
+  	<selectKey resultType="java.lang.Long" keyProperty="supplyId" order="BEFORE">
+	   	select WEIXIN.SEQ_WX_SUPPLY.nextval as supplyId from dual
+  	</selectKey>
+    insert into WEIXIN.WX_SUPPLY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      SUPPLY_ID,
+      USER_ID,
+      BREED_ID,
+      BREED_NAME,
+      STANDARD_LEVEL_ID,
+      BREED_STANDARD_LEVEL,
+      PRICE,
+      PRICE_UNIT,
+      QTY,
+      QTY_UNIT,
+      PLACE_ID,
+      BREED_PLACE,
+      WHID,
+      "STATUS",
+      CREATE_TIME,
+      UPDATE_TIME,
+      APPROVE_TIME,
+      APPROVER,
+      AREA_CODE,
+      AREA_NAME,
+      USER_NAME,
+      USER_MOBILE,
+      SYPPLY_RESOURCE,
+      REMARKS,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{supplyId,jdbcType=DECIMAL},
+      #{userId,jdbcType=DECIMAL},
+      #{breedId,jdbcType=DECIMAL},
+      #{breedName,jdbcType=VARCHAR},
+      #{standardLevelId,jdbcType=DECIMAL},
+      #{breedStandardLevel,jdbcType=VARCHAR},
+      #{price,jdbcType=DECIMAL},
+      #{priceUnit,jdbcType=VARCHAR},
+      #{qty,jdbcType=DECIMAL},
+      #{qtyUnit,jdbcType=VARCHAR},
+      #{placeId,jdbcType=DECIMAL},
+      #{breedPlace,jdbcType=VARCHAR},
+      #{whid,jdbcType=DECIMAL},
+      #{status,jdbcType=DECIMAL},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+      #{approveTime,jdbcType=TIMESTAMP},
+      #{approver,jdbcType=DECIMAL},
+      #{areaCode,jdbcType=VARCHAR},
+      #{areaName,jdbcType=VARCHAR},
+      #{userName,jdbcType=VARCHAR},
+      #{userMobile,jdbcType=VARCHAR},
+      #{sypplyResource,jdbcType=DECIMAL},
+      #{remarks,jdbcType=VARCHAR},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jointown.zy.common.model.WxSupply" >
+    update WEIXIN.WX_SUPPLY
+    <set >
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=DECIMAL},
+      </if>
+      <if test="breedId != null" >
+        BREED_ID = #{breedId,jdbcType=DECIMAL},
+      </if>
+      <if test="breedName != null" >
+        BREED_NAME = #{breedName,jdbcType=VARCHAR},
+      </if>
+      <if test="standardLevelId != null" >
+        STANDARD_LEVEL_ID = #{standardLevelId,jdbcType=DECIMAL},
+      </if>
+      <if test="breedStandardLevel != null" >
+        BREED_STANDARD_LEVEL = #{breedStandardLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        PRICE = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="priceUnit != null" >
+        PRICE_UNIT = #{priceUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="qty != null" >
+        QTY = #{qty,jdbcType=DECIMAL},
+      </if>
+      <if test="qtyUnit != null" >
+        QTY_UNIT = #{qtyUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="placeId != null" >
+        PLACE_ID = #{placeId,jdbcType=DECIMAL},
+      </if>
+      <if test="breedPlace != null" >
+        BREED_PLACE = #{breedPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="whid != null" >
+        WHID = #{whid,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        "STATUS" = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approveTime != null" >
+        APPROVE_TIME = #{approveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approver != null" >
+        APPROVER = #{approver,jdbcType=DECIMAL},
+      </if>
+      <if test="areaCode != null" >
+        AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaName != null" >
+        AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userMobile != null" >
+        USER_MOBILE = #{userMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="sypplyResource != null" >
+        SYPPLY_RESOURCE = #{sypplyResource,jdbcType=DECIMAL},
+      </if>
+      <if test="remarks != null" >
+        REMARKS = #{remarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SUPPLY_ID = #{supplyId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jointown.zy.common.model.WxSupply" >
+    update WEIXIN.WX_SUPPLY
+    set USER_ID = #{userId,jdbcType=DECIMAL},
+      BREED_ID = #{breedId,jdbcType=DECIMAL},
+      BREED_NAME = #{breedName,jdbcType=VARCHAR},
+      STANDARD_LEVEL_ID = #{standardLevelId,jdbcType=DECIMAL},
+      BREED_STANDARD_LEVEL = #{breedStandardLevel,jdbcType=VARCHAR},
+      PRICE = #{price,jdbcType=DECIMAL},
+      PRICE_UNIT = #{priceUnit,jdbcType=VARCHAR},
+      QTY = #{qty,jdbcType=DECIMAL},
+      QTY_UNIT = #{qtyUnit,jdbcType=VARCHAR},
+      PLACE_ID = #{placeId,jdbcType=DECIMAL},
+      BREED_PLACE = #{breedPlace,jdbcType=VARCHAR},
+      WHID = #{whid,jdbcType=DECIMAL},
+      "STATUS" = #{status,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      APPROVE_TIME = #{approveTime,jdbcType=TIMESTAMP},
+      APPROVER = #{approver,jdbcType=DECIMAL},
+      AREA_CODE = #{areaCode,jdbcType=VARCHAR},
+      AREA_NAME = #{areaName,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR},
+      USER_MOBILE = #{userMobile,jdbcType=VARCHAR},
+      SYPPLY_RESOURCE = #{sypplyResource,jdbcType=DECIMAL},
+      REMARKS = #{remarks,jdbcType=VARCHAR}
+    where SUPPLY_ID = #{supplyId,jdbcType=DECIMAL}
+  </update>
+  
+  <!-- 查询符合Map条件的数量 -->
+  <select id="selectCountByCondition" parameterType="java.util.Map" resultType="java.lang.Integer">
+	  select count(*) from WEIXIN.WX_SUPPLY s
+	  left join BOSS.BREED b on s.BREED_ID = b.BREED_ID
+	  where s.STATUS = 1 
+	  <if test="breedName != null and breedName != ''">
+	      and (b.BREED_NAME like CONCAT(CONCAT('%', #{breedName, jdbcType=VARCHAR}),'%')
+		  or b.BREED_CNAME like CONCAT(CONCAT('%', #{breedName, jdbcType=VARCHAR}),'%'))
+      </if>
+  </select>
+  
+  <!-- 查询供应信息的商家的数量（busi_listing(挂牌信息表)+wx_supply(供应信息表)微信+gongqiu(供求信息表)东方中药材） -->
+  <!-- start 操作：屏蔽之前的查询方法，原因：查询"wx_supply"数据异常，  author:aizhengdong date:2015.05.22 -->
+  <!-- 
+  <select id="selectUserCountByBreedName" parameterType="java.lang.String" resultType="java.lang.Integer">
+	 select 
+	  ((select count(*) from (
+	  (select l.USERID from ZYC.BUSI_LISTING l
+	  left join 
+	  BOSS.BREED b on l.BREEDID=b.BREED_ID
+	  where l.LISTINGFLAG = 2
+	  and b.BREED_NAME = #{breedName, jdbcType=VARCHAR}
+      ) UNION (select s.USER_ID from WEIXIN.WX_SUPPLY s
+	  left join 
+	  BOSS.BREED b on s.BREED_ID = b.BREED_ID
+	  where s.STATUS = 1 
+	  and b.BREED_NAME = #{breedName, jdbcType=VARCHAR}
+      )))
+      +(select count(*) from WEIXIN.EAST_GONGQIU g
+      left join 
+      WEIXIN.EAST_PZ_DANGAN p on g.YCNAM = p.YCNAM
+      where g.SHFLG = '1' and g.GQFLG = '1'
+	  and p.YCNAM = #{breedName, jdbcType=VARCHAR}
+      )) as num 
+      from DUAL
+  </select>
+  -->
+  <!-- end 操作：屏蔽之前的查询方法，原因：查询"wx_supply"数据异常，  author:aizhengdong date:2015.05.22 -->
+  
+   <!-- 查询供应信息的商家的数量（busi_listing(挂牌信息表)+wx_supply(供应信息表)微信+gongqiu(供求信息表)东方中药材） -->
+  <!-- start 操作：屏蔽之前的查询方法，原因：查询"wx_supply"数据异常，  author:aizhengdong date:2015.05.22 -->
+  <select id="selectUserCountByBreedName" parameterType="java.lang.String" resultType="java.lang.Integer">
+	 select 
+	  ((select count(*) from (
+	  (select l.USERID from ZYC.BUSI_LISTING l
+	  left join 
+	  BOSS.BREED b on l.BREEDID=b.BREED_ID
+	  where l.LISTINGFLAG = 2
+	  and b.BREED_NAME = #{breedName, jdbcType=VARCHAR}
+      ) UNION (select s.USER_ID from WEIXIN.WX_SUPPLY s
+	  where s.STATUS = 1 
+	  and s.BREED_NAME = #{breedName, jdbcType=VARCHAR}
+      )))
+      +(select count(*) from WEIXIN.EAST_GONGQIU g
+      where g.CHANDI is not null and g.ENDTM > sysdate and g.GQFLG = '1'
+    and g.SHFLG = '1' and g.YCNAM = #{breedName, jdbcType=VARCHAR}
+      )) as num 
+      from DUAL
+  </select>
+  
+  <!-- 查询供应信息的数量（busi_listing(挂牌信息表)+wx_supply(供应信息表)微信+gongqiu(供求信息表)东方中药材） -->
+  <!-- start 操作：修改查询方法， author:aizhengdong date:2015.05.22 -->  
+  <select id="selectSupplyCountByBreedName" parameterType="java.lang.String" resultType="java.lang.Integer">
+	  select 
+	  ((select count(*) from ZYC.BUSI_LISTING l
+	  left join 
+	  BOSS.BREED b on l.BREEDID=b.BREED_ID
+	  where l.LISTINGFLAG = 2
+	  and b.BREED_NAME = #{breedName, jdbcType=VARCHAR}
+      )+(select count(*) from WEIXIN.WX_SUPPLY s
+	  where s.STATUS = 1 
+	  and s.BREED_NAME = #{breedName, jdbcType=VARCHAR}
+      )+(select count(*) from WEIXIN.EAST_GONGQIU g
+      where g.CHANDI is not null and g.ENDTM > sysdate and g.GQFLG = '1'
+    and g.SHFLG = '1' and g.YCNAM = #{breedName, jdbcType=VARCHAR}
+      )) as num 
+      from DUAL
+  </select>
+  <!-- end 操作：修改查询方法， author:aizhengdong date:2015.05.22 -->  
+  
+  <!-- 查询品种的今日价格的信息（东方中药材） -->
+  <select id="selectTodayPriceByBreedName" parameterType="java.lang.String" resultType="java.util.Map">
+	  select y.YCNAM as YC_YCNAM,p.GUIGE as YC_GUIGE,t.PRI as YC_PRI from WEIXIN.EAST_YC_PRICE_TODAY t
+	  left join WEIXIN.EAST_PINZHONG p on t.PZID = p.PZID
+	  left join WEIXIN.EAST_YAOCAI y on p.YCID = y.YCID
+	  left join WEIXIN.EAST_PZ_DANGAN d on y.YCNAM = d.YCNAM
+	  where d.YCNAM = #{breedName, jdbcType=VARCHAR}
+  </select>
+  
+   <!-- 查询类目品种的产地信息 -->
+  <select id="selectWxSupplyPlaces" resultType="java.lang.String">
+	  select distinct BREED_PLACE from WEIXIN.VIEW_BREED_YCNAM_CHANDI order by BREED_PLACE
+  </select>
+  
+  <!-- 查询类目品种的货物所在地信息 -->
+  <select id="selectWxSupplyAreas" resultType="com.jointown.zy.common.vo.AreaVo">
+	  select * from ZYC.AREA where TYPE = 2 order by NAME
+  </select>
+  
+  <!-- 查询类目的单位信息 -->
+  <select id="selectWxSupplyDicts" resultType="com.jointown.zy.common.vo.DictInfoVo">
+	  select ID as id,DICT_VALUE as dictValue from BOSS.DICT_INFO where DICT_TYPE = 'weight_unit' order by DICT_VALUE
+  </select>
+  
+  <!-- 查询类目的品种信息 -->
+  <select id="selectWxSupplyByBreedName" parameterType="java.lang.String" resultMap="WxSupplyBreedVo">
+	  select b.BREED_ID as BREED_ID,b.BREED_NAME as BREED_NAME,d.DICT_VALUE as QTY_UNIT,b.BREED_STANDARD_LEVEL as BREED_STANDARD_LEVEL,b.BREED_PLACE as BREED_PLACE 
+	  from BOSS.BREED b
+	  left join BOSS.DICT_INFO d on b.BREED_COUNT_UNIT = d.DICT_CODE
+	  where b.STATUS = 1
+	  and b.BREED_NAME = #{breedName, jdbcType=VARCHAR}
+  </select>  
+
+ 	
+	 <!-- alter by biran 20150722 后台审核：查询供应信息, 
+	 		将供求关系-供应信息管理和微信-供应信息审核分开,
+	 	           供求关系-供应信息管理使用，不包含东网数据
+	 -->
+  <select id="selectWxSupplysByCondition" parameterType="com.jointown.zy.common.model.Page" resultMap="WxSupplyVo">
+		select *
+		  from (select *
+		          from (select *
+		                  from (select s.SUPPLY_ID,
+		                               (case when s.User_Name is not null then s.User_Name else uu.USER_NAME end) as UC_USER_NAME,
+		                               (case when s.User_MOBILE is not null then s.User_MOBILE else uu.MOBILE end) as UC_USER_MOBILE,
+		                               s.SYPPLY_RESOURCE,
+		                               s.BREED_NAME,
+		                               s.BREED_STANDARD_LEVEL,
+		                               concat(s.PRICE, s.PRICE_UNIT) as JIAG,
+		                               concat(s.QTY, s.QTY_UNIT) as SHUL,
+		                               s.BREED_PLACE,
+		                               s.AREA_NAME,
+		                               s.CREATE_TIME,
+		                               s.UPDATE_TIME,
+		                               s.STATUS,
+		                               bu.USER_NAME as BOSS_USER_NAME,
+		                               s.APPROVE_TIME
+		                          from WEIXIN.WX_SUPPLY s
+		                          left join BOSS.UC_USER uu
+		                            on s.USER_ID = uu.USER_ID
+		                          left join BOSS.BOSS_USER bu
+		                            on s.APPROVER = bu.USER_ID
+		                         where s.STATUS = '0') a
+		                 where 1 = 1
+		                 order by a.CREATE_TIME desc)
+		                 
+		        union all
+		        
+		        select *
+		          from (select *
+		                  from (
+		                        
+		                        select s.SUPPLY_ID,
+		                               (case when s.User_Name is not null then s.User_Name else uu.USER_NAME end) as UC_USER_NAME,
+		                               (case when s.User_MOBILE is not null then s.User_MOBILE else uu.MOBILE end) as UC_USER_MOBILE,
+		                               s.SYPPLY_RESOURCE,
+		                               s.BREED_NAME,
+		                               s.BREED_STANDARD_LEVEL,
+		                               concat(s.PRICE, s.PRICE_UNIT) as JIAG,
+		                               concat(s.QTY, s.QTY_UNIT) as SHUL,
+		                               s.BREED_PLACE,
+		                               s.AREA_NAME,
+		                               s.CREATE_TIME,
+		                               s.UPDATE_TIME,
+		                               s.STATUS,
+		                               bu.USER_NAME as BOSS_USER_NAME,
+		                               s.APPROVE_TIME
+		                          from WEIXIN.WX_SUPPLY s
+		                          left join BOSS.UC_USER uu
+		                            on s.USER_ID = uu.USER_ID
+		                          left join BOSS.BOSS_USER bu
+		                            on s.APPROVER = bu.USER_ID
+		                         where s.STATUS != '0') b
+		                 where 1 = 1
+		                 order by b.CREATE_TIME desc)
+		 		)
+		 where 1 = 1
+
+       	<!-- 查询条件：发布人姓名 -->
+	    <if test="params.wxSupplySearchDto.userName != null and params.wxSupplySearchDto.userName != ''">
+       	    and UC_USER_NAME like CONCAT(CONCAT('%', #{params.wxSupplySearchDto.userName, jdbcType=VARCHAR}),'%')
+        </if>
+        <!-- 查询条件：联系电话 -->
+        <if test="params.wxSupplySearchDto.userMobile!= null and params.wxSupplySearchDto.userMobile != ''">
+         	and UC_USER_MOBILE = #{params.wxSupplySearchDto.userMobile, jdbcType=VARCHAR}
+        </if>
+        <!-- 查询条件：品种名称 -->
+        <if test="params.wxSupplySearchDto.breedName != null and params.wxSupplySearchDto.breedName != ''">
+         	and BREED_NAME like CONCAT(CONCAT('%', #{params.wxSupplySearchDto.breedName, jdbcType=VARCHAR}),'%')
+        </if>
+        <!-- 查询条件：状态 -->
+        <if test="params.wxSupplySearchDto.status != null">
+         	and STATUS = #{params.wxSupplySearchDto.status, jdbcType=DECIMAL}
+        </if>
+        <!-- 查询条件：信息来源 -->
+        <if test="params.wxSupplySearchDto.sypplyResource != null">
+            and SYPPLY_RESOURCE = #{params.wxSupplySearchDto.sypplyResource, jdbcType=VARCHAR}
+        </if>
+        <!-- 查询条件：创建时间 -->
+        <if test="params.wxSupplySearchDto.startDate != null and params.wxSupplySearchDto.startDate != ''">
+        	and CREATE_TIME >= to_date(#{params.wxSupplySearchDto.startDate},'yyyy-mm-dd hh24:mi:ss') 
+        </if>
+        <if test="params.wxSupplySearchDto.endDate != null and params.wxSupplySearchDto.endDate != ''">
+        	and CREATE_TIME <![CDATA[<=]]> to_date(#{params.wxSupplySearchDto.endDate},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+  </select>
+  
+	<!--start author:lichenxiao addtime:2015年4月10日下午  H5页面查询供求信息中的珍药网的数据（默认全部按挂牌时间排序，点击查询时，显示只可按品种名称查询） -->
+	<select id="selectPriceByAll" parameterType="java.util.Map" resultMap="VoResultMap">
+		select sp.*
+		  from (select rownum rn,
+		                b.breed_name as name,
+		                trim(to_char(bl.lowunitprice, 9999999999990.99)) as price,
+		                round(bl.listingamount, 2) as amount,
+		                bq.grade as grade,
+		                di.dict_value as amountUnit
+		           from ZYC.Busi_Listing bl
+		           left join BOSS.Breed b
+		             on bl.breedid = b.breed_id
+		           left join ZYC.Busi_Qualityinfo bq
+		             on bl.wlid = bq.wlid
+		           left join ZYC.Busi_Whlist bw
+		             on bl.wlid = bw.wlid
+		           left join BOSS.Dict_Info di
+		             on bw.wlunit = di.dict_code
+		          where bl.listingflag = '2'
+					<if test="yc!=null and yc!=''"><!-- 按品种查询 -->
+				    and b.breed_name = #{yc,jdbcType=VARCHAR}
+			       </if>
+				order by bl.updatetime desc) sp
+	where <![CDATA[sp.rn >=#{start,jdbcType=DECIMAL} and sp.rn<=#{end,jdbcType=DECIMAL}]]>
+	</select>
+	<!--end author:lichenxiao addtime:2015年4月10日下午  H5页面查询供求信息中的珍药网的数据（默认全部按挂牌时间排序，点击查询时，显示只可按品种名称查询） -->
+	
+	<!--start author:lichenxiao addtime:2015年4月23日下午  H5页面查询供应信息中的珍药网的数据（默认全部按挂牌时间排序，点击查询时，显示只可按品种名称查询） -->
+	<select id="selectInfoBySupply" parameterType="java.util.Map" resultMap="WxSupplyVo">
+	select * from (
+		select 	supplyId,
+       			userName,
+       			userMobile,
+       			breedName,
+       			supplyPrice,
+       			breedStandardLevel,
+       			qty,
+       			qtyUnit,
+       			supplyPicOne,
+       			breedPlace,
+       			huoYuandi,
+       			dtm,
+       			ROWNUM rno
+       			from (
+					select gqid as supplyId,
+					       unam as userName,
+					       moba as userMobile,
+					       ycnam as breedName,
+					       pri as supplyPrice,
+					       guige as breedStandardLevel,
+					       shul as qty,
+					       danw as qtyUnit,
+					       picurl as supplyPicOne,
+					       chandi as breedPlace,
+					       huoyuandi as huoYuandi,
+					       dtm as dtm,
+					       ROWNUM rno
+					  from (
+					        select  gqid,
+					                unam,
+					                (SELECT REGEXP_SUBSTR(mob, '[0-9]{11}') FROM DUAL) moba,
+					                ycnam,
+					                pri,
+					                guige,
+					                shul,
+					                danw,
+					                picurl,
+					                chandi,
+					                huoyuandi,
+					                e1.dtm
+					          from weixin.east_gongqiu e1, weixin.east_lianxi e2
+					         where e1.yhid = e2.yhid
+					           and gqflg = '1'
+					           and shflg = '1'
+					           and shul >= 0
+					           and chandi is not null
+					           and mob is not null
+					           <!--start 查询条件为品种名称有值时带条件 -->
+					           	<if test="yc!=null and yc!=''"><!-- 按品种查询 -->
+							  		and ycnam = #{yc,jdbcType=VARCHAR}
+								</if>
+								<!-- end 查询条件为品种名称有值时带条件 -->
+				    union all
+				        select a.supply_id,
+				               b.companyname,
+				               b.mobile,
+				               a.breed_name,
+				               trim(to_char(a.price,9999999999990.99)) price,
+				               a.breed_standard_level,
+				               a.qty,
+				               a.qty_unit,
+				               (select d.picpath
+				                  from weixin.wx_supply_pic d
+				                 where d.supply_id = a.supply_id
+				                   and rownum = 1) as picurl,
+				               a.breed_place,
+				               a.area_name,
+				               a.update_time
+				          from weixin.wx_supply a, boss.uc_user b
+				         where a.user_id = b.user_id
+				           and a.status = 1
+				           and b.mobile is not null
+				           	<!--start 查询条件为品种名称有值时带条件 -->
+					        <if test="yc!=null and yc!=''"><!-- 按品种查询 -->
+							  	and a.breed_name = #{yc,jdbcType=VARCHAR}
+							</if>
+							<!-- end 查询条件为品种名称有值时带条件 -->
+		        	) aa order by aa.dtm desc
+		) r
+	) rr where <![CDATA[rno >=#{start,jdbcType=DECIMAL} and rno<=#{end,jdbcType=DECIMAL}]]>
+	</select>
+	<!--end author:lichenxiao addtime:2015年4月23日下午  H5页面查询供应信息中的珍药网的数据（默认全部按挂牌时间排序，点击查询时，显示只可按品种名称查询） -->
+	
+
+	<select id="selectAllChandi" resultType="String">
+ 		select t.CHANDI from weixin.EAST_GONGQIU t group by t.CHANDI
+ 	</select>
+ 	
+	<!-- 分页条件查询微信供应信息 -->
+	<select id="selectWxSupplysByPage" parameterType="com.jointown.zy.common.model.Page" resultMap="WxSupplyVo">
+	    select 
+	    SUPPLY_ID, BREED_NAME, BREED_STANDARD_LEVEL, QTY, QTY_UNIT, "STATUS"
+	    from WEIXIN.WX_SUPPLY
+	    where "STATUS" != 3
+	    <if test="params.wxSupply.supplyId != null and params.wxSupply.supplyId != ''">
+	 		and SUPPLY_ID = #{params.wxSupply.supplyId,jdbcType=DECIMAL}
+	    </if>
+	    <if test="params.wxSupply.userId != null and params.wxSupply.userId != ''">
+	 		and USER_ID = #{params.wxSupply.userId,jdbcType=DECIMAL}
+	    </if>
+	    order by UPDATE_TIME desc
+	</select>
+	
+  	<!-- ID条件查询微信供应信息和图片 -->
+	<select id="selectWxSupplyAndPicById" parameterType="com.jointown.zy.common.model.WxSupply" resultMap="WxSupplyVo">
+	    select 
+		SUPPLY_ID, USER_ID, BREED_ID, BREED_NAME, STANDARD_LEVEL_ID, BREED_STANDARD_LEVEL, 
+	    PRICE, PRICE_UNIT, QTY, QTY_UNIT, PLACE_ID, BREED_PLACE, WHID, AREA_CODE, AREA_NAME, "STATUS"
+	    from WEIXIN.WX_SUPPLY
+	    <where>
+		    <if test="supplyId != null and supplyId != ''">
+		 		and SUPPLY_ID = #{supplyId,jdbcType=DECIMAL}
+		    </if>
+		    <if test="userId != null and userId != ''">
+		 		and USER_ID = #{userId,jdbcType=DECIMAL}
+		    </if>
+	    </where>
+	</select>
+	
+	<!-- ID条件查询微信供应信息 -->
+	<select id="selectWxSupplyById" parameterType="com.jointown.zy.common.model.WxSupply" resultMap="WxSupply">
+	    select 
+		<include refid="Base_Column_List" />
+	    from WEIXIN.WX_SUPPLY
+	    <where>
+		    <if test="supplyId != null and supplyId != ''">
+		 		and SUPPLY_ID = #{supplyId,jdbcType=DECIMAL}
+		    </if>
+		    <if test="userId != null and userId != ''">
+		 		and USER_ID = #{userId,jdbcType=DECIMAL}
+		    </if>
+	    </where>
+	</select>
+	
+	
+	 <!-- added by biran 20150722 后台审核：查询供应信息, 
+	 		将供求关系-供应信息管理和微信-供应信息审核分开,
+	 	           供求关系-供应信息管理使用，不包含东网数据
+	 -->
+  <select id="selectWxSupplysByCondition1" parameterType="com.jointown.zy.common.model.Page" resultMap="WxSupplyVo">
+		select *
+		  from (select *
+		          from (select *
+		                  from (select s.SUPPLY_ID,
+		                               (case when s.User_Name is not null then s.User_Name else uu.USER_NAME end) as UC_USER_NAME,
+		                               (case when s.User_MOBILE is not null then s.User_MOBILE else uu.MOBILE end) as UC_USER_MOBILE,
+		                               s.SYPPLY_RESOURCE,
+		                               s.BREED_NAME,
+		                               s.BREED_STANDARD_LEVEL,
+		                               concat(s.PRICE, s.PRICE_UNIT) as JIAG,
+		                               concat(s.QTY, s.QTY_UNIT) as SHUL,
+		                               s.BREED_PLACE,
+		                               s.AREA_NAME,
+		                               s.CREATE_TIME,
+		                               s.UPDATE_TIME,
+		                               s.STATUS,
+		                               bu.USER_NAME as BOSS_USER_NAME,
+		                               s.APPROVE_TIME
+		                          from WEIXIN.WX_SUPPLY s
+		                          left join BOSS.UC_USER uu
+		                            on s.USER_ID = uu.USER_ID
+		                          left join BOSS.BOSS_USER bu
+		                            on s.APPROVER = bu.USER_ID
+		                         where s.STATUS = '0') a
+		                 where 1 = 1
+		                 order by a.CREATE_TIME desc)
+		                 
+		        union all
+		        
+		        select *
+		          from (select *
+		                  from (
+		                        
+		                        select s.SUPPLY_ID,
+		                               (case when s.User_Name is not null then s.User_Name else uu.USER_NAME end) as UC_USER_NAME,
+		                               (case when s.User_MOBILE is not null then s.User_MOBILE else uu.MOBILE end) as UC_USER_MOBILE,
+		                               s.SYPPLY_RESOURCE,
+		                               s.BREED_NAME,
+		                               s.BREED_STANDARD_LEVEL,
+		                               concat(s.PRICE, s.PRICE_UNIT) as JIAG,
+		                               concat(s.QTY, s.QTY_UNIT) as SHUL,
+		                               s.BREED_PLACE,
+		                               s.AREA_NAME,
+		                               s.CREATE_TIME,
+		                               s.UPDATE_TIME,
+		                               s.STATUS,
+		                               bu.USER_NAME as BOSS_USER_NAME,
+		                               s.APPROVE_TIME
+		                          from WEIXIN.WX_SUPPLY s
+		                          left join BOSS.UC_USER uu
+		                            on s.USER_ID = uu.USER_ID
+		                          left join BOSS.BOSS_USER bu
+		                            on s.APPROVER = bu.USER_ID
+		                         where s.STATUS != '0') b
+		                 where 1 = 1
+		                 order by b.CREATE_TIME desc)
+		 		)
+		 where 1 = 1
+
+       	<!-- 查询条件：发布人姓名 -->
+	    <if test="params.wxSupplySearchDto.userName != null and params.wxSupplySearchDto.userName != ''">
+       	    and UC_USER_NAME like CONCAT(CONCAT('%', #{params.wxSupplySearchDto.userName, jdbcType=VARCHAR}),'%')
+        </if>
+        <!-- 查询条件：联系电话 -->
+        <if test="params.wxSupplySearchDto.userMobile!= null and params.wxSupplySearchDto.userMobile != ''">
+         	and UC_USER_MOBILE = #{params.wxSupplySearchDto.userMobile, jdbcType=VARCHAR}
+        </if>
+        <!-- 查询条件：品种名称 -->
+        <if test="params.wxSupplySearchDto.breedName != null and params.wxSupplySearchDto.breedName != ''">
+         	and BREED_NAME like CONCAT(CONCAT('%', #{params.wxSupplySearchDto.breedName, jdbcType=VARCHAR}),'%')
+        </if>
+        <!-- 查询条件：状态 -->
+        <if test="params.wxSupplySearchDto.status != null">
+         	and STATUS = #{params.wxSupplySearchDto.status, jdbcType=DECIMAL}
+        </if>
+        <!-- 查询条件：信息来源 -->
+        <if test="params.wxSupplySearchDto.sypplyResource != null">
+            and SYPPLY_RESOURCE = #{params.wxSupplySearchDto.sypplyResource, jdbcType=VARCHAR}
+        </if>
+        <!-- 查询条件：创建时间 -->
+        <if test="params.wxSupplySearchDto.startDate != null and params.wxSupplySearchDto.startDate != ''">
+        	and CREATE_TIME >= to_date(#{params.wxSupplySearchDto.startDate},'yyyy-mm-dd hh24:mi:ss') 
+        </if>
+        <if test="params.wxSupplySearchDto.endDate != null and params.wxSupplySearchDto.endDate != ''">
+        	and CREATE_TIME <![CDATA[<=]]> to_date(#{params.wxSupplySearchDto.endDate},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+  </select>
+</mapper>

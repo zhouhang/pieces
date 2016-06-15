@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.OrganizationDao" >
+  <resultMap id="Organiztion" type="com.jointown.zy.common.model.Organization">
+    <id column="ORG_ID" property="id" jdbcType="INTEGER" />
+    <result column="ORG_NAME" property="orgName" jdbcType="VARCHAR" />
+    <result column="PARENT_ID" property="parentId" jdbcType="INTEGER" />
+    <result column="ORG_LEVEL" property="orgLevel" jdbcType="INTEGER" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <select id="findOrganization" resultMap="Organiztion">
+        select * from boss.boss_org where status = 0
+   </select>
+  <select id="findOrganizationByOrgName" parameterType="string" resultMap="Organiztion">
+        select * from boss.boss_org where org_name=#{orgName} and status=0
+   </select>
+  <select id="findOrganizationById" parameterType="java.lang.Integer" resultMap="Organiztion">
+        select * from boss.boss_org where org_id=#{id} and status=0
+   </select>
+  <select id="findOrganizationByPId" parameterType="java.lang.Integer" resultMap="Organiztion">
+        select * from boss.boss_org where parent_id=#{parentId} and status=0
+   </select>
+   <insert id="addOrganization" parameterType="com.jointown.zy.common.model.Organization">   
+   		insert into boss.boss_org (org_id,org_name,parent_id,org_level,status,create_time,update_time)
+   		values(boss.seq_boss_org.nextval,
+   		#{orgName,jdbcType=VARCHAR},
+   		#{parentId,jdbcType=INTEGER},
+   		#{orgLevel,jdbcType=INTEGER},
+   		#{status,jdbcType=INTEGER},
+   		#{createTime,jdbcType=TIMESTAMP},
+   		#{updateTime,jdbcType=TIMESTAMP})
+   </insert>
+   <update id="updateOrganization" parameterType="com.jointown.zy.common.model.Organization">
+        update boss.boss_org set
+        org_name = #{orgName},
+        update_time = #{updateTime},
+        status = #{status},
+        parent_id = #{parentId},
+        org_level = #{orgLevel}
+        WHERE org_id = #{id}
+  </update>
+   <update id="deleteOrganization" parameterType="com.jointown.zy.common.model.Organization">
+        update boss.boss_org set
+        status = 1
+        WHERE org_id = #{id}
+  </update>
+   
+</mapper>

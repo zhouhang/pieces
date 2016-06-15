@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.EastPzDanganDao" >
+  <resultMap id="EastPzDangan" type="com.jointown.zy.common.model.EastPzDangan" >
+    <id column="YCNAM" property="ycnam" jdbcType="VARCHAR" />
+    <result column="BYNAM" property="bynam" jdbcType="VARCHAR" />
+    <result column="GAISHU" property="gaishu" jdbcType="CLOB" />
+    <result column="CHANDI" property="chandi" jdbcType="CLOB" />
+    <result column="XINGTAI" property="xingtai" jdbcType="CLOB" />
+    <result column="SHENGTAI" property="shengtai" jdbcType="CLOB" />
+    <result column="SHENGWU" property="shengwu" jdbcType="CLOB" />
+    <result column="XIXING" property="xixing" jdbcType="CLOB" />
+    <result column="ZHOUQI" property="zhouqi" jdbcType="CLOB" />
+    <result column="CAISHOU" property="caishou" jdbcType="CLOB" />
+    <result column="CHUCANG" property="chucang" jdbcType="CLOB" />
+    <result column="GUIGE" property="guige" jdbcType="CLOB" />
+    <result column="XINGWEI" property="xingwei" jdbcType="CLOB" />
+    <result column="JIANBIE" property="jianbie" jdbcType="CLOB" />
+    <result column="ZHONGZHI" property="zhongzhi" jdbcType="CLOB" />
+    <result column="GONGXU" property="gongxu" jdbcType="CLOB" />
+    <result column="YAODIAN" property="yaodian" jdbcType="CLOB" />
+    <result column="PIC" property="pic" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    YCNAM, BYNAM, PIC, CREATE_TIME, UPDATE_TIME,
+    GAISHU, CHANDI, XINGTAI, SHENGTAI, SHENGWU, XIXING, ZHOUQI, CAISHOU, CHUCANG, GUIGE, 
+    XINGWEI, JIANBIE, ZHONGZHI, GONGXU, YAODIAN
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="EastPzDangan" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from WEIXIN.EAST_PZ_DANGAN
+    where YCNAM = #{ycnam,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from WEIXIN.EAST_PZ_DANGAN
+    where YCNAM = #{ycnam,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.jointown.zy.common.model.EastPzDangan" >
+    insert into WEIXIN.EAST_PZ_DANGAN (YCNAM, BYNAM, PIC, 
+      CREATE_TIME, UPDATE_TIME, GAISHU, 
+      CHANDI, XINGTAI, SHENGTAI, SHENGWU, 
+      XIXING, ZHOUQI, CAISHOU, CHUCANG, 
+      GUIGE, XINGWEI, JIANBIE, ZHONGZHI, 
+      GONGXU, YAODIAN)
+    values (#{ycnam,jdbcType=VARCHAR}, #{bynam,jdbcType=VARCHAR}, #{pic,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{gaishu,jdbcType=CLOB}, 
+      #{chandi,jdbcType=CLOB}, #{xingtai,jdbcType=CLOB}, #{shengtai,jdbcType=CLOB}, #{shengwu,jdbcType=CLOB}, 
+      #{xixing,jdbcType=CLOB}, #{zhouqi,jdbcType=CLOB}, #{caishou,jdbcType=CLOB}, #{chucang,jdbcType=CLOB}, 
+      #{guige,jdbcType=CLOB}, #{xingwei,jdbcType=CLOB}, #{jianbie,jdbcType=CLOB}, #{zhongzhi,jdbcType=CLOB}, 
+      #{gongxu,jdbcType=CLOB}, #{yaodian,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jointown.zy.common.model.EastPzDangan" >
+    insert into WEIXIN.EAST_PZ_DANGAN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      YCNAM,
+      BYNAM,
+      PIC,
+      CREATE_TIME,
+      UPDATE_TIME,
+      GAISHU,
+      CHANDI,
+      XINGTAI,
+      SHENGTAI,
+      SHENGWU,
+      XIXING,
+      ZHOUQI,
+      CAISHOU,
+      CHUCANG,
+      GUIGE,
+      XINGWEI,
+      JIANBIE,
+      ZHONGZHI,
+      GONGXU,
+      YAODIAN,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{ycnam,jdbcType=VARCHAR},
+      #{bynam,jdbcType=VARCHAR},
+      #{pic,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+      #{gaishu,jdbcType=CLOB},
+      #{chandi,jdbcType=CLOB},
+      #{xingtai,jdbcType=CLOB},
+      #{shengtai,jdbcType=CLOB},
+      #{shengwu,jdbcType=CLOB},
+      #{xixing,jdbcType=CLOB},
+      #{zhouqi,jdbcType=CLOB},
+      #{caishou,jdbcType=CLOB},
+      #{chucang,jdbcType=CLOB},
+      #{guige,jdbcType=CLOB},
+      #{xingwei,jdbcType=CLOB},
+      #{jianbie,jdbcType=CLOB},
+      #{zhongzhi,jdbcType=CLOB},
+      #{gongxu,jdbcType=CLOB},
+      #{yaodian,jdbcType=CLOB},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jointown.zy.common.model.EastPzDangan" >
+    update WEIXIN.EAST_PZ_DANGAN
+    <set >
+      <if test="bynam != null" >
+        BYNAM = #{bynam,jdbcType=VARCHAR},
+      </if>
+      <if test="pic != null" >
+        PIC = #{pic,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gaishu != null" >
+        GAISHU = #{gaishu,jdbcType=CLOB},
+      </if>
+      <if test="chandi != null" >
+        CHANDI = #{chandi,jdbcType=CLOB},
+      </if>
+      <if test="xingtai != null" >
+        XINGTAI = #{xingtai,jdbcType=CLOB},
+      </if>
+      <if test="shengtai != null" >
+        SHENGTAI = #{shengtai,jdbcType=CLOB},
+      </if>
+      <if test="shengwu != null" >
+        SHENGWU = #{shengwu,jdbcType=CLOB},
+      </if>
+      <if test="xixing != null" >
+        XIXING = #{xixing,jdbcType=CLOB},
+      </if>
+      <if test="zhouqi != null" >
+        ZHOUQI = #{zhouqi,jdbcType=CLOB},
+      </if>
+      <if test="caishou != null" >
+        CAISHOU = #{caishou,jdbcType=CLOB},
+      </if>
+      <if test="chucang != null" >
+        CHUCANG = #{chucang,jdbcType=CLOB},
+      </if>
+      <if test="guige != null" >
+        GUIGE = #{guige,jdbcType=CLOB},
+      </if>
+      <if test="xingwei != null" >
+        XINGWEI = #{xingwei,jdbcType=CLOB},
+      </if>
+      <if test="jianbie != null" >
+        JIANBIE = #{jianbie,jdbcType=CLOB},
+      </if>
+      <if test="zhongzhi != null" >
+        ZHONGZHI = #{zhongzhi,jdbcType=CLOB},
+      </if>
+      <if test="gongxu != null" >
+        GONGXU = #{gongxu,jdbcType=CLOB},
+      </if>
+      <if test="yaodian != null" >
+        YAODIAN = #{yaodian,jdbcType=CLOB},
+      </if>
+    </set>
+    where YCNAM = #{ycnam,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jointown.zy.common.model.EastPzDangan" >
+    update WEIXIN.EAST_PZ_DANGAN
+    set BYNAM = #{bynam,jdbcType=VARCHAR},
+      PIC = #{pic,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      GAISHU = #{gaishu,jdbcType=CLOB},
+      CHANDI = #{chandi,jdbcType=CLOB},
+      XINGTAI = #{xingtai,jdbcType=CLOB},
+      SHENGTAI = #{shengtai,jdbcType=CLOB},
+      SHENGWU = #{shengwu,jdbcType=CLOB},
+      XIXING = #{xixing,jdbcType=CLOB},
+      ZHOUQI = #{zhouqi,jdbcType=CLOB},
+      CAISHOU = #{caishou,jdbcType=CLOB},
+      CHUCANG = #{chucang,jdbcType=CLOB},
+      GUIGE = #{guige,jdbcType=CLOB},
+      XINGWEI = #{xingwei,jdbcType=CLOB},
+      JIANBIE = #{jianbie,jdbcType=CLOB},
+      ZHONGZHI = #{zhongzhi,jdbcType=CLOB},
+      GONGXU = #{gongxu,jdbcType=CLOB},
+      YAODIAN = #{yaodian,jdbcType=CLOB}
+    where YCNAM = #{ycnam,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 查询品种名称（breed(品种表)+pz_dangan(品种档案表)东方中药材） 
+  	select b.BREED_NAME from BOSS.BREED b
+	where b.BREED_NAME like CONCAT(CONCAT('%', #{name, jdbcType=VARCHAR}),'%')
+	or b.BREED_CNAME like CONCAT(CONCAT('%', #{name, jdbcType=VARCHAR}),'%')
+	UNION
+	select p.YCNAM from WEIXIN.EAST_PZ_DANGAN p
+	where p.YCNAM like CONCAT(CONCAT('%', #{name, jdbcType=VARCHAR}),'%')
+	or p.BYNAM like CONCAT(CONCAT('%', #{name, jdbcType=VARCHAR}),'%')
+  -->
+  <select id="selectBreedNameByName" parameterType="java.lang.String" resultType="java.lang.String">
+	select b.BREED_NAME from BOSS.BREED b
+	where b.BREED_NAME = #{name, jdbcType=VARCHAR}
+	UNION
+	select p.YCNAM from WEIXIN.EAST_PZ_DANGAN p
+	where p.YCNAM = #{name, jdbcType=VARCHAR}
+  </select>
+</mapper>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BusiOrderDepositDao">
+	<resultMap id="BaseResultMap" type="com.jointown.zy.common.model.BusiOrderDeposit">
+		<id column="ID" property="id" jdbcType="DECIMAL" />
+	    <result column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+	    <result column="WLID" property="wlid" jdbcType="VARCHAR" />
+	    <result column="LISTING_ID" property="listingId" jdbcType="VARCHAR" />
+	    <result column="SELLER_ID" property="sellerId" jdbcType="DECIMAL" />
+	    <result column="BUYER_ID" property="buyerId" jdbcType="DECIMAL" />
+	    <result column="DEPOSIT_TYPE" property="depositType" jdbcType="DECIMAL" />
+	    <result column="DEPOSIT_AMOUNT" property="depositAmount" jdbcType="DECIMAL" />
+	    <result column="ORDER_UPD" property="orderUpd" jdbcType="TIMESTAMP" />
+	    <result column="DEPOSIT_STATE" property="depositState" jdbcType="DECIMAL" />
+	    <result column="SELLER_AMOUNT" property="sellerAmount" jdbcType="DECIMAL" />
+	    <result column="BUYER_AMOUNT" property="buyerAmount" jdbcType="DECIMAL" />
+	    <result column="PLATFORM_AMOUNT" property="platformAmount" jdbcType="DECIMAL" />
+	    <result column="CREATETIME" property="createtime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATETIME" property="updatetime" jdbcType="TIMESTAMP" />
+	    <result column="PAYED_TIME" property="payedTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	
+	<sql id="BaseColumns" >
+		ID, ORDER_ID, WLID, LISTING_ID, SELLER_ID, BUYER_ID, DEPOSIT_TYPE, DEPOSIT_AMOUNT,
+		ORDER_UPD, DEPOSIT_STATE, SELLER_AMOUNT, BUYER_AMOUNT, PLATFORM_AMOUNT, CREATETIME, UPDATETIME,PAYED_TIME
+	</sql>
+	
+	<insert id="insertOrderDeposit" parameterType="com.jointown.zy.common.model.BusiOrderDeposit">
+		insert into ZYC.BUSI_ORDER_DEPOSIT (
+			ID,
+			ORDER_ID,
+			WLID,
+			LISTING_ID,
+			SELLER_ID,
+			BUYER_ID,
+			DEPOSIT_TYPE,
+			DEPOSIT_AMOUNT,
+			BUYER_AMOUNT,
+			SELLER_AMOUNT,
+			PLATFORM_AMOUNT,
+			ORDER_UPD,
+			CREATETIME,
+			UPDATETIME
+		)
+		values (
+			ZYC.SEQ_BUSI_ORDER_DEPOSIT.nextval,
+			#{orderId,jdbcType=VARCHAR},
+			#{wlid,jdbcType=VARCHAR},
+			#{listingId,jdbcType=VARCHAR},
+			#{sellerId,jdbcType=DECIMAL},
+			#{buyerId,jdbcType=DECIMAL},
+			#{depositType,jdbcType=DECIMAL},
+			#{depositAmount,jdbcType=DECIMAL},
+			#{buyerAmount,jdbcType=DECIMAL},
+			#{sellerAmount,jdbcType=DECIMAL},
+			#{platformAmount,jdbcType=DECIMAL},
+			#{orderUpd,jdbcType=TIMESTAMP},
+			#{createtime,jdbcType=TIMESTAMP},
+			#{updatetime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	<update id="updateOrderDepositByOrderId" parameterType="com.jointown.zy.common.model.BusiOrderDeposit">
+		update ZYC.BUSI_ORDER_DEPOSIT
+		set
+			DEPOSIT_STATE = #{depositState,jdbcType=DECIMAL},
+			SELLER_AMOUNT = #{sellerAmount,jdbcType=DECIMAL},
+			BUYER_AMOUNT = #{buyerAmount,jdbcType=DECIMAL},
+			PLATFORM_AMOUNT = #{platformAmount,jdbcType=DECIMAL},
+			UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+		where
+			ORDER_ID = #{orderId,jdbcType=VARCHAR} and DEPOSIT_TYPE = #{depositType,jdbcType=DECIMAL}
+			and (DEPOSIT_STATE = 1 or  DEPOSIT_STATE = 4)
+	</update>
+	
+	<update id="updateOrderDepositByPayFinish" parameterType="com.jointown.zy.common.model.BusiOrderDeposit">
+		update ZYC.BUSI_ORDER_DEPOSIT
+		set
+			DEPOSIT_STATE = #{depositState,jdbcType=DECIMAL},
+			<if test="payedTime != null">
+				PAYED_TIME = #{payedTime,jdbcType=TIMESTAMP},
+	    	</if>
+			UPDATETIME = #{updatetime,jdbcType=TIMESTAMP}
+		where
+			ORDER_ID = #{orderId,jdbcType=VARCHAR} and DEPOSIT_TYPE = #{depositType,jdbcType=DECIMAL}
+			and DEPOSIT_STATE = 3
+	</update>
+	
+	<select id="selectOrderDepositByLock" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+			<include refid="BaseColumns"/>
+		from ZYC.BUSI_ORDER_DEPOSIT
+		where
+			ORDER_ID = #{orderId,jdbcType=VARCHAR}
+		for update nowait
+	</select>
+	
+	<select id="selectSingleOrderDeposit" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+			<include refid="BaseColumns"/>
+		from ZYC.BUSI_ORDER_DEPOSIT
+		where
+			ORDER_ID = #{orderId,jdbcType=VARCHAR}
+	</select>
+	
+	<resultMap id="getDepositListByPageMap" type="com.jointown.zy.common.vo.BossOrderDepositVo">
+		<id column="ORDER_ID" property="orderId" jdbcType="VARCHAR" />
+	    <result column="TITLE" property="title" jdbcType="VARCHAR" />
+	    <result column="BUYERNAME" property="buyerName" jdbcType="VARCHAR" />
+	    <result column="SELLERNAME" property="sellerName" jdbcType="VARCHAR" />
+	    <result column="DEPOSIT_STATE" property="depositState" jdbcType="DECIMAL" />
+	    <result column="DEPOSIT_AMOUNT" property="depositAmount" jdbcType="DECIMAL" />
+	    <result column="SELLER_AMOUNT" property="sellerAmount" jdbcType="DECIMAL" />
+	    <result column="BUYER_AMOUNT" property="buyerAmount" jdbcType="DECIMAL" />
+	    <result column="PLATFORM_AMOUNT" property="platformAmount" jdbcType="DECIMAL" />
+	    <result column="ORDER_UPD" property="orderUpd" jdbcType="TIMESTAMP" />
+	    <result column="PAYED_TIME" property="payedTime" jdbcType="TIMESTAMP" />
+	    <result column="OPERATOR" property="operator" jdbcType="VARCHAR" />
+	    <!-- add by fanyuna 2015.07.30 增加买家、卖家业务员名称 -->
+	    <result column="sellerSalesmanName" property="sellerSalesmanName" jdbcType="VARCHAR" />
+	    <result column="buyerSalesmanName" property="buyerSalesmanName" jdbcType="VARCHAR" />
+	    
+	    <result column="TOTALPRICE" property="totalAmount" jdbcType="DECIMAL" />
+	</resultMap>
+	
+	<select id="getDepositListByPage" parameterType="com.jointown.zy.common.model.Page" resultMap="getDepositListByPageMap">
+		select
+			a.ORDER_ID,
+			b.TITLE,
+			c.USER_NAME as BUYERNAME,
+			d.USER_NAME as SELLERNAME,
+			a.DEPOSIT_STATE,
+			a.DEPOSIT_AMOUNT,
+			a.SELLER_AMOUNT,
+			a.BUYER_AMOUNT,
+			a.PLATFORM_AMOUNT,
+			a.ORDER_UPD,
+			a.PAYED_TIME,
+			e.USER_NAME as OPERATOR,
+			u.user_name as sellerSalesmanName,  <!-- 订单卖家业务员 -->
+			u1.user_name as buyerSalesmanName,   <!-- 订单买家业务员 -->
+			o.TOTALPRICE
+		from
+		(select <include refid="BaseColumns"/> from ZYC.BUSI_ORDER_DEPOSIT
+    		<where>
+	    		<if test="params.bossOrderDepositQueryDto.orderId != null and '' != params.bossOrderDepositQueryDto.orderId">
+	    			ORDER_ID = #{params.bossOrderDepositQueryDto.orderId}
+	    		</if>
+	    		<if test="params.bossOrderDepositQueryDto.depositType != null and '' != params.bossOrderDepositQueryDto.depositType">
+	    			and DEPOSIT_TYPE = #{params.bossOrderDepositQueryDto.depositType}
+	    		</if>
+	    		<if test="params.bossOrderDepositQueryDto.depositState != null and '' != params.bossOrderDepositQueryDto.depositState">
+	    			and DEPOSIT_STATE = #{params.bossOrderDepositQueryDto.depositState}
+	    		</if>
+	    		<if test="params.bossOrderDepositQueryDto.orderDateStart != null and '' != params.bossOrderDepositQueryDto.orderDateStart">
+					and ORDER_UPD <![CDATA[>=]]> to_date(#{params.bossOrderDepositQueryDto.orderDateStart},'yyyy-mm-dd')
+				</if>
+				<if test="params.bossOrderDepositQueryDto.orderDateEnd != null and '' != params.bossOrderDepositQueryDto.orderDateEnd">
+					and ORDER_UPD <![CDATA[<]]> (to_date(#{params.bossOrderDepositQueryDto.orderDateEnd},'yyyy-mm-dd') + 1)
+				</if>
+	    	</where>
+    	) a
+    	<!--add by Mr.song 2015.7.3 增加操作人信息 start-->
+    	left join (
+	         select  t.ORDER_ID,t.OPERATTOR_ID,max(t.CREATETIME) 
+	         from ZYC.BUSI_ORDER_DEPOSIT_LOG t  
+	         where
+			 	t.DEPOSIT_TYPE =#{params.bossOrderDepositQueryDto.depositType}
+			 	and t.OPERATION_RESULT=1 
+			  group by t.ORDER_ID,t.OPERATTOR_ID     
+    	) op on op.ORDER_ID = a.ORDER_ID
+    	left join BOSS.BOSS_USER e on op.OPERATTOR_ID = e.USER_ID
+    	<!--add by Mr.song 2015.7.3 增加操作人信息 end-->
+		left join ZYC.BUSI_LISTING b on b.LISTINGID = a.LISTING_ID
+		left join BOSS.UC_USER c on c.USER_ID = a.BUYER_ID
+    	left join BOSS.UC_USER d on d.USER_ID = a.SELLER_ID
+    	<!-- add by fanyuna 2015.12.2 增加订单总价 -->
+    	left join zyc.busi_order o on a.ORDER_ID=o.ORDERID
+    	<!-- add by fanyuna 2015.07.30 增加订单的买家、卖家业务员 -->
+    	left join zyc.busi_order_salesman m on a.order_id=m.orderid
+		left join boss.boss_user u on u.user_id=m.seller_salesmanid 
+		left join boss.boss_user u1 on u1.user_id=m.buyer_salesmanid
+    	<where>
+    		<if test="params.bossOrderDepositQueryDto.buyerName != null and '' != params.bossOrderDepositQueryDto.buyerName">
+    			instr(c.USER_NAME, #{params.bossOrderDepositQueryDto.buyerName}) <![CDATA[>]]> 0
+    		</if>
+    		<if test="params.bossOrderDepositQueryDto.sellerName != null and '' != params.bossOrderDepositQueryDto.sellerName">
+    			and instr(d.USER_NAME, #{params.bossOrderDepositQueryDto.sellerName}) <![CDATA[>]]> 0
+    		</if>
+    		<!-- add by fanyuna 2015.07.30 增加业务员名称匹配 -->
+    		<if test="params.bossOrderDepositQueryDto.salesmanName != null and '' != params.bossOrderDepositQueryDto.salesmanName">
+    			and (instr(u.user_name, #{params.bossOrderDepositQueryDto.salesmanName}) <![CDATA[>]]> 0 or instr(u1.user_name, #{params.bossOrderDepositQueryDto.salesmanName}) <![CDATA[>]]> 0)
+    		</if>
+	    </where>
+	    order by a.ORDER_UPD desc
+	</select>
+	
+	<select id="getCanceledOrderDepositInfo" parameterType="string" resultMap="getDepositListByPageMap">
+		select <include refid="BaseColumns"/> from ZYC.BUSI_ORDER_DEPOSIT 
+		where ORDER_ID = #{orderId} and DEPOSIT_TYPE in (2,3) and DEPOSIT_STATE = 2
+	    order by ORDER_UPD desc
+	</select>
+	
+</mapper>

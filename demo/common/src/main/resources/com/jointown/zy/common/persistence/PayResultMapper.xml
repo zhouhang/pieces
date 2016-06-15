@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.PayResultDao">
+	<resultMap id="PayResult" type="com.jointown.zy.common.model.PayResult">
+		<id column="RESULT_ID" property="resultId" jdbcType="NUMERIC" />
+		<result column="SOURCE_SYS" property="sourceSys" jdbcType="NUMERIC" />
+		<result column="AMT_TYPE" property="amtType" jdbcType="NUMERIC" />
+		<result column="ORDERID" property="orderId" jdbcType="VARCHAR" />
+		<result column="AMOUNT" property="amount" jdbcType="NUMERIC" />
+		<result column="STATUS" property="status" jdbcType="NUMERIC" />
+		<result column="FLOW_ID" property="flowId" jdbcType="NUMERIC"/>
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="DONE_TIME" property="doneTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	 
+	<!-- 支付结果表新增支付结果记录 -->
+	<insert id="addPayResult" parameterType="com.jointown.zy.common.model.PayResult">
+		<![CDATA[
+			insert into pay.pay_result
+			(RESULT_ID,SOURCE_SYS,AMT_TYPE,ORDERID,AMOUNT,STATUS,FLOW_ID,CREATE_TIME,DONE_TIME)
+			values (pay.SEQ_PAY_RESULT.nextval,
+			#{sourceSys,jdbcType=NUMERIC},
+			#{amtType,jdbcType=NUMERIC},
+			#{orderId,jdbcType=VARCHAR},
+			#{amount,jdbcType=NUMERIC},
+			#{status,jdbcType=NUMERIC},
+			#{flowId,jdbcType=NUMERIC},
+			#{createTime,jdbcType=TIMESTAMP},
+			#{doneTime,jdbcType=TIMESTAMP}
+			)
+		]]>
+	</insert>
+	
+	<!-- 获取支付结果记录,程序中判断获取多少条记录 -->
+	<select id="selectPayResults" parameterType="map" resultMap="PayResult">
+		<![CDATA[
+			select * from pay.pay_result 
+			where source_sys = #{sourceSys} and status = 0 order by create_time,result_id
+		]]>
+	</select>
+	
+	<!-- 修改结果记录的处理状态 -->
+	<update id="updatePayResultByResultId" parameterType="map">
+		<![CDATA[
+			update pay.pay_result
+			set 
+			status=#{status},
+			done_time=#{doneTime,jdbcType=TIMESTAMP}
+			where result_id = #{resultId} and status = 0
+		]]>
+	</update>
+	
+</mapper>

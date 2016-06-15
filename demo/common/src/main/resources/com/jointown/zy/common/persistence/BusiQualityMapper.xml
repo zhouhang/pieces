@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.BusiQualityMapper" >
+  <resultMap id="BaseResultMap" type="com.jointown.zy.common.model.BusiQuality" >
+    <id column="QUALITY_ID" property="qualityId" jdbcType="DECIMAL" />
+    <result column="WLID" property="wlid" jdbcType="VARCHAR" />
+    <result column="QUALITY_ITEM_CODE" property="qualityItemCode" jdbcType="VARCHAR" />
+    <result column="QUALITY_ITEM_NAME" property="qualityItemName" jdbcType="VARCHAR" />
+    <result column="QUALITY_ITEM_RESULT" property="qualityItemResult" jdbcType="VARCHAR" />
+    <result column="QUALITY_TIME" property="qualityTime" jdbcType="TIMESTAMP" />
+    <result column="QUALITY_PERSON" property="qualityPerson" jdbcType="VARCHAR" />
+    <result column="GRADE" property="grade" jdbcType="VARCHAR" />
+    <result column="CHECK_NUMBER" property="checkNum" jdbcType="VARCHAR" />
+    <result column="REPORT_DATE" property="reportDate" jdbcType="TIMESTAMP" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    QUALITY_ID, WLID, QUALITY_ITEM_CODE, QUALITY_ITEM_NAME, QUALITY_ITEM_RESULT, QUALITY_TIME, 
+    QUALITY_PERSON, GRADE,CHECK_NUMBER,REPORT_DATE, CREATE_TIME, UPDATE_TIME
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ZYC.BUSI_QUALITY
+    where QUALITY_ID = #{qualityId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ZYC.BUSI_QUALITY
+    where QUALITY_ID = #{qualityId,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.jointown.zy.common.model.BusiQuality" >
+  <selectKey resultType="java.lang.Long" keyProperty="qualityId" order="BEFORE">
+   	select zyc.SEQ_BUSI_QUALITY.nextVal as QUALITY_ID
+   		from dual
+  	</selectKey>
+    insert into ZYC.BUSI_QUALITY (QUALITY_ID, WLID, QUALITY_ITEM_CODE, 
+      QUALITY_ITEM_NAME, QUALITY_ITEM_RESULT, QUALITY_TIME, 
+      QUALITY_PERSON, GRADE,CHECK_NUMBER, REPORT_DATE, CREATE_TIME, 
+      UPDATE_TIME)
+    values (#{qualityId,jdbcType=DECIMAL}, #{wlid,jdbcType=VARCHAR}, #{qualityItemCode,jdbcType=VARCHAR}, 
+      #{qualityItemName,jdbcType=VARCHAR}, #{qualityItemResult,jdbcType=VARCHAR}, #{qualityTime,jdbcType=TIMESTAMP}, 
+      #{qualityPerson,jdbcType=VARCHAR},#{grade,jdbcType=VARCHAR},#{checkNum,jdbcType=VARCHAR},#{reportDate,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jointown.zy.common.model.BusiQuality" >
+    insert into ZYC.BUSI_QUALITY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      QUALITY_ID,
+      WLID,
+      QUALITY_ITEM_CODE,
+      QUALITY_ITEM_NAME,
+      QUALITY_ITEM_RESULT,
+      QUALITY_TIME,
+      QUALITY_PERSON,
+      GRADE,
+      CHECK_NUMBER,
+      REPORT_DATE,
+      CREATE_TIME,
+      UPDATE_TIME,
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{qualityId,jdbcType=DECIMAL},
+      #{wlid,jdbcType=VARCHAR},
+      #{qualityItemCode,jdbcType=VARCHAR},
+      #{qualityItemName,jdbcType=VARCHAR},
+      #{qualityItemResult,jdbcType=VARCHAR},
+      #{qualityTime,jdbcType=TIMESTAMP},
+      #{qualityPerson,jdbcType=VARCHAR},
+      #{grade,jdbcType=VARCHAR},
+      #{checkNum,jdbcType=VARCHAR},
+      #{reportDate,jdbcType=TIMESTAMP},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jointown.zy.common.model.BusiQuality" >
+    update ZYC.BUSI_QUALITY
+    <set >
+      <if test="wlid != null" >
+        WLID = #{wlid,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityItemCode != null" >
+        QUALITY_ITEM_CODE = #{qualityItemCode,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityItemName != null" >
+        QUALITY_ITEM_NAME = #{qualityItemName,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityItemResult != null" >
+        QUALITY_ITEM_RESULT = #{qualityItemResult,jdbcType=VARCHAR},
+      </if>
+      <if test="qualityTime != null" >
+        QUALITY_TIME = #{qualityTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qualityPerson != null" >
+        QUALITY_PERSON = #{qualityPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        GRADE = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="checkNum != null" >
+        CHECK_NUMBER = #{checkNum,jdbcType=VARCHAR},
+      </if>
+      <if test="reportDate != null" >
+        REPORT_DATE = #{reportDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where QUALITY_ID = #{qualityId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jointown.zy.common.model.BusiQuality" >
+    update ZYC.BUSI_QUALITY
+    set WLID = #{wlid,jdbcType=VARCHAR},
+      QUALITY_ITEM_CODE = #{qualityItemCode,jdbcType=VARCHAR},
+      QUALITY_ITEM_NAME = #{qualityItemName,jdbcType=VARCHAR},
+      QUALITY_ITEM_RESULT = #{qualityItemResult,jdbcType=VARCHAR},
+      QUALITY_TIME = #{qualityTime,jdbcType=TIMESTAMP},
+      QUALITY_PERSON = #{qualityPerson,jdbcType=VARCHAR},
+      GRADE = #{grade,jdbcType=VARCHAR},
+      CHECK_NUMBER = #{checkNum,jdbcType=VARCHAR},
+      REPORT_DATE = #{reportDate,jdbcType=TIMESTAMP},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where QUALITY_ID = #{qualityId,jdbcType=DECIMAL}
+  </update>
+        
+  <!-- 根据仓单ID删除质检信息 -->
+  <delete id="deleteByWlID" parameterType="String">
+  	delete from ZYC.BUSI_QUALITY
+  	where WLID = #{wlID,jdbcType=VARCHAR}
+  </delete>
+  
+</mapper>

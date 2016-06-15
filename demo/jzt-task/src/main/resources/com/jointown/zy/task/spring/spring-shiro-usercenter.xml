@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<bean id="casSubjectFactory" class="org.apache.shiro.cas.CasSubjectFactory"/>
+
+    <bean id="casRealm" class="com.jointown.zy.web.shiro.MyCasRealm">
+        <property name="cachingEnabled" value="true"/>
+        <property name="authenticationCachingEnabled" value="true"/>
+        <property name="authenticationCacheName" value="authenticationCache"/>
+        <property name="authorizationCachingEnabled" value="true"/>
+        <property name="authorizationCacheName" value="authorizationCache"/>
+        <property name="casServerUrlPrefix" value="${jointown.shiro.cas.urlprefix}"/>
+        <property name="casService" value="${jointown.shiro.cas.casservice}"/>
+         <!--<property name="defaultRoles" value="admin,user"/>-->
+        <!--<property name="defaultPermissions" value="user:create,user:update"/>-->
+        <!--<property name="roleAttributeNames" value="roles"/>-->
+        <!--<property name="permissionAttributeNames" value="permissions"/>-->
+    </bean>
+    
+    <bean id="casFilter" class="org.apache.shiro.cas.CasFilter">
+        <property name="failureUrl" value="/casFailure.jsp"/>
+    </bean>
+
+</beans>

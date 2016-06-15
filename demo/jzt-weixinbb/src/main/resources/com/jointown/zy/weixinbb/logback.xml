@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/2002/xmlspec/dtd/2.10/xmlspec.dtd">
+<configuration>
+
+	<!-- 应用程序名称 -->
+	<contextName>weixinbb</contextName>
+
+	<!-- 引用的变量文件 -->
+	<property useExisted="true" />
+
+
+	<!-- 日志输出到控制台 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder charset="UTF-8">
+			<pattern>[%cn] [%date] [%thread] %logger{0} [%level] %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 日志输出到文件 -->
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOGBACK_FILENAME}</file>   <!--可以相对，可以绝对路径 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOGBACK_FILENAME_PATTERN}</fileNamePattern>
+			<maxHistory>${LOGBACK_MAXHISTORY}</maxHistory>
+		</rollingPolicy>
+		<encoder charset="UTF-8">
+			<pattern>[%cn] [%date] [%thread] %logger{0} [%level] %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 日志输出到远程日志收集服务器 -->
+	<appender name="SYSLOG"
+		class="com.jointown.zy.common.appender.JointownSyslogAppender">
+		<syslogHost>${LOGBACK_SYSLOG_IP}</syslogHost>
+		<port>${LOGBACK_SYSLOG_PORT}</port>
+		<facility>LOCAL7</facility>
+		<suffixPattern>[%cn] [%date] %logger{0} [%level] %msg%n</suffixPattern>
+	</appender>
+
+	<!-- 开发环境 -->
+	<if condition='property("LOGBACK_DEV").contains("development")'>
+		<then>
+			<root level="DEBUG">
+				<appender-ref ref="STDOUT" />
+				<appender-ref ref="FILE" />
+			</root>
+		</then>
+	</if>
+
+	<!-- 测试环境 -->
+	<if condition='property("LOGBACK_DEV").contains("testing")'>
+		<then>
+			<logger name="org.apache.ibatis" level="DEBUG" />
+			<logger name="com.jointown.zy.common.dao" level="DEBUG" />
+			<logger name="com.jointown.zy.web.controller" level="DEBUG" />
+			<logger name="com.jointown.zy.common.service" level="DEBUG" />
+			<!-- 所有SYSLOG日志 -->
+			<logger name="com.jointown.zy.common.util.SysLogUtil" level="INFO">
+				<appender-ref ref="SYSLOG" />
+			</logger>
+			<root level="INFO">
+				<appender-ref ref="FILE" />
+			</root>
+		</then>
+	</if>
+
+	<!-- 生产环境 -->
+	<if condition='property("LOGBACK_DEV").contains("production")'>
+		<then>
+			<!-- 所有SYSLOG日志 -->
+			<logger name="com.jointown.zy.common.util.SysLogUtil" level="INFO">
+				<appender-ref ref="SYSLOG" />
+			</logger>
+			<root level="INFO">
+				<appender-ref ref="FILE" />
+			</root>
+		</then>
+	</if>
+
+</configuration>

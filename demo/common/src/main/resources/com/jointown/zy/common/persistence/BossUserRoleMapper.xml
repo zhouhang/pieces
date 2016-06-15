@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BossUserDao">
+	<resultMap type="com.jointown.zy.common.model.BossUserRole"
+		id="BossUserRole">
+		<id column="user_id" property="userId" jdbcType="NUMERIC" />
+		<id column="role_id" property="roleId" jdbcType="NUMERIC" />
+		<id column="status" property="status" jdbcType="NUMERIC" />
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    	<result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<select id="findBossUserRoleByPK" parameterType="com.jointown.zy.common.model.BossUserRole" resultMap="BossUserRole">
+		select * from boss.boss_user_role where USER_ID = #{userId,jdbcType=INTEGER} and ROLE_ID = #{roleId,jdbcType=INTEGER}
+	</select>
+	
+	<!-- added by biran 20141221 删除角色时使用，查询是否有引用该角色的用户 -->
+	<select id="findBossUserRoleByRoleID" parameterType="com.jointown.zy.common.model.BossUserRole" resultMap="BossUserRole">
+		select * from boss.boss_user_role where ROLE_ID = #{roleId,jdbcType=INTEGER} and status = 0
+	</select>
+	
+	
+	<insert id="insertBossUserRole" parameterType="com.jointown.zy.common.model.BossUserRole" >
+	    insert into boss.boss_user_role (USER_ID, ROLE_ID, STATUS, 
+	      CREATE_TIME, UPDATE_TIME
+	      )
+	    values (
+				#{userId,jdbcType=INTEGER}, 
+				#{roleId,jdbcType=INTEGER}, 
+	      		#{status,jdbcType=INTEGER}, 
+	      		#{createTime,jdbcType=TIMESTAMP}, 
+	      		#{updateTime,jdbcType=TIMESTAMP}
+	      )
+	</insert>
+	<update id="updateBossUserRole" parameterType="com.jointown.zy.common.model.BossUserRole">
+		update boss.boss_user_role set
+        STATUS = #{status},
+        UPDATE_TIME = #{updateTime} 
+        WHERE USER_ID = #{userId} and ROLE_ID = #{roleId,jdbcType=INTEGER} and status = 0
+	</update>
+</mapper>

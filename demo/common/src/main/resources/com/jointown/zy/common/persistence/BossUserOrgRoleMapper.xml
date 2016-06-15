@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jointown.zy.common.dao.BossUserOrgRoleDao">
+	<resultMap id="BossUserOrg" type="com.jointown.zy.common.model.BossUserOrg">
+		<id column="user_id" property="userId" jdbcType="NUMERIC" />
+		<result column="user_code" property="userCode" jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="org_id" property="orgId" jdbcType="NUMERIC" />
+		<association property="organization" column="org_id"
+			javaType="Organization" resultMap="Organization" />
+	</resultMap>
+
+	<resultMap type="com.jointown.zy.common.model.BossUserRole"
+		id="BossUserRole">
+		<id column="user_id" property="userId" jdbcType="NUMERIC" />
+		<id column="role_id" property="roleId" jdbcType="NUMERIC" />
+		<result column="STATUS" property="status" jdbcType="INTEGER" />
+		<association property="bossRole" column="role_id"
+			javaType="BossRole" resultMap="BossRole" />
+	</resultMap>
+
+	<resultMap type="com.jointown.zy.common.model.BossRole" id="BossRole">
+		<id column="role_id" property="roleId" jdbcType="NUMERIC" />
+		<result column="role_name" property="roleName" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap type="com.jointown.zy.common.model.Organization"
+		id="Organization">
+		<id column="org_id" property="id" jdbcType="NUMERIC" />
+		<result column="org_name" property="orgName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 根据会员账号查询组织名称 -->
+	<select id="selectBossUserOrg" parameterType="String" resultMap="BossUserOrg">
+		<![CDATA[
+			select b.user_id, b.user_code, b.user_name, b.org_id, oi.org_name
+			  from boss.boss_user b
+			  left join boss.boss_org oi
+			    on b.org_id = oi.org_id
+			  where user_code=#{userCode}
+		]]>
+	</select>
+
+	<!-- 根据会员ID查询会员角色 -->
+	<select id="selectBossUserRole" parameterType="String"
+		resultMap="BossUserRole">
+		<![CDATA[
+			select bur.user_id, bur.role_id, br.role_name
+			  from boss.boss_user_role bur
+			  left join boss.boss_role br
+			    on bur.role_Id = br.role_id
+			  where user_id=#{userId} and bur.status=0
+		]]>
+	</select>
+
+	<!-- 根据管理员登陆账号获取密码信息 -->
+	<select id="getBossUserPasswordInfo" parameterType="String" resultType="com.jointown.zy.common.model.BossUser">
+		<![CDATA[
+			select bu.password,bu.salt from boss.boss_user bu 
+			where user_code=#{userCode}
+		]]>
+	</select>
+	
+	<!-- 根据管理员登陆账号修改密码 -->
+	<update id="modifyBossUserSecret" parameterType="String">
+		<![CDATA[
+			update boss.boss_user set password=#{password},salt=#{salt}
+			where user_code=#{userCode}
+		]]>
+	</update>
+</mapper>
