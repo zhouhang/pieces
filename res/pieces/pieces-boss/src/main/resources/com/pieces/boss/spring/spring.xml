@@ -44,6 +44,6 @@
 	
 	<!-- 此处引入 dao项目下所有的spring配置文件管理器 -->
 	<import resource="classpath*:com/pieces/dao/spring/spring-contextmanager.xml"  />
-	<import resource="classpath*:com/pieces/service/properties/spring/spring-shiro.xml"  />
 	<import resource="classpath*:com/pieces/service/properties/spring/spring-redis.xml"  />
+	<import resource="classpath*:com/pieces/service/properties/spring/spring-shiro.xml"  />
 </beans>

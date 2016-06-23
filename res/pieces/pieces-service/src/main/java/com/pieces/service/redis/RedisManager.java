@@ -104,58 +104,7 @@ public class RedisManager{
 		}
 		return false;
 	}
-	
-	
-	
-//	/**
-//	 * flush
-//	 */
-//	public void flushDB(){
-//		Jedis jedis = jedisPool.getResource();
-//		try{
-//			jedis.flushDB();
-//		}finally{
-//			jedisPool.returnResource(jedis);
-//		}
-//	}
-	
-//	/**
-//	 * size
-//	 */
-//	public Long dbSize(){
-//		Long dbSize = 0L;
-//		Jedis jedis = jedisPool.getResource();
-//		try{
-//			dbSize = jedis.dbSize();
-//		}finally{
-//			jedisPool.returnResource(jedis);
-//		}
-//		return dbSize;
-//	}
 
-//	/**
-//	 * keys
-//	 * @param regex
-//	 * @return
-//	 */
-//	public Set<byte[]> keys(String pattern){
-//		Set<byte[]> keys = null;
-//		Jedis jedis = jedisPool.getResource();
-//		try{
-//			keys = jedis.keys(pattern.getBytes());
-//		}finally{
-//			jedisPool.returnResource(jedis);
-//		}
-//		return keys;
-//	}
-	
-	
-	
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////redis string 數據結構操作//////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	
 	
 	/**
 	 * 從redis獲取值
