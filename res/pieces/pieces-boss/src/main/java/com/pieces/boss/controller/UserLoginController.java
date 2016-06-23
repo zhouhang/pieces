@@ -63,7 +63,7 @@ public class UserLoginController{
 			//查询菜单权限信息
 			TestUser tu1 = (TestUser) SecurityUtils.getSubject().getSession()
 			.getAttribute(RedisEnum.USER_SESSION_BOSS.getValue());
-			System.out.println(tu1);
+			System.out.println("-------------"+tu1.getPassword() + "---------------" + tu1.getPassword());
 		} catch (Exception e) {
 		}
 		//TestUser tu = testUserService.getTestUserByUserName("ff");

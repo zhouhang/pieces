@@ -7,7 +7,7 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
      <!-- 定义boss子系统的realm配置 
- <bean id="bossRealm" class="com.jointown.zy.web.shiro.BossRealm2">
+ <bean id="bossRealm" class="com.pieces.boss.shiro.BossRealm">
      <property name="cachingEnabled" value="true"/>
      <property name="authenticationCachingEnabled" value="true"/>
      <property name="authenticationCacheName" value="authenticationCache"/>
@@ -16,6 +16,6 @@
      <property name="credentialsMatcher" ref="credentialsMatcher"/>
  </bean>
     
- <bean id="bossAuthorizationFilter" class="com.jointown.zy.web.shiro.BossAuthorizationFilter2" /> 
+ <bean id="bossAuthorizationFilter" class="com.pieces.boss.shiro.BossAuthorizationFilter" /> 
     -->
 </beans>

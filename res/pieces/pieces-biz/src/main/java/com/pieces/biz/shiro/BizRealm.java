@@ -16,7 +16,7 @@ import org.apache.shiro.subject.PrincipalCollection;
  * 用于获取验证信息，权限信息
  *
  */
-public class BossRealm extends AuthorizingRealm {
+public class BizRealm extends AuthorizingRealm {
 
 	
 	
