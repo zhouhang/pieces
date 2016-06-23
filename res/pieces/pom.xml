@@ -16,8 +16,8 @@
 	</distributionManagement>
 
 	<properties>
-		<pieces.dao.version>0.0.1-SNAPSHOT</pieces.dao.version>
-		<pieces.service.version>0.0.1-SNAPSHOT</pieces.service.version>
+		<pieces.dao.version>0.0.1</pieces.dao.version>
+		<pieces.service.version>0.0.1</pieces.service.version>
 		<commons-fileupload>1.3.1</commons-fileupload>
 		<jetty.version>9.0.4.v20130625</jetty.version>
 		<spring.version>3.2.7.RELEASE</spring.version>
@@ -57,12 +57,12 @@
 				<scope>test</scope>
 			</dependency>
 			<dependency>
-				<groupId>pieces</groupId>
+				<groupId>pieces-dao</groupId>
 				<artifactId>pieces-dao</artifactId>
 				<version>${pieces.dao.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>pieces</groupId>
+				<groupId>pieces-service</groupId>
 				<artifactId>pieces-service</artifactId>
 				<version>${pieces.service.version}</version>
 			</dependency>

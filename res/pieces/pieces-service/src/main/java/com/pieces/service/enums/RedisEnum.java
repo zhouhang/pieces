@@ -5,8 +5,7 @@ import org.apache.commons.lang.StringUtils;
 public enum RedisEnum {
 	KEY_PREFIX_SHIRO_REDIS_SESSION("shiro_session:"),
 	KEY_PREFIX_SHIRO_REDIS_CACHE("shiro_cache:"),
-	USER_SESSION_BOSS("user_session_boss")
-	;
+	USER_SESSION_BOSS("user_session_boss");
 	
 	@Override
 	public String toString(){

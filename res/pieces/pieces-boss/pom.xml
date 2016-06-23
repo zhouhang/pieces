@@ -15,11 +15,11 @@
 	<url>http://maven.apache.org</url>
 	<dependencies>
 		<dependency>
-			<groupId>pieces</groupId>
+			<groupId>pieces-dao</groupId>
 			<artifactId>pieces-dao</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>pieces</groupId>
+			<groupId>pieces-service</groupId>
 			<artifactId>pieces-service</artifactId>
 		</dependency>
 		<dependency>
