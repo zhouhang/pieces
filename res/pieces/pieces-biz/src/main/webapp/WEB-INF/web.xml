@@ -24,7 +24,7 @@
 	</filter-mapping>
 
 	<servlet>
-		<servlet-name>piecesboss</servlet-name>
+		<servlet-name>piecesbiz</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 		<init-param>
@@ -34,7 +34,7 @@
 	</servlet>
 	
 	<servlet-mapping>
-		<servlet-name>piecesboss</servlet-name>
+		<servlet-name>piecesbiz</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
