@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pieces.dao.TestUserMapper" >
+
+  <resultMap id="BaseResultMap" type="com.pieces.dao.model.TestUser" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="userName" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 精确查询品种名称 -->
+  <select id="selecctTestUserByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  		select * from testUser b where b.userName = #{userName, jdbcType=VARCHAR}
+  </select>
+</mapper>

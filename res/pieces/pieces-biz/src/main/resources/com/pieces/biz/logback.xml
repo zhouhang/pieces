@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+	<!-- 应用程序名称 -->
+	<contextName>BOSS</contextName>
+	
+	<!-- 引用的变量文件 -->
+	<property useExisted="true"  />
+	
+
+	<!-- 日志输出到控制台 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <pattern>[%cn] [%date] [%thread] %logger{0} [%level] %msg%n</pattern>
+        </encoder>
+    </appender>
+	
+</configuration>
