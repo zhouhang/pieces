@@ -8,8 +8,9 @@
 		<artifactId>pieces</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>pieces</groupId>
+	<groupId>pieces-dao</groupId>
 	<artifactId>pieces-dao</artifactId>
+	<version>0.0.1</version>
 	<name>pieces-dao</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>

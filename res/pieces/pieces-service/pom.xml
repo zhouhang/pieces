@@ -8,9 +8,9 @@
 		<artifactId>pieces</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>pieces</groupId>
+	<groupId>pieces-service</groupId>
 	<artifactId>pieces-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>pieces-service</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>

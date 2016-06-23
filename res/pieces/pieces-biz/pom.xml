@@ -7,9 +7,9 @@
     <artifactId>pieces</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
-  <groupId>pieces</groupId>
+  <groupId>pieces-biz</groupId>
   <artifactId>pieces-biz</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <packaging>war</packaging>
   <name>pieces-biz</name>
   <url>http://maven.apache.org</url>
