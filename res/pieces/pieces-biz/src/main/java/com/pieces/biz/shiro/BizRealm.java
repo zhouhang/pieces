@@ -59,11 +59,10 @@ public class BizRealm extends AuthorizingRealm {
 		if(users == null || users.size()==0){
 			throw new AuthenticationException();
 		}
-		String name = getName();
-		SerializableSimpleAuthenticationInfo authenticationInfo = new SerializableSimpleAuthenticationInfo(user.getUserName(),
-				user.getPassword(),
-				Util.bytes(user.getSalt()),
-				name); // realm name
+		SerializableSimpleAuthenticationInfo authenticationInfo = new SerializableSimpleAuthenticationInfo(users.get(0).getUserName(),
+				users.get(0).getPassword(),
+				Util.bytes(users.get(0).getSalt()),
+				getName()); // realm name
 		return authenticationInfo;
 	}
 	
