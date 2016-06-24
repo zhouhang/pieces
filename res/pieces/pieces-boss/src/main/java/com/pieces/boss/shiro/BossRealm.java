@@ -11,9 +11,11 @@ import org.apache.shiro.authz.Permission;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
+import com.pieces.dao.model.User;
+
 
 /**
- * 用于获取验证信息，权限信息
+ * bossRealm
  *
  */
 public class BossRealm extends AuthorizingRealm {
@@ -26,7 +28,7 @@ public class BossRealm extends AuthorizingRealm {
 	}
 
 	/**
-	 * 授权,存储的是Name（可换成ID？）
+	 * 授权
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
@@ -37,7 +39,7 @@ public class BossRealm extends AuthorizingRealm {
 
 	
 	/**
-	 * 获取验证信息.
+	 * 验证身份
 	 * 
 	 */
 	@Override
@@ -48,7 +50,7 @@ public class BossRealm extends AuthorizingRealm {
 	
 	
 	/**
-	 * 自定义获取authenticationInfo缓存key,此时为用户名
+	 * 
 	 */
 	@Override
 	protected Object getAuthenticationCacheKey(AuthenticationToken token) {
@@ -56,14 +58,14 @@ public class BossRealm extends AuthorizingRealm {
     }
 	
 	/**
-	 * 自定义获取authenticationInfo缓存key,此时为用户名
+	 * 
 	 */
 	protected Object getAuthenticationCacheKey(PrincipalCollection principals) {
 		return principals.getPrimaryPrincipal().toString();
     }
 	
 	/**
-	 * 自定义获取authorizationInfo缓存key,此时为用户名
+	 * 
 	 */
 	@Override
 	protected Object getAuthorizationCacheKey(PrincipalCollection principals) {
@@ -72,14 +74,14 @@ public class BossRealm extends AuthorizingRealm {
 	
 	
 	/**
-	 * 清除认证缓存
+	 * 
 	 */
 	public void removeAuthenticationCacheInfo(){
 		clearCachedAuthenticationInfo(SecurityUtils.getSubject().getPrincipals());
 	}
 	
 	/**
-	 * 清除权限缓存
+	 * 
 	 */
 	public void removeAuthorizationCacheInfo(){
 		clearCachedAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());

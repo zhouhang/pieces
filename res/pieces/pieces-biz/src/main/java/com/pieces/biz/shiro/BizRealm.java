@@ -1,5 +1,6 @@
 package com.pieces.biz.shiro;
 
+import java.util.List;
 import java.util.Set;
 
 import org.apache.shiro.SecurityUtils;
@@ -8,8 +9,15 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.Permission;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.shiro.util.ByteSource.Util;
+
+import com.pieces.dao.model.User;
+import com.pieces.service.UserService;
+import com.pieces.service.shiro.SerializableSimpleAuthenticationInfo;
 
 
 /**
@@ -18,7 +26,8 @@ import org.apache.shiro.subject.PrincipalCollection;
  */
 public class BizRealm extends AuthorizingRealm {
 
-	
+	@Autowired
+	private UserService userService;
 	
 	private Set<Permission> addCommonPermissions(Set<Permission> permissions){
 		
@@ -26,13 +35,13 @@ public class BizRealm extends AuthorizingRealm {
 	}
 
 	/**
-	 * 授权,存储的是Name（可换成ID？）
+	 * 授权
 	 */
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
-		 String userCode = (String)principals.getPrimaryPrincipal();
-		return null;
+		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+		return authorizationInfo;
 	}
 
 	
@@ -43,7 +52,19 @@ public class BizRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authToken) throws AuthenticationException {
-		return null;
+		BizToken token = (BizToken) authToken;
+		User user = new User();
+		user.setUserName(token.getUsername());
+		List<User> users = userService.findUserByCondition(user);
+		if(users == null || users.size()==0){
+			throw new AuthenticationException();
+		}
+		String name = getName();
+		SerializableSimpleAuthenticationInfo authenticationInfo = new SerializableSimpleAuthenticationInfo(user.getUserName(),
+				user.getPassword(),
+				Util.bytes(user.getSalt()),
+				name); // realm name
+		return authenticationInfo;
 	}
 	
 	
