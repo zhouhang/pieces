@@ -13,7 +13,19 @@
 	<version>0.0.1</version>
 	<name>pieces-dao</name>
 	<url>http://maven.apache.org</url>
+
+
+	<properties>
+		<targetJava>${basedir}/src/main/java</targetJava>
+		<targetResources>${basedir}/src/main/resources</targetResources>
+	</properties>
+
+
 	<dependencies>
+		<dependency>
+			<groupId>pieces-tools</groupId>
+			<artifactId>pieces-tools</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -73,6 +85,11 @@
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
+		</dependency>
+		<!--分页插件-->
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
 		</dependency>
 		<!-- freemarker -->
 		<dependency>
@@ -175,5 +192,29 @@
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-webapp-support</artifactId>
 		</dependency>
+
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>1.3.2</version>
+				<configuration>
+					<configurationFile>${basedir}/src/main/resources/generator.xml</configurationFile>
+					<overwrite>false</overwrite>
+					<verbose>true</verbose>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>pieces-tools</groupId>
+						<artifactId>pieces-tools</artifactId>
+						<version>0.0.1</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
+	</build>
+
 </project>

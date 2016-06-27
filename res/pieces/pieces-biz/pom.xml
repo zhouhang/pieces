@@ -23,10 +23,6 @@
 			<artifactId>pieces-service</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>pieces-tools</groupId>
-			<artifactId>pieces-tools</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>

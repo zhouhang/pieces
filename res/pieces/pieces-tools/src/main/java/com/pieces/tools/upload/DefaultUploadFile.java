@@ -8,6 +8,11 @@ import java.util.Calendar;
  */
 public class DefaultUploadFile extends AbstractUploadFile{
 
+    /**
+     * 自定义文件名
+     * @param fileName
+     * @return
+     */
     @Override
     public String customImageName(String fileName) {
         Calendar now = Calendar.getInstance();
@@ -15,6 +20,9 @@ public class DefaultUploadFile extends AbstractUploadFile{
         int month=now.get(Calendar.MONTH)+1;
         StringBuffer sb = new StringBuffer();
         sb.append("files").append("/").append(year).append("/").append(month).append("/").append(fileName);
-        return fileName;
+        return sb.toString();
     }
+
+
+
 }
