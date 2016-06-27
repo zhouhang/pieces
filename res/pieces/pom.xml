@@ -48,6 +48,7 @@
 		<slf4j-log4j12.version>1.6.0</slf4j-log4j12.version>
 		<kryo.version>2.24.0</kryo.version>
 		<kryo.serializer.version>0.26</kryo.serializer.version>
+		<xerces.version>2.9.1</xerces.version>
 	</properties>
 
 	<dependencyManagement>
@@ -293,6 +294,11 @@
 				<groupId>de.javakaffee</groupId>
 				<artifactId>kryo-serializers</artifactId>
 				<version>${kryo.serializer.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>xerces</groupId>
+				<artifactId>xercesImpl</artifactId>
+				<version>${xerces.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

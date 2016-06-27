@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -55,16 +56,16 @@ public class UserLoginController{
 			// 登陆验证
 			Subject subject = SecurityUtils.getSubject();
 			UsernamePasswordToken token = new UsernamePasswordToken("ff","111");
-			subject.login(token);
+//			subject.login(token);
 			tu.setUserName("ff");
 			tu.setPassword("111");
-			SecurityUtils.getSubject().getSession()
-					.setAttribute(RedisEnum.USER_SESSION_BOSS.getValue(), tu);
+			Session s = subject.getSession();
+			s.setAttribute(RedisEnum.USER_SESSION_BOSS.getValue(), tu);
 			//查询菜单权限信息
-			TestUser tu1 = (TestUser) SecurityUtils.getSubject().getSession()
-			.getAttribute(RedisEnum.USER_SESSION_BOSS.getValue());
-			System.out.println(tu1);
+			TestUser tu1 = (TestUser) s.getAttribute(RedisEnum.USER_SESSION_BOSS.getValue());
+			System.out.println("-------------"+tu1.getUserName() + "---------------");
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		//TestUser tu = testUserService.getTestUserByUserName("ff");
 		

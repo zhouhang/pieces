@@ -6,8 +6,16 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-     <!-- 定义boss子系统的realm配置 
- <bean id="bossRealm" class="com.jointown.zy.web.shiro.BossRealm2">
+     <!-- 安全管理器 -->
+ <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+     <property name="realm" ref="bizRealm"/>
+     <property name="sessionManager" ref="sessionManager"/>
+     <property name="cacheManager" ref="cacheManager"/>
+     <property name="rememberMeManager" ref="rememberMeManager"/>
+     <property name="subjectFactory" ref="defaultSubjectFactory"/>
+ </bean> 
+    
+ <bean id="bizRealm" class="com.pieces.biz.shiro.BizRealm">
      <property name="cachingEnabled" value="true"/>
      <property name="authenticationCachingEnabled" value="true"/>
      <property name="authenticationCacheName" value="authenticationCache"/>
@@ -15,7 +23,7 @@
      <property name="authorizationCacheName" value="authorizationCache"/>
      <property name="credentialsMatcher" ref="credentialsMatcher"/>
  </bean>
-    
- <bean id="bossAuthorizationFilter" class="com.jointown.zy.web.shiro.BossAuthorizationFilter2" /> 
+    <!-- 定义boss子系统的realm配置 
+ <bean id="bizAuthorizationFilter" class="com.pieces.biz.shiro.BizAuthorizationFilter" /> 
     -->
 </beans>

@@ -11,7 +11,7 @@ import org.apache.shiro.web.filter.authz.AuthorizationFilter;
  * 用于验证身份信息
  *
  */
-public class BossAuthorizationFilter extends AuthorizationFilter {
+public class BizAuthorizationFilter extends AuthorizationFilter {
 	
 
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
