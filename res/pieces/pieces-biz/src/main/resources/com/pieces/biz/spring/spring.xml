@@ -40,7 +40,12 @@
 	            <value>classpath:com/pieces/biz/properties/**/*.properties</value>
 	        </list>
 	    </property>
-	</bean> 
+	</bean>
+
+	<!--上传文件-->
+	<bean id="defaultUploadFile" class="com.pieces.tools.upload.DefaultUploadFile">
+		<property name="basePath" value="${upload.path}"/>
+	</bean>
 	
 	<!-- 此处引入 dao项目下所有的spring配置文件管理器 -->
 	<import resource="classpath*:com/pieces/dao/spring/spring-contextmanager.xml"  />

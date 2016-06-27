@@ -1,0 +1,42 @@
+package com.pieces.biz.controller;
+
+import com.pieces.tools.bean.FileBo;
+import com.pieces.tools.upload.DefaultUploadFile;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Created by wangbin on 2016/6/27.
+ */
+@Controller
+@RequestMapping(value = "gen")
+public class GeneralController {
+
+    @Autowired
+    private DefaultUploadFile defaultUploadFile;
+
+    @RequestMapping(value = "/file/index")
+    public String index(){
+        return "public/fileUploadTest";
+    }
+
+    @RequestMapping(value = "/file/upload")
+    public void  fileUpload(HttpServletRequest request,
+                            HttpServletResponse response,
+                            @RequestParam(required=false) MultipartFile file){
+        try {
+            FileBo fileBo =  defaultUploadFile.uploadFile(file.getOriginalFilename(),file.getInputStream());
+            System.out.println(fileBo);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+}

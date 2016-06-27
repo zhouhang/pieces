@@ -24,7 +24,7 @@ public class UserLoginController{
 	private TestUserService testUserService;
 	
     public TestUserVo getUserInfo(HttpServletRequest request){
-    	
+
     	return null;
     }
     

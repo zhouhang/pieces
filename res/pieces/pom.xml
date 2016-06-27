@@ -18,7 +18,9 @@
 	<properties>
 		<pieces.dao.version>0.0.1</pieces.dao.version>
 		<pieces.service.version>0.0.1</pieces.service.version>
+		<pieces.tools.version>0.0.1</pieces.tools.version>
 		<commons-fileupload>1.3.1</commons-fileupload>
+		<commons-io>2.4</commons-io>
 		<jetty.version>9.0.4.v20130625</jetty.version>
 		<spring.version>3.2.7.RELEASE</spring.version>
 		<spring-expression.version>3.2.7.RELEASE</spring-expression.version>
@@ -66,6 +68,11 @@
 				<artifactId>pieces-service</artifactId>
 				<version>${pieces.service.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>pieces-tools</groupId>
+				<artifactId>pieces-tools</artifactId>
+				<version>${pieces.tools.version}</version>
+			</dependency>
 			<!-- spring -->
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -92,6 +99,12 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-expression</artifactId>
 				<version>${spring-expression.version}</version>
+			</dependency>
+			<!-- common-io -->
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io}</version>
 			</dependency>
 			<!-- spring orm -->
 			<dependency>
@@ -176,6 +189,7 @@
 				<artifactId>commons-collections</artifactId>
 				<version>${commons-collections.version}</version>
 			</dependency>
+
 			<!--Apache Shiro所需的jar包 -->
 			<dependency>
 				<groupId>org.apache.shiro</groupId>
@@ -345,5 +359,6 @@
 		<module>pieces-dao</module>
 		<module>pieces-boss</module>
 		<module>pieces-biz</module>
+		<module>pieces-tools</module>
 	</modules>
 </project>
