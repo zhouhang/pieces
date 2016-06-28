@@ -2,7 +2,8 @@ $(function() {
     var $username = $('#username'),
         $pwd = $('#pwd'),
         $submit = $('#submit'),
-        $msg = $('#msg span');
+        $msg = $('#msg span'),
+    	$myform = $('#myform');
 
     var _showMsg = function(txt) {
         if (!txt) {
@@ -54,6 +55,21 @@ $(function() {
     $pwd.on('blur', _checkPassword);
 
     $submit.on('click', function() {
-        return _checkForm();      
+        if(_checkForm()){
+        	$.post("/login",
+  				  {
+  					userName:$username.val(),
+  				    password:$pwd.val(),
+  				  },
+  				  function(data,status){
+  					if(data != "ok"){
+  						_showMsg("用户名密码错误!");
+  					}else{
+  						window.location = "/welcome";
+  					}
+  				  });
+        }else{
+        	return false;
+        }
     })
 })
