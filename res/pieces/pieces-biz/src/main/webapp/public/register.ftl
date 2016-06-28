@@ -69,7 +69,7 @@
                             <i>*</i>企业注册地：
                         </div>
                         <div class="cnt">
-                            <select name="provinceCode" id="province" data-value="120000">
+                            <select name="provinceCode" id="province">
                                 <option value="">-省-</option>
                             </select>
                             <select name="cityCode" id="city">

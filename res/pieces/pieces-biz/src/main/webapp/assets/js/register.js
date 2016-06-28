@@ -23,14 +23,14 @@ $(function() {
 	            required: true
 	        },
 	        area: {
-	            //required: true
+	            required: true
 	        },
 	        linkMan: {
-	            //required: true
+	            required: true
 	        },
 	        mobile: {
-	            //required: true,
-	            //isMobile: true
+	            required: true,
+	            isMobile: true
 	        },
 	        mobileCode: {
 	            //required: true
@@ -56,13 +56,13 @@ $(function() {
 	            required: icons.error + '请输入企业名称'
 	        },
 	        area: {
-	            //required: icons.error + '请选择企业注册地'
+	            required: icons.error + '请选择企业注册地'
 	        },
 	        linkMan: {
-	            //required: icons.error + '请输入联系人姓名'
+	            required: icons.error + '请输入联系人姓名'
 	        },
 	        mobile: {
-	            //required: icons.error + '请输入手机号码'	            
+	            required: icons.error + '请输入手机号码'	            
 	        },
 	        mobileCode: {
 	            //required: icons.error + '请输入短信验证码'
