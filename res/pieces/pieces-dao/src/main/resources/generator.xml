@@ -6,13 +6,9 @@
 <generatorConfiguration>
 
 
-
-
   <classPathEntry location="E:\development\mysql\mysql-connector-java-5.1.9.jar" />
 
   <context id="Mysql" targetRuntime="MyBatis3">
-
-
 
     <!--<plugin type="com.pieces.tools.plugin.mybatis.MysqlPaginationPlugin"></plugin>-->
     <!--<plugin type="com.pieces.tools.plugin.mybatis.PersistenceRepositoryAnnotationPlugin"></plugin>-->

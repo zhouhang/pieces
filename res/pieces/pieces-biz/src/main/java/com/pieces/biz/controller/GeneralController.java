@@ -45,6 +45,12 @@ public class GeneralController {
         }
     }
 
+    /**
+     * 省市区接口
+     * @param request
+     * @param response
+     * @param parentId
+     */
     @RequestMapping(value = "/area")
     public void area(HttpServletRequest request,
                      HttpServletResponse response,

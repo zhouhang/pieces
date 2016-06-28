@@ -15,6 +15,7 @@
     <result column="position" jdbcType="VARCHAR" property="position" />
     <result column="sort" jdbcType="INTEGER" property="sort" />
   </resultMap>
+
   <sql id="Base_Column_List">
     id, areaname, parentid, shortname, areacode, zipcode, pinyin, lng, lat, level, position, 
     sort
