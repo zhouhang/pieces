@@ -17,9 +17,88 @@
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, areaname, parentid, shortname, areacode, zipcode, pinyin, lng, lat, level, position, 
-    sort
+    id, areaname, parentid, shortname, areacode, zipcode, pinyin, lng, lat, level, position, sort
   </sql>
+
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from area
+    where id = #{id}
+  </select>
+
+  <select id="findAll"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from area
+  </select>
+
+  <delete id="deleteById" parameterType="java.lang.Integer">
+    delete from area
+    where id = #{id}
+  </delete>
+
+  <insert id="create" parameterType="com.exemple.dao.model.Area">
+    insert into
+    area (areaname,parentid,shortname,areacode,zipcode,pinyin,lng,lat,level,position,sort)
+    values
+    (#{areaname},#{parentid},#{shortname},#{areacode},#{zipcode},#{pinyin},#{lng},#{lat},#{level},#{position},#{sort})
+  </insert>
+
+  <update id="update" parameterType="com.exemple.dao.model.Area">
+    update area
+    <set>
+
+      <if test="areaname != null">
+        areaname = #{areaname},
+      </if>
+
+      <if test="parentid != null">
+        parentid = #{parentid},
+      </if>
+
+      <if test="shortname != null">
+        shortname = #{shortname},
+      </if>
+
+      <if test="areacode != null">
+        areacode = #{areacode},
+      </if>
+
+      <if test="zipcode != null">
+        zipcode = #{zipcode},
+      </if>
+
+      <if test="pinyin != null">
+        pinyin = #{pinyin},
+      </if>
+
+      <if test="lng != null">
+        lng = #{lng},
+      </if>
+
+      <if test="lat != null">
+        lat = #{lat},
+      </if>
+
+      <if test="level != null">
+        level = #{level},
+      </if>
+
+      <if test="position != null">
+        position = #{position},
+      </if>
+
+      <if test="sort != null">
+        sort = #{sort},
+      </if>
+
+    </set>
+    where id = #{id}
+  </update>
+
+
 
   <select id="selectByLevel" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select

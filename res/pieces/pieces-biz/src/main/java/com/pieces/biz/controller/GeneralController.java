@@ -1,5 +1,6 @@
 package com.pieces.biz.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Area;
 import com.pieces.service.AreaService;
 import com.pieces.tools.bean.FileBo;
@@ -61,10 +62,20 @@ public class GeneralController {
         }else{
             areaList = areaService.findByParent(parentId);
         }
+
         String result = GsonUtil.toJsonInclude(areaList,"id","areaname");
         WebUtil.printJson(response,result);
     }
 
 
+    @RequestMapping(value = "/area/page")
+    public void areaPage(HttpServletRequest request,
+                     HttpServletResponse response,
+                     Integer pageNum,
+                     Integer pageSize){
+        PageInfo<Area> page = areaService.find(pageNum,pageSize);
+        String result = GsonUtil.toJson(page);
+        WebUtil.printJson(response,result);
+    }
 
 }
