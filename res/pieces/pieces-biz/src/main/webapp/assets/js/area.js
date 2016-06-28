@@ -12,9 +12,8 @@ $(function() {
 			return false;
 		}
 		$.ajax({
-			url: '../json/',
-			data: {'parentid': pid},
-			url: 'json/' + pid + '.json',
+			url: 'gen/area',
+			data: {'parentId': pid},
 			// dataType: 'jsonp',
 			success: function(data) {
 				citys[pid] = data;
@@ -33,8 +32,8 @@ $(function() {
 		var def = $wrap.data('value');
 		console.log(def)
 		$.each(citys[pid], function(i, item){
-			var selected = item.i == def ? ' selected' : '';
-			arr.push('<option value="', item.i, '"', selected, '>', item.n, '</option>');
+			var selected = item.id == def ? ' selected' : '';
+			arr.push('<option value="', item.id, '"', selected, '>', item.areaname, '</option>');
 		});
 		$wrap.find('select:gt(0)').remove();
 		$wrap.append(arr.join(''));
@@ -50,6 +49,6 @@ $(function() {
 		getArea(val, $area);
 	});
 
-	getArea('index', $province); 
+	getArea('', $province);
 
 })
