@@ -27,7 +27,7 @@
     <div class="reg-box">
         <div class="wrap">
             <div class="fa-form">
-                <form action="" id="myform">
+                <form action="/register" id="myform">
                     <div class="group">
                         <div class="txt">
                             <i>*</i>用户名：
@@ -69,7 +69,7 @@
                             <i>*</i>企业注册地：
                         </div>
                         <div class="cnt">
-                            <select name="province" id="provinceCode" data-value="120000">
+                            <select name="provinceCode" id="province">
                                 <option value="">-省-</option>
                             </select>
                             <select name="cityCode" id="city">
@@ -187,7 +187,7 @@
             // 注册验证
             $('#myform').validate({
                 rules: {
-                    username: {
+                	userName: {
                         required: true,
                         // remote: 'check.php', // 使用ajax方法调用check.php验证输入值
                         isUsername: true,
@@ -195,11 +195,13 @@
                         remote: {
                                     type:"POST",
                                     url:"/ifExistUserName",
+                                    dataType:'json',
                                     data:{
-                                    userName: function() {return $("#username").val();}
+                                    	userName: function() {return $("#username").val();}
+                                    }
                                 }
                     },
-                    pwd: {
+                    password: {
                         required: true,
                         rangelength: [6,20],
                         isPwd: true
@@ -208,23 +210,25 @@
                         required: true,
                         equalTo: '#pwd'
                     },
-                    companyName: {
+                    companyFullName: {
                         required: true
                     },
-                    area: {
+                    countyCode: {
                         required: true
                     },
-                    linkMan: {
+                    contactName: {
                         required: true
                     },
-                    mobile: {
+                    contactMobile: {
                         required: true,
                         isMobile: true,
                         remote: {
                                     type:"POST",
                                     url:"/ifExistMobile",
+                                    dataType:'json',
                                     data:{
-                                    contactMobile: function() {return $("#mobile").val();}
+                                    	contactMobile: function() {return $("#mobile").val();}
+                                    }
                                 }
                     },
                     mobileCode: {
@@ -235,12 +239,12 @@
                     }
                 },
                 messages: {
-                    username: {
+                	userName: {
                         required: icons.error + '用户名必须以英文字母开头，长度6到20位',
                         rangelength: icons.error + '用户名长度只能在6-20位字符之间',
                         remote: icons.error + "用户名重复"
                     },
-                    pwd: {
+                    password: {
                         required: icons.error + '请输入密码',
                         rangelength: icons.error + '密码由数字、字母或下划线组成，长度为6-20位',
                     },
@@ -248,16 +252,16 @@
                         required: icons.error + '请再重复输入一遍密码，不能留空',
                         equalTo: icons.error + '确认新密码与新密码不一致',
                     },
-                    companyName: {
+                    companyFullName: {
                         required: icons.error + '请输入企业名称'
                     },
-                    area: {
+                    countyCode: {
                         required: icons.error + '请选择企业注册地'
                     },
-                    linkMan: {
+                    contactName: {
                         required: icons.error + '请输入联系人姓名'
                     },
-                    mobile: {
+                    contactMobile: {
                         required: icons.error + '请输入手机号码' ,
                         remote:  icons.error + "手机号重复"              
                     },
@@ -273,8 +277,8 @@
                     element.parent().append(error);
                 },
                 errorElement: 'span',
-                submitHandler: function() {
-                    return false;
+                submitHandler: function(form) {
+                    form.submit();
                 }
             });
 

@@ -42,10 +42,10 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		user.setContactMobile(contactMobile);
 		List<User> users = userDao.findUserByCondition(user);
-		if(users != null || users.size() != 0){
-			return false;
-		}else{
+		if(users != null && users.size() != 0){
 			return true;
+		}else{
+			return false;
 		}
 	}
 	
@@ -54,10 +54,10 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		user.setUserName(userName);
 		List<User> users = userDao.findUserByCondition(user);
-		if(users != null || users.size() != 0){
-			return false;
-		}else{
+		if(users != null && users.size() != 0){
 			return true;
+		}else{
+			return false;
 		}
 	}
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pieces.dao.model.User;
 import com.pieces.service.UserService;
@@ -28,16 +29,14 @@ public class UserRegisterController {
 	}
 	
 	@RequestMapping(value = "/register")
-	public String register(Model model,HttpServletRequest request,User user) {
+	public String register(Model model,HttpServletRequest request,User user,String mobileCode) {
 		//1.获取页面参数
 		//2.校验手机验证码
 		//3.生成盐，加密密码
 		//4.保存数据库
 		try {
-			int result = userService.addUser(user);
-			if(result <= 0){
-				System.out.println("成功添加会员");
-			}
+			user.setStatus(0);
+			userService.addUser(user);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -51,20 +50,22 @@ public class UserRegisterController {
 	}
 	
 	@RequestMapping(value="/ifExistUserName")
+	@ResponseBody
 	public String ifExistUserName(Model model,String userName){
 		if(userService.ifExistUserName(userName)){
-			return "true";
-		}else{
 			return "false";
+		}else{
+			return "true";
 		}
 	}
 	
 	@RequestMapping(value="/ifExistMobile")
+	@ResponseBody
 	public String ifExistMobile(Model model,String contactMobile){
 		if(userService.ifExistMobile(contactMobile)){
-			return "true";
-		}else{
 			return "false";
+		}else{
+			return "true";
 		}
 	}
 }
