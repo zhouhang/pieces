@@ -40,4 +40,7 @@ public class AreaServiceImpl extends AbsCommonService<Area> implements AreaServi
     public ICommonDao<Area> getDao() {
         return areaDao;
     }
+
+
+
 }

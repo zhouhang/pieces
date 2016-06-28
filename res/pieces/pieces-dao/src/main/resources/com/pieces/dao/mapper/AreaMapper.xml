@@ -39,14 +39,14 @@
     where id = #{id}
   </delete>
 
-  <insert id="create" parameterType="com.exemple.dao.model.Area">
+  <insert id="create" parameterType="com.pieces.dao.model.Area">
     insert into
     area (areaname,parentid,shortname,areacode,zipcode,pinyin,lng,lat,level,position,sort)
     values
     (#{areaname},#{parentid},#{shortname},#{areacode},#{zipcode},#{pinyin},#{lng},#{lat},#{level},#{position},#{sort})
   </insert>
 
-  <update id="update" parameterType="com.exemple.dao.model.Area">
+  <update id="update" parameterType="com.pieces.dao.model.Area">
     update area
     <set>
 
