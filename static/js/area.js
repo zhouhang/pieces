@@ -31,7 +31,6 @@ $(function() {
 	function toHtml(pid, $wrap) {
 		var arr = [];
 		var def = $wrap.data('value');
-		console.log(def)
 		$.each(citys[pid], function(i, item){
 			var selected = item.i == def ? ' selected' : '';
 			arr.push('<option value="', item.i, '"', selected, '>', item.n, '</option>');

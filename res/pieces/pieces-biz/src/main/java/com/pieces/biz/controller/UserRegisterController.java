@@ -52,8 +52,19 @@ public class UserRegisterController {
 	
 	@RequestMapping(value="/ifExistUserName")
 	public String ifExistUserName(Model model,String userName){
-		userService.ifExistUserName(userName);
-		return "aaa";
+		if(userService.ifExistUserName(userName)){
+			return "true";
+		}else{
+			return "false";
+		}
 	}
 	
+	@RequestMapping(value="/ifExistMobile")
+	public String ifExistMobile(Model model,String contactMobile){
+		if(userService.ifExistMobile(contactMobile)){
+			return "true";
+		}else{
+			return "false";
+		}
+	}
 }

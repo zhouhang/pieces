@@ -25,7 +25,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .hide{display:none;}
 .wrap{width:1200px;margin:0 auto;}
 .cf,.wrap{*zoom:1;}
-.cf:after,.wrap:after{content:"";display:block;height:0;clear:both;overflow:hidden;}
+.cf:after,.wrap:after{content:".";display:block;height:0;clear:both;visibility:hidden}
 .opacity{opacity:.7;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";filter:alpha(opacity=70);}
 .cbx{margin:0 4px 0 0;vertical-align:-1px;}
 
@@ -134,22 +134,6 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
   .slide-full .bd{height:560px;}
   .slide-full .login-box{position:absolute;top:100px;left:50%;margin-left:160px;}
 
-
-/* 登录框 */
-.login-box{width:300px;padding:30px;background:#fff;}
-  .login-box .title{line-height:1;font-size:16px;}
-    .login-box .msg{margin:20px 0 6px;color:#c3272b;visibility:hidden;}
-    .login-box .vis{visibility:visible;}
-    .login-box .group{position:relative;line-height:38px;padding-left:39px;}
-      .login-box .txt{position:absolute;top:0;left:0;width:38px;height:38px;color:#ccc;border:1px solid #ccc;text-align:center;}
-      .login-box .cnt{height:70px;}
-        .login-box .ipt{width:238px;line-height:18px;padding:10px;border:1px solid #ccc;}
-      .login-box .error .txt{color:#c3272b;border-color:#c3272b;}
-      .login-box .error .ipt{border-color:#c3272b;}
-    .login-box .links{margin-bottom:30px;}
-    .login-box .button{text-align:center;}
-      .login-box .btn{width:100%;font-size:16px;}
-
 /* fa-form */
 .fa-form{padding:50px 0;}
   .fa-form .group{position:relative;padding-left:140px;}
@@ -165,6 +149,21 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
       .fa-form .cnt option{text-align:left;}
       .fa-form .cnt input.error{border-color:#c3272b;}
       .fa-form .cnt span.error{color:#c3272b;display:block;}
+
+/* 登录框 */
+.login-box{width:300px;padding:30px;background:#fff;}
+  .login-box .title{line-height:1;font-size:16px;}
+    .login-box .msg{margin:20px 0 6px;color:#c3272b;visibility:hidden;}
+    .login-box .vis{visibility:visible;}
+    .login-box .group{position:relative;line-height:38px;padding-left:39px;}
+      .login-box .txt{position:absolute;top:0;left:0;width:38px;height:38px;color:#ccc;border:1px solid #ccc;text-align:center;}
+      .login-box .cnt{height:70px;}
+        .login-box .ipt{width:238px;line-height:18px;padding:10px;border:1px solid #ccc;}
+      .login-box .error .txt{color:#c3272b;border-color:#c3272b;}
+      .login-box .error .ipt{border-color:#c3272b;}
+    .login-box .links{margin-bottom:30px;}
+    .login-box .button{text-align:center;}
+      .login-box .btn{width:100%;font-size:16px;}
 
 /* 注册 */
 .reg-box{margin-top:10px;}
@@ -197,7 +196,11 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
           .member-box .side .expand .curr{color:#c3272b;}  
         .member-box .side .expand dd{display:block;}  
   .member-box .main{margin-left:260px;border:1px solid #e7e7e7;} 
-    .member-box .main .title{line-height:50px;padding:0 30px;font-size:14px;border-bottom:1px solid #e7e7e7;} 
+    .member-box .main .title{padding:0 30px;border-bottom:1px solid #e7e7e7;overflow:hidden;*zoom:1;} 
+      .member-box .main .title h3{float:left;line-height:50px;font-size:14px;} 
+      .member-box .main .title .extra{float:right;} 
+      .member-box .main .tips{line-height:48px;padding:0 30px;font-size:16px;font-weight:700;border-bottom:1px solid #e7e7e7;background:#f0eff5;}
+        .member-box .main .tips i{margin-right:6px;color:#58c805;font-size:28px;}
 
 .fa-message{padding:100px 0;text-align:center;}
   .fa-message .hd{font-size:26px;}
