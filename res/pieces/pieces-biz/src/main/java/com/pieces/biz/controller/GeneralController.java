@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -53,6 +54,7 @@ public class GeneralController {
      * @param parentId
      */
     @RequestMapping(value = "/area")
+    @ResponseBody
     public void area(HttpServletRequest request,
                      HttpServletResponse response,
                      @RequestParam(required=false) Integer parentId){
