@@ -7,6 +7,7 @@ import java.io.PrintWriter;
  * Created by wangbin on 2016/6/27.
  */
 public class WebUtil {
+    private WebUtil(){};
 
     private static final String ENCODING = "utf-8";
 

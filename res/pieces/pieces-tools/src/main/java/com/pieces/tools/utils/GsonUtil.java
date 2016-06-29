@@ -23,6 +23,7 @@ import java.util.Map;
  * @author miles
  */
 public class GsonUtil {
+    private GsonUtil(){};
 
     /**
      * 将一个对象转成json字符串
