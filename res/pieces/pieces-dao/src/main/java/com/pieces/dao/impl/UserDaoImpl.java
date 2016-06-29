@@ -20,4 +20,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		return getSqlSession().insert("com.pieces.dao.UserMapper.addUser", user);
 	}
 
+	@Override
+	public int updateUserByCondition(User user) {
+		return getSqlSession().update("com.pieces.dao.UserMapper.updateUserByCondition", user);
+	}
+
 }

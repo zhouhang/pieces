@@ -28,7 +28,7 @@
     <div class="reg-box">
         <div class="wrap">
             <div class="fa-form">
-                <form action="" id="myform">
+                <form action="/findPasswordTwo" id="myform">
                     <div class="group">
                         <ul class="fa-guide">
                             <li>
@@ -42,7 +42,7 @@
                             </li>
                         </ul>
                     </div>
-
+					<input type="hidden" value="${userName!''}" name="userName">
                     <div class="group">
                         <div class="txt">
                             <i>*</i>新密码：
@@ -155,8 +155,8 @@
                     element.parent().append(error);
                 },
                 errorElement: 'span',
-                submitHandler: function() {
-                    return false;
+                submitHandler: function(form) {
+                    form.submit();
                 }
             });
 

@@ -31,10 +31,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int addUser(User user) {
+		user = creatPawAndSaltMd5(user);
+		return userDao.addUser(user);
+	}
+	
+	public User creatPawAndSaltMd5(User user){
 		Password pass = EncryptUtil.PiecesEncode(user.getPassword());
 		user.setPassword(pass.getPassword());
 		user.setSalt(pass.getSalt());
-		return userDao.addUser(user);
+		return user;
 	}
 	
 	@Override
@@ -106,6 +111,11 @@ public class UserServiceImpl implements UserService {
 	        ip = request.getRemoteAddr();
 	    }
 	    return ip.equals("0:0:0:0:0:0:0:1")?"127.0.0.1":ip;
+	}
+
+	@Override
+	public int updateUserByCondition(User user) {
+		return userDao.updateUserByCondition(user);
 	}
 
 }

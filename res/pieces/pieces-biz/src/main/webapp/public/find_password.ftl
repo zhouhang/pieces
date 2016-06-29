@@ -28,7 +28,7 @@
     <div class="reg-box">
         <div class="wrap">
             <div class="fa-form">
-                <form action="" id="myform">
+                <form action="/findPasswordOne" id="myform">
                     <div class="group">
                         <ul class="fa-guide">
                             <li class="curr">
@@ -173,9 +173,34 @@
                 },
                 errorElement: 'span',
                 submitHandler: function(form) {
-                    form.submit();
                 }
             });
+            
+            $('#submit').on('click', function() {
+                if($('#myform').valid()){
+                	$.ajax({
+                		type : "POST",
+            			url : "/findPasswordOne",
+            			data : {
+	                		username:$('#username').val(),
+	                    	mobile:$('#mobile').val(),
+	                    	mobileCode:$('#mobileCode').val()
+          				  },
+            			dataType : "json",
+            			success : function(data){
+            				var result = data.result; 
+          					var resultMessage = data.resultMessage;
+          					if(result != "ok"){
+          						//设置错误信息
+          					}else{
+          						window.location = "/toFindPasswordTwo?userName="+resultMessage;
+          					}
+            			}
+                	});
+                }else{
+                	return false;
+                }
+            })
 
             var $mobile = $('#mobile'),
                 $getMobileCode = $('#getMobileCode'),

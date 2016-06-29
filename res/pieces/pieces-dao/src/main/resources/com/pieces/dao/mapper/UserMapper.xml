@@ -60,4 +60,44 @@
 			)
 		]]>
 	</insert>
+	
+	  <update id="updateUserByCondition" parameterType="com.pieces.dao.model.User">
+        update boss.boss_user
+		<set >
+	        <if test="userName != null">
+	        	user_name = #{userName,jdbcType=VARCHAR},
+	        </if>
+	        <if test="password != null">
+	        	password = #{password,jdbcType=VARCHAR},
+	        </if>
+	        <if test="salt != null">
+	        	salt = #{salt,jdbcType=NUMERIC},
+	        </if>
+	        <if test="companyFullName != null">
+	        	company_full_name = #{companyFullName,jdbcType=VARCHAR},
+	        </if>
+	        <if test="provinceCode != null">
+	        	province_code = #{provinceCode,jdbcType=VARCHAR},
+	        </if>
+	        <if test="cityCode != null">
+	        	city_code = #{cityCode,jdbcType=VARCHAR},
+	        </if>
+	        <if test="countyCode != null">
+	        	county_code = #{countyCode,jdbcType=INTEGER},
+	        </if>
+	        <if test="contactName != null">
+	        	contact_name = #{contactName,jdbcType=INTEGER},
+	        </if>
+	        <if test="contactMobile != null">
+	        	contact_mobile = #{contactMobile,jdbcType=INTEGER},
+	        </if>
+	        <if test="status != null">
+	        	status = #{status,jdbcType=INTEGER},
+	        </if>
+	        <if test="updateTime != null">
+	        	update_time = #{updateTime,jdbcType=INTEGER},
+	        </if>
+	    </set>
+        WHERE id = #{id,jdbcType=NUMERIC}
+  </update>
 </mapper>

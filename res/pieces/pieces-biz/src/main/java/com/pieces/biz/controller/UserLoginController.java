@@ -1,5 +1,6 @@
 package com.pieces.biz.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,10 +16,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.pieces.biz.shiro.BizToken;
 import com.pieces.dao.model.User;
 import com.pieces.service.UserService;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.vo.MessageVo;
 import com.pieces.service.vo.TestUserVo;
 
 @Controller(value = "userLoginController")
@@ -79,16 +82,57 @@ public class UserLoginController{
 	@RequestMapping(value = "/findPasswordOne")
 	@ResponseBody
 	public String findPasswordOne(Model model,String username,String mobile,String mobileCode) {
-		User user = new User();
-		user.setUserName(username);
-		List<User> users = userService.findUserByCondition(user);
-		if(user!=null&&users.size() != 0){
-			if(users.get(0).getContactMobile().equals(mobile)){
-				if(userService.checkMobileCode(mobileCode)){
-					return "ok";
-				}
-			}
+		MessageVo mv = new MessageVo();
+//		User user = new User();
+//		user.setUserName(username);
+//		List<User> users = userService.findUserByCondition(user);
+//		if(user!=null&&users.size() != 0){
+//			if(users.get(0).getContactMobile().equals(mobile)){
+//				if(userService.checkMobileCode(mobileCode)){
+//					mv.setResult("ok");
+//				}else{
+//					mv.setResult("falseCode");
+//					mv.setResultMessage("验证码错误");
+//				}
+//			}else{
+//				mv.setResult("falseMobile");
+//				mv.setResultMessage("手机号码错误");
+//			}
+//		}else{
+//			mv.setResult("falseName");
+//			mv.setResultMessage("用户名不存在");
+//		}
+		mv.setResult("ok");
+		mv.setResultMessage(username);
+		Gson gson = new Gson();
+		String aaa = gson.toJson(mv);
+		return aaa;
+	}
+	
+	@RequestMapping(value = "/toFindPasswordTwo")
+	public String toFindPasswordTwo(ModelMap model,HttpServletRequest request,String userName) {
+		model.put("userName",userName);
+		return "find_password_2";
+	}
+	
+	@RequestMapping(value = "/findPasswordTwo")
+	public String findPasswordTwo(Model model,String pwd,String userName) {
+		try {
+			User user = new User();
+			user.setUserName(userName);
+			List<User> users = userService.findUserByCondition(user);
+			user = users.get(0);
+			User updateUser = new User();
+			updateUser.setId(user.getId());
+			updateUser.setPassword(pwd);
+			updateUser.setUpdateTime(new Date());
+			updateUser = userService.creatPawAndSaltMd5(updateUser);
+			userService.updateUserByCondition(updateUser);
+			return "message_find_pwd";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "message_find_pwd";
 		}
-		return "false";
+
 	}
 }
