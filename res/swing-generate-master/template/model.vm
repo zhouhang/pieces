@@ -1,0 +1,33 @@
+##实体类代码
+package ${table.packageName}.dao.model;
+
+import java.io.Serializable;
+
+
+
+public class ${table.className}  implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+	
+#foreach( $tempColumn in $table.columnList)
+#if(${tempColumn.columnComment.trim()} != '')
+	//${tempColumn.columnComment.trim()}
+#end
+	private ${tempColumn.fieldType} ${tempColumn.fieldName};
+	
+#end
+	public ${table.className}(){}
+	
+#foreach( $tempColumn in $table.columnList )
+#if(${tempColumn.fieldType}=="Date")
+#end
+	public ${tempColumn.fieldType} ${tempColumn.fieldGetMethod}() {
+		return ${tempColumn.fieldName};
+	}
+
+	public void ${tempColumn.fieldSetMehtod}(${tempColumn.fieldType} ${tempColumn.fieldName}) {
+		this.${tempColumn.fieldName} = ${tempColumn.fieldName};
+	}
+	
+#end
+}

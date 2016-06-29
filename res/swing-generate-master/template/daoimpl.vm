@@ -1,0 +1,48 @@
+package ${table.packageName}.dao.impl;
+
+import com.github.pagehelper.PageInfo;
+import ${table.packageName}.dao.${table.className}Dao;
+import ${table.packageName}.dao.model.${table.className};
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+
+@Repository
+public class ${table.className}DaoImpl extends BaseDaoImpl implements ${table.className}Dao{
+
+        @Override
+        public ${table.className} findById(int id) {
+            return getSqlSession().selectOne("${table.packageName}.dao.${table.className}Mapper.findById", id);
+        }
+
+
+        @Override
+        public List<${table.className}> findAll() {
+            return getSqlSession().selectList("${table.packageName}.dao.${table.className}Mapper.findAll");
+        }
+
+        @Override
+        public PageInfo<${table.className}> find(int pageNum, int pageSize) {
+            List<${table.className}> list = getSqlSession().selectList("${table.packageName}.dao.${table.className}Mapper.findAll", null,new RowBounds(pageNum, pageSize));
+            PageInfo page = new PageInfo(list);
+            return page;
+        }
+
+        @Override
+        public int deleteById(int id) {
+            return getSqlSession().delete("${table.packageName}.dao.${table.className}Mapper.deleteById",id);
+        }
+
+        @Override
+        public int create(${table.className} ${table.classNameFirstLower}) {
+            return getSqlSession().insert("${table.packageName}.dao.${table.className}Mapper.create",${table.classNameFirstLower});
+        }
+
+        @Override
+        public int update(${table.className} ${table.classNameFirstLower}) {
+            return getSqlSession().update("${table.packageName}.dao.${table.className}Mapper.update",${table.classNameFirstLower});
+        }
+
+}
