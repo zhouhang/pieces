@@ -65,7 +65,7 @@ $(function() {
   					if(data != "ok"){
   						_showMsg("用户名密码错误!");
   					}else{
-  						window.location = "/welcome";
+  						window.location = "/user_info";
   					}
   				  });
         }else{

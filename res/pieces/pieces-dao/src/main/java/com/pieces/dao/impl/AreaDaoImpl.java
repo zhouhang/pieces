@@ -64,4 +64,9 @@ public class AreaDaoImpl extends BaseDaoImpl implements AreaDao{
         return getSqlSession().update("com.pieces.dao.AreaMapper.update",area);
     }
 
+	@Override
+	public Area findByCode(String areacode) {
+		return getSqlSession().selectOne("com.pieces.dao.AreaMapper.selectByCode",areacode);
+	}
+
 }
