@@ -72,9 +72,9 @@ public class CodeGenerator {
 				map.put("author", author);
 
 				VelocityInfoOp.generatorCode("model.vm", map, sourcePath + table.getPackagePath() + "/model", table.getClassName() + ".java");
-				VelocityInfoOp.generatorCode("service.vm", map, sourcePath + table.getPackagePath() + "/service", table.getClassName() + "Service.java");
-				VelocityInfoOp.generatorCode("serviceImpl.vm", map, sourcePath + table.getPackagePath() + "/service/impl", table.getClassName() + "ServiceImpl.java");
-				VelocityInfoOp.generatorCode("controller.vm", map, sourcePath + table.getPackagePath() + "/controller", table.getClassName() + "Controller.java");
+//				VelocityInfoOp.generatorCode("service.vm", map, sourcePath + table.getPackagePath() + "/service", table.getClassName() + "Service.java");
+//				VelocityInfoOp.generatorCode("serviceImpl.vm", map, sourcePath + table.getPackagePath() + "/service/impl", table.getClassName() + "ServiceImpl.java");
+//				VelocityInfoOp.generatorCode("controller.vm", map, sourcePath + table.getPackagePath() + "/controller", table.getClassName() + "Controller.java");
 				VelocityInfoOp.generatorCode("sqlmap.vm", map, sourcePath + table.getPackagePath() + "/mapper", table.getClassName() + "Mapper.xml");
 				VelocityInfoOp.generatorCode("dao.vm", map, sourcePath + table.getPackagePath() + "/dao", table.getClassName() + "Dao.java");
 				VelocityInfoOp.generatorCode("daoimpl.vm", map, sourcePath + table.getPackagePath() + "/dao/impl", table.getClassName() + "DaoImpl.java");
