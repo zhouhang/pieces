@@ -1,5 +1,6 @@
 package com.pieces.biz.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Area;
 import com.pieces.service.AreaService;
 import com.pieces.tools.bean.FileBo;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,6 +54,7 @@ public class GeneralController {
      * @param parentId
      */
     @RequestMapping(value = "/area")
+    @ResponseBody
     public void area(HttpServletRequest request,
                      HttpServletResponse response,
                      @RequestParam(required=false) Integer parentId){
@@ -61,10 +64,20 @@ public class GeneralController {
         }else{
             areaList = areaService.findByParent(parentId);
         }
+
         String result = GsonUtil.toJsonInclude(areaList,"id","areaname");
         WebUtil.printJson(response,result);
     }
 
 
+    @RequestMapping(value = "/area/page")
+    public void areaPage(HttpServletRequest request,
+                     HttpServletResponse response,
+                     Integer pageNum,
+                     Integer pageSize){
+        PageInfo<Area> page = areaService.find(pageNum,pageSize);
+        String result = GsonUtil.toJson(page);
+        WebUtil.printJson(response,result);
+    }
 
 }

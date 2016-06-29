@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${table.packageName}.dao.${table.className}Mapper">
+    <resultMap id="BaseResultMap" type="${table.packageName}.dao.model.${table.className}">
+    #foreach($tempColumn in $table.columnList)
+    #if(${tempColumn.fieldName}==${table.getFirstPrimaryKey().fieldName})
+    <id column="${tempColumn.columnName}"  property="${tempColumn.fieldName}" />
+    #else
+<result column="${tempColumn.columnName}"  property="${tempColumn.fieldName}" />
+    #end
+    #end
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        #foreach( $tempColumn in $table.columnList)${tempColumn.columnName}#if($velocityCount!=$table.columnList.size()),#end#end
+
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ${table.tableName}
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ${table.tableName}
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from ${table.tableName}
+        where id = #{id}
+    </delete>
+
+    <insert id="create" parameterType="${table.packageName}.dao.model.${table.className}">
+        insert into
+        ${table.tableName} (#foreach( $tempColumn in $table.columnList)#if(${tempColumn.fieldName}!=${table.getFirstPrimaryKey().fieldName})${tempColumn.columnName}#if($velocityCount!=$table.columnList.size()),#end#end#end)
+        values
+        (#foreach( $tempColumn in $table.columnList)#if(${tempColumn.fieldName}!=${table.getFirstPrimaryKey().fieldName})#{${tempColumn.fieldName}}#if($velocityCount!=$table.columnList.size()),#end#end#end)
+    </insert>
+
+    <update id="update" parameterType="${table.packageName}.dao.model.${table.className}">
+        update ${table.tableName}
+        <set>
+            #foreach($tempColumn in $table.columnList)
+                #if(${tempColumn.fieldName}!=${table.getFirstPrimaryKey().fieldName})
+
+            <if test="${tempColumn.fieldName} != null">
+                ${tempColumn.columnName} = #{${tempColumn.fieldName}},
+            </if>
+                #end
+            #end
+
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

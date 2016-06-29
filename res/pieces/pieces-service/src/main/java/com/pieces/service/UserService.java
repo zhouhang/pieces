@@ -2,6 +2,8 @@ package com.pieces.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.pieces.dao.model.User;
 
 /**
@@ -13,4 +15,14 @@ public interface UserService {
 	List<User> findUserByCondition(User user);
 
 	int addUser(User user);
+	
+	boolean ifExistMobile(String contactMobile);
+	
+	boolean ifExistUserName(String userName);
+	
+	String getMobileCode(HttpServletRequest request);
+	
+	boolean checkMobileCode(String targetMobileCode);
+	
+	String getRemoteHost(HttpServletRequest request);
 }

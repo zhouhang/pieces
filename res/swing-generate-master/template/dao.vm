@@ -1,0 +1,8 @@
+package ${table.packageName}.dao;
+
+import ${table.packageName}.dao.model.${table.className};
+
+public interface ${table.className}Dao extends ICommonDao<${table.className}>{
+
+	
+}

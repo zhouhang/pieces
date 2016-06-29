@@ -72,6 +72,8 @@
 						<value>
 							dialect=mysql
 							reasonable=true
+							rowBoundsWithCount=true
+							offsetAsPageNum=true
 						</value>
 					</property>
 				</bean>
