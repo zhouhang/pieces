@@ -137,6 +137,13 @@
             var icons = {
                 error: '<i class="fa fa-prompt"></i>'
             };
+            
+         	// _showMsg($('#mobileCode'), '啊啊')
+            var _showMsg = function($element, msg) {
+                $element.siblings('.error').hide();
+                $element.parent().append('<span class="error">' + icons.error + msg + '</span>');
+            }
+            
             // 注册验证
             $('#myform').validate({
                 rules: {
@@ -191,7 +198,13 @@
             				var result = data.result; 
           					var resultMessage = data.resultMessage;
           					if(result != "ok"){
-          						//设置错误信息
+          						if(result == "falseCode")
+          							_showMsg($('#mobileCode'), resultMessage);
+          						if(result == "falseMobile")
+              						_showMsg($('#mobile'), resultMessage);
+          						if(result == "falseName")
+              						_showMsg($('#username'), resultMessage);
+          						
           					}else{
           						window.location = "/toFindPasswordTwo?userName="+resultMessage;
           					}

@@ -83,30 +83,29 @@ public class UserLoginController{
 	@ResponseBody
 	public String findPasswordOne(Model model,String username,String mobile,String mobileCode) {
 		MessageVo mv = new MessageVo();
-//		User user = new User();
-//		user.setUserName(username);
-//		List<User> users = userService.findUserByCondition(user);
-//		if(user!=null&&users.size() != 0){
-//			if(users.get(0).getContactMobile().equals(mobile)){
-//				if(userService.checkMobileCode(mobileCode)){
-//					mv.setResult("ok");
-//				}else{
-//					mv.setResult("falseCode");
-//					mv.setResultMessage("验证码错误");
-//				}
-//			}else{
-//				mv.setResult("falseMobile");
-//				mv.setResultMessage("手机号码错误");
-//			}
-//		}else{
-//			mv.setResult("falseName");
-//			mv.setResultMessage("用户名不存在");
-//		}
-		mv.setResult("ok");
-		mv.setResultMessage(username);
+		User user = new User();
+		user.setUserName(username);
+		List<User> users = userService.findUserByCondition(user);
+		if(user!=null&&users.size() != 0){
+			if(users.get(0).getContactMobile().equals(mobile)){
+				if(userService.checkMobileCode(mobileCode)){
+					mv.setResult("ok");
+				}else{
+					mv.setResult("falseCode");
+					mv.setResultMessage("验证码错误");
+				}
+			}else{
+				mv.setResult("falseMobile");
+				mv.setResultMessage("手机号码错误");
+			}
+		}else{
+			mv.setResult("falseName");
+			mv.setResultMessage("用户名不存在");
+		}
+//		mv.setResult("ok");
+//		mv.setResultMessage(username);
 		Gson gson = new Gson();
-		String aaa = gson.toJson(mv);
-		return aaa;
+		return gson.toJson(mv);
 	}
 	
 	@RequestMapping(value = "/toFindPasswordTwo")
