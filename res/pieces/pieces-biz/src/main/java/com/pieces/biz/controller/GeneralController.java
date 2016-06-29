@@ -1,8 +1,14 @@
 package com.pieces.biz.controller;
 
+import com.github.bingoohuang.patchca.color.SingleColorFactory;
+import com.github.bingoohuang.patchca.custom.ConfigurableCaptchaService;
+import com.github.bingoohuang.patchca.filter.predefined.CurvesRippleFilterFactory;
+import com.github.bingoohuang.patchca.service.Captcha;
+import com.github.bingoohuang.patchca.word.RandomWordFactory;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Area;
 import com.pieces.service.AreaService;
+import com.pieces.service.constant.Constants;
 import com.pieces.tools.bean.FileBo;
 import com.pieces.tools.upload.DefaultUploadFile;
 import com.pieces.tools.utils.GsonUtil;
@@ -14,8 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -25,30 +35,45 @@ import java.util.List;
 @RequestMapping(value = "gen")
 public class GeneralController {
 
+    public static ConfigurableCaptchaService cs = new ConfigurableCaptchaService();
+
+    static {
+        //生成验证码
+        cs.setColorFactory(new SingleColorFactory(new Color(25, 60, 170)));
+        cs.setFilterFactory(new CurvesRippleFilterFactory(cs.getColorFactory()));
+        //设置随机验证码的位数
+        RandomWordFactory randomWordFactory =  new RandomWordFactory();
+        randomWordFactory.setMaxLength(4);
+        randomWordFactory.setMinLength(4);
+        cs.setWordFactory(randomWordFactory);
+    }
+
+
     @Autowired
     private DefaultUploadFile defaultUploadFile;
     @Autowired
     private AreaService areaService;
 
     @RequestMapping(value = "/file/index")
-    public String index(){
+    public String index() {
         return "public/fileUploadTest";
     }
 
     @RequestMapping(value = "/file/upload")
     public void fileUpload(HttpServletRequest request,
-                            HttpServletResponse response,
-                            @RequestParam(required=false) MultipartFile file){
+                           HttpServletResponse response,
+                           @RequestParam(required = false) MultipartFile file) {
         try {
-            FileBo fileBo =  defaultUploadFile.uploadFile(file.getOriginalFilename(),file.getInputStream());
+            FileBo fileBo = defaultUploadFile.uploadFile(file.getOriginalFilename(), file.getInputStream());
             System.out.println(fileBo);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     /**
      * 省市区接口
+     *
      * @param request
      * @param response
      * @param parentId
@@ -57,27 +82,58 @@ public class GeneralController {
     @ResponseBody
     public void area(HttpServletRequest request,
                      HttpServletResponse response,
-                     @RequestParam(required=false) Integer parentId){
+                     @RequestParam(required = false) Integer parentId) {
         List<Area> areaList = null;
-        if(parentId==null){
+        if (parentId == null) {
             areaList = areaService.findByLevel(1);
-        }else{
+        } else {
             areaList = areaService.findByParent(parentId);
         }
 
-        String result = GsonUtil.toJsonInclude(areaList,"id","areaname");
-        WebUtil.printJson(response,result);
+        String result = GsonUtil.toJsonInclude(areaList, "id", "areaname");
+        WebUtil.printJson(response, result);
     }
 
 
     @RequestMapping(value = "/area/page")
     public void areaPage(HttpServletRequest request,
-                     HttpServletResponse response,
-                     Integer pageNum,
-                     Integer pageSize){
-        PageInfo<Area> page = areaService.find(pageNum,pageSize);
+                         HttpServletResponse response,
+                         Integer pageNum,
+                         Integer pageSize) {
+        PageInfo<Area> page = areaService.find(pageNum, pageSize);
         String result = GsonUtil.toJson(page);
-        WebUtil.printJson(response,result);
+        WebUtil.printJson(response, result);
     }
+
+    /**
+     * 生成验证码
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping(value = "/captcha")
+    public void captcha(HttpServletRequest request,
+                        HttpServletResponse response) throws Exception{
+        HttpSession session = request.getSession();
+        //设置不缓存
+        response.setDateHeader("Expires", 0);
+        response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
+        response.addHeader("Cache-Control", "post-check=0, pre-check=0");
+        response.setHeader("Pragma", "no-cache");
+        response.setContentType("image/png");
+
+        Captcha captcha = cs.getCaptcha();
+        ServletOutputStream out = response.getOutputStream();
+        try {
+            String code = captcha.getChallenge();
+            session.setAttribute(Constants.KAPTCHA_SESSION_KEY,code);
+            System.out.println("生成的验证码为:"+code);
+            ImageIO.write(captcha.getImage(), "png", out);
+            out.flush();
+        } finally {
+            out.close();
+        }
+    }
+
 
 }

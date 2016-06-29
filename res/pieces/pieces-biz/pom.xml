@@ -189,5 +189,9 @@
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-webapp-support</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.github.bingoohuang</groupId>
+			<artifactId>patchca</artifactId>
+		</dependency>
 	</dependencies>
 </project>
