@@ -18,6 +18,8 @@ public interface UserService {
 	
 	User creatPawAndSaltMd5(User user);
 	
+	User getPawAndSaltMd5(User user);
+	
 	int updateUserByCondition(User user);
 	
 	boolean ifExistMobile(String contactMobile);

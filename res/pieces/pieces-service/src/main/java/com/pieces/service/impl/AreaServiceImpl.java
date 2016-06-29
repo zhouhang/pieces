@@ -41,6 +41,11 @@ public class AreaServiceImpl extends AbsCommonService<Area> implements AreaServi
         return areaDao;
     }
 
+	@Override
+	public Area findByCode(String areacode) {
+		return areaDao.findByCode(areacode);
+	}
+
 
 
 }

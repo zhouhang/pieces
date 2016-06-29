@@ -121,5 +121,12 @@
     from area
     where parentid = #{parentid,jdbcType=INTEGER}
   </select>
+  
+    <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from area
+    where areacode = #{areacode,jdbcType=VARCHAR}
+  </select>
 
 </mapper>

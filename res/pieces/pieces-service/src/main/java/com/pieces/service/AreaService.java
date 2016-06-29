@@ -13,6 +13,8 @@ public interface AreaService extends ICommonService<Area>{
     public List<Area> findByParent(Integer parentId);
 
     public List<Area> findByLevel(Integer level);
+    
+    public Area findByCode(String areacode);
 
     public PageInfo<Area> findByPage(Integer level, Integer pageNum, Integer pageSize);
 

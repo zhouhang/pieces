@@ -42,6 +42,13 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 	
+	public User getPawAndSaltMd5(User user){
+		Password pass = EncryptUtil.PiecesEncode(user.getPassword(),user.getSalt());
+		user.setPassword(pass.getPassword());
+		user.setSalt(pass.getSalt());
+		return user;
+	}
+	
 	@Override
 	public boolean ifExistMobile(String contactMobile){
 		User user = new User();
