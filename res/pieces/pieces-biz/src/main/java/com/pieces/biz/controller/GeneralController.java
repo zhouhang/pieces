@@ -9,10 +9,12 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Area;
 import com.pieces.service.AreaService;
 import com.pieces.service.constant.Constants;
+import com.pieces.service.impl.SmsService;
 import com.pieces.tools.bean.FileBo;
 import com.pieces.tools.upload.DefaultUploadFile;
 import com.pieces.tools.utils.GsonUtil;
 import com.pieces.tools.utils.WebUtil;
+import com.pieces.tools.utils.httpclient.HttpClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,17 +37,21 @@ import java.util.List;
 @RequestMapping(value = "gen")
 public class GeneralController {
 
-    public static ConfigurableCaptchaService cs = new ConfigurableCaptchaService();
+    @Autowired
+    private SmsService smsService;
+
+
+    public static ConfigurableCaptchaService captchaService = new ConfigurableCaptchaService();
 
     static {
         //生成验证码
-        cs.setColorFactory(new SingleColorFactory(new Color(25, 60, 170)));
-        cs.setFilterFactory(new CurvesRippleFilterFactory(cs.getColorFactory()));
+        captchaService.setColorFactory(new SingleColorFactory(new Color(25, 60, 170)));
+        captchaService.setFilterFactory(new CurvesRippleFilterFactory(captchaService.getColorFactory()));
         //设置随机验证码的位数
-        RandomWordFactory randomWordFactory =  new RandomWordFactory();
+        RandomWordFactory randomWordFactory = new RandomWordFactory();
         randomWordFactory.setMaxLength(4);
         randomWordFactory.setMinLength(4);
-        cs.setWordFactory(randomWordFactory);
+        captchaService.setWordFactory(randomWordFactory);
     }
 
 
@@ -107,13 +113,14 @@ public class GeneralController {
 
     /**
      * 生成验证码
+     *
      * @param request
      * @param response
      * @throws Exception
      */
     @RequestMapping(value = "/captcha")
     public void captcha(HttpServletRequest request,
-                        HttpServletResponse response) throws Exception{
+                        HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
         //设置不缓存
         response.setDateHeader("Expires", 0);
@@ -122,12 +129,12 @@ public class GeneralController {
         response.setHeader("Pragma", "no-cache");
         response.setContentType("image/png");
 
-        Captcha captcha = cs.getCaptcha();
+        Captcha captcha = captchaService.getCaptcha();
         ServletOutputStream out = response.getOutputStream();
         try {
             String code = captcha.getChallenge();
-            session.setAttribute(Constants.KAPTCHA_SESSION_KEY,code);
-            System.out.println("生成的验证码为:"+code);
+            session.setAttribute(Constants.KAPTCHA_SESSION_KEY, code);
+            System.out.println("生成的验证码为:" + code);
             ImageIO.write(captcha.getImage(), "png", out);
             out.flush();
         } finally {
@@ -135,5 +142,10 @@ public class GeneralController {
         }
     }
 
+    @RequestMapping(value = "/send")
+    public void sendPost() {
+        String result =  smsService.sendSmsCaptcha("18801285391");
+        System.out.println("result:"+result);
+    }
 
 }
