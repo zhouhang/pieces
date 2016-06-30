@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.pieces.dao.model.User;
 import com.pieces.service.UserService;
+import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.utils.MobileCodeUtil;
 import com.pieces.service.utils.SendMessage;
 import com.pieces.service.utils.ValidationCodeUtil;
@@ -56,7 +57,10 @@ public class UserRegisterController {
 				String code = codeMap.get("code").toString();
 				if(code!=null&&!code.equals("")){
 					if(code.equals(mobileCode)){
-						user.setStatus(0);
+						user.setStatus(BasicConstants.USER_STATUS_VALID);
+						user.setOnlineStatus(BasicConstants.USER_ONLINESTATUS_ONLINE);
+						user.setBindErp(BasicConstants.USER_BINDERP_NO);
+						user.setCreateChannel(BasicConstants.USER_CREATECHANNEL_BIZ);
 						userService.addUser(user);
 						mv.setResult("ok");
 					}else{

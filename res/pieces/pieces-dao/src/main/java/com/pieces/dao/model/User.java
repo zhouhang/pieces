@@ -39,6 +39,13 @@ public class User implements Serializable {
 	private String roleId;
 	//角色名称
 	private String roleName;
+	//在线状态 0:离线，1：在线
+	private Integer onlineStatus;
+	//是否绑定erp 0:未绑定  1.已绑定
+	private Integer bindErp;
+	//账号创建渠道 0:前台  1：后台
+	private Integer createChannel;
+	
 	public User() {
 		super();
 	}
@@ -132,6 +139,23 @@ public class User implements Serializable {
 	public void setContactMobile(String contactMobile) {
 		this.contactMobile = contactMobile;
 	}
-	
+	public Integer getOnlineStatus() {
+		return onlineStatus;
+	}
+	public void setOnlineStatus(Integer onlineStatus) {
+		this.onlineStatus = onlineStatus;
+	}
+	public Integer getBindErp() {
+		return bindErp;
+	}
+	public void setBindErp(Integer bindErp) {
+		this.bindErp = bindErp;
+	}
+	public Integer getCreateChannel() {
+		return createChannel;
+	}
+	public void setCreateChannel(Integer createChannel) {
+		this.createChannel = createChannel;
+	}
 	
 }
