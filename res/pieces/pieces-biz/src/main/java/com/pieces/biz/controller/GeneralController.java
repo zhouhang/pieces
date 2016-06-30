@@ -149,7 +149,7 @@ public class GeneralController {
     }
 
     @RequestMapping(value = "/send")
-    public void sendPost() {
+    public void sendPost() throws Exception{
         String result =  smsService.sendSmsCaptcha("18801285391");
         System.out.println("result:"+result);
 
