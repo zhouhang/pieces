@@ -27,7 +27,7 @@
     <div class="reg-box">
         <div class="wrap">
             <div class="fa-form">
-                <form action="http://www.baidu.com" target="_blank" id="myform">
+                <form action="" id="myform">
                     <div class="group">
                         <div class="txt">
                             <i>*</i>用户名：
@@ -177,100 +177,83 @@
 
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/validform.min.js"></script>
     <script src="js/area.js"></script>
     <script>
         $(function() {
-            var icons = {
-                error: '<i class="fa fa-prompt"></i>'
-            };
-            // 注册验证
-            $('#myform').validate({
-                rules: {
-                    username: {
-                        required: true,
-                        // remote: 'check.php', // 使用ajax方法调用check.php验证输入值
-                        isUsername: true,
-                        rangelength: [6,20]
-                    },
-                    pwd: {
-                        required: true,
-                        rangelength: [6,20],
-                        isPwd: true
-                    },
-                    pwdRepeat: {
-                        required: true,
-                        equalTo: '#pwd'
-                    },
-                    companyName: {
-                        required: true
-                    },
-                    area: {
-                        required: true
-                    },
-                    linkMan: {
-                        required: true
-                    },
-                    mobile: {
-                        required: true,
-                        isMobile: true
-                    },
-                    mobileCode: {
-                        required: true
-                    },
-                    agreement: {
-                        required: true
-                    }
+            var iconsError = "<i class='fa fa-prompt'></i> ";
+            $.Tipmsg.r = '';
+            $.Tipmsg.c = '';
+
+            var formValidate = $("#myform").Validform({
+                postonce: true,
+                showAllError: true,
+                datatype: {
+                    pwd: /^[a-zA-Z0-9_]{6,20}$/
                 },
-                messages: {
-                    username: {
-                        required: icons.error + '用户名必须以英文字母开头，长度6到20位',
-                        rangelength: icons.error + '用户名长度只能在6-20位字符之间'
-                    },
-                    pwd: {
-                        required: icons.error + '请输入密码',
-                        rangelength: icons.error + '密码由数字、字母或下划线组成，长度为6-20位',
-                    },
-                    pwdRepeat: {
-                        required: icons.error + '请再重复输入一遍密码，不能留空',
-                        equalTo: icons.error + '确认新密码与新密码不一致',
-                    },
-                    companyName: {
-                        required: icons.error + '请输入企业名称'
-                    },
-                    area: {
-                        required: icons.error + '请选择企业注册地'
-                    },
-                    linkMan: {
-                        required: icons.error + '请输入联系人姓名'
-                    },
-                    mobile: {
-                        required: icons.error + '请输入手机号码'               
-                    },
-                    mobileCode: {
-                        required: icons.error + '请输入短信验证码'
-                    },
-                    agreement: {
-                        required: icons.error + '请同意协议并勾选'  
-                    }
-                },
-                onfocusout: function(element) { $(element).valid(); },
-                errorPlacement: function(error, element) {  
-                    element.parent().append(error);
-                },
-                errorElement: 'span',
-                submitHandler: function() {
-                    return false;
-                }
+                tiptype: 3
             });
 
-            var $code = $('#jCode'),
-                $mobile = $('#mobile'),
+            formValidate.addRule([
+                {
+                    ele: '#username',
+                    datatype: /^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$/,
+                    nullmsg: iconsError + '用户名必须以英文字母开头，长度6到20位',
+                    errormsg: iconsError + '用户名长度只能在6-20位字符之间'
+                },
+                {
+                    ele: '#pwd',
+                    datatype: 'pwd',
+                    nullmsg: iconsError + '请输入密码',
+                    errormsg: iconsError + '密码由数字、字母或下划线组成，长度为6-20位'
+                },
+                {
+                    ele: '#pwdRepeat',
+                    datatype: '*',
+                    recheck: 'pwd',
+                    nullmsg: iconsError + '请再重复输入一遍密码，不能留空',
+                    errormsg: iconsError + '确认新密码与新密码不一致'
+                },
+                {
+                    ele: '#companyName',
+                    datatype: '*',
+                    nullmsg: iconsError + '请输入企业名称'
+                },
+                {
+                    ele: '#area',
+                    datatype: '*',
+                    nullmsg: iconsError + '请选择企业注册地'
+                },
+                {
+                    ele: '#linkMan',
+                    datatype: '*',
+                    nullmsg: iconsError + '请再重复输入一遍密码，不能留空'
+                },
+                {
+                    ele: '#mobile',
+                    datatype: 'm',
+                    nullmsg: iconsError + '请输入手机号码',
+                    errormsg: iconsError + '请输入正确的手机号码'
+                },
+                {
+                    ele: '#mobileCode',
+                    datatype: 'n',
+                    nullmsg: iconsError + '请输入短信验证码'
+                },
+                {
+                    ele: '#agreement',
+                    datatype: '*',
+                    nullmsg: iconsError + '请同意协议并勾选'
+                }
+            ])
+
+
+            var $mobile = $('#mobile'),
                 $getMobileCode = $('#getMobileCode'),
                 timeout = 0, 
                 timer = 0,
                 delay = 60,
-                txt = '秒后重试'
+                txt = '秒后重试';
 
             var _clock = function() {
                 timer && clearInterval(timer);
@@ -286,13 +269,12 @@
 
             // 验证码
             $getMobileCode.on('click', function() {
-                if($mobile.valid() && timeout === 0) {
+                if(formValidate.check(false, $mobile) && timeout === 0) {
                     timeout = delay;
                     $getMobileCode.text(timeout + txt).prop('disabled', true).prev().focus();
                     _clock();
                 }
             });
-
         })
     </script>
 </body>
