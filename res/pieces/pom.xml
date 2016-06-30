@@ -52,6 +52,7 @@
 		<pagehelper.version>4.0.3</pagehelper.version>
 		<servlet.api.version>3.0.1</servlet.api.version>
 		<patchca.version>0.0.1</patchca.version>
+		<httpclient.version>4.3</httpclient.version>
 	</properties>
 
 	<dependencyManagement>
@@ -155,7 +156,7 @@
 				<artifactId>mybatis-spring</artifactId>
 				<version>${mybatis.string.version}</version>
 			</dependency>
-			<!--分页插件-->
+			<!--分页插件 -->
 			<dependency>
 				<groupId>com.github.pagehelper</groupId>
 				<artifactId>pagehelper</artifactId>
@@ -319,6 +320,12 @@
 				<groupId>com.github.bingoohuang</groupId>
 				<artifactId>patchca</artifactId>
 				<version>${patchca.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpclient</artifactId>
+				<version>${httpclient.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

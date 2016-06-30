@@ -2,6 +2,7 @@ package com.pieces.biz.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -81,18 +82,30 @@ public class UserLoginController{
 
 	@RequestMapping(value = "/findPasswordOne")
 	@ResponseBody
-	public String findPasswordOne(Model model,String username,String mobile,String mobileCode) {
+	public String findPasswordOne(HttpServletRequest request,Model model,String username,String mobile,String mobileCode) {
+		Map codeMap = (Map)request.getSession().getAttribute(mobile);
 		MessageVo mv = new MessageVo();
 		User user = new User();
 		user.setUserName(username);
 		List<User> users = userService.findUserByCondition(user);
 		if(user!=null&&users.size() != 0){
 			if(users.get(0).getContactMobile().equals(mobile)){
-				if(userService.checkMobileCode(mobileCode)){
-					mv.setResult("ok");
+				if(codeMap != null){
+					String code = codeMap.get("code").toString();
+					if(code!=null&&!code.equals("")){
+						if(code.equals(mobileCode)){
+							mv.setResult("ok");
+						}else{
+							mv.setResult("falseCode");
+							mv.setResultMessage("验证码错误");
+						}
+					}else{
+						mv.setResult("falseCode");
+						mv.setResultMessage("验证码过期");
+					}
 				}else{
 					mv.setResult("falseCode");
-					mv.setResultMessage("验证码错误");
+					mv.setResultMessage("请获取验证码");
 				}
 			}else{
 				mv.setResult("falseMobile");
@@ -102,8 +115,6 @@ public class UserLoginController{
 			mv.setResult("falseName");
 			mv.setResultMessage("用户名不存在");
 		}
-//		mv.setResult("ok");
-//		mv.setResultMessage(username);
 		Gson gson = new Gson();
 		return gson.toJson(mv);
 	}

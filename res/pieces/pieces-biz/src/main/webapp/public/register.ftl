@@ -174,8 +174,6 @@
         </div>
     </div><!-- footer end -->
 
-
-
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/area.js"></script>
@@ -278,9 +276,34 @@
                 },
                 errorElement: 'span',
                 submitHandler: function(form) {
-                    form.submit();
+                	form.submit();
                 }
             });
+            
+            $('#submit').on('click', function() {
+                if($('#myform').valid()){
+                	$.ajax({
+                		type : "POST",
+            			url : "/register",
+            			data : {
+            				mobileCode:$('#mobileCode').val(),
+            				user : $("myform").serialize()
+          				  },
+            			dataType : "json",
+            			success : function(data){
+            				var result = data.result; 
+          					var resultMessage = data.resultMessage;
+          					if(result != "ok"){
+          						_showMsg($('#mobileCode'), resultMessage);
+          					}else{
+          						window.location = "/login?userName="+ $('#username').val() + "&password="+ $('#pwd').val();
+          					}
+            			}
+                	});
+                }else{
+                	return false;
+                }
+            })
 
             var $code = $('#jCode'),
                 $mobile = $('#mobile'),
@@ -304,6 +327,22 @@
 
             // 验证码
             $getMobileCode.on('click', function() {
+            	$.ajax({
+            		type : "POST",
+        			url : "/getMobileCode",
+        			data : {
+        				contactMobile:$('#mobile').val()
+      				  },
+        			dataType : "json",
+        			success : function(data){
+        				var result = data.result; 
+      					var resultMessage = data.resultMessage;
+      					if(result != "ok"){
+      						_showMsg($('#mobileCode'), resultMessage);
+      					}
+        			}
+            	});
+            	
                 if($mobile.valid() && timeout === 0) {
                     timeout = delay;
                     $getMobileCode.text(timeout + txt).prop('disabled', true).prev().focus();

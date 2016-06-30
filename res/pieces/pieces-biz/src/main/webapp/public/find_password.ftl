@@ -236,6 +236,22 @@
 
             // 验证码
             $getMobileCode.on('click', function() {
+            	$.ajax({
+            		type : "POST",
+        			url : "/getMobileCode",
+        			data : {
+        				contactMobile:$('#mobile').val()
+      				  },
+        			dataType : "json",
+        			success : function(data){
+        				var result = data.result; 
+      					var resultMessage = data.resultMessage;
+      					if(result != "ok"){
+      						_showMsg($('#mobileCode'), resultMessage);
+      					}
+        			}
+            	});
+            	
                 if($mobile.valid() && timeout === 0) {
                     timeout = delay;
                     $getMobileCode.text(timeout + txt).prop('disabled', true).prev().focus();
