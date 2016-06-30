@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>账户信息-boss-饮片B2B</title>
+    <meta name="renderer" content="webkit" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+    <!-- header start -->
+    <div class="header">
+        <div class="wrap">
+            <div class="logo">
+                <a href="home.html">药优优电子商务管理系统</a>
+            </div>
+            <div class="user">
+                <span>登录用户 hehuan</span>
+                <i>|</i>
+                <span>2016年6月20日 星期三</span>
+                <i>|</i>
+                <a href="logout.html">退出</a>
+            </div>
+        </div>
+    </div><!-- header end -->
+
+
+    <!-- nav start -->
+    <div class="nav">
+        <div class="wrap">
+            <ul>
+                <li><a href="#!">首页</a></li>
+                <li><a href="#!">销售</a></li>
+                <li><a href="#!">目录</a></li>
+                <li>
+                    <a class="curr" href="#!">客户</a>
+                    <div class="subnav">
+                        <a href="customers.html">客户管理</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="#!">促销</a>
+                    <div class="subnav">
+                        <a href="customers.html">客户管理</a>
+                        <a href="customers.html">客户管理</a>
+                        <a href="customers.html">客户管理</a>
+                        <a href="customers.html">客户管理</a>
+                        <a href="customers.html">客户管理</a>
+                    </div>
+                </li>
+                <li><a href="#!">邮件列表</a></li>
+                <li><a href="#!">CMS</a></li>
+                <li><a href="#!">报表</a></li>
+                <li><a href="#!">系统</a></li>
+            </ul>
+        </div>
+    </div><!-- nav end -->
+
+
+    <!-- fa-floor start -->
+    <div class="fa-floor">
+        <div class="wrap">
+            <div class="side">
+                <dl>
+                    <dt>客户信息</dt>
+                    <dd>
+                        <a href="customers.html">客户界面</a>
+                        <a class="curr" href="customers-account.html">账户信息</a>
+                    </dd>
+                </dl>
+            </div>
+            <div class="main">
+
+
+                <form action="" id="myform">
+                    <div class="title">
+                        <h3><i class="fa fa-people"></i>hehuan</h3>
+                        <div class="extra">
+                            <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
+                            <button type="reset" class="btn btn-gray">重置</button>
+                            <button type="submit" class="btn btn-red">保存</button>
+                        </div>
+                    </div>
+
+                    <div class="user-info">
+                        <h3>账户信息</h3>
+                        <div class="fa-form">
+                            <div class="group">
+                                <div class="txt">
+                                    <i>*</i>企业全称：
+                                </div>
+                                <div class="cnt">
+                                    <input type="text" class="ipt" value="" autocomplete="off" name="companyName" id="companyName" placeholder="">   
+                                </div>
+                            </div>
+
+                            <div class="group">
+                                <div class="txt">
+                                    <i>*</i>企业注册地：
+                                </div>
+                                <div class="cnt">
+                                    <select name="province" id="province">
+                                        <option value="">-省-</option>
+                                    </select>
+                                    <select name="city" id="city">
+                                        <option value="">-市-</option>
+                                    </select>
+                                    <select name="area" id="area">
+                                        <option value="">-区/县-</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="group">
+                                <div class="txt">
+                                    <i>*</i>联系人姓名：
+                                </div>
+                                <div class="cnt">
+                                    <input type="text" class="ipt" value="" autocomplete="off" name="linkMan" id="linkMan" placeholder="">                            
+                                </div>
+                            </div>
+
+                            <div class="group">
+                                <div class="txt">
+                                    <i>*</i>联系人手机号码：
+                                </div>
+                                <div class="cnt">
+                                    <input type="text" class="ipt" value="" autocomplete="off" name="mobile" id="mobile" placeholder="">                            
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="user-info">
+                        <h3>密码管理</h3>
+
+                        <div class="fa-form">
+
+                            <div class="group">
+                                <div class="txt">
+                                    <i>*</i>新密码：
+                                </div>
+                                <div class="cnt">
+                                    <input type="password" disabled class="ipt" value="" autocomplete="off" name="pwd" id="pwd" placeholder="请输入新密码">     
+                                </div>
+                            </div>
+
+                            <div class="group">
+                                <div class="cnt-extra">
+                                    <label><input class="cbx" id="mobileCode" type="checkbox">或发送随机密码</label>                
+                                </div>
+                            </div>
+
+                            <div class="group">
+                                <div class="txt">
+                                    <i>*</i>您的密码：
+                                </div>
+                                <div class="cnt">
+                                    <input type="password" class="ipt" value="" autocomplete="off" name="pwdOld" id="pwdOld" placeholder="请输入当前操作人的boss帐号密码">                            
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- fa-floor end -->
+    </div>
+
+
+    <!-- footer start -->
+    <div class="footer">
+        <div class="wrap">            
+            <div class="copyright">
+                <p>药优优电商管理系统 版本 1.0  版权所有 &copy; 2016 药优优</p>
+            </div>
+        </div>
+    </div><!-- footer end -->
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script>
+        $(function() {
+            var icons = {
+                error: '<i class="fa fa-prompt"></i>'
+            };
+            // 注册验证
+            $('#myform').validate({
+                rules: {
+                    pwd: {
+                        required: true,
+                        rangelength: [6,20],
+                        isPwd: true
+                    },
+                    pwdOld: {
+                        required: true,
+                        equalTo: '#pwd'
+                    },
+                    companyName: {
+                        required: true
+                    },
+                    area: {
+                        required: true
+                    },
+                    linkMan: {
+                        required: true
+                    },
+                    mobile: {
+                        required: true,
+                        isMobile: true
+                    }
+                },
+                messages: {
+                    pwd: {
+                        required: icons.error + '请输入密码',
+                        rangelength: icons.error + '密码由数字、字母或下划线组成，长度为6-20位',
+                    },
+                    pwdOld: {
+                        required: icons.error + '请输入当前操作人的boss帐号密码',
+                        equalTo: icons.error + '请输入当前操作人的boss帐号密码',
+                    },
+                    companyName: {
+                        required: icons.error + '请输入企业名称'
+                    },
+                    area: {
+                        required: icons.error + '请选择企业注册地'
+                    },
+                    linkMan: {
+                        required: icons.error + '请输入联系人姓名'
+                    },
+                    mobile: {
+                        required: icons.error + '请输入手机号码'               
+                    }
+                },
+                onfocusout: function(element) { $(element).valid(); },
+                errorPlacement: function(error, element) {  
+                    element.parent().append(error);
+                },
+                errorElement: 'span',
+                submitHandler: function() {
+                    return false;
+                }
+            });
+            
+            var $mobileCode = $('#mobileCode');
+            var $pwd = $('#pwd');
+            var setPwd = function() {
+                var flag = $mobileCode.prop('checked');
+                $pwd.prop('disabled', flag);
+
+                $pwd.removeClass('error').nextAll('.error').html('').hide();
+            }
+            $mobileCode.on('click', setPwd);
+            setPwd();
+        })
+    </script>
+</body>
+</html>
