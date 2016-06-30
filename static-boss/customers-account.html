@@ -180,69 +180,58 @@
     </div><!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/validform.min.js"></script>
+    <script src="js/area.js"></script>
     <script>
         $(function() {
-            var icons = {
-                error: '<i class="fa fa-prompt"></i>'
-            };
-            // 注册验证
-            $('#myform').validate({
-                rules: {
-                    pwd: {
-                        required: true,
-                        rangelength: [6,20],
-                        isPwd: true
-                    },
-                    pwdOld: {
-                        required: true,
-                        equalTo: '#pwd'
-                    },
-                    companyName: {
-                        required: true
-                    },
-                    area: {
-                        required: true
-                    },
-                    linkMan: {
-                        required: true
-                    },
-                    mobile: {
-                        required: true,
-                        isMobile: true
-                    }
+            var iconsError = "<i class='fa fa-prompt'></i> ";
+            $.Tipmsg.r = '';
+            $.Tipmsg.c = '';
+
+            var formValidate = $("#myform").Validform({
+                postonce: true,
+                showAllError: true,
+                datatype: {
+                    pwd: /^[a-zA-Z0-9_]{6,20}$/
                 },
-                messages: {
-                    pwd: {
-                        required: icons.error + '请输入密码',
-                        rangelength: icons.error + '密码由数字、字母或下划线组成，长度为6-20位',
-                    },
-                    pwdOld: {
-                        required: icons.error + '请输入当前操作人的boss帐号密码',
-                        equalTo: icons.error + '请输入当前操作人的boss帐号密码',
-                    },
-                    companyName: {
-                        required: icons.error + '请输入企业名称'
-                    },
-                    area: {
-                        required: icons.error + '请选择企业注册地'
-                    },
-                    linkMan: {
-                        required: icons.error + '请输入联系人姓名'
-                    },
-                    mobile: {
-                        required: icons.error + '请输入手机号码'               
-                    }
-                },
-                onfocusout: function(element) { $(element).valid(); },
-                errorPlacement: function(error, element) {  
-                    element.parent().append(error);
-                },
-                errorElement: 'span',
-                submitHandler: function() {
-                    return false;
-                }
+                tiptype: 3
             });
+
+            formValidate.addRule([
+                {
+                    ele: '#companyName',
+                    datatype: 's',
+                    nullmsg: iconsError + '用户名必须以英文字母开头，长度6到20位',
+                    errormsg: iconsError + '用户名长度只能在6-20位字符之间'
+                },
+                {
+                    ele: '#area',
+                    datatype: 's',
+                    nullmsg: iconsError + '请选择企业注册地'
+                },
+                {
+                    ele: '#linkMan',
+                    datatype: 's',
+                    nullmsg: iconsError + '请输入联系人姓名'
+                },
+                {
+                    ele: '#mobile',
+                    datatype: 'm',
+                    nullmsg: iconsError + '请输入手机号码',
+                    errormsg: iconsError + '请输入正确的电话号码'
+                },
+                {
+                    ele: '#pwd',
+                    datatype: '*,pwd',
+                    nullmsg: iconsError + '请输入密码',
+                    errormsg: iconsError + '密码由数字、字母或下划线组成，长度为6-20位'
+                },
+                {
+                    ele: '#pwdOld',
+                    datatype: '*',
+                    nullmsg: iconsError + '请输入当前操作人的boss帐号密码'
+                }
+            ])
             
             var $mobileCode = $('#mobileCode');
             var $pwd = $('#pwd');

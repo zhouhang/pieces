@@ -15,7 +15,7 @@
         <div class="wrap">
             <p class="fl">欢迎光临药优优饮片采购平台！</p>
             <ul class="fr">
-                <li>$(user.userName!'')  <a href="logout.html">退出</a></li>
+                <li>${user.userName!'' }  <a href="logout.html">退出</a></li>
                 <li>|</li>
                 <li><a href="logout.html">我的供应链</a></li>
                 <li>|</li>
@@ -117,7 +117,7 @@
                                 <i>*</i>用户名：
                             </div>
                             <div class="cnt">
-                                <span class="val">$(user.userName!'')</span>
+                                <span class="val">${user.userName!'' }</span>
                             </div>
                         </div>
 

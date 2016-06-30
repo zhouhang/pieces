@@ -16,7 +16,7 @@ import org.eclipse.jetty.webapp.WebAppContext;
 public class JettyServer {
 
 	public static void main(String[] args) throws Exception {
-		int port =80;
+		int port =8088;
 		String contextPath = "/";
 		if(!ArrayUtils.isEmpty(args)){
 			switch(args.length){
