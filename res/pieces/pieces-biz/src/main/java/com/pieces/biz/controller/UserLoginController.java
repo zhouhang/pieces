@@ -33,7 +33,6 @@ public class UserLoginController{
 	private UserService userService;
 	
     public TestUserVo getUserInfo(HttpServletRequest request){
-
     	return null;
     }
     

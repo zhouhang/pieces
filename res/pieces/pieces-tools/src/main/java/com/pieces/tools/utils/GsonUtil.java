@@ -19,7 +19,6 @@ import java.util.Map;
 
 /**
  * gson的工具类
- *
  * @author miles
  */
 public class GsonUtil {

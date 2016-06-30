@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
 /**
+ * 发送response工具类
  * Created by wangbin on 2016/6/27.
  */
 public class WebUtil {

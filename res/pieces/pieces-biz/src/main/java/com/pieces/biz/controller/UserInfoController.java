@@ -26,10 +26,10 @@ import com.pieces.service.vo.MessageVo;
 public class UserInfoController {
 	@Autowired
     private AreaService areaService;
-	
 	@Autowired
 	private UserService userService;
-	
+
+
 	@RequestMapping()
 	public String userInfo(ModelMap model,HttpServletRequest request) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BOSS.getValue());

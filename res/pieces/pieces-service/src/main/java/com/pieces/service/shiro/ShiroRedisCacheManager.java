@@ -25,8 +25,7 @@ import com.pieces.service.shiro.CacheManager;
  */
 public class ShiroRedisCacheManager implements CacheManager{
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(ShiroRedisCacheManager.class);
+	private static final Logger logger = LoggerFactory.getLogger(ShiroRedisCacheManager.class);
 
 	// fast lookup by name map
 	@SuppressWarnings("rawtypes")
@@ -97,9 +96,7 @@ public class ShiroRedisCacheManager implements CacheManager{
 		logger.debug("获取名称为: " + name + " 的RedisCache实例");
 		Cache c = caches.get(name);
 		if (c == null) {
-			// create a new cache instance
 			c = new ShiroRedisCache<K, V>(this,redisManager, getCahceNameInRedis(name));
-			// add it to the cache collection
 			caches.put(name, c);
 		}
 		return c;

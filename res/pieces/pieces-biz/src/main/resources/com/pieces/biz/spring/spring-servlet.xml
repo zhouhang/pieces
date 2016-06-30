@@ -104,4 +104,5 @@
 	<mvc:resources mapping="/js/**" location="/assets/js/" />
 	<mvc:resources mapping="/fonts/**" location="/assets/fonts/" />
 	<mvc:resources mapping="/images/**" location="/assets/images/" />
+	<mvc:resources mapping="/error/**" location="/assets/error/" />
 </beans>

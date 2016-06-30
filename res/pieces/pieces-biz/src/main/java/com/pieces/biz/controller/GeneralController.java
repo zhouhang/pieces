@@ -79,7 +79,6 @@ public class GeneralController {
 
     /**
      * 省市区接口
-     *
      * @param request
      * @param response
      * @param parentId
@@ -113,7 +112,6 @@ public class GeneralController {
 
     /**
      * 生成验证码
-     *
      * @param request
      * @param response
      * @throws Exception
@@ -142,10 +140,19 @@ public class GeneralController {
         }
     }
 
+    @RequestMapping(value = "/captcha/get")
+    public void captchaGet(HttpServletRequest request,
+                           HttpServletResponse response){
+        HttpSession session = request.getSession();
+        String code = session.getAttribute(Constants.KAPTCHA_SESSION_KEY).toString();
+        System.out.println("code:"+code);
+    }
+
     @RequestMapping(value = "/send")
     public void sendPost() {
         String result =  smsService.sendSmsCaptcha("18801285391");
         System.out.println("result:"+result);
+
     }
 
 }
