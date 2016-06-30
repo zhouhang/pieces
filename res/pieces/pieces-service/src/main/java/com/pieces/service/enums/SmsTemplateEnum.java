@@ -33,7 +33,6 @@ public enum SmsTemplateEnum {
     }
 
 
-
     public static void main(String[] args) {
         String la =  SmsTemplateEnum.SMS_CAPTCHA_TEMPLATE.getValue("【速采科技】","1024");
         System.out.println(la);
