@@ -16,7 +16,6 @@ import com.pieces.service.UserService;
 import com.pieces.service.dto.Password;
 import com.pieces.service.utils.EncryptUtil;
 import com.pieces.service.utils.MobileCodeUtil;
-import com.pieces.tools.utils.SendMessage;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -71,32 +70,6 @@ public class UserServiceImpl implements UserService {
 		}else{
 			return false;
 		}
-	}
-
-	@Override
-	public String getMobileCode(HttpServletRequest request) {
-		String mobileNo = request.getParameter("memberMobile").trim();
-		if(mobileNo == null || "".equals(mobileNo)){
-			return "n";
-		}
-		HttpSession session = request.getSession();
-		Map<String, Object> moCode = (Map<String, Object>) session.getAttribute(MobileCodeUtil.MOBILE_CODE);
-		Date time = new Date();
-		if(moCode!=null&&moCode.get("mobileNo").equals(mobileNo)){
-			Date reSendDate = (Date) moCode.get("reSendDate");
-			if(reSendDate.after(time)){
-				return "eorr";
-			}
-		}
-		//获取手机号、验证码及过期时间
-		Map<String, Object> mobileCode = MobileCodeUtil.getMobileCode(mobileNo);
-		//发送短信
-		String sendFlag = SendMessage.sendMessage(mobileNo,(String) mobileCode.get("mobileCode"));
-		if ("y".equals(sendFlag)) {//y标识短信发送前提交成功,短信提交成功后，再存session
-			session.setAttribute(MobileCodeUtil.MOBILE_CODE,mobileCode);//存session
-			return (String) mobileCode.get("mobileCode");
-		}
-		return sendFlag;
 	}
 
 	@Override

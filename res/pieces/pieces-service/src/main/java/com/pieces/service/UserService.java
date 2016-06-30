@@ -26,8 +26,6 @@ public interface UserService {
 	
 	boolean ifExistUserName(String userName);
 	
-	String getMobileCode(HttpServletRequest request);
-	
 	boolean checkMobileCode(String targetMobileCode);
 	
 	String getRemoteHost(HttpServletRequest request);
