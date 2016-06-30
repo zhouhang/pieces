@@ -33,11 +33,11 @@ public class UserInfoController {
 	@RequestMapping()
 	public String userInfo(ModelMap model,HttpServletRequest request) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BOSS.getValue());
-		String province = areaService.findByCode(user.getProvinceCode()).getAreaname();
-		String city = areaService.findByCode(user.getCityCode()).getAreaname();
+		String province = areaService.findById(Integer.parseInt(user.getProvinceCode())).getAreaname();
+		String city = areaService.findById(Integer.parseInt(user.getCityCode())).getAreaname();
 		String county = "";
 		if(user.getCountyCode() != null && !user.getCountyCode().equals("")){
-			county = areaService.findByCode(user.getCountyCode()).getAreaname();
+			county = areaService.findById(Integer.parseInt(user.getCountyCode())).getAreaname();
 		}
 		String area = province + city + county;
 		model.put("user", user);

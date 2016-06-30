@@ -65,10 +65,11 @@ $(function() {
   				  },
     			dataType : "json",
     			success : function(data){
-    				if(data != "ok"){
+    				var result = data.result; 
+    				if(result != "ok"){
   						_showMsg("用户名密码错误!");
   					}else{
-  						window.location = "/user_info";
+  						window.location = "/userInfo";
   					}
     			}
         	});

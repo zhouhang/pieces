@@ -48,6 +48,8 @@ public class UserLoginController{
 	@ResponseBody
 	public String login(Model model,String userName,String password,HttpServletRequest request) {
 		// 页面数据验证逻辑
+		MessageVo mv = new MessageVo();
+		Gson gson = new Gson();
 		try {
 			// 登陆验证
 			Subject subject = SecurityUtils.getSubject();
@@ -63,10 +65,36 @@ public class UserLoginController{
 			tu.setSalt(null);
 			Session s = subject.getSession();
 			s.setAttribute(RedisEnum.USER_SESSION_BOSS.getValue(), tu);
-			return "ok";
+			mv.setResult("ok");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "false";
+			mv.setResult("false");
+		}
+		return gson.toJson(mv);
+	}
+	
+	@RequestMapping(value = "/registerLogin")
+	public String registerLogin(Model model,String userName,String password,HttpServletRequest request) {
+		// 页面数据验证逻辑
+		try {
+			// 登陆验证
+			Subject subject = SecurityUtils.getSubject();
+			BizToken token = new BizToken(userName, password, false, userService.getRemoteHost(request), "");
+			subject.login(token);
+			// 存入用户信息到session
+			User tu = new User();
+			tu.setUserName(token.getUsername());
+			List<User> users = userService.findUserByCondition(tu);
+			BeanUtils.copyProperties(users.get(0), tu);
+			tu.setId(users.get(0).getId());
+			tu.setPassword(null);
+			tu.setSalt(null);
+			Session s = subject.getSession();
+			s.setAttribute(RedisEnum.USER_SESSION_BOSS.getValue(), tu);
+			return "user_info";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "register";
 		}
 	}
 	

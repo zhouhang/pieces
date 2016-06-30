@@ -288,12 +288,11 @@
                 if($('#myform').valid()){
                 	$.ajax({
                 		type : "POST",
-            			url : "/register?mobileCode=" + $('#mobileCode').val(),
+            			url : "/register",
             			data : {
             				userName : $('#username').val(),
             				password : $('#pwd').val(),
-            				companyFullName : $('#pwd').val(),
-            				password : $('#companyName').val(),
+            				companyFullName : $('#companyName').val(),
             				provinceCode : $('#province option:selected').val(),
             				cityCode : $('#city option:selected').val(),
             				countyCode : $('#area option:selected').val(),
@@ -308,7 +307,7 @@
           					if(result != "ok"){
           						_showMsg($('#mobileCode'), resultMessage);
           					}else{
-          						window.location = "/login?userName="+ $('#username').val() + "&password="+ $('#pwd').val();
+          						window.location = "/registerLogin?userName="+ $('#username').val() + "&password="+ $('#pwd').val();
           					}
             			}
                 	});
@@ -347,10 +346,10 @@
       				  },
         			dataType : "json",
         			success : function(data){
-        				var result = data.result; 
-      					var resultMessage = data.resultMessage;
-      					if(result != "ok"){
-      						_showMsg($('#mobileCode'), resultMessage);
+        				var result = data; 
+      					var resultMessage = data;
+      					if(result != "true"){
+      						_showMsg($('#mobileCode'), "验证码发送失败");
       					}
         			}
             	});
