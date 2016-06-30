@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -15,20 +16,27 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import com.pieces.tools.utils.httpclient.HttpClientUtil;
+import com.pieces.tools.utils.httpclient.common.HttpConfig;
+import com.pieces.tools.utils.httpclient.exception.HttpProcessException;
+
 public class YPSendMessage extends SendMessage {
 	
 	private static String ENCODING = "UTF-8";
+	private static String SMS_URL = "https://sms.yunpian.com/v2/sms/single_send.json";
+	private static String SMS_USERID = "49a8a3011d2eb2734a5e88938bea8c1e";
 	
 	@Override
 	public String send(String mobileNo,String code) {
 		String context = getContext(code);
-		String res = "";
+//		String res = "";
 		try {
-			res = sendSms(SMS_USERID, context, mobileNo);
-		} catch (IOException e) {
+//			res = sendSms(SMS_USERID, context, mobileNo);
+			System.out.println("--------------------"+context);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return res;
+		return context;
 	}
 	
 	
@@ -40,14 +48,16 @@ public class YPSendMessage extends SendMessage {
      * @param mobile 　接受的手机号
      * @return json格式字符串
      * @throws IOException
+	 * @throws HttpProcessException 
      */
 
-    public static String sendSms(String apikey, String text, String mobile) throws IOException {
-        Map<String, String> params = new HashMap<String, String>();
-        params.put("apikey", apikey);
-        params.put("text", text);
-        params.put("mobile", mobile);
-        return post(SMS_URL, params);
+    public static String sendSms(String apikey, String text, String mobile) throws HttpProcessException {
+    	Map<String, Object> params = new HashMap<String, Object>();
+		params.put("apikey", apikey);
+		params.put("text", text);
+		params.put("mobile", mobile);
+		//return post(SMS_URL, params);
+		return HttpClientUtil.post(HttpConfig.custom().url(SMS_URL).map(params));
     }
 	
 	/**

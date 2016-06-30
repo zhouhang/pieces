@@ -7,12 +7,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 public abstract class SendMessage {
-	
-	static final String SMS_URL = SpringUtil.getConfigProperties("sms_url");
-	static final String SMS_USERID = SpringUtil.getConfigProperties("sms_userid");
-	static final String SMS_PREFIX = SpringUtil.getConfigProperties("sms_prefix");
-	static final String SMS_INTERVAL_COUNT = SpringUtil.getConfigProperties("sms_interval_count");
-	static final String SMS_INTERVAL_TIME = SpringUtil.getConfigProperties("sms_interval_time");
+	private static final String SMS_PREFIX = "【药优优】您的验证码是";
+	private static final String SMS_INTERVAL_COUNT = "3";
+	private static final String SMS_INTERVAL_TIME = "3600";
 	
 	public abstract String send(String mobileNo,String code);
 	

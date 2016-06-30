@@ -34,11 +34,21 @@ public class UserRegisterController {
 	
 	@RequestMapping(value = "/register")
 	@ResponseBody
-	public String register(Model model,HttpServletRequest request,User user,String mobileCode) {
+	public String register(Model model,HttpServletRequest request) {
 		//1.获取页面参数
 		//2.校验手机验证码
 		//3.生成盐，加密密码
 		//4.保存数据库
+		User user = new User();
+		user.setUserName(request.getParameter("userName"));
+		user.setPassword(request.getParameter("password"));
+		user.setCompanyFullName(request.getParameter("companyFullName"));
+		user.setProvinceCode(request.getParameter("provinceCode"));
+		user.setCityCode(request.getParameter("cityCode"));
+		user.setCountyCode(request.getParameter("countyCode"));
+		user.setContactName(request.getParameter("contactName"));
+		user.setContactMobile(request.getParameter("contactMobile"));
+		String mobileCode = request.getParameter("mobileCode");
 		MessageVo mv = new MessageVo();
 		try {
 			Map codeMap = (Map)request.getSession().getAttribute(user.getContactMobile());
@@ -65,10 +75,10 @@ public class UserRegisterController {
 			e.printStackTrace();
 			mv.setResult("false");
 			mv.setResultMessage("请求出错");
-		} finally {
-			Gson gson = new Gson();
-			return gson.toJson(mv);
 		}
+		Gson gson = new Gson();
+		return gson.toJson(mv);
+
 	}
 	
 	@RequestMapping(value="/ifExistUserName")

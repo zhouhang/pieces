@@ -36,8 +36,8 @@
 	    <property name="locations">
 	        <list>
 	            <value>classpath:com/pieces/dao/properties/**/*.properties</value>
-	            <value>classpath:com/pieces/service/properties/**/*.properties</value>
-	            <value>classpath:com/pieces/biz/properties/**/*.properties</value>
+	            <value>classpath:com/pieces/service/properties/*.properties</value>
+	            <value>classpath:com/pieces/biz/properties/*.properties</value>
 	        </list>
 	    </property>
 	</bean>

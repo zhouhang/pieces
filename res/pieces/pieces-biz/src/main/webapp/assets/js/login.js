@@ -56,18 +56,22 @@ $(function() {
 
     $submit.on('click', function() {
         if(_checkForm()){
-        	$.post("/login",
-  				  {
-  					userName:$username.val(),
-  				    password:$pwd.val(),
+        	$.ajax({
+        		type : "POST",
+    			url : "/login",
+    			data : {
+    				userName:$username.val(),
+  				    password:$pwd.val()
   				  },
-  				  function(data,status){
-  					if(data != "ok"){
+    			dataType : "json",
+    			success : function(data){
+    				if(data != "ok"){
   						_showMsg("用户名密码错误!");
   					}else{
   						window.location = "/user_info";
   					}
-  				  });
+    			}
+        	});
         }else{
         	return false;
         }

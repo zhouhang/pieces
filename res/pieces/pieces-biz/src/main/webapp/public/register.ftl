@@ -178,10 +178,15 @@
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/area.js"></script>
     <script>
-        $(function() {
+        $(function() {	
             var icons = {
                 error: '<i class="fa fa-prompt"></i>'
             };
+         	// _showMsg($('#mobileCode'), '啊啊')
+            var _showMsg = function($element, msg) {
+                $element.siblings('.error').hide();
+                $element.parent().append('<span class="error">' + icons.error + msg + '</span>');
+            }
             // 注册验证
             $('#myform').validate({
                 rules: {
@@ -275,8 +280,7 @@
                     element.parent().append(error);
                 },
                 errorElement: 'span',
-                submitHandler: function(form) {
-                	form.submit();
+                submitHandler: function() {
                 }
             });
             
@@ -284,11 +288,19 @@
                 if($('#myform').valid()){
                 	$.ajax({
                 		type : "POST",
-            			url : "/register",
+            			url : "/register?mobileCode=" + $('#mobileCode').val(),
             			data : {
-            				mobileCode:$('#mobileCode').val(),
-            				user : $("myform").serialize()
-          				  },
+            				userName : $('#username').val(),
+            				password : $('#pwd').val(),
+            				companyFullName : $('#pwd').val(),
+            				password : $('#companyName').val(),
+            				provinceCode : $('#province option:selected').val(),
+            				cityCode : $('#city option:selected').val(),
+            				countyCode : $('#area option:selected').val(),
+            				contactName : $('#linkMan').val(),
+            				contactMobile : $('#mobile').val(),
+            				mobileCode : $('#mobileCode').val()
+            			},
             			dataType : "json",
             			success : function(data){
             				var result = data.result; 

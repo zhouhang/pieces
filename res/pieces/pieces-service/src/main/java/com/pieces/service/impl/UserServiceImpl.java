@@ -1,11 +1,8 @@
 package com.pieces.service.impl;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +12,6 @@ import com.pieces.dao.model.User;
 import com.pieces.service.UserService;
 import com.pieces.service.dto.Password;
 import com.pieces.service.utils.EncryptUtil;
-import com.pieces.service.utils.MobileCodeUtil;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -42,7 +38,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	public User getPawAndSaltMd5(User user){
-		Password pass = EncryptUtil.PiecesEncode(user.getPassword(),user.getSalt());
+		Password pass = EncryptUtil.PiecesEncode(user.getPassword(),user.getSalt(),"");
 		user.setPassword(pass.getPassword());
 		user.setSalt(pass.getSalt());
 		return user;

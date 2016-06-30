@@ -28,10 +28,6 @@ public class EncryptUtil
 		return PiecesEncode(plainPassword,random);
 	}
 	
-	public static Password PiecesEncode(String plainPassword,String salt){
-		return PiecesEncode(plainPassword,salt);
-	}
-	
 	/**登录时调用，此方法用于通过原生密码和盐生成加密密码
 	 * 
 	 * @param plainPassword
