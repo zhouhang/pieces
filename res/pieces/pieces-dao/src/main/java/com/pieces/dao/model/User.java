@@ -45,6 +45,12 @@ public class User implements Serializable {
 	private Integer bindErp;
 	//账号创建渠道 0:前台  1：后台
 	private Integer createChannel;
+	//注册地中文全称
+	private String areaFull;
+	//注册开始时间
+	private String startDate;
+	//注册结束时间
+	private String endDate;
 	
 	public User() {
 		super();
@@ -156,6 +162,24 @@ public class User implements Serializable {
 	}
 	public void setCreateChannel(Integer createChannel) {
 		this.createChannel = createChannel;
+	}
+	public String getAreaFull() {
+		return areaFull;
+	}
+	public void setAreaFull(String areaFull) {
+		this.areaFull = areaFull;
+	}
+	public String getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
+	public String getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 	
 }

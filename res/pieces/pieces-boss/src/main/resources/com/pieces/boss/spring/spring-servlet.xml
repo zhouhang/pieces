@@ -28,7 +28,7 @@
 	    class="com.pieces.service.utils.ShiroTagFreeMarkerConfigurer">
 	    <property name="templateLoaderPaths">
 	        <list>
-				<value>/</value>
+				<value>/public</value>
 			</list>
 	    </property>
 	    <property name="freemarkerVariables">
@@ -38,9 +38,19 @@
 	    </property>
 	    <property name="freemarkerSettings">
 	        <props>
-	            <prop key="defaultEncoding">UTF-8</prop>
+				<prop key="template_update_delay">0</prop>
 	            <prop key="classic_compatible">true</prop>
 	            <prop key="number_format">#.####</prop>
+				<prop key="tag_syntax">auto_detect</prop>
+				<prop key="defaultEncoding">UTF-8</prop>
+				<prop key="url_escaping_charset">UTF-8</prop>
+				<prop key="locale">zh_CN</prop>
+				<prop key="boolean_format">true,false</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="date_format">yyyy-MM-dd</prop>
+				<prop key="time_format">HH:mm:ss</prop>
+				<prop key="whitespace_stripping">true</prop>
+				<prop key="auto_import">/common/pager.ftl as p</prop>
 	        </props>
 	    </property>
 	</bean>
@@ -90,7 +100,8 @@
 	</bean>
 	
 	<!-- css,js路径 -->
-	<mvc:resources mapping="/css/**" location="/css/" />
-	<mvc:resources mapping="/js/**" location="/js/" />
-	<mvc:resources mapping="/html/**" location="/html/" />
+	<mvc:resources mapping="/css/**" location="/assets/css/" />
+	<mvc:resources mapping="/js/**" location="/assets/js/" />
+	<mvc:resources mapping="/fonts/**" location="/assets/fonts/" />
+	<mvc:resources mapping="/images/**" location="/assets/images/" />
 </beans>

@@ -298,7 +298,8 @@
             				countyCode : $('#area option:selected').val(),
             				contactName : $('#linkMan').val(),
             				contactMobile : $('#mobile').val(),
-            				mobileCode : $('#mobileCode').val()
+            				mobileCode : $('#mobileCode').val(),
+            				areaFull : $('#province option:selected').text() + $('#city option:selected').text() + $('#area option:selected').text()
             			},
             			dataType : "json",
             			success : function(data){

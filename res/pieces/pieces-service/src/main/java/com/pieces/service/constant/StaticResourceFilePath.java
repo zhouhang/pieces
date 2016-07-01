@@ -4,12 +4,12 @@ import com.pieces.service.utils.SpringUtil;
 
 public enum StaticResourceFilePath {
 	
-	BIZ_RESOURCE_JS("src/webapp/static/js"),
-	BIZ_RESOURCE_CSS("src/webapp/static/css"),
-	BIZ_RESOURCE_IMAGES("src/webapp/static/images"),
-	BOSS_RESOURCE_IMAGES("src/webapp/static/images"),
-	BOSS_RESOURCE_CSS("src/webapp/static/css"),
-	BOSS_RESOURCE_JS("src/webapp/static/js");
+	BIZ_RESOURCE_JS("src/webapp/assets/js"),
+	BIZ_RESOURCE_CSS("src/webapp/assets/css"),
+	BIZ_RESOURCE_IMAGES("src/webapp/assets/images"),
+	BOSS_RESOURCE_IMAGES("src/webapp/assets/images"),
+	BOSS_RESOURCE_CSS("src/webapp/assets/css"),
+	BOSS_RESOURCE_JS("src/webapp/assets/js");
 
 	private String messageKey;
 	private String value;
