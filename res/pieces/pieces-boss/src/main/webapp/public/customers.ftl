@@ -64,7 +64,7 @@
         <div class="wrap">
             <div class="title">
                 <h3>客户管理</h3>
-                <div class="extra"><a class="btn btn-red" href="customers-add.html"><i class="fa fa-plus"></i>增加新客户</a></div>
+                <div class="extra"><a class="btn btn-red" href="/menber/to/add/user"><i class="fa fa-plus"></i>增加新客户</a></div>
             </div>
             <div class="pagin">
                 <div class="extra">
@@ -111,7 +111,7 @@
                             
 	                            <td>
 	                                <select name="bindErp" id="bindErp">
-	                                    <option value="1">是</option>
+	                                    <option value="1" selected="selected">是</option>
 	                                    <option value="0">否</option>
 	                                </select>
 	                            </td>
@@ -164,7 +164,13 @@
     <script src="${BIZ_RESOURCE_JS}/js/jquery.min.js"></script>
     
     <script>
-        $(function() {	
+        $(function() {
+        	var bindErp = "${user.bindErp!'' }";
+        	if(bindErp != '')
+        		$('#bindErp').val(bindErp);
+        	else
+        		$('#bindErp').val('1');
+        	
             $('#search').on('click', function() {
                 $('#myform').submit();
             })

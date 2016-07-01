@@ -28,4 +28,11 @@ public class MenberController {
 		
 		return "customers";
 	}
+	
+	@RequestMapping(value = "/to/add/user")
+	public String toAddUser(ModelMap model,HttpServletRequest request) {
+		return "customers-add";
+	}
+	
+	
 }

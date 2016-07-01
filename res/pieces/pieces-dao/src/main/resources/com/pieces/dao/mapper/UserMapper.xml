@@ -3,7 +3,7 @@
 <mapper namespace="com.pieces.dao.UserMapper" >
 
   <resultMap id="BaseResultMap" type="com.pieces.dao.model.User" >
-    <id column="id" property="id" jdbcType="DECIMAL" />
+    <id column="id" property="id" jdbcType="INTEGER" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="salt" property="salt" jdbcType="VARCHAR" />
@@ -13,14 +13,14 @@
     <result column="county_code" property="countyCode" jdbcType="VARCHAR" />
     <result column="contact_name" property="contactName" jdbcType="VARCHAR" />
     <result column="contact_mobile" property="contactMobile" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="role_id" property="roleId" jdbcType="VARCHAR" />
     <result column="role_name" property="roleName" jdbcType="VARCHAR" />
-    <result column="online_status" property="onlineStatus" jdbcType="DECIMAL" />
-    <result column="bind_erp" property="bindErp" jdbcType="DECIMAL" />
-    <result column="create_channel" property="createChannel" jdbcType="DECIMAL" />
+    <result column="online_status" property="onlineStatus" jdbcType="INTEGER" />
+    <result column="bind_erp" property="bindErp" jdbcType="INTEGER" />
+    <result column="create_channel" property="createChannel" jdbcType="INTEGER" />
   </resultMap>
   <!-- 查询user -->
   <select id="findUserByCondition" parameterType="com.pieces.dao.model.User" resultMap="BaseResultMap">
@@ -30,7 +30,7 @@
   			and b.user_name = #{userName, jdbcType=VARCHAR}
   		</if>
   		<if test="status != null" >
-  			and b.status = #{status, jdbcType=DECIMAL}
+  			and b.status = #{status, jdbcType=INTEGER}
   		</if>
   		<if test="companyFullName != null" >
   			and b.company_full_name = #{companyFullName, jdbcType=VARCHAR}
@@ -58,12 +58,12 @@
 			#{countyCode,jdbcType=VARCHAR},
 			#{contactName,jdbcType=VARCHAR},
 			#{contactMobile,jdbcType=VARCHAR},
-			#{status,jdbcType=DECIMAL},
+			#{status,jdbcType=INTEGER},
 			#{createTime,jdbcType=TIMESTAMP},
 			#{updateTime,jdbcType=TIMESTAMP},
-			#{onlineStatus,jdbcType=DECIMAL},
-			#{bindErp,jdbcType=DECIMAL},
-			#{createChannel,jdbcType=DECIMAL},
+			#{onlineStatus,jdbcType=INTEGER},
+			#{bindErp,jdbcType=INTEGER},
+			#{createChannel,jdbcType=INTEGER},
 			#{areaFull,jdbcType=VARCHAR}
 			)
 		]]>
@@ -97,7 +97,7 @@
 	        	contact_name = #{contactName,jdbcType=VARCHAR},
 	        </if>
 	        <if test="contactMobile != null">
-	        	contact_mobile = #{contactMobile,jdbcType=INTEGER},
+	        	contact_mobile = #{contactMobile,jdbcType=VARCHAR},
 	        </if>
 	        <if test="status != null">
 	        	status = #{status,jdbcType=INTEGER},
@@ -120,31 +120,31 @@
   		select * from user b 
   		where 1=1
   		<if test="userName != null and userName != ''" >
-  			and b.user_name like '%#{userName, jdbcType=VARCHAR}%'
+  			and b.user_name like CONCAT('%','${userName}','%' )
   		</if>
   		<if test="status != null and status != ''" >
-  			and b.status = #{status, jdbcType=DECIMAL}
+  			and b.status = #{status, jdbcType=INTEGER}
   		</if>
   		<if test="bindErp != null and bindErp != ''" >
-  			and b.bind_erp = #{bindErp, jdbcType=DECIMAL}
+  			and b.bind_erp = #{bindErp, jdbcType=INTEGER}
   		</if>
 		<if test="areaFull != null and areaFull != ''">
-	        and b.area_full like  '%#{areaFull,jdbcType=VARCHAR}%'
+	        and b.area_full like  '%${areaFull}%'
 	    </if>
   		<if test="companyFullName != null and companyFullName != ''" >
-  			and b.company_full_name like '%#{companyFullName, jdbcType=VARCHAR}%'
+  			and b.company_full_name like '%${companyFullName}%'
   		</if>
   		<if test="contactMobile != null and contactMobile != ''" >
-  			and b.contact_mobile like '%#{contactMobile, jdbcType=VARCHAR}%'
+  			and b.contact_mobile like '%${contactMobile}%'
   		</if>
   		<if test="contactName != null and contactName != ''" >
-  			and b.contact_name like  '%#{contactName, jdbcType=VARCHAR}%'
+  			and b.contact_name like  '%${contactName}%'
   		</if>
   		<if test="startDate != null and startDate != ''">
 		    and b.create_time >= to_date(#{startDate},'yyyy-mm-dd') 
 		</if>
 		<if test="endDate != null and endDate != ''">
-		    and b.create_time <![CDATA[<]]> to_date(#{endDate},'yyyy-mm-dd') + 1 
+		    and b.create_time <![CDATA[<]]> (to_date(#{endDate},'yyyy-mm-dd') + 1)
 		</if>
   </select>
 </mapper>
