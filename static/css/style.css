@@ -153,7 +153,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
         .fa-form .cnt option{text-align:left;}
       .fa-form .cnt .Validform_checktip{display:block;}
       .fa-form .cnt input.Validform_error{border-color:#c3272b;}
-      .fa-form .cnt .Validform_loading{position:absolute;top:12px;left:460px;width:16px;height:16px;background:url(../images/loader.gif) no-repeat 50%;}
+      .fa-form .cnt .Validform_loading{position:absolute;top:17px;left:460px;width:16px;height:16px;background:url(../images/loader.gif) no-repeat 50%;}
       .fa-form .cnt .Validform_right{display:none;}
       .fa-form .cnt .Validform_wrong{display:block;color:#c3272b;font-size:12px;}
         .fa-form .cnt .Validform_wrong i{vertical-align:-2px;}

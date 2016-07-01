@@ -17,18 +17,6 @@ public class HomeController {
     @RequestMapping(value = "/")
     public String index(HttpServletRequest request,
                         HttpServletResponse response){
-
-        if(true){
-
-        }
-        else if(false){
-
-        }
-        else {
-
-        }
-
-
         return "home";
     }
 

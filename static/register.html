@@ -60,7 +60,7 @@
                             <i>*</i>企业全称：
                         </div>
                         <div class="cnt">
-                            <input type="text" class="ipt" value="" autocomplete="off" name="companyName" id="companyName" placeholder="工商局注册的企业名称">                            
+                            <input type="text" class="ipt" value="" autocomplete="off" name="companyFullName" id="companyName" placeholder="工商局注册的企业名称">                            
                         </div>
                     </div>
 
@@ -69,13 +69,13 @@
                             <i>*</i>企业注册地：
                         </div>
                         <div class="cnt">
-                            <select name="province" id="province">
+                            <select name="provinceCode" id="province">
                                 <option value="">-省-</option>
                             </select>
-                            <select name="city" id="city">
+                            <select name="cityCode" id="city">
                                 <option value="">-市-</option>
                             </select>
-                            <select name="area" id="area">
+                            <select name="countyCode" id="area">
                                 <option value="">-区/县-</option>
                             </select>
                         </div>
@@ -86,7 +86,7 @@
                             <i>*</i>联系人姓名：
                         </div>
                         <div class="cnt">
-                            <input type="text" class="ipt" value="" autocomplete="off" name="linkMan" id="linkMan" placeholder="企业联系人姓名">                            
+                            <input type="text" class="ipt" value="" autocomplete="off" name="contactName" id="linkMan" placeholder="企业联系人姓名">                            
                         </div>
                     </div>
 
@@ -95,7 +95,7 @@
                             <i>*</i>联系人手机号码：
                         </div>
                         <div class="cnt">
-                            <input type="text" class="ipt" value="" autocomplete="off" name="mobile" id="mobile" placeholder="企业联系人的手机号码">                            
+                            <input type="text" class="ipt" value="" autocomplete="off" name="contactMobile" id="mobile" placeholder="企业联系人的手机号码">                            
                         </div>
                     </div>
 
@@ -174,108 +174,165 @@
         </div>
     </div><!-- footer end -->
 
-
-
     <script src="js/jquery.min.js"></script>
     <script src="js/validform.min.js"></script>
     <script src="js/area.js"></script>
     <script>
-        $(function() {
-            var iconsError = "<i class='fa fa-prompt'></i> ";
-            $.Tipmsg.r = '';
-            $.Tipmsg.c = '';
-
-            var formValidate = $("#myform").Validform({
-                postonce: true,
-                showAllError: true,
-                datatype: {
-                    pwd: /^[a-zA-Z0-9_]{6,20}$/
+    !(function($) {
+        var registerPage = {
+            //定义全局变量区
+            v: {
+                iconsError: "<i class='fa fa-prompt'></i> "
+            },
+            //定义方法区
+            fn: {
+                //初始化方法区
+                init: function () {
+                    registerPage.fn.formInit();
                 },
-                tiptype: 3
-            });
-
-            formValidate.addRule([
-                {
-                    ele: '#username',
-                    datatype: /^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$/,
-                    nullmsg: iconsError + '用户名必须以英文字母开头，长度6到20位',
-                    errormsg: iconsError + '用户名长度只能在6-20位字符之间'
-                },
-                {
-                    ele: '#pwd',
-                    datatype: 'pwd',
-                    nullmsg: iconsError + '请输入密码',
-                    errormsg: iconsError + '密码由数字、字母或下划线组成，长度为6-20位'
-                },
-                {
-                    ele: '#pwdRepeat',
-                    datatype: '*',
-                    recheck: 'pwd',
-                    nullmsg: iconsError + '请再重复输入一遍密码，不能留空',
-                    errormsg: iconsError + '确认新密码与新密码不一致'
-                },
-                {
-                    ele: '#companyName',
-                    datatype: '*',
-                    nullmsg: iconsError + '请输入企业名称'
-                },
-                {
-                    ele: '#area',
-                    datatype: '*',
-                    nullmsg: iconsError + '请选择企业注册地'
-                },
-                {
-                    ele: '#linkMan',
-                    datatype: '*',
-                    nullmsg: iconsError + '请再重复输入一遍密码，不能留空'
-                },
-                {
-                    ele: '#mobile',
-                    datatype: 'm',
-                    nullmsg: iconsError + '请输入手机号码',
-                    errormsg: iconsError + '请输入正确的手机号码'
-                },
-                {
-                    ele: '#mobileCode',
-                    datatype: 'n',
-                    nullmsg: iconsError + '请输入短信验证码'
-                },
-                {
-                    ele: '#agreement',
-                    datatype: '*',
-                    nullmsg: iconsError + '请同意协议并勾选'
-                }
-            ])
-
-
-            var $mobile = $('#mobile'),
-                $getMobileCode = $('#getMobileCode'),
-                timeout = 0, 
-                timer = 0,
-                delay = 60,
-                txt = '秒后重试';
-
-            var _clock = function() {
-                timer && clearInterval(timer);
-                timer = setInterval(function() {
-                    timeout --;
-                    $getMobileCode.text(timeout + txt).prop('disabled', true);
-                    if (timeout === 0) {
-                        clearInterval(timer);
-                        $getMobileCode.text('获取验证码').prop('disabled', false);
+                //初始化页面表单验证
+                formInit: function () {
+                    var iconsError = "<i class='fa fa-prompt'></i> ";
+                    $.Tipmsg.r = '';
+                    $.Tipmsg.c = '';
+                    var _showMsg = function($element, msg) {
+                        $element.siblings(".Validform_checktip").attr('class', 'Validform_checktip Validform_wrong').html(iconsError + msg);
                     }
-                }, 1e3);
-            }
+                    var formValidate = $("#myform").Validform({
+                        postonce: true,
+                        showAllError: true,
+                        datatype: {
+                            pwd: /^[a-zA-Z0-9_]{6,20}$/
+                        },
+                        tiptype: 4,
+                        ajaxPost: true,
+                        url: 'json/form.php',
+                        callback: function(data){
+                            switch (data.result) {
+                                case 'ok':
+                                    window.location.href = 'login.html?userName='+ $('#username').val() + '&password='+ $('#pwd').val();
+                                    break;
+                                case 'fail':
+                                    _showMsg($('#username'), data.resultMessage);
+                                    break;
+                                // no default
+                            }
+                        }
+                    });
 
-            // 验证码
-            $getMobileCode.on('click', function() {
-                if(formValidate.check(false, $mobile) && timeout === 0) {
-                    timeout = delay;
-                    $getMobileCode.text(timeout + txt).prop('disabled', true).prev().focus();
-                    _clock();
+                    formValidate.addRule([
+                        {
+                            ele: '#username',
+                            datatype: /^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$/,
+                            ajaxurl: 'json/checkname.php',
+                            nullmsg: iconsError + '用户名必须以英文字母开头，长度6到20位',
+                            errormsg: iconsError + '用户名长度只能在6-20位字符之间'
+                        },
+                        {
+                            ele: '#pwd',
+                            datatype: 'pwd',
+                            nullmsg: iconsError + '请输入密码',
+                            errormsg: iconsError + '密码由数字、字母或下划线组成，长度为6-20位'
+                        },
+                        {
+                            ele: '#pwdRepeat',
+                            datatype: '*',
+                            recheck: 'pwd',
+                            nullmsg: iconsError + '请再重复输入一遍密码，不能留空',
+                            errormsg: iconsError + '确认新密码与新密码不一致'
+                        },
+                        {
+                            ele: '#companyName',
+                            datatype: '*',
+                            nullmsg: iconsError + '请输入企业名称'
+                        },
+                        {
+                            ele: '#area',
+                            // datatype: '*',
+                            nullmsg: iconsError + '请选择企业注册地'
+                        },
+                        {
+                            ele: '#linkMan',
+                            datatype: '*',
+                            nullmsg: iconsError + '请再重复输入一遍密码，不能留空'
+                        },
+                        {
+                            ele: '#mobile',
+                            datatype: /^1[345678]\d{9}$/,
+                            ajaxurl: 'json/valid.php',
+                            nullmsg: iconsError + '请输入手机号码',
+                            errormsg: iconsError + '请输入正确的手机号码'
+                        },
+                        {
+                            ele: '#mobileCode',
+                            datatype: '*',
+                            nullmsg: iconsError + '请输入短信验证码'
+                        },
+                        {
+                            ele: '#agreement',
+                            datatype: '*',
+                            nullmsg: iconsError + '请同意协议并勾选'
+                        }
+                    ])
+                },
+                mobileCodeInit: function() {
+                    var $mobile = $('#mobile'),
+                        $getMobileCode = $('#getMobileCode'),
+                        timeout = 0, 
+                        timer = 0,
+                        delay = 60,
+                        txt = '秒后重试';
+
+                    var _clock = function() {
+                        timer && clearInterval(timer);
+                        timer = setInterval(function() {
+                            timeout --;
+                            $getMobileCode.text(timeout + txt).prop('disabled', true);
+                            if (timeout === 0) {
+                                clearInterval(timer);
+                                $getMobileCode.text('获取验证码').prop('disabled', false);
+                            }
+                        }, 1e3);
+                    }
+
+                    var _sendMobileCode = function() {
+                        $.ajax({
+                            type : 'POST',
+                            url : 'json/getMobileCode.php',
+                            data : {
+                                contactMobile: $mobile.val()
+                            },
+                            dataType : 'json',
+                            success : function(data){
+                                if (data.result !== 'ok') {
+                                    clearInterval(timer);
+                                    $getMobileCode.text('获取验证码').prop('disabled', false);
+                                    _showMsg($mobile, data.resultMessage);
+                                    timeout = 0;
+                                } 
+                            }
+                        });
+                    }
+
+                    // 验证码
+                    $getMobileCode.prop('disabled', false).on('click', function() {
+                        if(timeout === 0 && formValidate.check(false, $mobile)) {
+                            timeout = delay;
+                            $getMobileCode.text(timeout + txt).prop('disabled', true);
+                            _clock();
+                            _sendMobileCode();
+                        } else {
+                            $mobile.focus();
+                        }
+                    });
                 }
-            });
-        })
+            }
+        }
+        //加载页面js
+        $(function() {
+            registerPage.fn.init();
+        });
+    })(jQuery);
     </script>
 </body>
 </html>

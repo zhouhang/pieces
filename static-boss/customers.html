@@ -106,7 +106,7 @@
                             <td><input type="text" class="ipt" value=""></td>
                             <td><input type="text" class="ipt" value=""></td>
                             <td><input type="text" class="ipt" value=""></td>
-                            <td><input type="text" class="ipt date" value=""> - <input type="text" class="ipt date" value=""></td>
+                            <td><input type="text" class="ipt date" value="" id="start"> - <input type="text" class="ipt date" value="" id="end"></td>
                             <td>
                                 <select name="" id="">
                                     <option value="">是</option>
@@ -182,5 +182,60 @@
     </div><!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
+    <script src="js/laydate/laydate.js"></script>
+    <script>
+    //定义根变量
+    !(function($) {
+        var page = {
+            //定义全局变量区
+            v: {
+                id: "page"
+            },
+            //定义方法区
+            fn: {
+                //初始化方法区
+                init: function () {
+                    page.fn.dateInit();
+                },
+                //日期选择
+                dateInit: function () {
+                    var start = {
+                        elem: '#start',
+                        format: 'YYYY/MM/DD hh:mm:ss',
+                        min: laydate.now(), //设定最小日期为当前日期
+                        max: '2099-06-16 23:59:59', //最大日期
+                        istime: true,
+                        istoday: false,
+                        choose: function(datas){
+                             end.min = datas; //开始日选好后，重置结束日的最小日期
+                             end.start = datas; //将结束日的初始值设定为开始日
+                             $('#start').attr('title', datas);
+                        }
+                    };
+                    var end = {
+                        elem: '#end',
+                        format: 'YYYY/MM/DD hh:mm:ss',
+                        min: laydate.now(),
+                        max: '2099-06-16 23:59:59',
+                        istime: true,
+                        istoday: false,
+                        choose: function(datas){
+                            start.max = datas; //结束日选好后，重置开始日的最大日期
+                            $('#end').attr('title', datas);
+                        }
+                    };
+                    laydate(start);
+                    laydate(end);
+                }
+            }
+        }
+        //加载页面js
+        $(function() {
+            page.fn.init();
+        });
+    })(jQuery);
+
+        
+    </script>
 </body>
 </html>
