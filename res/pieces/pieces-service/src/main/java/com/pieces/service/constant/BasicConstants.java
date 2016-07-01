@@ -24,5 +24,6 @@ public class BasicConstants {
 	public static final int USER_CREATECHANNEL_BIZ = 0;
 	//账号创建渠道：后台
 	public static final int USER_CREATECHANNEL_BOSS = 1;
-		
+
+
 }

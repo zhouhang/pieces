@@ -31,6 +31,7 @@ import java.awt.*;
 import java.util.List;
 
 /**
+ * 公共URL访问
  * Created by wangbin on 2016/6/27.
  */
 @Controller
@@ -89,6 +90,7 @@ public class GeneralController {
                      HttpServletResponse response,
                      @RequestParam(required = false) Integer parentId) {
         List<Area> areaList = null;
+        //父类ID为空，查询全部省
         if (parentId == null) {
             areaList = areaService.findByLevel(1);
         } else {
@@ -111,7 +113,7 @@ public class GeneralController {
     }
 
     /**
-     * 生成验证码
+     * 图片验证码
      * @param request
      * @param response
      * @throws Exception
@@ -126,7 +128,7 @@ public class GeneralController {
         response.addHeader("Cache-Control", "post-check=0, pre-check=0");
         response.setHeader("Pragma", "no-cache");
         response.setContentType("image/png");
-
+        //生成验证码
         Captcha captcha = captchaService.getCaptcha();
         ServletOutputStream out = response.getOutputStream();
         try {

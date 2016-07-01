@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * 处理主页业务
  * Created by wangbin on 2016/6/28.
  */
 @Controller
@@ -16,6 +17,18 @@ public class HomeController {
     @RequestMapping(value = "/")
     public String index(HttpServletRequest request,
                         HttpServletResponse response){
+
+        if(true){
+
+        }
+        else if(false){
+
+        }
+        else {
+
+        }
+
+
         return "home";
     }
 

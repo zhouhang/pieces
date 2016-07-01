@@ -99,7 +99,7 @@
   </update>
 
 
-
+  <!--通过等级查找地区-->
   <select id="selectByLevel" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -114,15 +114,16 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-
+  <!--通过父ID查询地区-->
   <select id="selectByParent" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from area
     where parentid = #{parentid,jdbcType=INTEGER}
   </select>
-  
-    <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+
+  <!--通过地区编码查询地区-->
+  <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from area
