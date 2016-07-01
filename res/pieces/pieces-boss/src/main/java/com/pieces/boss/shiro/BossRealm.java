@@ -11,7 +11,7 @@ import org.apache.shiro.authz.Permission;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
-import com.pieces.dao.model.User;
+import com.pieces.service.shiro.SerializableSimpleAuthenticationInfo;
 
 
 /**
@@ -45,7 +45,12 @@ public class BossRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authToken) throws AuthenticationException {
-		return null;
+		BossToken token = (BossToken) authToken;
+		SerializableSimpleAuthenticationInfo authenticationInfo = new SerializableSimpleAuthenticationInfo(token.getUsername(),
+				token.getPassword(),
+				null,
+				getName()); // realm name
+		return authenticationInfo;
 	}
 	
 	

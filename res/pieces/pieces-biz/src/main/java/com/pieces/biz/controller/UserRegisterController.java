@@ -49,6 +49,7 @@ public class UserRegisterController {
 		user.setCountyCode(request.getParameter("countyCode"));
 		user.setContactName(request.getParameter("contactName"));
 		user.setContactMobile(request.getParameter("contactMobile"));
+		user.setAreaFull(request.getParameter("areaFull"));
 		String mobileCode = request.getParameter("mobileCode");
 		MessageVo mv = new MessageVo();
 		try {

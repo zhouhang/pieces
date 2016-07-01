@@ -3,7 +3,7 @@ package com.pieces.biz.shiro;
 import org.apache.shiro.authc.UsernamePasswordToken;
 
 /**
- *  BossToken
+ *  BizToken
  */
 public class BizToken extends UsernamePasswordToken {
 	

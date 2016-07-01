@@ -48,7 +48,7 @@
 		<![CDATA[
 			insert into user
 			(user_name,password,salt,company_full_name,province_code,city_code,county_code,contact_name,contact_mobile,status,create_time,update_time
-			,online_status,bind_erp,create_channel)
+			,online_status,bind_erp,create_channel,area_full)
 			values (#{userName,jdbcType=VARCHAR},
 			#{password,jdbcType=VARCHAR},
 			#{salt,jdbcType=VARCHAR},
@@ -63,7 +63,8 @@
 			#{updateTime,jdbcType=TIMESTAMP},
 			#{onlineStatus,jdbcType=DECIMAL},
 			#{bindErp,jdbcType=DECIMAL},
-			#{createChannel,jdbcType=DECIMAL}
+			#{createChannel,jdbcType=DECIMAL},
+			#{areaFull,jdbcType=VARCHAR}
 			)
 		]]>
 	</insert>
@@ -107,7 +108,43 @@
 	        <if test="onlineStatus != null">
 	        	online_status = #{onlineStatus,jdbcType=INTEGER},
 	        </if>
+	        <if test="areaFull != null">
+	        	area_full = #{areaFull,jdbcType=VARCHAR},
+	        </if>
 	    </set>
         WHERE id = #{id,jdbcType=NUMERIC}
   </update>
+  
+    <!-- 模糊查询user -->
+  <select id="findUserByVagueCondition" parameterType="com.pieces.dao.model.User" resultMap="BaseResultMap">
+  		select * from user b 
+  		where 1=1
+  		<if test="userName != null and userName != ''" >
+  			and b.user_name like '%#{userName, jdbcType=VARCHAR}%'
+  		</if>
+  		<if test="status != null and status != ''" >
+  			and b.status = #{status, jdbcType=DECIMAL}
+  		</if>
+  		<if test="bindErp != null and bindErp != ''" >
+  			and b.bind_erp = #{bindErp, jdbcType=DECIMAL}
+  		</if>
+		<if test="areaFull != null and areaFull != ''">
+	        and b.area_full like  '%#{areaFull,jdbcType=VARCHAR}%'
+	    </if>
+  		<if test="companyFullName != null and companyFullName != ''" >
+  			and b.company_full_name like '%#{companyFullName, jdbcType=VARCHAR}%'
+  		</if>
+  		<if test="contactMobile != null and contactMobile != ''" >
+  			and b.contact_mobile like '%#{contactMobile, jdbcType=VARCHAR}%'
+  		</if>
+  		<if test="contactName != null and contactName != ''" >
+  			and b.contact_name like  '%#{contactName, jdbcType=VARCHAR}%'
+  		</if>
+  		<if test="startDate != null and startDate != ''">
+		    and b.create_time >= to_date(#{startDate},'yyyy-mm-dd') 
+		</if>
+		<if test="endDate != null and endDate != ''">
+		    and b.create_time <![CDATA[<]]> to_date(#{endDate},'yyyy-mm-dd') + 1 
+		</if>
+  </select>
 </mapper>

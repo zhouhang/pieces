@@ -24,7 +24,7 @@ import redis.clients.jedis.ShardedJedis;
 
 @Controller(value = "userLoginController")
 @RequestMapping
-public class UserLoginController{
+public class TestUserLoginController{
 	
 	@Autowired
 	private TestUserService testUserService;
