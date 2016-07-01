@@ -183,7 +183,6 @@
     <script src="js/area.js"></script>
     <script>
         $(function() {
-
             var iconsError = "<i class='fa fa-prompt'></i> ";
             $.Tipmsg.r = '';
             $.Tipmsg.c = '';
@@ -194,7 +193,7 @@
                 datatype: {
                     pwd: /^[a-zA-Z0-9_]{6,20}$/
                 },
-                tiptype: 3
+                tiptype: 4
             });
 
             formValidate.addRule([
@@ -223,9 +222,9 @@
                 },
                 {
                     ele: '#mobile',
-                    datatype: 'm',
+                    datatype: /^1[345678]\d{9}$/,
                     nullmsg: iconsError + '请输入手机号码',
-                    errormsg: iconsError + '请输入正确的电话号码'
+                    errormsg: iconsError + '请输入正确的手机号码'
                 },
                 {
                     ele: '#pwd',
@@ -234,23 +233,21 @@
                     errormsg: iconsError + '密码由数字、字母或下划线组成，长度为6-20位'
                 }
             ])
-
             
             var $mobileCode = $('#mobileCode');
             var $pwd = $('#pwd');
-            var setPwd = function() {
+            var _setPwd = function() {
                 var flag = $mobileCode.prop('checked');
                 if (flag) {
                     formValidate.ignore($pwd);
-                    $pwd.removeAttr('recheck').nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
+                    $pwd.nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
                 } else {
                     formValidate.unignore($pwd);
-                    $pwd.attr('recheck','1');
                 }
                 $pwd.prop('disabled', flag);
             }
-            $mobileCode.on('click', setPwd);
-            setPwd();
+            $mobileCode.on('click', _setPwd);
+            _setPwd();
 
         })
     </script>

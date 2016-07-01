@@ -761,7 +761,6 @@
 			if(inputval==this.validform_lastval && !$(this).attr("recheck") && subpost==""){
 				return flag.passed ? true : false;
 			}
-			console.log(999)
 
 			this.validform_lastval=inputval;//存储当前值;
 			

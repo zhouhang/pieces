@@ -144,7 +144,7 @@
                                     <i>*</i>新密码：
                                 </div>
                                 <div class="cnt">
-                                    <input type="password" disabled class="ipt" value="" autocomplete="off" name="pwd" id="pwd" placeholder="请输入新密码">     
+                                    <input type="password" class="ipt" value="" autocomplete="off" name="pwd" id="pwd" placeholder="请输入新密码">     
                                 </div>
                             </div>
 
@@ -194,7 +194,7 @@
                 datatype: {
                     pwd: /^[a-zA-Z0-9_]{6,20}$/
                 },
-                tiptype: 3
+                tiptype: 4
             });
 
             formValidate.addRule([
@@ -216,9 +216,9 @@
                 },
                 {
                     ele: '#mobile',
-                    datatype: 'm',
+                    datatype: /^1[345678]\d{9}$/,
                     nullmsg: iconsError + '请输入手机号码',
-                    errormsg: iconsError + '请输入正确的电话号码'
+                    errormsg: iconsError + '请输入正确的手机号码'
                 },
                 {
                     ele: '#pwd',
@@ -235,14 +235,19 @@
             
             var $mobileCode = $('#mobileCode');
             var $pwd = $('#pwd');
-            var setPwd = function() {
+            var _setPwd = function() {
                 var flag = $mobileCode.prop('checked');
+                if (flag) {
+                    formValidate.ignore($pwd);
+                    $pwd.nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
+                } else {
+                    formValidate.unignore($pwd);
+                }
                 $pwd.prop('disabled', flag);
-
-                $pwd.removeClass('error').nextAll('.error').html('').hide();
             }
-            $mobileCode.on('click', setPwd);
-            setPwd();
+            $mobileCode.on('click', _setPwd);
+            _setPwd();
+
         })
     </script>
 </body>
