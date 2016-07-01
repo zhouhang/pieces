@@ -18,6 +18,9 @@
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="role_id" property="roleId" jdbcType="VARCHAR" />
     <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="online_status" property="onlineStatus" jdbcType="DECIMAL" />
+    <result column="bind_erp" property="bindErp" jdbcType="DECIMAL" />
+    <result column="create_channel" property="createChannel" jdbcType="DECIMAL" />
   </resultMap>
   <!-- 查询user -->
   <select id="findUserByCondition" parameterType="com.pieces.dao.model.User" resultMap="BaseResultMap">
@@ -44,7 +47,8 @@
 	<insert id="addUser" parameterType="com.pieces.dao.model.User" useGeneratedKeys="true" keyProperty="id">
 		<![CDATA[
 			insert into user
-			(user_name,password,salt,company_full_name,province_code,city_code,county_code,contact_name,contact_mobile,status,create_time,update_time)
+			(user_name,password,salt,company_full_name,province_code,city_code,county_code,contact_name,contact_mobile,status,create_time,update_time
+			,online_status,bind_erp,create_channel)
 			values (#{userName,jdbcType=VARCHAR},
 			#{password,jdbcType=VARCHAR},
 			#{salt,jdbcType=VARCHAR},
@@ -56,7 +60,10 @@
 			#{contactMobile,jdbcType=VARCHAR},
 			#{status,jdbcType=DECIMAL},
 			#{createTime,jdbcType=TIMESTAMP},
-			#{updateTime,jdbcType=TIMESTAMP}
+			#{updateTime,jdbcType=TIMESTAMP},
+			#{onlineStatus,jdbcType=DECIMAL},
+			#{bindErp,jdbcType=DECIMAL},
+			#{createChannel,jdbcType=DECIMAL}
 			)
 		]]>
 	</insert>
@@ -86,7 +93,7 @@
 	        	county_code = #{countyCode,jdbcType=INTEGER},
 	        </if>
 	        <if test="contactName != null">
-	        	contact_name = #{contactName,jdbcType=INTEGER},
+	        	contact_name = #{contactName,jdbcType=VARCHAR},
 	        </if>
 	        <if test="contactMobile != null">
 	        	contact_mobile = #{contactMobile,jdbcType=INTEGER},
@@ -95,7 +102,10 @@
 	        	status = #{status,jdbcType=INTEGER},
 	        </if>
 	        <if test="updateTime != null">
-	        	update_time = #{updateTime,jdbcType=INTEGER},
+	        	update_time = #{updateTime,jdbcType=TIMESTAMP},
+	        </if>
+	        <if test="onlineStatus != null">
+	        	online_status = #{onlineStatus,jdbcType=INTEGER},
 	        </if>
 	    </set>
         WHERE id = #{id,jdbcType=NUMERIC}
