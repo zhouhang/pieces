@@ -195,8 +195,4 @@
 			<artifactId>patchca</artifactId>
 		</dependency>
 	</dependencies>
-
-
-
-
 </project>

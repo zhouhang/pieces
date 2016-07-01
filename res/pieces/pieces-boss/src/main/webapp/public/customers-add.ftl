@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>新增账户-boss-饮片B2B</title>
     <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="${BOSS_RESOURCE_CSS}/css/style.css" />
 </head>
 
 <body>
@@ -74,13 +74,13 @@
             <div class="main">
 
 
-                <form action="" id="myform">
+                <form action="/menber/add/user" id="myform">
                     <div class="title">
                         <h3><i class="fa fa-people"></i>hehuan</h3>
                         <div class="extra">
                             <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                            <button type="reset" class="btn btn-gray">重置</button>
-                            <button type="submit" class="btn btn-red">保存</button>
+                            <button id="reset" type="reset" class="btn btn-gray">重置</button>
+                            <button id="submit" type="submit" class="btn btn-red">保存</button>
                         </div>
                     </div>
 
@@ -92,7 +92,7 @@
                                     <i>*</i>会员名：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="username" id="username" placeholder="">                            
+                                    <input type="text" class="ipt" value="" autocomplete="off" name="userName" id="username" placeholder="">                            
                                 </div>
                             </div>
 
@@ -101,7 +101,7 @@
                                     <i>*</i>企业全称：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="companyName" id="companyName" placeholder="">   
+                                    <input type="text" class="ipt" value="" autocomplete="off" name="companyFullName" id="companyName" placeholder="">   
                                 </div>
                             </div>
 
@@ -110,13 +110,13 @@
                                     <i>*</i>企业注册地：
                                 </div>
                                 <div class="cnt">
-                                    <select name="province" id="province">
+                                    <select name="provinceCode" id="province">
                                         <option value="">-省-</option>
                                     </select>
-                                    <select name="city" id="city">
+                                    <select name="cityCode" id="city">
                                         <option value="">-市-</option>
                                     </select>
-                                    <select name="area" id="area">
+                                    <select name="countyCode" id="area">
                                         <option value="">-区/县-</option>
                                     </select>
                                 </div>
@@ -127,7 +127,7 @@
                                     <i>*</i>联系人姓名：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="linkMan" id="linkMan" placeholder="">                            
+                                    <input type="text" class="ipt" value="" autocomplete="off" name="contactName" id="linkMan" placeholder="">                            
                                 </div>
                             </div>
 
@@ -136,7 +136,7 @@
                                     <i>*</i>联系人手机号码：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="mobile" id="mobile" placeholder="">                            
+                                    <input type="text" class="ipt" value="" autocomplete="off" name="contactMobile" id="mobile" placeholder="">                            
                                 </div>
                             </div>
 
@@ -152,7 +152,7 @@
                                     <i>*</i>新密码：
                                 </div>
                                 <div class="cnt">
-                                    <input type="password" class="ipt" value="" autocomplete="off" name="pwd" id="pwd" placeholder="请输入新密码">     
+                                    <input type="password" class="ipt" value="" autocomplete="off" name="password" id="pwd" placeholder="请输入新密码">     
                                 </div>
                             </div>
 
@@ -178,9 +178,9 @@
         </div>
     </div><!-- footer end -->
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/validform.min.js"></script>
-    <script src="js/area.js"></script>
+    <script src="${BOSS_RESOURCE_JS}/js/jquery.min.js"></script>
+    <script src="${BOSS_RESOURCE_JS}/js/validform.min.js"></script>
+    <script src="${BOSS_RESOURCE_JS}/js/area.js"></script>
     <script>
         $(function() {
 
@@ -201,7 +201,7 @@
                 {
                     ele: '#username',
                     datatype: /^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$/,
-                    ajaxurl: 'json/valid.php',
+                    ajaxurl: '/menber/ifexist/username',
                     nullmsg: iconsError + '会员名必须以英文字母开头，长度6到20位',
                     errormsg: iconsError + '会员名必须以英文字母开头，长度6到20位'
                 },
@@ -224,12 +224,13 @@
                 {
                     ele: '#mobile',
                     datatype: 'm',
+                    ajaxurl: '/menber/ifexist/mobile',
                     nullmsg: iconsError + '请输入手机号码',
                     errormsg: iconsError + '请输入正确的电话号码'
                 },
                 {
                     ele: '#pwd',
-                    datatype: '*,pwd',
+                    datatype: /^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$/,
                     nullmsg: iconsError + '请输入密码',
                     errormsg: iconsError + '密码由数字、字母或下划线组成，长度为6-20位'
                 }
@@ -242,16 +243,19 @@
                 var flag = $mobileCode.prop('checked');
                 if (flag) {
                     formValidate.ignore($pwd);
-                    $pwd.removeAttr('recheck').nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
+                    $pwd.nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
                 } else {
                     formValidate.unignore($pwd);
-                    $pwd.attr('recheck','1');
                 }
                 $pwd.prop('disabled', flag);
             }
             $mobileCode.on('click', setPwd);
             setPwd();
-
+			
+            $("#submit").on('click', function() {
+            	formValidate.submitForm(false);
+            })
+            
         })
     </script>
 </body>
