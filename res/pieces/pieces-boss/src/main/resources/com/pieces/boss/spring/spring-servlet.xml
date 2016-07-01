@@ -28,7 +28,7 @@
 	    class="com.pieces.service.utils.ShiroTagFreeMarkerConfigurer">
 	    <property name="templateLoaderPaths">
 	        <list>
-				<value>/</value>
+				<value>/public</value>
 			</list>
 	    </property>
 	    <property name="freemarkerVariables">
@@ -90,7 +90,8 @@
 	</bean>
 	
 	<!-- css,js路径 -->
-	<mvc:resources mapping="/css/**" location="/css/" />
-	<mvc:resources mapping="/js/**" location="/js/" />
-	<mvc:resources mapping="/html/**" location="/html/" />
+	<mvc:resources mapping="/css/**" location="/assets/css/" />
+	<mvc:resources mapping="/js/**" location="/assets/js/" />
+	<mvc:resources mapping="/fonts/**" location="/assets/fonts/" />
+	<mvc:resources mapping="/images/**" location="/assets/images/" />
 </beans>
