@@ -6,6 +6,8 @@ import com.pieces.dao.model.User;
 
 public interface UserDao {
 	List<User> findUserByCondition(User user);
+	
+	List<User> findUserByVagueCondition(User user);
 
 	int addUser(User user);
 

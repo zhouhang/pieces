@@ -28,7 +28,7 @@
 	    class="com.pieces.service.utils.ShiroTagFreeMarkerConfigurer">
 	    <property name="templateLoaderPaths">
 	        <list>
-				<value>/</value>
+				<value>/public</value>
 			</list>
 	    </property>
 	    <property name="freemarkerVariables">

@@ -94,4 +94,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.updateUserByCondition(user);
 	}
 
+	@Override
+	public List<User> findUserByVagueCondition(User user) {
+		return userDao.findUserByVagueCondition(user);
+	}
+
 }

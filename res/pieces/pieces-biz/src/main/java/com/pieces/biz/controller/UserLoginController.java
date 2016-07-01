@@ -63,7 +63,7 @@ public class UserLoginController{
 			tu.setPassword(null);
 			tu.setSalt(null);
 			Session s = subject.getSession();
-			s.setAttribute(RedisEnum.USER_SESSION_BOSS.getValue(), tu);
+			s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), tu);
 			mv.setResult("ok");
 		} catch (Exception e) {
 			e.printStackTrace();

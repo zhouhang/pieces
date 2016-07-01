@@ -25,4 +25,9 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		return getSqlSession().update("com.pieces.dao.UserMapper.updateUserByCondition", user);
 	}
 
+	@Override
+	public List<User> findUserByVagueCondition(User user) {
+		return getSqlSession().selectList("com.pieces.dao.UserMapper.findUserByVagueCondition", user);
+	}
+
 }

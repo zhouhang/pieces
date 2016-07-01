@@ -32,7 +32,7 @@ public class UserInfoController {
 
 	@RequestMapping()
 	public String userInfo(ModelMap model,HttpServletRequest request) {
-		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BOSS.getValue());
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		String province = areaService.findById(Integer.parseInt(user.getProvinceCode())).getAreaname();
 		String city = areaService.findById(Integer.parseInt(user.getCityCode())).getAreaname();
 		String county = "";
@@ -52,7 +52,7 @@ public class UserInfoController {
 	
 	@RequestMapping(value = "/toUserUpdatePassword")
 	public String toUserUpdatePassword(ModelMap model,HttpServletRequest request) {
-		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BOSS.getValue());
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		model.put("user", user);
 		return "user_update_password";
 	}
@@ -61,7 +61,7 @@ public class UserInfoController {
 	@ResponseBody
 	public String userUpdatePassword(ModelMap model,String pwdOld,String pwd,HttpServletRequest request) {
 		MessageVo mv = new MessageVo();
-		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BOSS.getValue());
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		User oldUser = new User();
 		BeanUtils.copyProperties(user, oldUser);
 		oldUser.setPassword(pwdOld);
