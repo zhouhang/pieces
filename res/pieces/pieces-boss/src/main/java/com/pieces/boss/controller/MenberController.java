@@ -1,6 +1,7 @@
 package com.pieces.boss.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,8 +15,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.pieces.dao.model.User;
 import com.pieces.service.UserService;
+import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.utils.SendMessage;
 import com.pieces.service.utils.YPSendMessage;
+import com.pieces.service.vo.MessageVo;
 import com.pieces.service.vo.ValidFromVo;
 
 @Controller
@@ -25,7 +28,7 @@ public class MenberController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value = "/get/user")
+	@RequestMapping(value = "/get/userlist")
 	public String getUser(ModelMap model,User user,HttpServletRequest request) {
 		List<User> users = userService.findUserByVagueCondition(user);
 		
@@ -36,13 +39,44 @@ public class MenberController {
 	}
 	
 	@RequestMapping(value = "/add/user")
+	@ResponseBody
 	public String addUser(ModelMap model,User user,HttpServletRequest request) {
-		List<User> users = userService.findUserByVagueCondition(user);
-		
-		model.put("users", users);
-		model.put("user", user);
-		
-		return "customers";
+		MessageVo mv = new MessageVo();
+		if(user.getPassword()!=null&&!user.getPassword().equals("")){
+			user.setStatus(BasicConstants.USER_STATUS_VALID);
+			user.setOnlineStatus(BasicConstants.USER_ONLINESTATUS_ONLINE);
+			user.setBindErp(BasicConstants.USER_BINDERP_NO);
+			user.setCreateChannel(BasicConstants.USER_CREATECHANNEL_BIZ);
+			userService.addUser(user);
+			mv.setResult("ok");
+		}else{
+			if(getMobileCode(user.getContactMobile(),request)){
+				Map codeMap = (Map)request.getSession().getAttribute(user.getContactMobile());
+				if(codeMap != null){
+					String code = codeMap.get("code").toString();
+					if(code!=null&&!code.equals("")){
+						user.setPassword(code);
+						user.setStatus(BasicConstants.USER_STATUS_VALID);
+						user.setOnlineStatus(BasicConstants.USER_ONLINESTATUS_ONLINE);
+						user.setBindErp(BasicConstants.USER_BINDERP_NO);
+						user.setCreateChannel(BasicConstants.USER_CREATECHANNEL_BIZ);
+						userService.addUser(user);
+						mv.setResult("ok");
+					}else{
+						mv.setResult("false");
+						mv.setResultMessage("验证码过期");
+					}
+				}else{
+					mv.setResult("false");
+					mv.setResultMessage("短信发送失败");
+				}
+			}else{
+				mv.setResult("false");
+				mv.setResultMessage("短信发送失败");
+			}
+		}
+		Gson gson = new Gson();
+		return gson.toJson(mv);
 	}
 	
 	@RequestMapping(value = "/to/add/user")
@@ -80,18 +114,12 @@ public class MenberController {
 		return gson.toJson(vo);
 	}
 	
-	@RequestMapping(value="/get/mobilecode")
-	@ResponseBody
-	public String getMobileCode(Model model,String contactMobile,HttpServletRequest request){
-		ValidFromVo vo = new ValidFromVo();
+	public boolean getMobileCode(String contactMobile,HttpServletRequest request){
 		SendMessage sm = new YPSendMessage();
 		if(sm.sendMessage(request, contactMobile)){
-			vo.setStatus("y");
+			return true;
 		}else{
-			vo.setStatus("n");
-			vo.setInfo("短信发送失败");
+			return false;
 		}
-		Gson gson = new Gson();
-		return gson.toJson(vo);
 	}
 }

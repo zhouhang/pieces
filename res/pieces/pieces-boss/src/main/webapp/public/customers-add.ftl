@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>新增账户-boss-饮片B2B</title>
     <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="${BOSS_RESOURCE_CSS}/css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -66,7 +66,7 @@
                 <dl>
                     <dt>客户信息</dt>
                     <dd>
-                        <a href="/menber/get/user">客户界面</a>
+                        <a href="/menber/get/userlist">客户界面</a>
                         <a class="curr" href="/menber/to/add/user">账户信息</a>
                     </dd>
                 </dl>
@@ -111,17 +111,18 @@
                                 </div>
                                 <div class="cnt">
                                     <select name="provinceCode" id="province">
-                                        <option value="">-省-</option>
+                                        <option value="111111">湖北省</option>
                                     </select>
                                     <select name="cityCode" id="city">
-                                        <option value="">-市-</option>
+                                        <option value="222222">武汉市</option>
                                     </select>
                                     <select name="countyCode" id="area">
-                                        <option value="">-区/县-</option>
+                                        <option value="333333">汉阳</option>
                                     </select>
+                                    <input type="hidden" id="areaFull" name="areaFull" value="">
                                 </div>
                             </div>
-
+								
                             <div class="group">
                                 <div class="txt">
                                     <i>*</i>联系人姓名：
@@ -178,9 +179,9 @@
         </div>
     </div><!-- footer end -->
 
-    <script src="${BOSS_RESOURCE_JS}/js/jquery.min.js"></script>
-    <script src="${BOSS_RESOURCE_JS}/js/validform.min.js"></script>
-    <script src="${BOSS_RESOURCE_JS}/js/area.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/validform.min.js"></script>
+    <script src="/js/area.js"></script>
     <script>
         $(function() {
 
@@ -189,12 +190,19 @@
             $.Tipmsg.c = '';
 
             var formValidate = $("#myform").Validform({
+            	btnReset:"#reset",
                 postonce: true,
                 showAllError: true,
                 datatype: {
                     pwd: /^[a-zA-Z0-9_]{6,20}$/
                 },
-                tiptype: 3
+                tiptype: 4,
+            	beforeSubmit:function(curform){
+            		$("#areaFull").val($('#province option:selected').text() + $('#city option:selected').text() + $('#area option:selected').text());
+            	},
+                success:function(data){
+            		alert(data);
+            	}
             });
 
             formValidate.addRule([
@@ -223,14 +231,14 @@
                 },
                 {
                     ele: '#mobile',
-                    datatype: 'm',
+                    datatype: /^1[345678]\d{9}$/,
                     ajaxurl: '/menber/ifexist/mobile',
                     nullmsg: iconsError + '请输入手机号码',
-                    errormsg: iconsError + '请输入正确的电话号码'
+                    errormsg: iconsError + '请输入正确的手机号码'
                 },
                 {
                     ele: '#pwd',
-                    datatype: /^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$/,
+                    datatype: '*,pwd',
                     nullmsg: iconsError + '请输入密码',
                     errormsg: iconsError + '密码由数字、字母或下划线组成，长度为6-20位'
                 }
@@ -239,7 +247,7 @@
             
             var $mobileCode = $('#mobileCode');
             var $pwd = $('#pwd');
-            var setPwd = function() {
+            var _setPwd = function() {
                 var flag = $mobileCode.prop('checked');
                 if (flag) {
                     formValidate.ignore($pwd);
@@ -249,13 +257,10 @@
                 }
                 $pwd.prop('disabled', flag);
             }
-            $mobileCode.on('click', setPwd);
-            setPwd();
+            $mobileCode.on('click', _setPwd);
+            _setPwd();
 			
-            $("#submit").on('click', function() {
-            	formValidate.submitForm(false);
-            })
-            
+
         })
     </script>
 </body>

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>客户清单-boss-饮片B2B</title>
     <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="${BIZ_RESOURCE_CSS}/css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -101,13 +101,13 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <form action="/menber/get/user" id="myform">
+                            <form action="/menber/get/userlist" id="myform">
 	                            <td><input name="userName" id="userName" type="text" class="ipt" value="${user.userName!''}"></td>
 	                            <td><input name="companyFullName" id="companyFullName" type="text" class="ipt" value="${user.companyFullName!''}"></td>
 	                            <td><input name="areaFull" id="areaFull" type="text" class="ipt" value="${user.areaFull!''}"></td>
 	                            <td><input name="contactName" id="contactName" type="text" class="ipt" value="${user.contactName!''}"></td>
 	                            <td><input name="contactMobile" id="contactMobile" type="text" class="ipt" value="${user.contactMobile!''}"></td>
-	                            <td><input name="startDate" id="startDate" type="text" class="ipt date" value="${user.startDate!''}"> - <input name="endDate" id="endDate" type="text" class="ipt date" value="${user.endDate!''}"></td>
+	                            <td><input name="startDate" id="start" type="text" class="ipt date" value="${user.startDate!''}"> - <input name="endDate" id="end" type="text" class="ipt date" value="${user.endDate!''}"></td>
                             
 	                            <td>
 	                                <select name="bindErp" id="bindErp">
@@ -161,21 +161,71 @@
         </div>
     </div><!-- footer end -->
 
-    <script src="${BIZ_RESOURCE_JS}/js/jquery.min.js"></script>
-    
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/laydate/laydate.js"></script>
     <script>
+    //定义根变量
+    !(function($) {
+        var page = {
+            //定义全局变量区
+            v: {
+                id: "page"
+            },
+            //定义方法区
+            fn: {
+                //初始化方法区
+                init: function () {
+                    page.fn.dateInit();
+                },
+                //日期选择
+                dateInit: function () {
+                    var start = {
+                        elem: '#start',
+                        format: 'YYYY/MM/DD',
+                        min: laydate.now(), //设定最小日期为当前日期
+                        max: '2099-06-16 23:59:59', //最大日期
+                        istime: true,
+                        istoday: false,
+                        choose: function(datas){
+                             end.min = datas; //开始日选好后，重置结束日的最小日期
+                             end.start = datas; //将结束日的初始值设定为开始日
+                             $('#start').attr('title', datas);
+                        }
+                    };
+                    var end = {
+                        elem: '#end',
+                        format: 'YYYY/MM/DD',
+                        min: laydate.now(),
+                        max: '2099-06-16 23:59:59',
+                        istime: true,
+                        istoday: false,
+                        choose: function(datas){
+                            start.max = datas; //结束日选好后，重置开始日的最大日期
+                            $('#end').attr('title', datas);
+                        }
+                    };
+                    laydate(start);
+                    laydate(end);
+                }
+            }
+        }
+        //加载页面js
         $(function() {
+        	page.fn.init();
+
         	var bindErp = "${user.bindErp!'' }";
-        	if(bindErp != '')
+        	if(bindErp != ''){
         		$('#bindErp').val(bindErp);
-        	else
+        	}
+        	else{
+        		//1为是
         		$('#bindErp').val('1');
-        	
+        	}
             $('#search').on('click', function() {
                 $('#myform').submit();
             })
-
-        })
+        });
+        })(jQuery);
     </script>
 </body>
 </html>
