@@ -21,11 +21,15 @@
     <result column="online_status" property="onlineStatus" jdbcType="INTEGER" />
     <result column="bind_erp" property="bindErp" jdbcType="INTEGER" />
     <result column="create_channel" property="createChannel" jdbcType="INTEGER" />
+    <result column="area_full" property="areaFull" jdbcType="VARCHAR" />
   </resultMap>
   <!-- 查询user -->
   <select id="findUserByCondition" parameterType="com.pieces.dao.model.User" resultMap="BaseResultMap">
   		select * from user b 
   		where 1=1
+  		<if test="id != null" >
+  			and b.id = #{id, jdbcType=INTEGER}
+  		</if>
   		<if test="userName != null" >
   			and b.user_name = #{userName, jdbcType=VARCHAR}
   		</if>
@@ -141,10 +145,10 @@
   			and b.contact_name like  '%${contactName}%'
   		</if>
   		<if test="startDate != null and startDate != ''">
-		    and b.create_time >= to_date(#{startDate},'yyyy-mm-dd') 
+		    and DATE_FORMAT(b.create_time, '%Y-%m-%d') >= DATE_FORMAT(#{startDate},'%Y-%m-%d') 
 		</if>
 		<if test="endDate != null and endDate != ''">
-		    and b.create_time <![CDATA[<]]> (to_date(#{endDate},'yyyy-mm-dd') + 1)
+		    and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<]]> DATE_FORMAT(DATE_ADD(#{endDate},INTERVAL 1 DAY),'%Y-%m-%d')
 		</if>
   </select>
 </mapper>

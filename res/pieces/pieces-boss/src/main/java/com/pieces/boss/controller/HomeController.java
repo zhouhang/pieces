@@ -23,6 +23,6 @@ public class HomeController {
     @RequestMapping(value = "/")
     public String index(HttpServletRequest request,
                         HttpServletResponse response){
-    	return "redirect:/menber/get/user";
+    	return "redirect:/menber/get/userlist";
     }
 }

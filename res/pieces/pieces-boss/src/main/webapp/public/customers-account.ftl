@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>新增账户-boss-饮片B2B</title>
+    <title>账户信息-boss-饮片B2B</title>
     <meta name="renderer" content="webkit" />
     <link rel="stylesheet" href="/css/style.css" />
 </head>
@@ -67,14 +67,14 @@
                     <dt>客户信息</dt>
                     <dd>
                         <a href="/menber/get/userlist">客户界面</a>
-                        <a class="curr" href="/menber/to/add/user">账户信息</a>
+                        <a class="curr" href="/menber/to/add/account">账户信息</a>
                     </dd>
                 </dl>
             </div>
             <div class="main">
 
 
-                <form action="/menber/add/user" id="myform">
+                <form action="" id="myform">
                     <div class="title">
                         <h3><i class="fa fa-people"></i>hehuan</h3>
                         <div class="extra">
@@ -89,19 +89,10 @@
                         <div class="fa-form">
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>会员名：
-                                </div>
-                                <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="userName" id="username" placeholder="">                            
-                                </div>
-                            </div>
-
-                            <div class="group">
-                                <div class="txt">
                                     <i>*</i>企业全称：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="companyFullName" id="companyName" placeholder="">   
+                                    <input type="text" class="ipt" value="${user.companyFullName!'' }" autocomplete="off" name="companyFullName" id="companyName" placeholder="">   
                                 </div>
                             </div>
 
@@ -110,25 +101,24 @@
                                     <i>*</i>企业注册地：
                                 </div>
                                 <div class="cnt">
-                                    <select name="provinceCode" id="province">
-                                        <option value="111111">湖北省</option>
+                                    <select name="province" id="province">
+                                        <option value="">-省-</option>
                                     </select>
-                                    <select name="cityCode" id="city">
-                                        <option value="222222">武汉市</option>
+                                    <select name="city" id="city">
+                                        <option value="">-市-</option>
                                     </select>
-                                    <select name="countyCode" id="area">
-                                        <option value="333333">汉阳</option>
+                                    <select name="area" id="area">
+                                        <option value="">-区/县-</option>
                                     </select>
-                                    <input type="hidden" id="areaFull" name="areaFull" value="">
                                 </div>
                             </div>
-								
+
                             <div class="group">
                                 <div class="txt">
                                     <i>*</i>联系人姓名：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="contactName" id="linkMan" placeholder="">                            
+                                    <input type="text" class="ipt" value="${user.contactName!'' }" autocomplete="off" name="contactName" id="linkMan" placeholder="">                            
                                 </div>
                             </div>
 
@@ -137,7 +127,7 @@
                                     <i>*</i>联系人手机号码：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="contactMobile" id="mobile" placeholder="">                            
+                                    <input type="text" class="ipt" value="${user.contactMobile!'' }" autocomplete="off" name="contactMobile" id="mobile" placeholder="">                            
                                 </div>
                             </div>
 
@@ -148,6 +138,7 @@
                         <h3>密码管理</h3>
 
                         <div class="fa-form">
+
                             <div class="group">
                                 <div class="txt">
                                     <i>*</i>新密码：
@@ -160,6 +151,15 @@
                             <div class="group">
                                 <div class="cnt-extra">
                                     <label><input class="cbx" id="mobileCode" type="checkbox">或发送随机密码</label>                
+                                </div>
+                            </div>
+
+                            <div class="group">
+                                <div class="txt">
+                                    <i>*</i>您的密码：
+                                </div>
+                                <div class="cnt">
+                                    <input type="password" class="ipt" value="" autocomplete="off" name="pwdOld" id="pwdOld" placeholder="请输入当前操作人的boss帐号密码">                            
                                 </div>
                             </div>
                         </div>
@@ -184,41 +184,20 @@
     <script src="/js/area.js"></script>
     <script>
         $(function() {
-
             var iconsError = "<i class='fa fa-prompt'></i> ";
             $.Tipmsg.r = '';
             $.Tipmsg.c = '';
 
             var formValidate = $("#myform").Validform({
-            	btnReset:"#reset",
                 postonce: true,
-                ajaxPost:true,
                 showAllError: true,
                 datatype: {
                     pwd: /^[a-zA-Z0-9_]{6,20}$/
                 },
-                tiptype: 4,
-            	beforeSubmit:function(curform){
-            		$("#areaFull").val($('#province option:selected').text() + $('#city option:selected').text() + $('#area option:selected').text());
-            	},
-            	callback:function(data){
-                	alert(data);
-            		var status = data.status;
-            		var info = data.info;
-            		if(status == 'y'){
-            			window.location = "/menber/get/userlist";
-            		}
-            	}
+                tiptype: 4
             });
 
             formValidate.addRule([
-                {
-                    ele: '#username',
-                    datatype: /^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$/,
-                    ajaxurl: '/menber/ifexist/username',
-                    nullmsg: iconsError + '会员名必须以英文字母开头，长度6到20位',
-                    errormsg: iconsError + '会员名必须以英文字母开头，长度6到20位'
-                },
                 {
                     ele: '#companyName',
                     datatype: 's',
@@ -238,7 +217,6 @@
                 {
                     ele: '#mobile',
                     datatype: /^1[345678]\d{9}$/,
-                    ajaxurl: '/menber/ifexist/mobile',
                     nullmsg: iconsError + '请输入手机号码',
                     errormsg: iconsError + '请输入正确的手机号码'
                 },
@@ -247,9 +225,13 @@
                     datatype: '*,pwd',
                     nullmsg: iconsError + '请输入密码',
                     errormsg: iconsError + '密码由数字、字母或下划线组成，长度为6-20位'
+                },
+                {
+                    ele: '#pwdOld',
+                    datatype: '*',
+                    nullmsg: iconsError + '请输入当前操作人的boss帐号密码'
                 }
             ])
-
             
             var $mobileCode = $('#mobileCode');
             var $pwd = $('#pwd');
@@ -265,7 +247,6 @@
             }
             $mobileCode.on('click', _setPwd);
             _setPwd();
-			
 
         })
     </script>
