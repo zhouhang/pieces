@@ -111,13 +111,13 @@
                                 </div>
                                 <div class="cnt">
                                     <select name="provinceCode" id="province">
-                                        <option value="111111">湖北省</option>
+                                        <option value="">-省-</option>
                                     </select>
                                     <select name="cityCode" id="city">
-                                        <option value="222222">武汉市</option>
+                                        <option value="">-市-</option>
                                     </select>
                                     <select name="countyCode" id="area">
-                                        <option value="333333">汉阳</option>
+                                        <option value="">-区/县-</option>
                                     </select>
                                     <input type="hidden" id="areaFull" name="areaFull" value="">
                                 </div>
@@ -202,7 +202,6 @@
             		$("#areaFull").val($('#province option:selected').text() + $('#city option:selected').text() + $('#area option:selected').text());
             	},
             	callback:function(data){
-                	alert(data);
             		var status = data.status;
             		var info = data.info;
             		if(status == 'y'){

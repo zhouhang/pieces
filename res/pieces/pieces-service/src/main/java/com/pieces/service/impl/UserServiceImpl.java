@@ -1,5 +1,6 @@
 package com.pieces.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int addUser(User user) {
 		user = creatPawAndSaltMd5(user);
+		user.setCreateTime(new Date());
+		user.setUpdateTime(new Date());
 		return userDao.addUser(user);
 	}
 	
