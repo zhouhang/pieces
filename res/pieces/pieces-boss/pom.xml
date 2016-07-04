@@ -8,6 +8,9 @@
 		<artifactId>pieces</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+	<packaging>war</packaging>
+
+
 	<groupId>pieces-boss</groupId>
 	<artifactId>pieces-boss</artifactId>
 	<version>0.0.1</version>
@@ -190,5 +193,54 @@
 			<artifactId>cas-server-webapp-support</artifactId>
 		</dependency>
 	</dependencies>
-	<packaging>war</packaging>
+
+	<profiles>
+		<profile>
+			<id>dev-wb</id>
+			<properties>
+				<boss.base.url>http://localhost:81</boss.base.url>
+				<boss.upload.url>http://localhost:81/files/upload/</boss.upload.url>
+				<boss.upload.path>E:\development\apache-tomcat-8.0.36\webapps\files\upload</boss.upload.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<boss.base.url>http://localhost:81</boss.base.url>
+				<boss.upload.url>http://localhost:81/files/upload/</boss.upload.url>
+				<boss.upload.path>E:\development\apache-tomcat-8.0.36\webapps\files\upload</boss.upload.path>
+			</properties>
+		</profile>
+	</profiles>
+	<build>
+		<finalName>boss</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>utf-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<warName>boss</warName>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
 </project>

@@ -195,4 +195,53 @@
 			<artifactId>patchca</artifactId>
 		</dependency>
 	</dependencies>
+
+
+	<profiles>
+		<profile>
+			<id>dev-wb</id>
+			<properties>
+				<biz.base.url>http://localhost</biz.base.url>
+				<biz.upload.url>http://localhost/files/upload/</biz.upload.url>
+				<biz.upload.path>E:\development\apache-tomcat-8.0.36\webapps\files\upload</biz.upload.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<biz.base.url>http://localhost:81</biz.base.url>
+				<biz.upload.url>http://localhost:81/files/upload/</biz.upload.url>
+				<biz.upload.path>E:\development\apache-tomcat-8.0.36\webapps\files\upload</biz.upload.path>
+			</properties>
+		</profile>
+	</profiles>
+	<build>
+		<finalName>biz</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.5.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>utf-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<warName>biz</warName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

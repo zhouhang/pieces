@@ -36,7 +36,8 @@
 	    <property name="freemarkerVariables">
 	        <map>
 	            <entry key="xml_escape" value-ref="fmXmlEscape" />
-	        </map>
+				<entry key="baseUrl" value="${boss.base.url}"/>
+			</map>
 	    </property>
 	    <property name="freemarkerSettings">
 	        <props>
@@ -100,7 +101,17 @@
 	    <property name="exposeSpringMacroHelpers" value="true"></property>
 	    <property name="exposeRequestAttributes" value="true"></property>
 	</bean>
-	
+
+
+	<!-- 配置 文件上传的支持 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="maxUploadSize" value="102400000"/>
+		<property name="resolveLazily" value="true"/>
+		<property name="maxInMemorySize" value="4096"/>
+	</bean>
+
+
 	<!-- css,js路径 -->
 	<mvc:resources mapping="/css/**" location="/assets/css/" />
 	<mvc:resources mapping="/js/**" location="/assets/js/" />
