@@ -175,7 +175,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
     .fa-form .txt{position:absolute;top:0;left:0;width:130px;line-height:40px;text-align:right;}
       .fa-form .txt i{margin-right:6px;color:#c3272b;vertical-align:middle;}
     .fa-form .cnt{height:70px;}
-      .fa-form .cnt .ipt{width:320px;height:20px;line-height:20px;padding:9px 14px;border:1px solid #ccc;}
+      .fa-form .cnt .ipt{width:320px;height:20px;line-height:20px;padding:9px 14px;font-size:12px;border:1px solid #ccc;}
       .fa-form .cnt .ipt:disabled{background:#ededed;color:#999;}
       .fa-form .cnt .btn-inside{position:absolute;top:5px;right:5px;height:40px;}
       .fa-form .cnt .btn-wide{width:350px;height:40px;font-size:16px;}
