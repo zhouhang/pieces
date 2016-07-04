@@ -37,12 +37,8 @@ public class DemoController {
                         Integer pageSize,
                         ModelMap modelMap){
 
-        if(pageNum==null){
-            pageNum = 1;
-        }
-        if(pageSize==null){
-            pageSize=10;
-        }
+        pageNum = pageNum==null?1:pageNum;
+        pageSize = pageSize==null?10:pageSize;
 
         PageInfo<Area> areaPage =  areaService.findByPage(1,pageNum,pageSize);
 

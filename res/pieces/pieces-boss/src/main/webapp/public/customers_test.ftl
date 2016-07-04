@@ -71,6 +71,7 @@
                 </div>
                 <#--分页-->
                 <@p.pager pageInfo=areaPage  pageUrl="demo/page" />
+
             </div>
             <div class="chart">
                 <table class="tc">
