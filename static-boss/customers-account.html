@@ -184,52 +184,41 @@
     <script src="js/area.js"></script>
     <script>
         $(function() {
-            var iconsError = "<i class='fa fa-prompt'></i> ";
-            $.Tipmsg.r = '';
-            $.Tipmsg.c = '';
-
-            var formValidate = $("#myform").Validform({
-                postonce: true,
-                showAllError: true,
-                datatype: {
-                    pwd: /^[a-zA-Z0-9_]{6,20}$/
-                },
-                tiptype: 4
-            });
+            var formValidate = $("#myform").Validform();
 
             formValidate.addRule([
                 {
                     ele: '#companyName',
                     datatype: 's',
-                    nullmsg: iconsError + '用户名必须以英文字母开头，长度6到20位',
-                    errormsg: iconsError + '用户名长度只能在6-20位字符之间'
+                    nullmsg: '用户名必须以英文字母开头，长度6到20位',
+                    errormsg: '用户名长度只能在6-20位字符之间'
                 },
                 {
                     ele: '#area',
                     datatype: 's',
-                    nullmsg: iconsError + '请选择企业注册地'
+                    nullmsg: '请选择企业注册地'
                 },
                 {
                     ele: '#linkMan',
                     datatype: 's',
-                    nullmsg: iconsError + '请输入联系人姓名'
+                    nullmsg: '请输入联系人姓名'
                 },
                 {
                     ele: '#mobile',
-                    datatype: /^1[345678]\d{9}$/,
-                    nullmsg: iconsError + '请输入手机号码',
-                    errormsg: iconsError + '请输入正确的手机号码'
+                    datatype: 'm',
+                    nullmsg: '请输入手机号码',
+                    errormsg: '请输入正确的手机号码'
                 },
                 {
                     ele: '#pwd',
-                    datatype: '*,pwd',
-                    nullmsg: iconsError + '请输入密码',
-                    errormsg: iconsError + '密码由数字、字母或下划线组成，长度为6-20位'
+                    datatype: 'pwd',
+                    nullmsg: '请输入密码',
+                    errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
                 },
                 {
                     ele: '#pwdOld',
                     datatype: '*',
-                    nullmsg: iconsError + '请输入当前操作人的boss帐号密码'
+                    nullmsg: '请输入当前操作人的boss帐号密码'
                 }
             ])
             
