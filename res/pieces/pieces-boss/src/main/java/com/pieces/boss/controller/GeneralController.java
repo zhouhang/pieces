@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.pieces.service.constant.BasicConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +25,6 @@ import com.github.bingoohuang.patchca.word.RandomWordFactory;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Area;
 import com.pieces.service.AreaService;
-import com.pieces.service.constant.Constants;
 import com.pieces.service.impl.SmsService;
 import com.pieces.tools.bean.FileBo;
 import com.pieces.tools.upload.DefaultUploadFile;
@@ -119,7 +119,7 @@ public class GeneralController {
         ServletOutputStream out = response.getOutputStream();
         try {
             String code = captcha.getChallenge();
-            session.setAttribute(Constants.KAPTCHA_SESSION_KEY, code);
+            session.setAttribute(BasicConstants.KAPTCHA_SESSION_KEY, code);
             System.out.println("生成的验证码为:" + code);
             ImageIO.write(captcha.getImage(), "png", out);
             out.flush();
@@ -132,7 +132,7 @@ public class GeneralController {
     public void captchaGet(HttpServletRequest request,
                            HttpServletResponse response){
         HttpSession session = request.getSession();
-        String code = session.getAttribute(Constants.KAPTCHA_SESSION_KEY).toString();
+        String code = session.getAttribute(BasicConstants.KAPTCHA_SESSION_KEY).toString();
         System.out.println("code:"+code);
     }
 
