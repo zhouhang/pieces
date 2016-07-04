@@ -17,9 +17,9 @@
 
 <div class="skip">
     <span>第</span>
-    <a type="button" href="${pageUrl}?pageNum=${prePage}&pageSize=${pageSize}" class="fa fa-chevron-left btn btn-gray"></a>
+    <a class="fa fa-chevron-left btn btn-gray" href="${pageUrl}?pageNum=${prePage}&pageSize=${pageSize}"></a>
     <input type="text" class="ipt" value="${pageNum}">
-    <a href="${pageUrl}?pageNum=${pageInfo.nextPage}&pageSize=${pageSize}" class="fa fa-chevron-right btn btn-gray"></a>
+    <a class="fa fa-chevron-right btn btn-gray" href="${pageUrl}?pageNum=${pageInfo.nextPage}&pageSize=${pageSize}"></a>
     <span>页，共</span><em>${pageInfo.pages}</em><span>页</span>
     <i>|</i>
     <span>每页</span>

@@ -46,8 +46,7 @@ public class SmsService {
         param.put("apikey", apikey);
         param.put("mobile", mobile);
         param.put("text", TextTemplateEnum.SMS_CAPTCHA_TEMPLATE.getText("【药优优】", code));
-        //HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
-        System.out.println("-----验证码:"+code);
+        HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
         //验证码存储在redis缓存里
         redisManager.set(RedisEnum.KEY_MOBILE_CAPTCHA.getValue()+mobile,code,SMS_EXPIRE_TIME);
         return code;
