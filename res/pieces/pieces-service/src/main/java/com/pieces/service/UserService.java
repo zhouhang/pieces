@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.User;
 
 /**
@@ -14,7 +15,7 @@ import com.pieces.dao.model.User;
 public interface UserService {
 	List<User> findUserByCondition(User user);
 	
-	List<User> findUserByVagueCondition(User user);
+	PageInfo<User> findUserByVagueCondition(User user,Integer pageNum, Integer pageSize);
 
 	int addUser(User user);
 	

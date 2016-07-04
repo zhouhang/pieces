@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.pieces.dao.model.Area;
 import com.pieces.dao.model.User;
@@ -31,10 +32,17 @@ public class MenberController {
 	private UserService userService;
 	
 	@RequestMapping(value = "/get/userlist")
-	public String getUserList(ModelMap model,User user,HttpServletRequest request) {
-		List<User> users = userService.findUserByVagueCondition(user);
+	public String getUserList(ModelMap model,User user,Integer pageNum,
+            Integer pageSize,HttpServletRequest request) {
+        if(pageNum==null){
+            pageNum = 1;
+        }
+        if(pageSize==null){
+            pageSize=10;
+        }
+		PageInfo<User> userPage = userService.findUserByVagueCondition(user,pageNum,pageSize);
 		
-		model.put("users", users);
+		model.put("userPage", userPage);
 		model.put("user", user);
 		
 		return "customers";
@@ -54,10 +62,6 @@ public class MenberController {
 	public String addUser(ModelMap model,User user,HttpServletRequest request) {
 		ValidFromVo mv = new ValidFromVo();
 		if(user.getPassword()!=null&&!user.getPassword().equals("")){
-			user.setStatus(BasicConstants.USER_STATUS_VALID);
-			user.setOnlineStatus(BasicConstants.USER_ONLINESTATUS_ONLINE);
-			user.setBindErp(BasicConstants.USER_BINDERP_NO);
-			user.setCreateChannel(BasicConstants.USER_CREATECHANNEL_BIZ);
 			userService.addUser(user);
 			mv.setStatus("y");
 		}else{
@@ -67,10 +71,6 @@ public class MenberController {
 					String code = codeMap.get("code").toString();
 					if(code!=null&&!code.equals("")){
 						user.setPassword(code);
-						user.setStatus(BasicConstants.USER_STATUS_VALID);
-						user.setOnlineStatus(BasicConstants.USER_ONLINESTATUS_ONLINE);
-						user.setBindErp(BasicConstants.USER_BINDERP_NO);
-						user.setCreateChannel(BasicConstants.USER_CREATECHANNEL_BIZ);
 						userService.addUser(user);
 						mv.setStatus("y");
 					}else{

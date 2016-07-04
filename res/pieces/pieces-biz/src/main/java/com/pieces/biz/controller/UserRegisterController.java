@@ -58,10 +58,6 @@ public class UserRegisterController {
 				String code = codeMap.get("code").toString();
 				if(code!=null&&!code.equals("")){
 					if(code.equals(mobileCode)){
-						user.setStatus(BasicConstants.USER_STATUS_VALID);
-						user.setOnlineStatus(BasicConstants.USER_ONLINESTATUS_ONLINE);
-						user.setBindErp(BasicConstants.USER_BINDERP_NO);
-						user.setCreateChannel(BasicConstants.USER_CREATECHANNEL_BIZ);
 						userService.addUser(user);
 						mv.setResult("ok");
 					}else{

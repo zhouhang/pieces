@@ -3,7 +3,7 @@
 <head>
     <#include "./inc/meta.ftl"/>
     <title>客户清单-boss-饮片B2B</title>
-    <script src="js/jquery.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
 
 </head>
 

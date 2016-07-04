@@ -8,9 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageInfo;
 import com.pieces.dao.UserDao;
+import com.pieces.dao.model.Area;
 import com.pieces.dao.model.User;
 import com.pieces.service.UserService;
+import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.dto.Password;
 import com.pieces.service.utils.EncryptUtil;
 
@@ -30,6 +33,10 @@ public class UserServiceImpl implements UserService {
 		user = creatPawAndSaltMd5(user);
 		user.setCreateTime(new Date());
 		user.setUpdateTime(new Date());
+		user.setStatus(BasicConstants.USER_STATUS_VALID);
+		user.setOnlineStatus(BasicConstants.USER_ONLINESTATUS_ONLINE);
+		user.setBindErp(BasicConstants.USER_BINDERP_NO);
+		user.setCreateChannel(BasicConstants.USER_CREATECHANNEL_BIZ);
 		return userDao.addUser(user);
 	}
 	
@@ -98,8 +105,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<User> findUserByVagueCondition(User user) {
-		return userDao.findUserByVagueCondition(user);
+	public PageInfo<User> findUserByVagueCondition(User user,Integer pageNum, Integer pageSize) {
+		return userDao.findUserByVagueCondition(user,pageNum,pageSize);
 	}
 
 }
