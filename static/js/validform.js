@@ -98,13 +98,15 @@
 			"p":"请填写邮政编码！",
 			"m":"请填写手机号码！",
 			"e":"邮箱地址格式不对！",
-			"url":"请填写网址！"
+			"url":"请填写网址！",
+			"uname":"用户名必须以英文字母开头，长度6到20位",
+			"pwd":"密码由数字、字母或下划线组成，长度为6-20位"
 		},
 		def:"请填写正确信息！",
 		undef:"datatype未定义！",
 		reck:"两次输入的内容不一致！",
-		r:"通过信息验证！",
-		c:"正在检测信息…",
+		r:"", // 通过信息验证！
+		c:"", // 正在检测信息…
 		s:"请{填写|选择}{0|信息}！",
 		v:"所填信息没有经过验证，请稍后…",
 		p:"正在提交数据…"
@@ -184,10 +186,10 @@
 	}
 	
 	Validform.defaults={
-		tiptype:1,
+		tiptype:4,
 		tipSweep:false,
-		showAllError:false,
-		postonce:false,
+		showAllError:true,
+		postonce:true,
 		ajaxPost:false
 	}
 	
@@ -200,9 +202,11 @@
 			"s":/^[\u4E00-\u9FA5\uf900-\ufa2d\w\.\s]+$/,
 			"s6-18":/^[\u4E00-\u9FA5\uf900-\ufa2d\w\.\s]{6,18}$/,
 			"p":/^[0-9]{6}$/,
-			"m":/^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|18[0-9]{9}$/,
+			"m":/^1[345678]\d{9}$/,
 			"e":/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
-			"url":/^(\w+:\/\/)?\w+(\.\w+)+.*$/
+			"url":/^(\w+:\/\/)?\w+(\.\w+)+.*$/,
+			"uname":/^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$/,
+			"pwd":/^[a-zA-Z0-9_]{6,20}$/
 		},
 		
 		toString:Object.prototype.toString,
@@ -1076,7 +1080,7 @@
 			
 			brothers.find(".Validform_right").text("");
 			brothers.find(".passwordStrength").children().removeClass("bgStrength");
-			brothers.find(".Validform_checktip").removeClass("Validform_wrong Validform_right Validform_loading").html();
+			brothers.find(".Validform_checktip").removeClass("Validform_wrong Validform_right Validform_loading");//.html();
 			brothers.find(".Validform_error").removeClass("Validform_error");
 			brothers.find("[datatype]").removeData("cked").removeData("dataIgnore").each(function(){
 				this.validform_lastval=null;
