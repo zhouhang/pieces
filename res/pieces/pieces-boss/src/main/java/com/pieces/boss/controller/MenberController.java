@@ -23,14 +23,14 @@ import com.pieces.service.utils.YPSendMessage;
 import com.pieces.service.vo.ValidFromVo;
 
 @Controller
-@RequestMapping(value = "/menber")
+@RequestMapping(value = "/user")
 public class MenberController {
 	@Autowired
     private AreaService areaService;
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value = "/get/userlist")
+	@RequestMapping(value = "/index")
 	public String getUserList(ModelMap model,User user,HttpServletRequest request) {
 		List<User> users = userService.findUserByVagueCondition(user);
 		
@@ -40,7 +40,7 @@ public class MenberController {
 		return "customers";
 	}
 	
-	@RequestMapping(value = "/get/user")
+	@RequestMapping(value = "/{id}")
 	public String getUser(ModelMap model,User user,HttpServletRequest request) {
 		List<User> users = userService.findUserByCondition(user);
 		
@@ -49,7 +49,7 @@ public class MenberController {
 		return "customers-info";
 	}
 	
-	@RequestMapping(value = "/add/user")
+	@RequestMapping(value = "/add")
 	@ResponseBody
 	public String addUser(ModelMap model,User user,HttpServletRequest request) {
 		ValidFromVo mv = new ValidFromVo();
@@ -90,7 +90,7 @@ public class MenberController {
 		return gson.toJson(mv);
 	}
 	
-	@RequestMapping(value = "/to/add/user")
+	@RequestMapping(value = "//save")
 	public String toAddUser(ModelMap model,HttpServletRequest request) {
 		return "customers-add";
 	}

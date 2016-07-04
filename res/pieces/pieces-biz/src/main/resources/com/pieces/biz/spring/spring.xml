@@ -14,22 +14,14 @@
         http://www.springframework.org/schema/aop 
 		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-	<!-- 扫描包annotated bean -->
-	<context:component-scan base-package="com.pieces.biz" />
-	<context:component-scan base-package="com.pieces.dao" />
-	<context:component-scan base-package="com.pieces.service" />
-	
-	<!-- 开启注解 -->  
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />  
-    <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"></bean>
-	<!-- 配置 文件上传的支持 -->  
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
-        <property name="defaultEncoding" value="UTF-8"/>
-        <property name="maxUploadSize" value="1024000000"/>  
-        <property name="resolveLazily" value="true"/>  
-        <property name="maxInMemorySize" value="4096"/>  
-    </bean>  
-    
+
+
+	<context:component-scan base-package="com.pieces">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+	</context:component-scan>
+
+
 	<!-- 下面的变量从配置文件里面拿出来,子系统可以覆盖公共的 -->
     <bean id="scPropertyPlaceholderConfigurer"   
         class="com.pieces.dao.config.PiecesPropertyPlaceholderConfigurer">

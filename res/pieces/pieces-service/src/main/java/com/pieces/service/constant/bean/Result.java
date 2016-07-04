@@ -5,21 +5,21 @@ package com.pieces.service.constant.bean;
  */
 public class Result {
 
-    private Integer status;
-    private String msg ="";
+    private String status;
+    private String info ="";
     private Object data = new Object();
 
     public Result(Boolean status) {
         if(status){
-            this.status = 0;
+            this.status = "y";
         }
     }
 
-    public Result(Integer status) {
+    public Result(String status) {
         this.status = status;
     }
-    public Result msg(String msg) {
-        this.msg = msg;
+    public Result info(String info) {
+        this.info = info;
         return this;
     }
     public Result data(Object data) {
@@ -32,16 +32,19 @@ public class Result {
     public void setData(Object data) {
         this.data = data;
     }
-    public String getMsg() {
-        return msg;
+
+    public String getInfo() {
+        return info;
     }
-    public void setMsg(String msg) {
-        this.msg = msg;
+
+    public void setInfo(String info) {
+        this.info = info;
     }
-    public Integer getStatus() {
+
+    public String getStatus() {
         return status;
     }
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 }

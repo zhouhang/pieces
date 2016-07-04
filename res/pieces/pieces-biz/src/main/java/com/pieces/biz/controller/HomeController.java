@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class HomeController {
 
 
+
     @RequestMapping(value = "/")
     public String index(HttpServletRequest request,
                         HttpServletResponse response){

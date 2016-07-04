@@ -13,6 +13,7 @@ public enum TextTemplateEnum {
     private String value;
 
     TextTemplateEnum(String value){
+
         this.value = value;
     }
 
@@ -22,14 +23,15 @@ public enum TextTemplateEnum {
      * @return
      */
     public String getText(String... params ){
+        String text = new String(this.value);
         if(!ArrayUtils.isEmpty(params)){
             for(int i=0;i<params.length;i++){
                 String temKey = "{"+(i+1)+"}";
                 String temVal = params[i];
-                value = value.replace(temKey,temVal);
+                text = text.replace(temKey,temVal);
             }
         }
-        return value;
+        return text;
     }
 
 
