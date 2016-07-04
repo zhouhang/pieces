@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
 import com.google.gson.Gson;
 import com.pieces.dao.model.Area;
 import com.pieces.dao.model.User;
@@ -23,24 +24,31 @@ import com.pieces.service.utils.YPSendMessage;
 import com.pieces.service.vo.ValidFromVo;
 
 @Controller
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/menber")
 public class MenberController {
 	@Autowired
     private AreaService areaService;
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value = "/index")
-	public String getUserList(ModelMap model,User user,HttpServletRequest request) {
-		List<User> users = userService.findUserByVagueCondition(user);
+	@RequestMapping(value = "/get/userlist")
+	public String getUserList(ModelMap model,User user,Integer pageNum,
+            Integer pageSize,HttpServletRequest request) {
+        if(pageNum==null){
+            pageNum = 1;
+        }
+        if(pageSize==null){
+            pageSize=10;
+        }
+		PageInfo<User> userPage = userService.findUserByVagueCondition(user,pageNum,pageSize);
 		
-		model.put("users", users);
+		model.put("userPage", userPage);
 		model.put("user", user);
 		
 		return "customers";
 	}
 	
-	@RequestMapping(value = "/{id}")
+	@RequestMapping(value = "/get/user")
 	public String getUser(ModelMap model,User user,HttpServletRequest request) {
 		List<User> users = userService.findUserByCondition(user);
 		
@@ -49,15 +57,11 @@ public class MenberController {
 		return "customers-info";
 	}
 	
-	@RequestMapping(value = "/add")
+	@RequestMapping(value = "/add/user")
 	@ResponseBody
 	public String addUser(ModelMap model,User user,HttpServletRequest request) {
 		ValidFromVo mv = new ValidFromVo();
 		if(user.getPassword()!=null&&!user.getPassword().equals("")){
-			user.setStatus(BasicConstants.USER_STATUS_VALID);
-			user.setOnlineStatus(BasicConstants.USER_ONLINESTATUS_ONLINE);
-			user.setBindErp(BasicConstants.USER_BINDERP_NO);
-			user.setCreateChannel(BasicConstants.USER_CREATECHANNEL_BIZ);
 			userService.addUser(user);
 			mv.setStatus("y");
 		}else{
@@ -67,10 +71,6 @@ public class MenberController {
 					String code = codeMap.get("code").toString();
 					if(code!=null&&!code.equals("")){
 						user.setPassword(code);
-						user.setStatus(BasicConstants.USER_STATUS_VALID);
-						user.setOnlineStatus(BasicConstants.USER_ONLINESTATUS_ONLINE);
-						user.setBindErp(BasicConstants.USER_BINDERP_NO);
-						user.setCreateChannel(BasicConstants.USER_CREATECHANNEL_BIZ);
 						userService.addUser(user);
 						mv.setStatus("y");
 					}else{
@@ -90,7 +90,7 @@ public class MenberController {
 		return gson.toJson(mv);
 	}
 	
-	@RequestMapping(value = "//save")
+	@RequestMapping(value = "/to/add/user")
 	public String toAddUser(ModelMap model,HttpServletRequest request) {
 		return "customers-add";
 	}

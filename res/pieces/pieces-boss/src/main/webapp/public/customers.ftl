@@ -70,20 +70,8 @@
                 <div class="extra">
                     <a class="btn btn-gray" href="#"><i class="fa fa-export"></i>导出</a>
                 </div>
-                <div class="skip">
-                    <span>第</span>
-                    <button type="button" class="fa fa-chevron-left btn btn-gray"></button><input type="text" class="ipt" value="1"><button class="fa fa-chevron-right btn btn-gray"></button>
-                    <span>页，共</span><em>6</em><span>页</span>
-                    <i>|</i>
-                    <span>每页</span>
-                    <select name="" id="">
-                        <option value="">10</option>
-                        <option value="">20</option>
-                        <option value="">30</option>
-                        <option value="">40</option>
-                    </select>
-                    <span>个记录，共有 2 个记录</span>
-                </div>
+                <#--分页-->
+                <@p.pager pageInfo=userPage  pageUrl="/menber/get/userlist" />
             </div>
             <div class="chart">
                 <table class="tc">
@@ -101,7 +89,7 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <form action="/menber/get/userlist" id="myform">
+                            <form action="/menber/get/userlist" id="myform" method="post">
 	                            <td><input name="userName" id="userName" type="text" class="ipt" value="${user.userName!''}"></td>
 	                            <td><input name="companyFullName" id="companyFullName" type="text" class="ipt" value="${user.companyFullName!''}"></td>
 	                            <td><input name="areaFull" id="areaFull" type="text" class="ipt" value="${user.areaFull!''}"></td>
@@ -124,8 +112,8 @@
                     </thead>
                     <tfoot></tfoot>
                     <tbody>
-	                    <#if (users?size>0)>
-		                    <#list users as user>
+	                    <#if (userPage.list?size>0)>
+		                    <#list userPage.list as user>
 		                        <tr>
 		                            <td>${user.id }</td>
 		                            <td>${user.userName }</td>
@@ -224,6 +212,9 @@
             $('#search').on('click', function() {
                 $('#myform').submit();
             })
+            function getPageUrl(){
+            	
+            }
         });
         })(jQuery);
     </script>

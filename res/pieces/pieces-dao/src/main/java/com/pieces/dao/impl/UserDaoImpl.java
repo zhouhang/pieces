@@ -2,9 +2,12 @@ package com.pieces.dao.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
+import com.github.pagehelper.PageInfo;
 import com.pieces.dao.UserDao;
+import com.pieces.dao.model.Area;
 import com.pieces.dao.model.User;
 
 @Repository
@@ -26,8 +29,10 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<User> findUserByVagueCondition(User user) {
-		return getSqlSession().selectList("com.pieces.dao.UserMapper.findUserByVagueCondition", user);
+	public PageInfo<User> findUserByVagueCondition(User user,Integer pageNum, Integer pageSize) {
+		List<User> list = getSqlSession().selectList("com.pieces.dao.UserMapper.findUserByVagueCondition", user,new RowBounds(pageNum, pageSize));
+        PageInfo page = new PageInfo(list);
+        return page;
 	}
 
 }
