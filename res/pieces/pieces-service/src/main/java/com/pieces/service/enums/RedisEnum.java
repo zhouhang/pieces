@@ -6,8 +6,9 @@ public enum RedisEnum {
 	KEY_PREFIX_SHIRO_REDIS_SESSION("shiro_session:"),
 	KEY_PREFIX_SHIRO_REDIS_CACHE("shiro_cache:"),
 	USER_SESSION_BOSS("user_session_boss"),
-	USER_SESSION_BIZ("user_session_biz");
-	
+	USER_SESSION_BIZ("user_session_biz"),
+	KEY_MOBILE_CAPTCHA("mobile_captcha"); //手机验证码
+
 	@Override
 	public String toString(){
 		return getValue();

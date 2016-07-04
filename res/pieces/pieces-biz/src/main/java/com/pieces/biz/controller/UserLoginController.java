@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.pieces.biz.shiro.BizToken;
 import com.pieces.dao.model.User;
+import com.pieces.service.AreaService;
 import com.pieces.service.UserService;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.vo.MessageVo;
@@ -28,7 +29,8 @@ import com.pieces.service.vo.TestUserVo;
 @Controller(value = "userLoginController")
 @RequestMapping
 public class UserLoginController{
-	
+	@Autowired
+    private AreaService areaService;
 	@Autowired
 	private UserService userService;
 	
@@ -73,7 +75,7 @@ public class UserLoginController{
 	}
 	
 	@RequestMapping(value = "/registerLogin")
-	public String registerLogin(Model model,String userName,String password,HttpServletRequest request) {
+	public String registerLogin(ModelMap model,String userName,String password,HttpServletRequest request) {
 		// 页面数据验证逻辑
 		try {
 			// 登陆验证
@@ -90,6 +92,15 @@ public class UserLoginController{
 			tu.setSalt(null);
 			Session s = subject.getSession();
 			s.setAttribute(RedisEnum.USER_SESSION_BOSS.getValue(), tu);
+			model.put("user", tu);
+			String province = areaService.findById(Integer.parseInt(tu.getProvinceCode())).getAreaname();
+			String city = areaService.findById(Integer.parseInt(tu.getCityCode())).getAreaname();
+			String county = "";
+			if(tu.getCountyCode() != null && !tu.getCountyCode().equals("")){
+				county = areaService.findById(Integer.parseInt(tu.getCountyCode())).getAreaname();
+			}
+			String area = province + city + county;
+			model.put("area", area);
 			return "user_info";
 		} catch (Exception e) {
 			e.printStackTrace();

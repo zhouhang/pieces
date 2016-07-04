@@ -74,7 +74,7 @@
 	</insert>
 	
 	  <update id="updateUserByCondition" parameterType="com.pieces.dao.model.User">
-        update boss.boss_user
+        update user
 		<set >
 	        <if test="userName != null">
 	        	user_name = #{userName,jdbcType=VARCHAR},

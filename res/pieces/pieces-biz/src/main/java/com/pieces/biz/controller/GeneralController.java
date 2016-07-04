@@ -8,13 +8,13 @@ import com.github.bingoohuang.patchca.word.RandomWordFactory;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Area;
 import com.pieces.service.AreaService;
-import com.pieces.service.constant.Constants;
+import com.pieces.service.constant.BasicConstants;
+import com.pieces.service.constant.bean.Result;
 import com.pieces.service.impl.SmsService;
 import com.pieces.tools.bean.FileBo;
 import com.pieces.tools.upload.DefaultUploadFile;
 import com.pieces.tools.utils.GsonUtil;
 import com.pieces.tools.utils.WebUtil;
-import com.pieces.tools.utils.httpclient.HttpClientUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +28,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.*;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 公共URL访问
@@ -63,8 +65,9 @@ public class GeneralController {
 
     @RequestMapping(value = "/file/index")
     public String index() {
-        return "public/fileUploadTest";
+        return "fileUploadTest";
     }
+
 
     @RequestMapping(value = "/file/upload")
     public void fileUpload(HttpServletRequest request,
@@ -133,7 +136,7 @@ public class GeneralController {
         ServletOutputStream out = response.getOutputStream();
         try {
             String code = captcha.getChallenge();
-            session.setAttribute(Constants.KAPTCHA_SESSION_KEY, code);
+            session.setAttribute(BasicConstants.KAPTCHA_SESSION_KEY, code);
             System.out.println("生成的验证码为:" + code);
             ImageIO.write(captcha.getImage(), "png", out);
             out.flush();
@@ -142,18 +145,29 @@ public class GeneralController {
         }
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     */
     @RequestMapping(value = "/captcha/get")
     public void captchaGet(HttpServletRequest request,
                            HttpServletResponse response){
         HttpSession session = request.getSession();
-        String code = session.getAttribute(Constants.KAPTCHA_SESSION_KEY).toString();
-        System.out.println("code:"+code);
+        String code = session.getAttribute(BasicConstants.KAPTCHA_SESSION_KEY).toString();
+        WebUtil.printJson(response, new Result(true).data(code));
     }
 
+    /**
+     * 发送验证码测试
+     * @throws Exception
+     */
     @RequestMapping(value = "/send")
-    public void sendPost() throws Exception{
-        String result =  smsService.sendSmsCaptcha("18801285391");
-        System.out.println("result:"+result);
+    public void sendPost(HttpServletRequest request,
+                         HttpServletResponse response) throws Exception{
+        //String result =  smsService.sendSmsCaptcha("18801285391");
+        Result result =  new Result(true).data(Collections.singletonMap("code","1234")).msg("短信验证码");
+        WebUtil.print(response,result);
 
     }
 

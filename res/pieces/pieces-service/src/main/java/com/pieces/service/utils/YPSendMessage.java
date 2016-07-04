@@ -29,10 +29,10 @@ public class YPSendMessage extends SendMessage {
 	@Override
 	public String send(String mobileNo, String code) {
 		String context = getContext(code);
-		// String res = "";
+		String res = "";
 		try {
-			// res = sendSms(SMS_USERID, context, mobileNo);
-			System.out.println("--------------------" + context);
+			res = sendSms(SMS_USERID, context, mobileNo);
+			System.out.println("--------------------" + res);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -6,13 +6,13 @@ import org.apache.commons.lang.ArrayUtils;
  * 验证码模板
  * Created by wangbin on 2016/6/30.
  */
-public enum SmsTemplateEnum {
+public enum TextTemplateEnum {
 
     SMS_CAPTCHA_TEMPLATE("{1}您的验证码是{2}");
 
     private String value;
 
-    SmsTemplateEnum(String value){
+    TextTemplateEnum(String value){
         this.value = value;
     }
 
@@ -21,7 +21,7 @@ public enum SmsTemplateEnum {
      * @param params
      * @return
      */
-    public String getValue(String... params ){
+    public String getText(String... params ){
         if(!ArrayUtils.isEmpty(params)){
             for(int i=0;i<params.length;i++){
                 String temKey = "{"+(i+1)+"}";
@@ -34,7 +34,7 @@ public enum SmsTemplateEnum {
 
 
     public static void main(String[] args) {
-        String la =  SmsTemplateEnum.SMS_CAPTCHA_TEMPLATE.getValue("【速采科技】","1024");
+        String la =  TextTemplateEnum.SMS_CAPTCHA_TEMPLATE.getText("【速采科技】","1024");
         System.out.println(la);
     }
 

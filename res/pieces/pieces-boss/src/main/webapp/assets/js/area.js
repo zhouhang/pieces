@@ -13,7 +13,7 @@ $(function() {
 		}
 		$.ajax({
 			url: '/gen/area',
-			data: {'parentid': pid},
+			data: {'parentId': pid},
 			// dataType: 'jsonp',
 			success: function(data) {
 				citys[pid] = data;

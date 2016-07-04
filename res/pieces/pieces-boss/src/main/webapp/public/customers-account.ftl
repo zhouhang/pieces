@@ -74,7 +74,7 @@
             <div class="main">
 
 
-                <form action="" id="myform">
+                <form action="/menber/update/account" id="myform">
                     <div class="title">
                         <h3><i class="fa fa-people"></i>hehuan</h3>
                         <div class="extra">
@@ -87,6 +87,7 @@
                     <div class="user-info">
                         <h3>账户信息</h3>
                         <div class="fa-form">
+                            <input type="hidden" id="id" name="id" value="${user.id!'' }">
                             <div class="group">
                                 <div class="txt">
                                     <i>*</i>企业全称：
@@ -102,13 +103,13 @@
                                 </div>
                                 <div class="cnt">
                                     <select name="province" id="province">
-                                        <option value="">-省-</option>
+                                        
                                     </select>
                                     <select name="city" id="city">
-                                        <option value="">-市-</option>
+                                        
                                     </select>
                                     <select name="area" id="area">
-                                        <option value="">-区/县-</option>
+                                        
                                     </select>
                                 </div>
                             </div>
@@ -154,14 +155,14 @@
                                 </div>
                             </div>
 
-                            <div class="group">
+                            <!-- <div class="group">
                                 <div class="txt">
                                     <i>*</i>您的密码：
                                 </div>
                                 <div class="cnt">
                                     <input type="password" class="ipt" value="" autocomplete="off" name="pwdOld" id="pwdOld" placeholder="请输入当前操作人的boss帐号密码">                            
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </form>
@@ -187,14 +188,35 @@
             var iconsError = "<i class='fa fa-prompt'></i> ";
             $.Tipmsg.r = '';
             $.Tipmsg.c = '';
+            
+            var provinceId = '${province.id}';
+            var provinceName = '${province.areaname}';
+            var cityId = '${city.id}';
+            var cityName = '${city.areaname}';
+            var areaId = '${area.id}';
+            var areaName = '${area.areaname}';
+            $("#province").append("<option selected='selected' value='"+provinceId+"'>"+provinceName+"</option>");
+            $("#city").append("<option selected='selected' value='"+cityId+"'>"+cityName+"</option>");
+            $("#area").append("<option selected='selected' value='"+areaId+"'>"+areaName+"</option>");
 
             var formValidate = $("#myform").Validform({
                 postonce: true,
                 showAllError: true,
+                ajaxPost:true,
                 datatype: {
                     pwd: /^[a-zA-Z0-9_]{6,20}$/
                 },
-                tiptype: 4
+                tiptype: 4,
+            	beforeSubmit:function(curform){
+            		$("#areaFull").val($('#province option:selected').text() + $('#city option:selected').text() + $('#area option:selected').text());
+            	},
+            	callback:function(data){
+            		var status = data.status;
+            		var info = data.info;
+            		if(status == 'y'){
+            			window.location = "/menber/get/userlist";
+            		}
+            	}
             });
 
             formValidate.addRule([
@@ -225,12 +247,12 @@
                     datatype: '*,pwd',
                     nullmsg: iconsError + '请输入密码',
                     errormsg: iconsError + '密码由数字、字母或下划线组成，长度为6-20位'
-                },
+                }/* ,
                 {
                     ele: '#pwdOld',
                     datatype: '*',
                     nullmsg: iconsError + '请输入当前操作人的boss帐号密码'
-                }
+                } */
             ])
             
             var $mobileCode = $('#mobileCode');
