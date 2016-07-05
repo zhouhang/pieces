@@ -42,10 +42,12 @@ public class SmsService {
     public String sendSmsCaptcha(String mobile) throws Exception {
         //生成并发送验证码
         String code = SeqNoUtil.getRandomNum(5);
+
         Map<String, Object> param = new HashMap<>();
         param.put("apikey", apikey);
         param.put("mobile", mobile);
         param.put("text", TextTemplateEnum.SMS_CAPTCHA_TEMPLATE.getText("【药优优】", code));
+
         HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
         //验证码存储在redis缓存里
         redisManager.set(RedisEnum.KEY_MOBILE_CAPTCHA.getValue()+mobile,code,SMS_EXPIRE_TIME);

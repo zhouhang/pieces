@@ -5,7 +5,6 @@ import com.github.bingoohuang.patchca.custom.ConfigurableCaptchaService;
 import com.github.bingoohuang.patchca.filter.predefined.CurvesRippleFilterFactory;
 import com.github.bingoohuang.patchca.service.Captcha;
 import com.github.bingoohuang.patchca.word.RandomWordFactory;
-import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Area;
 import com.pieces.service.AreaService;
 import com.pieces.service.constant.BasicConstants;
@@ -72,13 +71,9 @@ public class GeneralController {
     @RequestMapping(value = "/file/upload")
     public void fileUpload(HttpServletRequest request,
                            HttpServletResponse response,
-                           @RequestParam(required = false) MultipartFile file) {
-        try {
-            FileBo fileBo = defaultUploadFile.uploadFile(file.getOriginalFilename(), file.getInputStream());
-            System.out.println(fileBo);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                           @RequestParam(required = false) MultipartFile file)throws Exception {
+        FileBo fileBo = defaultUploadFile.uploadFile(file.getOriginalFilename(), file.getInputStream());
+
     }
 
     /**
@@ -103,16 +98,6 @@ public class GeneralController {
         WebUtil.printJson(response, result);
     }
 
-
-    @RequestMapping(value = "/area/page")
-    public void areaPage(HttpServletRequest request,
-                         HttpServletResponse response,
-                         Integer pageNum,
-                         Integer pageSize) {
-        PageInfo<Area> page = areaService.find(pageNum, pageSize);
-        String result = GsonUtil.toJson(page);
-        WebUtil.printJson(response, result);
-    }
 
     /**
      * 图片验证码
@@ -163,11 +148,11 @@ public class GeneralController {
      */
     @RequestMapping(value = "/send")
     public void sendPost(HttpServletRequest request,
-                         HttpServletResponse response) throws Exception{
-        //String result =  smsService.sendSmsCaptcha("18801285391");
-        Result result =  new Result(true).data(Collections.singletonMap("code","1234")).msg("短信验证码");
+                         HttpServletResponse response,
+                         @RequestParam(required = true) String mobile) throws Exception{
+        String code =  smsService.sendSmsCaptcha("18801285391");
+        Result result =  new Result(true).data(Collections.singletonMap("code",code)).info("短信验证码");
         WebUtil.print(response,result);
-
     }
 
 }

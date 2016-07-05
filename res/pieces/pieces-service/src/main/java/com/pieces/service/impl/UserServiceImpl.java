@@ -16,6 +16,7 @@ import com.pieces.service.UserService;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.dto.Password;
 import com.pieces.service.utils.EncryptUtil;
+import org.springframework.util.StringUtils;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -59,11 +60,9 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		user.setContactMobile(contactMobile);
 		List<User> users = userDao.findUserByCondition(user);
-		if(users != null && users.size() != 0){
-			return true;
-		}else{
-			return false;
-		}
+
+
+		return (users != null && users.size() != 0);
 	}
 	
 	@Override

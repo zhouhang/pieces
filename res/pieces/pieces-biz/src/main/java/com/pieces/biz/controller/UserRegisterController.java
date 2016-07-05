@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -52,10 +53,16 @@ public class UserRegisterController {
 		user.setAreaFull(request.getParameter("areaFull"));
 		String mobileCode = request.getParameter("mobileCode");
 		MessageVo mv = new MessageVo();
+
+
 		try {
 			Map codeMap = (Map)request.getSession().getAttribute(user.getContactMobile());
-			if(codeMap != null){
+			if(codeMap != null) {
 				String code = codeMap.get("code").toString();
+			}
+				if(codeMap != null){
+				String code = codeMap.get("code").toString();
+
 				if(code!=null&&!code.equals("")){
 					if(code.equals(mobileCode)){
 						userService.addUser(user);
@@ -84,7 +91,7 @@ public class UserRegisterController {
 	
 	@RequestMapping(value="/ifExistUserName")
 	@ResponseBody
-	public String ifExistUserName(Model model,String userName){
+	public String ifExistUserName(Model model,String userName,String mobile){
 		if(userService.ifExistUserName(userName)){
 			return "false";
 		}else{

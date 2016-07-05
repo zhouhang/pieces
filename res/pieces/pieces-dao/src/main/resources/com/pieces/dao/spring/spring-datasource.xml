@@ -14,31 +14,12 @@
 					 http://www.springframework.org/schema/tx 
 					 http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
-	<!-- 数据源 -->
-	<bean id="C3P0DataSourceFather" class="com.mchange.v2.c3p0.ComboPooledDataSource" abstract="true" >
-		<property name="driverClass" value="${jdbc.driverClass}" />
-		<property name="autoCommitOnClose" value="${jdbc.autoCommitOnClose}" />
-		<property name="acquireIncrement" value="${jdbc.acquireIncrement}" />
-		<property name="acquireRetryAttempts" value="${jdbc.acquireRetryAttempts}" />
-		<property name="acquireRetryDelay" value="${jdbc.acquireRetryDelay}" />
-		<property name="maxStatements" value="${jdbc.maxStatements}" />
-		<property name="checkoutTimeout" value="${jdbc.checkoutTimeout}" />
-		<property name="initialPoolSize" value="${jdbc.initialPoolSize}" />
-		<property name="minPoolSize" value="${jdbc.minPoolSize}" />
-		<property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
-		<property name="maxIdleTime" value="${jdbc.maxIdleTime}" />
-		
-		<property name="maxIdleTimeExcessConnections" value="${jdbc.maxIdleTimeExcessConnections}" />
-		
-		<property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}" />
 
-	</bean>
-	
 	<!--启用阿里连接池  -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">   
 	    <property name="url" value="${db.jdbcUrl}" />  
 	    <property name="username" value="${db.user}" />  
-	    <property name="password" value="${db.password}" />  
+	    <property name="password" value="${db.password}" />
 	        
 	    <property name="initialSize" value="1" />  
 	    <property name="minIdle" value="1" />   
@@ -96,25 +77,9 @@
       </property>
     </bean>
     
-    <!-- AOP based transaction management -->
-    <aop:config>
-        <aop:pointcut id="serviceMethod" expression="execution(* com.pieces.service.impl.*.*(..))"/>
-        <aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice"/>
-    </aop:config>
-    
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>
-            <tx:method name="create*" propagation="REQUIRED" rollback-for="Exception"/>
-            <tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/>
-            <tx:method name="cancel*" propagation="REQUIRED" rollback-for="Exception"/>
-            <tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception"/>
-            <tx:method name="alter*" propagation="REQUIRED" rollback-for="Exception"/>
-            <tx:method name="remove*" propagation="REQUIRED" rollback-for="Exception"/>
-            <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
-            <tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"/>
-            <tx:method name="execute*" propagation="REQUIRED" rollback-for="Exception"/>
-            <tx:method name="*" propagation="SUPPORTS"/>
-        </tx:attributes>
-    </tx:advice>
+
+	<!-- 启用 annotation事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+
 </beans>

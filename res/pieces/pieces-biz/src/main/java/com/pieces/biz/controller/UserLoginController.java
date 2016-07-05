@@ -104,7 +104,7 @@ public class UserLoginController{
 			return "user_info";
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "register";
+			return "redirect:xxx";
 		}
 	}
 	
@@ -164,7 +164,7 @@ public class UserLoginController{
 	}
 	
 	@RequestMapping(value = "/findPasswordTwo")
-	public String findPasswordTwo(Model model,String pwd,String userName) {
+	public String findPasswordTwo(Model model, String pwd, String userName) {
 		try {
 			User user = new User();
 			user.setUserName(userName);
