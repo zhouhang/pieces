@@ -35,7 +35,7 @@ $(function() {
 			var selected = item.i == def ? ' selected' : '';
 			arr.push('<option value="', item.i, '"', selected, '>', item.n, '</option>');
 		});
-		$wrap.find('select:gt(0)').remove();
+		$wrap.find('option:gt(0)').remove();
 		$wrap.append(arr.join(''));
 	}
 
