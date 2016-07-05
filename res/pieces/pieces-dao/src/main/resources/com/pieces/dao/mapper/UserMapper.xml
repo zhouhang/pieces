@@ -14,16 +14,15 @@
 		<result column="role_id"  property="roleId" />
 		<result column="online_status"  property="onlineStatus" />
 		<result column="bind_erp"  property="bindErp" />
-		<result column="create_channel"  property="createChannel" />
+		<result column="source"  property="source" />
 		<result column="area_full"  property="areaFull" />
 		<result column="is_del"  property="isDel" />
 		<result column="create_time"  property="createTime" />
 		<result column="update_time"  property="updateTime" />
-
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id,user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,role_id,online_status,bind_erp,create_channel,area_full,is_del,create_time,update_time
+		id,user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,role_id,online_status,bind_erp,source,area_full,is_del,create_time,update_time
 	</sql>
 
 	<select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -46,9 +45,9 @@
 
 	<insert id="create" parameterType="com.pieces.dao.model.User">
 		insert into
-		user (user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,role_id,online_status,bind_erp,create_channel,area_full,is_del,create_time,update_time)
+		user (user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,role_id,online_status,bind_erp,source,area_full,is_del,create_time,update_time)
 		values
-		(#{userName},#{password},#{salt},#{companyFullName},#{areaId},#{contactName},#{contactMobile},#{roleId},#{onlineStatus},#{bindErp},#{createChannel},#{areaFull},#{isDel},#{createTime},#{updateTime})
+		(#{userName},#{password},#{salt},#{companyFullName},#{areaId},#{contactName},#{contactMobile},#{roleId},#{onlineStatus},#{bindErp},#{source},#{areaFull},#{isDel},#{createTime},#{updateTime})
 	</insert>
 
 	<update id="update" parameterType="com.pieces.dao.model.User">
@@ -95,8 +94,8 @@
 				bind_erp = #{bindErp},
 			</if>
 
-			<if test="createChannel != null">
-				create_channel = #{createChannel},
+			<if test="source != null">
+				source = #{source},
 			</if>
 
 			<if test="areaFull != null">
@@ -118,7 +117,6 @@
 		</set>
 		where id = #{id}
 	</update>
-
 
 	<!-- 查询user -->
   <select id="findUserByCondition" parameterType="com.pieces.dao.model.User" resultMap="BaseResultMap">

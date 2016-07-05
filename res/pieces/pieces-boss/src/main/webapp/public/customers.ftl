@@ -68,7 +68,7 @@
                         <td>${user.areaFull}</td>
                         <td>${user.contactName}</td>
                         <td>${user.contactMobile}</td>
-                        <td>${user.createTime}</td>
+                        <td>${user.createTime?date}</td>
                         <td>${user.bindErp}</td>
                         <td><a href="customers-info.html">修改</a></td>
                     </tr>
