@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,27 +25,20 @@ import com.pieces.service.utils.YPSendMessage;
 import com.pieces.service.vo.ValidFromVo;
 
 @Controller
-@RequestMapping(value = "/menber")
+@RequestMapping(value = "/user")
 public class UserController {
 	@Autowired
     private AreaService areaService;
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value = "/get/userlist")
-	public String getUserList(ModelMap model,User user,Integer pageNum,
-            Integer pageSize,HttpServletRequest request) {
-        if(pageNum==null){
-            pageNum = 1;
-        }
-        if(pageSize==null){
-            pageSize=10;
-        }
-		PageInfo<User> userPage = userService.findUserByVagueCondition(user,pageNum,pageSize);
-		
-		model.put("userPage", userPage);
-		model.put("user", user);
-		
+	@RequestMapping(value = "/index")
+	public String getUserList(HttpServletRequest request,
+							  HttpServletResponse response,
+							  Integer pageNum,
+							  Integer pageSize,
+							  ModelMap model) {
+
 		return "customers";
 	}
 	

@@ -5,7 +5,7 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.User;
 
-public interface UserDao {
+public interface UserDao extends ICommonDao<User>{
 	List<User> findUserByCondition(User user);
 	
 	PageInfo<User> findUserByVagueCondition(User user,Integer pageNum, Integer pageSize);
@@ -13,4 +13,6 @@ public interface UserDao {
 	int addUser(User user);
 
 	int updateUserByCondition(User user);
+
+
 }

@@ -35,4 +35,38 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
         return page;
 	}
 
+
+	@Override
+	public User findById(int id) {
+		return getSqlSession().selectOne("com.pieces.dao.UserMapper.findById", id);
+	}
+
+
+	@Override
+	public List<User> findAll() {
+		return getSqlSession().selectList("com.pieces.dao.UserMapper.findAll");
+	}
+
+	@Override
+	public PageInfo<User> find(int pageNum, int pageSize) {
+		List<User> list = getSqlSession().selectList("com.pieces.dao.UserMapper.findAll", null,new RowBounds(pageNum, pageSize));
+		PageInfo page = new PageInfo(list);
+		return page;
+	}
+
+	@Override
+	public int deleteById(int id) {
+		return getSqlSession().delete("com.pieces.dao.UserMapper.deleteById",id);
+	}
+
+	@Override
+	public int create(User user) {
+		return getSqlSession().insert("com.pieces.dao.UserMapper.create",user);
+	}
+
+	@Override
+	public int update(User user) {
+		return getSqlSession().update("com.pieces.dao.UserMapper.update",user);
+	}
+
 }

@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <#include "./inc/meta.ftl"/>
     <title>客户清单-boss-饮片B2B</title>
-    <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
@@ -71,7 +68,7 @@
                     <a class="btn btn-gray" href="#"><i class="fa fa-export"></i>导出</a>
                 </div>
                 <#--分页-->
-                <@p.pager pageInfo=userPage  pageUrl="/menber/get/userlist" />
+                <#--<@p.pager pageInfo=userPage  pageUrl="/menber/get/userlist" />-->
             </div>
             <div class="chart">
                 <table class="tc">

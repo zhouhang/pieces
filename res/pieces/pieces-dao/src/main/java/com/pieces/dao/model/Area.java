@@ -3,6 +3,7 @@ package com.pieces.dao.model;
 import java.io.Serializable;
 
 public  class Area implements Serializable{
+
     private Integer id;
 
     private String areaname;

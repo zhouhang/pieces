@@ -12,7 +12,7 @@ import com.pieces.dao.model.User;
  * @author feng
  *
  */
-public interface UserService {
+public interface UserService extends ICommonService<User>{
 	List<User> findUserByCondition(User user);
 	
 	PageInfo<User> findUserByVagueCondition(User user,Integer pageNum, Integer pageSize);
