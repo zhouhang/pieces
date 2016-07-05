@@ -88,7 +88,6 @@ public class GeneralController {
      * @param parentId
      */
     @RequestMapping(value = "/area")
-    @ResponseBody
     public void area(HttpServletRequest request,
                      HttpServletResponse response,
                      @RequestParam(required = false) Integer parentId) {
