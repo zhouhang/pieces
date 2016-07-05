@@ -31,9 +31,7 @@ public class User  implements Serializable {
 	
 	//联系人手机
 	private String contactMobile;
-	
-	//角色id
-	private String roleId;
+
 	
 	//在线状态（0：离线，1：在线）
 	private Boolean onlineStatus;
@@ -120,14 +118,6 @@ public class User  implements Serializable {
 
 	public void setContactMobile(String contactMobile) {
 		this.contactMobile = contactMobile;
-	}
-	
-	public String getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
 	}
 	
 	public Boolean getOnlineStatus() {

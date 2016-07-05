@@ -163,7 +163,7 @@ public class UserLoginController{
 			updateUser.setId(user.getId());
 			updateUser.setPassword(pwd);
 			updateUser.setUpdateTime(new Date());
-			updateUser = userService.creatPawAndSaltMd5(updateUser);
+			updateUser = userService.createPwdAndSaltMd5(updateUser);
 			userService.updateUserByCondition(updateUser);
 			return "message_find_pwd";
 		} catch (Exception e) {

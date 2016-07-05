@@ -1,7 +1,6 @@
 package com.pieces.biz.controller;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -57,10 +56,10 @@ public class UserInfoController {
 		User oldUser = new User();
 		BeanUtils.copyProperties(user, oldUser);
 		oldUser.setPassword(pwdOld);
-		if(userService.getPawAndSaltMd5(oldUser).getPassword().equals(user.getPassword())){
+		if(userService.getPwdAndSaltMd5(oldUser).getPassword().equals(user.getPassword())){
 			user.setPassword(pwd);
 			user.setUpdateTime(new Date());
-			user = userService.creatPawAndSaltMd5(user);
+			user = userService.createPwdAndSaltMd5(user);
 			userService.updateUserByCondition(user);
 			mv.setResult("ok");
 		}else{

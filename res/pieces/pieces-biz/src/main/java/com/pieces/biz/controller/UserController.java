@@ -1,6 +1,5 @@
 package com.pieces.biz.controller;
 
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -267,7 +266,7 @@ public class UserController {
 			updateUser.setId(user.getId());
 			updateUser.setPassword(pwd);
 			updateUser.setUpdateTime(new Date());
-			updateUser = userService.creatPawAndSaltMd5(updateUser);
+			updateUser = userService.createPwdAndSaltMd5(updateUser);
 			userService.updateUserByCondition(updateUser);
 			return "message_find_pwd";
 		} catch (Exception e) {
@@ -303,10 +302,10 @@ public class UserController {
 		User oldUser = new User();
 		BeanUtils.copyProperties(user, oldUser);
 		oldUser.setPassword(pwdOld);
-		if(userService.getPawAndSaltMd5(oldUser).getPassword().equals(user.getPassword())){
+		if(userService.getPwdAndSaltMd5(oldUser).getPassword().equals(user.getPassword())){
 			user.setPassword(pwd);
 			user.setUpdateTime(new Date());
-			user = userService.creatPawAndSaltMd5(user);
+			user = userService.createPwdAndSaltMd5(user);
 			userService.updateUserByCondition(user);
 			mv.setResult("ok");
 		}else{

@@ -12,14 +12,12 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.UserDao;
-import com.pieces.dao.model.Area;
 import com.pieces.dao.model.User;
 import com.pieces.service.UserService;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.dto.Password;
 import com.pieces.service.utils.EncryptUtil;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 @Service
 @Transactional
@@ -33,38 +31,27 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 		return userDao.findUserByCondition(user);
 	}
 
+	/**
+	 * 添加用户
+	 * @param user
+	 * @return
+     */
 	@Override
 	public int addUser(User user) {
-		user = creatPawAndSaltMd5(user);
+		createPwdAndSaltMd5(user);
 		user.setIsDel(false);
 		user.setOnlineStatus(false);
 		user.setBindErp(false);
-		user.setSource(BasicConstants.USER_CREATECHANNEL_BIZ);
 		user.setCreateTime(new Date());
-		return userDao.addUser(user);
+		return this.create(user);
 	}
 	
-	public User creatPawAndSaltMd5(User user){
-		Password pass = EncryptUtil.PiecesEncode(user.getPassword());
-		user.setPassword(pass.getPassword());
-		user.setSalt(pass.getSalt());
-		return user;
-	}
-	
-	public User getPawAndSaltMd5(User user){
-		Password pass = EncryptUtil.PiecesEncode(user.getPassword(),user.getSalt(),"");
-		user.setPassword(pass.getPassword());
-		user.setSalt(pass.getSalt());
-		return user;
-	}
-	
+
 	@Override
 	public boolean ifExistMobile(String contactMobile){
 		User user = new User();
 		user.setContactMobile(contactMobile);
 		List<User> users = userDao.findUserByCondition(user);
-
-
 		return (users != null && users.size() != 0);
 	}
 	
@@ -78,6 +65,12 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 		}else{
 			return false;
 		}
+	}
+
+
+	@Override
+	public User findByUserName(String userName) {
+		return userDao.findByUserName(userName);
 	}
 
 	@Override
@@ -114,4 +107,29 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 	public ICommonDao<User> getDao() {
 		return userDao;
 	}
+
+	/**
+	 * 生成密码加盐
+ 	 * @param user
+	 * @return
+     */
+	public User createPwdAndSaltMd5(User user){
+		Password pass = EncryptUtil.PiecesEncode(user.getPassword());
+		user.setPassword(pass.getPassword());
+		user.setSalt(pass.getSalt());
+		return user;
+	}
+
+	/**
+	 * 得到密码加盐
+	 * @param user
+	 * @return
+     */
+	public User getPwdAndSaltMd5(User user){
+		Password pass = EncryptUtil.PiecesEncode(user.getPassword(),user.getSalt(),"");
+		user.setPassword(pass.getPassword());
+		user.setSalt(pass.getSalt());
+		return user;
+	}
+
 }

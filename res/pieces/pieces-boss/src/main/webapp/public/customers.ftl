@@ -14,7 +14,7 @@
     <div class="wrap">
         <div class="title">
             <h3>客户管理</h3>
-            <div class="extra"><a class="btn btn-red" href="customers-add.html"><i class="fa fa-plus"></i>增加新客户</a></div>
+            <div class="extra"><a class="btn btn-red" href="user/add"><i class="fa fa-plus"></i>增加新客户</a></div>
         </div>
         <div class="pagin">
             <div class="extra">

@@ -19,15 +19,17 @@ public interface UserService extends ICommonService<User>{
 
 	int addUser(User user);
 	
-	User creatPawAndSaltMd5(User user);
-	
-	User getPawAndSaltMd5(User user);
+	User createPwdAndSaltMd5(User user);
+
+	User getPwdAndSaltMd5(User user);
 	
 	int updateUserByCondition(User user);
 	
 	boolean ifExistMobile(String contactMobile);
 	
 	boolean ifExistUserName(String userName);
+
+	User findByUserName(String userName);
 	
 	boolean checkMobileCode(String targetMobileCode);
 	

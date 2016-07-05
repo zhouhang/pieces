@@ -12,6 +12,8 @@ public class Result {
     public Result(Boolean status) {
         if(status){
             this.status = "y";
+        }else{
+            this.status = "1000";
         }
     }
 
