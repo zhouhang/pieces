@@ -36,12 +36,11 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 	@Override
 	public int addUser(User user) {
 		user = creatPawAndSaltMd5(user);
+		user.setIsDel(false);
+		user.setOnlineStatus(false);
+		user.setBindErp(false);
+		user.setSource(BasicConstants.USER_CREATECHANNEL_BIZ);
 		user.setCreateTime(new Date());
-		user.setUpdateTime(new Date());
-		user.setStatus(BasicConstants.USER_STATUS_VALID);
-		user.setOnlineStatus(BasicConstants.USER_ONLINESTATUS_ONLINE);
-		user.setBindErp(BasicConstants.USER_BINDERP_NO);
-		user.setCreateChannel(BasicConstants.USER_CREATECHANNEL_BIZ);
 		return userDao.addUser(user);
 	}
 	
@@ -83,7 +82,6 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 
 	@Override
 	public boolean checkMobileCode(String targetMobileCode) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 	

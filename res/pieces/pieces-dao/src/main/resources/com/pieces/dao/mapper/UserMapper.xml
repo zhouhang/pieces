@@ -11,21 +11,20 @@
 		<result column="area_id"  property="areaId" />
 		<result column="contact_name"  property="contactName" />
 		<result column="contact_mobile"  property="contactMobile" />
-		<result column="status"  property="status" />
-		<result column="create_time"  property="createTime" />
-		<result column="update_time"  property="updateTime" />
 		<result column="role_id"  property="roleId" />
 		<result column="online_status"  property="onlineStatus" />
 		<result column="bind_erp"  property="bindErp" />
 		<result column="create_channel"  property="createChannel" />
 		<result column="area_full"  property="areaFull" />
+		<result column="is_del"  property="isDel" />
+		<result column="create_time"  property="createTime" />
+		<result column="update_time"  property="updateTime" />
 
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id,user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,status,create_time,update_time,role_id,online_status,bind_erp,create_channel,area_full
+		id,user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,role_id,online_status,bind_erp,create_channel,area_full,is_del,create_time,update_time
 	</sql>
-
 
 	<select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
 		select
@@ -47,9 +46,9 @@
 
 	<insert id="create" parameterType="com.pieces.dao.model.User">
 		insert into
-		user (user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,status,create_time,update_time,role_id,online_status,bind_erp,create_channel,area_full)
+		user (user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,role_id,online_status,bind_erp,create_channel,area_full,is_del,create_time,update_time)
 		values
-		(#{userName},#{password},#{salt},#{companyFullName},#{areaId},#{contactName},#{contactMobile},#{status},#{createTime},#{updateTime},#{roleId},#{onlineStatus},#{bindErp},#{createChannel},#{areaFull})
+		(#{userName},#{password},#{salt},#{companyFullName},#{areaId},#{contactName},#{contactMobile},#{roleId},#{onlineStatus},#{bindErp},#{createChannel},#{areaFull},#{isDel},#{createTime},#{updateTime})
 	</insert>
 
 	<update id="update" parameterType="com.pieces.dao.model.User">
@@ -84,18 +83,6 @@
 				contact_mobile = #{contactMobile},
 			</if>
 
-			<if test="status != null">
-				status = #{status},
-			</if>
-
-			<if test="createTime != null">
-				create_time = #{createTime},
-			</if>
-
-			<if test="updateTime != null">
-				update_time = #{updateTime},
-			</if>
-
 			<if test="roleId != null">
 				role_id = #{roleId},
 			</if>
@@ -114,6 +101,18 @@
 
 			<if test="areaFull != null">
 				area_full = #{areaFull},
+			</if>
+
+			<if test="isDel != null">
+				is_del = #{isDel},
+			</if>
+
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+
+			<if test="updateTime != null">
+				update_time = #{updateTime},
 			</if>
 
 		</set>

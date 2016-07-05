@@ -24,7 +24,6 @@ import com.pieces.service.AreaService;
 import com.pieces.service.UserService;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.vo.MessageVo;
-import com.pieces.service.vo.TestUserVo;
 
 @Controller(value = "userLoginController")
 @RequestMapping
@@ -34,9 +33,7 @@ public class UserLoginController{
 	@Autowired
 	private UserService userService;
 	
-    public TestUserVo getUserInfo(HttpServletRequest request){
-    	return null;
-    }
+
     
 	@RequestMapping(value = "/logout")
 	public String logout(ModelMap model) {
