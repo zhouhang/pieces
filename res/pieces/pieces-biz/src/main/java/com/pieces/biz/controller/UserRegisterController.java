@@ -45,9 +45,6 @@ public class UserRegisterController {
 		user.setUserName(request.getParameter("userName"));
 		user.setPassword(request.getParameter("password"));
 		user.setCompanyFullName(request.getParameter("companyFullName"));
-		user.setProvinceCode(request.getParameter("provinceCode"));
-		user.setCityCode(request.getParameter("cityCode"));
-		user.setCountyCode(request.getParameter("countyCode"));
 		user.setContactName(request.getParameter("contactName"));
 		user.setContactMobile(request.getParameter("contactMobile"));
 		user.setAreaFull(request.getParameter("areaFull"));

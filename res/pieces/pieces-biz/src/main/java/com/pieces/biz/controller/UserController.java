@@ -1,10 +1,12 @@
 package com.pieces.biz.controller;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -23,10 +25,12 @@ import com.pieces.biz.shiro.BizToken;
 import com.pieces.dao.model.User;
 import com.pieces.service.AreaService;
 import com.pieces.service.UserService;
+import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.utils.SendMessage;
 import com.pieces.service.utils.YPSendMessage;
 import com.pieces.service.vo.MessageVo;
+import com.pieces.tools.utils.WebUtil;
 
 /**
  * 用户控制器
@@ -62,11 +66,11 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/register/save")
-	@ResponseBody
-	public String register(Model model,
+	public void register(Model model,
 							User user,
 							String mobileCode,
-							HttpServletRequest request) throws Exception {
+							HttpServletRequest request,
+							HttpServletResponse response) throws Exception {
 //		User user = new User();
 //		user.setUserName(request.getParameter("userName"));
 //		user.setPassword(request.getParameter("password"));
@@ -79,43 +83,40 @@ public class UserController {
 //		user.setAreaFull(request.getParameter("areaFull"));
 //		String mobileCode = request.getParameter("mobileCode");
 		//校验页面参数
-		MessageVo mv = new MessageVo();
-		Gson gson = new Gson();
+		
+		
 		//session中获取codeMap
 		Map codeMap = (Map)request.getSession().getAttribute(user.getContactMobile());
 		//codeMap为空判断
 		if(codeMap == null){
-			mv.setResult("false");
-			mv.setResultMessage("请获取验证码");
-			return gson.toJson(mv);
+	        Result result =  new Result(false).info("请获取验证码");
+	        WebUtil.print(response,result);
 		}
 		//获取code验证码
 		String code = codeMap.get("code").toString();
 		//验证码为空
 		if(code == null){
-			mv.setResult("false");
-			mv.setResultMessage("验证码过期");
-			return gson.toJson(mv);
+	        Result result =  new Result(false).info("验证码过期");
+	        WebUtil.print(response,result);
 		}
 		//判断输入验证码与session验证码是否相同
 		if(code.equals(mobileCode)){
 			userService.addUser(user);
-			mv.setResult("ok");
-			return gson.toJson(mv);
+	        Result result =  new Result(true);
+	        WebUtil.print(response,result);
 		}else{
-			mv.setResult("false");
-			mv.setResultMessage("验证码错误");
-			return gson.toJson(mv);
+	        Result result =  new Result(false).info("验证码错误");
+	        WebUtil.print(response,result);
 		}
 	}
 	
 	/**
-	 * 验证用户名重复
+	 * 验证用户名
 	 * @param model
 	 * @param userName 用户名
 	 * @return 
 	 */
-	@RequestMapping(value="/repeat/check")
+	@RequestMapping(value="/check")
 	@ResponseBody
 	public boolean ifExistUserName(Model model,String userName,String contactMobile){
 		if(StringUtils.isNotBlank(userName) && StringUtils.isBlank(contactMobile)){
@@ -193,14 +194,6 @@ public class UserController {
 			Session s = subject.getSession();
 			s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), tu);
 			model.put("user", tu);
-			String province = areaService.findById(Integer.parseInt(tu.getProvinceCode())).getAreaname();
-			String city = areaService.findById(Integer.parseInt(tu.getCityCode())).getAreaname();
-			String county = "";
-			if(tu.getCountyCode() != null && !tu.getCountyCode().equals("")){
-				county = areaService.findById(Integer.parseInt(tu.getCountyCode())).getAreaname();
-			}
-			String area = province + city + county;
-			model.put("area", area);
 			return "user_info";
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -286,15 +279,7 @@ public class UserController {
 	@RequestMapping()
 	public String userInfo(ModelMap model,HttpServletRequest request) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-		String province = areaService.findById(Integer.parseInt(user.getProvinceCode())).getAreaname();
-		String city = areaService.findById(Integer.parseInt(user.getCityCode())).getAreaname();
-		String county = "";
-		if(user.getCountyCode() != null && !user.getCountyCode().equals("")){
-			county = areaService.findById(Integer.parseInt(user.getCountyCode())).getAreaname();
-		}
-		String area = province + city + county;
 		model.put("user", user);
-		model.put("area", area);
 		return "user_info";
 	}
 

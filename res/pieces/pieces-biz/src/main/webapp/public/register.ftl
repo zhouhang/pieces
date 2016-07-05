@@ -184,146 +184,86 @@
             };
          	// _showMsg($('#mobileCode'), '啊啊')
             var _showMsg = function($element, msg) {
-                $element.siblings('.error').hide();
-                $element.parent().append('<span class="error">' + icons.error + msg + '</span>');
+ 					$element.siblings(".Validform_checktip").attr('class', 'Validform_checktip Validform_wrong').html(msg);
+
             }
             // 注册验证
-            $('#myform').validate({
-                rules: {
-                	userName: {
-                        required: true,
-                        // remote: 'check.php', // 使用ajax方法调用check.php验证输入值
-                        isUsername: true,
-                        rangelength: [6,20],
-                        remote: {
-                                    type:"POST",
-                                    url:"/ifExistUserName",
-                                    dataType:'json',
-                                    data:{
-                                    	userName: function() {return $("#username").val();}
-                                    }
-                                }
-                    },
-                    password: {
-                        required: true,
-                        rangelength: [6,20],
-                        isPwd: true
-                    },
-                    pwdRepeat: {
-                        required: true,
-                        equalTo: '#pwd'
-                    },
-                    companyFullName: {
-                        required: true
-                    },
-                    countyCode: {
-                        required: true
-                    },
-                    contactName: {
-                        required: true
-                    },
-                    contactMobile: {
-                        required: true,
-                        isMobile: true,
-                        remote: {
-                                    type:"POST",
-                                    url:"/ifExistMobile",
-                                    dataType:'json',
-                                    data:{
-                                    	contactMobile: function() {return $("#mobile").val();}
-                                    }
-                                }
-                    },
-                    mobileCode: {
-                        required: true
-                    },
-                    agreement: {
-                        required: true
-                    }
-                },
-                messages: {
-                	userName: {
-                        required: icons.error + '用户名必须以英文字母开头，长度6到20位',
-                        rangelength: icons.error + '用户名长度只能在6-20位字符之间',
-                        remote: icons.error + "用户名重复"
-                    },
-                    password: {
-                        required: icons.error + '请输入密码',
-                        rangelength: icons.error + '密码由数字、字母或下划线组成，长度为6-20位',
-                    },
-                    pwdRepeat: {
-                        required: icons.error + '请再重复输入一遍密码，不能留空',
-                        equalTo: icons.error + '确认新密码与新密码不一致',
-                    },
-                    companyFullName: {
-                        required: icons.error + '请输入企业名称'
-                    },
-                    countyCode: {
-                        required: icons.error + '请选择企业注册地'
-                    },
-                    contactName: {
-                        required: icons.error + '请输入联系人姓名'
-                    },
-                    contactMobile: {
-                        required: icons.error + '请输入手机号码' ,
-                        remote:  icons.error + "手机号重复"              
-                    },
-                    mobileCode: {
-                        required: icons.error + '请输入短信验证码'
-                    },
-                    agreement: {
-                        required: icons.error + '请同意协议并勾选'  
-                    }
-                },
-                onfocusout: function(element) { $(element).valid(); },
-                errorPlacement: function(error, element) {  
-                    element.parent().append(error);
-                },
-                errorElement: 'span',
-                submitHandler: function() {
-                }
-            });
-            
-            $('#submit').on('click', function() {
-                if($('#myform').valid()){
-                	$.ajax({
-                		type : "POST",
-            			url : "/register",
-            			data : {
-            				userName : $('#username').val(),
-            				password : $('#pwd').val(),
-            				companyFullName : $('#companyName').val(),
-            				provinceCode : $('#province option:selected').val(),
-            				cityCode : $('#city option:selected').val(),
-            				countyCode : $('#area option:selected').val(),
-            				contactName : $('#linkMan').val(),
-            				contactMobile : $('#mobile').val(),
-            				mobileCode : $('#mobileCode').val(),
-            				areaFull : $('#province option:selected').text() + $('#city option:selected').text() + $('#area option:selected').text()
-            			},
-            			dataType : "json",
-            			success : function(data){
-            				var result = data.result; 
-          					var resultMessage = data.resultMessage;
-          					if(result != "ok"){
-          						_showMsg($('#mobileCode'), resultMessage);
-          					}else{
-          						window.location = "/registerLogin?userName="+ $('#username').val() + "&password="+ $('#pwd').val();
-          					}
-            			}
-                	});
-                }else{
-                	return false;
-                }
-            })
+        var formValidate = $("#myform").Validform({
+            ajaxPost: true,
+            url: '/register',
+            callback: function(data){
+				var result = data.result; 
+				var resultMessage = data.resultMessage;
+				if(result != "ok"){
+					_showMsg($('#mobileCode'), resultMessage);
+				}else{
+					window.location = "/registerLogin?userName="+ $('#username').val() + "&password="+ $('#pwd').val();
+				}
+            }
+        });
 
-            var $code = $('#jCode'),
-                $mobile = $('#mobile'),
-                $getMobileCode = $('#getMobileCode'),
-                timeout = 0, 
-                timer = 0,
-                delay = 60,
-                txt = '秒后重试'
+        formValidate.addRule([
+            {
+                ele: '#username',
+                datatype: 'uname',
+                ajaxurl: 'json/checkname.php',
+                nullmsg: '用户名必须以英文字母开头，长度6到20位',
+                errormsg: '用户名长度只能在6-20位字符之间'
+            },
+            {
+                ele: '#pwd',
+                datatype: 'pwd',
+                nullmsg: '请输入密码',
+                errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
+            },
+            {
+                ele: '#pwdRepeat',
+                datatype: '*',
+                recheck: 'pwd',
+                nullmsg: '请再重复输入一遍密码，不能留空',
+                errormsg: '确认新密码与新密码不一致'
+            },
+            {
+                ele: '#companyName',
+                datatype: '*',
+                nullmsg: '请输入企业名称'
+            },
+            {
+                ele: '#area',
+                datatype: '*',
+                nullmsg: '请选择企业注册地'
+            },
+            {
+                ele: '#linkMan',
+                datatype: '*',
+                nullmsg: '请再重复输入一遍密码，不能留空'
+            },
+            {
+                ele: '#mobile',
+                datatype: 'm',
+                ajaxurl: 'json/checkmobile.php',
+                nullmsg: '请输入手机号码',
+                errormsg: '请输入正确的手机号码'
+            },
+            {
+                ele: '#mobileCode',
+                datatype: '*',
+                nullmsg: '请输入短信验证码'
+            },
+            {
+                ele: '#agreement',
+                datatype: '*',
+                nullmsg: '请同意协议并勾选'
+            }
+        ])
+
+        var $mobile = $('#mobile'),
+            $getMobileCode = $('#getMobileCode'),
+            timeout = 0, 
+            timer = 0,
+            delay = 60,
+            txt = '秒后重试';
+
 
             var _clock = function() {
                 timer && clearInterval(timer);
@@ -338,31 +278,41 @@
             }
 
             // 验证码
-            $getMobileCode.on('click', function() {
-            	$.ajax({
-            		type : "POST",
-        			url : "/getMobileCode",
-        			data : {
-        				contactMobile:$('#mobile').val()
-      				  },
-        			dataType : "json",
-        			success : function(data){
-        				var result = data; 
-      					var resultMessage = data;
-      					if(result != "true"){
-      						_showMsg($('#mobileCode'), "验证码发送失败");
-      					}
-        			}
-            	});
-            	
-                if($mobile.valid() && timeout === 0) {
-                    timeout = delay;
-                    $getMobileCode.text(timeout + txt).prop('disabled', true).prev().focus();
-                    _clock();
+        var _sendMobileCode = function() {
+            $.ajax({
+                type : 'POST',
+                url : 'json/getMobileCode.php',
+                data : {
+                    contactMobile: $mobile.val()
+                },
+                dataType : 'json',
+                success : function(data){
+                    if (data.status !== 'y') {
+                        clearInterval(timer);
+                        $getMobileCode.text('获取验证码').prop('disabled', false);
+                        _showMsg($('#mobileCode'), data.resultMessage);
+                        timeout = 0;
+                    } else {
+                        timeout = delay;
+                        _clock();
+                        $getMobileCode.text(timeout + txt).prop('disabled', true);
+                    }
                 }
             });
+        }
 
-        })
+        // 验证码
+        $getMobileCode.prop('disabled', false).on('click', function() {
+            if(timeout === 0 && formValidate.check(false, $mobile)) {
+                timeout = delay;
+                _sendMobileCode();
+            } else {
+                $mobile.focus();
+            }
+        });
+
+
+    })
     </script>
 </body>
 </html>

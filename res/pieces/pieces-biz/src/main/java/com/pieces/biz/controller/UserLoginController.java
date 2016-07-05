@@ -93,14 +93,6 @@ public class UserLoginController{
 			Session s = subject.getSession();
 			s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), tu);
 			model.put("user", tu);
-			String province = areaService.findById(Integer.parseInt(tu.getProvinceCode())).getAreaname();
-			String city = areaService.findById(Integer.parseInt(tu.getCityCode())).getAreaname();
-			String county = "";
-			if(tu.getCountyCode() != null && !tu.getCountyCode().equals("")){
-				county = areaService.findById(Integer.parseInt(tu.getCountyCode())).getAreaname();
-			}
-			String area = province + city + county;
-			model.put("area", area);
 			return "user_info";
 		} catch (Exception e) {
 			e.printStackTrace();
