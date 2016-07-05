@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.pieces.dao.ICommonDao;
+import com.pieces.service.AbsCommonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +18,12 @@ import com.pieces.service.UserService;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.dto.Password;
 import com.pieces.service.utils.EncryptUtil;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 @Service
-public class UserServiceImpl implements UserService {
+@Transactional
+public class UserServiceImpl extends AbsCommonService<User> implements UserService {
 	
 	@Autowired
 	private UserDao userDao;
@@ -108,4 +112,8 @@ public class UserServiceImpl implements UserService {
 		return userDao.findUserByVagueCondition(user,pageNum,pageSize);
 	}
 
+	@Override
+	public ICommonDao<User> getDao() {
+		return userDao;
+	}
 }

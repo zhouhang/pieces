@@ -36,7 +36,7 @@
 
 	<!--上传文件-->
 	<bean id="defaultUploadFile" class="com.pieces.tools.upload.DefaultUploadFile">
-		<property name="basePath" value="${upload.path}"/>
+		<property name="basePath" value="${biz.upload.path}"/>
 	</bean>
 	
 	<!-- 此处引入 dao项目下所有的spring配置文件管理器 -->
