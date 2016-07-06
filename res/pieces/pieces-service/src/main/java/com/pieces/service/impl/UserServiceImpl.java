@@ -16,10 +16,10 @@ import com.pieces.dao.UserDao;
 import com.pieces.dao.model.User;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.UserService;
-import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.dto.Password;
 import com.pieces.service.utils.EncryptUtil;
 import com.pieces.service.utils.ValidUtils;
+
 
 @Service
 @Transactional
@@ -33,32 +33,22 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 		return userDao.findUserByCondition(user);
 	}
 
+	/**
+	 * 添加用户
+	 * @param user
+	 * @return
+     */
 	@Override
 	public int addUser(User user) {
-		user = creatPawAndSaltMd5(user);
+		createPwdAndSaltMd5(user);
+		user.setIsDel(false);
+		user.setOnlineStatus(false);
+		user.setBindErp(false);
 		user.setCreateTime(new Date());
-		user.setUpdateTime(new Date());
-		user.setStatus(BasicConstants.USER_STATUS_VALID);
-		user.setOnlineStatus(BasicConstants.USER_ONLINESTATUS_ONLINE);
-		user.setBindErp(BasicConstants.USER_BINDERP_NO);
-		user.setCreateChannel(BasicConstants.USER_CREATECHANNEL_BIZ);
-		return userDao.addUser(user);
+		return this.create(user);
 	}
 	
-	public User creatPawAndSaltMd5(User user){
-		Password pass = EncryptUtil.PiecesEncode(user.getPassword());
-		user.setPassword(pass.getPassword());
-		user.setSalt(pass.getSalt());
-		return user;
-	}
-	
-	public User getPawAndSaltMd5(User user){
-		Password pass = EncryptUtil.PiecesEncode(user.getPassword(),user.getSalt(),"");
-		user.setPassword(pass.getPassword());
-		user.setSalt(pass.getSalt());
-		return user;
-	}
-	
+
 	@Override
 	public boolean ifExistMobile(String contactMobile){
 		User user = new User();
@@ -75,9 +65,14 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 		return ValidUtils.listBlank(users);
 	}
 
+
+	@Override
+	public User findByUserName(String userName) {
+		return userDao.findByUserName(userName);
+	}
+
 	@Override
 	public boolean checkMobileCode(String targetMobileCode) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -127,5 +122,29 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 			message.append("联系人手机错误");
 		}
 		return message.toString();
+	}
+
+	/**
+	 * 生成密码加盐
+ 	 * @param user
+	 * @return
+     */
+	public User createPwdAndSaltMd5(User user){
+		Password pass = EncryptUtil.PiecesEncode(user.getPassword());
+		user.setPassword(pass.getPassword());
+		user.setSalt(pass.getSalt());
+		return user;
+	}
+
+	/**
+	 * 得到密码加盐
+	 * @param user
+	 * @return
+     */
+	public User getPwdAndSaltMd5(User user){
+		Password pass = EncryptUtil.PiecesEncode(user.getPassword(),user.getSalt(),"");
+		user.setPassword(pass.getPassword());
+		user.setSalt(pass.getSalt());
+		return user;
 	}
 }

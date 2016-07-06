@@ -1,35 +1,47 @@
-<!-- site-nav end -->
-<div class="site-nav">
-    <div class="wrap">
-        <p class="fl">欢迎光临 药优优饮片采购平台！</p>
-        <ul class="fr">
-            <li><a href="login.html">登录</a> | <a href="register.html">注册</a></li>
-            <li><a href="helper.html">帮助中心</a></li>
-            <li><a href="sitemap.html">网站导航</a></li>
-        </ul>
-    </div>
-</div><!-- site-nav end -->
-
 <!-- header start -->
 <div class="header">
     <div class="wrap">
         <div class="logo">
-            <a href="/">饮片B2B首页</a>
+            <a href="home.html">药优优电子商务管理系统</a>
         </div>
-        <div class="plus">
-            <a class="btn" href="#">我的询价单（10）<i>&gt;</i></a>
-        </div>
-        <div class="search">
-            <div class="form">
-                <button class="btn" type="button">搜索</button>
-                <input class="ipt" name="" id="" placeholder="输入关键字" value="" type="text">
-            </div>
-            <div class="hotwords">
-                <span>热门搜索：</span>
-                <a class="red" href="#!">麻辣灯影牛肉丝</a>
-                <a href="#!">小蜜蜂蛋糕</a>
-                <a href="#!">长寿核桃</a>
-            </div>
+        <div class="user">
+            <span>登录用户 hehuan</span>
+            <i>|</i>
+            <span>2016年6月20日 星期三</span>
+            <i>|</i>
+            <a href="logout.html">退出</a>
         </div>
     </div>
 </div><!-- header end -->
+
+
+<!-- nav start -->
+<div class="nav">
+    <div class="wrap">
+        <ul>
+            <li><a href="#!">首页</a></li>
+            <li><a href="#!">销售</a></li>
+            <li><a href="#!">目录</a></li>
+            <li>
+                <a class="curr" href="#!">客户</a>
+                <div class="subnav">
+                    <a href="customers.html">客户管理</a>
+                </div>
+            </li>
+            <li>
+                <a href="#!">促销</a>
+                <div class="subnav">
+                    <a href="customers.html">客户管理</a>
+                    <a href="customers.html">客户管理</a>
+                    <a href="customers.html">客户管理</a>
+                    <a href="customers.html">客户管理</a>
+                    <a href="customers.html">客户管理</a>
+                </div>
+            </li>
+            <li><a href="#!">邮件列表</a></li>
+            <li><a href="#!">CMS</a></li>
+            <li><a href="#!">报表</a></li>
+            <li><a href="#!">系统</a></li>
+        </ul>
+    </div>
+</div><!-- nav end -->

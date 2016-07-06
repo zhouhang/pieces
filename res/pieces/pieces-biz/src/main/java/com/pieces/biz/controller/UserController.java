@@ -312,7 +312,7 @@ public class UserController extends BaseController {
 		updateUser.setId(user.getId());
 		updateUser.setPassword(pwd);
 		updateUser.setUpdateTime(new Date());
-		updateUser = userService.creatPawAndSaltMd5(updateUser);
+		updateUser = userService.createPwdAndSaltMd5(updateUser);
 		userService.updateUserByCondition(updateUser);
 		return "message_find_pwd";
 	}
@@ -337,7 +337,7 @@ public class UserController extends BaseController {
 		User oldUser = new User();
 		BeanUtils.copyProperties(user, oldUser);
 		oldUser.setPassword(pwdOld);
-		if (!userService.getPawAndSaltMd5(oldUser).getPassword().equals(user.getPassword())) {
+		if (!userService.getPwdAndSaltMd5(oldUser).getPassword().equals(user.getPassword())) {
 			Result result = new Result(false).info("原密码有误");
 			WebUtil.print(response, result);
 			return;
@@ -345,7 +345,7 @@ public class UserController extends BaseController {
 		
 		user.setPassword(pwd);
 		user.setUpdateTime(new Date());
-		user = userService.creatPawAndSaltMd5(user);
+		user = userService.createPwdAndSaltMd5(user);
 		userService.updateUserByCondition(user);
 		Result result = new Result(true);
 		WebUtil.print(response, result);

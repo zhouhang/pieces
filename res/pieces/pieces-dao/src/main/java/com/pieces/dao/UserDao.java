@@ -14,5 +14,6 @@ public interface UserDao extends ICommonDao<User>{
 
 	int updateUserByCondition(User user);
 
+	User findByUserName(String userName);
 
 }

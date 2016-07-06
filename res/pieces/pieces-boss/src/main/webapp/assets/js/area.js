@@ -12,7 +12,7 @@ $(function() {
 			return false;
 		}
 		$.ajax({
-			url: '/gen/area',
+			url: 'gen/area',
 			data: {'parentId': pid},
 			// dataType: 'jsonp',
 			success: function(data) {
@@ -48,6 +48,6 @@ $(function() {
 		getArea(val, $area);
 	});
 
-	getArea('', $province); 
+	getArea('', $province);
 
 })

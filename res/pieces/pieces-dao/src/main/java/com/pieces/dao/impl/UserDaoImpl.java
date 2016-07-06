@@ -28,6 +28,16 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 		return getSqlSession().update("com.pieces.dao.UserMapper.updateUserByCondition", user);
 	}
 
+	/**
+	 * 通过用户名或者手机号查询用户
+	 * @param userName
+	 * @return
+     */
+	@Override
+	public User findByUserName(String userName) {
+		return getSqlSession().selectOne("com.pieces.dao.UserMapper.findByUserName", userName);
+	}
+
 	@Override
 	public PageInfo<User> findUserByVagueCondition(User user,Integer pageNum, Integer pageSize) {
 		List<User> list = getSqlSession().selectList("com.pieces.dao.UserMapper.findUserByVagueCondition", user,new RowBounds(pageNum, pageSize));

@@ -122,8 +122,6 @@
                             <td><a href="customers-info.html">修改</a></td>
                         </tr>
                         </#list>
-
-
                     </tbody>
                 </table>
             </div>

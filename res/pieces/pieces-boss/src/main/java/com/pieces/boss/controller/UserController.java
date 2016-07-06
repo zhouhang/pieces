@@ -6,11 +6,16 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pieces.service.constant.bean.Result;
+import com.pieces.tools.utils.WebUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
@@ -27,154 +32,82 @@ import com.pieces.service.vo.ValidFromVo;
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
-	@Autowired
-    private AreaService areaService;
+
 	@Autowired
 	private UserService userService;
-	
-	@RequestMapping(value = "/index")
-	public String getUserList(HttpServletRequest request,
-							  HttpServletResponse response,
-							  Integer pageNum,
-							  Integer pageSize,
-							  ModelMap model) {
 
+	/**
+	 * 会员查询页面
+	 * @param request
+	 * @param response
+	 * @param pageNum
+	 * @param pageSize
+	 * @param model
+     * @return
+     */
+	@RequestMapping(value = "/index")
+	public String userIndex(HttpServletRequest request,
+							HttpServletResponse response,
+							Integer pageNum,
+							Integer pageSize,
+							ModelMap model) {
+		pageNum=pageNum==null?1:pageNum;
+		pageSize=pageSize==null?10:pageSize;
+		PageInfo<User> userPage =	userService.find(pageNum,pageSize);
+		model.put("userPage",userPage);
 		return "customers";
 	}
-	
-	@RequestMapping(value = "/get/user")
-	public String getUser(ModelMap model,User user,HttpServletRequest request) {
-		List<User> users = userService.findUserByCondition(user);
-		
-		model.put("user", users.get(0));
-		
-		return "customers-info";
-	}
-	
-	@RequestMapping(value = "/add/user")
-	@ResponseBody
-	public String addUser(ModelMap model,User user,HttpServletRequest request) {
-		ValidFromVo mv = new ValidFromVo();
-		if(user.getPassword()!=null&&!user.getPassword().equals("")){
-			userService.addUser(user);
-			mv.setStatus("y");
-		}else{
-			if(getMobileCode(user.getContactMobile(),request)){
-				Map codeMap = (Map)request.getSession().getAttribute(user.getContactMobile());
-				if(codeMap != null){
-					String code = codeMap.get("code").toString();
-					if(code!=null&&!code.equals("")){
-						user.setPassword(code);
-						userService.addUser(user);
-						mv.setStatus("y");
-					}else{
-						mv.setStatus("n");
-						mv.setInfo("验证码过期");
-					}
-				}else{
-					mv.setStatus("n");
-					mv.setInfo("短信发送失败");
-				}
-			}else{
-				mv.setStatus("n");
-				mv.setInfo("短信发送失败");
-			}
-		}
-		Gson gson = new Gson();
-		return gson.toJson(mv);
-	}
-	
-	@RequestMapping(value = "/to/add/user")
-	public String toAddUser(ModelMap model,HttpServletRequest request) {
+
+	/**
+	 * 添加会员页面
+	 * @param request
+	 * @param response
+     * @return
+     */
+	@RequestMapping(value = "/add" ,method= RequestMethod.GET)
+	public String userAdd(HttpServletRequest request,
+						  HttpServletResponse response){
 		return "customers-add";
 	}
-	
-	@RequestMapping(value = "/to/add/account")
-	public String toAddAccount(ModelMap model,String id,HttpServletRequest request) {
-		User user = new User();
-		user.setId(Integer.parseInt(id));
-		List<User> users = userService.findUserByCondition(user);
-		Area province = areaService.findById(Integer.parseInt(users.get(0).getProvinceCode()));
-		Area city = areaService.findById(Integer.parseInt(users.get(0).getCityCode()));
-		Area area = areaService.findById(Integer.parseInt(users.get(0).getCountyCode()));
-		model.put("user", users.get(0));
-		model.put("province", province);
-		model.put("city", city);
-		model.put("area", area);
-		return "customers-account";
+
+	/**
+	 * 提交用户信息
+	 * @param request
+	 * @param response
+	 * @param user
+     */
+	@RequestMapping(value = "/add" ,method= RequestMethod.POST)
+	public void userSubmit(HttpServletRequest request,
+						   HttpServletResponse response,
+						   User user){
+		user.setSource(BasicConstants.USER_CREATECHANNEL_BOSS);
+		int userId = userService.addUser(user);
+		System.out.println(user.getId());
 	}
-	
-	@RequestMapping(value = "/update/account")
-	@ResponseBody
-	public String updateAccount(ModelMap model,User user,HttpServletRequest request) {
-		ValidFromVo mv = new ValidFromVo();
-		if(user.getPassword()!=null&&!user.getPassword().equals("")){
-			user = userService.getPawAndSaltMd5(user);
-			userService.updateUserByCondition(user);
-			mv.setStatus("y");
-		}else{
-			if(getMobileCode(user.getContactMobile(),request)){
-				Map codeMap = (Map)request.getSession().getAttribute(user.getContactMobile());
-				if(codeMap != null){
-					String code = codeMap.get("code").toString();
-					if(code!=null&&!code.equals("")){
-						user.setPassword(code);
-						user = userService.getPawAndSaltMd5(user);
-						userService.updateUserByCondition(user);
-						mv.setStatus("y");
-					}else{
-						mv.setStatus("n");
-						mv.setInfo("验证码过期");
-					}
-				}else{
-					mv.setStatus("n");
-					mv.setInfo("短信发送失败");
-				}
+
+	/**
+	 * 验证用户名和手机号
+	 * @param request
+	 * @param response
+
+     */
+	@RequestMapping(value = "/username/check" ,method= RequestMethod.POST)
+	public void checkUserName(HttpServletRequest request,
+							  HttpServletResponse response,
+							  @RequestParam(required = true) String name,
+							  @RequestParam(required = true) String param){
+
+		if("userName".equals(name)&&StringUtils.isNotBlank(param)){
+			User user =	userService.findByUserName(param);
+			if(user!=null){
+				WebUtil.print(response,new Result(false).info("该用户名已存在!"));
 			}else{
-				mv.setStatus("n");
-				mv.setInfo("短信发送失败");
+				WebUtil.print(response,new Result(true).info("可以注册用户名!"));
 			}
+			return;
 		}
-		Gson gson = new Gson();
-		return gson.toJson(mv);
+		WebUtil.print(response,new Result(false).info("用户名不能为空!"));
 	}
-	
-	@RequestMapping(value="/ifexist/username")
-	@ResponseBody
-	public String ifExistUserName(Model model,HttpServletRequest request){
-		String userName = request.getParameter("param");
-		ValidFromVo vo = new ValidFromVo();
-		if(userService.ifExistUserName(userName)){
-			vo.setStatus("n");
-			vo.setInfo("用户名重复");
-		}else{
-			vo.setStatus("y");
-		}
-		Gson gson = new Gson();
-		return gson.toJson(vo);
-	}
-	
-	@RequestMapping(value="/ifexist/mobile")
-	@ResponseBody
-	public String ifExistMobile(Model model,HttpServletRequest request){
-		String contactMobile = request.getParameter("param");
-		ValidFromVo vo = new ValidFromVo();
-		if(userService.ifExistMobile(contactMobile)){
-			vo.setStatus("n");
-			vo.setInfo("手机号重复");
-		}else{
-			vo.setStatus("y");
-		}
-		Gson gson = new Gson();
-		return gson.toJson(vo);
-	}
-	
-	public boolean getMobileCode(String contactMobile,HttpServletRequest request){
-		SendMessage sm = new YPSendMessage();
-		if(sm.sendMessage(request, contactMobile)){
-			return true;
-		}else{
-			return false;
-		}
-	}
+
+
 }
