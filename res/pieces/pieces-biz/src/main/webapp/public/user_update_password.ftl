@@ -148,7 +148,7 @@
                             </div>
                         </div>
 
-                        <div class="group">
+                        <div class="ft">
                             <div class="cnt">
                                 <button type="submit" class="btn btn-red btn-wide" id="submit">提交修改</button>
                             </div>
@@ -184,56 +184,33 @@
     </div><!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/validform.min.js"></script>
     <script src="js/member.js"></script>
     <script>
         $(function() {
-            var icons = {
-                error: '<i class="fa fa-prompt"></i>'
-            };
-         	// _showMsg($('#mobileCode'), '啊啊')
-            var _showMsg = function($element, msg) {
-                $element.siblings('.error').hide();
-                $element.parent().append('<span class="error">' + icons.error + msg + '</span>');
-            }
-            // 注册验证
-            $('#myform').validate({
-                rules: {
-                    pwdOld: {
-                        required: true
-                    },
-                    pwd: {
-                        required: true,
-                        rangelength: [6,20],
-                        isPwd: true
-                    },
-                    pwdRepeat: {
-                        required: true,
-                        equalTo: '#pwd'
-                    }
+            var formValidate = $("#myform").Validform();
+
+            formValidate.addRule([
+                {
+                    ele: '#pwdOld',
+                    datatype: '*',
+                    nullmsg: '请输入原始密码'
                 },
-                messages: {
-                    pwdOld: {
-                        required: icons.error + '请输入原始密码'
-                    },
-                    pwd: {
-                        required: icons.error + '请输入新密码',
-                        rangelength: icons.error + '密码由数字、字母或下划线组成，长度为6-20位',
-                    },
-                    pwdRepeat: {
-                        required: icons.error + '请再重复输入一遍密码，不能留空',
-                        equalTo: icons.error + '确认新密码与新密码不一致',
-                    }
+                {
+                    ele: '#pwd',
+                    datatype: 'pwd',
+                    nullmsg: '请输入新密码',
+                    errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
                 },
-                onfocusout: function(element) { $(element).valid(); },
-                errorPlacement: function(error, element) {  
-                    element.parent().append(error);
-                },
-                errorElement: 'span',
-                submitHandler: function(form) {
-                    
+                {
+                    ele: '#pwdRepeat',
+                    datatype: '*',
+                    recheck: 'pwd',
+                    nullmsg: '请再重复输入一遍密码，不能留空',
+                    errormsg: '确认新密码与新密码不一致'
                 }
-            });
+            ])
+
             
             $('#submit').on('click', function() {
                 if($('#myform').valid()){

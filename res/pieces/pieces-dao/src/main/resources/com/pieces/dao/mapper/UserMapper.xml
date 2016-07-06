@@ -149,15 +149,13 @@
 	<insert id="addUser" parameterType="com.pieces.dao.model.User" useGeneratedKeys="true" keyProperty="id">
 		<![CDATA[
 			insert into user
-			(user_name,password,salt,company_full_name,province_code,city_code,county_code,contact_name,contact_mobile,status,create_time,update_time
+			(user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,status,create_time,update_time
 			,online_status,bind_erp,create_channel,area_full)
 			values (#{userName,jdbcType=VARCHAR},
 			#{password,jdbcType=VARCHAR},
 			#{salt,jdbcType=VARCHAR},
 			#{companyFullName,jdbcType=VARCHAR},
-			#{provinceCode,jdbcType=VARCHAR},
-			#{cityCode,jdbcType=VARCHAR},
-			#{countyCode,jdbcType=VARCHAR},
+			#{areaId,jdbcType=VARCHAR},
 			#{contactName,jdbcType=VARCHAR},
 			#{contactMobile,jdbcType=VARCHAR},
 			#{status,jdbcType=INTEGER},
@@ -186,14 +184,8 @@
 	        <if test="companyFullName != null">
 	        	company_full_name = #{companyFullName,jdbcType=VARCHAR},
 	        </if>
-	        <if test="provinceCode != null">
-	        	province_code = #{provinceCode,jdbcType=VARCHAR},
-	        </if>
-	        <if test="cityCode != null">
-	        	city_code = #{cityCode,jdbcType=VARCHAR},
-	        </if>
-	        <if test="countyCode != null">
-	        	county_code = #{countyCode,jdbcType=INTEGER},
+	        <if test="areaId != null">
+	        	area_id = #{areaId,jdbcType=VARCHAR},
 	        </if>
 	        <if test="contactName != null">
 	        	contact_name = #{contactName,jdbcType=VARCHAR},

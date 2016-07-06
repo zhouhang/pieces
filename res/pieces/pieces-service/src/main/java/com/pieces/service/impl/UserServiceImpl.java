@@ -2,24 +2,24 @@ package com.pieces.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import javax.servlet.http.HttpServletRequest;
-
-import com.pieces.dao.ICommonDao;
-import com.pieces.service.AbsCommonService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.ICommonDao;
 import com.pieces.dao.UserDao;
-import com.pieces.dao.model.Area;
 import com.pieces.dao.model.User;
+import com.pieces.service.AbsCommonService;
 import com.pieces.service.UserService;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.dto.Password;
 import com.pieces.service.utils.EncryptUtil;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
+import com.pieces.service.utils.ValidUtils;
 
 @Service
 @Transactional
@@ -64,42 +64,21 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 		User user = new User();
 		user.setContactMobile(contactMobile);
 		List<User> users = userDao.findUserByCondition(user);
-
-
 		return (users != null && users.size() != 0);
 	}
 	
 	@Override
-	public boolean ifExistUserName(String userName){
+	public boolean checkUserName(String userName){
 		User user = new User();
 		user.setUserName(userName);
 		List<User> users = userDao.findUserByCondition(user);
-		if(users != null && users.size() != 0){
-			return true;
-		}else{
-			return false;
-		}
+		return ValidUtils.listBlank(users);
 	}
 
 	@Override
 	public boolean checkMobileCode(String targetMobileCode) {
 		// TODO Auto-generated method stub
 		return false;
-	}
-	
-	@Override
-	public String getRemoteHost(HttpServletRequest request){
-	    String ip = request.getHeader("x-forwarded-for");
-	    if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
-	        ip = request.getHeader("Proxy-Client-IP");
-	    }
-	    if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
-	        ip = request.getHeader("WL-Proxy-Client-IP");
-	    }
-	    if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
-	        ip = request.getRemoteAddr();
-	    }
-	    return ip.equals("0:0:0:0:0:0:0:1")?"127.0.0.1":ip;
 	}
 
 	@Override
@@ -115,5 +94,38 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 	@Override
 	public ICommonDao<User> getDao() {
 		return userDao;
+	}
+	
+	/**
+	 * user后台验证
+	 */
+	public String valid(User user){
+		StringBuffer message = new StringBuffer();
+		Pattern pattern = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$");
+		Matcher matcher = pattern.matcher(user.getUserName());
+		if(StringUtils.isBlank(user.getUserName()) || !matcher.matches()){
+			message.append("用户名错误");
+		}
+		if(this.checkUserName(user.getUserName())){
+			message.append("用户名重复");
+		}
+		if(StringUtils.isBlank(user.getPassword())){
+			message.append("密码不能为空");
+		}
+		if(StringUtils.isBlank(user.getCompanyFullName())){
+			message.append("企业全称不能为空");
+		}
+		if(user.getAreaId() >= 10000){
+			message.append("注册地有误");
+		}
+		if(StringUtils.isBlank(user.getContactName())){
+			message.append("联系人姓名不能为空");
+		}
+		pattern = Pattern.compile("^1[345678]\\d{9}$");
+		matcher = pattern.matcher(user.getContactMobile());
+		if(StringUtils.isBlank(user.getContactMobile()) || !matcher.matches()){
+			message.append("联系人手机错误");
+		}
+		return message.toString();
 	}
 }

@@ -12,17 +12,12 @@ $(function() {
 			return false;
 		}
 		$.ajax({
-			url: 'gen/area',
+			url: '/gen/area',
 			data: {'parentId': pid},
 			// dataType: 'jsonp',
 			success: function(data) {
 				citys[pid] = data;
 				toHtml(pid, $wrap);
-			},
-			error: function() {
-				setTimeout(function() {
-					getArea(pid);
-				}, 1e3);
 			}
 		});
 	}
@@ -34,7 +29,7 @@ $(function() {
 			var selected = item.id == def ? ' selected' : '';
 			arr.push('<option value="', item.id, '"', selected, '>', item.areaname, '</option>');
 		});
-		$wrap.find('select:gt(0)').remove();
+		$wrap.find('option:gt(0)').remove();
 		$wrap.append(arr.join(''));
 	}
 

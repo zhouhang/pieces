@@ -7,6 +7,10 @@ import org.apache.shiro.authc.UsernamePasswordToken;
  */
 public class BizToken extends UsernamePasswordToken {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String validationCode;
 
 	public String getValidationCode() {

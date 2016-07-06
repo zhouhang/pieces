@@ -71,7 +71,7 @@
                         </div>
                     </div>
 
-                    <div class="group">
+                    <div class="ft">
                         <div class="cnt">
                             <button type="submit" class="btn btn-red btn-wide" id="submit">下一步</button>
                         </div>
@@ -131,89 +131,56 @@
     </div><!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/validform.min.js"></script>
     <script>
         $(function() {
-            var icons = {
-                error: '<i class="fa fa-prompt"></i>'
-            };
-            
-         	// _showMsg($('#mobileCode'), '啊啊')
+
             var _showMsg = function($element, msg) {
-                $element.siblings('.error').hide();
-                $element.parent().append('<span class="error">' + icons.error + msg + '</span>');
+                $element.siblings(".Validform_checktip").attr('class', 'Validform_checktip Validform_wrong').html(msg);
             }
             
-            // 注册验证
-            $('#myform').validate({
-                rules: {
-                    username: {
-                        required: true,
-                        // remote: 'check.php', // 使用ajax方法调用check.php验证输入值
-                        isUsername: true,
-                        rangelength: [6,20]
-                    },
-                    mobile: {
-                        required: true,
-                        isMobile: true
-                    },
-                    mobileCode: {
-                        required: true
+            var formValidate = $("#myform").Validform({
+                ajaxPost: true,
+                url: '/findPasswordOne',
+                callback: function(data){
+                    switch (data.status) {
+                        case 'y':
+                            window.location.href = 'find_password_2.html';
+                            break;
+                        case 'falseCode':
+                            _showMsg($('#mobileCode'), data.resultMessage);
+                            break;
+                        case 'falseMobile':
+                            _showMsg($('#mobile'), data.resultMessage);
+                            break;
+                        case 'falseName':
+                            _showMsg($('#username'), data.resultMessage);
+                            break;
+                        // no default
                     }
-                },
-                messages: {
-                    username: {
-                        required: icons.error + '用户名必须以英文字母开头，长度6到20位',
-                        rangelength: icons.error + '用户名长度只能在6-20位字符之间'
-                    },
-                    mobile: {
-                        required: icons.error + '请输入手机号码'               
-                    },
-                    mobileCode: {
-                        required: icons.error + '请输入短信验证码'
-                    }
-                },
-                // onkeyup: false,
-                onfocusout: function(element) { $(element).valid(); },
-                errorPlacement: function(error, element) {  
-                    element.parent().append(error);
-                },
-                errorElement: 'span',
-                submitHandler: function(form) {
                 }
             });
-            
-            $('#submit').on('click', function() {
-                if($('#myform').valid()){
-                	$.ajax({
-                		type : "POST",
-            			url : "/findPasswordOne",
-            			data : {
-	                		username:$('#username').val(),
-	                    	mobile:$('#mobile').val(),
-	                    	mobileCode:$('#mobileCode').val()
-          				  },
-            			dataType : "json",
-            			success : function(data){
-            				var result = data.result; 
-          					var resultMessage = data.resultMessage;
-          					if(result != "ok"){
-          						if(result == "falseCode")
-          							_showMsg($('#mobileCode'), resultMessage);
-          						if(result == "falseMobile")
-              						_showMsg($('#mobile'), resultMessage);
-          						if(result == "falseName")
-              						_showMsg($('#username'), resultMessage);
-          						
-          					}else{
-          						window.location = "/toFindPasswordTwo?userName="+resultMessage;
-          					}
-            			}
-                	});
-                }else{
-                	return false;
+
+            formValidate.addRule([
+                {
+                    ele: '#username',
+                    datatype: '*',
+                    nullmsg: '请输入用户名'
+                },
+                {
+                    ele: '#mobile',
+                    datatype: 'm',
+                    nullmsg: '请输入手机号码',
+                    errormsg: '请输入正确的手机号码'
+                },
+                {
+                    ele: '#mobileCode',
+                    datatype: '*',
+                    nullmsg: '请输入短信验证码'
                 }
-            })
+            ])
+
+
 
             var $mobile = $('#mobile'),
                 $getMobileCode = $('#getMobileCode'),
@@ -235,29 +202,39 @@
             }
 
             // 验证码
-            $getMobileCode.on('click', function() {
-            	$.ajax({
-            		type : "POST",
-        			url : "/getMobileCode",
-        			data : {
-        				contactMobile:$('#mobile').val()
-      				  },
-        			dataType : "json",
-        			success : function(data){
-        				var result = data.result; 
-      					var resultMessage = data.resultMessage;
-      					if(result != "ok"){
-      						_showMsg($('#mobileCode'), resultMessage);
-      					}
-        			}
-            	});
-            	
-                if($mobile.valid() && timeout === 0) {
+            var _sendMobileCode = function() {
+                $.ajax({
+                    type : 'POST',
+                    url : 'json/getMobileCode.php',
+                    data : {
+                        contactMobile: $mobile.val()
+                    },
+                    dataType : 'json',
+                    success : function(data){
+                        if (data.status !== 'y') {
+                            clearInterval(timer);
+                            $getMobileCode.text('获取验证码').prop('disabled', false);
+                            _showMsg($('#mobileCode'), data.resultMessage);
+                            timeout = 0;
+                        } else {
+                            timeout = delay;
+                            _clock();
+                            $getMobileCode.text(timeout + txt).prop('disabled', true);
+                        }
+                    }
+                });
+            }
+
+            // 验证码
+            $getMobileCode.prop('disabled', false).on('click', function() {
+                if(timeout === 0 && formValidate.check(false, $mobile)) {
                     timeout = delay;
-                    $getMobileCode.text(timeout + txt).prop('disabled', true).prev().focus();
-                    _clock();
+                    _sendMobileCode();
+                } else {
+                    $mobile.focus();
                 }
             });
+
 
         })
     </script>

@@ -27,9 +27,9 @@ public interface UserService extends ICommonService<User>{
 	
 	boolean ifExistMobile(String contactMobile);
 	
-	boolean ifExistUserName(String userName);
+	boolean checkUserName(String userName);
 	
 	boolean checkMobileCode(String targetMobileCode);
 	
-	String getRemoteHost(HttpServletRequest request);
+	String valid(User user);
 }

@@ -122,7 +122,7 @@
                             <i>*</i>企业注册地：
                         </div>
                         <div class="cnt">
-                            <span class="val">${ area!''}</span>
+                            <span class="val">${ user.areaFull!''}</span>
                         </div>
                     </div>
 

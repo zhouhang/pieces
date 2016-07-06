@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>登录-饮片B2B</title>
     <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -25,7 +25,7 @@
     <!-- slide start -->
     <div class="slide slide-full">
         <div class="bd">
-            <div class="item" style="background-image:url(images/banner-login.jpg);"></div>
+            <div class="item" style="background-image:url(/images/banner-login.jpg);"></div>
         </div>
 
         <div class="login-box">
@@ -56,8 +56,8 @@
                     </div>
 
                     <div class="links cf">
-                        <a class="fl" href="/toRegister">免费注册</a>
-                        <a class="fr" href="/toFindPassword">忘记密码？</a>
+                        <a class="fl" href="/register">免费注册</a>
+                        <a class="fr" href="/findpwd/stepone">忘记密码？</a>
                     </div>
 
                     <div class="button">
@@ -94,7 +94,7 @@
 
 
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/login.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/login.js"></script>
 </body>
 </html>

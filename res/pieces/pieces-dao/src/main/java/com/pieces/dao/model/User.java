@@ -3,6 +3,10 @@ package com.pieces.dao.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 /**
  * 前台用户
  * @author feng
