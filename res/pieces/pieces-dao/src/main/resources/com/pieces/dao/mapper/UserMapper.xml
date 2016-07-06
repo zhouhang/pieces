@@ -132,8 +132,8 @@
   		<if test="userName != null" >
   			and b.user_name = #{userName, jdbcType=VARCHAR}
   		</if>
-  		<if test="status != null" >
-  			and b.status = #{status, jdbcType=INTEGER}
+  		<if test="isDel != null" >
+  			and b.is_del = #{isDel, jdbcType=INTEGER}
   		</if>
   		<if test="companyFullName != null" >
   			and b.company_full_name = #{companyFullName, jdbcType=VARCHAR}
@@ -150,8 +150,8 @@
 	<insert id="addUser" parameterType="com.pieces.dao.model.User" useGeneratedKeys="true" keyProperty="id">
 		<![CDATA[
 			insert into user
-			(user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,status,create_time,update_time
-			,online_status,bind_erp,create_channel,area_full)
+			(user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,isDel,create_time,update_time
+			,online_status,bind_erp,source,area_full)
 			values (#{userName,jdbcType=VARCHAR},
 			#{password,jdbcType=VARCHAR},
 			#{salt,jdbcType=VARCHAR},
@@ -159,12 +159,12 @@
 			#{areaId,jdbcType=VARCHAR},
 			#{contactName,jdbcType=VARCHAR},
 			#{contactMobile,jdbcType=VARCHAR},
-			#{status,jdbcType=INTEGER},
+			#{is_del,jdbcType=INTEGER},
 			#{createTime,jdbcType=TIMESTAMP},
 			#{updateTime,jdbcType=TIMESTAMP},
 			#{onlineStatus,jdbcType=INTEGER},
 			#{bindErp,jdbcType=INTEGER},
-			#{createChannel,jdbcType=INTEGER},
+			#{source,jdbcType=INTEGER},
 			#{areaFull,jdbcType=VARCHAR}
 			)
 		]]>
@@ -194,8 +194,8 @@
 	        <if test="contactMobile != null">
 	        	contact_mobile = #{contactMobile,jdbcType=VARCHAR},
 	        </if>
-	        <if test="status != null">
-	        	status = #{status,jdbcType=INTEGER},
+	        <if test="isDel != null">
+	        	is_del = #{isDel,jdbcType=INTEGER},
 	        </if>
 	        <if test="updateTime != null">
 	        	update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -217,8 +217,8 @@
   		<if test="userName != null and userName != ''" >
   			and b.user_name like CONCAT('%','${userName}','%' )
   		</if>
-  		<if test="status != null and status != ''" >
-  			and b.status = #{status, jdbcType=INTEGER}
+  		<if test="isDel != null and isDel != ''" >
+  			and b.is_del = #{isDel, jdbcType=INTEGER}
   		</if>
   		<if test="bindErp != null and bindErp != ''" >
   			and b.bind_erp = #{bindErp, jdbcType=INTEGER}

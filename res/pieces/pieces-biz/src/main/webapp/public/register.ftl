@@ -197,12 +197,12 @@
         		$("#areaFull").val($('#province option:selected').text() + $('#city option:selected').text() + $('#area option:selected').text());
         	},
             callback: function(data){
-				var result = data.result; 
-				var resultMessage = data.resultMessage;
-				if(result != "y"){
-					_showMsg($('#mobileCode'), resultMessage);
+				var status = data.status; 
+				var info = data.info;
+				if(status == "y"){
+					window.location = "/user/regsuccess?userName="+ $('#username').val() + "&password="+ $('#pwd').val();
 				}else{
-					window.location = "/registerLogin?userName="+ $('#username').val() + "&password="+ $('#pwd').val();
+					_showMsg($('#mobileCode'), info);
 				}
             }
         });
@@ -211,7 +211,7 @@
             {
                 ele: '#username',
                 datatype: 'uname',
-                ajaxurl: '/user/namecheck?username11=' + $('#username').val(),
+                ajaxurl: '/user/checkusername',
                 nullmsg: '用户名必须以英文字母开头，长度6到20位',
                 errormsg: '用户名必须以英文字母开头，长度6到20位'
             },

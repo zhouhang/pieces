@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>用户资料-饮片B2B</title>
     <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -96,8 +96,8 @@
                         <i class="fa fa-chevron-right"></i>
                     </dt>
                     <dd>
-                        <a href="/userInfo">注册资料</a>
-                        <a class="curr" href="/userInfo/toUserUpdatePassword">修改密码</a>
+                        <a href="/user/info">注册资料</a>
+                        <a class="curr" href="/user/pwd/update">修改密码</a>
                     </dd>
                 </dl>
             </div>
@@ -183,12 +183,25 @@
         </div>
     </div><!-- footer end -->
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/validform.min.js"></script>
-    <script src="js/member.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/validform.min.js"></script>
+    <script src="/js/member.js"></script>
     <script>
         $(function() {
-            var formValidate = $("#myform").Validform();
+        	var _showMsg = function($element, msg) {
+				$element.siblings(".Validform_checktip").attr('class', 'Validform_checktip Validform_wrong').html(msg);
+        	}
+        	
+            var formValidate = $("#myform").Validform({
+                ajaxPost: true,
+                postonce: true,
+                url: '/user/pwd/update',
+                callback: function(data){
+    				var status = data.status; 
+    				var info = data.info;
+    				_showMsg($('#pwdRepeat'), info);
+                }
+            });
 
             formValidate.addRule([
                 {
@@ -210,32 +223,6 @@
                     errormsg: '确认新密码与新密码不一致'
                 }
             ])
-
-            
-            $('#submit').on('click', function() {
-                if($('#myform').valid()){
-                	$.ajax({
-                		type : "POST",
-            			url : "/userInfo/userUpdatePassword",
-            			data : {
-            				pwdOld:$('#pwdOld').val(),
-            				pwd:$('#pwd').val()
-          				  },
-            			dataType : "json",
-            			success : function(data){
-            				var result = data.result; 
-          					var resultMessage = data.resultMessage;
-          					if(result != "ok"){
-          						_showMsg($('#submit'), resultMessage);
-          					}else{
-          						_showMsg($('#submit'), resultMessage);
-          					}
-            			}
-                	});
-                }else{
-                	return false;
-                }
-            })
         })
     </script>
 </body>

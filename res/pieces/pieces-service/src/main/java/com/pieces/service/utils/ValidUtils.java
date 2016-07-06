@@ -14,7 +14,7 @@ public class ValidUtils {
 	 * @param list
 	 * @return
 	 */
-	public static boolean listBlank(List list){
+	public static boolean listNotBlank(List list){
 		return (list != null && list.size() != 0);
 	}
 	
@@ -23,7 +23,7 @@ public class ValidUtils {
 	 * @param list
 	 * @return
 	 */
-	public static boolean mapBlank(Map map){
+	public static boolean mapNotBlank(Map map){
 		return (map != null && !map.isEmpty());
 	}
 

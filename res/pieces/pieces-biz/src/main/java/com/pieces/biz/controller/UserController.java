@@ -69,8 +69,10 @@ public class UserController extends BaseController {
 	public void register(Model model, User user, String mobileCode,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		if (StringUtils.isNotBlank(userService.valid(user))) {
-			Result result = new Result(false);
+		//后台验证
+		String info = userService.valid(user);
+		if (StringUtils.isNotBlank(info)) {
+			Result result = new Result(false).info(info);
 			WebUtil.print(response, result);
 			return;
 		}
@@ -78,7 +80,7 @@ public class UserController extends BaseController {
 		Map<String, Object> codeMap = (Map<String, Object>) request.getSession().getAttribute(user.getContactMobile());
 
 		// codeMap为空判断
-		if (ValidUtils.mapBlank(codeMap)) {
+		if (!ValidUtils.mapNotBlank(codeMap)) {
 			Result result = new Result(false).info("请获取验证码");
 			WebUtil.print(response, result);
 			return;
@@ -93,7 +95,7 @@ public class UserController extends BaseController {
 		}
 
 		// 判断输入验证码与session验证码是否相同
-		if (code.equals(mobileCode)) {
+		if (!code.equals(mobileCode)) {
 			Result result = new Result(false).info("验证码错误");
 			WebUtil.print(response, result);
 			return;
@@ -114,7 +116,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/checkusername")
 	public void checkUserName(Model model, HttpServletRequest request, HttpServletResponse response) {
-		Result result = new Result(false);
+		Result result = new Result(false).info("用户名必须以英文字母开头，长度6到20位");
 		String userName = request.getParameter("param");
 		if (StringUtils.isNotBlank(userName)) {
 			Pattern pattern = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$");
@@ -163,21 +165,24 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(Model model, String userName, String password, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response) {
 		// 登陆验证
 		Subject subject = SecurityUtils.getSubject();
 		BizToken token = new BizToken(userName, password, false, CommonUtils.getRemoteHost(request), "");
-		subject.login(token);
+		try{
+			subject.login(token);
+		}catch(Exception e){
+			e.printStackTrace();
+			Result result = new Result(false).info("用户名密码错误");
+			WebUtil.print(response, result);
+			return;
+		}
 		// 存入用户信息到session
-		User tu = new User();
-		tu.setUserName(token.getUsername());
-		List<User> users = userService.findUserByCondition(tu);
-		BeanUtils.copyProperties(users.get(0), tu);
-		tu.setId(users.get(0).getId());
-		tu.setPassword(null);
-		tu.setSalt(null);
+		User user = userService.findByUserName(token.getUsername());
+		user.setPassword(null);
+		user.setSalt(null);
 		Session s = subject.getSession();
-		s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), tu);
+		s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), user);
 		Result result = new Result(true);
 		WebUtil.print(response, result);
 	}
@@ -193,24 +198,25 @@ public class UserController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/regsuccess")
-	public String registerLogin(ModelMap model, String userName, String password, HttpServletRequest request)
+	public String regSuccess(ModelMap model, String userName, String password, HttpServletRequest request)
 			throws Exception {
-		// 登陆验证
-		Subject subject = SecurityUtils.getSubject();
-		BizToken token = new BizToken(userName, password, false, CommonUtils.getRemoteHost(request), "");
-		subject.login(token);
-		// 存入用户信息到session
-		User tu = new User();
-		tu.setUserName(token.getUsername());
-		List<User> users = userService.findUserByCondition(tu);
-		BeanUtils.copyProperties(users.get(0), tu);
-		tu.setId(users.get(0).getId());
-		tu.setPassword(null);
-		tu.setSalt(null);
-		Session s = subject.getSession();
-		s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), tu);
-		model.put("user", tu);
-		return "user_info";
+//		// 登陆验证
+//		Subject subject = SecurityUtils.getSubject();
+//		BizToken token = new BizToken(userName, password, false, CommonUtils.getRemoteHost(request), "");
+//		subject.login(token);
+//		// 存入用户信息到session
+//		User tu = new User();
+//		tu.setUserName(token.getUsername());
+//		List<User> users = userService.findUserByCondition(tu);
+//		BeanUtils.copyProperties(users.get(0), tu);
+//		tu.setId(users.get(0).getId());
+//		tu.setPassword(null);
+//		tu.setSalt(null);
+//		Session s = subject.getSession();
+//		s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), tu);
+//		model.put("user", tu);
+//		return "user_info";
+		return "message_register";
 	}
 
 	/**
@@ -243,7 +249,7 @@ public class UserController extends BaseController {
 		user.setUserName(username);
 		List<User> users = userService.findUserByCondition(user);
 
-		if (ValidUtils.listBlank(users)) {
+		if (!ValidUtils.listNotBlank(users)) {
 			Result result = new Result(false).info("用户名不存在");
 			WebUtil.print(response, result);
 			return;
@@ -256,7 +262,7 @@ public class UserController extends BaseController {
 			return;
 		}
 
-		if (ValidUtils.mapBlank(codeMap)) {
+		if (!ValidUtils.mapNotBlank(codeMap)) {
 			Result result = new Result(false).info("请获取验证码");
 			WebUtil.print(response, result);
 			return;
@@ -303,17 +309,26 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/findpwd/steptwo", method = RequestMethod.POST)
-	public String findPasswordTwo(Model model, String pwd, String userName) throws Exception {
-		User user = new User();
-		user.setUserName(userName);
-		List<User> users = userService.findUserByCondition(user);
-		user = users.get(0);
-		User updateUser = new User();
-		updateUser.setId(user.getId());
-		updateUser.setPassword(pwd);
-		updateUser.setUpdateTime(new Date());
-		updateUser = userService.createPwdAndSaltMd5(updateUser);
-		userService.updateUserByCondition(updateUser);
+	public void findPasswordTwo(Model model, String pwd, String userName,HttpServletResponse response) throws Exception {
+		User user = userService.findByUserName(userName);
+		user.setPassword(pwd);
+		user.setUpdateTime(new Date());
+		user = userService.createPwdAndSaltMd5(user);
+		userService.updateUserByCondition(user);
+		Result result = new Result(true);
+		WebUtil.print(response, result);
+	}
+	
+	/**
+	 * 修改密码成功
+	 * 
+	 * @param model
+	 * @param request
+	 * @param userName
+	 * @return
+	 */
+	@RequestMapping(value = "/findpwd/success", method = RequestMethod.GET)
+	public String findpwdSuccess(ModelMap model, HttpServletRequest request, String userName) {
 		return "message_find_pwd";
 	}
 
@@ -334,10 +349,12 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/pwd/update" , method = RequestMethod.POST)
 	public void userUpdatePassword(ModelMap model, String pwdOld, String pwd, HttpServletRequest request, HttpServletResponse response) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+		user = userService.findById(user.getId());
 		User oldUser = new User();
 		BeanUtils.copyProperties(user, oldUser);
 		oldUser.setPassword(pwdOld);
-		if (!userService.getPwdAndSaltMd5(oldUser).getPassword().equals(user.getPassword())) {
+		
+		if (!(userService.getPwdAndSaltMd5(oldUser).getPassword()).equals(user.getPassword())) {
 			Result result = new Result(false).info("原密码有误");
 			WebUtil.print(response, result);
 			return;
@@ -347,7 +364,7 @@ public class UserController extends BaseController {
 		user.setUpdateTime(new Date());
 		user = userService.createPwdAndSaltMd5(user);
 		userService.updateUserByCondition(user);
-		Result result = new Result(true);
+		Result result = new Result(true).info("密码修改成功");
 		WebUtil.print(response, result);
 		return;
 	}

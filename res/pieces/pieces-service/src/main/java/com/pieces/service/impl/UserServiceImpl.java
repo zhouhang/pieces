@@ -45,6 +45,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 		user.setOnlineStatus(false);
 		user.setBindErp(false);
 		user.setCreateTime(new Date());
+		user.setSource(0);
 		return this.create(user);
 	}
 	
@@ -62,7 +63,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 		User user = new User();
 		user.setUserName(userName);
 		List<User> users = userDao.findUserByCondition(user);
-		return ValidUtils.listBlank(users);
+		return ValidUtils.listNotBlank(users);
 	}
 
 
@@ -110,7 +111,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 		if(StringUtils.isBlank(user.getCompanyFullName())){
 			message.append("企业全称不能为空");
 		}
-		if(user.getAreaId() >= 10000){
+		if(user.getAreaId() < 10000){
 			message.append("注册地有误");
 		}
 		if(StringUtils.isBlank(user.getContactName())){
@@ -142,7 +143,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 	 * @return
      */
 	public User getPwdAndSaltMd5(User user){
-		Password pass = EncryptUtil.PiecesEncode(user.getPassword(),user.getSalt(),"");
+		Password pass = EncryptUtil.PiecesEncode(user.getPassword(),user.getSalt());
 		user.setPassword(pass.getPassword());
 		user.setSalt(pass.getSalt());
 		return user;

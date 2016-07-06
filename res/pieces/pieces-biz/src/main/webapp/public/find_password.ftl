@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>找回密码-饮片B2B</title>
     <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -130,8 +130,8 @@
         </div>
     </div><!-- footer end -->
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/validform.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/validform.min.js"></script>
     <script>
         $(function() {
 
@@ -141,20 +141,20 @@
             
             var formValidate = $("#myform").Validform({
                 ajaxPost: true,
-                url: '/findPasswordOne',
+                url: '/user/findpwd/stepone',
                 callback: function(data){
                     switch (data.status) {
                         case 'y':
-                            window.location.href = 'find_password_2.html';
+                            window.location.href = '/user/findpwd/steptwo?userName='+$('#username').val();
                             break;
                         case 'falseCode':
-                            _showMsg($('#mobileCode'), data.resultMessage);
+                            _showMsg($('#mobileCode'), data.info);
                             break;
                         case 'falseMobile':
-                            _showMsg($('#mobile'), data.resultMessage);
+                            _showMsg($('#mobile'), data.info);
                             break;
                         case 'falseName':
-                            _showMsg($('#username'), data.resultMessage);
+                            _showMsg($('#username'), data.info);
                             break;
                         // no default
                     }
@@ -205,7 +205,7 @@
             var _sendMobileCode = function() {
                 $.ajax({
                     type : 'POST',
-                    url : 'json/getMobileCode.php',
+                    url : '/gen/code',
                     data : {
                         contactMobile: $mobile.val()
                     },

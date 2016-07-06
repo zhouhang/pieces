@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>找回密码-饮片B2B</title>
     <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -120,12 +120,22 @@
         </div>
     </div><!-- footer end -->
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/validform.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/validform.min.js"></script>
     <script>
         $(function() {
 
-            var formValidate = $("#myform").Validform();
+            var formValidate = $("#myform").Validform({
+                ajaxPost: true,
+                url: '/user/findpwd/steptwo',
+                callback: function(data){
+    				var status = data.status; 
+    				var info = data.info;
+    				if(status == 'y'){
+    					window.location.href = "/user/findpwd/success";
+    				}
+                }
+            });
 
             formValidate.addRule([
                 {

@@ -56,8 +56,8 @@
                     </div>
 
                     <div class="links cf">
-                        <a class="fl" href="/register">免费注册</a>
-                        <a class="fr" href="/findpwd/stepone">忘记密码？</a>
+                        <a class="fl" href="/user/register">免费注册</a>
+                        <a class="fr" href="/user/findpwd/stepone">忘记密码？</a>
                     </div>
 
                     <div class="button">

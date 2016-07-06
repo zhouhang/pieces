@@ -58,18 +58,18 @@ $(function() {
         if(_checkForm()){
         	$.ajax({
         		type : "POST",
-    			url : "/login",
+    			url : "/user/login",
     			data : {
     				userName:$username.val(),
   				    password:$pwd.val()
   				  },
     			dataType : "json",
     			success : function(data){
-    				var result = data.result; 
-    				if(result != "ok"){
+    				var status = data.status; 
+    				if(status != "y"){
   						_showMsg("用户名密码错误!");
   					}else{
-  						window.location = "/userInfo";
+  						window.location = "/user/info";
   					}
     			}
         	});
