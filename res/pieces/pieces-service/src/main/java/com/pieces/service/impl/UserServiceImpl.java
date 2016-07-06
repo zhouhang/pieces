@@ -6,6 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +19,13 @@ import com.pieces.dao.UserDao;
 import com.pieces.dao.model.User;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.UserService;
+import com.pieces.service.constant.bean.Result;
 import com.pieces.service.dto.Password;
+import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.utils.CommonUtils;
 import com.pieces.service.utils.EncryptUtil;
 import com.pieces.service.utils.ValidUtils;
+import com.pieces.tools.utils.WebUtil;
 
 
 @Service
@@ -92,39 +99,6 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 		return userDao;
 	}
 	
-	/**
-	 * user后台验证
-	 */
-	public String valid(User user){
-		StringBuffer message = new StringBuffer();
-		Pattern pattern = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$");
-		Matcher matcher = pattern.matcher(user.getUserName());
-		if(StringUtils.isBlank(user.getUserName()) || !matcher.matches()){
-			message.append("用户名错误");
-		}
-		if(this.checkUserName(user.getUserName())){
-			message.append("用户名重复");
-		}
-		if(StringUtils.isBlank(user.getPassword())){
-			message.append("密码不能为空");
-		}
-		if(StringUtils.isBlank(user.getCompanyFullName())){
-			message.append("企业全称不能为空");
-		}
-		if(user.getAreaId() < 10000){
-			message.append("注册地有误");
-		}
-		if(StringUtils.isBlank(user.getContactName())){
-			message.append("联系人姓名不能为空");
-		}
-		pattern = Pattern.compile("^1[345678]\\d{9}$");
-		matcher = pattern.matcher(user.getContactMobile());
-		if(StringUtils.isBlank(user.getContactMobile()) || !matcher.matches()){
-			message.append("联系人手机错误");
-		}
-		return message.toString();
-	}
-
 	/**
 	 * 生成密码加盐
  	 * @param user

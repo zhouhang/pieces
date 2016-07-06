@@ -143,20 +143,10 @@
                 ajaxPost: true,
                 url: '/user/findpwd/stepone',
                 callback: function(data){
-                    switch (data.status) {
-                        case 'y':
-                            window.location.href = '/user/findpwd/steptwo?userName='+$('#username').val();
-                            break;
-                        case 'falseCode':
-                            _showMsg($('#mobileCode'), data.info);
-                            break;
-                        case 'falseMobile':
-                            _showMsg($('#mobile'), data.info);
-                            break;
-                        case 'falseName':
-                            _showMsg($('#username'), data.info);
-                            break;
-                        // no default
+                     if(data.status == 'y'){
+                         window.location.href = '/user/findpwd/steptwo?userName='+$('#username').val();
+                    }else{
+                    	_showMsg($('#mobileCode'), data.info);
                     }
                 }
             });
@@ -214,7 +204,7 @@
                         if (data.status !== 'y') {
                             clearInterval(timer);
                             $getMobileCode.text('获取验证码').prop('disabled', false);
-                            _showMsg($('#mobileCode'), data.resultMessage);
+                            _showMsg($('#mobileCode'), data.info);
                             timeout = 0;
                         } else {
                             timeout = delay;

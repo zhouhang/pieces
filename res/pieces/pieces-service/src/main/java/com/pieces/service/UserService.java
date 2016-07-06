@@ -32,6 +32,4 @@ public interface UserService extends ICommonService<User>{
 	User findByUserName(String userName);
 	
 	boolean checkMobileCode(String targetMobileCode);
-	
-	String valid(User user);
 }

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
@@ -21,6 +22,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.pieces.biz.shiro.BizRealm;
 import com.pieces.biz.shiro.BizToken;
 import com.pieces.dao.model.User;
 import com.pieces.service.UserService;
@@ -70,9 +72,35 @@ public class UserController extends BaseController {
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		//后台验证
-		String info = userService.valid(user);
-		if (StringUtils.isNotBlank(info)) {
-			Result result = new Result(false).info(info);
+		StringBuffer message = new StringBuffer();
+		Pattern pattern = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$");
+		Matcher matcher = pattern.matcher(user.getUserName());
+		if(StringUtils.isBlank(user.getUserName()) || !matcher.matches()){
+			message.append("用户名错误");
+		}
+		if(userService.checkUserName(user.getUserName())){
+			message.append("用户名重复");
+		}
+		if(StringUtils.isBlank(user.getPassword())){
+			message.append("密码不能为空");
+		}
+		if(StringUtils.isBlank(user.getCompanyFullName())){
+			message.append("企业全称不能为空");
+		}
+		if(user.getAreaId() < 10000){
+			message.append("注册地有误");
+		}
+		if(StringUtils.isBlank(user.getContactName())){
+			message.append("联系人姓名不能为空");
+		}
+		pattern = Pattern.compile("^1[345678]\\d{9}$");
+		matcher = pattern.matcher(user.getContactMobile());
+		if(StringUtils.isBlank(user.getContactMobile()) || !matcher.matches()){
+			message.append("联系人手机错误");
+		}
+		
+		if (StringUtils.isNotBlank(message.toString())) {
+			Result result = new Result(false).info(message.toString());
 			WebUtil.print(response, result);
 			return;
 		}
@@ -138,7 +166,7 @@ public class UserController extends BaseController {
 	public String logout(ModelMap model) {
 		// 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
 		SecurityUtils.getSubject().logout();
-		return "redirect:/login";
+		return "redirect:/user/login";
 	}
 	
 	/**
@@ -309,12 +337,16 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/findpwd/steptwo", method = RequestMethod.POST)
-	public void findPasswordTwo(Model model, String pwd, String userName,HttpServletResponse response) throws Exception {
+	public void findPasswordTwo(Model model, String pwd, String userName,HttpServletRequest request,HttpServletResponse response) throws Exception {
 		User user = userService.findByUserName(userName);
 		user.setPassword(pwd);
 		user.setUpdateTime(new Date());
 		user = userService.createPwdAndSaltMd5(user);
 		userService.updateUserByCondition(user);
+		
+		//更新缓存
+		flush(user.getUserName(),pwd,request);
+		
 		Result result = new Result(true);
 		WebUtil.print(response, result);
 	}
@@ -347,7 +379,7 @@ public class UserController extends BaseController {
 	}
 
 	@RequestMapping(value = "/pwd/update" , method = RequestMethod.POST)
-	public void userUpdatePassword(ModelMap model, String pwdOld, String pwd, HttpServletRequest request, HttpServletResponse response) {
+	public void userUpdatePassword(ModelMap model, String pwdOld, String pwd, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		user = userService.findById(user.getId());
 		User oldUser = new User();
@@ -364,8 +396,27 @@ public class UserController extends BaseController {
 		user.setUpdateTime(new Date());
 		user = userService.createPwdAndSaltMd5(user);
 		userService.updateUserByCondition(user);
+		
+		flush(user.getUserName(),pwd,request);
+		
 		Result result = new Result(true).info("密码修改成功");
 		WebUtil.print(response, result);
 		return;
+	}
+	
+	/**
+	 * 修改密码后刷新缓存
+	 */
+	public void flush(String userName,String pwd,HttpServletRequest request) throws Exception{
+		Subject subject = SecurityUtils.getSubject();
+		subject.logout();
+		BizToken token = new BizToken(userName, pwd, false, CommonUtils.getRemoteHost(request), "");
+		subject.login(token);
+		// 存入用户信息到session
+		User user = userService.findByUserName(userName);
+		user.setPassword(null);
+		user.setSalt(null);
+		Session s = subject.getSession();
+		s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), user);
 	}
 }
