@@ -18,6 +18,8 @@ public interface UserService extends ICommonService<User>{
 	PageInfo<User> findUserByVagueCondition(User user,Integer pageNum, Integer pageSize);
 
 	int addUser(User user);
+
+	int updateUser(User user);
 	
 	User createPwdAndSaltMd5(User user);
 

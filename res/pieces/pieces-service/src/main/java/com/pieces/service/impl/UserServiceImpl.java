@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.pieces.dao.ICommonDao;
 import com.pieces.service.AbsCommonService;
+import com.pieces.tools.utils.httpclient.common.util.StringUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +22,7 @@ import com.pieces.service.utils.EncryptUtil;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class UserServiceImpl extends AbsCommonService<User> implements UserService {
 	
 	@Autowired
@@ -37,6 +39,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 	 * @return
      */
 	@Override
+	@Transactional
 	public int addUser(User user) {
 		createPwdAndSaltMd5(user);
 		user.setIsDel(false);
@@ -45,7 +48,23 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 		user.setCreateTime(new Date());
 		return this.create(user);
 	}
-	
+
+
+	/**
+	 * 修改用户
+	 * @param user
+	 * @return
+     */
+	@Override
+	@Transactional
+	public int updateUser(User user) {
+		if(StringUtils.isNotBlank(user.getPassword())){
+			createPwdAndSaltMd5(user);
+		}
+		user.setUpdateTime(new Date());
+		return this.update(user);
+	}
+
 
 	@Override
 	public boolean ifExistMobile(String contactMobile){
@@ -94,6 +113,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 	}
 
 	@Override
+	@Transactional
 	public int updateUserByCondition(User user) {
 		return userDao.updateUserByCondition(user);
 	}
