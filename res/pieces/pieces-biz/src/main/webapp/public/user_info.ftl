@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>用户资料-饮片B2B</title>
     <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -96,8 +96,8 @@
                         <i class="fa fa-chevron-right"></i>
                     </dt>
                     <dd>
-                        <a class="curr" href="/userInfo">注册资料</a>
-                        <a href="/userInfo/toUserUpdatePassword">修改密码</a>
+                        <a class="curr" href="/user/info">注册资料</a>
+                        <a href="/user/pwd/update">修改密码</a>
                     </dd>
                 </dl>
             </div>
@@ -122,7 +122,7 @@
                             <i>*</i>企业注册地：
                         </div>
                         <div class="cnt">
-                            <span class="val">${ area!''}</span>
+                            <span class="val">${ user.areaFull!''}</span>
                         </div>
                     </div>
 
@@ -172,7 +172,7 @@
         </div>
     </div><!-- footer end -->
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/member.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/member.js"></script>
 </body>
 </html>

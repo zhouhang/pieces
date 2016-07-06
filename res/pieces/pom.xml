@@ -392,21 +392,6 @@
 		</pluginManagement>
 	</build>
 
-	<repositories>
-		<repository>
-			<id>Nexus</id>
-			<name>Nexus Public Repository</name>
-			<url>http://192.168.1.174:8081/nexus/content/groups/public</url>
-		</repository>
-		<repository>
-			<id>nexus-snapshots</id>
-			<name>Nexus Snapshot Repository</name>
-			<url>http://192.168.1.174:8081/nexus/content/repositories/snapshots</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 
 
 	<modules>

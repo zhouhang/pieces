@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>成功找回密码-饮片B2B</title>
     <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -34,10 +34,10 @@
                 <p>—— 您可以立即使用新密码登录 ——</p>
             </div>
             <div class="ft">
-                <a class="btn btn-red" href="login.html">立即登录</a>
+                <a class="btn btn-red" href="/user/login">立即登录</a>
             </div>
             <div class="links">
-                或 <a href="index.html">返回首页</a>
+                或 <a href="/">返回首页</a>
             </div>
         </div>
     </div><!-- fa-message start -->

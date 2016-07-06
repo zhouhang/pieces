@@ -8,7 +8,8 @@ import org.apache.commons.lang.ArrayUtils;
  */
 public enum TextTemplateEnum {
 
-    SMS_CAPTCHA_TEMPLATE("{1}您的验证码是{2}");
+    SMS_CAPTCHA_TEMPLATE("{1}您的验证码是{2}。"),
+    SMS_PASSWORD_TEMPLATE("{1}我们为您创建的的用户名为{2}随机密码为{3}，请妥善保管。");
 
     private String value;
 

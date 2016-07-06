@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.User;
+import com.pieces.dao.vo.UserVo;
 
 /**
  * 前台用户service
@@ -29,11 +30,13 @@ public interface UserService extends ICommonService<User>{
 	
 	boolean ifExistMobile(String contactMobile);
 	
-	boolean ifExistUserName(String userName);
+	boolean checkUserName(String userName);
 
 	User findByUserName(String userName);
 	
 	boolean checkMobileCode(String targetMobileCode);
-	
-	String getRemoteHost(HttpServletRequest request);
+
+	PageInfo<User> findByCondition(UserVo userVo, Integer pageNum, Integer pageSize);
+
+
 }

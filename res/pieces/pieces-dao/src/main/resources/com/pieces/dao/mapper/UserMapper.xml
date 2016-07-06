@@ -132,8 +132,8 @@
   		<if test="userName != null" >
   			and b.user_name = #{userName, jdbcType=VARCHAR}
   		</if>
-  		<if test="status != null" >
-  			and b.status = #{status, jdbcType=INTEGER}
+  		<if test="isDel != null" >
+  			and b.is_del = #{isDel, jdbcType=INTEGER}
   		</if>
   		<if test="companyFullName != null" >
   			and b.company_full_name = #{companyFullName, jdbcType=VARCHAR}
@@ -150,23 +150,21 @@
 	<insert id="addUser" parameterType="com.pieces.dao.model.User" useGeneratedKeys="true" keyProperty="id">
 		<![CDATA[
 			insert into user
-			(user_name,password,salt,company_full_name,province_code,city_code,county_code,contact_name,contact_mobile,status,create_time,update_time
-			,online_status,bind_erp,create_channel,area_full)
+			(user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,isDel,create_time,update_time
+			,online_status,bind_erp,source,area_full)
 			values (#{userName,jdbcType=VARCHAR},
 			#{password,jdbcType=VARCHAR},
 			#{salt,jdbcType=VARCHAR},
 			#{companyFullName,jdbcType=VARCHAR},
-			#{provinceCode,jdbcType=VARCHAR},
-			#{cityCode,jdbcType=VARCHAR},
-			#{countyCode,jdbcType=VARCHAR},
+			#{areaId,jdbcType=VARCHAR},
 			#{contactName,jdbcType=VARCHAR},
 			#{contactMobile,jdbcType=VARCHAR},
-			#{status,jdbcType=INTEGER},
+			#{is_del,jdbcType=INTEGER},
 			#{createTime,jdbcType=TIMESTAMP},
 			#{updateTime,jdbcType=TIMESTAMP},
 			#{onlineStatus,jdbcType=INTEGER},
 			#{bindErp,jdbcType=INTEGER},
-			#{createChannel,jdbcType=INTEGER},
+			#{source,jdbcType=INTEGER},
 			#{areaFull,jdbcType=VARCHAR}
 			)
 		]]>
@@ -187,14 +185,8 @@
 	        <if test="companyFullName != null">
 	        	company_full_name = #{companyFullName,jdbcType=VARCHAR},
 	        </if>
-	        <if test="provinceCode != null">
-	        	province_code = #{provinceCode,jdbcType=VARCHAR},
-	        </if>
-	        <if test="cityCode != null">
-	        	city_code = #{cityCode,jdbcType=VARCHAR},
-	        </if>
-	        <if test="countyCode != null">
-	        	county_code = #{countyCode,jdbcType=INTEGER},
+	        <if test="areaId != null">
+	        	area_id = #{areaId,jdbcType=VARCHAR},
 	        </if>
 	        <if test="contactName != null">
 	        	contact_name = #{contactName,jdbcType=VARCHAR},
@@ -202,8 +194,8 @@
 	        <if test="contactMobile != null">
 	        	contact_mobile = #{contactMobile,jdbcType=VARCHAR},
 	        </if>
-	        <if test="status != null">
-	        	status = #{status,jdbcType=INTEGER},
+	        <if test="isDel != null">
+	        	is_del = #{isDel,jdbcType=INTEGER},
 	        </if>
 	        <if test="updateTime != null">
 	        	update_time = #{updateTime,jdbcType=TIMESTAMP},
@@ -225,8 +217,8 @@
   		<if test="userName != null and userName != ''" >
   			and b.user_name like CONCAT('%','${userName}','%' )
   		</if>
-  		<if test="status != null and status != ''" >
-  			and b.status = #{status, jdbcType=INTEGER}
+  		<if test="isDel != null and isDel != ''" >
+  			and b.is_del = #{isDel, jdbcType=INTEGER}
   		</if>
   		<if test="bindErp != null and bindErp != ''" >
   			and b.bind_erp = #{bindErp, jdbcType=INTEGER}
@@ -250,4 +242,34 @@
 		    and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<]]> DATE_FORMAT(DATE_ADD(#{endDate},INTERVAL 1 DAY),'%Y-%m-%d')
 		</if>
   </select>
+
+	<!-- 条件查询User-->
+	<select id="findByCondition" parameterType="com.pieces.dao.vo.UserVo" resultMap="BaseResultMap">
+		select * from user b
+		where 1=1
+		<if test="userName != null and userName != ''" >
+			and b.user_name like "%"#{userName}"%"
+		</if>
+		<if test="bindErp != null and bindErp != ''" >
+			and b.bind_erp = #{bindErp}
+		</if>
+		<if test="areaFull != null and areaFull != ''">
+			and b.area_full like  "%"#{areaFull}"%"
+		</if>
+		<if test="companyFullName != null and companyFullName != ''" >
+			and b.company_full_name like "%"#{companyFullName}"%"
+		</if>
+		<if test="contactMobile != null and contactMobile != ''" >
+			and b.contact_mobile like "%"#{contactMobile}"%"
+		</if>
+		<if test="contactName != null and contactName != ''" >
+			and b.contact_name like  "%"#{contactName}"%"
+		</if>
+		<if test="startDate != null and startDate != ''">
+			and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[>=]]> DATE_FORMAT(#{startDate},'%Y-%m-%d')
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<=]]> DATE_FORMAT(#{endDate},'%Y-%m-%d')
+		</if>
+	</select>
 </mapper>

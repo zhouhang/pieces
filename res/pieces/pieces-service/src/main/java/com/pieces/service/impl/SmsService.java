@@ -54,4 +54,14 @@ public class SmsService {
         return code;
     }
 
+
+    public void sendUserAccount(String passWord,String mobile,String username)throws Exception{
+        //生成六位数密码
+        Map<String, Object> param = new HashMap<>();
+        param.put("apikey", apikey);
+        param.put("mobile", mobile);
+        param.put("text", TextTemplateEnum.SMS_PASSWORD_TEMPLATE.getText("【药优优】",username,passWord));
+        HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+    }
+
 }

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>用户资料-饮片B2B</title>
     <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -96,8 +96,8 @@
                         <i class="fa fa-chevron-right"></i>
                     </dt>
                     <dd>
-                        <a href="/userInfo">注册资料</a>
-                        <a class="curr" href="/userInfo/toUserUpdatePassword">修改密码</a>
+                        <a href="/user/info">注册资料</a>
+                        <a class="curr" href="/user/pwd/update">修改密码</a>
                     </dd>
                 </dl>
             </div>
@@ -148,7 +148,7 @@
                             </div>
                         </div>
 
-                        <div class="group">
+                        <div class="ft">
                             <div class="cnt">
                                 <button type="submit" class="btn btn-red btn-wide" id="submit">提交修改</button>
                             </div>
@@ -183,82 +183,46 @@
         </div>
     </div><!-- footer end -->
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
-    <script src="js/member.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/validform.min.js"></script>
+    <script src="/js/member.js"></script>
     <script>
         $(function() {
-            var icons = {
-                error: '<i class="fa fa-prompt"></i>'
-            };
-         	// _showMsg($('#mobileCode'), '啊啊')
-            var _showMsg = function($element, msg) {
-                $element.siblings('.error').hide();
-                $element.parent().append('<span class="error">' + icons.error + msg + '</span>');
-            }
-            // 注册验证
-            $('#myform').validate({
-                rules: {
-                    pwdOld: {
-                        required: true
-                    },
-                    pwd: {
-                        required: true,
-                        rangelength: [6,20],
-                        isPwd: true
-                    },
-                    pwdRepeat: {
-                        required: true,
-                        equalTo: '#pwd'
-                    }
-                },
-                messages: {
-                    pwdOld: {
-                        required: icons.error + '请输入原始密码'
-                    },
-                    pwd: {
-                        required: icons.error + '请输入新密码',
-                        rangelength: icons.error + '密码由数字、字母或下划线组成，长度为6-20位',
-                    },
-                    pwdRepeat: {
-                        required: icons.error + '请再重复输入一遍密码，不能留空',
-                        equalTo: icons.error + '确认新密码与新密码不一致',
-                    }
-                },
-                onfocusout: function(element) { $(element).valid(); },
-                errorPlacement: function(error, element) {  
-                    element.parent().append(error);
-                },
-                errorElement: 'span',
-                submitHandler: function(form) {
-                    
+        	var _showMsg = function($element, msg) {
+				$element.siblings(".Validform_checktip").attr('class', 'Validform_checktip Validform_wrong').html(msg);
+        	}
+        	
+            var formValidate = $("#myform").Validform({
+                ajaxPost: true,
+                postonce: true,
+                url: '/user/pwd/update',
+                callback: function(data){
+    				var status = data.status; 
+    				var info = data.info;
+    				_showMsg($('#pwdOld'), info);
                 }
             });
-            
-            $('#submit').on('click', function() {
-                if($('#myform').valid()){
-                	$.ajax({
-                		type : "POST",
-            			url : "/userInfo/userUpdatePassword",
-            			data : {
-            				pwdOld:$('#pwdOld').val(),
-            				pwd:$('#pwd').val()
-          				  },
-            			dataType : "json",
-            			success : function(data){
-            				var result = data.result; 
-          					var resultMessage = data.resultMessage;
-          					if(result != "ok"){
-          						_showMsg($('#submit'), resultMessage);
-          					}else{
-          						_showMsg($('#submit'), resultMessage);
-          					}
-            			}
-                	});
-                }else{
-                	return false;
+
+            formValidate.addRule([
+                {
+                    ele: '#pwdOld',
+                    datatype: '*',
+                    nullmsg: '请输入原始密码'
+                },
+                {
+                    ele: '#pwd',
+                    datatype: 'pwd',
+                    nullmsg: '请输入新密码',
+                    errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
+                },
+                {
+                    ele: '#pwdRepeat',
+                    datatype: '*',
+                    recheck: 'pwd',
+                    nullmsg: '请再重复输入一遍密码，不能留空',
+                    errormsg: '确认新密码与新密码不一致'
                 }
-            })
+            ])
         })
     </script>
 </body>

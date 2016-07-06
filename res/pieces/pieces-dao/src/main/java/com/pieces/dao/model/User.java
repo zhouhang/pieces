@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+
+/**
+ * 前台用户
+ * @author feng
+ */
 public class User  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

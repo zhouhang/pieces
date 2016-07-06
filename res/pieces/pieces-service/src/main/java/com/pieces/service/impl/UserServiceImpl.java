@@ -2,6 +2,8 @@ package com.pieces.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,17 +11,27 @@ import com.pieces.dao.ICommonDao;
 import com.pieces.service.AbsCommonService;
 import com.pieces.tools.utils.httpclient.common.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.ICommonDao;
 import com.pieces.dao.UserDao;
 import com.pieces.dao.model.User;
 import com.pieces.service.UserService;
-import com.pieces.service.constant.BasicConstants;
+import com.pieces.service.constant.bean.Result;
 import com.pieces.service.dto.Password;
+import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.utils.CommonUtils;
 import com.pieces.service.utils.EncryptUtil;
-import org.springframework.transaction.annotation.Transactional;
+import com.pieces.service.utils.ValidUtils;
+import com.pieces.tools.utils.WebUtil;
+
 
 @Service
 @Transactional(readOnly = true)
@@ -46,6 +58,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 		user.setOnlineStatus(false);
 		user.setBindErp(false);
 		user.setCreateTime(new Date());
+		user.setSource(0);
 		return this.create(user);
 	}
 
@@ -75,15 +88,11 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 	}
 	
 	@Override
-	public boolean ifExistUserName(String userName){
+	public boolean checkUserName(String userName){
 		User user = new User();
 		user.setUserName(userName);
 		List<User> users = userDao.findUserByCondition(user);
-		if(users != null && users.size() != 0){
-			return true;
-		}else{
-			return false;
-		}
+		return ValidUtils.listNotBlank(users);
 	}
 
 
@@ -95,21 +104,6 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 	@Override
 	public boolean checkMobileCode(String targetMobileCode) {
 		return false;
-	}
-	
-	@Override
-	public String getRemoteHost(HttpServletRequest request){
-	    String ip = request.getHeader("x-forwarded-for");
-	    if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
-	        ip = request.getHeader("Proxy-Client-IP");
-	    }
-	    if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
-	        ip = request.getHeader("WL-Proxy-Client-IP");
-	    }
-	    if(ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)){
-	        ip = request.getRemoteAddr();
-	    }
-	    return ip.equals("0:0:0:0:0:0:0:1")?"127.0.0.1":ip;
 	}
 
 	@Override

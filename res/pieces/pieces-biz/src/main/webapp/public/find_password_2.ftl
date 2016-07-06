@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>找回密码-饮片B2B</title>
     <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -61,7 +61,7 @@
                         </div>
                     </div>
 
-                    <div class="group">
+                    <div class="ft">
                         <div class="cnt">
                             <button type="submit" class="btn btn-red btn-wide" id="submit">提交修改</button>
                         </div>
@@ -120,45 +120,39 @@
         </div>
     </div><!-- footer end -->
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/validform.min.js"></script>
     <script>
         $(function() {
-            var icons = {
-                error: '<i class="fa fa-prompt"></i>'
-            };
-            // 注册验证
-            $('#myform').validate({
-                rules: {
-                    pwd: {
-                        required: true,
-                        rangelength: [6,20],
-                        isPwd: true
-                    },
-                    pwdRepeat: {
-                        required: true,
-                        equalTo: '#pwd'
-                    }
-                },
-                messages: {
-                    pwd: {
-                        required: icons.error + '请输入新密码',
-                        rangelength: icons.error + '密码由数字、字母或下划线组成，长度为6-20位',
-                    },
-                    pwdRepeat: {
-                        required: icons.error + '请再次输入新密码',
-                        equalTo: icons.error + '确认新密码与新密码不一致',
-                    }
-                },
-                onfocusout: function(element) { $(element).valid(); },
-                errorPlacement: function(error, element) {  
-                    element.parent().append(error);
-                },
-                errorElement: 'span',
-                submitHandler: function(form) {
-                    form.submit();
+
+            var formValidate = $("#myform").Validform({
+                ajaxPost: true,
+                url: '/user/findpwd/steptwo',
+                callback: function(data){
+    				var status = data.status; 
+    				var info = data.info;
+    				if(status == 'y'){
+    					window.location.href = "/user/findpwd/success";
+    				}
                 }
             });
+
+            formValidate.addRule([
+                {
+                    ele: '#pwd',
+                    datatype: 'pwd',
+                    nullmsg: '请输入新密码',
+                    errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
+                },
+                {
+                    ele: '#pwdRepeat',
+                    datatype: '*',
+                    recheck: 'pwd',
+                    nullmsg: '请再次输入新密码',
+                    errormsg: '确认新密码与新密码不一致'
+                }
+            ])
+
 
         })
     </script>

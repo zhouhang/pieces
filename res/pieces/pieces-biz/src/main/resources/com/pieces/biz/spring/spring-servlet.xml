@@ -12,7 +12,7 @@
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
-	<mvc:annotation-driven />
+	<mvc:annotation-driven/>
 
 	<!--Spring3.1开始的注解 HandlerMapping ,支持 product consume annotation-->  
 	<bean   class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>   
@@ -104,8 +104,7 @@
 		<property name="resolveLazily" value="true"/>
 		<property name="maxInMemorySize" value="4096"/>
 	</bean>
-
-
+	
 	<!-- css,js路径 -->
 	<mvc:resources mapping="/css/**" location="/assets/css/" />
 	<mvc:resources mapping="/js/**" location="/assets/js/" />

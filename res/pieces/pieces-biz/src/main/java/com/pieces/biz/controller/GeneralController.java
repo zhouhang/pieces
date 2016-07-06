@@ -1,5 +1,21 @@
 package com.pieces.biz.controller;
 
+import java.awt.Color;
+import java.util.Collections;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.github.bingoohuang.patchca.color.SingleColorFactory;
 import com.github.bingoohuang.patchca.custom.ConfigurableCaptchaService;
 import com.github.bingoohuang.patchca.filter.predefined.CurvesRippleFilterFactory;
@@ -10,26 +26,11 @@ import com.pieces.service.AreaService;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.impl.SmsService;
-import com.pieces.tools.bean.FileBo;
+import com.pieces.service.utils.SMSMessage;
+import com.pieces.service.utils.SendMessage;
 import com.pieces.tools.upload.DefaultUploadFile;
 import com.pieces.tools.utils.GsonUtil;
 import com.pieces.tools.utils.WebUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.awt.*;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 公共URL访问
@@ -72,7 +73,7 @@ public class GeneralController {
     public void fileUpload(HttpServletRequest request,
                            HttpServletResponse response,
                            @RequestParam(required = false) MultipartFile file)throws Exception {
-        FileBo fileBo = defaultUploadFile.uploadFile(file.getOriginalFilename(), file.getInputStream());
+        defaultUploadFile.uploadFile(file.getOriginalFilename(), file.getInputStream());
 
     }
 
@@ -154,5 +155,19 @@ public class GeneralController {
         Result result =  new Result(true).data(Collections.singletonMap("code",code)).info("短信验证码");
         WebUtil.print(response,result);
     }
+    
+	@RequestMapping(value="/code")
+	public void getMobileCode(String contactMobile,
+						HttpServletRequest request,
+						HttpServletResponse response){
+		SendMessage sm = SMSMessage.getInstance();
+		if(sm.sendMessage(request, contactMobile)){
+			Result result =  new Result(true);
+	        WebUtil.print(response,result);
+		}else{
+			Result result =  new Result(false);
+	        WebUtil.print(response,result);
+		}
+	}
 
 }

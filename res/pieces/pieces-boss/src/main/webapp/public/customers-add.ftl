@@ -15,17 +15,15 @@
             <dl>
                 <dt>客户信息</dt>
                 <dd>
-                    <a href="customers.html">客户界面</a>
-                    <a class="curr" href="customers-account.html">账户信息</a>
+                    <a href="user/index">客户界面</a>
+                    <a class="curr" href="user/add">账户信息</a>
                 </dd>
             </dl>
         </div>
         <div class="main">
-
-
-            <form action="user/add" id="userForm" method="post">
+            <form action="user/save" id="userForm" method="post">
                 <div class="title">
-                    <h3><i class="fa fa-people"></i>hehuan</h3>
+                    <h3><i class="fa fa-people"></i></h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                         <button type="reset" class="btn btn-gray">重置</button>

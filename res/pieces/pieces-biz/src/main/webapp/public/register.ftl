@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>注册-饮片B2B</title>
     <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -27,7 +27,7 @@
     <div class="reg-box">
         <div class="wrap">
             <div class="fa-form">
-                <form action="/register" id="myform">
+                <form action="/user/register" id="myform" method="post">
                     <div class="group">
                         <div class="txt">
                             <i>*</i>用户名：
@@ -75,10 +75,11 @@
                             <select name="cityCode" id="city">
                                 <option value="">-市-</option>
                             </select>
-                            <select name="countyCode" id="area">
+                            <select name="areaId" id="area">
                                 <option value="">-区/县-</option>
                             </select>
                         </div>
+                        <input type="hidden" id="areaFull" name="areaFull" value="">
                     </div>
 
                     <div class="group">
@@ -125,7 +126,7 @@
 
             <div class="side">
                 <div class="hd">
-                   已有账号<a class="btn btn-gray" href="login.html">请登录</a> 
+                   已有账号<a class="btn btn-gray" href="/user/login">请登录</a> 
                 </div>
                 <div class="bd">
                     <dl>
@@ -174,9 +175,9 @@
         </div>
     </div><!-- footer end -->
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.validate.min.js"></script>
-    <script src="js/area.js"></script>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/validform.min.js"></script>
+    <script src="/js/area.js"></script>
     <script>
         $(function() {	
             var icons = {
@@ -190,14 +191,18 @@
             // 注册验证
         var formValidate = $("#myform").Validform({
             ajaxPost: true,
-            url: '/register',
+            postonce: true,
+            url: '/user/register',
+            beforeSubmit:function(curform){
+        		$("#areaFull").val($('#province option:selected').text() + $('#city option:selected').text() + $('#area option:selected').text());
+        	},
             callback: function(data){
-				var result = data.result; 
-				var resultMessage = data.resultMessage;
-				if(result != "ok"){
-					_showMsg($('#mobileCode'), resultMessage);
+				var status = data.status; 
+				var info = data.info;
+				if(status == "y"){
+					window.location = "/user/regsuccess?userName="+ $('#username').val() + "&password="+ $('#pwd').val();
 				}else{
-					window.location = "/registerLogin?userName="+ $('#username').val() + "&password="+ $('#pwd').val();
+					_showMsg($('#mobileCode'), info);
 				}
             }
         });
@@ -206,9 +211,9 @@
             {
                 ele: '#username',
                 datatype: 'uname',
-                ajaxurl: 'json/checkname.php',
+                ajaxurl: '/user/checkusername',
                 nullmsg: '用户名必须以英文字母开头，长度6到20位',
-                errormsg: '用户名长度只能在6-20位字符之间'
+                errormsg: '用户名必须以英文字母开头，长度6到20位'
             },
             {
                 ele: '#pwd',
@@ -219,7 +224,7 @@
             {
                 ele: '#pwdRepeat',
                 datatype: '*',
-                recheck: 'pwd',
+                recheck: 'password', 
                 nullmsg: '请再重复输入一遍密码，不能留空',
                 errormsg: '确认新密码与新密码不一致'
             },
@@ -236,12 +241,11 @@
             {
                 ele: '#linkMan',
                 datatype: '*',
-                nullmsg: '请再重复输入一遍密码，不能留空'
+                nullmsg: '请输入联系人姓名'
             },
             {
                 ele: '#mobile',
                 datatype: 'm',
-                ajaxurl: 'json/checkmobile.php',
                 nullmsg: '请输入手机号码',
                 errormsg: '请输入正确的手机号码'
             },
@@ -281,7 +285,7 @@
         var _sendMobileCode = function() {
             $.ajax({
                 type : 'POST',
-                url : 'json/getMobileCode.php',
+                url : '/gen/code',
                 data : {
                     contactMobile: $mobile.val()
                 },
