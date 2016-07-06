@@ -278,34 +278,34 @@ public class UserController extends BaseController {
 		List<User> users = userService.findUserByCondition(user);
 
 		if (!ValidUtils.listNotBlank(users)) {
-			Result result = new Result(false).info("用户名不存在");
+			Result result = new Result("10001").info("用户名不存在");
 			WebUtil.print(response, result);
 			return;
 		}
 
 		// 验证页面mobile与数据库mobile是否相同
 		if (!users.get(0).getContactMobile().equals(mobile)) {
-			Result result = new Result(false).info("手机号码错误");
+			Result result = new Result("10002").info("手机号码错误");
 			WebUtil.print(response, result);
 			return;
 		}
 
 		if (!ValidUtils.mapNotBlank(codeMap)) {
-			Result result = new Result(false).info("请获取验证码");
+			Result result = new Result("10003").info("请获取验证码");
 			WebUtil.print(response, result);
 			return;
 		}
 
 		String code = codeMap.get("code").toString();
 		if (StringUtils.isBlank(code)) {
-			Result result = new Result(false).info("验证码过期");
+			Result result = new Result("10003").info("验证码过期");
 			WebUtil.print(response, result);
 			return;
 		}
 
 		// 验证页面验证码与session验证码是否相同
 		if (!code.equals(mobileCode)) {
-			Result result = new Result(false).info("验证码错误");
+			Result result = new Result("10003").info("验证码错误");
 			WebUtil.print(response, result);
 			return;
 		}
@@ -345,7 +345,7 @@ public class UserController extends BaseController {
 		userService.updateUserByCondition(user);
 		
 		//更新缓存
-		flush(user.getUserName(),pwd,request);
+		reLog(user.getUserName(),pwd,request);
 		
 		Result result = new Result(true);
 		WebUtil.print(response, result);
@@ -397,7 +397,7 @@ public class UserController extends BaseController {
 		user = userService.createPwdAndSaltMd5(user);
 		userService.updateUserByCondition(user);
 		
-		flush(user.getUserName(),pwd,request);
+		reLog(user.getUserName(),pwd,request);
 		
 		Result result = new Result(true).info("密码修改成功");
 		WebUtil.print(response, result);
@@ -405,9 +405,9 @@ public class UserController extends BaseController {
 	}
 	
 	/**
-	 * 修改密码后刷新缓存
+	 * 修改密码后重新登录一次
 	 */
-	public void flush(String userName,String pwd,HttpServletRequest request) throws Exception{
+	public void reLog(String userName,String pwd,HttpServletRequest request) throws Exception{
 		Subject subject = SecurityUtils.getSubject();
 		subject.logout();
 		BizToken token = new BizToken(userName, pwd, false, CommonUtils.getRemoteHost(request), "");

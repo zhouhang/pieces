@@ -199,7 +199,7 @@
                 callback: function(data){
     				var status = data.status; 
     				var info = data.info;
-    				_showMsg($('#pwdRepeat'), info);
+    				_showMsg($('#pwdOld'), info);
                 }
             });
 

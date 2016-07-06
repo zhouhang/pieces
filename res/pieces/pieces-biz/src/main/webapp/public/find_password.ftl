@@ -145,16 +145,27 @@
                 callback: function(data){
                      if(data.status == 'y'){
                          window.location.href = '/user/findpwd/steptwo?userName='+$('#username').val();
-                    }else{
-                    	_showMsg($('#mobileCode'), data.info);
+                         return;
                     }
+                     if(data.status == '10001'){
+                    	_showMsg($('#username'), data.info);
+                    	return;
+                    }
+                     if(data.status == '10002'){
+                     	_showMsg($('#mobile'), data.info);
+                     	return;
+                     }
+                     if(data.status == '10003'){
+                     	_showMsg($('#mobileCode'), data.info);
+                     	return;
+                     }
                 }
             });
 
             formValidate.addRule([
                 {
                     ele: '#username',
-                    datatype: '*',
+                    datatype: 'uname',
                     nullmsg: '请输入用户名'
                 },
                 {
