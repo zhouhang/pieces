@@ -10,7 +10,16 @@
 
     <!-- fa-floor start -->
     <div class="fa-floor">
+
+
         <div class="wrap">
+
+
+            <div  style="display: none" id="error_advices" class="message">
+                <i class="fa fa-times-circle"></i>
+                <span>修改失败！</span>
+            </div>
+
             <div class="side">
                 <dl>
                     <dt>客户信息</dt>
@@ -49,13 +58,13 @@
                                     <i>*</i>企业注册地：
                                 </div>
                                 <div class="cnt">
-                                    <select name="province" id="province">
+                                    <select name="province" id="province"  data-value="${userArea.provinceId}">
                                         <option value="">-省-</option>
                                     </select>
-                                    <select name="city" id="city">
+                                    <select name="city" id="city" data-value="${userArea.cityId}">
                                         <option value="">-市-</option>
                                     </select>
-                                    <select name="area" id="area">
+                                    <select name="areaId" id="area" data-value="${userArea.id}">
                                         <option value="">-区/县-</option>
                                     </select>
                                 </div>
@@ -89,7 +98,7 @@
 
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>新密码：
+                                   新密码：
                                 </div>
                                 <div class="cnt">
                                     <input type="password" class="ipt" value="" autocomplete="off" name="password" id="password" placeholder="请输入新密码">
@@ -102,14 +111,6 @@
                                 </div>
                             </div>
 
-                            <div class="group">
-                                <div class="txt">
-                                    <i>*</i>您的密码：
-                                </div>
-                                <div class="cnt">
-                                    <input type="password" class="ipt" value="" autocomplete="off" name="memberPassword" id="memberPassword" placeholder="请输入当前操作人的boss帐号密码">
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </form>
@@ -190,7 +191,11 @@
             $("#userForm").ajaxSubmit({
                 dataType: "json",
                 success: function (result) {
-
+                    if(result.status=="y"){
+                        location.href="user/index?advices="+result.info
+                    }else{
+                        $("#error_advices").show();
+                    }
                 }
             });
 

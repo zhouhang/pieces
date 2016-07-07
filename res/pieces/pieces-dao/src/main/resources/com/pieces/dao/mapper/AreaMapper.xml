@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pieces.dao.AreaMapper">
+
   <resultMap id="BaseResultMap" type="com.pieces.dao.model.Area">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="areaname" jdbcType="VARCHAR" property="areaname" />
@@ -129,5 +130,16 @@
     from area
     where areacode = #{areacode,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectParentsById" parameterType="java.lang.Integer" resultType="com.pieces.dao.model.Area">
+    SELECT
+	  a.id as id,a.areaname as areaname,b.id as cityId,b.areaname as city,c.id as provinceId,c.areaname as province
+    FROM
+      area a
+    LEFT JOIN area b ON b.id = a.parentid
+    LEFT JOIN area c ON c.id = b.parentid
+    WHERE a.id = #{id}
+  </select>
+
 
 </mapper>

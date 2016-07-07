@@ -1,9 +1,9 @@
 package com.pieces.dao;
 
+import java.util.List;
+
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Area;
-
-import java.util.List;
 
 public interface AreaDao extends ICommonDao<Area>{
     public List<Area> findByParent(Integer parentId);
@@ -14,4 +14,5 @@ public interface AreaDao extends ICommonDao<Area>{
 
     public PageInfo<Area> findByPage(Integer level,Integer pageNum,Integer pageSize);
 
+    public Area findParentsByCode(Integer id);
 }

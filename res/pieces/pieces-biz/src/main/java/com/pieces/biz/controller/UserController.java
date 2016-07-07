@@ -43,6 +43,9 @@ import com.pieces.tools.utils.WebUtil;
 public class UserController extends BaseController {
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private BizRealm bizRealm;
 
 	/**
 	 * 进入注册页面
@@ -344,8 +347,8 @@ public class UserController extends BaseController {
 		user = userService.createPwdAndSaltMd5(user);
 		userService.updateUserByCondition(user);
 		
-		//更新缓存
-		reLog(user.getUserName(),pwd,request);
+		//清除缓存
+		bizRealm.removeAuthenticationCacheInfo();
 		
 		Result result = new Result(true);
 		WebUtil.print(response, result);
@@ -397,26 +400,13 @@ public class UserController extends BaseController {
 		user = userService.createPwdAndSaltMd5(user);
 		userService.updateUserByCondition(user);
 		
-		reLog(user.getUserName(),pwd,request);
+		//清除缓存
+		bizRealm.removeAuthenticationCacheInfo();
 		
 		Result result = new Result(true).info("密码修改成功");
 		WebUtil.print(response, result);
 		return;
 	}
 	
-	/**
-	 * 修改密码后重新登录一次
-	 */
-	public void reLog(String userName,String pwd,HttpServletRequest request) throws Exception{
-		Subject subject = SecurityUtils.getSubject();
-		subject.logout();
-		BizToken token = new BizToken(userName, pwd, false, CommonUtils.getRemoteHost(request), "");
-		subject.login(token);
-		// 存入用户信息到session
-		User user = userService.findByUserName(userName);
-		user.setPassword(null);
-		user.setSalt(null);
-		Session s = subject.getSession();
-		s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), user);
-	}
+	
 }
