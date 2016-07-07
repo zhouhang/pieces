@@ -1,13 +1,12 @@
 package com.pieces.boss.controller;
 
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pieces.dao.model.Area;
 import com.pieces.dao.vo.UserVo;
+import com.pieces.service.AreaService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.impl.SmsService;
 import com.pieces.tools.utils.SeqNoUtil;
@@ -15,20 +14,13 @@ import com.pieces.tools.utils.WebUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import com.github.pagehelper.PageInfo;
-import com.google.gson.Gson;
-import com.pieces.dao.model.Area;
 import com.pieces.dao.model.User;
-import com.pieces.service.AreaService;
 import com.pieces.service.UserService;
 import com.pieces.service.constant.BasicConstants;
-import com.pieces.service.utils.SendMessage;
-import com.pieces.service.utils.YPSendMessage;
-import com.pieces.service.vo.ValidFromVo;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -38,7 +30,8 @@ public class UserController extends  BaseController{
 	private UserService userService;
 	@Autowired
 	private SmsService smsService;
-
+	@Autowired
+	private AreaService areaService;
 	/**
 	 * 会员查询页面
 	 * @param request
@@ -114,6 +107,9 @@ public class UserController extends  BaseController{
 			user.setPassword(passWord);
 		}
 		user.setSource(BasicConstants.USER_CREATECHANNEL_BOSS);
+
+		Area area =  areaService.findParentsById(user.getAreaId());
+
 		//没有用户ID为新用户
 		if(user.getId()==null){
 			userService.addUser(user);
@@ -167,8 +163,6 @@ public class UserController extends  BaseController{
 		model.put("user",user);
 		return "customers-account";
 	}
-
-
 
 
 
