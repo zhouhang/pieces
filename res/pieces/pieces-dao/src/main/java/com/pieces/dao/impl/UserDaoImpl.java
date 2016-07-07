@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.UserDao;
-import com.pieces.dao.model.Area;
 import com.pieces.dao.model.User;
 
 @Repository

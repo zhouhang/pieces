@@ -2,13 +2,7 @@ package com.pieces.service.impl;
 
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,13 +13,9 @@ import com.pieces.dao.UserDao;
 import com.pieces.dao.model.User;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.UserService;
-import com.pieces.service.constant.bean.Result;
 import com.pieces.service.dto.Password;
-import com.pieces.service.enums.RedisEnum;
-import com.pieces.service.utils.CommonUtils;
 import com.pieces.service.utils.EncryptUtil;
 import com.pieces.service.utils.ValidUtils;
-import com.pieces.tools.utils.WebUtil;
 
 
 @Service

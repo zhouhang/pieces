@@ -14,7 +14,7 @@
      <property name="rememberMeManager" ref="rememberMeManager"/>
      <property name="subjectFactory" ref="defaultSubjectFactory"/>
  </bean>
-    
+    <!-- 定义boss子系统的realm配置     -->
  <bean id="bossRealm" class="com.pieces.boss.shiro.BossRealm">
      <property name="cachingEnabled" value="true"/>
      <property name="authenticationCachingEnabled" value="true"/>
@@ -23,7 +23,6 @@
      <property name="authorizationCacheName" value="authorizationCache"/>
      <property name="credentialsMatcher" ref="credentialsMatcher"/>
  </bean>
-     <!-- 定义boss子系统的realm配置 
+     
  <bean id="bossAuthorizationFilter" class="com.pieces.boss.shiro.BossAuthorizationFilter" /> 
-    -->
 </beans>
