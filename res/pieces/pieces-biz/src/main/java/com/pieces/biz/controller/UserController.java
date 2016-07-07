@@ -87,14 +87,18 @@ public class UserController extends BaseController {
 		if(StringUtils.isBlank(user.getPassword())){
 			message.append("密码不能为空");
 		}
-		if(StringUtils.isBlank(user.getCompanyFullName())){
-			message.append("企业全称不能为空");
+		pattern = Pattern.compile("^[\\u4E00-\\u9FA5\\uf900-\\ufa2d\\w\\.\\s]{1,50}$");
+		matcher = pattern.matcher(user.getCompanyFullName());
+		if(!matcher.matches()){
+			message.append("企业全称1-50字符");
 		}
 		if(user.getAreaId() < 10000){
 			message.append("注册地有误");
 		}
-		if(StringUtils.isBlank(user.getContactName())){
-			message.append("联系人姓名不能为空");
+		pattern = Pattern.compile("^[\\u4E00-\\u9FA5\\uf900-\\ufa2d\\w\\.\\s]{1,50}$");
+		matcher = pattern.matcher(user.getContactName());
+		if(!matcher.matches()){
+			message.append("联系人姓名1-50字符");
 		}
 		pattern = Pattern.compile("^1[345678]\\d{9}$");
 		matcher = pattern.matcher(user.getContactMobile());
