@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
@@ -379,20 +378,41 @@ public class UserController extends BaseController {
 		return "message_find_pwd";
 	}
 
+	/**
+	 * 跳转用户中心
+	 * @param model
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/info")
 	public String userInfo(ModelMap model, HttpServletRequest request) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		model.put("user", user);
 		return "user_info";
 	}
-
+	
+	/**
+	 * 进入修改密码页面
+	 * @param model
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/pwd/update" , method = RequestMethod.GET)
 	public String toUserUpdatePassword(ModelMap model, HttpServletRequest request) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		model.put("user", user);
 		return "user_update_password";
 	}
-
+	
+	/**
+	 * 密码修改
+	 * @param model
+	 * @param pwdOld
+	 * @param pwd
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/pwd/update" , method = RequestMethod.POST)
 	public void userUpdatePassword(ModelMap model, String pwdOld, String pwd, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
