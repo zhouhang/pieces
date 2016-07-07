@@ -24,6 +24,7 @@
 		id,user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,create_time,update_time
 	</sql>
 
+
 	<select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
 		select
 		<include refid="Base_Column_List" />
@@ -272,4 +273,6 @@
 			and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<=]]> DATE_FORMAT(#{endDate},'%Y-%m-%d')
 		</if>
 	</select>
+
+
 </mapper>

@@ -31,6 +31,16 @@ public class AreaDaoImpl extends BaseDaoImpl implements AreaDao{
         return page;
     }
 
+    /**
+     * 通过地区ID查询该地区全部信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Area findParentsByCode(Integer id) {
+        return getSqlSession().selectOne("com.pieces.dao.AreaMapper.selectParentsById", id);
+    }
+
     @Override
     public Area findById(int id) {
         return getSqlSession().selectOne("com.pieces.dao.AreaMapper.findById", id);

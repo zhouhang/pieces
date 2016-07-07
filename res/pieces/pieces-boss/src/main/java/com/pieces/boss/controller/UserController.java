@@ -1,8 +1,5 @@
 package com.pieces.boss.controller;
 
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,20 +12,15 @@ import com.pieces.tools.utils.WebUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import com.github.pagehelper.PageInfo;
-import com.google.gson.Gson;
 import com.pieces.dao.model.Area;
 import com.pieces.dao.model.User;
 import com.pieces.service.AreaService;
 import com.pieces.service.UserService;
 import com.pieces.service.constant.BasicConstants;
-import com.pieces.service.utils.SendMessage;
-import com.pieces.service.utils.YPSendMessage;
-import com.pieces.service.vo.ValidFromVo;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -52,6 +44,7 @@ public class UserController extends  BaseController{
 	@RequestMapping(value = "/index")
 	public String userIndex(HttpServletRequest request,
 							HttpServletResponse response,
+							String  advices,
 							Integer pageNum,
 							Integer pageSize,
 							UserVo userVo,
@@ -61,6 +54,7 @@ public class UserController extends  BaseController{
 		PageInfo<User> userPage = userService.findByCondition(userVo,pageNum,pageSize);
 		model.put("userPage",userPage);
 		model.put("userParams",userVo.toString());
+		model.put("advices",advices);
 		return "customers";
 	}
 
@@ -108,6 +102,7 @@ public class UserController extends  BaseController{
 						   HttpServletResponse response,
 						   Boolean random,
 						   User user)throws Exception{
+		String advices = "新增用户信息成功!";
 		String passWord =null;
 		//是否发送随机密码
 		if(random!=null&&random){
@@ -115,20 +110,25 @@ public class UserController extends  BaseController{
 			user.setPassword(passWord);
 		}
 		user.setSource(BasicConstants.USER_CREATECHANNEL_BOSS);
-
-		Area area =  areaService.findParentsById(user.getAreaId());
-
+		//补全地址信息
+		if(user.getAreaId()!=null){
+			StringBuffer sb = new StringBuffer();
+			Area area = areaService.findParentsById(user.getAreaId());
+			sb.append(area.getProvince()).append(area.getCity()).append(area.getAreaname());
+			user.setAreaFull(sb.toString());
+		}
 		//没有用户ID为新用户
 		if(user.getId()==null){
 			userService.addUser(user);
 		}else{
 			userService.updateUser(user);
+			advices = "修改用户信息成功!";
 		}
 		//发送短信
 		if(passWord!=null){
 			smsService.sendUserAccount(passWord,user.getContactMobile(),user.getUserName());
 		}
-		WebUtil.print(response,new Result(true));
+		WebUtil.print(response,new Result(true).info(advices));
 	}
 
 	/**
@@ -168,10 +168,10 @@ public class UserController extends  BaseController{
 					   @PathVariable("id") Integer id,
 					   ModelMap model){
 		User user =	userService.findById(id);
+		Area area =  areaService.findParentsById(user.getAreaId());
 		model.put("user",user);
+		model.put("userArea",area);
 		return "customers-account";
 	}
-
-
 
 }

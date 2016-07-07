@@ -14,4 +14,5 @@ public interface AreaDao extends ICommonDao<Area>{
 
     public PageInfo<Area> findByPage(Integer level,Integer pageNum,Integer pageSize);
 
+    public Area findParentsByCode(Integer id);
 }

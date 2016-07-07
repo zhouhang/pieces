@@ -18,7 +18,7 @@
                     <dt>客户信息</dt>
                     <dd>
                         <a  href="/user/index">客户界面</a>
-                        <a class="curr" href="/user/info/${user.id}">账户信息</a>
+                        <a class="curr" href="/user/edit/${user.id}">账户信息</a>
                     </dd>
                 </dl>
             </div>
