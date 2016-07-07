@@ -149,13 +149,21 @@ public class UserController extends BaseController {
 	public void checkUserName(Model model, HttpServletRequest request, HttpServletResponse response) {
 		Result result = new Result(false).info("用户名必须以英文字母开头，长度6到20位");
 		String userName = request.getParameter("param");
-		if (StringUtils.isNotBlank(userName)) {
-			Pattern pattern = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$");
-			Matcher matcher = pattern.matcher(userName);
-			if (matcher.matches() && !userService.checkUserName(userName)) {
-				result = new Result(true);
-			}
+		Pattern pattern = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$");
+		Matcher matcher = pattern.matcher(userName);
+		
+		if	(!StringUtils.isNotBlank(userName) || !matcher.matches()){
+			WebUtil.print(response, result);
+			return;
 		}
+		
+		if (userService.checkUserName(userName)) {
+			result = new Result(false).info("用户名重复");
+			WebUtil.print(response, result);
+			return;
+		}
+		
+		result = new Result(true);
 		WebUtil.print(response, result);
 	}
 

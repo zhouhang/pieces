@@ -135,7 +135,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
      * @return
      */
     public User getPwdAndSaltMd5(User user) {
-        Password pass = EncryptUtil.PiecesEncode(user.getPassword(), user.getSalt(), "");
+        Password pass = EncryptUtil.PiecesEncode(user.getPassword(), user.getSalt());
         user.setPassword(pass.getPassword());
         user.setSalt(pass.getSalt());
         return user;
