@@ -20,7 +20,7 @@
             <div class="extra">
                 <a class="btn btn-gray" href="#"><i class="fa fa-export"></i>导出</a>
             </div>
-            <@p.pager pageInfo=userPage  pageUrl="user/index" />
+            <@p.pager pageInfo=userPage  pageUrl="user/index"  params=userParams/>
 
 
         </div>
@@ -39,23 +39,24 @@
                     <th>操作</th>
                 </tr>
                 <tr>
-                    <td></td>
-                    <td><input type="text" class="ipt" value=""></td>
-                    <td><input type="text" class="ipt" value=""></td>
-                    <td><input type="text" class="ipt" value=""></td>
-                    <td><input type="text" class="ipt" value=""></td>
-                    <td><input type="text" class="ipt" value=""></td>
-                    <td><input type="text" class="ipt date" value="" id="start"> - <input type="text" class="ipt date" value="" id="end"></td>
-                    <td>
-                        <select name="" id="">
-                            <option value="">是</option>
-                            <option value="">否</option>
-                        </select>
-                    </td>
-                    <td>
-
-                        <button class="button" type="button"><i class="fa fa-search"></i><span>搜索</span></button>
-                    </td>
+                    <form id="search_form">
+                        <td></td>
+                        <td><input name="userName" type="text" class="ipt" value="${userVo.userName}"></td>
+                        <td><input name="companyFullName" type="text" class="ipt" value="${userVo.companyFullName}"></td>
+                        <td><input name="areaFull" type="text" class="ipt" value="${userVo.areaFull}"></td>
+                        <td><input name="contactName" type="text" class="ipt" value="${userVo.contactName}"></td>
+                        <td><input name="contactMobile" type="text" class="ipt" value="${userVo.contactMobile}"></td>
+                        <td><input name="startDate" type="text" class="ipt date" value="${userVo.startDate}" id="start"> - <input name="endDate" type="text" class="ipt date" value="${userVo.endDate}" id="end"></td>
+                        <td>
+                            <select name="bindErp" id="">
+                                <option <#if (!userVo.bindErp??)>selected</#if> value="false">否</option>
+                                <option <#if (userVo.bindErp??&&userVo.bindErp)>selected</#if> value="true">是</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button id="search_btn" class="button" type="button"><i class="fa fa-search"></i><span>搜索</span></button>
+                        </td>
+                    </form>
                 </tr>
                 </thead>
                 <tfoot></tfoot>
@@ -70,7 +71,7 @@
                         <td>${user.contactMobile}</td>
                         <td>${user.createTime?date}</td>
                         <td>${user.bindErp}</td>
-                        <td><a href="customers-info.html">修改</a></td>
+                        <td><a href="user/info/${user.id}">修改</a></td>
                     </tr>
                 </#list>
                 </tbody>
@@ -89,13 +90,22 @@
         var page = {
             //定义全局变量区
             v: {
-                id: "page"
+                id: "page",
+                pageNum:${userPage.pageNum},
+                pageSize:${userPage.pageSize}
             },
             //定义方法区
             fn: {
                 //初始化方法区
                 init: function () {
                     page.fn.dateInit();
+
+                    $("#search_btn").click(function(){
+                        var url="user/index?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
+                        var param = $("#search_form").serialize();
+                        location.href=url+"&"+param;
+                    })
+
                 },
                 //日期选择
                 dateInit: function () {

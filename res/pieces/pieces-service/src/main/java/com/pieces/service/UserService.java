@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.User;
+import com.pieces.dao.vo.UserVo;
 
 /**
  * 前台用户service
@@ -18,6 +19,8 @@ public interface UserService extends ICommonService<User>{
 	PageInfo<User> findUserByVagueCondition(User user,Integer pageNum, Integer pageSize);
 
 	int addUser(User user);
+
+	int updateUser(User user);
 	
 	User createPwdAndSaltMd5(User user);
 
@@ -32,4 +35,8 @@ public interface UserService extends ICommonService<User>{
 	User findByUserName(String userName);
 	
 	boolean checkMobileCode(String targetMobileCode);
+
+	PageInfo<User> findByCondition(UserVo userVo, Integer pageNum, Integer pageSize);
+
+
 }

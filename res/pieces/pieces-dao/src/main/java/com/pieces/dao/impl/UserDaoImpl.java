@@ -2,6 +2,7 @@ package com.pieces.dao.impl;
 
 import java.util.List;
 
+import com.pieces.dao.vo.UserVo;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
@@ -35,6 +36,14 @@ public class UserDaoImpl extends BaseDaoImpl implements UserDao {
 	@Override
 	public User findByUserName(String userName) {
 		return getSqlSession().selectOne("com.pieces.dao.UserMapper.findByUserName", userName);
+	}
+
+
+	@Override
+	public PageInfo<User> findByCondition(UserVo userVo, Integer pageNum, Integer pageSize) {
+		List<User> list = getSqlSession().selectList("com.pieces.dao.UserMapper.findByCondition", userVo,new RowBounds(pageNum, pageSize));
+		PageInfo page = new PageInfo(list);
+		return page;
 	}
 
 	@Override

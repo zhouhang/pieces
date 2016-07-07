@@ -1,63 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <#include "./inc/meta.ftl"/>
     <title>账户信息-boss-饮片B2B</title>
-    <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
-
-    <!-- header start -->
-    <div class="header">
-        <div class="wrap">
-            <div class="logo">
-                <a href="home.html">药优优电子商务管理系统</a>
-            </div>
-            <div class="user">
-                <span>登录用户 hehuan</span>
-                <i>|</i>
-                <span>2016年6月20日 星期三</span>
-                <i>|</i>
-                <a href="logout.html">退出</a>
-            </div>
-        </div>
-    </div><!-- header end -->
-
-
-    <!-- nav start -->
-    <div class="nav">
-        <div class="wrap">
-            <ul>
-                <li><a href="#!">首页</a></li>
-                <li><a href="#!">销售</a></li>
-                <li><a href="#!">目录</a></li>
-                <li>
-                    <a class="curr" href="#!">客户</a>
-                    <div class="subnav">
-                        <a href="customers.html">客户管理</a>
-                    </div>
-                </li>
-                <li>
-                    <a href="#!">促销</a>
-                    <div class="subnav">
-                        <a href="customers.html">客户管理</a>
-                        <a href="customers.html">客户管理</a>
-                        <a href="customers.html">客户管理</a>
-                        <a href="customers.html">客户管理</a>
-                        <a href="customers.html">客户管理</a>
-                    </div>
-                </li>
-                <li><a href="#!">邮件列表</a></li>
-                <li><a href="#!">CMS</a></li>
-                <li><a href="#!">报表</a></li>
-                <li><a href="#!">系统</a></li>
-            </ul>
-        </div>
-    </div><!-- nav end -->
-
+    <#include "./inc/header.ftl">
 
     <!-- fa-floor start -->
     <div class="fa-floor">
@@ -66,34 +15,32 @@
                 <dl>
                     <dt>客户信息</dt>
                     <dd>
-                        <a href="/menber/get/userlist">客户界面</a>
-                        <a class="curr" href="/menber/to/add/account">账户信息</a>
+                        <a href="user/index">客户界面</a>
+                        <a class="curr" href="user/info/${user.id}">账户信息</a>
                     </dd>
                 </dl>
             </div>
             <div class="main">
-
-
-                <form action="/menber/update/account" id="myform">
+                <form action="user/save" id="userForm" method="post">
+                    <input type="hidden" name="id" value="${user.id}">
                     <div class="title">
-                        <h3><i class="fa fa-people"></i>hehuan</h3>
+                        <h3><i class="fa fa-people"></i>${user.userName}</h3>
                         <div class="extra">
                             <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                            <button id="reset" type="reset" class="btn btn-gray">重置</button>
-                            <button id="submit" type="submit" class="btn btn-red">保存</button>
+                            <button type="reset" class="btn btn-gray">重置</button>
+                            <button id="userFormSubmit" type="button" class="btn btn-red">保存</button>
                         </div>
                     </div>
 
                     <div class="user-info">
                         <h3>账户信息</h3>
                         <div class="fa-form">
-                            <input type="hidden" id="id" name="id" value="${user.id!'' }">
                             <div class="group">
                                 <div class="txt">
                                     <i>*</i>企业全称：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="${user.companyFullName!'' }" autocomplete="off" name="companyFullName" id="companyName" placeholder="">   
+                                    <input type="text" class="ipt" value="${(user.companyFullName)!}" autocomplete="off" name="companyFullName" id="companyFullName" placeholder="">
                                 </div>
                             </div>
 
@@ -103,13 +50,13 @@
                                 </div>
                                 <div class="cnt">
                                     <select name="province" id="province">
-                                        
+                                        <option value="">-省-</option>
                                     </select>
                                     <select name="city" id="city">
-                                        
+                                        <option value="">-市-</option>
                                     </select>
                                     <select name="area" id="area">
-                                        
+                                        <option value="">-区/县-</option>
                                     </select>
                                 </div>
                             </div>
@@ -119,7 +66,7 @@
                                     <i>*</i>联系人姓名：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="${user.contactName!'' }" autocomplete="off" name="contactName" id="linkMan" placeholder="">                            
+                                    <input type="text" class="ipt" value="${(user.contactName)!}" autocomplete="off" name="contactName" id="contactName" placeholder="">
                                 </div>
                             </div>
 
@@ -128,7 +75,7 @@
                                     <i>*</i>联系人手机号码：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="${user.contactMobile!'' }" autocomplete="off" name="contactMobile" id="mobile" placeholder="">                            
+                                    <input type="text" class="ipt" value="${(user.contactMobile)!}" autocomplete="off" name="contactMobile" id="contactMobile" placeholder="">
                                 </div>
                             </div>
 
@@ -145,132 +92,111 @@
                                     <i>*</i>新密码：
                                 </div>
                                 <div class="cnt">
-                                    <input type="password" class="ipt" value="" autocomplete="off" name="password" id="pwd" placeholder="请输入新密码">     
+                                    <input type="password" class="ipt" value="" autocomplete="off" name="password" id="password" placeholder="请输入新密码">
                                 </div>
                             </div>
 
                             <div class="group">
                                 <div class="cnt-extra">
-                                    <label><input class="cbx" id="mobileCode" type="checkbox">或发送随机密码</label>                
+                                    <label><input class="cbx" id="contactMobileCode" type="checkbox">或发送随机密码</label>
                                 </div>
                             </div>
 
-                            <!-- <div class="group">
+                            <div class="group">
                                 <div class="txt">
                                     <i>*</i>您的密码：
                                 </div>
                                 <div class="cnt">
-                                    <input type="password" class="ipt" value="" autocomplete="off" name="pwdOld" id="pwdOld" placeholder="请输入当前操作人的boss帐号密码">                            
+                                    <input type="password" class="ipt" value="" autocomplete="off" name="memberPassword" id="memberPassword" placeholder="请输入当前操作人的boss帐号密码">
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                 </form>
             </div>
-        </div><!-- fa-floor end -->
+        </div>
+        <!-- fa-floor end -->
     </div>
 
 
     <!-- footer start -->
-    <div class="footer">
-        <div class="wrap">            
-            <div class="copyright">
-                <p>药优优电商管理系统 版本 1.0  版权所有 &copy; 2016 药优优</p>
-            </div>
-        </div>
-    </div><!-- footer end -->
-
-    <script src="/js/jquery.min.js"></script>
+    <#include "./inc/footer.ftl"/>
+    <!-- footer end -->
     <script src="/js/validform.min.js"></script>
     <script src="/js/area.js"></script>
-    <script>
-        $(function() {
-            var iconsError = "<i class='fa fa-prompt'></i> ";
-            $.Tipmsg.r = '';
-            $.Tipmsg.c = '';
-            
-            var provinceId = '${province.id}';
-            var provinceName = '${province.areaname}';
-            var cityId = '${city.id}';
-            var cityName = '${city.areaname}';
-            var areaId = '${area.id}';
-            var areaName = '${area.areaname}';
-            $("#province").append("<option selected='selected' value='"+provinceId+"'>"+provinceName+"</option>");
-            $("#city").append("<option selected='selected' value='"+cityId+"'>"+cityName+"</option>");
-            $("#area").append("<option selected='selected' value='"+areaId+"'>"+areaName+"</option>");
 
-            var formValidate = $("#myform").Validform({
-                postonce: true,
-                showAllError: true,
-                ajaxPost:true,
-                datatype: {
-                    pwd: /^[a-zA-Z0-9_]{6,20}$/
-                },
-                tiptype: 4,
-            	beforeSubmit:function(curform){
-            		$("#areaFull").val($('#province option:selected').text() + $('#city option:selected').text() + $('#area option:selected').text());
-            	},
-            	callback:function(data){
-            		var status = data.status;
-            		var info = data.info;
-            		if(status == 'y'){
-            			window.location = "/menber/get/userlist";
-            		}
-            	}
+</body>
+
+<script>
+    $(function() {
+        var formValidate = $("#userform").Validform();
+
+        formValidate.addRule([
+            {
+                ele: '#companyFullName',
+                datatype: 's',
+                nullmsg: '用户名必须以英文字母开头，长度6到20位',
+                errormsg: '用户名长度只能在6-20位字符之间'
+            },
+            {
+                ele: '#area',
+                datatype: 's',
+                nullmsg: '请选择企业注册地'
+            },
+            {
+                ele: '#contactName',
+                datatype: 's',
+                nullmsg: '请输入联系人姓名'
+            },
+            {
+                ele: '#contactMobile',
+                datatype: 'm',
+                nullmsg: '请输入手机号码',
+                errormsg: '请输入正确的手机号码'
+            },
+            {
+                ele: '#password',
+                datatype: 'password',
+                nullmsg: '请输入密码',
+                errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
+            },
+            {
+                ele: '#memberPassword',
+                datatype: '*',
+                nullmsg: '请输入当前操作人的boss帐号密码'
+            }
+        ])
+
+        var $contactMobileCode = $('#contactMobileCode');
+        var $password = $('#password');
+        var _setpassword = function() {
+            var flag = $contactMobileCode.prop('checked');
+            if (flag) {
+                formValidate.ignore($password);
+                $password.nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
+            } else {
+                formValidate.unignore($password);
+            }
+            $password.prop('disabled', flag);
+        }
+        $contactMobileCode.on('click', _setpassword);
+        _setpassword();
+
+
+        /**
+         * 提交表单
+         */
+        $("#userFormSubmit").click(function(){
+            $("#userForm").ajaxSubmit({
+                dataType: "json",
+                success: function (result) {
+
+                }
             });
 
-            formValidate.addRule([
-                {
-                    ele: '#companyName',
-                    datatype: 's',
-                    nullmsg: iconsError + '用户名必须以英文字母开头，长度6到20位',
-                    errormsg: iconsError + '用户名长度只能在6-20位字符之间'
-                },
-                {
-                    ele: '#area',
-                    datatype: 's',
-                    nullmsg: iconsError + '请选择企业注册地'
-                },
-                {
-                    ele: '#linkMan',
-                    datatype: 's',
-                    nullmsg: iconsError + '请输入联系人姓名'
-                },
-                {
-                    ele: '#mobile',
-                    datatype: /^1[345678]\d{9}$/,
-                    nullmsg: iconsError + '请输入手机号码',
-                    errormsg: iconsError + '请输入正确的手机号码'
-                },
-                {
-                    ele: '#pwd',
-                    datatype: '*,pwd',
-                    nullmsg: iconsError + '请输入密码',
-                    errormsg: iconsError + '密码由数字、字母或下划线组成，长度为6-20位'
-                }/* ,
-                {
-                    ele: '#pwdOld',
-                    datatype: '*',
-                    nullmsg: iconsError + '请输入当前操作人的boss帐号密码'
-                } */
-            ])
-            
-            var $mobileCode = $('#mobileCode');
-            var $pwd = $('#pwd');
-            var _setPwd = function() {
-                var flag = $mobileCode.prop('checked');
-                if (flag) {
-                    formValidate.ignore($pwd);
-                    $pwd.nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
-                } else {
-                    formValidate.unignore($pwd);
-                }
-                $pwd.prop('disabled', flag);
-            }
-            $mobileCode.on('click', _setPwd);
-            _setPwd();
-
         })
-    </script>
-</body>
+
+
+    })
+</script>
 </html>

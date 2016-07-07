@@ -242,4 +242,34 @@
 		    and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<]]> DATE_FORMAT(DATE_ADD(#{endDate},INTERVAL 1 DAY),'%Y-%m-%d')
 		</if>
   </select>
+
+	<!-- 条件查询User-->
+	<select id="findByCondition" parameterType="com.pieces.dao.vo.UserVo" resultMap="BaseResultMap">
+		select * from user b
+		where 1=1
+		<if test="userName != null and userName != ''" >
+			and b.user_name like "%"#{userName}"%"
+		</if>
+		<if test="bindErp != null and bindErp != ''" >
+			and b.bind_erp = #{bindErp}
+		</if>
+		<if test="areaFull != null and areaFull != ''">
+			and b.area_full like  "%"#{areaFull}"%"
+		</if>
+		<if test="companyFullName != null and companyFullName != ''" >
+			and b.company_full_name like "%"#{companyFullName}"%"
+		</if>
+		<if test="contactMobile != null and contactMobile != ''" >
+			and b.contact_mobile like "%"#{contactMobile}"%"
+		</if>
+		<if test="contactName != null and contactName != ''" >
+			and b.contact_name like  "%"#{contactName}"%"
+		</if>
+		<if test="startDate != null and startDate != ''">
+			and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[>=]]> DATE_FORMAT(#{startDate},'%Y-%m-%d')
+		</if>
+		<if test="endDate != null and endDate != ''">
+			and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<=]]> DATE_FORMAT(#{endDate},'%Y-%m-%d')
+		</if>
+	</select>
 </mapper>
