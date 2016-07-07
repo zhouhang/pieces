@@ -2,7 +2,9 @@ $(function() {
 	var $province = $('#province'),
 		$city = $('#city'),
 		$area = $('#area'),
-		def1 = $province.data('value');
+        province = $province.data('value') || 0, //省份地区编码
+        city = $province.data('value') || 0, //城市地区编码
+        area = $province.data('value') || 0; //地区地区编码
 
 	var citys = {};
 
@@ -19,11 +21,6 @@ $(function() {
 			success: function(data) {
 				citys[pid] = data;
 				toHtml(pid, $wrap);
-			},
-			error: function() {
-				setTimeout(function() {
-					getArea(pid);
-				}, 1e3);
 			}
 		});
 	}
@@ -50,5 +47,6 @@ $(function() {
 	});
 
 	getArea('index', $province); 
-
+	city && getArea(province, $city);
+	area && getArea(city, $area);
 })

@@ -118,13 +118,13 @@ public class MainFrame extends JFrame {
 		contentPane.add(lblPassword);
 
 		txt_username = new JTextField();
-		txt_username.setText("root");
+		txt_username.setText("piece");
 		txt_username.setBounds(110, 70, 205, 25);
 		contentPane.add(txt_username);
 		txt_username.setColumns(10);
 
 		txt_password = new JTextField();
-		txt_password.setText("");
+		txt_password.setText("123456");
 		txt_password.setColumns(10);
 		txt_password.setBounds(110, 110, 205, 25);
 		contentPane.add(txt_password);
@@ -201,7 +201,7 @@ public class MainFrame extends JFrame {
 		contentPane.add(lblUrl);
 
 		txt_url = new JTextField();
-		txt_url.setText("jdbc:mysql://127.0.0.1:3306/pieces");
+		txt_url.setText("jdbc:mysql://192.168.1.174:3306/pieces");
 		txt_url.setColumns(10);
 		txt_url.setBounds(110, 150, 205, 25);
 		contentPane.add(txt_url);
