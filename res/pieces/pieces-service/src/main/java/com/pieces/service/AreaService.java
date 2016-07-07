@@ -18,4 +18,6 @@ public interface AreaService extends ICommonService<Area>{
 
     public PageInfo<Area> findByPage(Integer level, Integer pageNum, Integer pageSize);
 
+    public Area findParentsById(Integer id);
+
 }

@@ -1,6 +1,8 @@
 package com.pieces.boss.controller.exception;
 
 import com.google.common.base.Throwables;
+import com.pieces.service.constant.bean.Result;
+import com.pieces.tools.utils.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -31,9 +33,9 @@ public class BaseGlobalExceptionHandler {
         String errorStack = Throwables.getStackTraceAsString(e);
 
         getLogger().error("Request: {} raised {}", req.getRequestURI(), errorStack);
-//        if (Ajax.isAjax(req)) {
-//            return handleAjaxError(rsp, errorMsg, status);
-//        }
+        if (isAjaxRequest(req)) {
+            return handleAjaxError(rsp, errorMsg, status);
+        }
         return handleViewError(req.getRequestURL().toString(), errorStack, errorMsg, viewName);
     }
 
@@ -48,15 +50,21 @@ public class BaseGlobalExceptionHandler {
     }
 
     protected ModelAndView handleAjaxError(HttpServletResponse rsp, String errorMessage, HttpStatus status) throws IOException {
-        rsp.setCharacterEncoding("UTF-8");
-        rsp.setStatus(status.value());
-        PrintWriter writer = rsp.getWriter();
-        writer.write(errorMessage);
-        writer.flush();
+        WebUtil.print(rsp,new Result(false).info(DEFAULT_ERROR_MESSAGE));
         return null;
     }
 
     public Logger getLogger() {
         return LoggerFactory.getLogger(BaseGlobalExceptionHandler.class);
+    }
+
+    public static boolean isAjaxRequest(HttpServletRequest request) {
+        String requestType = request.getHeader("X-Requested-With");
+
+        if (requestType != null && requestType.equals("XMLHttpRequest")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
+ * 地区信息
  * Created by wangbin on 2016/6/27.
  */
 @Service
@@ -33,6 +34,16 @@ public class AreaServiceImpl extends AbsCommonService<Area> implements AreaServi
     @Override
     public PageInfo<Area> findByPage(Integer level, Integer pageNum, Integer pageSize) {
         return areaDao.findByPage(level, pageNum, pageSize);
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public Area findParentsById(Integer id) {
+        return areaDao.findParentsByCode(id);
     }
 
 

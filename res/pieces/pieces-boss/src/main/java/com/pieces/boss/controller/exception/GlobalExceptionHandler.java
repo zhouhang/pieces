@@ -18,8 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 public class GlobalExceptionHandler  extends BaseGlobalExceptionHandler{
 
 
-
-
     //500的异常会被这个方法捕获
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -33,5 +31,7 @@ public class GlobalExceptionHandler  extends BaseGlobalExceptionHandler{
     public Logger getLogger() {
         return LoggerFactory.getLogger(GlobalExceptionHandler.class);
     }
+
+
 
 }

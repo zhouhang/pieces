@@ -114,8 +114,7 @@
                                 </select>
                             </td>
                             <td>
-
-                                <button class="button" type="button"><i class="fa fa-search"></i><span>搜索</span></button>
+                                <button class="button" type="button" id="submit"><i class="fa fa-search"></i><span>搜索</span></button>
                             </td>
                         </tr>
                     </thead>
@@ -196,6 +195,7 @@
                 //初始化方法区
                 init: function () {
                     page.fn.dateInit();
+                    page.fn.filter();
                 },
                 //日期选择
                 dateInit: function () {
@@ -226,6 +226,19 @@
                     };
                     laydate(start);
                     laydate(end);
+                },
+                // 筛选
+                filter: function() {
+                    var $ipts = $('.chart .ipt, .chart select');
+
+                    $('#submit').on('click', function() {
+                        var params = [];
+                        $ipts.each(function() {
+                            var val = $.trim(this.value);
+                            val && params.push($(this).attr('name') + '=' + val);
+                        })
+                        console.log(params.join('&'))
+                    })
                 }
             }
         }

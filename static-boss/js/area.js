@@ -3,8 +3,8 @@ $(function() {
 		$city = $('#city'),
 		$area = $('#area'),
         province = $province.data('value') || 0, //省份地区编码
-        city = $province.data('value') || 0, //城市地区编码
-        area = $province.data('value') || 0; //地区地区编码
+        city = $city.data('value') || 0, //城市地区编码
+        area = $area.data('value') || 0; //地区地区编码
 
 	var citys = {};
 
@@ -28,6 +28,7 @@ $(function() {
 	function toHtml(pid, $wrap) {
 		var arr = [];
 		var def = $wrap.data('value');
+		$wrap.data('value', '');
 		$.each(citys[pid], function(i, item){
 			var selected = item.i == def ? ' selected' : '';
 			arr.push('<option value="', item.i, '"', selected, '>', item.n, '</option>');
@@ -38,12 +39,15 @@ $(function() {
 
 	$province.on('change', function() {
 		var val = $(this).val();
-		getArea(val, $city);
+		$city.find('select:gt(0)').remove();
+		$area.find('select:gt(0)').remove();
+		val && getArea(val, $city);
 	});
 
 	$city.on('change', function() {
 		var val = $(this).val();
-		getArea(val, $area);
+		$area.find('select:gt(0)').remove();
+		val && getArea(val, $area);
 	});
 
 	getArea('index', $province); 

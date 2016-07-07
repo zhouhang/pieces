@@ -10,7 +10,14 @@
 
 <!-- fa-floor start -->
 <div class="fa-floor">
+
     <div class="wrap">
+
+        <div  style="display: none" id="error_advices" class="message">
+            <i class="fa fa-times-circle"></i>
+            <span>新增失败！</span>
+        </div>
+
         <div class="side">
             <dl>
                 <dt>客户信息</dt>
@@ -62,7 +69,7 @@
                                 <select name="city" id="city">
                                     <option value="">-市-</option>
                                 </select>
-                                <select name="areaId" id="area" >
+                                <select name="areaId" id="area">
                                     <option value="">-区/县-</option>
                                 </select>
                             </div>
@@ -165,8 +172,6 @@
             }
         ])
 
-
-
         var $mobileCode = $('#random');
         var $pwd = $('#password');
         var _setPwd = function() {
@@ -189,13 +194,15 @@
             $("#userForm").ajaxSubmit({
                 dataType: "json",
                 success: function (result) {
-
+                    if(result.status=="y"){
+                        location.href="user/index?advices="+result.info
+                    }else{
+                        $("#error_advices").show();
+                    }
                 }
             });
 
         })
-
-
     })
 </script>
 </body>

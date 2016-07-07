@@ -12,6 +12,13 @@
 <!-- fa-floor start -->
 <div class="fa-floor">
     <div class="wrap">
+        <#if (advices??)>
+            <div  class="message">
+                <i class="fa fa-check-circle"></i>
+                <span>${advices}</span>
+            </div>
+        </#if>
+
         <div class="title">
             <h3>客户管理</h3>
             <div class="extra"><a class="btn btn-red" href="user/add"><i class="fa fa-plus"></i>增加新客户</a></div>
@@ -21,8 +28,6 @@
                 <a class="btn btn-gray" href="#"><i class="fa fa-export"></i>导出</a>
             </div>
             <@p.pager pageInfo=userPage  pageUrl="user/index"  params=userParams/>
-
-
         </div>
         <div class="chart">
             <table class="tc">
@@ -102,17 +107,31 @@
 
                     $("#search_btn").click(function(){
                         var url="user/index?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
-                        var param = $("#search_form").serialize();
+                        var param = page.fn.getParams($('#search_form').serialize());
                         location.href=url+"&"+param;
                     })
 
+                },
+                getParams:function(str){
+                    var ret = [],
+                        params = str.replace(/^\?/,'').split('&'),
+                        len = params.length, i = 0, s;
+
+                    for (;i<len;i++) {
+                        if (!params[i]) {
+                            continue;
+                        }
+                        s = params[i].split('=');
+                        s[1] && ret.push(s[0]+ '=' + s[1]);
+                    }
+                    return ret;
                 },
                 //日期选择
                 dateInit: function () {
                     var start = {
                         elem: '#start',
                         format: 'YYYY/MM/DD hh:mm:ss',
-                        min: laydate.now(), //设定最小日期为当前日期
+                        min: '', //设定最小日期为当前日期
                         max: '2099-06-16 23:59:59', //最大日期
                         istime: true,
                         istoday: false,
