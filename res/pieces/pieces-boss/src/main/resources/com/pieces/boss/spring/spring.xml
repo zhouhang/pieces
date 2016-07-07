@@ -44,4 +44,5 @@
 	<import resource="classpath*:com/pieces/dao/spring/spring-contextmanager.xml"  />
 	<import resource="classpath*:com/pieces/service/properties/spring/spring-redis.xml"  />
 	<import resource="classpath*:com/pieces/service/properties/spring/spring-shiro.xml"  />
+	<import resource="classpath*:com/pieces/boss/spring/spring-shiro-boss.xml"  />
 </beans>

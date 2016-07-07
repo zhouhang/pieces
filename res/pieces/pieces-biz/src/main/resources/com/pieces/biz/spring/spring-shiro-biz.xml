@@ -23,7 +23,6 @@
      <property name="authorizationCacheName" value="authorizationCache"/>
      <property name="credentialsMatcher" ref="credentialsMatcher"/>
  </bean>
-    <!-- 定义boss子系统的realm配置 
+    <!-- 定义boss子系统的realm配置 -->
  <bean id="bizAuthorizationFilter" class="com.pieces.biz.shiro.BizAuthorizationFilter" /> 
-    -->
 </beans>

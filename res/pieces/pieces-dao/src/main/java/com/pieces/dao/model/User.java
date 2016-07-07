@@ -3,8 +3,6 @@ package com.pieces.dao.model;
 import java.io.Serializable;
 import java.util.Date;
 
-
-
 /**
  * 前台用户
  * @author feng
