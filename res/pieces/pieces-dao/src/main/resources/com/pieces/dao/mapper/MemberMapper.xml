@@ -66,7 +66,7 @@
                 mobile = #{mobile},
             </if>
             <if test="email != null">
-                mobile = #{email},
+                email = #{email},
             </if>
             <if test="isDel != null">
                 is_del = #{isDel},
@@ -99,5 +99,27 @@
         from member
         where username = #{username} and is_del = false
     </select>
+
+    <!-- 条件查询User-->
+    <select id="findByCondition" parameterType="com.pieces.dao.vo.MemberVo" resultMap="MemberResultMap">
+        select * from member b
+        where 1=1
+        <if test="id != null " >
+            and b.id = #{id}
+        </if>
+        <if test="username != null and username != ''" >
+            and b.username like "%"#{username}"%"
+        </if>
+        <if test="name != null and name != ''">
+            and b.name like  "%"#{name}"%"
+        </if>
+        <if test="email != null and email != ''" >
+            and b.email like "%"#{email}"%"
+        </if>
+        <if test="isDel != null ">
+            and b.is_del = #{isDel}
+        </if>
+    </select>
+
 
 </mapper>

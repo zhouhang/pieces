@@ -40,8 +40,8 @@
                     <th>联系人</th>
                     <th>手机号</th>
                     <th width="170">注册日期</th>
-                    <th>与ERP关联</th>
-                    <th>操作</th>
+                    <th width="80">与ERP关联</th>
+                    <th width="80">操作</th>
                 </tr>
                 <tr>
                     <form id="search_form">

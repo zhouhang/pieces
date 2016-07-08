@@ -1,9 +1,15 @@
 package com.pieces.boss.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Member;
+import com.pieces.dao.vo.MemberVo;
 import com.pieces.service.MemberService;
+import com.pieces.service.constant.bean.Result;
+import com.pieces.tools.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -29,7 +35,18 @@ public class MemberController extends BaseController{
      */
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public String index(HttpServletRequest request,
-                        HttpServletResponse response){
+                        HttpServletResponse response,
+                        Integer pageNum,
+                        Integer pageSize,
+                        String  advices,
+                        MemberVo memberVo,
+                        ModelMap model){
+        pageNum=pageNum==null?1:pageNum;
+        pageSize=pageSize==null?10:pageSize;
+        PageInfo<Member> memberPage =memberService.findByCondition(memberVo, pageNum, pageSize);
+        model.put("memberPage",memberPage);
+        model.put("memberParams",memberVo.toString());
+        model.put("advices",advices);
         return "member";
     }
 
@@ -39,9 +56,30 @@ public class MemberController extends BaseController{
      * @param response
      * @return
      */
-    @RequestMapping(value = "/info",method = RequestMethod.GET)
-    public String info(HttpServletRequest request,
-                       HttpServletResponse response){
+    @RequestMapping(value = "/add",method = RequestMethod.GET)
+    public String add(HttpServletRequest request,
+                       HttpServletResponse response,
+                       ModelMap model){
+
+        return "member-info";
+    }
+
+
+    /**
+     * BOSS用户编辑页
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
+    public String edit(HttpServletRequest request,
+                       HttpServletResponse response,
+                       ModelMap model,
+                       @PathVariable("id") Integer id){
+        if(id!=null){
+            Member member = memberService.findById(id);
+            model.put("member",member);
+        }
         return "member-info";
     }
 
@@ -56,8 +94,14 @@ public class MemberController extends BaseController{
     public void save(HttpServletRequest request,
                      HttpServletResponse response,
                      Member member){
-
-
+        String advices = "新增用户信息成功!";
+        if(member.getId()==null){
+            memberService.addMember(member);
+        }else{
+            memberService.updateMember(member);
+            advices = "修改用户信息成功!";
+        }
+        WebUtil.print(response,new Result(true).info(advices));
     }
 
 

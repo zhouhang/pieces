@@ -3,6 +3,7 @@ package com.pieces.dao.impl;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.MemberDao;
 import com.pieces.dao.model.Member;
+import com.pieces.dao.vo.MemberVo;
 import com.pieces.dao.vo.Params;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
@@ -56,5 +57,12 @@ public class MemberDaoImpl extends BaseDaoImpl implements MemberDao {
     public Member findByUsername(String username) {
         Member member =  getSqlSession().selectOne("com.pieces.dao.MemberMapper.findByUsername",username);
         return member;
+    }
+
+    @Override
+    public PageInfo<Member> findUserByCondition(MemberVo memberVo, Integer pageNum, Integer pageSize) {
+        List<Member> list = getSqlSession().selectList("com.pieces.dao.MemberMapper.findByCondition", memberVo,new RowBounds(pageNum, pageSize));
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 }
