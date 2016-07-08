@@ -132,7 +132,18 @@
 <script>
     $(function() {
         var formValidate = $("#userForm").Validform({
-            btnSubmit: '#userFormSubmit'
+            btnSubmit: '#userFormSubmit',
+            ajaxPost: true,
+            postonce: true,
+            url: '/user/save',
+            callback: function(data){
+            	if(data.status=="y"){
+                    location.href="user/index?advices="+data.info
+                }else{
+                    $("#error_advices").show();
+                }
+            }
+            
         });
         formValidate.addRule([
             {
@@ -144,18 +155,17 @@
             },
             {
                 ele: '#companyFullName',
-                datatype: 's',
-                nullmsg: '用户名必须以英文字母开头，长度6到20位',
-                errormsg: '用户名长度只能在6-20位字符之间'
+                datatype: 's1-50',
+                nullmsg: '企业全称必须以英文字母开头，长度1到50位'
             },
             {
                 ele: '#area',
-                datatype: 's',
+                datatype: '*',
                 nullmsg: '请选择企业注册地'
             },
             {
                 ele: '#contactName',
-                datatype: 's',
+                datatype: 's1-50',
                 nullmsg: '请输入联系人姓名'
             },
             {
@@ -186,23 +196,6 @@
         }
         $mobileCode.on('click', _setPwd);
         _setPwd();
-
-        /**
-         * 提交表单
-         */
-        $("#userFormSubmit").click(function(){
-            $("#userForm").ajaxSubmit({
-                dataType: "json",
-                success: function (result) {
-                    if(result.status=="y"){
-                        location.href="user/index?advices="+result.info
-                    }else{
-                        $("#error_advices").show();
-                    }
-                }
-            });
-
-        })
     })
 </script>
 </body>
