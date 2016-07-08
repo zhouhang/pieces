@@ -54,10 +54,11 @@
                         <td><input name="startDate" type="text" class="ipt date" value="${userVo.startDate}" id="start"> - <input name="endDate" type="text" class="ipt date" value="${userVo.endDate}" id="end"></td>
                         <td>
                             <select name="bindErp" id="">
-                                <option <#if (!userVo.bindErp??)>selected</#if> value="false">否</option>
+                            	<option <#if (!userVo.bindErp??)>selected</#if> value=""> </option>
+                                <option <#if (userVo.bindErp??&&!userVo.bindErp)>selected</#if> value="false">否</option>
                                 <option <#if (userVo.bindErp??&&userVo.bindErp)>selected</#if> value="true">是</option>
                             </select>
-                        </td>
+                        </td>	
                         <td>
                             <button id="search_btn" class="button" type="button"><i class="fa fa-search"></i><span>搜索</span></button>
                         </td>
@@ -75,7 +76,10 @@
                         <td>${user.contactName}</td>
                         <td>${user.contactMobile}</td>
                         <td>${user.createTime?date}</td>
-                        <td>${user.bindErp}</td>
+                        <td>
+                        	<#if (user.bindErp)>是
+                        	<#else>否</#if>
+                        </td>
                         <td><a href="user/info/${user.id}">修改</a></td>
                     </tr>
                 </#list>

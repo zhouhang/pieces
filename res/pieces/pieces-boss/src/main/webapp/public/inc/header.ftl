@@ -25,7 +25,7 @@
             <li>
                 <a class="curr" href="#!">客户</a>
                 <div class="subnav">
-                    <a href="customers.html">客户管理</a>
+                    <a href="/user/index">客户管理</a>
                 </div>
             </li>
             <li>

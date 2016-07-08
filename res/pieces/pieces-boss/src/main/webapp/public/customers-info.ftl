@@ -48,37 +48,37 @@
                                     <td><#if (user.updateTime)??>${(user.updateTime)?string("yyyy-MM-dd HH:mm:ss")}</#if></td>
                                 </tr>
                                 <tr>
-                                    <th>上次登录时间：</th>
-                                    <td></td>
-                                    <th>修改途径：</th>
-                                    <td></td>
+                                    <th>企业全称：</th>
+                                    <td>${user.companyFullName}</td>
+                                    <th>注册地：</th>
+                                    <td>${user.areaFull}</td>
                                 </tr>
                                 <tr>
                                     <th>是否与ERP关联：</th>
                                     <td>
                                     	<#if (user.bindErp==1)>
-	                            			已绑定
+	                            			已关联
 		                            	<#else>
-		                            		未绑定
+		                            		未关联
 		                            	</#if>
                                     </td>
-                                    <th>修改人员账号：</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>账号创建日期：</th>
-                                    <td>${user.createTime?string("yyyy-MM-dd HH:mm:ss") }</td>
-                                    <th>修改内容：</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
                                     <th>账号创建方式：</th>
-                                    <td>
-                                    	<#if (user.source==1)>
+                                    <td><#if (user.source==1)>
 	                            			后台注册
 		                            	<#else>
 		                            		前台注册
 		                            	</#if>
+		                            </td>
+                                </tr>
+                                <tr>
+                                    <th>账号创建日期：</th>
+                                    <td>${user.createTime?string("yyyy-MM-dd HH:mm:ss") }</td>
+                                    <th></th>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td>
                                     </td>
                                     <th></th>
                                     <td></td>
