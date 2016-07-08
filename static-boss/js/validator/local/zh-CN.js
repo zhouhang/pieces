@@ -32,8 +32,10 @@
             ,mobile: [/^1[3-9]\d{9}$/, "请填写有效的手机号"]
             ,zipcode: [/^\d{6}$/, "请检查邮政编码格式"]
             ,chinese: [/^[\u0391-\uFFE5]+$/, "请填写中文字符"]
-            ,username: [/^\w{3,12}$/, "请填写3-12位数字、字母、下划线"]
-            ,password: [/^[\S]{6,16}$/, "请填写6-16位字符，不能包含空格"]
+            ,username: [/^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$/, "用户名必须以英文字母开头，长度6到20位"]
+            ,password: [/^[a-zA-Z0-9_]{6,20}$/, "密码由数字、字母或下划线组成，长度为6-20位"]
+            ,company: [/^([a-zA-Z0-9_\(\)-]|[\u4e00-\u9fa5]|[（）]){4,50}$/, "企业名称长度4-50，只能由中英文、数字及\"_\"、\"-\"、()、（）组成"]
+            ,nickName: [/^([a-zA-Z]|[\u4e00-\u9fa5]){2,50}$/, "联系人姓名长度2-50位，只能包括中文字、英文字母"]
             ,accept: function (element, params){
                 if (!params) return true;
                 var ext = params[0],
@@ -93,6 +95,10 @@
                 gte_2: "",
                 lte_2: ""
             }
+        },
+        msgWrapper: 'span',
+        msgMaker: function(opt){
+            return '<span class="'+ opt.type +'"><i class="fa fa-prompt"></i> ' + opt.msg + '</span>';
         }
     });
 
