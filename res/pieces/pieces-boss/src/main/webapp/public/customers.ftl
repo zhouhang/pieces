@@ -19,13 +19,13 @@
             </div>
         </#if>
 
-        <div class="title">
+        <div class="title title-btm">
             <h3>客户管理</h3>
             <div class="extra"><a class="btn btn-red" href="user/add"><i class="fa fa-plus"></i>增加新客户</a></div>
         </div>
         <div class="pagin">
             <div class="extra">
-                <a class="btn btn-gray" href="#"><i class="fa fa-export"></i>导出</a>
+                <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
             </div>
             <@p.pager pageInfo=userPage  pageUrl="user/index"  params=userParams/>
         </div>
@@ -46,11 +46,11 @@
                 <tr>
                     <form id="search_form">
                         <td></td>
-                        <td><input name="userName" type="text" class="ipt" value="${userVo.userName}"></td>
-                        <td><input name="companyFullName" type="text" class="ipt" value="${userVo.companyFullName}"></td>
-                        <td><input name="areaFull" type="text" class="ipt" value="${userVo.areaFull}"></td>
-                        <td><input name="contactName" type="text" class="ipt" value="${userVo.contactName}"></td>
-                        <td><input name="contactMobile" type="text" class="ipt" value="${userVo.contactMobile}"></td>
+                        <td><div class="ipt-wrap"><input  name="userName" type="text" class="ipt" value="${userVo.userName}"></div></td>
+                        <td><div class="ipt-wrap"><input name="companyFullName" type="text" class="ipt" value="${userVo.companyFullName}"></div></td>
+                        <td><div class="ipt-wrap"><input name="areaFull" type="text" class="ipt" value="${userVo.areaFull}"></div></td>
+                        <td><div class="ipt-wrap"><input name="contactName" type="text" class="ipt" value="${userVo.contactName}"></div></td>
+                        <td><div class="ipt-wrap"><input name="contactMobile" type="text" class="ipt" value="${userVo.contactMobile}"></div></td>
                         <td><input name="startDate" type="text" class="ipt date" value="${userVo.startDate}" id="start"> - <input name="endDate" type="text" class="ipt date" value="${userVo.endDate}" id="end"></td>
                         <td>
                             <select name="bindErp" id="">
@@ -60,7 +60,6 @@
                             </select>
                         </td>	
                         <td>
-                            <button id="search_btn" class="button" type="button"><i class="fa fa-search"></i><span>搜索</span></button>
                         </td>
                     </form>
                 </tr>
