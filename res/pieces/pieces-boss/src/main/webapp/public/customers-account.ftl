@@ -123,30 +123,41 @@
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
-    <script src="/js/validform.min.js"></script>
-    <script src="/js/area.js"></script>
+    <script src="js/validform.min.js"></script>
+    <script src="js/area.js"></script>
 
-</body>
 
 <script>
     $(function() {
-        var formValidate = $("#userform").Validform();
+        var formValidate = $("#userForm").Validform({
+        	btnSubmit: '#userFormSubmit',
+            ajaxPost: true,
+            postonce: true,
+            url: '/user/save',
+            callback: function(data){
+            	if(data.status=="y"){
+                    location.href="user/index?advices="+data.info
+                }else{
+                    $("#error_advices").show();
+                }
+            }
+        });
+        
 
         formValidate.addRule([
             {
                 ele: '#companyFullName',
-                datatype: 's',
-                nullmsg: '用户名必须以英文字母开头，长度6到20位',
-                errormsg: '用户名长度只能在6-20位字符之间'
+                datatype: 's1-50',
+                nullmsg: '企业全称必须以英文字母开头，长度6到20位',
             },
             {
                 ele: '#area',
-                datatype: 's',
+                datatype: '*',
                 nullmsg: '请选择企业注册地'
             },
             {
                 ele: '#contactName',
-                datatype: 's',
+                datatype: 's1-50',
                 nullmsg: '请输入联系人姓名'
             },
             {
@@ -157,14 +168,9 @@
             },
             {
                 ele: '#password',
-                datatype: 'password',
+                datatype: 'pwd',
                 nullmsg: '请输入密码',
                 errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
-            },
-            {
-                ele: '#memberPassword',
-                datatype: '*',
-                nullmsg: '请输入当前操作人的boss帐号密码'
             }
         ])
 
@@ -184,24 +190,7 @@
         _setpassword();
 
 
-        /**
-         * 提交表单
-         */
-        $("#userFormSubmit").click(function(){
-            $("#userForm").ajaxSubmit({
-                dataType: "json",
-                success: function (result) {
-                    if(result.status=="y"){
-                        location.href="user/index?advices="+result.info
-                    }else{
-                        $("#error_advices").show();
-                    }
-                }
-            });
-
-        })
-
-
     })
 </script>
+</body>
 </html>

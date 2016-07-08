@@ -24,5 +24,5 @@
      <property name="credentialsMatcher" ref="credentialsMatcher"/>
  </bean>
      
- <bean id="bossAuthorizationFilter" class="com.pieces.boss.shiro.BossAuthorizationFilter" /> 
+ <bean id="bossAuthorizationFilter" class="com.pieces.boss.shiro.BossAuthorizationFilter" />
 </beans>
