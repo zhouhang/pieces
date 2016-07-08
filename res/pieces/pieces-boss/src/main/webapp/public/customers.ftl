@@ -104,35 +104,33 @@
                 //初始化方法区
                 init: function () {
                     page.fn.dateInit();
-
+                    page.fn.filter();
                     $("#search_btn").click(function(){
-                        var url="user/index?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
-                        var param = page.fn.getParams($('#search_form').serialize());
-                        location.href=url+"&"+param;
+                        page.fn.filter();
                     })
 
                 },
-                getParams:function(str){
-                    var ret = [],
-                        params = str.replace(/^\?/,'').split('&'),
-                        len = params.length, i = 0, s;
+                // 筛选
+                filter: function() {
+                    var $ipts = $('.chart .ipt, .chart select');
+                    var url="user/index?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
 
-                    for (;i<len;i++) {
-                        if (!params[i]) {
-                            continue;
-                        }
-                        s = params[i].split('=');
-                        s[1] && ret.push(s[0]+ '=' + s[1]);
-                    }
-                    return ret;
+                    $('#search_btn').on('click', function() {
+                        var params = [];
+                        $ipts.each(function() {
+                            var val = $.trim(this.value);
+                            val && params.push($(this).attr('name') + '=' + val);
+                        })
+                        location.href=url+"&"+params.join('&');
+                    })
                 },
                 //日期选择
                 dateInit: function () {
                     var start = {
                         elem: '#start',
-                        format: 'YYYY/MM/DD hh:mm:ss',
+                        format: 'YYYY/MM/DD',
                         min: '', //设定最小日期为当前日期
-                        max: '2099-06-16 23:59:59', //最大日期
+                        max: '2099-06-16', //最大日期
                         istime: true,
                         istoday: false,
                         choose: function(datas){
@@ -143,9 +141,9 @@
                     };
                     var end = {
                         elem: '#end',
-                        format: 'YYYY/MM/DD hh:mm:ss',
-                        min: laydate.now(),
-                        max: '2099-06-16 23:59:59',
+                        format: 'YYYY/MM/DD',
+                        min: '',
+                        max: '2099-06-16',
                         istime: true,
                         istoday: false,
                         choose: function(datas){

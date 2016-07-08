@@ -230,7 +230,7 @@
             },
             {
                 ele: '#companyName',
-                datatype: '*',
+                datatype: 's1-50',
                 nullmsg: '请输入企业名称'
             },
             {
@@ -240,7 +240,7 @@
             },
             {
                 ele: '#linkMan',
-                datatype: '*',
+                datatype: 's1-50',
                 nullmsg: '请输入联系人姓名'
             },
             {

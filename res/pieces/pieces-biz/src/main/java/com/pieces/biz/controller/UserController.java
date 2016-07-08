@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.mgt.RealmSecurityManager;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.BeanUtils;
@@ -87,14 +86,18 @@ public class UserController extends BaseController {
 		if(StringUtils.isBlank(user.getPassword())){
 			message.append("密码不能为空");
 		}
-		if(StringUtils.isBlank(user.getCompanyFullName())){
-			message.append("企业全称不能为空");
+		pattern = Pattern.compile("^[\\u4E00-\\u9FA5\\uf900-\\ufa2d\\w\\.\\s]{1,50}$");
+		matcher = pattern.matcher(user.getCompanyFullName());
+		if(!matcher.matches()){
+			message.append("企业全称1-50字符");
 		}
 		if(user.getAreaId() < 10000){
 			message.append("注册地有误");
 		}
-		if(StringUtils.isBlank(user.getContactName())){
-			message.append("联系人姓名不能为空");
+		pattern = Pattern.compile("^[\\u4E00-\\u9FA5\\uf900-\\ufa2d\\w\\.\\s]{1,50}$");
+		matcher = pattern.matcher(user.getContactName());
+		if(!matcher.matches()){
+			message.append("联系人姓名1-50字符");
 		}
 		pattern = Pattern.compile("^1[345678]\\d{9}$");
 		matcher = pattern.matcher(user.getContactMobile());
@@ -149,13 +152,21 @@ public class UserController extends BaseController {
 	public void checkUserName(Model model, HttpServletRequest request, HttpServletResponse response) {
 		Result result = new Result(false).info("用户名必须以英文字母开头，长度6到20位");
 		String userName = request.getParameter("param");
-		if (StringUtils.isNotBlank(userName)) {
-			Pattern pattern = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$");
-			Matcher matcher = pattern.matcher(userName);
-			if (matcher.matches() && !userService.checkUserName(userName)) {
-				result = new Result(true);
-			}
+		Pattern pattern = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$");
+		Matcher matcher = pattern.matcher(userName);
+		
+		if	(!StringUtils.isNotBlank(userName) || !matcher.matches()){
+			WebUtil.print(response, result);
+			return;
 		}
+		
+		if (userService.checkUserName(userName)) {
+			result = new Result(false).info("用户名重复");
+			WebUtil.print(response, result);
+			return;
+		}
+		
+		result = new Result(true);
 		WebUtil.print(response, result);
 	}
 
@@ -367,20 +378,41 @@ public class UserController extends BaseController {
 		return "message_find_pwd";
 	}
 
+	/**
+	 * 跳转用户中心
+	 * @param model
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/info")
 	public String userInfo(ModelMap model, HttpServletRequest request) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		model.put("user", user);
 		return "user_info";
 	}
-
+	
+	/**
+	 * 进入修改密码页面
+	 * @param model
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/pwd/update" , method = RequestMethod.GET)
 	public String toUserUpdatePassword(ModelMap model, HttpServletRequest request) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		model.put("user", user);
 		return "user_update_password";
 	}
-
+	
+	/**
+	 * 密码修改
+	 * @param model
+	 * @param pwdOld
+	 * @param pwd
+	 * @param request
+	 * @param response
+	 * @throws Exception
+	 */
 	@RequestMapping(value = "/pwd/update" , method = RequestMethod.POST)
 	public void userUpdatePassword(ModelMap model, String pwdOld, String pwd, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
