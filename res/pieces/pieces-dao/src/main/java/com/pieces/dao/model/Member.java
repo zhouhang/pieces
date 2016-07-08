@@ -17,7 +17,9 @@ public class Member  implements Serializable {
 	private String salt;
 	
 	private String name;
-	
+
+	private String email;
+
 	private String mobile;
 
 	private Boolean isDel;
@@ -99,5 +101,12 @@ public class Member  implements Serializable {
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 }

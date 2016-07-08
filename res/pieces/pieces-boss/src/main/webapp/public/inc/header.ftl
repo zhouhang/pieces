@@ -15,6 +15,7 @@
 </div><!-- header end -->
 
 
+
 <!-- nav start -->
 <div class="nav">
     <div class="wrap">
@@ -23,25 +24,25 @@
             <li><a href="#!">销售</a></li>
             <li><a href="#!">目录</a></li>
             <li>
-                <a class="curr" href="#!">客户</a>
+                <a href="#!">客户</a>
                 <div class="subnav">
-                    <a href="/user/index">客户管理</a>
+                    <a href="user/index">客户管理</a>
                 </div>
             </li>
             <li>
                 <a href="#!">促销</a>
-                <div class="subnav">
-                    <a href="customers.html">客户管理</a>
-                    <a href="customers.html">客户管理</a>
-                    <a href="customers.html">客户管理</a>
-                    <a href="customers.html">客户管理</a>
-                    <a href="customers.html">客户管理</a>
-                </div>
             </li>
             <li><a href="#!">邮件列表</a></li>
             <li><a href="#!">CMS</a></li>
             <li><a href="#!">报表</a></li>
-            <li><a href="#!">系统</a></li>
+            <li>
+                <a class="curr" href="#!">系统</a>
+                <div class="subnav">
+                    <a class="on" href="member/index">用户管理</a>
+                    <a href="role.html">角色管理</a>
+                </div>
+            </li>
         </ul>
     </div>
-</div><!-- nav end -->
+</div>
+<!-- nav end -->

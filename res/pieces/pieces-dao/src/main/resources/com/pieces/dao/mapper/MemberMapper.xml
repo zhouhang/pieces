@@ -14,7 +14,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,username,password,salt,name,mobile,is_del,create_date,update_date
+        id,username,password,salt,name,mobile,email,is_del,create_date,update_date
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="MemberResultMap">
@@ -37,9 +37,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Member">
         insert into
-        member (username,password,salt,name,mobile,is_del,create_date,update_date)
+        member (username,password,salt,name,mobile,email,is_del,create_date,update_date)
         values
-        (#{username},#{password},#{salt},#{name},#{mobile},#{isDel},#{createDate},#{updateDate})
+        (#{username},#{password},#{salt},#{name},#{mobile},#{email},#{isDel},#{createDate},#{updateDate})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.Member">
@@ -64,6 +64,9 @@
                                             
             <if test="mobile != null">
                 mobile = #{mobile},
+            </if>
+            <if test="email != null">
+                mobile = #{email},
             </if>
             <if test="isDel != null">
                 is_del = #{isDel},
