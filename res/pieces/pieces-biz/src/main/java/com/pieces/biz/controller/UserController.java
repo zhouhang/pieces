@@ -86,18 +86,18 @@ public class UserController extends BaseController {
 		if(StringUtils.isBlank(user.getPassword())){
 			message.append("密码不能为空");
 		}
-		pattern = Pattern.compile("^[\\u4E00-\\u9FA5\\uf900-\\ufa2d\\w\\.\\s]{1,50}$");
+		pattern = Pattern.compile("^([a-zA-Z0-9_\\(\\)-]|[\\u4e00-\\u9fa5]|[（）]){4,50}$");
 		matcher = pattern.matcher(user.getCompanyFullName());
 		if(!matcher.matches()){
-			message.append("企业全称1-50字符");
+			message.append("用药单位名称有误");
 		}
 		if(user.getAreaId() < 10000){
 			message.append("注册地有误");
 		}
-		pattern = Pattern.compile("^[\\u4E00-\\u9FA5\\uf900-\\ufa2d\\w\\.\\s]{1,50}$");
+		pattern = Pattern.compile("^([a-zA-Z]|[\u4e00-\u9fa5]){2,50}$");
 		matcher = pattern.matcher(user.getContactName());
 		if(!matcher.matches()){
-			message.append("联系人姓名1-50字符");
+			message.append("联系人姓名有误");
 		}
 		pattern = Pattern.compile("^1[345678]\\d{9}$");
 		matcher = pattern.matcher(user.getContactMobile());
@@ -422,7 +422,7 @@ public class UserController extends BaseController {
 		oldUser.setPassword(pwdOld);
 		
 		if (!(userService.getPwdAndSaltMd5(oldUser).getPassword()).equals(user.getPassword())) {
-			Result result = new Result(false).info("原密码有误");
+			Result result = new Result(false).info("原始密码与用户名不匹配，请重新输入");
 			WebUtil.print(response, result);
 			return;
 		}

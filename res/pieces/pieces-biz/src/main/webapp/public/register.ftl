@@ -33,7 +33,7 @@
                             <i>*</i>用户名：
                         </div>
                         <div class="cnt">
-                            <input type="text" class="ipt" value="" autocomplete="off" name="userName" id="username" placeholder="6-20位，以字母开头，数字结尾的组合组成">                            
+                            <input type="text" class="ipt" value="" autocomplete="off" name="userName" id="username" placeholder="6-20位，以字母开头">                            
                         </div>
                     </div>
 
@@ -57,7 +57,7 @@
 
                     <div class="group">
                         <div class="txt">
-                            <i>*</i>企业全称：
+                            <i>*</i>用药单位：
                         </div>
                         <div class="cnt">
                             <input type="text" class="ipt" value="" autocomplete="off" name="companyFullName" id="companyName" placeholder="工商局注册的企业名称">                            
@@ -66,7 +66,7 @@
 
                     <div class="group">
                         <div class="txt">
-                            <i>*</i>企业注册地：
+                            <i>*</i>所在地区：
                         </div>
                         <div class="cnt">
                             <select name="provinceCode" id="province">
@@ -230,18 +230,20 @@
             },
             {
                 ele: '#companyName',
-                datatype: 's1-50',
-                nullmsg: '请输入企业名称'
+                datatype: /^([a-zA-Z0-9_\(\)-]|[\u4e00-\u9fa5]|[（）]){4,50}$/,
+                nullmsg: '用药单位的名称',
+                errormsg: "用药单位名称长度4-50位，不能包含特殊字符"
             },
             {
                 ele: '#area',
                 datatype: '*',
-                nullmsg: '请选择企业注册地'
+                nullmsg: '请选择所在地区'
             },
             {
                 ele: '#linkMan',
-                datatype: 's1-50',
-                nullmsg: '请输入联系人姓名'
+                datatype: /^([a-zA-Z]|[\u4e00-\u9fa5]){2,50}$/,
+                nullmsg: '请输入联系人姓名',
+                errormsg: '联系人姓名长度2-50位，只能包括中文字、英文字母'
             },
             {
                 ele: '#mobile',

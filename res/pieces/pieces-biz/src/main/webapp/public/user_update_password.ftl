@@ -144,7 +144,7 @@
                                 <i>*</i>确认新密码：
                             </div>
                             <div class="cnt">
-                                <input type="password" class="ipt" value="" autocomplete="off" name="pwdRepeat" id="pwdRepeat" placeholder="请再次输入的密码">                            
+                                <input type="password" class="ipt" value="" autocomplete="off" name="pwdRepeat" id="pwdRepeat" placeholder="请再次输入新密码">                            
                             </div>
                         </div>
 
@@ -188,6 +188,8 @@
     <script src="/js/member.js"></script>
     <script>
         $(function() {
+        	$('.tips').hide();
+        	
         	var _showMsg = function($element, msg) {
 				$element.siblings(".Validform_checktip").attr('class', 'Validform_checktip Validform_wrong').html(msg);
         	}
@@ -200,7 +202,7 @@
     				var status = data.status; 
     				var info = data.info;
     				if(status == 'y'){
-    					_showMsg($('#pwdRepeat'), info);
+    					$('.tips').show();
     				}else{
     					_showMsg($('#pwdOld'), info);
     				}
