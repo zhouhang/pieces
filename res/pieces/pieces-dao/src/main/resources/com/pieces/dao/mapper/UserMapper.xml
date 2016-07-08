@@ -130,11 +130,11 @@
   		<if test="id != null" >
   			and b.id = #{id, jdbcType=INTEGER}
   		</if>
+  		<if test="isDel != null" >
+  			and b.is_del = #{isDel, jdbcType=VARCHAR}
+  		</if>
   		<if test="userName != null" >
   			and b.user_name = #{userName, jdbcType=VARCHAR}
-  		</if>
-  		<if test="isDel != null" >
-  			and b.is_del = #{isDel, jdbcType=INTEGER}
   		</if>
   		<if test="companyFullName != null" >
   			and b.company_full_name = #{companyFullName, jdbcType=VARCHAR}
@@ -218,9 +218,6 @@
   		<if test="userName != null and userName != ''" >
   			and b.user_name like CONCAT('%','${userName}','%' )
   		</if>
-  		<if test="isDel != null and isDel != ''" >
-  			and b.is_del = #{isDel, jdbcType=INTEGER}
-  		</if>
   		<if test="bindErp != null and bindErp != ''" >
   			and b.bind_erp = #{bindErp, jdbcType=INTEGER}
   		</if>
@@ -242,6 +239,7 @@
 		<if test="endDate != null and endDate != ''">
 		    and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<]]> DATE_FORMAT(DATE_ADD(#{endDate},INTERVAL 1 DAY),'%Y-%m-%d')
 		</if>
+		and b.is_del = 0
   </select>
 
 	<!-- 条件查询User-->

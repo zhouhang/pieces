@@ -147,18 +147,20 @@
         formValidate.addRule([
             {
                 ele: '#companyFullName',
-                datatype: 's1-50',
-                nullmsg: '企业全称必须以英文字母开头，长度6到20位',
+                datatype: /^([a-zA-Z0-9_\(\)-]|[\u4e00-\u9fa5]|[（）]){4,50}$/,
+                nullmsg: '用药单位的名称',
+                errormsg: '用药单位名称长度4-50位，不能包含特殊字符'
             },
             {
                 ele: '#area',
                 datatype: '*',
-                nullmsg: '请选择企业注册地'
+                nullmsg: '请选择所在地区'
             },
             {
                 ele: '#contactName',
-                datatype: 's1-50',
-                nullmsg: '请输入联系人姓名'
+                datatype: /^([a-zA-Z]|[\u4e00-\u9fa5]){2,50}$/,
+                nullmsg: '请输入联系人姓名',
+                errormsg: '联系人姓名长度2-50位，只能包括中文字、英文字母'
             },
             {
                 ele: '#contactMobile',
