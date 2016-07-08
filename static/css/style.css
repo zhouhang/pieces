@@ -165,6 +165,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
         .fa-form .cnt option{text-align:left;}
       .fa-form .cnt .msg-box{display:block;line-height:18px;font-size:12px;}
         .fa-form .cnt .msg-box .error{color:#c3272b;}
+        .fa-form .cnt .msg-box .ok{display:none;}
       .fa-form .cnt .n-invalid{border-color:#c3272b;}
       .fa-form .cnt .Validform_checktip{display:block;}
       .fa-form .cnt .Validform_error{border-color:#c3272b;}
