@@ -195,6 +195,8 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
         .fa-form .cnt option{text-align:left;}
       .fa-form .cnt .wide{width:350px;text-align:left;}
       .fa-form .cnt .msg-box{display:block;line-height:18px;font-size:12px;}
+        .fa-form .cnt .msg-box .error{color:#c3272b;}
+        .fa-form .cnt .msg-box .ok{display:none;}
       .fa-form .cnt .n-invalid{border-color:#c3272b;}
       .fa-form .cnt .Validform_loading{position:absolute;top:12px;left:460px;width:16px;height:16px;background:url(../images/loader.gif) no-repeat 50%;}
       .fa-form .cnt .msg-box .error{color:#c3272b;}
