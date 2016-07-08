@@ -2,6 +2,8 @@ package com.pieces.boss.shiro;
 
 import java.util.Set;
 
+import com.pieces.dao.model.Member;
+import com.pieces.service.MemberService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -12,6 +14,8 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
 import com.pieces.service.shiro.SerializableSimpleAuthenticationInfo;
+import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 /**
@@ -20,7 +24,8 @@ import com.pieces.service.shiro.SerializableSimpleAuthenticationInfo;
  */
 public class BossRealm extends AuthorizingRealm {
 
-	
+	@Autowired
+	private MemberService memberService;
 	
 	private Set<Permission> addCommonPermissions(Set<Permission> permissions){
 		
@@ -46,9 +51,14 @@ public class BossRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authToken) throws AuthenticationException {
 		BossToken token = (BossToken) authToken;
-		SerializableSimpleAuthenticationInfo authenticationInfo = new SerializableSimpleAuthenticationInfo(token.getUsername(),
-				token.getPassword(),
-				null,
+		Member member = memberService.findByUsername(token.getUsername());
+		if(member==null){
+			throw new AuthenticationException();
+		}
+		token.setMember(member);
+		SerializableSimpleAuthenticationInfo authenticationInfo = new SerializableSimpleAuthenticationInfo(member.getUsername(),
+				member.getPassword(),
+				ByteSource.Util.bytes(member.getSalt()),
 				getName()); // realm name
 		return authenticationInfo;
 	}

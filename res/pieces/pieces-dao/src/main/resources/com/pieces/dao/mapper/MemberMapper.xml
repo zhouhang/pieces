@@ -8,13 +8,13 @@
             <result column="salt"  property="salt" />
             <result column="name"  property="name" />
             <result column="mobile"  property="mobile" />
+            <result column="is_del"  property="isDel" />
             <result column="create_date"  property="createDate" />
             <result column="update_date"  property="updateDate" />
-        
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,username,password,salt,name,mobile,create_date,update_date
+        id,username,password,salt,name,mobile,is_del,create_date,update_date
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="MemberResultMap">
@@ -37,9 +37,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Member">
         insert into
-        member (username,password,salt,name,mobile,create_date,update_date)
+        member (username,password,salt,name,mobile,is_del,create_date,update_date)
         values
-        (#{username},#{password},#{salt},#{name},#{mobile},#{createDate},#{updateDate})
+        (#{username},#{password},#{salt},#{name},#{mobile},#{isDel},#{createDate},#{updateDate})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.Member">
@@ -65,7 +65,10 @@
             <if test="mobile != null">
                 mobile = #{mobile},
             </if>
-                                            
+            <if test="isDel != null">
+                is_del = #{isDel},
+            </if>
+
             <if test="createDate != null">
                 create_date = #{createDate},
             </if>
@@ -77,4 +80,21 @@
         </set>
         where id = #{id}
     </update>
+
+
+    <select id="findByUsernameAndPassword" parameterType="java.util.HashMap" resultMap="MemberResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from member
+        where username = #{username} and password = #{password} and is_del = false
+    </select>
+
+    <!-- 通过用户名查找用户-->
+    <select id="findByUsername" parameterType="java.lang.String" resultMap="MemberResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from member
+        where username = #{username} and is_del = false
+    </select>
+
 </mapper>

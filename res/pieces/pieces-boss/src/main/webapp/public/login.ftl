@@ -9,7 +9,7 @@
     <div class="login-box">
         <div class="title"><strong>药优优</strong>电子商务管理系统</div>
         <div class="form">
-            <form id="loginForm" action="">
+            <form id="loginForm" action="login" method="post">
                 <div id="msg" class="msg"></div>
 
                 <div class="group">
@@ -38,6 +38,7 @@
     </div>
 
     <script src="js/validform.min.js"></script>
+    <script src="js/jquery.form.js"></script>
 
 </body>
 
@@ -52,6 +53,11 @@
         fn: {
             init: function() {
                 this.bindEvent();
+
+                $("#submit").click(function(){
+                    loginPage.fn.login();
+                })
+
             },
             // 错误提示
             showMsg: function(msg) {
@@ -102,6 +108,18 @@
                     return self.checkForm();
                 });
 
+            },
+            login:function(){
+                $("#loginForm").ajaxSubmit({
+                    dataType: "json",
+                    success: function (result) {
+                        if(result.status=="y"){
+                            location.href="user/index"
+                        }else{
+                            loginPage.fn.showMsg(result.info)
+                        }
+                    }
+                });
             }
         }
     }

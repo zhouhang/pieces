@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.RoleMemberMapper">
+    <resultMap id="RoleMemberResultMap" type="com.pieces.dao.model.RoleMember">
+            <id column="id"  property="id" />
+            <result column="role_id"  property="roleId" />
+            <result column="member_id"  property="memberId" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,role_id,member_id
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="RoleMemberResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from role_member
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="RoleMemberResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from role_member
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from role_member
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.RoleMember">
+        insert into
+        role_member (role_id,member_id)
+        values
+        (#{roleId},#{memberId})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.RoleMember">
+        update role_member
+        <set>
+            <if test="roleId != null">
+                role_id = #{roleId},
+            </if>
+            <if test="memberId != null">
+                member_id = #{memberId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

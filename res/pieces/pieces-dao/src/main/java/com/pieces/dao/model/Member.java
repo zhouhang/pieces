@@ -19,6 +19,8 @@ public class Member  implements Serializable {
 	private String name;
 	
 	private String mobile;
+
+	private Boolean isDel;
 	
 	private Date createDate;
 	
@@ -73,7 +75,15 @@ public class Member  implements Serializable {
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-	
+
+	public Boolean getIsDel() {
+		return isDel;
+	}
+
+	public void setIsDel(Boolean del) {
+		isDel = del;
+	}
+
 	public Date getCreateDate() {
 		return createDate;
 	}
