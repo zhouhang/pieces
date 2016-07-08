@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>新增用户-boss-饮片B2B</title>
+    <meta name="renderer" content="webkit" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+    <!-- header start -->
+    <div class="header">
+        <div class="wrap">
+            <div class="logo">
+                <a href="home.html">药优优电子商务管理系统</a>
+            </div>
+            <div class="user">
+                <span>登录用户 hehuan</span>
+                <i>|</i>
+                <span>2016年6月20日 星期三</span>
+                <i>|</i>
+                <a href="logout.html">退出</a>
+            </div>
+        </div>
+    </div><!-- header end -->
+
+
+    <!-- nav start -->
+    <div class="nav">
+        <div class="wrap">
+            <ul>
+                <li><a href="#!">首页</a></li>
+                <li><a href="#!">销售</a></li>
+                <li><a href="#!">目录</a></li>
+                <li>
+                    <a href="#!">客户</a>
+                    <div class="subnav">
+                        <a href="customers.html">客户管理</a>
+                    </div>
+                </li>
+                <li>
+                    <a href="#!">促销</a>
+                    <div class="subnav">
+                        <a href="customers.html">客户管理</a>
+                        <a href="customers.html">客户管理</a>
+                        <a href="customers.html">客户管理</a>
+                        <a href="customers.html">客户管理</a>
+                        <a href="customers.html">客户管理</a>
+                    </div>
+                </li>
+                <li><a href="#!">邮件列表</a></li>
+                <li><a href="#!">CMS</a></li>
+                <li><a href="#!">报表</a></li>
+                <li>
+                    <a class="curr" href="#!">系统</a>
+                    <div class="subnav">
+                        <a class="on" href="user.html">用户管理</a>
+                        <a href="role.html">角色管理</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div><!-- nav end -->
+
+
+    <!-- fa-floor start -->
+    <div class="fa-floor">
+        <div class="wrap">
+            <div class="side">
+                <dl>
+                    <dt>用户信息</dt>
+                    <dd>
+                        <a href="user_info.html">账号信息</a>
+                        <a class="curr" href="user_role.html">角色信息</a>
+                    </dd>
+                </dl>
+            </div>
+            <div class="main">
+                
+                <div class="title title-btm">
+                    <h3><i class="fa fa-people"></i>创建用户</h3>
+                    <div class="extra">
+                        <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
+                        <button type="reset" class="btn btn-gray">重置</button>
+                        <button type="submit" class="btn btn-red">保存用户</button>
+                    </div>
+                </div>
+
+                <div class="pagin">
+                    <div class="extra">
+                        <button class="btn btn-gray" type="button" id="reset">重置条件</button>
+                        <button class="btn btn-blue" type="button" id="submit"><i class="fa fa-search"></i><span>搜索</span></button>
+                    </div>
+                    <div class="skip">
+                        <span>第</span>
+                        <a class="fa fa-chevron-left btn btn-gray"></a><input type="text" class="ipt" value="1"><a class="fa fa-chevron-right btn btn-gray"></a>
+                        <span>页，共</span><em>6</em><span>页</span>
+                        <i>|</i>
+                        <span>每页</span>
+                        <select name="" id="">
+                            <option value="">10</option>
+                            <option value="">20</option>
+                            <option value="">30</option>
+                            <option value="">40</option>
+                        </select>
+                        <span>个记录，共有 2 个记录</span>
+                    </div>
+                </div>
+
+                <div class="chart">
+                    <table class="tc">
+                        <thead>
+                            <tr>
+                                <th>指定</th>
+                                <th>
+                                    <div class="tl">角色名称</div>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="" id="">
+                                        <option value="">任意</option>
+                                    </select>
+                                </td>
+                                <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
+                            </tr>
+                        </thead>
+                        <tfoot></tfoot>
+                        <tbody>
+                            <tr>
+                                <td><label><input type="radio" name="role" class="cbx" /></label></td>
+                                <td>
+                                    <div class="tl">超级管理员</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label><input type="radio" name="role" class="cbx" /></label></td>
+                                <td>
+                                    <div class="tl">管理员</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label><input type="radio" name="role" class="cbx" /></label></td>
+                                <td>
+                                    <div class="tl">编辑</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label><input type="radio" name="role" class="cbx" /></label></td>
+                                <td>
+                                    <div class="tl">客服</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label><input type="radio" name="role" class="cbx" /></label></td>
+                                <td>
+                                    <div class="tl">超级管理员</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label><input type="radio" name="role" class="cbx" /></label></td>
+                                <td>
+                                    <div class="tl">超级管理员</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div><!-- fa-floor end -->
+    </div>
+
+
+    <!-- footer start -->
+    <div class="footer">
+        <div class="wrap">            
+            <div class="copyright">
+                <p>药优优电商管理系统 版本 1.0  版权所有 &copy; 2016 药优优</p>
+            </div>
+        </div>
+    </div><!-- footer end -->
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
+    <script>
+        var roleAddPage = {
+            v: {},
+            fn: {
+                init: function() {
+                    this.formValidate();
+                },
+                formValidate: function() {
+                    $('#myform').validator({
+                        fields: {
+                            username: '用户名: required',
+                            name: '姓名: required, nickName',
+                            email: '邮箱: required; email',
+                            pwd: '密码: required; password',
+                            pwdRepeat: '确认密码: required; match(pwd)'
+                        }
+                    });
+                }
+            }
+        }
+        $(function() {
+            roleAddPage.fn.init();
+        })
+    </script>
+</body>
+</html>
