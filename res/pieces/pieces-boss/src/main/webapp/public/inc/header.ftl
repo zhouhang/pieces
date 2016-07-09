@@ -9,7 +9,7 @@
             <i>|</i>
             <span>2016年6月20日 星期三</span>
             <i>|</i>
-            <a href="logout.html">退出</a>
+            <a href="logout">退出</a>
         </div>
     </div>
 </div><!-- header end -->

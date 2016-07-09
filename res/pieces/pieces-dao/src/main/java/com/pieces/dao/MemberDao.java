@@ -10,6 +10,6 @@ public interface MemberDao extends ICommonDao<Member>{
 
 	Member findByUsername(String username);
 
-	PageInfo<Member> findUserByCondition(MemberVo memberVo, Integer pageNum, Integer pageSize);
+	PageInfo<Member> findByCondition(MemberVo memberVo, Integer pageNum, Integer pageSize);
 
 }

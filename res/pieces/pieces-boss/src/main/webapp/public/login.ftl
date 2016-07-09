@@ -26,7 +26,7 @@
                         <i class="fa fa-lock"></i>
                     </div>
                     <div class="cnt">
-                        <input type="password" placeholder="密码" id="password" name="password" autocomplete="off" value="" class="ipt">
+                        <input onkeydown="loginPage.fn.keyDown()" type="password" placeholder="密码" id="password" name="password" autocomplete="off" value="" class="ipt">
                     </div>
                 </div>
 
@@ -58,6 +58,12 @@
                     loginPage.fn.login();
                 })
 
+            },
+            keyDown:function(){
+                if (event.keyCode == 13)
+                {
+                    $("#submit").click();
+                }
             },
             // 错误提示
             showMsg: function(msg) {
