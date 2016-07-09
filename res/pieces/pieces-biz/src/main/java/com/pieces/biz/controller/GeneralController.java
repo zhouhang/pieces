@@ -2,7 +2,9 @@ package com.pieces.biz.controller;
 
 import java.awt.Color;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -161,11 +163,12 @@ public class GeneralController {
 						HttpServletRequest request,
 						HttpServletResponse response){
 		SendMessage sm = SMSMessage.getInstance();
+		Map<String, String> result = new HashMap<String, String>();
 		if(sm.sendMessage(request, contactMobile)){
-			Result result =  new Result(true);
+			result.put("ok", "");
 	        WebUtil.print(response,result);
 		}else{
-			Result result =  new Result(false);
+			result.put("error", "验证码错误，请重新输入");
 	        WebUtil.print(response,result);
 		}
 	}
