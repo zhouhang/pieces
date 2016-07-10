@@ -39,7 +39,7 @@
                 <a class="curr" href="#!">系统</a>
                 <div class="subnav">
                     <a class="on" href="member/index">用户管理</a>
-                    <a href="role.html">角色管理</a>
+                    <a href="role/index">角色管理</a>
                 </div>
             </li>
         </ul>

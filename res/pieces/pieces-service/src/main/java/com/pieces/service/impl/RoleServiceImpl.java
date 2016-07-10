@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+
 /**
  * Created by wangbin on 2016/7/8.
  */
@@ -30,5 +32,14 @@ public class RoleServiceImpl extends AbsCommonService<Role> implements RoleServi
     @Override
     public PageInfo<Role> findByCondition(RoleVo memberVo, Integer pageNum, Integer pageSize) {
         return roleDao.findByCondition(memberVo,pageNum,pageSize);
+    }
+
+
+    @Override
+    @Transactional
+    public int add(Role role) {
+        role.setCreateDate(new Date());
+        add(role);
+        return role.getId();
     }
 }

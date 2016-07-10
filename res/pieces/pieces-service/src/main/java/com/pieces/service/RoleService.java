@@ -12,4 +12,7 @@ public interface RoleService extends ICommonService<Role>{
 
     PageInfo<Role> findByCondition(RoleVo memberVo, Integer pageNum, Integer pageSize);
 
+    public int add(Role role);
+
+
 }
