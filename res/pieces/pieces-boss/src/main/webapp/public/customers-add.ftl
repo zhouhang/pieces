@@ -22,19 +22,19 @@
             <dl>
                 <dt>客户信息</dt>
                 <dd>
-                    <a href="user/index">客户界面</a>
-                    <a class="curr" href="user/add">账户信息</a>
+                    <!-- <a href="user/index">客户界面</a> -->
+                    <a class="curr" href="/user/add">账户信息</a>
                 </dd>
             </dl>
         </div>
         <div class="main">
             <form action="user/save" id="userForm" method="post">
                 <div class="title">
-                    <h3><i class="fa fa-people"></i></h3>
+                    <h3><i class="fa fa-people">新客户</i></h3>
                     <div class="extra">
-                        <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
+                        <button type="button" class="btn btn-gray" onclick="javascript:window.location.href='/user/index'">返回</button>
                         <button type="reset" class="btn btn-gray">重置</button>
-                        <button id="userFormSubmit"  type="button" class="btn btn-red">保存</button>
+                        <button id="userFormSubmit"  type="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
                 <div class="user-info">
@@ -45,7 +45,8 @@
                                 <i>*</i>会员名：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="" autocomplete="off" name="userName" id="userName" placeholder="用户名">
+                                <input type="text" class="ipt" value="" autocomplete="off" name="userName" id="userName" placeholder="6-20位，以字母开头"
+                                data-msg-required="请输入用户名">
                             </div>
                         </div>
 
@@ -54,7 +55,9 @@
                                 <i>*</i>用药单位：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="" autocomplete="off" name="companyFullName" id="companyFullName" placeholder="企业全称">
+                                <input type="text" class="ipt" value="" autocomplete="off" name="companyFullName" id="companyFullName" placeholder="用药单位名称"
+                                data-msg-required="请输入用药单位名称"
+								data-msg-company="用药单位名称长度4-50位，不能包含特殊字符">
                             </div>
                         </div>
 
@@ -69,7 +72,7 @@
                                 <select name="city" id="city">
                                     <option value="">-市-</option>
                                 </select>
-                                <select name="areaId" id="area">
+                                <select name="areaId" id="area" data-msg-required="请选择至最后一级">
                                     <option value="">-区/县-</option>
                                 </select>
                             </div>
@@ -80,7 +83,9 @@
                                 <i>*</i>联系人姓名：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="" autocomplete="off" name="contactName" id="contactName" placeholder="联系人姓名">
+                                <input type="text" class="ipt" value="" autocomplete="off" name="contactName" id="contactName" placeholder="联系人姓名"
+                                data-msg-required="请输入联系人姓名"
+								data-msg-nickName="联系人姓名长度2-50位，只能包括中文字、英文字母">
                             </div>
                         </div>
 
@@ -89,7 +94,9 @@
                                 <i>*</i>联系人手机号码：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="" autocomplete="off" name="contactMobile" id="contactMobile" placeholder="联系人手机号码">
+                                <input type="text" class="ipt" value="" autocomplete="off" name="contactMobile" id="contactMobile" placeholder="联系人手机号码"
+                                data-msg-required="请输入联系人手机号码"
+								data-msg-mobile="请输入正确的手机号码">
                             </div>
                         </div>
 
@@ -105,7 +112,9 @@
                                 <i>*</i>新密码：
                             </div>
                             <div class="cnt">
-                                <input type="password" class="ipt" value="" autocomplete="off" name="password" id="password" placeholder="请输入新密码">
+                                <input type="password" class="ipt" value="" autocomplete="off" name="password" id="password" placeholder="请输入新密码"
+                                data-msg-required="请输入密码"
+								data-msg-password="密码由数字、字母或下划线组成，长度为6-20位">
                             </div>
                         </div>
 
@@ -126,73 +135,49 @@
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
 
-<script src="js/validform.min.js"></script>
+<script src="/js/validator/jquery.validator.js?local=zh-CN"></script>
+<script src="/js/jquery.form.js"></script>
 <script src="js/area.js"></script>
 
 <script>
     $(function() {
-        var formValidate = $("#userForm").Validform({
-            btnSubmit: '#userFormSubmit',
-            ajaxPost: true,
-            postonce: true,
-            url: '/user/save',
-            callback: function(data){
-            	if(data.status=="y"){
-                    location.href="user/index?advices="+data.info
-                }else{
-                    $("#error_advices").show();
-                }
-            }
-            
-        });
-        formValidate.addRule([
-            {
-                ele: '#userName',
-                datatype: 'uname',
-                ajaxurl: 'user/username/check',
-                nullmsg: '请输入会员名',
-                errormsg: '会员名必须以英文字母开头，长度6到20位'
-            },
-            {
-                ele: '#companyFullName',
-                datatype: /^([a-zA-Z0-9_\(\)-]|[\u4e00-\u9fa5]|[（）]){4,50}$/,
-                nullmsg: '用药单位的名称',
-                errormsg: '用药单位名称长度4-50位，不能包含特殊字符'
-            },
-            {
-                ele: '#area',
-                datatype: '*',
-                nullmsg: '请选择所在地区'
-            },
-            {
-                ele: '#contactName',
-                datatype: /^([a-zA-Z]|[\u4e00-\u9fa5]){2,50}$/,
-                nullmsg: '请输入联系人姓名',
-                errormsg: '联系人姓名长度2-50位，只能包括中文字、英文字母'
-            },
-            {
-                ele: '#contactMobile',
-                datatype: 'm',
-                nullmsg: '请输入手机号码',
-                errormsg: '请输入正确的手机号码'
-            },
-            {
-                ele: '#password',
-                datatype: 'pwd',
-                nullmsg: '请输入密码',
-                errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
-            }
-        ])
+    	$('#userForm').validator({
+			fields : {
+				userName : '用户名: required;username;remote(/user/username/check)',
+				password : '密码: required; password',
+				companyFullName : '用药单位: required, company',
+				areaId : '所在地区: required',
+				contactName : '联系人: required;nickName',
+				contactMobile : '手机号码: required;mobile',
+			},
+		    valid: function(form) {
+		    	var myfromValid = this;
+		    	if ( $(form).isValid() ) {
+			    	$.ajax({
+			            url: "/user/save",
+			            data: $(form).formSerialize(),
+			            type: "POST",
+			            success: function(data){
+			            	if(data.status=="y"){
+			                    location.href="user/index?advices="+data.info
+			                }else{
+			                    $("#error_advices").show();
+			                }
+			            }
+			        });
+		    	} 
+			}
+		});
 
         var $mobileCode = $('#random');
         var $pwd = $('#password');
         var _setPwd = function() {
             var flag = $mobileCode.prop('checked');
             if (flag) {
-                formValidate.ignore($pwd);
+                //formValidate.ignore($pwd);
                 $pwd.nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
             } else {
-                formValidate.unignore($pwd);
+                //formValidate.unignore($pwd);
             }
             $pwd.prop('disabled', flag);
         }
