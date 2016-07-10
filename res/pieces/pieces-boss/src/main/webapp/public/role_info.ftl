@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>修改角色-boss-饮片B2B</title>
+    <title>编辑角色-boss-饮片B2B</title>
 </head>
 
 <body>
@@ -12,24 +12,31 @@
     <!-- fa-floor start -->
     <div class="fa-floor">
         <div class="wrap">
+
+            <div  style="display: none" id="error_advices" class="message">
+                <i class="fa fa-times-circle"></i>
+                <span>新增失败！</span>
+            </div>
+
+
             <div class="side">
                 <dl>
                     <dt>角色信息</dt>
                     <dd>
-                        <a class="curr" href="role_info.html">角色信息</a>
-                        <a href="role_power.html">角色权限</a>
-                        <a href="role_list.html">角色用户</a>
+                        <a id="role_info_a" class="curr" href="<#if role??>role/info/${role.id}<#else>role/add</#if>">角色信息</a>
+                        <a id="role_power_a" href="<#if role??>role/power/${role.id}<#else>role/add</#if>">角色权限</a>
+                        <a id="role_list_a" href="<#if role??>role/list/${role.id}<#else>role/add</#if>">角色用户</a>
                     </dd>
                 </dl>
             </div>
             <div class="main">
-                <form action="" id="roleForm" method="post">
+                <form action="role/save" id="roleForm" method="post">
                     <div class="title">
                         <h3><i class="fa fa-people"></i><#if !role??>新增角色<#else>${role.name}</#if></h3>
                         <div class="extra">
                             <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                            <button type="reset" class="btn btn-gray">保存</button>
-                            <button type="submit" class="btn btn-red">保存并继续</button>
+                            <button id="submit" type="button" class="btn btn-gray">保存</button>
+                            <button  id="ajaxSubmit" type="button" class="btn btn-red">保存并继续</button>
                         </div>
                     </div>
 
@@ -41,7 +48,7 @@
                                     <i>*</i>角色名称：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="<#if role??>${role.name}</#if>" autocomplete="off" name="username" id="username" placeholder="请输入角色名称">
+                                    <input type="text" class="ipt" value="<#if role??>${role.name}</#if>" autocomplete="off" name="name" id="name" placeholder="请输入角色名称">
                                 </div>
                             </div>
                         </div>
@@ -61,6 +68,16 @@
             fn: {
                 init: function() {
                     this.formValidate();
+
+                    $("#ajaxSubmit").click(function(){
+                        roleAddPage.fn.saveAjax();
+                    })
+
+                    $("#submit").click(function(){
+                        roleAddPage.fn.save();
+                    })
+
+
                 },
                 formValidate: function() {
                     $("#roleForm").validator({
@@ -70,7 +87,30 @@
                     });
                 },
                 save:function(){
+                    $("#roleForm").ajaxSubmit({
+                        success:function(result){
+                            if(result.status=="y"){
+                                location.href = "role/index?advices=角色信息编辑成功!"
+                            }else{
+                                $("#error_advices").show();
+                            }
 
+                        }
+                    })
+                },
+                saveAjax:function(){
+                    $("#roleForm").ajaxSubmit({
+                        success:function(result){
+                           if(result.status=="y"){
+                               $("#role_info_a").attr("href","role/info/"+result.data.id)
+                               $("#role_power_a").attr("href","role/power/"+result.data.id)
+                               $("#role_list_a").attr("href","role/list/"+result.data.id)
+                           }else{
+                               $("#error_advices").show();
+                           }
+
+                        }
+                    })
                 }
             }
         }

@@ -46,11 +46,11 @@
                 <tr>
                     <form id="search_form">
                         <td></td>
-                        <td><div class="ipt-wrap"><input  name="userName" type="text" class="ipt" value="${userVo.userName}"></div></td>
-                        <td><div class="ipt-wrap"><input name="companyFullName" type="text" class="ipt" value="${userVo.companyFullName}"></div></td>
-                        <td><div class="ipt-wrap"><input name="areaFull" type="text" class="ipt" value="${userVo.areaFull}"></div></td>
-                        <td><div class="ipt-wrap"><input name="contactName" type="text" class="ipt" value="${userVo.contactName}"></div></td>
-                        <td><div class="ipt-wrap"><input name="contactMobile" type="text" class="ipt" value="${userVo.contactMobile}"></div></td>
+                        <td><div class="ipt-wrap"><input  name="userName" type="text" class="ipt" value="${userVo.userName!}"></div></td>
+                        <td><div class="ipt-wrap"><input name="companyFullName" type="text" class="ipt" value="${userVo.companyFullName!}"></div></td>
+                        <td><div class="ipt-wrap"><input name="areaFull" type="text" class="ipt" value="${userVo.areaFull!}"></div></td>
+                        <td><div class="ipt-wrap"><input name="contactName" type="text" class="ipt" value="${userVo.contactName!}"></div></td>
+                        <td><div class="ipt-wrap"><input name="contactMobile" type="text" class="ipt" value="${userVo.contactMobile!}"></div></td>
                         <td><input name="startDate" type="text" class="ipt date" value="${userVo.startDate}" id="start"> - <input name="endDate" type="text" class="ipt date" value="${userVo.endDate}" id="end"></td>
                         <td>
                             <select name="bindErp" id="">

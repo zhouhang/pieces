@@ -48,7 +48,7 @@ public class RoleDaoImpl extends BaseDaoImpl implements RoleDao {
 
     @Override
     public PageInfo<Role> findByCondition(RoleVo roleVo, Integer pageNum, Integer pageSize) {
-        List<Role> list = getSqlSession().selectList("com.pieces.dao.RoleMapper.findByCondition", null, new RowBounds(pageNum, pageSize));
+        List<Role> list = getSqlSession().selectList("com.pieces.dao.RoleMapper.findByCondition", roleVo, new RowBounds(pageNum, pageSize));
         PageInfo page = new PageInfo(list);
         return page;
     }

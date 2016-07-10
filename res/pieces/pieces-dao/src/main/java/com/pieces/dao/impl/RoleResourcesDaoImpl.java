@@ -10,39 +10,43 @@ import java.util.List;
 
 
 @Repository
-public class RoleResourcesDaoImpl extends BaseDaoImpl implements RoleResourcesDao{
+public class RoleResourcesDaoImpl extends BaseDaoImpl implements RoleResourcesDao {
 
-        @Override
-        public RoleResources findById(int id) {
-            return getSqlSession().selectOne("com.pieces.dao.RoleResourcesMapper.findById", id);
-        }
+    @Override
+    public RoleResources findById(int id) {
+        return getSqlSession().selectOne("com.pieces.dao.RoleResourcesMapper.findById", id);
+    }
 
 
-        @Override
-        public List<RoleResources> findAll() {
-            return getSqlSession().selectList("com.pieces.dao.RoleResourcesMapper.findAll");
-        }
+    @Override
+    public List<RoleResources> findAll() {
+        return getSqlSession().selectList("com.pieces.dao.RoleResourcesMapper.findAll");
+    }
 
-        @Override
-        public PageInfo<RoleResources> find(int pageNum, int pageSize) {
-            List<RoleResources> list = getSqlSession().selectList("com.pieces.dao.RoleResourcesMapper.findAll", null,new RowBounds(pageNum, pageSize));
-            PageInfo page = new PageInfo(list);
-            return page;
-        }
+    @Override
+    public PageInfo<RoleResources> find(int pageNum, int pageSize) {
+        List<RoleResources> list = getSqlSession().selectList("com.pieces.dao.RoleResourcesMapper.findAll", null, new RowBounds(pageNum, pageSize));
+        PageInfo page = new PageInfo(list);
+        return page;
+    }
 
-        @Override
-        public int deleteById(int id) {
-            return getSqlSession().delete("com.pieces.dao.RoleResourcesMapper.deleteById",id);
-        }
+    @Override
+    public int deleteById(int id) {
+        return getSqlSession().delete("com.pieces.dao.RoleResourcesMapper.deleteById", id);
+    }
 
-        @Override
-        public int create(RoleResources roleResources) {
-            return getSqlSession().insert("com.pieces.dao.RoleResourcesMapper.create",roleResources);
-        }
+    @Override
+    public int create(RoleResources roleResources) {
+        return getSqlSession().insert("com.pieces.dao.RoleResourcesMapper.create", roleResources);
+    }
 
-        @Override
-        public int update(RoleResources roleResources) {
-            return getSqlSession().update("com.pieces.dao.RoleResourcesMapper.update",roleResources);
-        }
+    @Override
+    public int update(RoleResources roleResources) {
+        return getSqlSession().update("com.pieces.dao.RoleResourcesMapper.update", roleResources);
+    }
 
+    @Override
+    public int deleteByRoleId(int roleId) {
+        return getSqlSession().delete("com.pieces.dao.RoleResourcesMapper.deleteByRoleId", roleId);
+    }
 }

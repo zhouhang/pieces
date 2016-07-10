@@ -62,8 +62,8 @@
         <if test="id != null " >
             and b.id = #{id}
         </if>
-        <if test="username != null and username != ''" >
-            and b.username like "%"#{username}"%"
+        <if test="name != null and name != ''" >
+            and b.name like "%"#{name}"%"
         </if>
     </select>
 

@@ -1,71 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>角色权限-boss-饮片B2B</title>
-    <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="css/style.css" />
+    <#include "./inc/meta.ftl"/>
     <link rel="stylesheet" href="css/zTreeStyle/zTreeStyle.css" />
+
 </head>
 
 <body>
-
-    <!-- header start -->
-    <div class="header">
-        <div class="wrap">
-            <div class="logo">
-                <a href="home.html">药优优电子商务管理系统</a>
-            </div>
-            <div class="user">
-                <span>登录用户 hehuan</span>
-                <i>|</i>
-                <span>2016年6月20日 星期三</span>
-                <i>|</i>
-                <a href="logout.html">退出</a>
-            </div>
-        </div>
-    </div><!-- header end -->
-
-
-    <!-- nav start -->
-    <div class="nav">
-        <div class="wrap">
-            <ul>
-                <li><a href="#!">首页</a></li>
-                <li><a href="#!">销售</a></li>
-                <li><a href="#!">目录</a></li>
-                <li>
-                    <a class="curr" href="#!">客户</a>
-                    <div class="subnav">
-                        <a href="customers.html">客户管理</a>
-                    </div>
-                </li>
-                <li>
-                    <a href="#!">促销</a>
-                    <div class="subnav">
-                        <a href="customers.html">客户管理</a>
-                        <a href="customers.html">客户管理</a>
-                        <a href="customers.html">客户管理</a>
-                        <a href="customers.html">客户管理</a>
-                        <a href="customers.html">客户管理</a>
-                    </div>
-                </li>
-                <li><a href="#!">邮件列表</a></li>
-                <li><a href="#!">CMS</a></li>
-                <li><a href="#!">报表</a></li>
-                <li>
-                    <a class="curr" href="#!">系统</a>
-                    <div class="subnav">
-                        <a href="user.html">用户管理</a>
-                        <a class="on" href="role.html">角色管理</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div><!-- nav end -->
-
-
+    <#include "./inc/header.ftl">
 
     <!-- fa-floor start -->
     <div class="fa-floor">
@@ -82,12 +25,13 @@
             </div>
             <div class="main">
                 <form action="" id="myform">
+                    <input id="roleId" type="hidden" value="<#if role??>${role.id}</#if>">
                     <div class="title">
                         <h3>修改角色“客服”</h3>
                         <div class="extra">
                             <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                             <button type="reset" class="btn btn-gray">重置</button>
-                            <button type="submit" class="btn btn-red">保存</button>
+                            <button id="submit" type="button" class="btn btn-red">保存</button>
                         </div>
                     </div>
 
@@ -120,17 +64,11 @@
     </div>
 
 
-    <!-- footer start -->
-    <div class="footer">
-        <div class="wrap">            
-            <div class="copyright">
-                <p>药优优电商管理系统 版本 1.0  版权所有 &copy; 2016 药优优</p>
-            </div>
-        </div>
-    </div><!-- footer end -->
+    <#include "./inc/footer.ftl"/>
 
-    <script src="js/jquery.min.js"></script>
+
     <script src="js/jquery.ztree.min.js"></script>
+
     <script>
         var setting = {
             check: {
@@ -226,7 +164,7 @@
                 { id:54, pId:5, name:"Media Gallery", open:true},
                 { id:55, pId:5, name:"投票区", open:true},
 
-            { id:6, pId:0, name:"报表", open:true},
+            { id:6, pId:0, name:"报表",  open:true},
                 { id:61, pId:6, name:"标签", open:true},
                     { id:611, pId:61, name:"商品", open:true},
                     { id:612, pId:61, name:"受欢迎的", open:true},
@@ -283,7 +221,47 @@
         
         
         $(function(){
-            $.fn.zTree.init($("#powerTree"), setting, zNodes);
+
+            var rootTree = null;
+
+            //加载所有资源
+            $.ajax({
+                url: "/role/resources",
+                type: "POST",
+                async:false,
+                success: function(result){
+                    rootTree =  $.fn.zTree.init($("#powerTree"), setting, result);
+                }
+            });
+
+
+            $("#submit").click(function(){
+                var arrIds = [];
+                //获取所有选中的节点
+                var checkNodes = rootTree.getCheckedNodes(true);
+                $.each(checkNodes,function(index){
+                    arrIds.push(this.id)
+                })
+
+                if(arrIds.length==0){
+                    return false;
+                }
+
+                var roleId = $("#roleId").val();
+
+                $.ajax({
+                    url: "/role/resources/save",
+                    type: "POST",
+                    data:{roleId:roleId,resourcesIds:arrIds},
+                    success: function(result){
+
+
+                    }
+                });
+
+            })
+
+
         });
 
     </script>

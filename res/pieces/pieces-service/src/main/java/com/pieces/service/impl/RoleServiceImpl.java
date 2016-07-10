@@ -39,7 +39,7 @@ public class RoleServiceImpl extends AbsCommonService<Role> implements RoleServi
     @Transactional
     public int add(Role role) {
         role.setCreateDate(new Date());
-        add(role);
+        create(role);
         return role.getId();
     }
 }
