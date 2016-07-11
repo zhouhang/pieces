@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.pieces.boss.shiro.BossToken;
 import com.pieces.dao.model.Member;
+import com.pieces.dao.model.User;
 import com.pieces.service.MemberService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
@@ -12,6 +13,7 @@ import com.pieces.service.utils.CommonUtils;
 import com.pieces.tools.utils.WebUtil;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.xml.ParserContext;
@@ -69,11 +71,19 @@ public class HomeController extends BaseController{
         BossToken token = new BossToken(username, password, false, CommonUtils.getRemoteHost(request), "");
         try {
             subject.login(token);
-            WebUtil.print(response, new Result(true));
         } catch (Exception e) {
             e.printStackTrace();
             WebUtil.print(response, new Result(false).info("用户名密码错误!"));
         }
+        
+		// 存入用户信息到session
+        Member mem = memberService.findByUsername(token.getUsername());
+        mem.setPassword(null);
+        mem.setSalt(null);
+		Session s = subject.getSession();
+		s.setAttribute(RedisEnum.USER_SESSION_BOSS.getValue(), mem);
+		Result result = new Result(true);
+		WebUtil.print(response, result);
     }
 
 

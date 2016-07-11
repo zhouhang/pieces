@@ -34,8 +34,8 @@
             </div>
             <div class="search">
                 <div class="form">
-                    <button class="btn" type="button">搜索</button>
                     <input class="ipt" name="" id="" placeholder="输入关键字" value="" type="text">
+                    <button class="btn" type="button">搜索</button>
                 </div>
                 <div class="hotwords">
                     <span>热门搜索：</span>
