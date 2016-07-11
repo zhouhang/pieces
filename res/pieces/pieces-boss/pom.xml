@@ -210,8 +210,8 @@
 		<profile>
 			<id>dev-ff</id>
 			<properties>
-				<boss.base.url>http://localhost:8089</boss.base.url>
-				<boss.upload.url>http://localhost:8089/files/upload/</boss.upload.url>
+				<boss.base.url>http://127.0.0.1:8089</boss.base.url>
+				<boss.upload.url>http://127.0.0.1:8089/files/upload/</boss.upload.url>
 				<boss.upload.path>E:\development\apache-tomcat-8.0.36\webapps\files\upload</boss.upload.path>
 			</properties>
 		</profile>
