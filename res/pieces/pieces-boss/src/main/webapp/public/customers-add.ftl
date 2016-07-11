@@ -174,9 +174,11 @@
         var _setPwd = function() {
             var flag = $mobileCode.prop('checked');
             if (flag) {
+            	$('#userForm').data('validator').options.ignore = '#password';
                 //formValidate.ignore($pwd);
-                $pwd.nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
+                $pwd.removeClass('n-invalid').nextAll('.msg-box').html('');
             } else {
+            	$('#userForm').data('validator').options.ignore = '';
                 //formValidate.unignore($pwd);
             }
             $pwd.prop('disabled', flag);

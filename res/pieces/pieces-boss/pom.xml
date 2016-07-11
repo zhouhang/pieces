@@ -192,6 +192,10 @@
 			<groupId>org.jasig.cas</groupId>
 			<artifactId>cas-server-webapp-support</artifactId>
 		</dependency>
+		<dependency>
+    		<groupId>dk.brics.automaton</groupId>
+    		<artifactId>automaton</artifactId>
+		</dependency>
 	</dependencies>
 
 	<profiles>
@@ -206,8 +210,8 @@
 		<profile>
 			<id>dev-ff</id>
 			<properties>
-				<boss.base.url>http://localhost:8089</boss.base.url>
-				<boss.upload.url>http://localhost:8089/files/upload/</boss.upload.url>
+				<boss.base.url>http://127.0.0.1:8089</boss.base.url>
+				<boss.upload.url>http://127.0.0.1:8089/files/upload/</boss.upload.url>
 				<boss.upload.path>E:\development\apache-tomcat-8.0.36\webapps\files\upload</boss.upload.path>
 			</properties>
 		</profile>
@@ -221,6 +225,14 @@
 			<activation>  
                 <activeByDefault>true</activeByDefault>  
             </activation>  
+		</profile>
+				<profile>
+			<id>test-ff</id>
+			<properties>
+				<boss.base.url>http://192.168.1.99:8089</boss.base.url>
+				<boss.upload.url>http://192.168.1.99/files/upload/</boss.upload.url>
+				<boss.upload.path>E:\Program Files (x86)\nginx-1.10.0\html\files\upload</boss.upload.path>
+			</properties>
 		</profile>
 	</profiles>
 	<build>

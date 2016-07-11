@@ -46,7 +46,7 @@ public class SmsService {
         Map<String, Object> param = new HashMap<>();
         param.put("apikey", apikey);
         param.put("mobile", mobile);
-        param.put("text", TextTemplateEnum.SMS_CAPTCHA_TEMPLATE.getText("【药优优】", code));
+        param.put("text", TextTemplateEnum.SMS_BIZ_CAPTCHA_TEMPLATE.getText("【药优优】", code));
 
         HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
         //验证码存储在redis缓存里
@@ -55,12 +55,21 @@ public class SmsService {
     }
 
 
-    public void sendUserAccount(String passWord,String mobile,String username)throws Exception{
+    public void sendAddUserAccount(String passWord,String mobile,String username)throws Exception{
         //生成六位数密码
         Map<String, Object> param = new HashMap<>();
         param.put("apikey", apikey);
         param.put("mobile", mobile);
-        param.put("text", TextTemplateEnum.SMS_PASSWORD_TEMPLATE.getText("【药优优】",username,passWord));
+        param.put("text", TextTemplateEnum.SMS_BOSS_ADDUSER_PASSWORD_TEMPLATE.getText("【药优优】",username,passWord));
+        HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+    }
+    
+    public void sendUpdateUserAccount(String passWord,String mobile,String username)throws Exception{
+        //生成六位数密码
+        Map<String, Object> param = new HashMap<>();
+        param.put("apikey", apikey);
+        param.put("mobile", mobile);
+        param.put("text", TextTemplateEnum.SMS_BOSS_UPDATEUSER_PASSWORD_TEMPLATE.getText("【药优优】",username,passWord));
         HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
     }
 

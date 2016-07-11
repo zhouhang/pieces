@@ -161,16 +161,11 @@ public class GeneralController {
 	@RequestMapping(value="/code")
 	public void getMobileCode(String contactMobile,
 						HttpServletRequest request,
-						HttpServletResponse response){
-		SendMessage sm = SMSMessage.getInstance();
+						HttpServletResponse response) throws Exception{
+		String code =  smsService.sendSmsCaptcha(contactMobile);
 		Map<String, String> result = new HashMap<String, String>();
-		if(sm.sendMessage(request, contactMobile)){
-			result.put("ok", "");
-	        WebUtil.print(response,result);
-		}else{
-			result.put("error", "验证码错误，请重新输入");
-	        WebUtil.print(response,result);
-		}
+		result.put("ok", code);
+        WebUtil.print(response,result);
 	}
 
 }

@@ -200,8 +200,7 @@
 				}
 			}, 1e3);
 		}
-
-		// 验证码
+		//验证码
 		var _sendMobileCode = function() {
 			$.ajax({
 				type : 'POST',
@@ -211,20 +210,22 @@
 				},
 				dataType : 'json',
 				success : function(data) {
-					if (data.status !== 'y') {
-						clearInterval(timer);
-						$getMobileCode.text('获取验证码')
-								.prop('disabled', false);
-						validator.showMsg("#mobileCode", {
-						    type: "error",
-						    msg: data.info
-						})
-						timeout = 0;
-					} else {
+					if (typeof data.ok === 'string') {
 						timeout = delay;
 						_clock();
 						$getMobileCode.text(timeout + txt).prop('disabled',
 								true);
+					} else if (typeof data.error === 'string') {
+						clearInterval(timer);
+						$getMobileCode.text('获取验证码').prop('disabled', false);
+						
+						
+						$('#myform').validator('showMsg', '#mobileCode', {
+						    type: "error",
+						    msg: data.error
+						});
+						
+						timeout = 0;
 					}
 				}
 			});

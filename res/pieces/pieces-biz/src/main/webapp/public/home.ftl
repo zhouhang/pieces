@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>饮片B2B</title>
     <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -34,8 +34,8 @@
             </div>
             <div class="search">
                 <div class="form">
-                    <button class="btn" type="button">搜索</button>
                     <input class="ipt" name="" id="" placeholder="输入关键字" value="" type="text">
+                    <button class="btn" type="button">搜索</button>
                 </div>
                 <div class="hotwords">
                     <span>热门搜索：</span>
@@ -98,6 +98,6 @@
         </div>
     </div><!-- footer end -->
 
-    <script src="js/jquery.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
 </body>
 </html>

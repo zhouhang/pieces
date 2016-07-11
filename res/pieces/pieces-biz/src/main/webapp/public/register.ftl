@@ -207,8 +207,7 @@
 					this.formValidate().sendCode();
 				},
 				formValidate : function() {
-					var valid = this;
-					 $('#myform').validator({
+					this.validator = $('#myform').validator({
 						fields : {
 							userName : '用户名: required;username;remote(/user/checkusername)',
 							password : '密码: required; password',
@@ -247,6 +246,7 @@
 					return this;
 				},
 				sendCode: function() {
+					var self = this;
 					var $mobile = $('#mobile'), 
 					$getMobileCode = $('#getMobileCode'), timeout = 0, timer = 0, delay = 60, txt = '秒后重试';
 
@@ -261,7 +261,7 @@
 							}
 						}, 1e3);
 					}
-
+					
 					// 验证码
 					var _sendMobileCode = function() {
 						$.ajax({
@@ -272,20 +272,22 @@
 							},
 							dataType : 'json',
 							success : function(data) {
-								if (data.status !== 'y') {
-									clearInterval(timer);
-									$getMobileCode.text('获取验证码')
-											.prop('disabled', false);
-									valid.formValidate.showMsg("#mobileCode", {
-									    type: "error",
-									    msg: data.info
-									})
-									timeout = 0;
-								} else {
+								if (typeof data.ok === 'string') {
 									timeout = delay;
 									_clock();
 									$getMobileCode.text(timeout + txt).prop('disabled',
 											true);
+								} else if (typeof data.error === 'string') {
+									clearInterval(timer);
+									$getMobileCode.text('获取验证码').prop('disabled', false);
+									
+									
+									$('#myform').validator('showMsg', '#mobileCode', {
+									    type: "error",
+									    msg: data.error
+									});
+									
+									timeout = 0;
 								}
 							}
 						});

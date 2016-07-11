@@ -106,7 +106,7 @@ public class UserController extends  BaseController{
 		String passWord =null;
 		//是否发送随机密码
 		if(random!=null&&random){
-			passWord = SeqNoUtil.getRandomNum(6);
+			passWord = SeqNoUtil.getXegerPwd();
 			user.setPassword(passWord);
 		}
 		user.setSource(BasicConstants.USER_CREATECHANNEL_BOSS);
@@ -120,14 +120,18 @@ public class UserController extends  BaseController{
 		//没有用户ID为新用户
 		if(user.getId()==null){
 			userService.addUser(user);
+			//发送短信
+			if(passWord!=null){
+				smsService.sendAddUserAccount(passWord,user.getContactMobile(),user.getUserName());
+			}
 		}else{
 			userService.updateUser(user);
 			advices = "修改用户信息成功!";
+			if(passWord!=null){
+				smsService.sendUpdateUserAccount(passWord,user.getContactMobile(),user.getUserName());
+			}
 		}
-		//发送短信
-		if(passWord!=null){
-			smsService.sendUserAccount(passWord,user.getContactMobile(),user.getUserName());
-		}
+		
 		WebUtil.print(response,new Result(true).info(advices));
 	}
 
