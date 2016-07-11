@@ -33,7 +33,6 @@
                     <h3><i class="fa fa-people">新客户</i></h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:window.location.href='/user/index'">返回</button>
-                        <button type="reset" class="btn btn-gray">重置</button>
                         <button id="userFormSubmit"  type="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
