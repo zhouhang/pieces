@@ -50,8 +50,8 @@
 			<artifactId>patchca</artifactId>
 		</dependency>
 		<dependency>
-    		<groupId>nl.flotsam</groupId>
-    		<artifactId>xeger</artifactId>
+    		<groupId>dk.brics.automaton</groupId>
+    		<artifactId>automaton</artifactId>
 		</dependency>
     </dependencies>
 
