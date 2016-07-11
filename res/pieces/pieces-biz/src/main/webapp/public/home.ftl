@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>饮片B2B</title>
     <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <body>
@@ -98,6 +98,6 @@
         </div>
     </div><!-- footer end -->
 
-    <script src="js/jquery.min.js"></script>
+    <script src="/js/jquery.min.js"></script>
 </body>
 </html>

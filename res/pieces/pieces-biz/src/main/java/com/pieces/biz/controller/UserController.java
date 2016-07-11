@@ -28,6 +28,7 @@ import com.pieces.dao.model.User;
 import com.pieces.service.UserService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.redis.RedisManager;
 import com.pieces.service.utils.CommonUtils;
 import com.pieces.service.utils.ValidUtils;
 import com.pieces.tools.utils.WebUtil;
@@ -46,6 +47,9 @@ public class UserController extends BaseController {
 	
 	@Autowired
 	private BizRealm bizRealm;
+	
+	 @Autowired
+	 private RedisManager redisManager;
 
 	/**
 	 * 进入注册页面
@@ -112,24 +116,13 @@ public class UserController extends BaseController {
 			return;
 		}
 
-		Map<String, Object> codeMap = (Map<String, Object>) request.getSession().getAttribute(user.getContactMobile());
-
-		// codeMap为空判断
-		if (!ValidUtils.mapNotBlank(codeMap)) {
+		//校验验证码
+		String code  = redisManager.get(RedisEnum.KEY_MOBILE_CAPTCHA.getValue()+user.getContactMobile());
+		if (!StringUtils.isNotBlank(code)) {
 			Result result = new Result(false).info("请获取验证码");
 			WebUtil.print(response, result);
 			return;
 		}
-		String code = codeMap.get("code").toString();
-
-		// 验证码为空
-		if (!StringUtils.isNotBlank(code)) {
-			Result result = new Result(false).info("验证码过期");
-			WebUtil.print(response, result);
-			return;
-		}
-
-		// 判断输入验证码与session验证码是否相同
 		if (!code.equals(mobileCode)) {
 			Result result = new Result(false).info("验证码错误");
 			WebUtil.print(response, result);
@@ -244,22 +237,6 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/regsuccess")
 	public String regSuccess(ModelMap model, String userName, String password, HttpServletRequest request)
 			throws Exception {
-//		// 登陆验证
-//		Subject subject = SecurityUtils.getSubject();
-//		BizToken token = new BizToken(userName, password, false, CommonUtils.getRemoteHost(request), "");
-//		subject.login(token);
-//		// 存入用户信息到session
-//		User tu = new User();
-//		tu.setUserName(token.getUsername());
-//		List<User> users = userService.findUserByCondition(tu);
-//		BeanUtils.copyProperties(users.get(0), tu);
-//		tu.setId(users.get(0).getId());
-//		tu.setPassword(null);
-//		tu.setSalt(null);
-//		Session s = subject.getSession();
-//		s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), tu);
-//		model.put("user", tu);
-//		return "user_info";
 		return "message_register";
 	}
 
@@ -288,33 +265,24 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/findpwd/stepone", method = RequestMethod.POST)
 	public void findPasswordOne(HttpServletRequest request, HttpServletResponse response, Model model, String username,
 			String mobile, String mobileCode) {
-		Map codeMap = (Map) request.getSession().getAttribute(mobile);
-		User user = new User();
-		user.setUserName(username);
-		List<User> users = userService.findUserByCondition(user);
+		User user = userService.findByUserName(username);
 
-		if (!ValidUtils.listNotBlank(users)) {
+		if (user == null) {
 			Result result = new Result("10001").info("系统找不到该用户名，请确认用户名是否正确");
 			WebUtil.print(response, result);
 			return;
 		}
 
 		// 验证页面mobile与数据库mobile是否相同
-		if (!users.get(0).getContactMobile().equals(mobile)) {
+		if (!user.getContactMobile().equals(mobile)) {
 			Result result = new Result("10002").info("手机号与用户名不匹配，请重新输入");
 			WebUtil.print(response, result);
 			return;
 		}
-
-		if (!ValidUtils.mapNotBlank(codeMap)) {
+		
+		String code  = redisManager.get(RedisEnum.KEY_MOBILE_CAPTCHA.getValue()+user.getContactMobile());
+		if (!StringUtils.isNotBlank(code)) {
 			Result result = new Result("10003").info("请获取验证码");
-			WebUtil.print(response, result);
-			return;
-		}
-
-		String code = codeMap.get("code").toString();
-		if (StringUtils.isBlank(code)) {
-			Result result = new Result("10003").info("验证码过期");
 			WebUtil.print(response, result);
 			return;
 		}
