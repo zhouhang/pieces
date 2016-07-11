@@ -27,6 +27,8 @@ public class Member  implements Serializable {
 	private Date createDate;
 	
 	private Date updateDate;
+
+	private Integer roleId;
 	
 	public Member(){}
 	
@@ -108,5 +110,13 @@ public class Member  implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 }

@@ -9,7 +9,6 @@
 
 <#include "./inc/header.ftl">
 
-
 <!-- fa-floor start -->
 <div class="fa-floor">
     <div class="wrap">
@@ -22,8 +21,10 @@
             <dl>
                 <dt>用户信息</dt>
                 <dd>
-                    <a class="curr" href="member/index">账号信息</a>
-                    <a href="user_role.html">角色信息</a>
+                    <a  class="curr" href="member/index">账号信息</a>
+                    <#if member??>
+                        <a  href="member/role/${member.id}">角色信息</a>
+                    </#if>
                 </dd>
             </dl>
         </div>
@@ -40,7 +41,7 @@
 
                 <div class="user-info">
                     <h3>账号信息</h3>
-                    <input type="hidden" name="id" value="${(member.id)!}">
+                    <input type="hidden" id="id" name="id" value="${(member.id)!}">
                     <div class="fa-form">
                         <div class="group">
                             <div class="txt">
@@ -74,7 +75,7 @@
                                 <#if (!member??)><i>*</i></#if>密码：
                             </div>
                             <div class="cnt">
-                                <input type="password" class="ipt" value="" data-rule="<#if (!member??)>required;</#if>password" autocomplete="off" name="password" id="password" placeholder="">
+                                <input type="password" class="ipt" value="" data-rule="<#if (!member??)>required;</#if>password" autocomplete="off" name="password" id="password" placeholder="不修改密码留空">
                             </div>
                         </div>
                         <input type="hidden" id="idDel"  value="${(member.isDel)!}">
@@ -90,7 +91,6 @@
                                 </select>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </form>

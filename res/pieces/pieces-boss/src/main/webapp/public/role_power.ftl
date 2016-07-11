@@ -17,9 +17,9 @@
                 <dl>
                     <dt>角色信息</dt>
                     <dd>
-                        <a href="role_info.html">角色信息</a>
-                        <a class="curr" href="role_power.html">角色权限</a>
-                        <a href="role_list.html">角色用户</a>
+                        <a href="role/info/${role.id}">角色信息</a>
+                        <a class="curr" href="role/power/${role.id}">角色权限</a>
+                        <a href="role/list/${role.id}">角色用户</a>
                     </dd>
                 </dl>
             </div>

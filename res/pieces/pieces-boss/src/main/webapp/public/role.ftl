@@ -20,7 +20,7 @@
 
             <div class="title title-btm">
                 <h3>角色管理</h3>
-                <div class="extra"><a class="btn btn-red" href="role/info"><i class="fa fa-plus"></i>增加新角色</a></div>
+                <div class="extra"><a class="btn btn-red" href="role/add"><i class="fa fa-plus"></i>增加新角色</a></div>
             </div>
             <div class="pagin">
                 <div class="extra">

@@ -4,9 +4,11 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.MemberDao;
 import com.pieces.dao.model.Member;
+import com.pieces.dao.model.RoleMember;
 import com.pieces.dao.vo.MemberVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.MemberService;
+import com.pieces.service.RoleMemberService;
 import com.pieces.service.dto.Password;
 import com.pieces.service.utils.EncryptUtil;
 import org.apache.commons.lang.StringUtils;
@@ -25,6 +27,8 @@ public class MemberServiceImpl extends AbsCommonService<Member> implements Membe
 
     @Autowired
     private MemberDao memberDao;
+    @Autowired
+    private RoleMemberService roleMemberService;
 
     @Override
     public ICommonDao<Member> getDao() {
@@ -49,7 +53,15 @@ public class MemberServiceImpl extends AbsCommonService<Member> implements Membe
         member.setPassword(pass.getPassword());
         member.setSalt(pass.getSalt());
         member.setCreateDate(new Date());
-        return create(member);
+        create(member);
+
+        //添加用户角色
+        RoleMember roleMember = new RoleMember();
+        roleMember.setRoleId(member.getRoleId());
+        roleMember.setMemberId(member.getId());
+        roleMemberService.create(roleMember);
+
+        return member.getId();
     }
 
     @Override
@@ -60,6 +72,14 @@ public class MemberServiceImpl extends AbsCommonService<Member> implements Membe
             member.setPassword(pass.getPassword());
             member.setSalt(pass.getSalt());
         }
+
+        //删除用户角色再添加
+        roleMemberService.deleteByMember(member.getId());
+        RoleMember roleMember = new RoleMember();
+        roleMember.setMemberId(member.getId());
+        roleMember.setRoleId(member.getRoleId());
+        roleMemberService.create(roleMember);
+
         member.setUpdateDate(new Date());
         return this.update(member);
     }
@@ -69,5 +89,7 @@ public class MemberServiceImpl extends AbsCommonService<Member> implements Membe
         PageInfo<Member> page =  memberDao.findByCondition(memberVo,pageNum,pageSize);
         return page;
     }
+
+
 
 }

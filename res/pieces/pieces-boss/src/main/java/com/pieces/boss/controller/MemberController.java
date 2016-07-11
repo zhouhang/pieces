@@ -2,8 +2,12 @@ package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Member;
+import com.pieces.dao.model.Role;
+import com.pieces.dao.model.RoleMember;
 import com.pieces.dao.vo.MemberVo;
 import com.pieces.service.MemberService;
+import com.pieces.service.RoleMemberService;
+import com.pieces.service.RoleService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * BOSS用户管理
@@ -26,6 +31,10 @@ public class MemberController extends BaseController{
 
     @Autowired
     private MemberService memberService;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private RoleMemberService roleMemberService;
 
     /**
      * BOSS用户列表页
@@ -104,6 +113,42 @@ public class MemberController extends BaseController{
         WebUtil.print(response,new Result(true).info(advices));
     }
 
+
+    /**
+     * BOSS角色编辑
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/role/{id}")
+    public String role(HttpServletRequest request,
+                       HttpServletResponse response,
+                       @PathVariable("id") Integer id,
+                       ModelMap model){
+        List<Role> roleList =  roleService.findAll();
+        model.put("roleList",roleList);
+        model.put("memberId",id);
+        return "member-role";
+    }
+
+
+    /**
+     * 保存角色
+     * @param request
+     * @param response
+     */
+    @RequestMapping(value = "/role/save")
+    public void roleSave(HttpServletRequest request,
+                         HttpServletResponse response,
+                         Integer memberId,
+                         Integer[] roleIds){
+        if(roleIds.length==0){
+            WebUtil.print(response,new Result(false).info("角色不能为空!"));
+            return;
+        }
+        roleMemberService.createRoleMember(roleIds,memberId);
+        WebUtil.print(response,new Result(true));
+    }
 
 
 }

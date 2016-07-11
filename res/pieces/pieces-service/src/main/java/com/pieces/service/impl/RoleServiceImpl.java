@@ -7,6 +7,7 @@ import com.pieces.dao.RoleDao;
 import com.pieces.dao.model.Role;
 import com.pieces.dao.vo.RoleVo;
 import com.pieces.service.AbsCommonService;
+import com.pieces.service.RoleMemberService;
 import com.pieces.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ public class RoleServiceImpl extends AbsCommonService<Role> implements RoleServi
 
     @Autowired
     private RoleDao roleDao;
+
+
 
     @Override
     public ICommonDao<Role> getDao() {
