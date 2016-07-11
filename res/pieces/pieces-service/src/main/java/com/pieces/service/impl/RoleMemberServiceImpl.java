@@ -48,4 +48,9 @@ public class RoleMemberServiceImpl  extends AbsCommonService<RoleMember> impleme
             create(roleMember);
         }
     }
+
+    @Override
+    public List<RoleMember> findByCondition() {
+        return roleMemberDao.findByCondition();
+    }
 }

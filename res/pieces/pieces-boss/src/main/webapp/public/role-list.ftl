@@ -34,22 +34,9 @@
                 <div class="pagin">
                     <div class="extra">
                         <button class="btn btn-gray" type="button" id="reset">重置条件</button>
-                        <button class="btn btn-blue" type="button" id="submit"><i class="fa fa-search"></i><span>搜索</span></button>
+                        <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
                     </div>
-                    <div class="skip">
-                        <span>第</span>
-                        <a class="fa fa-chevron-left btn btn-gray"></a><input type="text" class="ipt" value="1"><a class="fa fa-chevron-right btn btn-gray"></a>
-                        <span>页，共</span><em>6</em><span>页</span>
-                        <i>|</i>
-                        <span>每页</span>
-                        <select name="" id="">
-                            <option value="">10</option>
-                            <option value="">20</option>
-                            <option value="">30</option>
-                            <option value="">40</option>
-                        </select>
-                        <span>个记录，共有 2 个记录</span>
-                    </div>
+                    <@p.pager pageInfo=memberPage  pageUrl="role/list/${role.id}"  params=memberParams/>
                 </div>
 
                 <div class="chart">
@@ -69,51 +56,34 @@
                                         <option value="">是</option>
                                     </select>
                                 </td>
-                                <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                                <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                                <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                                <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
+                                <td><div class="ipt-wrap"><input name="id" type="text" class="ipt" value="${memberVo.id}"></div></td>
+                                <td><div class="ipt-wrap"><input name="username" type="text" class="ipt" value="${memberVo.username}"></div></td>
+                                <td><div class="ipt-wrap"><input name="name" type="text" class="ipt" value="${memberVo.name}"></div></td>
+                                <td><div class="ipt-wrap"><input name="email" type="text" class="ipt" value="${memberVo.email}"></div></td>
                                 <td>
-                                    <select name="" >
-                                        <option value="">激活</option>
+                                    <select name="isDel" >
+                                        <option <#if (!memberVo.isDel??)>selected</#if> value=""> </option>
+                                        <option <#if (memberVo.isDel??&&!memberVo.isDel)>selected</#if> value="false">激活</option>
+                                        <option <#if (memberVo.isDel??&&memberVo.isDel)>selected</#if> value="true">禁用</option>
                                     </select>
                                 </td>
                             </tr>
                         </thead>
                         <tfoot></tfoot>
                         <tbody>
+                        <#list memberPage.list as member>
                             <tr>
                                 <td><label><input type="checkbox" class="cbx" /></label></td>
-                                <td>10</td>
-                                <td>administrator</td>
-                                <td>超级管理员</td>
-                                <td>super.yaicai.pro</td>
-                                <td>激活</td>
+                                <td>${member.id}</td>
+                                <td>${member.username}</td>
+                                <td>${member.name}</td>
+                                <td>${member.email}</td>
+                                <td>
+                                    <#if (member.isDel)>禁用
+                                    <#else>激活</#if>
+                                </td>
                             </tr>
-                            <tr>
-                                <td><label><input type="checkbox" class="cbx" /></label></td>
-                                <td>10</td>
-                                <td>administrator</td>
-                                <td>超级管理员</td>
-                                <td>super.yaicai.pro</td>
-                                <td>激活</td>
-                            </tr>
-                            <tr>
-                                <td><label><input type="checkbox" class="cbx" /></label></td>
-                                <td>10</td>
-                                <td>administrator</td>
-                                <td>超级管理员</td>
-                                <td>super.yaicai.pro</td>
-                                <td>激活</td>
-                            </tr>
-                            <tr>
-                                <td><label><input type="checkbox" class="cbx" /></label></td>
-                                <td>10</td>
-                                <td>administrator</td>
-                                <td>超级管理员</td>
-                                <td>super.yaicai.pro</td>
-                                <td>激活</td>
-                            </tr>
+                        </#list>
                         </tbody>
                     </table>
                 </div>
@@ -127,4 +97,45 @@
 
 
 </body>
+<script>
+
+    //定义根变量
+    !(function($) {
+        var page = {
+            //定义全局变量区
+            v: {
+                id: "page",
+                pageNum:${memberPage.pageNum},
+                pageSize:${memberPage.pageSize}
+            },
+            //定义方法区
+            fn: {
+                //初始化方法区
+                init: function () {
+                    page.fn.filter();
+                },
+                // 筛选
+                filter: function() {
+                    var $ipts = $('.chart .ipt, .chart select');
+                    var url="role/list/${role.id}?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
+
+                    $('#search_btn').on('click', function() {
+                        var params = [];
+                        $ipts.each(function() {
+                            var val = $.trim(this.value);
+                            val && params.push($(this).attr('name') + '=' + val);
+                        })
+                        location.href=url+"&"+params.join('&');
+                    })
+                }
+            }
+        }
+        //加载页面js
+        $(function() {
+            page.fn.init();
+        });
+    })(jQuery);
+
+
+</script>
 </html>

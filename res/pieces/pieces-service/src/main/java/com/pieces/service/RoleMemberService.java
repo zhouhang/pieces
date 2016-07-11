@@ -14,4 +14,6 @@ public interface RoleMemberService extends ICommonService<RoleMember>{
     int deleteByMember(int memberId);
 
     void createRoleMember(Integer[] roleIds,Integer memberId);
+
+    List<RoleMember> findByCondition();
 }

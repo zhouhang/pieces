@@ -5,8 +5,27 @@
             <id column="id"  property="id" />
             <result column="role_id"  property="roleId" />
             <result column="member_id"  property="memberId" />
-        
     </resultMap>
+
+
+    <resultMap id="RoleMemberResultMap2" type="com.pieces.dao.model.RoleMember">
+        <id column="id"  property="id" />
+        <result column="role_id"  property="roleId" />
+        <result column="member_id"  property="memberId" />
+        <association property="role" javaType="com.pieces.dao.model.Role">
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+        </association>
+        <association property="member" javaType="com.pieces.dao.model.Member">
+            <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="name" column="name"/>
+            <result property="email" column="email"/>
+            <result property="isDel" column="is_del"/>
+        </association>
+    </resultMap>
+
+
 
     <sql id="Base_Column_List">
         id,role_id,member_id
@@ -60,6 +79,19 @@
         delete from role_member
         where member_id = #{memberId}
     </delete>
+
+    <select id="findByPage" resultMap="RoleMemberResultMap2">
+        select  a.*,b.id,b.name,c.id,c.username,c.name,c.email,c.is_del
+        from role_member a,role b,member c
+        where  a.role_id = b.id and a.member_id = c.id
+    </select>
+
+    <select id="findByRole" parameterType="java.lang.Integer"  resultMap="RoleMemberResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from  role_member
+        where role_id = #{roleId}
+    </select>
 
 
 </mapper>

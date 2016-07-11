@@ -1,14 +1,13 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.model.Member;
 import com.pieces.dao.model.Resources;
 import com.pieces.dao.model.Role;
 import com.pieces.dao.model.RoleMember;
+import com.pieces.dao.vo.MemberVo;
 import com.pieces.dao.vo.RoleVo;
-import com.pieces.service.ResourcesService;
-import com.pieces.service.RoleMemberService;
-import com.pieces.service.RoleResourcesService;
-import com.pieces.service.RoleService;
+import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +40,8 @@ public class RoleController extends BaseController{
     private RoleResourcesService roleResourcesService;
     @Autowired
     private RoleMemberService roleMemberService;
+    @Autowired
+    private MemberService memberService;
 
     /**
      * 角色列表页
@@ -211,21 +212,29 @@ public class RoleController extends BaseController{
      * 用户角色列表
      * @param request
      * @param response
-     * @param id
      * @param model
      * @return
      */
-    @RequestMapping(value = "/list/{id}")
+    @RequestMapping(value = "/list/{roleId}")
     public String memberList(HttpServletRequest request,
                              HttpServletResponse response,
-                             @PathVariable("id") Integer id,
+                             @PathVariable("roleId") Integer roleId,
+                             Integer pageNum,
+                             Integer pageSize,
+                             MemberVo memberVo,
                              ModelMap model){
-        if(id!=null){
-            Role role =  roleService.findById(id);
+        pageNum=pageNum==null?1:pageNum;
+        pageSize=pageSize==null?10:pageSize;
+        if(roleId!=null){
+            Role role =  roleService.findById(roleId);
             model.put("role",role);
         }
+        PageInfo<Member> memberPage =memberService.findByCondition(memberVo, pageNum, pageSize);
+        model.put("memberPage",memberPage);
+        model.put("memberParams",memberVo.toString());
         return "role-list";
     }
+
 
 
 

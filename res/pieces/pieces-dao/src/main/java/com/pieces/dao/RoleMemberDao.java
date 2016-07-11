@@ -9,4 +9,6 @@ public interface RoleMemberDao extends ICommonDao<RoleMember>{
     List<RoleMember> findByMember(Integer memberId);
 
     int deleteByMember(Integer memberId);
+
+    List<RoleMember> findByCondition();
 }
