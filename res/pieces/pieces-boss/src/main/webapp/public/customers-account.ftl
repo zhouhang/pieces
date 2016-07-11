@@ -33,7 +33,7 @@
                 <form action="user/save" id="userForm" method="post">
                     <input type="hidden" name="id" value="${user.id}">
                     <div class="title">
-                        <h3><i class="fa fa-people"></i>${user.userName}</h3>
+                        <h3><i class="fa fa-people"></i><input type="hidden" value="${(user.userName)!}" name="userName" id="userName">${user.userName}</h3>
                         <div class="extra">
                             <button type="button" class="btn btn-gray" onclick="javascript:window.location.href='/user/index'">返回</button>
                             <button type="reset" class="btn btn-gray">重置</button>
@@ -115,7 +115,7 @@
 
                             <div class="group">
                                 <div class="cnt-extra">
-                                    <label><input class="cbx" id="contactMobileCode" type="checkbox">或发送随机密码</label>
+                                    <label><input class="cbx" id="random" name="random" value="true" type="checkbox">或发送随机密码</label>
                                 </div>
                             </div>
 
@@ -165,15 +165,16 @@
 			}
 		});
 
-        var $contactMobileCode = $('#contactMobileCode');
+        var $contactMobileCode = $('#random');
         var $password = $('#password');
         var _setpassword = function() {
             var flag = $contactMobileCode.prop('checked');
             if (flag) {
-                //formValidate.ignore($password);
-                $password.nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
+            	$('#userForm').data('validator').options.ignore = '#password';
+                //formValidate.ignore($pwd);
+                $password.removeClass('n-invalid').nextAll('.msg-box').html('');
             } else {
-                //formValidate.unignore($password);
+            	$('#userForm').data('validator').options.ignore = '';
             }
             $password.prop('disabled', flag);
         }

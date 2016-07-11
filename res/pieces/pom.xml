@@ -53,6 +53,8 @@
 		<servlet.api.version>3.0.1</servlet.api.version>
 		<patchca.version>0.0.1</patchca.version>
 		<httpclient.version>4.4.1</httpclient.version>
+		<automaton.version>1.11-8</automaton.version>
+		<xeger.version>1.0</xeger.version>
 	</properties>
 
 	<dependencyManagement>
@@ -325,6 +327,16 @@
 				<groupId>org.apache.httpcomponents</groupId>
 				<artifactId>httpclient</artifactId>
 				<version>${httpclient.version}</version>
+			</dependency>
+			<dependency>
+    			<groupId>dk.brics.automaton</groupId>
+    			<artifactId>automaton</artifactId>
+    			<version>${automaton.version}</version>
+			</dependency>
+			<dependency>
+    			<groupId>nl.flotsam</groupId>
+    			<artifactId>xeger</artifactId>
+    			<version>${xeger.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

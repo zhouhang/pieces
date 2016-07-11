@@ -106,7 +106,7 @@ public class UserController extends  BaseController{
 		String passWord =null;
 		//是否发送随机密码
 		if(random!=null&&random){
-			passWord = SeqNoUtil.getRandomNum(6);
+			passWord = SeqNoUtil.getXegerPwd();
 			user.setPassword(passWord);
 		}
 		user.setSource(BasicConstants.USER_CREATECHANNEL_BOSS);
