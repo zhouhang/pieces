@@ -1,6 +1,7 @@
 package com.pieces.biz.controller;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -150,23 +151,24 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/checkusername")
 	public void checkUserName(Model model, HttpServletRequest request, HttpServletResponse response) {
-		Result result = new Result(false).info("用户名必须以英文字母开头，长度6到20位");
-		String userName = request.getParameter("param");
+		Map<String, String> result = new HashMap<String, String>();
+		String userName = request.getParameter("userName");
 		Pattern pattern = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$");
 		Matcher matcher = pattern.matcher(userName);
 		
 		if	(!StringUtils.isNotBlank(userName) || !matcher.matches()){
+			result.put("error", "用户名必须以英文字母开头，长度6到20位!");
 			WebUtil.print(response, result);
 			return;
 		}
 		
 		if (userService.checkUserName(userName)) {
-			result = new Result(false).info("用户名重复");
+			result.put("error", "该用户名已被使用，请重新输入");
 			WebUtil.print(response, result);
 			return;
 		}
 		
-		result = new Result(true);
+		result.put("ok", "");
 		WebUtil.print(response, result);
 	}
 
@@ -292,14 +294,14 @@ public class UserController extends BaseController {
 		List<User> users = userService.findUserByCondition(user);
 
 		if (!ValidUtils.listNotBlank(users)) {
-			Result result = new Result("10001").info("用户名不存在");
+			Result result = new Result("10001").info("系统找不到该用户名，请确认用户名是否正确");
 			WebUtil.print(response, result);
 			return;
 		}
 
 		// 验证页面mobile与数据库mobile是否相同
 		if (!users.get(0).getContactMobile().equals(mobile)) {
-			Result result = new Result("10002").info("手机号码错误");
+			Result result = new Result("10002").info("手机号与用户名不匹配，请重新输入");
 			WebUtil.print(response, result);
 			return;
 		}

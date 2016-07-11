@@ -53,4 +53,18 @@
         </set>
         where id = #{id}
     </update>
+
+
+    <!-- 条件查询User-->
+    <select id="findByCondition" parameterType="com.pieces.dao.vo.RoleVo" resultMap="RoleResultMap">
+        select * from role b
+        where 1=1
+        <if test="id != null " >
+            and b.id = #{id}
+        </if>
+        <if test="name != null and name != ''" >
+            and b.name like "%"#{name}"%"
+        </if>
+    </select>
+
 </mapper>

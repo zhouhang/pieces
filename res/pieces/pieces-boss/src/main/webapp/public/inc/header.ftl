@@ -9,7 +9,7 @@
             <i>|</i>
             <span>2016年6月20日 星期三</span>
             <i>|</i>
-            <a href="logout.html">退出</a>
+            <a href="logout">退出</a>
         </div>
     </div>
 </div><!-- header end -->
@@ -39,7 +39,7 @@
                 <a class="curr" href="#!">系统</a>
                 <div class="subnav">
                     <a class="on" href="member/index">用户管理</a>
-                    <a href="role.html">角色管理</a>
+                    <a href="role/index">角色管理</a>
                 </div>
             </li>
         </ul>
