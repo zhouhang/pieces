@@ -74,13 +74,13 @@
 									value="${userVo.startDate}" id="start"> - <input
 									name="endDate" type="text" class="ipt date"
 									value="${userVo.endDate}" id="end"></td>
-								<td><select name="bindErp" id="">
-										<option<#if (!userVo.bindErp??)>selected</#if>
+								<td><select name="bindErp" id="bindErp">
+										<option <#if (!userVo.bindErp??)>selected</#if>
 											value=""></option>
-										<option<#if
+										<option <#if
 											(userVo.bindErp??&&!userVo.bindErp)>selected</#if>
 											value="false">否</option>
-										<option<#if
+										<option <#if
 											(userVo.bindErp??&&userVo.bindErp)>selected</#if>
 											value="true">是</option>
 								</select></td>
@@ -135,7 +135,7 @@
                     });
                     
                     $("#reset").click(function(){
-                    	$("#search_form")[0].reset();
+                    	$('.tc :input').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
                     })
                 },
                 // 筛选

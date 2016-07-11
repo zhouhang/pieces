@@ -49,10 +49,10 @@
 		<groupId>com.github.bingoohuang</groupId>
 			<artifactId>patchca</artifactId>
 		</dependency>
-		<!--<dependency>-->
-    		<!--<groupId>nl.flotsam</groupId>-->
-    		<!--<artifactId>xeger</artifactId>-->
-		<!--</dependency>-->
+		<dependency>
+    		<groupId>nl.flotsam</groupId>
+    		<artifactId>xeger</artifactId>
+		</dependency>
     </dependencies>
 
 </project>

@@ -2,7 +2,7 @@ package com.pieces.tools.utils;
 
 import java.util.Random;
 
-//import nl.flotsam.xeger.Xeger;
+import nl.flotsam.xeger.Xeger;
 
 /**
  * 序列数工具类
@@ -16,8 +16,8 @@ public class SeqNoUtil {
     
     
     public static String getXegerPwd(){
-//    	Xeger x = new Xeger(XEGER_PWD);
-    	return null;
+    	Xeger x = new Xeger(XEGER_PWD);
+    	return x.generate();
     }
     
     /**
