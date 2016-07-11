@@ -11,6 +11,10 @@
     <!-- fa-floor start -->
     <div class="fa-floor">
         <div class="wrap">
+            <div  style="display: none" id="success_advices" class="message">
+                <i class="fa fa-check-circle"></i>
+                <span>编辑成功！</span>
+            </div>
             <div class="side">
                 <dl>
                     <dt>角色信息</dt>
@@ -23,11 +27,11 @@
             </div>
             <div class="main">
                 <div class="title title-btm">
-                    <h3><i class="fa fa-people"></i>修改角色 “超级管理员”</h3>
+                    <h3><i class="fa fa-people"></i>修改角色 “${role.name}”</h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                        <button type="reset" class="btn btn-gray">保存</button>
-                        <button type="submit" class="btn btn-red">保存并继续</button>
+                        <button id="submit" type="button" class="btn btn-gray">保存</button>
+                        <button id="ajaxSubmit" type="button" class="btn btn-red">保存并继续</button>
                     </div>
                 </div>
 
@@ -73,7 +77,7 @@
                         <tbody>
                         <#list memberPage.list as member>
                             <tr>
-                                <td><label><input type="checkbox" class="cbx" /></label></td>
+                                <td><label><input type="checkbox" name="haveRole"  value="${member.id}" data-id="${member.id}" class="cbx" /></label></td>
                                 <td>${member.id}</td>
                                 <td>${member.username}</td>
                                 <td>${member.name}</td>
@@ -113,6 +117,16 @@
                 //初始化方法区
                 init: function () {
                     page.fn.filter();
+
+                    page.fn.initRoleChecked();
+
+                    $("#ajaxSubmit").click(function(){
+                        page.fn.saveResourcesAjax();
+                    })
+                    $("#submit").click(function(){
+                        page.fn.saveResources();
+                    })
+
                 },
                 // 筛选
                 filter: function() {
@@ -127,6 +141,58 @@
                         })
                         location.href=url+"&"+params.join('&');
                     })
+                },
+                saveResources:function(){
+                    var memberIds = [];
+                    $("input[name='haveRole']:checked").each(function(){
+                        memberIds.push($(this).val());
+                    })
+
+                    $.ajax({
+                        url: "/role/member/save",
+                        type: "POST",
+                        data:{memberIds:memberIds,roleId:'${role.id}'},
+                        success: function(result){
+                            if(result.status=="y"){
+                                location.href="role/index?advices="+result.info
+                            }
+
+                        }
+                    });
+                },
+                saveResourcesAjax:function(){
+                    var memberIds = [];
+                    $("input[name='haveRole']:checked").each(function(){
+                            memberIds.push($(this).val());
+                    })
+
+                    $.ajax({
+                        url: "/role/member/save",
+                        type: "POST",
+                        data:{memberIds:memberIds,roleId:'${role.id}'},
+                        success: function(result){
+                           if(result.status=="y"){
+                               $("#success_advices").show();
+                           }
+
+                        }
+                    });
+                },
+                initRoleChecked:function () {
+                    $.ajax({
+                        url: "/role/have",
+                        type: "POST",
+                        data:{roleId:${role.id}},
+                        success: function(result){
+                            $("input[name='haveRole']").each(function(){
+                                var id =  $(this).data("id")
+                                if($.inArray(id, result)>=0){
+                                    $(this).attr("checked",'checked')
+                                }
+                            })
+
+                        }
+                    });
                 }
             }
         }

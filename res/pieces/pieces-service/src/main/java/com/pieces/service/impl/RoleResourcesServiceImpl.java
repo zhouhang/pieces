@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by wangbin on 2016/7/8.
  */
@@ -43,6 +46,16 @@ public class RoleResourcesServiceImpl extends AbsCommonService<RoleResources> im
             roleResources.setRoleId(roleId);
             create(roleResources);
         }
+    }
+
+    @Override
+    public List<Integer> findResourcesByRole(Integer roleId) {
+        List<Integer> resourceIds = new ArrayList<>();
+        List<RoleResources> roleResourcesList = roleResourcesDao.findByRole(roleId);
+        for(RoleResources roleResources : roleResourcesList){
+            resourceIds.add(roleResources.getResourcesId());
+        }
+        return resourceIds;
     }
 
 

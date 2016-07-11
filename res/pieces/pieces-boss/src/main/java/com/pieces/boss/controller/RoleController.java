@@ -89,7 +89,7 @@ public class RoleController extends BaseController{
             Role role =  roleService.findById(id);
             model.put("role",role);
         }
-        return "role_info";
+        return "role-info";
     }
 
     /**
@@ -125,7 +125,7 @@ public class RoleController extends BaseController{
             Role role =  roleService.findById(id);
             model.put("role",role);
         }
-        return "role_power";
+        return "role-power";
     }
 
 
@@ -136,10 +136,13 @@ public class RoleController extends BaseController{
      */
     @RequestMapping(value = "/resources")
     public void resources(HttpServletRequest request,
-                          HttpServletResponse response){
+                          HttpServletResponse response,
+                          Integer roleId){
         List<Resources> resourcesList = resourcesService.findAll();
 
         List<Map<String,Object>> resultList = new ArrayList<>();
+
+        List<Integer> resourcesIds = roleResourcesService.findResourcesByRole(roleId);
 
         for(Resources resources : resourcesList){
             Map<String,Object> map = new HashMap<>();
@@ -147,6 +150,10 @@ public class RoleController extends BaseController{
             map.put("pId",resources.getPid());
             map.put("name",resources.getName());
             map.put("open",true);
+            if(resourcesIds.contains(resources.getId())){
+                map.put("checked",true);
+            }
+
             resultList.add(map);
         }
         WebUtil.printJson(response,resultList);
@@ -235,6 +242,39 @@ public class RoleController extends BaseController{
         return "role-list";
     }
 
+    /**
+     * 查询角色下有哪些用户
+     * @param request
+     * @param response
+     * @param roleId
+     */
+    @RequestMapping(value = "/have")
+    public void roleMember(HttpServletRequest request,
+                           HttpServletResponse response,
+                           Integer roleId){
+        List<Integer> memberIds = new ArrayList<>();
+        List<RoleMember> roleMemberList = roleMemberService.findByRole(roleId);
+        for(RoleMember roleMember : roleMemberList){
+            memberIds.add(roleMember.getMemberId());
+        }
+        WebUtil.print(response,memberIds);
+    }
+
+
+    /**
+     * 保存用户到角色
+     * @param request
+     * @param response
+     * @param memberIds
+     */
+    @RequestMapping(value = "/member/save")
+    public void roleSave(HttpServletRequest request,
+                         HttpServletResponse response,
+                         Integer roleId,
+                         @RequestParam(value="memberIds[]")Integer[] memberIds){
+        roleMemberService.updateRoleMember(roleId,memberIds);
+        WebUtil.print(response,new Result(true).info("角色保存成功!"));
+    }
 
 
 

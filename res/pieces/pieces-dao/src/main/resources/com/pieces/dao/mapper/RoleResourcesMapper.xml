@@ -56,5 +56,12 @@
         where role_id = #{id}
     </delete>
 
+    <select id="findByRoleId" parameterType="java.lang.Integer" resultMap="RoleResourcesResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from  role_resources
+        where role_id = #{roleId}
+
+    </select>
 
 </mapper>

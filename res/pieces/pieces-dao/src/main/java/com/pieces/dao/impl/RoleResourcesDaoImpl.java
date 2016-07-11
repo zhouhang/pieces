@@ -49,4 +49,9 @@ public class RoleResourcesDaoImpl extends BaseDaoImpl implements RoleResourcesDa
     public int deleteByRoleId(int roleId) {
         return getSqlSession().delete("com.pieces.dao.RoleResourcesMapper.deleteByRoleId", roleId);
     }
+
+    @Override
+    public List<RoleResources> findByRole(int roleId) {
+        return getSqlSession().selectList("com.pieces.dao.RoleResourcesMapper.findByRoleId", roleId);
+    }
 }
