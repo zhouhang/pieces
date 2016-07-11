@@ -7,41 +7,47 @@
 
 <body>
 
-    <#include "./inc/header.ftl">
+<#include "./inc/header.ftl">
 
 
 <!-- fa-floor start -->
 <div class="fa-floor">
     <div class="wrap">
+        <div  style="display: none" id="error_advices" class="message">
+            <i class="fa fa-times-circle"></i>
+            <span>编辑信息失败！</span>
+        </div>
+
         <div class="side">
             <dl>
                 <dt>用户信息</dt>
                 <dd>
-                    <a class="curr" href="user_info.html">账号信息</a>
+                    <a class="curr" href="member/index">账号信息</a>
                     <a href="user_role.html">角色信息</a>
                 </dd>
             </dl>
         </div>
         <div class="main">
-            <form action="" id="memberForm">
+            <form action="member/save" id="memberForm" method="post">
                 <div class="title">
                     <h3><i class="fa fa-people"></i>创建用户</h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                         <button type="reset" class="btn btn-gray">重置</button>
-                        <button type="submit" class="btn btn-red">保存用户</button>
+                        <button id="memberSubmit" type="button" class="btn btn-red">保存用户</button>
                     </div>
                 </div>
 
                 <div class="user-info">
                     <h3>账号信息</h3>
+                    <input type="hidden" name="id" value="${(member.id)!}">
                     <div class="fa-form">
                         <div class="group">
                             <div class="txt">
                                 <i>*</i>用户名：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="" autocomplete="off" name="username" id="username" placeholder="">
+                                <input type="text" class="ipt" value="${(member.username)!}" autocomplete="off" name="username" id="username" placeholder="用户名">
                             </div>
                         </div>
 
@@ -50,7 +56,7 @@
                                 <i>*</i>姓名：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="" autocomplete="off" name="name" id="name" placeholder="">
+                                <input type="text" class="ipt" value="${(member.name)!}" autocomplete="off" name="name" id="name" placeholder="">
                             </div>
                         </div>
 
@@ -59,36 +65,28 @@
                                 <i>*</i>邮箱：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="" autocomplete="off" name="email" id="email" placeholder="">
+                                <input type="text" class="ipt" value="${(member.email)!}" autocomplete="off" name="email" id="email" placeholder="">
                             </div>
                         </div>
 
                         <div class="group">
                             <div class="txt">
-                                <i>*</i>密码：
+                                <#if (!member??)><i>*</i></#if>密码：
                             </div>
                             <div class="cnt">
-                                <input type="password" class="ipt" value="" autocomplete="off" name="password" id="password" placeholder="">
+                                <input type="password" class="ipt" value="" data-rule="<#if (!member??)>required;</#if>password" autocomplete="off" name="password" id="password" placeholder="">
                             </div>
                         </div>
-
-                        <div class="group">
-                            <div class="txt">
-                                <i>*</i>新密码：
-                            </div>
-                            <div class="cnt">
-                                <input type="password" class="ipt" value="" autocomplete="off" name="passwordRepeat" id="passwordRepeat" placeholder="">
-                            </div>
-                        </div>
+                        <input type="hidden" id="idDel"  value="${(member.isDel)!}">
 
                         <div class="group">
                             <div class="txt">
                                 <i>*</i>状态：
                             </div>
                             <div class="cnt">
-                                <select name="is_del" id="" class="wide">
-                                    <option value="true">激活</option>
-                                    <option value="false">禁用</option>
+                                <select name="isDel" id="" class="wide">
+                                    <option value="false">激活</option>
+                                    <option value="true">禁用</option>
                                 </select>
                             </div>
                         </div>
@@ -113,17 +111,40 @@
         fn: {
             init: function() {
                 this.formValidate();
+                $("#memberSubmit").click(function(){
+                    roleAddPage.fn.save();
+                })
+
+                if($("#idDel").val()!=null&&$("#idDel").val()!=""){
+                    $("#memberForm select[name=isDel]").val($("#idDel").val())
+                }
+
             },
             formValidate: function() {
                 $('#memberForm').validator({
                     fields: {
                         username: '用户名: required',
                         name: '姓名: required, nickName',
-                        email: '邮箱: required; email',
-                        password: '密码: required; password',
-                        passwordRepeat: '确认密码: required; match(password)'
+                        email: '邮箱: required; email'
                     }
                 });
+            },
+            save:function(){
+                if(!$('#memberForm').isValid()) {
+                    return false;
+                };
+
+                $("#memberForm").ajaxSubmit({
+                    dataType: "json",
+                    success: function (result) {
+                        if(result.status=="y"){
+                            location.href="member/index?advices="+result.info
+                        }else{
+                            $("#error_advices").show();
+                        }
+                    }
+                });
+
             }
         }
     }
