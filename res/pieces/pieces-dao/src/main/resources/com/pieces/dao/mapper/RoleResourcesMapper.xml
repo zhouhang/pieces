@@ -49,4 +49,12 @@
         </set>
         where id = #{id}
     </update>
+
+
+    <delete id="deleteByRoleId"   parameterType="java.lang.Integer">
+        delete from role_resources
+        where role_id = #{id}
+    </delete>
+
+
 </mapper>

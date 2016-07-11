@@ -60,7 +60,7 @@ public class MemberDaoImpl extends BaseDaoImpl implements MemberDao {
     }
 
     @Override
-    public PageInfo<Member> findUserByCondition(MemberVo memberVo, Integer pageNum, Integer pageSize) {
+    public PageInfo<Member> findByCondition(MemberVo memberVo, Integer pageNum, Integer pageSize) {
         List<Member> list = getSqlSession().selectList("com.pieces.dao.MemberMapper.findByCondition", memberVo,new RowBounds(pageNum, pageSize));
         PageInfo page = new PageInfo(list);
         return page;

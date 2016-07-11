@@ -66,7 +66,7 @@ public class MemberServiceImpl extends AbsCommonService<Member> implements Membe
 
     @Override
     public PageInfo<Member> findByCondition(MemberVo memberVo, Integer pageNum, Integer pageSize) {
-        PageInfo<Member> page =  memberDao.findUserByCondition(memberVo,pageNum,pageSize);
+        PageInfo<Member> page =  memberDao.findByCondition(memberVo,pageNum,pageSize);
         return page;
     }
 

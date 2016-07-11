@@ -22,17 +22,17 @@
             <dl>
                 <dt>客户信息</dt>
                 <dd>
-                    <a href="user/index">客户界面</a>
-                    <a class="curr" href="user/add">账户信息</a>
+                    <!-- <a href="user/index">客户界面</a> -->
+                    <a class="curr" href="/user/add">账户信息</a>
                 </dd>
             </dl>
         </div>
         <div class="main">
             <form action="user/save" id="userForm" method="post">
                 <div class="title">
-                    <h3><i class="fa fa-people"></i></h3>
+                    <h3><i class="fa fa-people">新客户</i></h3>
                     <div class="extra">
-                        <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
+                        <button type="button" class="btn btn-gray" onclick="javascript:window.location.href='/user/index'">返回</button>
                         <button type="reset" class="btn btn-gray">重置</button>
                         <button id="userFormSubmit"  type="submit" class="btn btn-red">保存</button>
                     </div>
