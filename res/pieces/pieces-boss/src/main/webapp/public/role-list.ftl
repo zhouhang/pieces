@@ -30,8 +30,6 @@
                     <h3><i class="fa fa-people"></i>修改角色 “${role.name}”</h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                        <button id="submit" type="button" class="btn btn-gray">保存</button>
-                        <button id="ajaxSubmit" type="button" class="btn btn-red">保存并继续</button>
                     </div>
                 </div>
 

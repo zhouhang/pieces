@@ -46,6 +46,9 @@ public class RoleMemberServiceImpl  extends AbsCommonService<RoleMember> impleme
     @Transactional
     public void createRoleMember(Integer[] roleIds, Integer memberId) {
         deleteByMember(memberId);
+        if(roleIds==null||roleIds.length==0){
+            return;
+        }
         for(Integer roleId : roleIds){
             RoleMember roleMember = new RoleMember();
             roleMember.setRoleId(roleId);

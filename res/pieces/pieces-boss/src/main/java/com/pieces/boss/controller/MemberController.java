@@ -125,9 +125,12 @@ public class MemberController extends BaseController{
                        HttpServletResponse response,
                        @PathVariable("id") Integer id,
                        ModelMap model){
+        if(id!=null){
+            Member member = memberService.findById(id);
+            model.put("member",member);
+        }
         List<Role> roleList =  roleService.findAll();
         model.put("roleList",roleList);
-        model.put("memberId",id);
         return "member-role";
     }
 
@@ -142,10 +145,6 @@ public class MemberController extends BaseController{
                          HttpServletResponse response,
                          Integer memberId,
                          Integer[] roleIds){
-        if(roleIds.length==0){
-            WebUtil.print(response,new Result(false).info("角色不能为空!"));
-            return;
-        }
         roleMemberService.createRoleMember(roleIds,memberId);
         WebUtil.print(response,new Result(true));
     }

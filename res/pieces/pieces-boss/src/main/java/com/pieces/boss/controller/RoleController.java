@@ -40,8 +40,7 @@ public class RoleController extends BaseController{
     private RoleResourcesService roleResourcesService;
     @Autowired
     private RoleMemberService roleMemberService;
-    @Autowired
-    private MemberService memberService;
+
 
     /**
      * 角色列表页
@@ -103,9 +102,7 @@ public class RoleController extends BaseController{
     public String add(HttpServletRequest request,
                       HttpServletResponse response,
                       ModelMap model){
-
-
-        return "role_info";
+        return "role-info";
     }
 
     /**
@@ -171,9 +168,9 @@ public class RoleController extends BaseController{
     public void resourcesSave(HttpServletRequest request,
                               HttpServletResponse response,
                               Integer roleId,
-                              @RequestParam(value="resourcesIds[]")Integer[] resourcesIds){
+                              @RequestParam(value="resourcesIds[]",required = false)Integer[] resourcesIds){
         roleResourcesService.updateRoleResources(roleId,resourcesIds);
-        WebUtil.print(response,new Result(true));
+        WebUtil.print(response,new Result(true).info("权限保存成功!"));
     }
 
     /**
@@ -274,8 +271,6 @@ public class RoleController extends BaseController{
         roleMemberService.updateRoleMember(roleId,memberIds);
         WebUtil.print(response,new Result(true).info("角色保存成功!"));
     }
-
-
 
     /**
      *  删除角色

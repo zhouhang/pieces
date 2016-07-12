@@ -41,9 +41,12 @@
                             <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                             <button id="submit" type="button" class="btn btn-gray">保存</button>
                             <#if role??>
-                                <button type="button" class="btn btn-gray" onclick="javascript:location.href='role/delete?roleId=${role.id}'" >删除</button>
+                            <#--//location.href='role/delete?roleId=${role.id}'-->
+                                <button type="button" class="btn btn-gray" onclick="javascript:if(confirm('你确定删除吗？')){location.href='role/delete?roleId=${role.id}'}" >删除</button>
                             </#if>
-                            <button  id="ajaxSubmit" type="button" class="btn btn-red">保存并继续</button>
+                            <#if role??>
+                                <button  id="ajaxSubmit" type="button" class="btn btn-red">保存并继续</button>
+                            </#if>
                         </div>
                     </div>
 
@@ -79,7 +82,7 @@
                     this.formValidate();
 
                     $("#ajaxSubmit").click(function(){
-                        roleAddPage.fn.saveAjax();
+                        roleAddPage.fn.save(true);
                     })
 
                     $("#submit").click(function(){
@@ -95,34 +98,26 @@
                         }
                     });
                 },
-                save:function(){
+                save:function(ajax){
                     $("#roleForm").ajaxSubmit({
                         success:function(result){
                             if(result.status=="y"){
-                                location.href = "role/index?advices=角色信息编辑成功!"
-
+                                if(ajax){
+                                    $("#role_info_a").attr("href","role/info/"+result.data.id)
+                                    $("#role_power_a").attr("href","role/power/"+result.data.id)
+                                    $("#role_list_a").attr("href","role/list/"+result.data.id)
+                                    $("#success_advices").show();
+                                }else{
+                                    location.href = "role/index?advices=角色信息编辑成功!"
+                                }
                             }else{
                                 $("#error_advices").show();
                             }
 
                         }
                     })
-                },
-                saveAjax:function(){
-                    $("#roleForm").ajaxSubmit({
-                        success:function(result){
-                           if(result.status=="y"){
-                               $("#role_info_a").attr("href","role/info/"+result.data.id)
-                               $("#role_power_a").attr("href","role/power/"+result.data.id)
-                               $("#role_list_a").attr("href","role/list/"+result.data.id)
-                               $("#success_advices").show();
-                           }else{
-                               $("#error_advices").show();
-                           }
-
-                        }
-                    })
                 }
+
             }
         }
         $(function() {
