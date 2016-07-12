@@ -23,6 +23,9 @@ public class BossAuthorizationFilter extends AuthorizationFilter {
 		if (subject.getPrincipal() == null) {
 			return false;
 		}
+
+
+
 //		String url = WebUtils.getPathWithinApplication(req);
 //		BossPermission p = new BossPermission();
 //		p.setOperationResource(url);

@@ -10,6 +10,7 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.Permission;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
@@ -28,7 +29,6 @@ public class BossRealm extends AuthorizingRealm {
 	private MemberService memberService;
 	
 	private Set<Permission> addCommonPermissions(Set<Permission> permissions){
-		
 		return permissions;
 	}
 
@@ -38,7 +38,9 @@ public class BossRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
-		 String userCode = (String)principals.getPrimaryPrincipal();
+		String userCode = (String)principals.getPrimaryPrincipal();
+		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+		System.out.println(userCode);
 		return null;
 	}
 
@@ -55,11 +57,14 @@ public class BossRealm extends AuthorizingRealm {
 		if(member==null){
 			throw new AuthenticationException();
 		}
-		token.setMember(member);
+
 		SerializableSimpleAuthenticationInfo authenticationInfo = new SerializableSimpleAuthenticationInfo(member.getUsername(),
 				member.getPassword(),
 				ByteSource.Util.bytes(member.getSalt()),
 				getName()); // realm name
+
+
+
 		return authenticationInfo;
 	}
 	
