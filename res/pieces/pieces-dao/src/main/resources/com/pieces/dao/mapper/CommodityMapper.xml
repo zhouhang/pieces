@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.CommodityMapper">
+    <resultMap id="BaseResultMap" type="com.pieces.dao.model.Commodity">
+            <id column="id"  property="id" />
+            <result column="name"  property="name" />
+            <result column="spec"  property="spec" />
+            <result column="origin_of"  property="originOf" />
+            <result column="executive_standard"  property="executiveStandard" />
+            <result column="factory"  property="factory" />
+            <result column="exterior"  property="exterior" />
+            <result column="picture_url"  property="pictureUrl" />
+            <result column="details"  property="details" />
+            <result column="status"  property="status" />
+            <result column="category_id"  property="categoryId" />
+            <result column="create_time"  property="createTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,spec,origin_of,executive_standard,factory,exterior,picture_url,details,status,category_id,create_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from commodity
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from commodity
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from commodity
+        where id = #{id}
+    </delete>
+
+    <insert id="create" parameterType="com.pieces.dao.model.Commodity">
+        insert into
+        commodity (name,spec,origin_of,executive_standard,factory,exterior,picture_url,details,status,category_id,create_time)
+        values
+        (#{name},#{spec},#{originOf},#{executiveStandard},#{factory},#{exterior},#{pictureUrl},#{details},#{status},#{categoryId},#{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.Commodity">
+        update commodity
+        <set>
+                                                        
+            <if test="name != null">
+                name = #{name},
+            </if>
+                                            
+            <if test="spec != null">
+                spec = #{spec},
+            </if>
+                                            
+            <if test="originOf != null">
+                origin_of = #{originOf},
+            </if>
+                                            
+            <if test="executiveStandard != null">
+                executive_standard = #{executiveStandard},
+            </if>
+                                            
+            <if test="factory != null">
+                factory = #{factory},
+            </if>
+                                            
+            <if test="exterior != null">
+                exterior = #{exterior},
+            </if>
+                                            
+            <if test="pictureUrl != null">
+                picture_url = #{pictureUrl},
+            </if>
+                                            
+            <if test="details != null">
+                details = #{details},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                                            
+            <if test="categoryId != null">
+                category_id = #{categoryId},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
