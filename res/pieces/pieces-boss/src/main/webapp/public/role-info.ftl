@@ -17,6 +17,10 @@
                 <i class="fa fa-times-circle"></i>
                 <span>新增失败！</span>
             </div>
+            <div  style="display: none" id="success_advices" class="message">
+                <i class="fa fa-check-circle"></i>
+                <span>编辑成功！</span>
+            </div>
 
 
             <div class="side">
@@ -47,6 +51,8 @@
                                 <div class="txt">
                                     <i>*</i>角色名称：
                                 </div>
+                                <input type="hidden" class="ipt" value="<#if role??>${role.id}</#if>"  name="id" id="id" >
+
                                 <div class="cnt">
                                     <input type="text" class="ipt" value="<#if role??>${role.name}</#if>" autocomplete="off" name="name" id="name" placeholder="请输入角色名称">
                                 </div>
@@ -91,6 +97,7 @@
                         success:function(result){
                             if(result.status=="y"){
                                 location.href = "role/index?advices=角色信息编辑成功!"
+
                             }else{
                                 $("#error_advices").show();
                             }
@@ -105,6 +112,7 @@
                                $("#role_info_a").attr("href","role/info/"+result.data.id)
                                $("#role_power_a").attr("href","role/power/"+result.data.id)
                                $("#role_list_a").attr("href","role/list/"+result.data.id)
+                               $("#success_advices").show();
                            }else{
                                $("#error_advices").show();
                            }

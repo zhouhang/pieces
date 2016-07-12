@@ -60,5 +60,10 @@ public class RoleMemberDaoImpl extends BaseDaoImpl implements RoleMemberDao {
         return getSqlSession().selectList("com.pieces.dao.RoleMemberMapper.findByPage");
     }
 
+    @Override
+    public List<RoleMember> findByRole(Integer roleId) {
+        return getSqlSession().selectList("com.pieces.dao.RoleMemberMapper.findByRole",roleId);
+    }
+
 
 }

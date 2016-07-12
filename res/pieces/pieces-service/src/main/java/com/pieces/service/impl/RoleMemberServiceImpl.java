@@ -5,10 +5,12 @@ import com.pieces.dao.RoleMemberDao;
 import com.pieces.dao.model.RoleMember;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.RoleMemberService;
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,4 +55,32 @@ public class RoleMemberServiceImpl  extends AbsCommonService<RoleMember> impleme
     public List<RoleMember> findByCondition() {
         return roleMemberDao.findByCondition();
     }
+
+    @Override
+    public List<RoleMember> findByRole(Integer roleId) {
+        return roleMemberDao.findByRole(roleId);
+    }
+
+    @Override
+    @Transactional
+    public void updateRoleMember(Integer roleId, Integer[] memberIds) {
+
+        List<RoleMember> roleMemberList = findByRole(roleId);
+        List<Integer> memberIdList = new ArrayList<>();
+        for(RoleMember roleMember : roleMemberList){
+            memberIdList.add(roleMember.getMemberId());
+        }
+        for(Integer memberId : memberIds){
+            if(!memberIdList.contains(memberId)){
+                RoleMember newRoleMember = new RoleMember();
+                newRoleMember.setRoleId(roleId);
+                newRoleMember.setMemberId(memberId);
+                create(newRoleMember);
+            }
+        }
+
+
+    }
+
+
 }

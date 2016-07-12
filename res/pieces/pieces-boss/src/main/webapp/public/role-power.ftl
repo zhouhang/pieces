@@ -13,6 +13,11 @@
     <!-- fa-floor start -->
     <div class="fa-floor">
         <div class="wrap">
+            <div  style="display: none" id="success_advices" class="message">
+                <i class="fa fa-check-circle"></i>
+                <span>编辑成功！</span>
+            </div>
+
             <div class="side">
                 <dl>
                     <dt>角色信息</dt>
@@ -43,7 +48,7 @@
                                     选择权限：
                                 </div>
                                 <div class="cnt">
-                                    <label><input type="checkbox" name="" id="" class="cbx">全选</label>
+                                    <label><input type="checkbox" name="" id="allCheck" class="cbx">全选</label>
                                 </div>
                             </div>
 
@@ -228,10 +233,18 @@
             $.ajax({
                 url: "/role/resources",
                 type: "POST",
+                data:{roleId:$("#roleId").val()},
                 async:false,
                 success: function(result){
                     rootTree =  $.fn.zTree.init($("#powerTree"), setting, result);
                 }
+            });
+
+
+
+
+            $("#allCheck").click(function() {
+                rootTree.checkAllNodes(this.checked)
             });
 
 
@@ -254,7 +267,9 @@
                     type: "POST",
                     data:{roleId:roleId,resourcesIds:arrIds},
                     success: function(result){
-
+                        if(result.status=="y"){
+                            $("#success_advices").show();
+                        }
 
                     }
                 });
