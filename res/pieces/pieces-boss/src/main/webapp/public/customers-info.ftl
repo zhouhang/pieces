@@ -27,7 +27,6 @@
                     <h3><i class="fa fa-people"></i>${user.userName}</h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:window.location.href='/user/index'">返回</button>
-                        <button type="button" class="btn btn-gray">重置</button>
                         <button type="button" class="btn btn-red">保存</button>
                     </div>
                 </div>

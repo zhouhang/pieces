@@ -1,14 +1,13 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.model.Member;
 import com.pieces.dao.model.Resources;
 import com.pieces.dao.model.Role;
 import com.pieces.dao.model.RoleMember;
+import com.pieces.dao.vo.MemberVo;
 import com.pieces.dao.vo.RoleVo;
-import com.pieces.service.ResourcesService;
-import com.pieces.service.RoleMemberService;
-import com.pieces.service.RoleResourcesService;
-import com.pieces.service.RoleService;
+import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +40,8 @@ public class RoleController extends BaseController{
     private RoleResourcesService roleResourcesService;
     @Autowired
     private RoleMemberService roleMemberService;
+    @Autowired
+    private MemberService memberService;
 
     /**
      * 角色列表页
@@ -88,7 +89,7 @@ public class RoleController extends BaseController{
             Role role =  roleService.findById(id);
             model.put("role",role);
         }
-        return "role_info";
+        return "role-info";
     }
 
     /**
@@ -124,7 +125,7 @@ public class RoleController extends BaseController{
             Role role =  roleService.findById(id);
             model.put("role",role);
         }
-        return "role_power";
+        return "role-power";
     }
 
 
@@ -135,10 +136,13 @@ public class RoleController extends BaseController{
      */
     @RequestMapping(value = "/resources")
     public void resources(HttpServletRequest request,
-                          HttpServletResponse response){
+                          HttpServletResponse response,
+                          Integer roleId){
         List<Resources> resourcesList = resourcesService.findAll();
 
         List<Map<String,Object>> resultList = new ArrayList<>();
+
+        List<Integer> resourcesIds = roleResourcesService.findResourcesByRole(roleId);
 
         for(Resources resources : resourcesList){
             Map<String,Object> map = new HashMap<>();
@@ -146,6 +150,10 @@ public class RoleController extends BaseController{
             map.put("pId",resources.getPid());
             map.put("name",resources.getName());
             map.put("open",true);
+            if(resourcesIds.contains(resources.getId())){
+                map.put("checked",true);
+            }
+
             resultList.add(map);
         }
         WebUtil.printJson(response,resultList);
@@ -211,20 +219,61 @@ public class RoleController extends BaseController{
      * 用户角色列表
      * @param request
      * @param response
-     * @param id
      * @param model
      * @return
      */
-    @RequestMapping(value = "/list/{id}")
+    @RequestMapping(value = "/list/{roleId}")
     public String memberList(HttpServletRequest request,
                              HttpServletResponse response,
-                             @PathVariable("id") Integer id,
+                             @PathVariable("roleId") Integer roleId,
+                             Integer pageNum,
+                             Integer pageSize,
+                             MemberVo memberVo,
                              ModelMap model){
-        if(id!=null){
-            Role role =  roleService.findById(id);
+        pageNum=pageNum==null?1:pageNum;
+        pageSize=pageSize==null?10:pageSize;
+        if(roleId!=null){
+            Role role =  roleService.findById(roleId);
             model.put("role",role);
         }
+        PageInfo<Member> memberPage =memberService.findByCondition(memberVo, pageNum, pageSize);
+        model.put("memberPage",memberPage);
+        model.put("memberParams",memberVo.toString());
         return "role-list";
+    }
+
+    /**
+     * 查询角色下有哪些用户
+     * @param request
+     * @param response
+     * @param roleId
+     */
+    @RequestMapping(value = "/have")
+    public void roleMember(HttpServletRequest request,
+                           HttpServletResponse response,
+                           Integer roleId){
+        List<Integer> memberIds = new ArrayList<>();
+        List<RoleMember> roleMemberList = roleMemberService.findByRole(roleId);
+        for(RoleMember roleMember : roleMemberList){
+            memberIds.add(roleMember.getMemberId());
+        }
+        WebUtil.print(response,memberIds);
+    }
+
+
+    /**
+     * 保存用户到角色
+     * @param request
+     * @param response
+     * @param memberIds
+     */
+    @RequestMapping(value = "/member/save")
+    public void roleSave(HttpServletRequest request,
+                         HttpServletResponse response,
+                         Integer roleId,
+                         @RequestParam(value="memberIds[]")Integer[] memberIds){
+        roleMemberService.updateRoleMember(roleId,memberIds);
+        WebUtil.print(response,new Result(true).info("角色保存成功!"));
     }
 
 

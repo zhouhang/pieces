@@ -45,9 +45,9 @@
                     <td><div class="ipt-wrap"><input name="email" type="text" class="ipt" value="${memberVo.email}"></div></td>
                     <td>
                         <select name="isDel" >
-                            <option <#if (!memberVo.bindErp??)>selected</#if> value=""> </option>
-                            <option <#if (memberVo.bindErp??&&!memberVo.bindErp)>selected</#if> value="false">否</option>
-                            <option <#if (memberVo.bindErp??&&memberVo.bindErp)>selected</#if> value="true">是</option>
+                            <option <#if (!memberVo.isDel??)>selected</#if> value=""> </option>
+                            <option <#if (memberVo.isDel??&&!memberVo.isDel)>selected</#if> value="false">激活</option>
+                            <option <#if (memberVo.isDel??&&memberVo.isDel)>selected</#if> value="true">禁用</option>
                         </select>
                     </td>
                     <td></td>
@@ -79,6 +79,7 @@
     <#include "./inc/footer.ftl"/>
 <!-- footer end -->
 <script>
+
     //定义根变量
     !(function($) {
         var page = {

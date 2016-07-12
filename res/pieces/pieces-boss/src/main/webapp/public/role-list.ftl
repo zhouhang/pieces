@@ -11,6 +11,10 @@
     <!-- fa-floor start -->
     <div class="fa-floor">
         <div class="wrap">
+            <div  style="display: none" id="success_advices" class="message">
+                <i class="fa fa-check-circle"></i>
+                <span>编辑成功！</span>
+            </div>
             <div class="side">
                 <dl>
                     <dt>角色信息</dt>
@@ -23,33 +27,20 @@
             </div>
             <div class="main">
                 <div class="title title-btm">
-                    <h3><i class="fa fa-people"></i>修改角色 “超级管理员”</h3>
+                    <h3><i class="fa fa-people"></i>修改角色 “${role.name}”</h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                        <button type="reset" class="btn btn-gray">保存</button>
-                        <button type="submit" class="btn btn-red">保存并继续</button>
+                        <button id="submit" type="button" class="btn btn-gray">保存</button>
+                        <button id="ajaxSubmit" type="button" class="btn btn-red">保存并继续</button>
                     </div>
                 </div>
 
                 <div class="pagin">
                     <div class="extra">
                         <button class="btn btn-gray" type="button" id="reset">重置条件</button>
-                        <button class="btn btn-blue" type="button" id="submit"><i class="fa fa-search"></i><span>搜索</span></button>
+                        <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
                     </div>
-                    <div class="skip">
-                        <span>第</span>
-                        <a class="fa fa-chevron-left btn btn-gray"></a><input type="text" class="ipt" value="1"><a class="fa fa-chevron-right btn btn-gray"></a>
-                        <span>页，共</span><em>6</em><span>页</span>
-                        <i>|</i>
-                        <span>每页</span>
-                        <select name="" id="">
-                            <option value="">10</option>
-                            <option value="">20</option>
-                            <option value="">30</option>
-                            <option value="">40</option>
-                        </select>
-                        <span>个记录，共有 2 个记录</span>
-                    </div>
+                    <@p.pager pageInfo=memberPage  pageUrl="role/list/${role.id}"  params=memberParams/>
                 </div>
 
                 <div class="chart">
@@ -69,51 +60,34 @@
                                         <option value="">是</option>
                                     </select>
                                 </td>
-                                <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                                <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                                <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                                <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
+                                <td><div class="ipt-wrap"><input name="id" type="text" class="ipt" value="${memberVo.id}"></div></td>
+                                <td><div class="ipt-wrap"><input name="username" type="text" class="ipt" value="${memberVo.username}"></div></td>
+                                <td><div class="ipt-wrap"><input name="name" type="text" class="ipt" value="${memberVo.name}"></div></td>
+                                <td><div class="ipt-wrap"><input name="email" type="text" class="ipt" value="${memberVo.email}"></div></td>
                                 <td>
-                                    <select name="" >
-                                        <option value="">激活</option>
+                                    <select name="isDel" >
+                                        <option <#if (!memberVo.isDel??)>selected</#if> value=""> </option>
+                                        <option <#if (memberVo.isDel??&&!memberVo.isDel)>selected</#if> value="false">激活</option>
+                                        <option <#if (memberVo.isDel??&&memberVo.isDel)>selected</#if> value="true">禁用</option>
                                     </select>
                                 </td>
                             </tr>
                         </thead>
                         <tfoot></tfoot>
                         <tbody>
+                        <#list memberPage.list as member>
                             <tr>
-                                <td><label><input type="checkbox" class="cbx" /></label></td>
-                                <td>10</td>
-                                <td>administrator</td>
-                                <td>超级管理员</td>
-                                <td>super.yaicai.pro</td>
-                                <td>激活</td>
+                                <td><label><input type="checkbox" name="haveRole"  value="${member.id}" data-id="${member.id}" class="cbx" /></label></td>
+                                <td>${member.id}</td>
+                                <td>${member.username}</td>
+                                <td>${member.name}</td>
+                                <td>${member.email}</td>
+                                <td>
+                                    <#if (member.isDel)>禁用
+                                    <#else>激活</#if>
+                                </td>
                             </tr>
-                            <tr>
-                                <td><label><input type="checkbox" class="cbx" /></label></td>
-                                <td>10</td>
-                                <td>administrator</td>
-                                <td>超级管理员</td>
-                                <td>super.yaicai.pro</td>
-                                <td>激活</td>
-                            </tr>
-                            <tr>
-                                <td><label><input type="checkbox" class="cbx" /></label></td>
-                                <td>10</td>
-                                <td>administrator</td>
-                                <td>超级管理员</td>
-                                <td>super.yaicai.pro</td>
-                                <td>激活</td>
-                            </tr>
-                            <tr>
-                                <td><label><input type="checkbox" class="cbx" /></label></td>
-                                <td>10</td>
-                                <td>administrator</td>
-                                <td>超级管理员</td>
-                                <td>super.yaicai.pro</td>
-                                <td>激活</td>
-                            </tr>
+                        </#list>
                         </tbody>
                     </table>
                 </div>
@@ -127,4 +101,107 @@
 
 
 </body>
+<script>
+
+    //定义根变量
+    !(function($) {
+        var page = {
+            //定义全局变量区
+            v: {
+                id: "page",
+                pageNum:${memberPage.pageNum},
+                pageSize:${memberPage.pageSize}
+            },
+            //定义方法区
+            fn: {
+                //初始化方法区
+                init: function () {
+                    page.fn.filter();
+
+                    page.fn.initRoleChecked();
+
+                    $("#ajaxSubmit").click(function(){
+                        page.fn.saveResourcesAjax();
+                    })
+                    $("#submit").click(function(){
+                        page.fn.saveResources();
+                    })
+
+                },
+                // 筛选
+                filter: function() {
+                    var $ipts = $('.chart .ipt, .chart select');
+                    var url="role/list/${role.id}?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
+
+                    $('#search_btn').on('click', function() {
+                        var params = [];
+                        $ipts.each(function() {
+                            var val = $.trim(this.value);
+                            val && params.push($(this).attr('name') + '=' + val);
+                        })
+                        location.href=url+"&"+params.join('&');
+                    })
+                },
+                saveResources:function(){
+                    var memberIds = [];
+                    $("input[name='haveRole']:checked").each(function(){
+                        memberIds.push($(this).val());
+                    })
+
+                    $.ajax({
+                        url: "/role/member/save",
+                        type: "POST",
+                        data:{memberIds:memberIds,roleId:'${role.id}'},
+                        success: function(result){
+                            if(result.status=="y"){
+                                location.href="role/index?advices="+result.info
+                            }
+
+                        }
+                    });
+                },
+                saveResourcesAjax:function(){
+                    var memberIds = [];
+                    $("input[name='haveRole']:checked").each(function(){
+                            memberIds.push($(this).val());
+                    })
+
+                    $.ajax({
+                        url: "/role/member/save",
+                        type: "POST",
+                        data:{memberIds:memberIds,roleId:'${role.id}'},
+                        success: function(result){
+                           if(result.status=="y"){
+                               $("#success_advices").show();
+                           }
+
+                        }
+                    });
+                },
+                initRoleChecked:function () {
+                    $.ajax({
+                        url: "/role/have",
+                        type: "POST",
+                        data:{roleId:${role.id}},
+                        success: function(result){
+                            $("input[name='haveRole']").each(function(){
+                                var id =  $(this).data("id")
+                                if($.inArray(id, result)>=0){
+                                    $(this).attr("checked",'checked')
+                                }
+                            })
+
+                        }
+                    });
+                }
+            }
+        }
+        //加载页面js
+        $(function() {
+            page.fn.init();
+        });
+    })(jQuery);
+
+
+</script>
 </html>
