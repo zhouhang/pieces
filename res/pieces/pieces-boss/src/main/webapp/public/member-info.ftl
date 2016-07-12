@@ -42,7 +42,7 @@
                     <h3><i class="fa fa-people"></i> <#if member??>${member.username}<#else>创建用户</#if></h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                        <button type="reset" class="btn btn-gray">重置</button>
+                        <button id="reset" type="button" class="btn btn-gray">重置</button>
                         <button id="memberSubmit" type="button" class="btn btn-red">保存</button>
                         <#if member??>
                             <button id="ajaxSubmit" type="button" class="btn btn-red">保存并继续</button>
@@ -131,6 +131,10 @@
                 if($("#idDel").val()!=null&&$("#idDel").val()!=""){
                     $("#memberForm select[name=isDel]").val($("#idDel").val())
                 }
+                //重置表单
+                $("#reset").click(function(){
+                    roleAddPage.fn.clearForm($("#memberForm"));
+                })
             },
             formValidate: function() {
                 $('#memberForm').validator({
@@ -160,6 +164,11 @@
                         }
                     }
                 });
+            },
+            clearForm: function (form) {
+                form.find("textarea").val("");
+                form.find('input:not(:hidden, :checkbox)').val("")
+                form.find("input[type=checkbox]").attr("checked",false)
             }
         }
     }

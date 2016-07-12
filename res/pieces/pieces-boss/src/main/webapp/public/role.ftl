@@ -80,6 +80,11 @@
                     $("#search_btn").click(function(){
                         page.fn.filter();
                     })
+
+
+                    $("#reset").click(function(){
+                        $('.chart .ipt, .chart select').val("")
+                    })
                 },
                 // 筛选
                 filter: function() {

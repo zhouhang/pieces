@@ -35,7 +35,6 @@
                         <h3>修改角色“${role.name}”</h3>
                         <div class="extra">
                             <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                            <button type="reset" class="btn btn-gray">重置</button>
                             <#if role??>
                             <#--//location.href='role/delete?roleId=${role.id}'-->
                                 <button type="button" class="btn btn-gray" onclick="javascript:if(confirm('你确定删除吗？')){location.href='role/delete?roleId=${role.id}'}" >删除</button>
