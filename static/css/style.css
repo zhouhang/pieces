@@ -219,6 +219,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
       .member-box .side .expand{background:#f0eff5;}  
         .member-box .side .expand dt{color:#333;}  
           .member-box .side .expand .fa{color:#333;}  
+            .member-box .side .expand .fa-chevron-right:before{content:"\e60c";}  
           .member-box .side .expand .curr{color:#c3272b;}  
         .member-box .side .expand dd{display:block;}  
   .member-box .main{margin-left:260px;border:1px solid #e7e7e7;} 
