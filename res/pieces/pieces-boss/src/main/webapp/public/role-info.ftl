@@ -40,6 +40,9 @@
                         <div class="extra">
                             <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                             <button id="submit" type="button" class="btn btn-gray">保存</button>
+                            <#if role??>
+                                <button type="button" class="btn btn-gray" onclick="javascript:location.href='role/delete?roleId=${role.id}'" >删除</button>
+                            </#if>
                             <button  id="ajaxSubmit" type="button" class="btn btn-red">保存并继续</button>
                         </div>
                     </div>

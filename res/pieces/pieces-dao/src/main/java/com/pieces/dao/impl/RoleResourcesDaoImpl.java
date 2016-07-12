@@ -54,4 +54,6 @@ public class RoleResourcesDaoImpl extends BaseDaoImpl implements RoleResourcesDa
     public List<RoleResources> findByRole(int roleId) {
         return getSqlSession().selectList("com.pieces.dao.RoleResourcesMapper.findByRoleId", roleId);
     }
+
+
 }

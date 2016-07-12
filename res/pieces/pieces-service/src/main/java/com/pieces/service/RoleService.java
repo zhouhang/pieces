@@ -14,5 +14,5 @@ public interface RoleService extends ICommonService<Role>{
 
     public int add(Role role);
 
-
+    public void deleteRole(Integer roleId);
 }
