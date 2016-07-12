@@ -1,8 +1,10 @@
 package com.pieces.dao.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.RoleMemberDao;
 import com.pieces.dao.model.RoleMember;
+import com.pieces.dao.vo.MemberVo;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
@@ -63,6 +65,18 @@ public class RoleMemberDaoImpl extends BaseDaoImpl implements RoleMemberDao {
     @Override
     public List<RoleMember> findByRole(Integer roleId) {
         return getSqlSession().selectList("com.pieces.dao.RoleMemberMapper.findByRole",roleId);
+    }
+
+    @Override
+    public int deleteByRole(Integer roleId) {
+        return getSqlSession().delete("com.pieces.dao.RoleMemberMapper.deleteByRole",roleId);
+    }
+
+    @Override
+    public PageInfo<RoleMember> findByConditionAndRole(MemberVo memberVo, Integer pageNum, Integer pageSize) {
+        List<RoleMember> list = getSqlSession().selectList("com.pieces.dao.RoleMemberMapper.findByConditionAndRole", memberVo,new RowBounds(pageNum, pageSize));
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
 

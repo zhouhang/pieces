@@ -236,8 +236,8 @@ public class RoleController extends BaseController{
             Role role =  roleService.findById(roleId);
             model.put("role",role);
         }
-        PageInfo<Member> memberPage =memberService.findByCondition(memberVo, pageNum, pageSize);
-        model.put("memberPage",memberPage);
+        PageInfo<RoleMember> roleMemberPage =roleMemberService.findByConditionAndRole(memberVo, pageNum, pageSize);
+        model.put("roleMemberPage",roleMemberPage);
         model.put("memberParams",memberVo.toString());
         return "role-list";
     }
@@ -260,7 +260,6 @@ public class RoleController extends BaseController{
         WebUtil.print(response,memberIds);
     }
 
-
     /**
      * 保存用户到角色
      * @param request
@@ -274,6 +273,25 @@ public class RoleController extends BaseController{
                          @RequestParam(value="memberIds[]")Integer[] memberIds){
         roleMemberService.updateRoleMember(roleId,memberIds);
         WebUtil.print(response,new Result(true).info("角色保存成功!"));
+    }
+
+
+
+    /**
+     *  删除角色
+     * @param request
+     * @param response
+     * @param roleId
+     * @return
+     */
+    @RequestMapping(value = "delete")
+    public String delete(HttpServletRequest request,
+                         HttpServletResponse response,
+                         ModelMap model,
+                         Integer roleId){
+        roleService.deleteRole(roleId);
+        model.put("advices","删除角色成功");
+        return "redirect:/role/index";
     }
 
 

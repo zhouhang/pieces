@@ -1,6 +1,9 @@
 package com.pieces.service;
 
+import com.github.pagehelper.PageInfo;
+import com.pieces.dao.model.Member;
 import com.pieces.dao.model.RoleMember;
+import com.pieces.dao.vo.MemberVo;
 
 import java.util.List;
 
@@ -21,4 +24,7 @@ public interface RoleMemberService extends ICommonService<RoleMember>{
 
     void updateRoleMember(Integer roleId,Integer[] memberIds);
 
+    int deleteByRole(int roleId);
+
+    PageInfo<RoleMember> findByConditionAndRole(MemberVo memberVo,Integer pageNum, Integer pageSize);
 }

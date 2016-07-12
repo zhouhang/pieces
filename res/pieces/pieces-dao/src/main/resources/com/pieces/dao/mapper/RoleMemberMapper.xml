@@ -80,10 +80,25 @@
         where member_id = #{memberId}
     </delete>
 
-    <select id="findByPage" resultMap="RoleMemberResultMap2">
-        select  a.*,b.id,b.name,c.id,c.username,c.name,c.email,c.is_del
-        from role_member a,role b,member c
-        where  a.role_id = b.id and a.member_id = c.id
+    <select id="findByConditionAndRole" parameterType="com.pieces.dao.vo.MemberVo" resultMap="RoleMemberResultMap2">
+        select  a.member_id,c.id,c.username,c.name,c.email,c.is_del
+        from role_member a,member c
+        where  a.member_id = c.id and a.role_id = #{roleId}
+        <if test="id != null " >
+            and c.id = #{id}
+        </if>
+        <if test="username != null and username != ''" >
+            and c.username like "%"#{username}"%"
+        </if>
+        <if test="name != null and name != ''">
+            and c.name like  "%"#{name}"%"
+        </if>
+        <if test="email != null and email != ''" >
+            and c.email like "%"#{email}"%"
+        </if>
+        <if test="isDel != null ">
+            and c.is_del = #{isDel}
+        </if>
     </select>
 
     <select id="findByRole" parameterType="java.lang.Integer"  resultMap="RoleMemberResultMap">
@@ -93,5 +108,9 @@
         where role_id = #{roleId}
     </select>
 
+    <delete id="deleteByRole" parameterType="java.lang.Integer">
+        delete from role_member
+        where role_id = #{roleId}
+    </delete>
 
 </mapper>

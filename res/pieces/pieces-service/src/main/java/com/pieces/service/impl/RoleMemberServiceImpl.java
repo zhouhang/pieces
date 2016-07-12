@@ -1,8 +1,11 @@
 package com.pieces.service.impl;
 
+import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.RoleMemberDao;
+import com.pieces.dao.model.Member;
 import com.pieces.dao.model.RoleMember;
+import com.pieces.dao.vo.MemberVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.RoleMemberService;
 import org.apache.commons.lang.ArrayUtils;
@@ -79,7 +82,17 @@ public class RoleMemberServiceImpl  extends AbsCommonService<RoleMember> impleme
             }
         }
 
+    }
 
+    @Override
+    public int deleteByRole(int roleId) {
+        return roleMemberDao.deleteByRole(roleId);
+    }
+
+    @Override
+    public PageInfo<RoleMember> findByConditionAndRole(MemberVo memberVo, Integer pageNum, Integer pageSize) {
+        PageInfo<RoleMember>  roleMemberPageInfo=   roleMemberDao.findByConditionAndRole(memberVo,pageNum,pageSize);
+        return roleMemberPageInfo;
     }
 
 

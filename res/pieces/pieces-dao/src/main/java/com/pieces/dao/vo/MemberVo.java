@@ -13,6 +13,8 @@ public class MemberVo {
 
     private String name;
 
+    private Integer roleId;
+
     private String email;
 
     private Boolean isDel;
@@ -72,5 +74,13 @@ public class MemberVo {
             e.printStackTrace();
         }
         return sb.toString();
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 }

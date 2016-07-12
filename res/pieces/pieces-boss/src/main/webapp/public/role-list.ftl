@@ -40,14 +40,13 @@
                         <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                         <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
                     </div>
-                    <@p.pager pageInfo=memberPage  pageUrl="role/list/${role.id}"  params=memberParams/>
+                    <@p.pager pageInfo=roleMemberPage  pageUrl="role/list/${role.id}"  params=memberParams/>
                 </div>
 
                 <div class="chart">
                     <table class="tc">
                         <thead>
                             <tr>
-                                <th width="100"><label><input type="checkbox" class="cbx" /></label></th>
                                 <th width="100">编号</th>
                                 <th>用户名</th>
                                 <th>姓名</th>
@@ -55,11 +54,6 @@
                                 <th width="100">状态</th>
                             </tr>
                             <tr>
-                                <td>
-                                    <select name="" >
-                                        <option value="">是</option>
-                                    </select>
-                                </td>
                                 <td><div class="ipt-wrap"><input name="id" type="text" class="ipt" value="${memberVo.id}"></div></td>
                                 <td><div class="ipt-wrap"><input name="username" type="text" class="ipt" value="${memberVo.username}"></div></td>
                                 <td><div class="ipt-wrap"><input name="name" type="text" class="ipt" value="${memberVo.name}"></div></td>
@@ -75,15 +69,14 @@
                         </thead>
                         <tfoot></tfoot>
                         <tbody>
-                        <#list memberPage.list as member>
+                        <#list roleMemberPage.list as roleMember>
                             <tr>
-                                <td><label><input type="checkbox" name="haveRole"  value="${member.id}" data-id="${member.id}" class="cbx" /></label></td>
-                                <td>${member.id}</td>
-                                <td>${member.username}</td>
-                                <td>${member.name}</td>
-                                <td>${member.email}</td>
+                                <td>${roleMember.member.id}</td>
+                                <td>${roleMember.member.username}</td>
+                                <td>${roleMember.member.name}</td>
+                                <td>${roleMember.member.email}</td>
                                 <td>
-                                    <#if (member.isDel)>禁用
+                                    <#if (roleMember.member.isDel)>禁用
                                     <#else>激活</#if>
                                 </td>
                             </tr>
@@ -109,8 +102,8 @@
             //定义全局变量区
             v: {
                 id: "page",
-                pageNum:${memberPage.pageNum},
-                pageSize:${memberPage.pageSize}
+                pageNum:${roleMemberPage.pageNum},
+                pageSize:${roleMemberPage.pageSize}
             },
             //定义方法区
             fn: {
@@ -118,7 +111,7 @@
                 init: function () {
                     page.fn.filter();
 
-                    page.fn.initRoleChecked();
+//                    page.fn.initRoleChecked();
 
                     $("#ajaxSubmit").click(function(){
                         page.fn.saveResourcesAjax();
