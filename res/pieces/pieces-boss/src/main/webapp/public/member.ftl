@@ -94,6 +94,10 @@
                 //初始化方法区
                 init: function () {
                     page.fn.filter();
+
+                    $("#reset").click(function(){
+                        $('.chart .ipt, .chart select').val("")
+                    })
                 },
                 // 筛选
                 filter: function() {

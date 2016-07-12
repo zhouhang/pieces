@@ -98,7 +98,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 
 /* header */
 .header{box-shadow:0 0 10px 3px rgba(0,0,0,.1);}
-  .header .logo{float:left;width:240px;height:60px;background:url(../images/logo.png) no-repeat;overflow:hidden;}
+  .header .logo{float:left;width:220px;height:60px;background:url(../images/logo.png) no-repeat;overflow:hidden;}
     .header .logo a{display:block;width:100%;height:100%;text-indent:-999px;}
   .header .user{float:right;line-height:60px;font-size:12px;}
     .header .user i{margin:0 10px;color:#999;}
@@ -201,6 +201,36 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
       .fa-form .cnt .Validform_loading{position:absolute;top:12px;left:460px;width:16px;height:16px;background:url(../images/loader.gif) no-repeat 50%;}
       .fa-form .cnt .msg-box .error{color:#c3272b;}
     .fa-form .cnt-extra{height:46px;}
+
+/* 消息提示 */
+.fa-message{padding:140px 0 100px;text-align:center;}
+  .fa-message .hd{font-size:26px;}
+    .fa-message .hd i{line-height:1;font-size:38px;}
+    .fa-message .hd .fa-prompt{color:#fca31d;} 
+    .fa-message .hd .fa-check-circle{color:#58c805;} 
+    .fa-message .hd .fa-times-circle{color:#c3272b;} 
+    .fa-message .hd strong{vertical-align:middle;}
+  .fa-message .bd{margin-top:30px;font-size:16px;color:#999;}
+  .fa-message .ft{margin-top:75px;}
+    .fa-message .ft .btn{min-width:300px;padding:12px 0;font-size:16px;}
+  .fa-message .links{margin-top:30px;}
+    .fa-message .links a{color:#1769ff;}
+
+/* 气泡式弹出层组件 */
+.tips-wrapper{position:fixed;top:-30px;left:0;z-index:1050;width:100%;text-align:center;overflow:hidden;}
+  .tips-wrapper span{display:inline-block;height:26px;line-height:26px;padding:0 16px;font-size:12px;font-weight:700;background:#000;color:#fff;-webkit-border-radius:0 0 3px 3px;border-radius:0 0 3px 3px;}
+  .tips-wrapper .error{background:#c3272b;}
+  .tips-wrapper .success{background:#58c805;}
+  .tips-wrapper .warn{background:#fca31d;}
+    .tips-wrapper .fa{margin-right:4px;vertical-align:top;}
+.notify-wrapper{position:fixed;top:0;right:0;z-index:1050;margin:5px;}   
+  .notify-wrapper .message{display:none;margin-bottom:5px;font-size:16px;background:#000;} 
+    .notify-wrapper .inner{min-height:48px;padding:2px 40px;color:#fff;}    
+      .notify-wrapper .error{background:#c3272b;}
+      .notify-wrapper .success{background:#58c805;}
+      .notify-wrapper .warn{background:#fca31d;}
+        .notify-wrapper .fa{margin-right:10px;font-size:36px;}
+        .notify-wrapper span{vertical-align:middle;}  
 
 /* 客户信息 */
 .user-info{margin-bottom:40px;border:1px solid #e7e7e7;background:#f0eff5;}

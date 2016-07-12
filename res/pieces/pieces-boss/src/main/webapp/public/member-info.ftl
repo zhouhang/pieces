@@ -12,6 +12,10 @@
 <!-- fa-floor start -->
 <div class="fa-floor">
     <div class="wrap">
+        <div  style="display: none" id="success_advices" class="message">
+            <i class="fa fa-check-circle"></i>
+            <span>编辑成功！</span>
+        </div>
         <div  style="display: none" id="error_advices" class="message">
             <i class="fa fa-times-circle"></i>
             <span>编辑信息失败！</span>
@@ -21,7 +25,11 @@
             <dl>
                 <dt>用户信息</dt>
                 <dd>
-                    <a  class="curr" href="member/index">账号信息</a>
+                    <#if member??>
+                        <a  class="curr" href="member/edit/${member.id}">账号信息</a>
+                    <#else>
+                        <a  class="curr" href="member/add">账号信息</a>
+                    </#if>
                     <#if member??>
                         <a  href="member/role/${member.id}">角色信息</a>
                     </#if>
@@ -31,11 +39,14 @@
         <div class="main">
             <form action="member/save" id="memberForm" method="post">
                 <div class="title">
-                    <h3><i class="fa fa-people"></i>创建用户</h3>
+                    <h3><i class="fa fa-people"></i> <#if member??>${member.username}<#else>创建用户</#if></h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                        <button type="reset" class="btn btn-gray">重置</button>
-                        <button id="memberSubmit" type="button" class="btn btn-red">保存用户</button>
+                        <button id="reset" type="button" class="btn btn-gray">重置</button>
+                        <button id="memberSubmit" type="button" class="btn btn-red">保存</button>
+                        <#if member??>
+                            <button id="ajaxSubmit" type="button" class="btn btn-red">保存并继续</button>
+                        </#if>
                     </div>
                 </div>
 
@@ -75,7 +86,7 @@
                                 <#if (!member??)><i>*</i></#if>密码：
                             </div>
                             <div class="cnt">
-                                <input type="password" class="ipt" value="" data-rule="<#if (!member??)>required;</#if>password" autocomplete="off" name="password" id="password" placeholder="不修改密码留空">
+                                <input type="password" class="ipt" value="" data-rule="<#if (!member??)>required;</#if>password" autocomplete="off" name="password" id="password" placeholder="<#if (!member??)>不修改密码留空</#if>">
                             </div>
                         </div>
                         <input type="hidden" id="idDel"  value="${(member.isDel)!}">
@@ -114,11 +125,16 @@
                 $("#memberSubmit").click(function(){
                     roleAddPage.fn.save();
                 })
-
+                $("#ajaxSubmit").click(function(){
+                    roleAddPage.fn.save(true);
+                })
                 if($("#idDel").val()!=null&&$("#idDel").val()!=""){
                     $("#memberForm select[name=isDel]").val($("#idDel").val())
                 }
-
+                //重置表单
+                $("#reset").click(function(){
+                    roleAddPage.fn.clearForm($("#memberForm"));
+                })
             },
             formValidate: function() {
                 $('#memberForm').validator({
@@ -129,7 +145,7 @@
                     }
                 });
             },
-            save:function(){
+            save:function(ajax){
                 if(!$('#memberForm').isValid()) {
                     return false;
                 };
@@ -138,13 +154,21 @@
                     dataType: "json",
                     success: function (result) {
                         if(result.status=="y"){
-                            location.href="member/index?advices="+result.info
+                            if(ajax){
+                                $("#success_advices").show();
+                            }else{
+                                location.href="member/index?advices="+result.info
+                            }
                         }else{
                             $("#error_advices").show();
                         }
                     }
                 });
-
+            },
+            clearForm: function (form) {
+                form.find("textarea").val("");
+                form.find('input:not(:hidden, :checkbox)').val("")
+                form.find("input[type=checkbox]").attr("checked",false)
             }
         }
     }

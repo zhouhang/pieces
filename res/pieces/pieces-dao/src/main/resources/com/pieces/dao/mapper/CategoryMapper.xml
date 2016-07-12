@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pieces.dao.CategoryMapper">
-    <resultMap id="BaseResultMap" type="com.pieces.dao.model.Category">
+    <resultMap id="CategoryResultMap" type="com.pieces.dao.model.Category">
             <id column="id"  property="id" />
             <result column="name"  property="name" />
             <result column="partenId"  property="partenId" />
@@ -16,14 +16,14 @@
         id,name,partenId,aliases,status,level,create_time
     </sql>
 
-    <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="findById" parameterType="java.lang.Integer" resultMap="CategoryResultMap">
         select
         <include refid="Base_Column_List" />
         from category
         where id = #{id}
     </select>
 
-    <select id="findAll"  resultMap="BaseResultMap">
+    <select id="findAll"  resultMap="CategoryResultMap">
         select
         <include refid="Base_Column_List" />
         from category
@@ -34,7 +34,7 @@
         where id = #{id}
     </delete>
 
-    <insert id="create" parameterType="com.pieces.dao.model.Category">
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Category">
         insert into
         category (name,partenId,aliases,status,level,create_time)
         values

@@ -40,6 +40,9 @@ public class RoleResourcesServiceImpl extends AbsCommonService<RoleResources> im
     public void updateRoleResources(Integer roleId, Integer[] resourcesIds) {
         //先删除角色下所有的权限再添加
         deleteByRoleId(roleId);
+        if(resourcesIds==null||resourcesIds.length==0){
+            return;
+        }
         for(Integer id : resourcesIds){
             RoleResources roleResources = new RoleResources();
             roleResources.setResourcesId(id);

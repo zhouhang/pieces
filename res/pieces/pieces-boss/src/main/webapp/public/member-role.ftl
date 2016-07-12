@@ -12,6 +12,10 @@
     <div class="fa-floor">
         <div class="wrap">
 
+            <div  style="display: none" id="success_advices" class="message">
+                <i class="fa fa-check-circle"></i>
+                <span>修改角色成功！</span>
+            </div>
             <div  style="display: none" id="error_advices" class="message">
                 <i class="fa fa-times-circle"></i>
                 <span>修改角色失败！</span>
@@ -21,24 +25,31 @@
                 <dl>
                     <dt>用户信息</dt>
                     <dd>
-                        <a href="member/index">账号信息</a>
-                        <a class="curr" href="member/role/${memberId}">角色信息</a>
+                        <#if member??>
+                            <a   href="member/edit/${member.id}">账号信息</a>
+                        <#else>
+                            <a   href="member/add">账号信息</a>
+                        </#if>
+                        <#if member??>
+                            <a  class="curr" href="member/role/${member.id}">角色信息</a>
+                        </#if>
                     </dd>
                 </dl>
             </div>
             <div class="main">
                 
                 <div class="title title-btm">
-                    <h3><i class="fa fa-people"></i>创建用户</h3>
+                    <h3><i class="fa fa-people"></i><#if member??>${member.username}<#else>创建用户</#if></h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                         <button type="reset" class="btn btn-gray">重置</button>
-                        <button id="submit" type="submit" class="btn btn-red">保存用户</button>
+                        <button id="submit" type="button" class="btn btn-red">保存</button>
+                        <button id="ajaxSubmit" type="button" class="btn btn-red">保存并继续</button>
                     </div>
                 </div>
 
                 <form id="memberRoleForm" method="post" action="member/role/save">
-                    <input type="hidden" id="memberId" name="memberId" value="${memberId}">
+                    <input type="hidden" id="memberId" name="memberId" value="${member.id}">
                     <div class="chart">
                         <table class="tc">
                             <thead>
@@ -84,6 +95,10 @@
                     $("#submit").click(function(){
                         roleAddPage.fn.save();
                     })
+                    $("#ajaxSubmit").click(function(){
+                        roleAddPage.fn.save(true);
+                    })
+
                     roleAddPage.fn.memberCheckInit()
                 },
                 memberCheckInit:function () {
@@ -106,12 +121,16 @@
                         }
                     });
                 },
-                save:function(){
+                save:function(ajax){
                     $("#memberRoleForm").ajaxSubmit({
                         dataType: "json",
                         success: function (result) {
                             if(result.status=="y"){
-                                location.href="member/index?advices="+result.info
+                                if(ajax){
+                                    $("#success_advices").show();
+                                }else{
+                                    location.href="member/index?advices="+result.info
+                                }
                             }else{
                                 $("#error_advices").show();
                             }

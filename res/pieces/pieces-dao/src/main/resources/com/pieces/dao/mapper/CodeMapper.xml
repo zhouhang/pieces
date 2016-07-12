@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pieces.dao.CodeMapper">
-    <resultMap id="BaseResultMap" type="com.pieces.dao.model.Code">
+    <resultMap id="CodeResultMap" type="com.pieces.dao.model.Code">
             <id column="id"  property="id" />
             <result column="code"  property="code" />
             <result column="name"  property="name" />
@@ -16,14 +16,14 @@
         id,code,name,related_code,status,type_id,create_time
     </sql>
 
-    <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <select id="findById" parameterType="java.lang.Integer" resultMap="CodeResultMap">
         select
         <include refid="Base_Column_List" />
         from code
         where id = #{id}
     </select>
 
-    <select id="findAll"  resultMap="BaseResultMap">
+    <select id="findAll"  resultMap="CodeResultMap">
         select
         <include refid="Base_Column_List" />
         from code
@@ -34,7 +34,7 @@
         where id = #{id}
     </delete>
 
-    <insert id="create" parameterType="com.pieces.dao.model.Code">
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Code">
         insert into
         code (code,name,related_code,status,type_id,create_time)
         values

@@ -54,13 +54,6 @@ public class MemberServiceImpl extends AbsCommonService<Member> implements Membe
         member.setSalt(pass.getSalt());
         member.setCreateDate(new Date());
         create(member);
-
-        //添加用户角色
-        RoleMember roleMember = new RoleMember();
-        roleMember.setRoleId(member.getRoleId());
-        roleMember.setMemberId(member.getId());
-        roleMemberService.create(roleMember);
-
         return member.getId();
     }
 
@@ -72,14 +65,6 @@ public class MemberServiceImpl extends AbsCommonService<Member> implements Membe
             member.setPassword(pass.getPassword());
             member.setSalt(pass.getSalt());
         }
-
-        //删除用户角色再添加
-        roleMemberService.deleteByMember(member.getId());
-        RoleMember roleMember = new RoleMember();
-        roleMember.setMemberId(member.getId());
-        roleMember.setRoleId(member.getRoleId());
-        roleMemberService.create(roleMember);
-
         member.setUpdateDate(new Date());
         return this.update(member);
     }

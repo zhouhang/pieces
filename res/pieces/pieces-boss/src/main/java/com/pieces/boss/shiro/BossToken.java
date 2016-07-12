@@ -8,7 +8,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
  */
 public class BossToken extends UsernamePasswordToken {
 
-	private Member member;
 
 	private String validationCode;
 
@@ -27,11 +26,5 @@ public class BossToken extends UsernamePasswordToken {
 		this.validationCode = validationCode;
 	}
 
-	public Member getMember() {
-		return member;
-	}
 
-	public void setMember(Member member) {
-		this.member = member;
-	}
 }
