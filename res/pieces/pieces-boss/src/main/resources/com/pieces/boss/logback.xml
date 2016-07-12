@@ -7,13 +7,44 @@
 	
 	<!-- 引用的变量文件 -->
 	<property useExisted="true"  />
-	
 
-	<!-- 日志输出到控制台 -->
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder charset="UTF-8">
-            <pattern>[%cn] [%date] [%thread] %logger{0} [%level] %msg%n</pattern>
+            <pattern>[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
+
+    <!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 -->
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
+        <File>./BOOSBIZ.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>./BOOSBIZ-%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+            <MaxHistory>10</MaxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>5MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <!-- 日志级别 -->
+    <root>
+        <level value="error" />
+        <level value="info" />
+        <level value="debug" />
+        <appender-ref ref="console" />
+    </root>
+
+    <logger name="com.pieces.tools.log.internal.LogHandle" additivity="false">
+        <level value="info" />
+        <appender-ref ref="file" />
+    </logger>
 	
 </configuration>
