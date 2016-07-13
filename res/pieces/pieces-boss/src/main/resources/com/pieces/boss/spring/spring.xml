@@ -45,4 +45,7 @@
 	<import resource="classpath*:com/pieces/service/properties/spring/spring-redis.xml"  />
 	<import resource="classpath*:com/pieces/service/properties/spring/spring-shiro.xml"  />
 	<import resource="classpath*:com/pieces/boss/spring/spring-shiro-boss.xml"  />
+
+	<!-- 导入log 配置 -->
+	<import resource="classpath*:com/pieces/tools/log/config/spring-log.xml"/>
 </beans>
