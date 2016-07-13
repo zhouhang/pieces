@@ -42,7 +42,6 @@
                     <h3><i class="fa fa-people"></i><#if member??>${member.username}<#else>创建用户</#if></h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                        <button type="reset" class="btn btn-gray">重置</button>
                         <button id="submit" type="button" class="btn btn-red">保存</button>
                         <button id="ajaxSubmit" type="button" class="btn btn-red">保存并继续</button>
                     </div>
@@ -107,16 +106,13 @@
                         type: "POST",
                         data:{memberId:$("#memberId").val()},
                         success: function(result){
-
                             $.each(result,function(index,obj){
                                 $("input[name='roleIds']").each(function(){
                                     if(obj.id==$(this).val()){
                                         $(this).attr("checked",true)
                                     }
                                 })
-
                             })
-
 
                         }
                     });

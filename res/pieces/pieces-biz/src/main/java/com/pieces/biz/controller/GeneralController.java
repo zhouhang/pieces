@@ -65,10 +65,6 @@ public class GeneralController {
     @Autowired
     private AreaService areaService;
 
-    @RequestMapping(value = "/file/index")
-    public String index() {
-        return "fileUploadTest";
-    }
 
 
     @RequestMapping(value = "/file/upload")

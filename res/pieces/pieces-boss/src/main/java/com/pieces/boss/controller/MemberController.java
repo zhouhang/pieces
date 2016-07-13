@@ -146,7 +146,7 @@ public class MemberController extends BaseController{
                          Integer memberId,
                          Integer[] roleIds){
         roleMemberService.createRoleMember(roleIds,memberId);
-        WebUtil.print(response,new Result(true));
+        WebUtil.print(response,new Result(true).info("修改角色成功!"));
     }
 
 
