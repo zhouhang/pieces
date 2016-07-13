@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<configuration>
+<configuration scan="true" scanPeriod="60" debug="false">
 
 	<!-- 应用程序名称 -->
 	<contextName>BOSS</contextName>
 	
 	<!-- 引用的变量文件 -->
-	<property useExisted="true"  />
+	<!--<property useExisted="true"  />-->
 
 
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
@@ -18,9 +18,9 @@
     <!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 -->
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <Encoding>UTF-8</Encoding>
-        <File>./BOOSBIZ.log</File>
+        <File>../logs/boosbiz.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>./BOOSBIZ-%d{yyyy-MM-dd}.log
+            <FileNamePattern>../logs/boosbiz-%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>10</MaxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy
@@ -42,7 +42,7 @@
         <appender-ref ref="console" />
     </root>
 
-    <logger name="com.pieces.tools.log.internal.LogHandle" additivity="false">
+    <logger name="com.pieces.tools.log.internal.LogHandle"  additivity="false">
         <level value="info" />
         <appender-ref ref="file" />
     </logger>
