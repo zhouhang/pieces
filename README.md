@@ -36,15 +36,9 @@ SeqNoUtil.getRandomNum(6)
 
 ```
 
-###4.随机字符工具
-com.pieces.tools.utils.SeqNoUtil
-```java
-//生成六位随机数
-SeqNoUtil.getRandomNum(6)
 
-```
 
-###5.上传文件
+###4.上传文件
 com.pieces.tools.upload.DefaultUploadFile
 ```java
 //上传文件工具类,需要配置basePath来设置上传更目录,配置customImageName来自定义上传子目录和上传文件名
@@ -53,7 +47,7 @@ defaultUploadFile.uploadFile("abc.txt",inputStream);
 ```
 biz项目**GeneralController**类里**fileUpload**方法有实例。
 
-###6.http请求工具类
+###5.http请求工具类
 com.pieces.tools.utils.httpclient.HttpClientUtil
 ```java
 //发送POST请求，访问taobao，并传入name参数
@@ -63,7 +57,7 @@ HttpClientUtil.post(HttpConfig.custom().url("http://www.taobao.com").map(param))
 
 ```
 
-###7.发送短信工具类
+###6.发送短信工具类
 com.pieces.service.impl.SmsService
 ```java
 //向手机号发送验证码
