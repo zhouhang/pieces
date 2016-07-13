@@ -72,4 +72,44 @@
         </set>
         where id = #{id}
     </update>
+    
+    <select id="findClassify" parameterType="com.pieces.dao.model.Category" resultMap="CategoryResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from category
+        where 1=1
+        and level = 1
+        <if test="name != null">
+            and name like CONCAT('%','${name}','%' )
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        order by create_time desc
+    </select>
+    
+    <select id="findBreed" parameterType="com.pieces.dao.vo.CategoryVo" resultMap="com.pieces.dao.vo.Category">
+        select c.* form
+        (select a.*,b.name as classifyName
+	        from category a
+	        left join category b on a.partenId = b.id
+	        where a.level = 2) c
+        where 1=1
+        <if test="name != null">
+            and c.name like CONCAT('%','${name}','%' )
+        </if>
+                                        
+        <if test="classifyName != null">
+            and c.classifyName like CONCAT('%','${classifyName}','%' )
+        </if>
+                                        
+        <if test="aliases != null">
+            and c.aliases like CONCAT('%','${aliases}','%' )
+        </if>
+                                        
+        <if test="status != null">
+            and c.status = #{status}
+        </if>
+        order by c.create_time desc
+    </select>
 </mapper>
