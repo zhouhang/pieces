@@ -5,8 +5,10 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
+import org.apache.shiro.web.util.WebUtils;
 
 
 /**
@@ -16,6 +18,7 @@ import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 public class BossAuthorizationFilter extends AuthorizationFilter {
 	
 
+
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		Subject subject = getSubject(request, response);
@@ -24,14 +27,14 @@ public class BossAuthorizationFilter extends AuthorizationFilter {
 			return false;
 		}
 
-
-
-//		String url = WebUtils.getPathWithinApplication(req);
-//		BossPermission p = new BossPermission();
+		return true;
 //		p.setOperationResource(url);
+
 //		BossShiroPermission permission = new BossShiroPermission(p);
 //		return subject.isPermitted(permission);
-		return true;
+//		return true;
+
+
     }
     
 }

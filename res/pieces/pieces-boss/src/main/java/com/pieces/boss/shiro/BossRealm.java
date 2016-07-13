@@ -1,5 +1,8 @@
 package com.pieces.boss.shiro;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import com.pieces.dao.model.Member;
@@ -32,6 +35,8 @@ public class BossRealm extends AuthorizingRealm {
 		return permissions;
 	}
 
+
+
 	/**
 	 * 授权
 	 */
@@ -40,8 +45,14 @@ public class BossRealm extends AuthorizingRealm {
 			PrincipalCollection principals) {
 		String userCode = (String)principals.getPrimaryPrincipal();
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-		System.out.println(userCode);
-		return null;
+		Set<String>	urlSet  = memberService.findPermissionByUsername(userCode);
+		Iterator<String> iterator = urlSet.iterator();
+		List<Permission> bossPermissionList = new ArrayList<>();
+		if(iterator.hasNext()){
+			bossPermissionList.add( new BossPermission(iterator.next()));
+		}
+		authorizationInfo.addObjectPermissions(bossPermissionList);
+		return authorizationInfo;
 	}
 
 	

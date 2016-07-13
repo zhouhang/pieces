@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pieces.dao.MemberMapper">
     <resultMap id="MemberResultMap" type="com.pieces.dao.model.Member">
-            <id column="id"  property="id" />
-            <result column="username"  property="username" />
-            <result column="password"  property="password" />
-            <result column="salt"  property="salt" />
-            <result column="name"  property="name" />
-            <result column="mobile"  property="mobile" />
-            <result column="is_del"  property="isDel" />
-            <result column="create_date"  property="createDate" />
-            <result column="update_date"  property="updateDate" />
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="salt" property="salt"/>
+        <result column="name" property="name"/>
+        <result column="mobile" property="mobile"/>
+        <result column="is_del" property="isDel"/>
+        <result column="create_date" property="createDate"/>
+        <result column="update_date" property="updateDate"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -19,14 +19,14 @@
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="MemberResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from member
         where id = #{id}
     </select>
 
-    <select id="findAll"  resultMap="MemberResultMap">
+    <select id="findAll" resultMap="MemberResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from member
     </select>
 
@@ -45,23 +45,23 @@
     <update id="update" parameterType="com.pieces.dao.model.Member">
         update member
         <set>
-                                                        
+
             <if test="username != null">
                 username = #{username},
             </if>
-                                            
+
             <if test="password != null">
                 password = #{password},
             </if>
-                                            
+
             <if test="salt != null">
                 salt = #{salt},
             </if>
-                                            
+
             <if test="name != null">
                 name = #{name},
             </if>
-                                            
+
             <if test="mobile != null">
                 mobile = #{mobile},
             </if>
@@ -75,11 +75,11 @@
             <if test="createDate != null">
                 create_date = #{createDate},
             </if>
-                                            
+
             <if test="updateDate != null">
                 update_date = #{updateDate},
             </if>
-                            
+
         </set>
         where id = #{id}
     </update>
@@ -87,7 +87,7 @@
 
     <select id="findByUsernameAndPassword" parameterType="java.util.HashMap" resultMap="MemberResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from member
         where username = #{username} and password = #{password} and is_del = false
     </select>
@@ -95,7 +95,7 @@
     <!-- 通过用户名查找用户-->
     <select id="findByUsername" parameterType="java.lang.String" resultMap="MemberResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from member
         where username = #{username} and is_del = false
     </select>
@@ -104,16 +104,16 @@
     <select id="findByCondition" parameterType="com.pieces.dao.vo.MemberVo" resultMap="MemberResultMap">
         select * from member b
         where 1=1
-        <if test="id != null " >
+        <if test="id != null ">
             and b.id = #{id}
         </if>
-        <if test="username != null and username != ''" >
+        <if test="username != null and username != ''">
             and b.username like "%"#{username}"%"
         </if>
         <if test="name != null and name != ''">
-            and b.name like  "%"#{name}"%"
+            and b.name like "%"#{name}"%"
         </if>
-        <if test="email != null and email != ''" >
+        <if test="email != null and email != ''">
             and b.email like "%"#{email}"%"
         </if>
         <if test="isDel != null ">
@@ -121,8 +121,13 @@
         </if>
     </select>
 
-
-
+    <select id="findResourcesByUsername" parameterType="java.lang.String" resultType="com.pieces.dao.model.Resources">
+        select d.`name`,d.path,d.id,d.pid from member a
+        left join role_member b on a.id = b.member_id
+        left join role_resources c on c.role_id = b.role_id
+        left join resources d on c.resources_id = d.id
+        where username = #{username}
+    </select>
 
 
 </mapper>

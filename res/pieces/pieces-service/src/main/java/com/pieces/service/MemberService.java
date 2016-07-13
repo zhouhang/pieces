@@ -4,6 +4,8 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Member;
 import com.pieces.dao.vo.MemberVo;
 
+import java.util.Set;
+
 /**
  * Created by wangbin on 2016/7/7.
  */
@@ -20,5 +22,6 @@ public interface MemberService extends ICommonService<Member>{
 
     PageInfo<Member> findByCondition(MemberVo memberVo, Integer pageNum, Integer pageSize);
 
+    Set<String> findPermissionByUsername(String username);
 
 }
