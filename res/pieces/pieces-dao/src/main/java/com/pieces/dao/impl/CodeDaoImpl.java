@@ -45,4 +45,10 @@ public class CodeDaoImpl extends BaseDaoImpl implements CodeDao{
             return getSqlSession().update("com.pieces.dao.CodeMapper.update",code);
         }
 
+
+		@Override
+		public List<Code> find(Code code) {
+			return getSqlSession().selectList("com.pieces.dao.CodeMapper.find",code);
+		}
+
 }

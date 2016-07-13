@@ -43,10 +43,6 @@
                 <version>${log4j.version}</version>
             </dependency>
 
-            <!--
-            mvn install:install-file -DgroupId=Issues -DartifactId=beautyeye -Dversion=3
-.5 -Dpackaging=jar -Dfile=E://beautyeye_lnf.jar
-            -->
             <dependency>
                 <groupId>Issues</groupId>
                 <artifactId>beautyeye</artifactId>

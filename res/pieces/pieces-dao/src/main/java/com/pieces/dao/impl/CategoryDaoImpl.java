@@ -54,6 +54,12 @@ public class CategoryDaoImpl extends BaseDaoImpl implements CategoryDao{
             PageInfo page = new PageInfo(list);
             return page;
 		}
+		
+		@Override
+		public List<Category> findClassify(Category t) {
+			List<Category> list = getSqlSession().selectList("com.pieces.dao.CategoryMapper.findClassify", t );
+            return list;
+		}
 
 
 		@Override
@@ -61,6 +67,14 @@ public class CategoryDaoImpl extends BaseDaoImpl implements CategoryDao{
 			List<Category> list = getSqlSession().selectList("com.pieces.dao.CategoryMapper.findBreed", vo ,new RowBounds(pageNum, pageSize));
             PageInfo page = new PageInfo(list);
             return page;
+		}
+
+
+		@Override
+		public List<Category> findBreedByName(String breedName) {
+			CategoryVo vo = new CategoryVo();
+			vo.setName(breedName);
+			return getSqlSession().selectList("com.pieces.dao.CategoryMapper.findBreed", vo);
 		}
 
 }

@@ -72,4 +72,21 @@
         </set>
         where id = #{id}
     </update>
+    
+    <select id="find" parameterType="com.pieces.dao.model.Code" resultMap="CodeResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from code
+        where 1=1
+        <if test="relatedCode != null">
+            and related_code = #{relatedCode}
+        </if>
+        <if test="typeId != null">
+            and type_id = #{typeId}
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        order by create_time desc
+    </select>
 </mapper>
