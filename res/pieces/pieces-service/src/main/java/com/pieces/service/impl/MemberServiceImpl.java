@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.MemberDao;
 import com.pieces.dao.model.Member;
+import com.pieces.dao.model.Resources;
 import com.pieces.dao.model.RoleMember;
 import com.pieces.dao.vo.MemberVo;
 import com.pieces.service.AbsCommonService;
@@ -17,6 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by wangbin on 2016/7/7.
@@ -75,6 +79,18 @@ public class MemberServiceImpl extends AbsCommonService<Member> implements Membe
         return page;
     }
 
+
+    @Override
+    public Set<String> findPermissionByUsername(String username) {
+        List<Resources> resourcesList =  memberDao.findResourcesByUserName(username);
+        Set<String> set = new HashSet<>();
+        for(Resources resources : resourcesList){
+            if(StringUtils.isNotBlank(resources.getPath())){
+                set.add(resources.getPath());
+            }
+        }
+        return set;
+    }
 
 
 }

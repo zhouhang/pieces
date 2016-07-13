@@ -54,6 +54,7 @@
 		<patchca.version>0.0.1</patchca.version>
 		<httpclient.version>4.4.1</httpclient.version>
 		<automaton.version>1.11-8</automaton.version>
+		<spring-data-elasticsearch>2.0.0.RELEASE</spring-data-elasticsearch>
 	</properties>
 
 	<dependencyManagement>
@@ -332,6 +333,12 @@
     			<artifactId>automaton</artifactId>
     			<version>${automaton.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-elasticsearch</artifactId>
+				<version>${spring-data-elasticsearch}</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 	<build>
