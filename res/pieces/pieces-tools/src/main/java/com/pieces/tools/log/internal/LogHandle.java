@@ -3,13 +3,8 @@ package com.pieces.tools.log.internal;
 import com.pieces.tools.log.pojo.LogInfo;
 import com.pieces.tools.log.sender.SendForMysql;
 import com.pieces.tools.log.util.JSONUtils;
-import jdk.nashorn.api.scripting.JSObject;
-import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by kevin1 on 7/11/16.
