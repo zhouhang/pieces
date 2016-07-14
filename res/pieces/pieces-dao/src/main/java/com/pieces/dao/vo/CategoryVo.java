@@ -1,5 +1,7 @@
 package com.pieces.dao.vo;
 
+import java.lang.reflect.Field;
+
 public class CategoryVo{
 
 	private Integer id;
@@ -64,5 +66,19 @@ public class CategoryVo{
 		this.level = level;
 	}
 	
-	
+	@Override
+    public String toString() {
+        Field[] fields = this.getClass().getFields();
+        StringBuffer sb = new StringBuffer();
+        try {
+            for(Field field : fields){
+                if(field.get(this)!=null){
+                    sb.append("&").append(field.getName()).append("=").append(field.get(this).toString());
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
 }

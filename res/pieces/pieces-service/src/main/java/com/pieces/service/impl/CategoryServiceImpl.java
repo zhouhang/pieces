@@ -1,9 +1,7 @@
 package com.pieces.service.impl;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +12,7 @@ import com.pieces.dao.CodeDao;
 import com.pieces.dao.model.Category;
 import com.pieces.dao.model.Code;
 import com.pieces.dao.vo.BreedVo;
+import com.pieces.dao.vo.CategoryVo;
 import com.pieces.service.CategoryService;
 import com.pieces.service.enums.CommodityEnum;
 
@@ -94,15 +93,6 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<Category> findBreedByName(String breedName) {
 		return categoryDao.findBreedByName(breedName);
 	}
-
-	@Override
-	public List<Code> findCode(Integer beedId,Integer typeId) {
-		Code code = new Code();
-		code.setTypeId(typeId);
-		code.setRelatedCode(beedId);
-		code.setStatus(1);
-		return codeDao.find(code);
-	}
 	
 	/**
 	 * 添加品种
@@ -140,9 +130,9 @@ public class CategoryServiceImpl implements CategoryService {
 	public void updateBreed(BreedVo bvo) {
 		//1.修改code
 		String[] specifications_new = bvo.getSpecifications().trim().split(",");
-		codeDao.updateCode(specifications_new,bvo.getId(),CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
+		codeDao.updateCode(specifications_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
 		String[] place_new = bvo.getPlace().trim().split(",");
-		codeDao.updateCode(place_new,bvo.getId(),CommodityEnum.COMMODITY_PLACE.getValue());
+		codeDao.updateCode(place_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_PLACE.getValue());
 		//修改category
 		Category ca = new Category();
 		ca.setName(bvo.getName());
@@ -150,7 +140,56 @@ public class CategoryServiceImpl implements CategoryService {
 		ca.setAliases(bvo.getAliases());
 		ca.setStatus(1);
 		ca.setLevel(2);
-		ca.setId(bvo.getId());
+		ca.setId(Integer.parseInt(bvo.getId()));
 		categoryDao.update(ca);
 	}
+	
+	/**
+	 * 获取品种列表
+	 */
+	@Override
+	public PageInfo<CategoryVo> findBreed(CategoryVo vo, int pageNum, int pageSize) {
+		return categoryDao.findBreed(vo, pageNum, pageSize);
+	}
+	
+	/**
+	 * 获取品种信息
+	 */
+	@Override
+	public BreedVo getBreedById(Integer id) {
+		Category category = categoryDao.findById(id);
+		Category parten = categoryDao.findById(category.getPartenId());
+		List<Code> specifications_list = findCode(id,CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
+		List<Code> places_list = findCode(id,CommodityEnum.COMMODITY_PLACE.getValue());
+		String specifications = "";
+		String places = "";
+		for(Code code : specifications_list){
+			specifications = specifications + code.getName() + ",";
+		}
+		for(Code code : places_list){
+			places = places + code.getName() + ",";
+		}
+		specifications = specifications.substring(0, specifications.length()-2);
+		places = places.substring(0, places.length()-2);
+		BreedVo bvo = new BreedVo();
+		bvo.setId(id.toString());
+		bvo.setAliases(category.getAliases());
+		bvo.setName(category.getName());
+		bvo.setPlace(places);
+		bvo.setSpecifications(specifications);
+		bvo.setClassifyId(category.getPartenId());
+		bvo.setClassifyName(parten.getName());
+		return bvo;
+	}
+
+	@Override
+	public List<Code> findCode(Integer beedId,Integer typeId) {
+		Code code = new Code();
+		code.setTypeId(typeId);
+		code.setRelatedCode(beedId);
+		code.setStatus(1);
+		return codeDao.find(code);
+	}
+
+
 }

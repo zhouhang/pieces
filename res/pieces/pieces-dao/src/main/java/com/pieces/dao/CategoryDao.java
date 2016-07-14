@@ -13,7 +13,7 @@ public interface CategoryDao extends ICommonDao<Category>{
 	public List<Category> findClassify(Category t);
 	
 	//根据条件查询品种表
-	public PageInfo<Category> findBreed(CategoryVo vo, int pageNum, int pageSize);
+	public PageInfo<CategoryVo> findBreed(CategoryVo vo, int pageNum, int pageSize);
 	
 	//根据条件查询分类表,分页
 	public List<Category> findBreedByName(String breedName);

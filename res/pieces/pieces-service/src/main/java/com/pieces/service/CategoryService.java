@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Category;
 import com.pieces.dao.model.Code;
 import com.pieces.dao.vo.BreedVo;
+import com.pieces.dao.vo.CategoryVo;
 
 public interface CategoryService extends ICommonService<Category> {
 	//获取分类
@@ -18,10 +19,14 @@ public interface CategoryService extends ICommonService<Category> {
 	public int addClassify(String classifyName);
 	//通过品种名称查询品种
 	public List<Category> findBreedByName(String breedName);
-	//通过type_id查询品种属性
-	public List<Code> findCode(Integer beedId,Integer typeId);
 	//新增品种
 	public void addBreed(BreedVo bvo);
 	//修改品种
 	public void updateBreed(BreedVo bvo);
+	//获取分类
+	public PageInfo<CategoryVo> findBreed(CategoryVo vo, int pageNum, int pageSize);
+	
+	public BreedVo getBreedById(Integer id);
+	//通过type_id查询品种属性
+	public List<Code> findCode(Integer beedId,Integer typeId);
 }

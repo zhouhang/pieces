@@ -1,9 +1,8 @@
 package com.pieces.dao.model;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.Date;
-
-
 
 public class Category  implements Serializable {
 
@@ -24,9 +23,6 @@ public class Category  implements Serializable {
 	private Integer level;
 	
 	private Date createTime;
-	
-	//类目名称
-	private String classifyName;
 	
 	public Category(){}
 	
@@ -85,14 +81,20 @@ public class Category  implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-
-	public String getClassifyName() {
-		return classifyName;
-	}
-
-	public void setClassifyName(String classifyName) {
-		this.classifyName = classifyName;
-	}
 	
-	
+	@Override
+    public String toString() {
+        Field[] fields = this.getClass().getFields();
+        StringBuffer sb = new StringBuffer();
+        try {
+            for(Field field : fields){
+                if(field.get(this)!=null){
+                    sb.append("&").append(field.getName()).append("=").append(field.get(this).toString());
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
 }

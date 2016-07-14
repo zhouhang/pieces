@@ -1,6 +1,5 @@
 package com.pieces.dao.vo;
 
-import java.io.Serializable;
 import java.lang.reflect.Field;
 
 /**

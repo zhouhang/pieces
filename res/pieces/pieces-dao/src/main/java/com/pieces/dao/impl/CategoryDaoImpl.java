@@ -63,8 +63,8 @@ public class CategoryDaoImpl extends BaseDaoImpl implements CategoryDao{
 
 
 		@Override
-		public PageInfo<Category> findBreed(CategoryVo vo, int pageNum, int pageSize) {
-			List<Category> list = getSqlSession().selectList("com.pieces.dao.CategoryMapper.findBreed", vo ,new RowBounds(pageNum, pageSize));
+		public PageInfo<CategoryVo> findBreed(CategoryVo vo, int pageNum, int pageSize) {
+			List<CategoryVo> list = getSqlSession().selectList("com.pieces.dao.CategoryMapper.findBreed", vo ,new RowBounds(pageNum, pageSize));
             PageInfo page = new PageInfo(list);
             return page;
 		}

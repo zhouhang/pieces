@@ -1,9 +1,11 @@
 package com.pieces.dao.vo;
 
 public class BreedVo {
-	private int id;
-	//类别
+	private String id;
+	//类别id
 	private Integer classifyId;
+	//类别中文
+	private String classifyName;
 	//名称
 	private String name;
 	//别名
@@ -42,12 +44,16 @@ public class BreedVo {
 	public void setPlace(String place) {
 		this.place = place;
 	}
-	public int getId() {
+	public String getClassifyName() {
+		return classifyName;
+	}
+	public void setClassifyName(String classifyName) {
+		this.classifyName = classifyName;
+	}
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
-	
-	
 }
