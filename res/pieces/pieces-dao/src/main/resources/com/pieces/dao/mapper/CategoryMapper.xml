@@ -89,27 +89,22 @@
     </select>
     
     <select id="findBreed" parameterType="com.pieces.dao.vo.CategoryVo" resultType="com.pieces.dao.vo.CategoryVo">
-        select c.* form
-        (select a.*,b.name as classifyName
+        select a.*,b.name as classifyName
 	        from category a
-	        left join category b on a.partenId = b.id
-	        where a.level = 2) c
-        where 1=1
-        <if test="name != null">
-            and c.name like CONCAT('%','${name}','%' )
-        </if>
-                                        
-        <if test="classifyName != null">
-            and c.classifyName like CONCAT('%','${classifyName}','%' )
-        </if>
-                                        
-        <if test="aliases != null">
-            and c.aliases like CONCAT('%','${aliases}','%' )
-        </if>
-                                        
-        <if test="status != null">
-            and c.status = #{status}
-        </if>
-        order by c.create_time desc
+	        inner join category b on a.partenId = b.id 
+	        <if test="classifyName != null">
+            	and b.name like CONCAT('%','${classifyName}','%' )
+        	</if>
+	        where a.level = 2
+	        <if test="name != null">
+            	and a.name like CONCAT('%','${name}','%' )
+        	</if>
+        	<if test="aliases != null">
+            	and a.aliases like CONCAT('%','${aliases}','%' )
+        	</if>
+        	<if test="status != null">
+            	and a.status = #{status}
+        	</if>
+        	order by a.create_time desc
     </select>
 </mapper>
