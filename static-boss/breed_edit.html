@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>新增用户-boss-饮片B2B</title>
+    <title>修改品种-boss-饮片B2B</title>
     <meta name="renderer" content="webkit" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -34,11 +34,11 @@
                 <li><a href="home.html">首页</a></li>
                 <li><a href="#!">销售</a></li>
                 <li>
-                    <a href="#!">目录</a>
+                    <a class="curr" href="#!">目录</a>
                     <div class="subnav">
                         <a href="goods.html">商品管理</a>
                         <a href="category.html">分类管理</a>
-                        <a href="breed.html">品种管理</a>
+                        <a class="on" href="breed.html">品种管理</a>
                     </div>
                 </li>
                 <li>
@@ -52,9 +52,9 @@
                 <li><a href="#!">CMS</a></li>
                 <li><a href="#!">报表</a></li>
                 <li>
-                    <a class="curr" href="#!">系统</a>
+                    <a href="#!">系统</a>
                     <div class="subnav">
-                        <a class="on" href="user.html">用户管理</a>
+                        <a href="user.html">用户管理</a>
                         <a href="role.html">角色管理</a>
                     </div>
                 </li>
@@ -68,83 +68,74 @@
         <div class="wrap">
             <div class="side">
                 <dl>
-                    <dt>用户信息</dt>
+                    <dt>品种信息</dt>
                     <dd>
-                        <a class="curr" href="user_info.html">账号信息</a>
-                        <a href="user_role.html">角色信息</a>
+                        <a class="curr" href="breed.html">基本信息</a>
                     </dd>
                 </dl>
             </div>
             <div class="main">
                 <form action="" id="myform">
                     <div class="title">
-                        <h3><i class="fa fa-people"></i>创建用户</h3>
+                        <h3><i class="fa fa-chevron-right"></i>修改品种“人参”</h3>
                         <div class="extra">
                             <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                             <button type="reset" class="btn btn-gray">重置</button>
-                            <button type="submit" class="btn btn-red">保存用户</button>
+                            <button type="button" class="btn btn-gray">删除</button>
+                            <button type="submit" class="btn btn-red">保存</button>
                         </div>
                     </div>
 
                     <div class="user-info">
-                        <h3>账号信息</h3>
+                        <h3>基本信息</h3>
                         <div class="fa-form">
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>用户名：
+                                    <i>*</i>所属分类：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="username" id="username" placeholder="">                            
+                                    <select name="">
+                                        <option value="">--请选择--</option>
+                                        <option value="" selected>根茎类</option>
+                                        <option value="">果实籽仁类</option>
+                                    </select>
                                 </div>
                             </div>
-
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>姓名：
+                                    <i>*</i>原药品种：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="name" id="name" placeholder="">                            
+                                    <input type="text" class="ipt" value="人参" autocomplete="off" name="name" id="name" placeholder="">                            
                                 </div>
                             </div>
-
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>邮箱：
+                                    <i>*</i>品种别名：
                                 </div>
-                                <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="email" id="email" placeholder="">                            
+                                <div class="cnt cnt-mul">
+                                    <textarea name="" class="ipt ipt-mul">神草，吉林参，棒槌，土精，黄参，血参，地精，金井玉阑，孩儿参</textarea>
+                                    <span class="tips">多个别名请用逗号隔开</span>
                                 </div>
                             </div>
-
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>密码：
+                                    <i>*</i>常见切制规格：
                                 </div>
-                                <div class="cnt">
-                                    <input type="password" class="ipt" value="" autocomplete="off" name="pwd" id="pwd" placeholder="">                            
+                                <div class="cnt cnt-mul">
+                                    <textarea name="" class="ipt ipt-mul">个，支</textarea>
+                                    <span class="tips">多个切制规格用逗号隔开</span>
                                 </div>
                             </div>
-
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>新密码：
+                                    <i>*</i>常见原药产地：
                                 </div>
-                                <div class="cnt">
-                                    <input type="password" class="ipt" value="" autocomplete="off" name="pwdRepeat" id="pwdRepeat" placeholder="">                            
-                                </div>
-                            </div>
-
-                            <div class="group">
-                                <div class="txt">
-                                    <i>*</i>状态：
-                                </div>
-                                <div class="cnt">
-                                    <select name="" id="" class="wide">
-                                        <option value="">激活</option>
-                                    </select>                           
+                                <div class="cnt cnt-mul">
+                                    <textarea name="" class="ipt ipt-mul">湖北，安徽，云南</textarea>
+                                    <span class="tips">多个产地用逗号隔开</span>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </form>
@@ -172,13 +163,9 @@
                     this.formValidate();
                 },
                 formValidate: function() {
-                    $('#myform').validator({
+                    $("#myform").validator({
                         fields: {
-                            username: '用户名: required',
-                            name: '姓名: required, nickName',
-                            email: '邮箱: required; email',
-                            pwd: '密码: required; password',
-                            pwdRepeat: '确认密码: required; match(pwd)'
+                            username: "required"
                         }
                     });
                 }

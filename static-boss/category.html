@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>角色清单-boss-饮片B2B</title>
+    <title>分类管理-boss-饮片B2B</title>
     <meta name="renderer" content="webkit" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -34,10 +34,10 @@
                 <li><a href="home.html">首页</a></li>
                 <li><a href="#!">销售</a></li>
                 <li>
-                    <a href="#!">目录</a>
+                    <a class="curr" href="#!">目录</a>
                     <div class="subnav">
                         <a href="goods.html">商品管理</a>
-                        <a href="category.html">分类管理</a>
+                        <a class="on" href="category.html">分类管理</a>
                         <a href="breed.html">品种管理</a>
                     </div>
                 </li>
@@ -52,10 +52,10 @@
                 <li><a href="#!">CMS</a></li>
                 <li><a href="#!">报表</a></li>
                 <li>
-                    <a class="curr" href="#!">系统</a>
+                    <a href="#!">系统</a>
                     <div class="subnav">
                         <a href="user.html">用户管理</a>
-                        <a class="on" href="role.html">角色管理</a>
+                        <a href="role.html">角色管理</a>
                     </div>
                 </li>
             </ul>
@@ -67,8 +67,8 @@
     <div class="fa-floor">
         <div class="wrap">
             <div class="title title-btm">
-                <h3>角色管理</h3>
-                <div class="extra"><a class="btn btn-red" href="role_info.html"><i class="fa fa-plus"></i>增加新角色</a></div>
+                <h3>分类管理</h3>
+                <div class="extra"><a class="btn btn-red" href="category_add.html"><i class="fa fa-plus"></i>增加新分类</a></div>
             </div>
             <div class="pagin">
                 <div class="extra">
@@ -94,37 +94,85 @@
                 <table class="tc">
                     <thead>
                         <tr>
-                            <th width="200">编号</th>
-                            <th>角色名称</th>
-                            <th width="200">操作</th>
+                            <th width="100">编号</th>
+                            <th>分类名称</th>
+                            <th width="150">状态</th>
+                            <th width="150">操作</th>
                         </tr>
                         <tr>
+                            <td></td>
                             <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                            <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
+                            <td>
+                                <select name="" id="">
+                                    <option value=""></option>
+                                    <option value="">激活</option>
+                                    <option value="">禁用</option>
+                                </select>
+                            </td>
                             <td></td>
                         </tr>
                     </thead>
                     <tfoot></tfoot>
                     <tbody>
                         <tr>
-                            <td>10</td>
-                            <td><div class="tl">超级管理员</div></td>
-                            <td><a href="role_info.html">配置</a></td>
+                            <td>01</td>
+                            <td><div class="tl">根茎类</div></td>
+                            <td>激活</td>
+                            <td><a href="category_edit.html">修改</a></td>
+                        </tr>
+                        <tr>
+                            <td>02</td>
+                            <td><div class="tl">果实籽仁类</div></td>
+                            <td>禁用</td>
+                            <td><a href="category_edit.html">修改</a></td>
+                        </tr>
+                        <tr>
+                            <td>03</td>
+                            <td><div class="tl">根茎类</div></td>
+                            <td>激活</td>
+                            <td><a href="category_edit.html">修改</a></td>
+                        </tr>
+                        <tr>
+                            <td>04</td>
+                            <td><div class="tl">果实籽仁类</div></td>
+                            <td>禁用</td>
+                            <td><a href="category_edit.html">修改</a></td>
+                        </tr>
+                        <tr>
+                            <td>05</td>
+                            <td><div class="tl">根茎类</div></td>
+                            <td>激活</td>
+                            <td><a href="category_edit.html">修改</a></td>
+                        </tr>
+                        <tr>
+                            <td>06</td>
+                            <td><div class="tl">果实籽仁类</div></td>
+                            <td>禁用</td>
+                            <td><a href="category_edit.html">修改</a></td>
+                        </tr>
+                        <tr>
+                            <td>07</td>
+                            <td><div class="tl">根茎类</div></td>
+                            <td>激活</td>
+                            <td><a href="category_edit.html">修改</a></td>
+                        </tr>
+                        <tr>
+                            <td>08</td>
+                            <td><div class="tl">果实籽仁类</div></td>
+                            <td>禁用</td>
+                            <td><a href="category_edit.html">修改</a></td>
+                        </tr>
+                        <tr>
+                            <td>09</td>
+                            <td><div class="tl">根茎类</div></td>
+                            <td>激活</td>
+                            <td><a href="category_edit.html">修改</a></td>
                         </tr>
                         <tr>
                             <td>10</td>
-                            <td><div class="tl">财务</div></td>
-                            <td><a href="role_info.html">配置</a></td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td><div class="tl">客服</div></td>
-                            <td><a href="role_info.html">配置</a></td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td><div class="tl">运营</div></td>
-                            <td><a href="role_info.html">配置</a></td>
+                            <td><div class="tl">果实籽仁类</div></td>
+                            <td>禁用</td>
+                            <td><a href="category_edit.html">修改</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -143,74 +191,5 @@
     </div><!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/laydate/laydate.js"></script>
-    <script>
-    //定义根变量
-    !(function($) {
-        var page = {
-            //定义全局变量区
-            v: {
-                id: "page"
-            },
-            //定义方法区
-            fn: {
-                //初始化方法区
-                init: function () {
-                    page.fn.dateInit();
-                    page.fn.filter();
-                },
-                //日期选择
-                dateInit: function () {
-                    var start = {
-                        elem: '#start',
-                        format: 'YYYY/MM/DD hh:mm:ss',
-                        min: laydate.now(), //设定最小日期为当前日期
-                        max: '2099-06-16 23:59:59', //最大日期
-                        istime: true,
-                        istoday: false,
-                        choose: function(datas){
-                             end.min = datas; //开始日选好后，重置结束日的最小日期
-                             end.start = datas; //将结束日的初始值设定为开始日
-                             $('#start').attr('title', datas);
-                        }
-                    };
-                    var end = {
-                        elem: '#end',
-                        format: 'YYYY/MM/DD hh:mm:ss',
-                        min: laydate.now(),
-                        max: '2099-06-16 23:59:59',
-                        istime: true,
-                        istoday: false,
-                        choose: function(datas){
-                            start.max = datas; //结束日选好后，重置开始日的最大日期
-                            $('#end').attr('title', datas);
-                        }
-                    };
-                    laydate(start);
-                    laydate(end);
-                },
-                // 筛选
-                filter: function() {
-                    var $ipts = $('.chart .ipt, .chart select');
-
-                    $('#submit').on('click', function() {
-                        var params = [];
-                        $ipts.each(function() {
-                            var val = $.trim(this.value);
-                            val && params.push($(this).attr('name') + '=' + val);
-                        })
-                        console.log(params.join('&'))
-                    })
-                }
-            }
-        }
-        //加载页面js
-        $(function() {
-            page.fn.init();
-        });
-    })(jQuery);
-
-        
-    </script>
 </body>
 </html>
