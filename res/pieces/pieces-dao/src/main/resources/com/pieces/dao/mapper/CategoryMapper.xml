@@ -88,7 +88,7 @@
         order by create_time desc
     </select>
     
-    <select id="findBreed" parameterType="com.pieces.dao.vo.CategoryVo" resultMap="com.pieces.dao.vo.Category">
+    <select id="findBreed" parameterType="com.pieces.dao.vo.CategoryVo" resultType="com.pieces.dao.model.Category">
         select c.* form
         (select a.*,b.name as classifyName
 	        from category a
