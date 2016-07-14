@@ -67,7 +67,7 @@
                                 <i>*</i>姓名：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="${(member.name)!}" autocomplete="off" name="name" id="name" placeholder="">
+                                <input type="text" class="ipt" value="${(member.name)!}" autocomplete="off" name="name" id="name" placeholder="姓名">
                             </div>
                         </div>
 
@@ -76,7 +76,7 @@
                                 <i>*</i>邮箱：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="${(member.email)!}" autocomplete="off" name="email" id="email" placeholder="">
+                                <input type="text" class="ipt" value="${(member.email)!}" autocomplete="off" name="email" id="email" placeholder="邮箱">
                             </div>
                         </div>
 
@@ -85,7 +85,7 @@
                                 <#if (!member??)><i>*</i></#if>密码：
                             </div>
                             <div class="cnt">
-                                <input type="password" class="ipt" value="" data-rule="<#if (!member??)>required;</#if>password" autocomplete="off" name="password" id="password" placeholder="<#if (!member??)>不修改密码留空</#if>">
+                                <input type="password" class="ipt" value="" data-rule="<#if (!member??)>required;</#if>password" autocomplete="off" name="password" id="password" placeholder="<#if (member??)>不修改密码留空</#if>">
                             </div>
                         </div>
                         <input type="hidden" id="idDel"  value="${(member.isDel)!}">

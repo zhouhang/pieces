@@ -19,8 +19,7 @@
 	<bean   class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>   
 	
 	<!-- 设置freeMarker的配置文件路径 -->  
-	<bean id="freemarkerConfiguration"
-	    class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+	<bean id="freemarkerConfiguration" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 	    <property name="location" value="classpath:com/pieces/boss/properties/freemarker.properties" />
 	</bean>
 	
@@ -62,16 +61,10 @@
 	 <!-- 配置多视图协商解析器 ,ppa策略,先找parameter，再找header，最后找accept-->
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
         <property name="order" value="1" />
-        <property name="mediaTypes">
-            <map>
-                <entry key="json" value="application/json" />
-                <entry key="xml" value="application/xml" />
-            </map>
-        </property>
         <property name="defaultViews">
             <list>
             	  <!-- JSON View -->
-                  <bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"/>
+                  <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
                   <!-- JAXB XML View -->
 		          <bean class="org.springframework.web.servlet.view.xml.MarshallingView">
 		            <constructor-arg>
@@ -86,9 +79,10 @@
 		          </bean>
             </list>
         </property>
-        <property name="ignoreAcceptHeader" value="true" />
     </bean>
-    
+
+
+
     <!-- 配置freeMarker视图解析器 , 如果多视图协商解析器没有匹配用这个-->  
 	<bean id="viewResolver"
 	    class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">

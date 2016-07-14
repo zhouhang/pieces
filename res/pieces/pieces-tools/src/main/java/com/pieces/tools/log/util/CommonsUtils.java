@@ -12,7 +12,7 @@ public class CommonsUtils {
     public static String getRawClassName(Object object) {
         if(object != null) {
             if(!AopUtils.isAopProxy(object)) {
-                if(AopUtils.isCglibProxyClass(object.getClass())) {
+                if(AopUtils.isCglibProxy(object.getClass())) {
                     return AopUtils.getTargetClass(object).getSimpleName();
                 }
 

@@ -73,9 +73,15 @@
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
         </dependency>
-        	<dependency>
-		<groupId>com.github.bingoohuang</groupId>
+        <dependency>
+		    <groupId>com.github.bingoohuang</groupId>
 			<artifactId>patchca</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>com.google</artifactId>
+                    <groupId>guava</groupId>
+                </exclusion>
+            </exclusions>
 		</dependency>
 		<dependency>
     		<groupId>dk.brics.automaton</groupId>

@@ -1,9 +1,15 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.model.Area;
 import com.pieces.service.AreaService;
+import com.pieces.service.CommoditySearchService;
+import com.pieces.tools.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +26,9 @@ public class DemoController {
 
     @Autowired
     private AreaService areaService;
+
+    @Autowired
+    private CommoditySearchService commoditySearchService;
 
     /**
      * 测试分页
@@ -46,7 +55,22 @@ public class DemoController {
         return "customers_test";
     }
 
+    @RequestMapping("create/index")
+    public void searchIndexCreate(HttpServletRequest request,
+                                  HttpServletResponse response){
+        commoditySearchService.create(null);
 
+    }
+
+
+
+    @RequestMapping("search")
+    public void search(HttpServletRequest request,
+                       HttpServletResponse response,
+                       String name){
+        Page<CommodityDoc> page = commoditySearchService.findByName(name);
+        WebUtil.print(response,page.getContent());
+    }
 
 
 }
