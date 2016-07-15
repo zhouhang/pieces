@@ -33,8 +33,6 @@ public class BossAuthorizationFilter extends AuthorizationFilter {
 //		BossShiroPermission permission = new BossShiroPermission(p);
 //		return subject.isPermitted(permission);
 //		return true;
-
-
     }
     
 }

@@ -78,7 +78,6 @@
         </div>
     </div><!-- fa-message start -->
 
-
     <!-- footer start -->
     <div class="footer">
         <div class="wrap">            
@@ -88,21 +87,29 @@
         </div>
     </div><!-- footer end -->
 
-    <button onclick="notify('success', '提交成功！')">success</button>
+    <button onclick="notify('success', '提交成功！', '5秒后自动跳转到商品详情页')">success</button>
     <button onclick="notify('error', '提交失败！')">error</button>
     <button onclick="notify('warn', '警告')">warn</button>
 
     <script src="js/jquery.min.js"></script>
     <script src="js/common.js"></script>
     <script>
-    // $.tips({type: 'error', msg: '提交失败！', delay: 5e3});
-    // $.tips({type: 'success', msg: '提交成功！', delay: 5e3});
+    var options = {
+        clickToHide: true   // 点击关闭
+        ,delay: 5e3         // 5秒后自动关闭，为0时不关闭
+        ,title: '提示消息'  // 文字
+        ,text: ''           // 说明
+        ,type: 'warn'       // 类型：错误(error)，正确(success)，警告(warn)
+        ,call: null         // 关闭后回调
+    }
 
-    // $.notify({type: 'success', msg: '提交成功！', delay: 5e3});
-    // $.notify({type: 'error', msg: '提交失败！', delay: 5e3});
-    function notify(type, msg) {
-        $.notify({type: type, msg: msg, delay: 1e3});
-        $.tips({type: type, msg: msg, delay: 1e3});
+    function notify(type, title, text) {
+        $.notify({
+            type: type, 
+            title: title, 
+            text: text, 
+            delay: 9e9
+        });
     }
     </script>
 </body>

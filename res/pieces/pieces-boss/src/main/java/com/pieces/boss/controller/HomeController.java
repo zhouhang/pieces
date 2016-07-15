@@ -2,6 +2,7 @@ package com.pieces.boss.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.pieces.boss.shiro.BossToken;
 import com.pieces.dao.model.Member;
@@ -75,11 +76,9 @@ public class HomeController extends BaseController{
             e.printStackTrace();
             WebUtil.print(response, new Result(false).info("用户名密码错误!"));
         }
-        
-		// 存入用户信息到session
+
+        // 存入用户信息到session
         Member mem = memberService.findByUsername(token.getUsername());
-        mem.setPassword(null);
-        mem.setSalt(null);
 		Session s = subject.getSession();
 		s.setAttribute(RedisEnum.USER_SESSION_BOSS.getValue(), mem);
 		Result result = new Result(true);

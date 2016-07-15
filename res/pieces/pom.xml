@@ -22,8 +22,8 @@
 		<commons-fileupload>1.3.1</commons-fileupload>
 		<commons-io>2.4</commons-io>
 		<jetty.version>9.0.4.v20130625</jetty.version>
-		<spring.version>3.2.7.RELEASE</spring.version>
-		<spring-expression.version>3.2.7.RELEASE</spring-expression.version>
+		<spring.version>4.2.5.RELEASE</spring.version>
+		<spring-expression.version>4.2.5.RELEASE</spring-expression.version>
 		<jackson.version>1.8.4</jackson.version>
 		<apache.lang.version>2.1.0</apache.lang.version>
 		<mybatis.version>3.2.3</mybatis.version>
@@ -55,6 +55,7 @@
 		<httpclient.version>4.4.1</httpclient.version>
 		<automaton.version>1.11-8</automaton.version>
 		<spring-data-elasticsearch>2.0.0.RELEASE</spring-data-elasticsearch>
+		<google.guava>18.0</google.guava>
 	</properties>
 
 	<dependencyManagement>
@@ -94,6 +95,11 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-context-support</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-beans</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 			<!-- spring mvc -->
@@ -405,21 +411,6 @@
 		</pluginManagement>
 	</build>
 
-	<repositories>
-		<repository>
-			<id>Nexus</id>
-			<name>Nexus Public Repository</name>
-			<url>http://192.168.1.174:8081/nexus/content/groups/public</url>
-		</repository>
-		<repository>
-			<id>nexus-snapshots</id>
-			<name>Nexus Snapshot Repository</name>
-			<url>http://192.168.1.174:8081/nexus/content/repositories/snapshots</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
 
 	<modules>
 		<module>pieces-service</module>

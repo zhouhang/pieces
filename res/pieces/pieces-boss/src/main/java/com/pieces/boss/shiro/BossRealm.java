@@ -74,8 +74,6 @@ public class BossRealm extends AuthorizingRealm {
 				ByteSource.Util.bytes(member.getSalt()),
 				getName()); // realm name
 
-
-
 		return authenticationInfo;
 	}
 	
