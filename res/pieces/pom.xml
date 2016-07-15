@@ -344,7 +344,11 @@
 				<artifactId>spring-data-elasticsearch</artifactId>
 				<version>${spring-data-elasticsearch}</version>
 			</dependency>
-
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${google.guava}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>

@@ -58,7 +58,7 @@ public class DemoController {
     @RequestMapping("create/index")
     public void searchIndexCreate(HttpServletRequest request,
                                   HttpServletResponse response){
-        commoditySearchService.create(null);
+
 
     }
 
