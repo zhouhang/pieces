@@ -17,6 +17,26 @@
         
     </resultMap>
 
+    <resultMap id="CommodityVOResultMap" type="com.pieces.dao.model.Commodity">
+        <id column="id"  property="id" />
+        <result column="name"  property="name" />
+        <result column="spec"  property="spec" />
+        <result column="specName"  property="specName" />
+        <result column="origin_of"  property="originOf" />
+        <result column="originOfName"  property="originOfName" />
+        <result column="executive_standard"  property="executiveStandard" />
+        <result column="executiveStandardName"  property="executiveStandardName" />
+        <result column="factory"  property="factory" />
+        <result column="exterior"  property="exterior" />
+        <result column="picture_url"  property="pictureUrl" />
+        <result column="details"  property="details" />
+        <result column="status"  property="status" />
+        <result column="category_id"  property="categoryId" />
+        <result column="create_time"  property="createTime" />
+
+    </resultMap>
+
+
     <sql id="Base_Column_List">
         id,name,spec,origin_of,executive_standard,factory,exterior,picture_url,details,status,category_id,create_time
     </sql>
@@ -32,6 +52,67 @@
         select
         <include refid="Base_Column_List" />
         from commodity
+    </select>
+
+    <select id="findByParam"  parameterType="com.pieces.dao.model.Commodity"  resultMap="CommodityVOResultMap">
+        select
+        <include refid="Base_Column_List" />,
+        spec.name as specName,
+        originOf.name as originOfName,
+        executiveStandard.name as executiveStandardName
+        from commodity
+        left join code spec ON spec = spec.id
+        left join code originOf on originOf = originOf.id
+        left join code executiveStandard on executiveStandard = executiveStandard.id
+        <where>
+            <if test="id != null">
+                id = #{id},
+            </if>
+
+            <if test="name != null">
+               and name = #{name},
+            </if>
+
+            <if test="spec != null">
+               and spec = #{spec},
+            </if>
+
+            <if test="originOf != null">
+               and origin_of = #{originOf},
+            </if>
+
+            <if test="executiveStandard != null">
+               and executive_standard = #{executiveStandard},
+            </if>
+
+            <if test="factory != null">
+               and factory = #{factory},
+            </if>
+
+            <if test="exterior != null">
+               and exterior = #{exterior},
+            </if>
+
+            <if test="pictureUrl != null">
+               and picture_url = #{pictureUrl},
+            </if>
+
+            <if test="details != null">
+               and details = #{details},
+            </if>
+
+            <if test="status != null">
+               and status = #{status},
+            </if>
+
+            <if test="categoryId != null">
+               and category_id = #{categoryId},
+            </if>
+
+            <if test="createTime != null">
+               and create_time = #{createTime},
+            </if>
+        </where>
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">

@@ -27,4 +27,18 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         return commodityDao;
     }
 
+    @Override
+    public void saveOrUpdate(Commodity commodity) {
+        if(commodity.getId()!= null) {
+            commodityDao.update(commodity);
+        } else {
+            commodityDao.create(commodity);
+        }
+    }
+
+
+    @Override
+    public PageInfo<Commodity> query(Commodity commodity, int pageNum, int pageSize) {
+        return commodityDao.findByParam(commodity, pageNum, pageSize);
+    }
 }
