@@ -16,4 +16,18 @@ public interface CommoditySearchService {
     public List<CommodityDoc> create(List<Commodity> commodityList);
 
     public Page<CommodityDoc> findByName(String name);
+
+    /**
+     * 查询所有商品创建document
+     */
+    public void createAllCommodityDoc();
+
+    /**
+     * 对所有commodityDoc字段进行全文检索
+     * @param pageNum
+     * @param pageSize
+     * @param filed
+     * @return
+     */
+    public Page<CommodityDoc> findByAnyField(Integer pageNum,Integer pageSize,String filed);
 }

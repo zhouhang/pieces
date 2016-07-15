@@ -85,8 +85,8 @@ public class MemberServiceImpl extends AbsCommonService<Member> implements Membe
         List<Resources> resourcesList =  memberDao.findResourcesByUserName(username);
         Set<String> set = new HashSet<>();
         for(Resources resources : resourcesList){
-            if(StringUtils.isNotBlank(resources.getPath())){
-                set.add(resources.getPath());
+            if(StringUtils.isNotBlank(resources.getPermission())){
+                set.add(resources.getPermission());
             }
         }
         return set;

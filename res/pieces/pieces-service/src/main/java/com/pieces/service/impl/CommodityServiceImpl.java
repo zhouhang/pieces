@@ -5,6 +5,7 @@ import com.pieces.dao.CommodityDao;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.model.Area;
 import com.pieces.dao.model.Commodity;
+import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.CommodityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,5 +41,11 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     @Override
     public PageInfo<Commodity> query(Commodity commodity, int pageNum, int pageSize) {
         return commodityDao.findByParam(commodity, pageNum, pageSize);
+    }
+
+    @Override
+    public PageInfo<CommodityVO> findVoByPage(int pageNum, int pageSize) {
+        PageInfo<CommodityVO> pageInfo = commodityDao.findVoByPage(pageNum,pageSize);
+        return pageInfo;
     }
 }

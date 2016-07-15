@@ -26,8 +26,7 @@
 	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
 	
 	<!-- 配置freeMarker的模板路径 -->
-	<bean id="freemarkerConfig"
-	    class="com.pieces.service.utils.ShiroTagFreeMarkerConfigurer">
+	<bean id="freemarkerConfig" class="com.pieces.service.utils.ShiroTagFreeMarkerConfigurer">
 	    <property name="templateLoaderPaths">
 	        <list>
 				<value>/public</value>

@@ -45,13 +45,8 @@ public class BossRealm extends AuthorizingRealm {
 			PrincipalCollection principals) {
 		String userCode = (String)principals.getPrimaryPrincipal();
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-		Set<String>	urlSet  = memberService.findPermissionByUsername(userCode);
-		Iterator<String> iterator = urlSet.iterator();
-		List<Permission> bossPermissionList = new ArrayList<>();
-		if(iterator.hasNext()){
-			bossPermissionList.add( new BossPermission(iterator.next()));
-		}
-		authorizationInfo.addObjectPermissions(bossPermissionList);
+		Set<String>	permissionSet  = memberService.findPermissionByUsername(userCode);
+		authorizationInfo.setStringPermissions(permissionSet);
 		return authorizationInfo;
 	}
 

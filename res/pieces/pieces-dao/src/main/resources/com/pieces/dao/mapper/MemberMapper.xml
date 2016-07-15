@@ -122,7 +122,7 @@
     </select>
 
     <select id="findResourcesByUsername" parameterType="java.lang.String" resultType="com.pieces.dao.model.Resources">
-        select d.`name`,d.path,d.id,d.pid from member a
+        select d.* from member a
         left join role_member b on a.id = b.member_id
         left join role_resources c on c.role_id = b.role_id
         left join resources d on c.resources_id = d.id

@@ -16,7 +16,7 @@ import org.apache.shiro.web.util.WebUtils;
  *
  */
 public class BossAuthorizationFilter extends AuthorizationFilter {
-	
+
 
 
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
@@ -34,5 +34,5 @@ public class BossAuthorizationFilter extends AuthorizationFilter {
 //		return subject.isPermitted(permission);
 //		return true;
     }
-    
+
 }

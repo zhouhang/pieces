@@ -23,6 +23,10 @@
      <property name="authorizationCacheName" value="authorizationCache"/>
      <property name="credentialsMatcher" ref="credentialsMatcher"/>
  </bean>
-     
- <bean id="bossAuthorizationFilter" class="com.pieces.boss.shiro.BossAuthorizationFilter" />
+
+    <!--<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">-->
+        <!--<property name="securityManager" ref="securityManager"/>-->
+    <!--</bean>-->
+
+    <bean id="bossAuthorizationFilter" class="com.pieces.boss.shiro.BossAuthorizationFilter" />
 </beans>

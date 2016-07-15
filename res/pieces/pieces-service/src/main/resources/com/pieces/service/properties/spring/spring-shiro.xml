@@ -71,7 +71,7 @@
     <!-- 默认subject工厂 -->
     <bean id="defaultSubjectFactory" class="org.apache.shiro.web.mgt.DefaultWebSubjectFactory" />
 
-    <!-- 安全管理器 -->
+     <!--安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="defaultRealm"/>
         <property name="sessionManager" ref="sessionManager"/>

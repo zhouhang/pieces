@@ -2,6 +2,7 @@ package com.pieces.service;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Commodity;
+import com.pieces.dao.vo.CommodityVO;
 
 import java.util.List;
 
@@ -16,14 +17,14 @@ public interface CommodityService extends ICommonService<Commodity>{
      * @param commodity
      */
     public void saveOrUpdate(Commodity commodity);
-
-
     /**
      * 根据传入的参数查询商品信息
      * @param commodity
      * @return
      */
     public PageInfo<Commodity> query(Commodity commodity, int pageNum, int pageSize);
+
+    public PageInfo<CommodityVO> findVoByPage(int pageNum, int pageSize);
 
 
 

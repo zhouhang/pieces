@@ -55,11 +55,11 @@ public class DemoController {
         return "customers_test";
     }
 
-    @RequestMapping("create/index")
+
+    @RequestMapping("create/index/all")
     public void searchIndexCreate(HttpServletRequest request,
                                   HttpServletResponse response){
-
-
+        commoditySearchService.createAllCommodityDoc();
     }
 
 
@@ -67,8 +67,8 @@ public class DemoController {
     @RequestMapping("search")
     public void search(HttpServletRequest request,
                        HttpServletResponse response,
-                       String name){
-        Page<CommodityDoc> page = commoditySearchService.findByName(name);
+                       String value){
+        Page<CommodityDoc> page = commoditySearchService.findByAnyField(0,50,value);
         WebUtil.print(response,page.getContent());
     }
 

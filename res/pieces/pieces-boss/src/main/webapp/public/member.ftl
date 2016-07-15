@@ -65,7 +65,11 @@
                         <#if (member.isDel)>禁用
                         <#else>激活</#if>
                         </td>
-                        <td><a href="member/edit/${member.id}">修改</a></td>
+                        <td>
+                            <@shiro.hasPermission name="customer:update">
+                                <a href="member/edit/${member.id}">修改</a>
+                            </@shiro.hasPermission>
+                        </td>
                     </tr>
                 </#list>
                 </tbody>

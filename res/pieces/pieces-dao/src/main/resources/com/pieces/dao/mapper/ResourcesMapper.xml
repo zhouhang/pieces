@@ -6,12 +6,14 @@
             <result column="name"  property="name" />
             <result column="path"  property="path" />
             <result column="pid"  property="pid" />
+            <result column="type"  property="type" />
+            <result column="permission"  property="permission" />
             <result column="create_date"  property="createDate" />
         
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,path,pid,create_date
+        id,name,type,permission,path,pid,create_date
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="ResourcesResultMap">
@@ -34,9 +36,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Resources">
         insert into
-        resources (name,path,pid,create_date)
+        resources (name,type,permission,path,pid,create_date)
         values
-        (#{name},#{path},#{pid},#{createDate})
+        (#{name},#{type},#{permission},#{path},#{pid},#{createDate})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.Resources">
