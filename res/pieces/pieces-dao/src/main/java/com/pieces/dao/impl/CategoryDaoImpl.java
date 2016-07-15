@@ -49,14 +49,14 @@ public class CategoryDaoImpl extends BaseDaoImpl implements CategoryDao{
 
 
 		@Override
-		public PageInfo<Category> findClassify(Category t, int pageNum, int pageSize) {
+		public PageInfo<Category> findClassify(CategoryVo t, int pageNum, int pageSize) {
 			List<Category> list = getSqlSession().selectList("com.pieces.dao.CategoryMapper.findClassify", t ,new RowBounds(pageNum, pageSize));
             PageInfo page = new PageInfo(list);
             return page;
 		}
 		
 		@Override
-		public List<Category> findClassify(Category t) {
+		public List<Category> findClassify(CategoryVo t) {
 			List<Category> list = getSqlSession().selectList("com.pieces.dao.CategoryMapper.findClassify", t );
             return list;
 		}

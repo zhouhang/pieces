@@ -31,7 +31,7 @@ public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao{
         }
 
         @Override
-        public PageInfo<Commodity> findByParam(Commodity commodity, int pageNum, int pageSize) {
+        public PageInfo<CommodityVO> findByParam(CommodityVO commodity, int pageNum, int pageSize) {
             List<Commodity> list = getSqlSession().selectList("com.pieces.dao.CommodityMapper.findByParam", commodity, new RowBounds(pageNum, pageSize));
             PageInfo page = new PageInfo(list);
             return page;

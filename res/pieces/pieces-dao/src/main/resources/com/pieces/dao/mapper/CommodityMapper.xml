@@ -54,16 +54,17 @@
         from commodity
     </select>
 
-    <select id="findByParam"  parameterType="com.pieces.dao.model.Commodity"  resultMap="CommodityVOResultMap">
+    <select id="findByParam"  parameterType="com.pieces.dao.vo.CommodityVO"  resultMap="CommodityVOResultMap">
         select
-        <include refid="Base_Column_List" />,
+        coom.id as id,coom.name as name,spec,origin_of,executive_standard,factory,exterior,
+        picture_url,details,coom.status,category_id,coom.create_time as create_time,
         spec.name as specName,
         originOf.name as originOfName,
         executiveStandard.name as executiveStandardName
-        from commodity
+        from commodity coom
         left join code spec ON spec = spec.id
-        left join code originOf on originOf = originOf.id
-        left join code executiveStandard on executiveStandard = executiveStandard.id
+        left join code originOf on origin_of = originOf.id
+        left join code executiveStandard on executive_standard = executiveStandard.id
         <where>
             <if test="id != null">
                 id = #{id},

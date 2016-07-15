@@ -74,7 +74,9 @@ public class CodeDaoImpl extends BaseDaoImpl implements CodeDao{
 				old_set.put(code_old.getName(), code_old);
 			}
 			for(int i=0 ; i<newString.length ; i++){
-				new_set.put(newString[i].trim(),newString[i].trim());
+				if(!newString[i].trim().equals("")){
+					new_set.put(newString[i].trim(),newString[i].trim());
+				}
 			}
 			//求交集和需要删除的
 			for(String key : old_set.keySet()){

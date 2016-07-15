@@ -39,7 +39,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 
 
     @Override
-    public PageInfo<Commodity> query(Commodity commodity, int pageNum, int pageSize) {
+    public PageInfo<CommodityVO> query(CommodityVO commodity, int pageNum, int pageSize) {
         return commodityDao.findByParam(commodity, pageNum, pageSize);
     }
 

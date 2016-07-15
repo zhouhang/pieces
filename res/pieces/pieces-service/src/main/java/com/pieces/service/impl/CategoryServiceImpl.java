@@ -57,12 +57,12 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public PageInfo<Category> findClassify(Category t, int pageNum, int pageSize) {
+	public PageInfo<Category> findClassify(CategoryVo t, int pageNum, int pageSize) {
 		return categoryDao.findClassify(t, pageNum, pageSize);
 	}
 	
 	@Override
-	public List<Category> findClassify(Category t) {
+	public List<Category> findClassify(CategoryVo t) {
 		return categoryDao.findClassify(t);
 	}
 
@@ -73,7 +73,6 @@ public class CategoryServiceImpl implements CategoryService {
 		t.setName(classifyName);
 		t.setPartenId(0);
 		t.setAliases(classifyName);
-		t.setCreateTime(new Date());
 		t.setLevel(1);
 		t.setStatus(1);
 		return this.update(t);
@@ -110,17 +109,22 @@ public class CategoryServiceImpl implements CategoryService {
 		ca.setStatus(1);
 		ca.setLevel(2);
 		ca.setCreateTime(new Date());
-		Integer breedid = categoryDao.create(ca);
+		categoryDao.create(ca);
+		Integer breedid = ca.getId();
 		//保存code
-		String[] specifications = bvo.getSpecifications().trim().split(",");
+		String[] specifications = bvo.getSpecifications().trim().replace("，", ",").split(",");
 		for(int i=0 ; i<specifications.length ; i++){
-			Code spe= codeDao.getCode(i, specifications[i].trim(), breedid, CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
-			codeDao.create(spe);
+			if(!specifications[i].trim().equals("")){
+				Code spe= codeDao.getCode(i, specifications[i].trim(), breedid, CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
+				codeDao.create(spe);
+			}
 		}
-		String[] place = bvo.getPlace().trim().split(",");
+		String[] place = bvo.getPlace().trim().replace("，", ",").split(",");
 		for(int i=0 ; i<place.length ; i++){
-			Code spe = codeDao.getCode(i, place[i].trim(), breedid, CommodityEnum.COMMODITY_PLACE.getValue());
-			codeDao.create(spe);
+			if(!place[i].trim().equals("")){
+				Code spe = codeDao.getCode(i, place[i].trim(), breedid, CommodityEnum.COMMODITY_PLACE.getValue());
+				codeDao.create(spe);
+			}
 		}
 	}
 	
@@ -131,9 +135,9 @@ public class CategoryServiceImpl implements CategoryService {
 	@Transactional
 	public void updateBreed(BreedVo bvo) {
 		//1.修改code
-		String[] specifications_new = bvo.getSpecifications().trim().split(",");
+		String[] specifications_new = bvo.getSpecifications().replace("，", ",").trim().split(",");
 		codeDao.updateCode(specifications_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
-		String[] place_new = bvo.getPlace().trim().split(",");
+		String[] place_new = bvo.getPlace().trim().replace("，", ",").split(",");
 		codeDao.updateCode(place_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_PLACE.getValue());
 		//修改category
 		Category ca = new Category();
@@ -171,8 +175,8 @@ public class CategoryServiceImpl implements CategoryService {
 		for(Code code : places_list){
 			places = places + code.getName() + ",";
 		}
-		specifications = specifications.substring(0, specifications.length()-2);
-		places = places.substring(0, places.length()-2);
+		specifications = specifications.substring(0, specifications.length()-1);
+		places = places.substring(0, places.length()-1);
 		BreedVo bvo = new BreedVo();
 		bvo.setId(id.toString());
 		bvo.setAliases(category.getAliases());

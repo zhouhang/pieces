@@ -73,7 +73,7 @@
         where id = #{id}
     </update>
     
-    <select id="findClassify" parameterType="com.pieces.dao.model.Category" resultMap="CategoryResultMap">
+    <select id="findClassify" parameterType="com.pieces.dao.vo.CategoryVo" resultMap="CategoryResultMap">
         select
         <include refid="Base_Column_List" />
         from category

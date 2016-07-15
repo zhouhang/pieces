@@ -10,9 +10,9 @@ import com.pieces.dao.vo.CategoryVo;
 
 public interface CategoryService extends ICommonService<Category> {
 	//获取分类
-	public PageInfo<Category> findClassify(Category t, int pageNum, int pageSize);
+	public PageInfo<Category> findClassify(CategoryVo t, int pageNum, int pageSize);
 	//获取分类
-	public List<Category> findClassify(Category t);
+	public List<Category> findClassify(CategoryVo t);
 	//修改分类
 	public int updateClassify(String classifyName,int id);
 	//新增分类
