@@ -349,7 +349,10 @@
 				<artifactId>guava</artifactId>
 				<version>${google.guava}</version>
 			</dependency>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8299af6e4d162f0ac48860d614b351fd9a096d72
 		</dependencies>
 	</dependencyManagement>
 	<build>
