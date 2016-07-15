@@ -13,7 +13,7 @@ public class CategoryVo{
 	//别名
 	private String aliases;
 	
-	private Integer status;
+	private String status;
 	
 	//类目级别 1 代表一级商品类别. 2 代表二级商品类别.
 	private Integer level;
@@ -50,11 +50,12 @@ public class CategoryVo{
 		this.aliases = aliases;
 	}
 
-	public Integer getStatus() {
+
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -68,7 +69,7 @@ public class CategoryVo{
 	
 	@Override
     public String toString() {
-        Field[] fields = this.getClass().getFields();
+        Field[] fields = this.getClass().getDeclaredFields();
         StringBuffer sb = new StringBuffer();
         try {
             for(Field field : fields){
