@@ -17,7 +17,7 @@
         
     </resultMap>
 
-    <resultMap id="CommodityVOResultMap" type="com.pieces.dao.model.Commodity">
+    <resultMap id="CommodityVOResultMap" type="com.pieces.dao.vo.CommodityVO">
         <id column="id"  property="id" />
         <result column="name"  property="name" />
         <result column="spec"  property="spec" />
