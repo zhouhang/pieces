@@ -1,7 +1,9 @@
 package com.pieces.boss.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.pieces.boss.commons.LogEnum;
 import com.pieces.dao.model.Commodity;
+import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.CommodityService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.bean.FileBo;
@@ -10,6 +12,7 @@ import com.pieces.tools.upload.DefaultUploadFile;
 import com.pieces.tools.utils.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +32,19 @@ public class CommodityController extends BaseController{
 
 //    @Autowired
 //    private DefaultUploadFile defaultUploadFile;
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public String index(Integer pageSize, Integer pageNum, CommodityVO commodityVO , ModelMap model){
+
+        pageNum=pageNum==null?1:pageNum;
+        pageSize=pageSize==null?10:pageSize;
+
+        PageInfo<CommodityVO> pageInfo = commodityService.query(commodityVO,pageNum, pageSize);
+
+        model.put("pageNum", pageNum);
+        model.put("pageSize", pageSize);
+        model.put("pageInfo", pageInfo);
+        return "commodity";
+    }
 
     @RequestMapping(value = "/save", method = RequestMethod.GET)
     @ResponseBody
@@ -49,7 +65,7 @@ public class CommodityController extends BaseController{
     @RequestMapping(value = "/query", method = RequestMethod.GET)
     @ResponseBody
     @BizLog(type = "商品信息", desc = "查询商品信息列表")
-    public Result queryById(Commodity commodity, Integer pageNum, Integer pageSize) {
+    public Result queryById(CommodityVO commodity, Integer pageNum, Integer pageSize) {
         return new Result(true).data(commodityService.query(commodity,pageNum, pageSize));
     }
 

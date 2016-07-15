@@ -3,6 +3,7 @@ package com.pieces.dao.impl;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.CommodityDao;
 import com.pieces.dao.model.Commodity;
+import com.pieces.dao.vo.CommodityVO;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
@@ -31,7 +32,7 @@ public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao{
         }
 
         @Override
-        public PageInfo<Commodity> findByParam(Commodity commodity, int pageNum, int pageSize) {
+        public PageInfo<CommodityVO> findByParam(CommodityVO commodity, int pageNum, int pageSize) {
             List<Commodity> list = getSqlSession().selectList("com.pieces.dao.CommodityMapper.findByParam", commodity, new RowBounds(pageNum, pageSize));
             PageInfo page = new PageInfo(list);
             return page;

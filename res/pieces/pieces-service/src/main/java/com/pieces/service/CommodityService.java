@@ -2,6 +2,7 @@ package com.pieces.service;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Commodity;
+import com.pieces.dao.vo.CommodityVO;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public interface CommodityService extends ICommonService<Commodity>{
      * @param commodity
      * @return
      */
-    public PageInfo<Commodity> query(Commodity commodity, int pageNum, int pageSize);
+    public PageInfo<CommodityVO> query(CommodityVO commodity, int pageNum, int pageSize);
 
 
 
