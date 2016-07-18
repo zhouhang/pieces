@@ -69,51 +69,51 @@
         left join code executiveStandard on executive_standard = executiveStandard.id
         <where>
             <if test="id != null">
-                id = #{id},
+                id = #{id}
             </if>
 
             <if test="name != null">
-               and name = #{name},
+               and name = #{name}
             </if>
 
             <if test="spec != null">
-               and spec = #{spec},
+               and spec = #{spec}
             </if>
 
             <if test="originOf != null">
-               and origin_of = #{originOf},
+               and origin_of = #{originOf}
             </if>
 
             <if test="executiveStandard != null">
-               and executive_standard = #{executiveStandard},
+               and executive_standard = #{executiveStandard}
             </if>
 
             <if test="factory != null">
-               and factory = #{factory},
+               and factory = #{factory}
             </if>
 
             <if test="exterior != null">
-               and exterior = #{exterior},
+               and exterior = #{exterior}
             </if>
 
             <if test="pictureUrl != null">
-               and picture_url = #{pictureUrl},
+               and picture_url = #{pictureUrl}
             </if>
 
             <if test="details != null">
-               and details = #{details},
+               and details = #{details}
             </if>
 
             <if test="status != null">
-               and status = #{status},
+               and status = #{status}
             </if>
 
             <if test="categoryId != null">
-               and category_id = #{categoryId},
+               and category_id = #{categoryId}
             </if>
 
             <if test="createTime != null">
-               and create_time = #{createTime},
+               and create_time = #{createTime}
             </if>
         </where>
     </select>
