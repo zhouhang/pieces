@@ -28,6 +28,11 @@ public class CommodityVO implements Serializable {
 
 	private String executiveStandardName;
 
+	// 商品等级
+	private Integer level;
+
+	private String levelName;
+
 	//生产厂家
 	private String factory;
 
@@ -44,6 +49,8 @@ public class CommodityVO implements Serializable {
 
 	//与商品相关联的二级品种ID
 	private Integer categoryId;
+
+	private String categoryName;
 
 	private Date createTime;
 
@@ -167,5 +174,29 @@ public class CommodityVO implements Serializable {
 
 	public void setExecutiveStandardName(String executiveStandardName) {
 		this.executiveStandardName = executiveStandardName;
+	}
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	public String getLevelName() {
+		return levelName;
+	}
+
+	public void setLevelName(String levelName) {
+		this.levelName = levelName;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
 	}
 }

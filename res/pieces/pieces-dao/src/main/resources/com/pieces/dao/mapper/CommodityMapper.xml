@@ -5,6 +5,7 @@
             <id column="id"  property="id" />
             <result column="name"  property="name" />
             <result column="spec"  property="spec" />
+            <result column="level"  property="level" />
             <result column="origin_of"  property="originOf" />
             <result column="executive_standard"  property="executiveStandard" />
             <result column="factory"  property="factory" />
@@ -21,6 +22,7 @@
         <id column="id"  property="id" />
         <result column="name"  property="name" />
         <result column="spec"  property="spec" />
+        <result column="level"  property="level" />
         <result column="specName"  property="specName" />
         <result column="origin_of"  property="originOf" />
         <result column="originOfName"  property="originOfName" />
@@ -38,7 +40,7 @@
 
 
     <sql id="Base_Column_List">
-        id,name,spec,origin_of,executive_standard,factory,exterior,picture_url,details,status,category_id,create_time
+        id,name,level,spec,origin_of,executive_standard,factory,exterior,picture_url,details,status,category_id,create_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="CommodityResultMap">
@@ -123,9 +125,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Commodity">
         insert into
-        commodity (name,spec,origin_of,executive_standard,factory,exterior,picture_url,details,status,category_id,create_time)
+        commodity (name,spec,level,origin_of,executive_standard,factory,exterior,picture_url,details,status,category_id,create_time)
         values
-        (#{name},#{spec},#{originOf},#{executiveStandard},#{factory},#{exterior},#{pictureUrl},#{details},#{status},#{categoryId},#{createTime})
+        (#{name},#{spec},#{level},#{originOf},#{executiveStandard},#{factory},#{exterior},#{pictureUrl},#{details},#{status},#{categoryId},#{createTime})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.Commodity">
@@ -138,6 +140,10 @@
                                             
             <if test="spec != null">
                 spec = #{spec},
+            </if>
+
+            <if test="level != null">
+                level = #{level},
             </if>
                                             
             <if test="originOf != null">

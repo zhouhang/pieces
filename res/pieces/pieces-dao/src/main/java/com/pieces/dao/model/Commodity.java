@@ -22,7 +22,10 @@ public class Commodity  implements Serializable {
 	
 	//执行标准
 	private Integer executiveStandard;
-	
+
+	//商品等级
+	private Integer level;
+
 	//生产厂家
 	private String factory;
 	
@@ -139,5 +142,12 @@ public class Commodity  implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
 }
