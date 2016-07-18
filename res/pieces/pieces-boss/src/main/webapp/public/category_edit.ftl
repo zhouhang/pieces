@@ -82,8 +82,8 @@
         			            	if(data.status == "y"){
         			            		$.notify({
             	                            type: 'success', 
-            	                            title: '删除成功',
-            	                            text: '3秒后自动跳转到类别列表页', 
+            	                            title: '删除分类成功。',
+            	                            text: '3秒后自动跳转到分类列表页', 
             	                            delay: 3e3, 
             	                            call: function() {
             	                                setTimeout(function() {
@@ -94,8 +94,7 @@
         			            	}else{
         			            		$.notify({
             	                            type: 'error', 
-            	                            title: '删除失败',
-            	                            text: data.info, 
+            	                            title: data.info, 
             	                            delay: 3e3
             	                        });
         			            	}
@@ -119,14 +118,8 @@
             			            success: function(data){
             			            	$.notify({
             	                            type: 'success', 
-            	                            title: '修改成功',
-            	                            text: '3秒后自动跳转到类别列表页', 
-            	                            delay: 3e3, 
-            	                            call: function() {
-            	                                setTimeout(function() {
-            	                                    location.href = '/category/list';
-            	                                }, 3e3);
-            	                            }
+            	                            title: '修改分类成功。',
+            	                            delay: 3e3
             	                        });
             			            }
             			        });

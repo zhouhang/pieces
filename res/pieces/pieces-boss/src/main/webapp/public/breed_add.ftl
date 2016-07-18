@@ -135,8 +135,7 @@
             			            	$('.user-info :input').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
             			            	$.notify({
             	                            type: 'success', 
-            	                            title: '保存成功',
-            	                            text: '品种保存成功,请继续添加品种', 
+            	                            title: '新增品种成功。',
             	                            delay: 3e3
             	                        });
             			            }

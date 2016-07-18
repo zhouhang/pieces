@@ -81,8 +81,7 @@
             			            	$('#name').val('');
             			            	$.notify({
             	                            type: 'success', 
-            	                            title: '保存成功',
-            	                            text: '类别保存成功,请继续添加类别', 
+            	                            title: '新增分类成功。',
             	                            delay: 3e3
             	                        });
             			            }

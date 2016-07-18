@@ -49,14 +49,13 @@ public class CategoryController {
 							  Integer pageNum,
 							  Integer pageSize,
 							  String name,
-							  String status,
 							  ModelMap model){
 		
 		pageNum = pageNum==null?1:pageNum;
 		pageSize = pageSize==null?10:pageSize;
 		CategoryVo t = new CategoryVo();
 		t.setName(name);
-		t.setStatus(status);
+		t.setStatus("1");
 		PageInfo<Category> categoryPage = categoryService.findClassify(t, pageNum, pageSize);
 		model.put("categoryPage", categoryPage);
 		model.put("categoryParams", t.toString());
@@ -137,7 +136,7 @@ public class CategoryController {
 		category.setStatus(0);
 		CategoryVo vo = categoryService.findBreedByPartenId(id);
 		if(vo != null){
-			Result result = new Result(false).info("该类别下面还有品种，不能删除");
+			Result result = new Result(false).info("该分类已有关联品种，请先取消关联后再删除。");
 	        WebUtil.printJson(response, result);
 	        return;
 		}
@@ -193,6 +192,7 @@ public class CategoryController {
 		
 		pageNum = pageNum==null?1:pageNum;
 		pageSize = pageSize==null?10:pageSize;
+		vo.setStatus("1");
 		PageInfo<CategoryVo> categoryPage = categoryService.findBreed(vo, pageNum, pageSize);
 		model.put("categoryPage", categoryPage);
 		model.put("categoryParams", vo.toString());
@@ -274,7 +274,7 @@ public class CategoryController {
 		category.setStatus(0);
 		CommodityVO vo = commodityService.findCommodityByBreedId(id);
 		if(vo != null){
-			Result result = new Result(false).info("该品种下面还有商品，不能删除");
+			Result result = new Result(false).info("该品种下已有商品，请先将所有商品移除后再删除。");
 	        WebUtil.printJson(response, result);
 		}
 		categoryService.update(category);
