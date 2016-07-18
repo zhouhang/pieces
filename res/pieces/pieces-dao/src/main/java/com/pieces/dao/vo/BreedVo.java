@@ -14,6 +14,8 @@ public class BreedVo {
 	private String specifications;
 	//产地
 	private String place;
+	//等级
+	private String level;
 	public Integer getClassifyId() {
 		return classifyId;
 	}
@@ -56,4 +58,11 @@ public class BreedVo {
 	public void setId(String id) {
 		this.id = id;
 	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}
+	
 }

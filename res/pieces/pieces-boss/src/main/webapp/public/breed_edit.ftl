@@ -84,6 +84,15 @@
                                     <span class="tips">多个产地用逗号隔开</span>
                                 </div>
                             </div>
+                            <div class="group">
+                                <div class="txt">
+                                    <i>*</i>等级：
+                                </div>
+                                <div class="cnt cnt-mul">
+                                    <textarea name="level" class="ipt ipt-mul">${breed.level }</textarea>
+                                    <span class="tips">多个等级用逗号隔开</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -132,7 +141,8 @@
                         	name: "required",
                         	aliases: "required",
                         	specifications: "required",
-                        	place: "required"
+                        	place: "required",
+                        	level: "required"
                         },
                         valid: function(form) {
             		    	if ( $(form).isValid() ) {

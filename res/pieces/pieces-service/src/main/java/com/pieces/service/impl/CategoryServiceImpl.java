@@ -126,6 +126,13 @@ public class CategoryServiceImpl implements CategoryService {
 				codeDao.create(spe);
 			}
 		}
+		String[] level = bvo.getLevel().trim().replace("，", ",").split(",");
+		for(int i=0 ; i<level.length ; i++){
+			if(!level[i].trim().equals("")){
+				Code spe = codeDao.getCode(i, level[i].trim(), breedid, CommodityEnum.COMMODITY_LEVEL.getValue());
+				codeDao.create(spe);
+			}
+		}
 	}
 	
 	/**
@@ -139,6 +146,8 @@ public class CategoryServiceImpl implements CategoryService {
 		codeDao.updateCode(specifications_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
 		String[] place_new = bvo.getPlace().trim().replace("，", ",").split(",");
 		codeDao.updateCode(place_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_PLACE.getValue());
+		String[] level_new = bvo.getLevel().trim().replace("，", ",").split(",");
+		codeDao.updateCode(level_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_LEVEL.getValue());
 		//修改category
 		Category ca = new Category();
 		ca.setName(bvo.getName());
@@ -165,18 +174,9 @@ public class CategoryServiceImpl implements CategoryService {
 	public BreedVo getBreedById(Integer id) {
 		Category category = categoryDao.findById(id);
 		Category parten = categoryDao.findById(category.getPartenId());
-		List<Code> specifications_list = findCode(id,CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
-		List<Code> places_list = findCode(id,CommodityEnum.COMMODITY_PLACE.getValue());
-		String specifications = "";
-		String places = "";
-		for(Code code : specifications_list){
-			specifications = specifications + code.getName() + ",";
-		}
-		for(Code code : places_list){
-			places = places + code.getName() + ",";
-		}
-		specifications = specifications.substring(0, specifications.length()-1);
-		places = places.substring(0, places.length()-1);
+		String specifications = getbreedProtity(id,CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
+		String places = getbreedProtity(id,CommodityEnum.COMMODITY_PLACE.getValue());
+		String level = getbreedProtity(id,CommodityEnum.COMMODITY_LEVEL.getValue());
 		BreedVo bvo = new BreedVo();
 		bvo.setId(id.toString());
 		bvo.setAliases(category.getAliases());
@@ -185,7 +185,19 @@ public class CategoryServiceImpl implements CategoryService {
 		bvo.setSpecifications(specifications);
 		bvo.setClassifyId(category.getPartenId());
 		bvo.setClassifyName(parten.getName());
+		bvo.setLevel(level);
 		return bvo;
+	}
+	
+	@Override
+	public String getbreedProtity(Integer id,Integer codeType) {
+		List<Code> list = findCode(id,codeType);
+		String codes = "";
+		for(Code code : list){
+			codes = codes + code.getName() + ",";
+		}
+		codes = codes.substring(0, codes.length()-1);
+		return codes;
 	}
 
 	@Override

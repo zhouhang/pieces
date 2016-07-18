@@ -29,4 +29,5 @@ public interface CategoryService extends ICommonService<Category> {
 	public BreedVo getBreedById(Integer id);
 	//通过type_id查询品种属性
 	public List<Code> findCode(Integer beedId,Integer typeId);
+	public String getbreedProtity(Integer id, Integer codeType);
 }

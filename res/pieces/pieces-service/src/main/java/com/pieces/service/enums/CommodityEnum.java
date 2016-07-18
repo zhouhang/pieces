@@ -2,7 +2,8 @@ package com.pieces.service.enums;
 
 public enum CommodityEnum {
 	COMMODITY_SPECIFICATIONS(10000,"切制规格"),
-	COMMODITY_PLACE(10001,"原药产地");
+	COMMODITY_PLACE(10001,"原药产地"),
+	COMMODITY_LEVEL(10002,"等级");
 	
 	private CommodityEnum(Integer value,String text) {
 		this.value = value;

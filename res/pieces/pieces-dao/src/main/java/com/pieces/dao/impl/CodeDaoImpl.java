@@ -94,11 +94,12 @@ public class CodeDaoImpl extends BaseDaoImpl implements CodeDao{
 				}
 			}
 			//新添加的的
+			int i = old_set.size();
 			for(String key : new_set.keySet()){
 				if(!common_set.containsKey(key)){
-					int i = old_set.size();
 					Code spe = getCode(i, key, relatedCode, typeId);
 					this.create(spe);
+					i++;
 				}
 			}
 		}
