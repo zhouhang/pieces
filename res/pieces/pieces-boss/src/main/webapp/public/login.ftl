@@ -9,7 +9,7 @@
     <div class="login-box">
         <div class="title"><strong>药优优</strong>电子商务管理系统</div>
         <div class="form">
-            <form id="loginForm" action="login" method="post">
+            <form id="loginForm" action="/login" method="post">
                 <div id="msg" class="msg"></div>
 
                 <div class="group">

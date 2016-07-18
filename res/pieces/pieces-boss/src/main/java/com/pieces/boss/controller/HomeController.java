@@ -80,7 +80,7 @@ public class HomeController extends BaseController{
         // 存入用户信息到session
         Member mem = memberService.findByUsername(token.getUsername());
 		Session s = subject.getSession();
-		s.setAttribute(RedisEnum.USER_SESSION_BOSS.getValue(), mem);
+		s.setAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue(), mem);
 		Result result = new Result(true);
 		WebUtil.print(response, result);
     }

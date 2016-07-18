@@ -23,8 +23,9 @@ public class RedisSessionDAO extends AbstractSessionDAO {
 	
 	/**
 	 * The Redis key prefix for the sessions 
+	 * 使用spring注入，每个项目一个不同的前缀。防止相同窗口访问不同项目造成key值相同，导致覆盖
 	 */
-	private String keyPrefix = RedisEnum.KEY_PREFIX_SHIRO_REDIS_SESSION.getValue();
+	private String keyPrefix;// = RedisEnum.KEY_PREFIX_SHIRO_REDIS_SESSION.getValue();
 	
 	
 	@Override
