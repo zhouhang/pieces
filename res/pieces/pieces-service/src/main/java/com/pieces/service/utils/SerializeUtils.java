@@ -20,7 +20,6 @@ import java.util.Date;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -28,7 +27,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.shiro.session.InvalidSessionException;
 import org.apache.shiro.session.Session;
-import org.apache.shiro.session.mgt.SimpleSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +34,6 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.esotericsoftware.kryo.serializers.DefaultSerializers;
-import com.pieces.service.enums.RedisEnum;
 
 import de.javakaffee.kryoserializers.ArraysAsListSerializer;
 import de.javakaffee.kryoserializers.BitSetSerializer;
@@ -364,26 +361,7 @@ public class SerializeUtils {
 		}
 		
 	}
-	
-	
-	public static Session fillSession(){
-		SimpleSession session = new SimpleSession("10.0.2.24");
-		Date d = new Date();
-		session.setId(RedisEnum.KEY_PREFIX_SHIRO_REDIS_SESSION.getValue()+UUID.randomUUID().toString());
-		session.setLastAccessTime(d);
-		session.setTimeout(300000);
-		session.setExpired(false);
-		Map<Object, Object> map = new HashMap<Object, Object>();
-		map.put("test", "testvalue");
-		session.setAttributes(map);
-		return session;
-	}
-	
-	public static Session fillTestSession(){
-		TestSession session = new TestSession();
-		session.setId(RedisEnum.KEY_PREFIX_SHIRO_REDIS_SESSION.getValue()+UUID.randomUUID().toString());
-		return session;
-	}
+
 	
 	private static class TestSession implements Session{
 		
