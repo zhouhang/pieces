@@ -209,5 +209,12 @@
         left join code originOf on origin_of = originOf.id
         left join code executiveStandard on executive_standard = executiveStandard.id
     </select>
+    
+    <select id="findCommodityByBreedId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CommodityVO">
+        select *
+	        from commodity a
+	        where a.category_id = #{categoryId}
+	        and a.status = 1
+    </select>
 
 </mapper>

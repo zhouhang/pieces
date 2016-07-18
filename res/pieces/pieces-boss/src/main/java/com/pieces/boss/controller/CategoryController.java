@@ -15,8 +15,11 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Category;
 import com.pieces.dao.vo.BreedVo;
 import com.pieces.dao.vo.CategoryVo;
+import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.CategoryService;
+import com.pieces.service.CommodityService;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.service.utils.ValidUtils;
 import com.pieces.tools.utils.GsonUtil;
 import com.pieces.tools.utils.WebUtil;
 
@@ -25,6 +28,9 @@ public class CategoryController {
 	
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private CommodityService commodityService;
 	
 	/**
 	 * 分类列表
@@ -129,6 +135,12 @@ public class CategoryController {
 		Category category = new Category();
 		category.setId(id);
 		category.setStatus(0);
+		CategoryVo vo = categoryService.findBreedByPartenId(id);
+		if(vo != null){
+			Result result = new Result(false).info("该类别下面还有品种，不能删除");
+	        WebUtil.printJson(response, result);
+	        return;
+		}
 		categoryService.update(category);
 		Result result = new Result(true);
         WebUtil.printJson(response, result);
@@ -231,7 +243,7 @@ public class CategoryController {
 	 * @return
 	 */
 	@RequestMapping(value = "/breed/save")
-	public String saveBreed(HttpServletRequest request,
+	public void saveBreed(HttpServletRequest request,
 							  HttpServletResponse response,
 							  BreedVo bvo,
 							  ModelMap model){
@@ -240,7 +252,8 @@ public class CategoryController {
 		}else{
 			categoryService.addBreed(bvo);
 		}
-		return "redirect:/breed/list";
+		Result result = new Result(true);
+        WebUtil.printJson(response, result);
 	}
 	
 	/**
@@ -252,15 +265,21 @@ public class CategoryController {
 	 * @return
 	 */
 	@RequestMapping(value = "/breed/delete/{id}")
-	public String deleteBreed(HttpServletRequest request,
+	public void deleteBreed(HttpServletRequest request,
 							  HttpServletResponse response,
 							  @PathVariable("id") Integer id,
 							  ModelMap model){
 		Category category = new Category();
 		category.setId(id);
 		category.setStatus(0);
+		CommodityVO vo = commodityService.findCommodityByBreedId(id);
+		if(vo != null){
+			Result result = new Result(false).info("该品种下面还有商品，不能删除");
+	        WebUtil.printJson(response, result);
+		}
 		categoryService.update(category);
-		return "redirect:/breed/list";
+		Result result = new Result(true);
+        WebUtil.printJson(response, result);
 	}
 
 

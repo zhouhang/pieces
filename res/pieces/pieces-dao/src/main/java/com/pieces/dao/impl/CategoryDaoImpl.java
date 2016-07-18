@@ -77,4 +77,10 @@ public class CategoryDaoImpl extends BaseDaoImpl implements CategoryDao{
 			return getSqlSession().selectList("com.pieces.dao.CategoryMapper.findBreed", vo);
 		}
 
+
+		@Override
+		public CategoryVo findBreedByPartenId(Integer partenId) {
+			return getSqlSession().selectOne("com.pieces.dao.CategoryMapper.findBreedByPartenId", partenId);
+		}
+
 }
