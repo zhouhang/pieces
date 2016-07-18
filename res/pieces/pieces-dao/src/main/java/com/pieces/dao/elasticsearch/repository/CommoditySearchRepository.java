@@ -15,9 +15,10 @@ import org.springframework.stereotype.Repository;
 
 public interface CommoditySearchRepository extends ElasticsearchRepository<CommodityDoc, Integer> {
 
-    Page<CommodityDoc> findByNameLike(String name, Pageable page);
+    Page<CommodityDoc> findByNameOrCategoryName(String name,String categoryName, Pageable page);
 
-    @Query("{\"bool\" : {\"should\" : [{\"term\" : {\"name\" : \"?0\"}}, {\"term\" : {\"factory\" : \"?0\"}}, {\"term\" : {\"exterior\" : \"?0\"}}, {\"term\" : {\"originOf\" : \"?0\"}}]}}}")
-    Page<CommodityDoc> findByField(String field,Pageable page);
+    @Query("{\"bool\" : {\"should\" : [{\"term\" : {\"name\" : \"?0\"}}, {\"term\" : {\"categoryName\" : \"?0\"}}]}}}")
+    Page<CommodityDoc> cusFindByNameOrCategoryName(String field, Pageable page);
+
 
 }

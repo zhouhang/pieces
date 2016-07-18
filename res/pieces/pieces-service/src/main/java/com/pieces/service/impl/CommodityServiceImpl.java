@@ -48,4 +48,10 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         PageInfo<CommodityVO> pageInfo = commodityDao.findVoByPage(pageNum,pageSize);
         return pageInfo;
     }
+
+    @Override
+    public CommodityVO findVoById(Integer id) {
+        CommodityVO commodity =  commodityDao.findVoById(id);
+        return commodity;
+    }
 }

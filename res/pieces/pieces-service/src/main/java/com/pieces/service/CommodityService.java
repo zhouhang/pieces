@@ -26,6 +26,7 @@ public interface CommodityService extends ICommonService<Commodity>{
 
     public PageInfo<CommodityVO> findVoByPage(int pageNum, int pageSize);
 
+    public CommodityVO findVoById(Integer id);
 
 
 }

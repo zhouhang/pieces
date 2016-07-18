@@ -11,23 +11,27 @@ import java.util.List;
  */
 public interface CommoditySearchService {
 
+    /**
+     * 创建或更新商品索引
+     * @param commodity
+     * @return
+     */
     public CommodityDoc create(Commodity commodity);
 
-    public List<CommodityDoc> create(List<Commodity> commodityList);
 
-    public Page<CommodityDoc> findByName(String name);
+    public Page<CommodityDoc> findAllField(Integer pageNum,Integer pageSize,String field);
 
     /**
-     * 查询所有商品创建document
+     * 更新商品库所有商品到索引
      */
     public void createAllCommodityDoc();
 
     /**
-     * 对所有commodityDoc字段进行全文检索
+     * 对商品名和品种名搜索
      * @param pageNum
      * @param pageSize
      * @param filed
      * @return
      */
-    public Page<CommodityDoc> findByAnyField(Integer pageNum,Integer pageSize,String filed);
+    public Page<CommodityDoc> findByNameOrCategoryName(Integer pageNum, Integer pageSize, String filed);
 }

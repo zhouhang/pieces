@@ -203,11 +203,41 @@
         commodity.create_time,
         spec.name as specName,
         originOf.name as originOfName,
-        executiveStandard.name as executiveStandardName
+        executiveStandard.name as executiveStandardName,
+        category.name as categoryName
         from commodity
         left join code spec ON spec = spec.id
         left join code originOf on origin_of = originOf.id
         left join code executiveStandard on executive_standard = executiveStandard.id
+        left join category on category_id = category.id
     </select>
+
+    <select id="findVoById" parameterType="java.lang.Integer" resultMap="CommodityVOResultMap" >
+         select
+        commodity.id,
+        commodity.name,
+        spec,
+        origin_of,
+        executive_standard,
+        factory,
+        exterior,
+        picture_url,
+        details,
+        commodity.status,
+        category_id,
+        commodity.create_time,
+        spec.name as specName,
+        originOf.name as originOfName,
+        executiveStandard.name as executiveStandardName,
+        category.name as categoryName
+        from commodity
+        left join code spec ON spec = spec.id
+        left join code originOf on origin_of = originOf.id
+        left join code executiveStandard on executive_standard = executiveStandard.id
+        left join category on category_id = category.id
+        where id = #{id}
+    </select>
+
+
 
 </mapper>
