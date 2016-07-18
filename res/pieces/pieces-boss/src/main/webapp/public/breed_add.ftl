@@ -132,16 +132,11 @@
             			            data: $(form).formSerialize(),
             			            type: "POST",
             			            success: function(data){
+            			            	$('.user-info :input').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
             			            	$.notify({
             	                            type: 'success', 
-            	                            title: '保存成功',
-            	                            text: '3秒后自动跳转到品种列表页', 
-            	                            delay: 3e3, 
-            	                            call: function() {
-            	                                setTimeout(function() {
-            	                                    location.href = '/breed/list';
-            	                                }, 3e3);
-            	                            }
+            	                            title: '新增品种成功。',
+            	                            delay: 3e3
             	                        });
             			            }
             			        });

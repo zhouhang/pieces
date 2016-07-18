@@ -95,6 +95,10 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryDao.findBreedByName(breedName);
 	}
 	
+	@Override
+	public CategoryVo findBreedByPartenId(Integer partenId) {
+		return categoryDao.findBreedByPartenId(partenId);
+	}
 	/**
 	 * 添加品种
 	 */
@@ -208,6 +212,5 @@ public class CategoryServiceImpl implements CategoryService {
 		code.setStatus(1);
 		return codeDao.find(code);
 	}
-
 
 }

@@ -54,4 +54,8 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         CommodityVO commodity =  commodityDao.findVoById(id);
         return commodity;
     }
+
+    public CommodityVO findCommodityByBreedId(Integer id) {
+    	return commodityDao.findCommodityByBreedId(id);
+    }
 }

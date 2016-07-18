@@ -28,5 +28,6 @@ public interface CommodityService extends ICommonService<Commodity>{
 
     public CommodityVO findVoById(Integer id);
 
+    public CommodityVO findCommodityByBreedId(Integer id);
 
 }

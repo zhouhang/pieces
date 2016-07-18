@@ -10,6 +10,7 @@ public class CategoryVo{
 	
 	private String classifyName;
 	
+	private String partenId;
 	//别名
 	private String aliases;
 	
@@ -67,6 +68,14 @@ public class CategoryVo{
 		this.level = level;
 	}
 	
+	public String getPartenId() {
+		return partenId;
+	}
+
+	public void setPartenId(String partenId) {
+		this.partenId = partenId;
+	}
+
 	@Override
     public String toString() {
         Field[] fields = this.getClass().getDeclaredFields();

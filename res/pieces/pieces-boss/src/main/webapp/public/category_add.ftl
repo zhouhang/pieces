@@ -78,16 +78,11 @@
             			            data: $(form).formSerialize(),
             			            type: "POST",
             			            success: function(data){
+            			            	$('#name').val('');
             			            	$.notify({
             	                            type: 'success', 
-            	                            title: '保存成功',
-            	                            text: '3秒后自动跳转到类别列表页', 
-            	                            delay: 3e3, 
-            	                            call: function() {
-            	                                setTimeout(function() {
-            	                                    location.href = '/category/list';
-            	                                }, 3e3);
-            	                            }
+            	                            title: '新增分类成功。',
+            	                            delay: 3e3
             	                        });
             			            }
             			        });

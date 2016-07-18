@@ -107,4 +107,12 @@
         	</if>
         	order by a.create_time desc
     </select>
+    
+    <select id="findBreedByPartenId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CategoryVo">
+        select *
+	        from category a
+	        where a.level = 2
+	        and a.partenId = #{partenId}
+	        and a.status = 1
+    </select>
 </mapper>

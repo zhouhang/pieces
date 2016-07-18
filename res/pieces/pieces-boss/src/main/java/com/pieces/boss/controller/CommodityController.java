@@ -46,7 +46,15 @@ public class CommodityController extends BaseController{
         return "commodity";
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/add", method = RequestMethod.GET)
+    @BizLog(type = "", desc = "新增商品信息页面")
+    public String addPage() {
+       return "commodity-add";
+    }
+
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     @BizLog(type = "", desc = "保存商品信息")
     public Result save(Commodity commodity) {

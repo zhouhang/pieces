@@ -66,4 +66,8 @@ public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao {
         return getSqlSession().update("com.pieces.dao.CommodityMapper.update", commodity);
     }
 
+        @Override
+        public CommodityVO findCommodityByBreedId(Integer id) {
+            return getSqlSession().selectOne("com.pieces.dao.CommodityMapper.findCommodityByBreedId",id);
+        }
 }
