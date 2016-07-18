@@ -56,6 +56,7 @@
 	<bean id="redisSessionDAO" class="com.pieces.service.shiro.RedisSessionDAO">
 	    <property name="redisManager" ref="redisManager" />
 	    <property name="sessionIdGenerator" ref="sessionIdGenerator"/>
+	    <property name="keyPrefix" value="${pieces.shiro.redisSessionDAO.keyPrefix}"/>
 	</bean>
 	
 	<!-- 会话管理器 -->
@@ -76,8 +77,8 @@
         <property name="realm" ref="defaultRealm"/>
         <property name="sessionManager" ref="sessionManager"/>
         <property name="cacheManager" ref="cacheManager"/>
-        <property name="rememberMeManager" ref="rememberMeManager"/>
         <property name="subjectFactory" ref="defaultSubjectFactory"/>
+        <property name="rememberMeManager" ref="rememberMeManager"/>
     </bean>
 
     <!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->

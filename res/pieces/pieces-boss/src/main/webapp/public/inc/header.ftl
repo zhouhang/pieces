@@ -5,7 +5,7 @@
             <a href="home.html">药优优电子商务管理系统</a>
         </div>
         <div class="user">
-            <span>登录用户 ${user_session_boss.username }</span>
+            <span>登录用户 ${member_session_boss.username }</span>
             <i>|</i>
             <span>2016年7月12日 星期三</span>
             <i>|</i>

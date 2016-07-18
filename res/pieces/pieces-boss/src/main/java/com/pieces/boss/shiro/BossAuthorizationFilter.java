@@ -5,10 +5,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authz.AuthorizationFilter;
-import org.apache.shiro.web.util.WebUtils;
+
+import com.pieces.service.enums.RedisEnum;
 
 
 /**
@@ -21,7 +22,15 @@ public class BossAuthorizationFilter extends AuthorizationFilter {
 
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
 		HttpServletRequest req = (HttpServletRequest) request;
+
+
 		Subject subject = getSubject(request, response);
+//		Session session = subject.getSession();
+//		session.getAttributeKeys();
+		//如果前台登录后，修改浏览器地址登录后台，会取到前台的的subject，所以在这里判断一下
+//		if (session.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue()) == null ) {
+//			return false;
+//		}
 		// 先判断是否需要重新登录
 		if (subject.getPrincipal() == null) {
 			return false;
