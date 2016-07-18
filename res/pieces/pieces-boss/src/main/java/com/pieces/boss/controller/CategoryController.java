@@ -9,10 +9,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Category;
@@ -264,5 +261,29 @@ public class CategoryController {
 		category.setStatus(0);
 		categoryService.update(category);
 		return "redirect:/breed/list";
+	}
+
+
+	/**
+	 * 根据品种名查询
+	 * @param name
+	 * @return
+     */
+	@RequestMapping(value = "/breed/search", method = RequestMethod.GET)
+	@ResponseBody
+	public Result searchBreed(String name){
+		return new Result(true).data(categoryService.findBreedByName(name));
+	}
+
+	/**
+	 * 根据品种ID和和code类型来查询对应的Code list.
+	 * @param beedId
+	 * @param typeId
+     * @return
+     */
+	@RequestMapping(value = "/code/query")
+	@ResponseBody
+	public Result findCode(Integer beedId,Integer typeId) {
+		return new Result(true).data(categoryService.findCode(beedId, typeId));
 	}
 }
