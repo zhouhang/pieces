@@ -8,7 +8,7 @@
         var $this = $(this);
         $.getJSON(url,{beedId:options.beedId, typeId:options.typeId}, function (data){
             if (data.status === "y") {
-                var html = "";
+                var html = "<option>请选择</option>";
                 $.each(data.data, function(k, v){
                    html += "<option value='"+v.id+"'>"+ v.name+"</option>";
                 });
@@ -26,4 +26,21 @@
     $.fn.code.settings = {
         url:"/code/query"
     }
-})(jQuery);
+
+    $.fn.serializeObject = function(){
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function(){
+            if (o[this.name]){
+                if(!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    }
+
+}(jQuery));

@@ -21,7 +21,7 @@ public class Commodity  implements Serializable {
 	private Integer originOf;
 	
 	//执行标准
-	private Integer executiveStandard;
+	private String executiveStandard;
 
 	//商品等级
 	private Integer level;
@@ -79,11 +79,11 @@ public class Commodity  implements Serializable {
 		this.originOf = originOf;
 	}
 	
-	public Integer getExecutiveStandard() {
+	public String getExecutiveStandard() {
 		return executiveStandard;
 	}
 
-	public void setExecutiveStandard(Integer executiveStandard) {
+	public void setExecutiveStandard(String executiveStandard) {
 		this.executiveStandard = executiveStandard;
 	}
 	
