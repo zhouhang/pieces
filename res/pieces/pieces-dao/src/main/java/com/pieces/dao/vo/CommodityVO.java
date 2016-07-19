@@ -126,13 +126,8 @@ public class CommodityVO implements Serializable {
 		this.details = details;
 	}
 	
-	public String getStatus() {
-		if (status != null) {
-			return status == 1?"激活":"禁用";
-		} else {
-			return null;
-		}
-
+	public Integer getStatus() {
+		return status;
 	}
 
 	public void setStatus(Integer status) {

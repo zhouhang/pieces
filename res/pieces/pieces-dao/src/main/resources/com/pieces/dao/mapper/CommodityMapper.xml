@@ -58,7 +58,7 @@
     <select id="findByParam"  parameterType="com.pieces.dao.vo.CommodityVO"  resultMap="CommodityVOResultMap">
         select
         coom.id as id,coom.name as name,spec,origin_of,executive_standard,factory,exterior,
-        picture_url,details,coom.status,category_id,coom.create_time as create_time,
+        picture_url,details,coom.status as status,category_id,coom.create_time as create_time,
         spec.name as specName,
         originOf.name as originOfName,
         category.name as categoryName
@@ -104,7 +104,7 @@
             </if>
 
             <if test="status != null">
-               and status = #{status}
+               and coom.status = #{status}
             </if>
 
             <if test="categoryId != null">
