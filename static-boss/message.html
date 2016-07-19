@@ -32,7 +32,13 @@
         <div class="wrap">
             <ul>
                 <li><a href="#!">首页</a></li>
-                <li><a href="#!">销售</a></li>
+                <li>
+                    <a href="#!">销售</a>
+                    <div class="subnav">
+                        <a href="enquiry.html">询价管理</a>
+                        <a href="order.html">订单管理</a>
+                    </div>
+                </li>
                 <li><a href="#!">目录</a></li>
                 <li>
                     <a class="curr" href="#!">客户</a>
@@ -108,11 +114,11 @@
             type: type, 
             title: title, 
             text: text, 
-            delay: 5e3。
-			call： function() {
-				setTimeoutfunction(){
-					localtion.href=  '';
-				local}, 5000)
+            delay: 5e3,
+			call: function() {
+				setTimeout(function() {
+                    // localtion.href=  '';
+                }, 5e3);
 			}
         });
     }
