@@ -106,6 +106,7 @@
             </div>
 
             <div class="fa-pro-list">
+                <form action="" id="myform">
                 <table>
                     <thead>
                         <tr>
@@ -123,14 +124,14 @@
                                                 <button class="btn btn-gray">确定</button>
                                             </dt>
                                             <dd>
-                                                <label><input type="checkbox" name="" id="" class="cbx">个</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">段</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">薄片</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">厚片</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">厚片</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">厚片</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">厚片</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">厚片</label>
+                                                <label><input type="checkbox" name="a" value="1" class="cbx">个</label>
+                                                <label><input type="checkbox" name="a" value="2" class="cbx">段</label>
+                                                <label><input type="checkbox" name="a" value="3" class="cbx">薄片</label>
+                                                <label><input type="checkbox" name="a" value="4" class="cbx">厚片</label>
+                                                <label><input type="checkbox" name="a" value="5" class="cbx">厚片</label>
+                                                <label><input type="checkbox" name="a" value="6" class="cbx">厚片</label>
+                                                <label><input type="checkbox" name="a" value="7" class="cbx">厚片</label>
+                                                <label><input type="checkbox" name="a" value="8" class="cbx">厚片</label>
                                             </dd>
                                         </dl>
                                     </div>
@@ -352,6 +353,7 @@
                         </tr>
                     </tbody>
                 </table>
+                </form>
             </div>
 
             <div class="pagin">
@@ -436,6 +438,7 @@
     </div><!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.form.js"></script>
     <script>
     var productPage = {
         v: {
@@ -482,15 +485,20 @@
 
                 // 确定按钮
                 $checkAll.parent().next().on('click', function() {
+                    var data = $('#myform').formSerialize();
+                    console.log(data)
                     var val = [];
                     $checkList.filter(':checked').each(function() {
                         val.push(this.value);
                     });
 
+                    // console.log(val) 
+
                     // 关闭下拉
                     $(this).closest('.bd').hide();
                     // window.open('search?' + $checkAll.val() + '=' + val.join('-'));
                     // location.href = 'search?' + $checkAll.val() + '=' + val.join('-');
+                    return false;
                 })
             },
             // 下拉

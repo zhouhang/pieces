@@ -69,6 +69,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .fa-lock:before { content: "\e600"; }
 .fa-chevron-right:before { content: "\e60a"; }
 .fa-search:before { content: "\e612"; }
+.fa-times-circle-o:before { content: "\e617"; }
 .fa-tel:before { content: "\e60b"; }
 .fa-invoice:before { content: "\e605"; }
 .fa-chevron-down:before { content: "\e60c"; }
@@ -80,6 +81,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .fa-times:before { content: "\e616"; }
 .fa-menu:before { content: "\e606"; }
 .fa-check-circle:before { content: "\e60e"; }
+.fa-frown:before { content: "\e618"; }
 .fa-riqi:before { content: "\e614"; }
 .fa-export:before { content: "\e613"; }
 .fa-bill:before { content: "\e607"; }
@@ -289,6 +291,15 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
         .fa-pro-list .drop-dowm:hover .hd{color:#c3272b;}
         /*.fa-pro-list .drop-dowm:hover .bd{display:block;}*/
     .fa-pro-list tr:hover td{background:#f5f5f5;}
+/* 无搜索结果 */
+.fa-pro-empty{width:500px;margin:0 auto;padding:80px 0 50px;overflow:hidden;*zoom:1;}
+  .fa-pro-empty .fa{float:left;width:100px;line-height:100px;font-size:100px;color:#ccc;}
+  .fa-pro-empty .text{position:relative;margin-left:135px;padding:15px;background:#f0eff5;border:1px solid #ccc;border-radius:5px;}
+  .fa-pro-empty .text:after{content:'';position:absolute;top:24px;left:-12px;width:12px;height:22px;background:url(../images/chevron-left.png) no-repeat;}
+    .fa-pro-empty .text .title{line-height:42px;font-size:16px;}
+    .fa-pro-empty .text dt{line-height:30px;}
+    .fa-pro-empty .text dd{line-height:24px;font-size:12px;color:#999;}
+    .fa-pro-empty .text a{color:#1869ff;}
 
 /* pagin */
 .pagin{padding-top:50px;text-align:center;overflow:hidden;}
