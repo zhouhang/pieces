@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.util.Date;
 
 /**
  * Author: koabs
@@ -48,6 +49,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         if(commodity.getId()!= null) {
             commodityDao.update(commodity);
         } else {
+            commodity.setCreateTime(new Date());
             commodityDao.create(commodity);
         }
     }

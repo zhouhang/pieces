@@ -34,7 +34,7 @@
             </dl>
         </div>
         <div class="main">
-            <form action="" id="myform">
+            <form action="" id="form">
                 <div class="title">
                     <h3><i class="fa fa-chevron-right"></i>新增商品</h3>
                     <div class="extra">
@@ -51,7 +51,8 @@
                                 <i>*</i>原药品种：
                             </div>
                             <div class="cnt">
-                                <input type="text" id="categoryId" name="categoryId" class="ipt" value="" autocomplete="off" placeholder="">
+                                <input type="text" id="categoryId" class="ipt" value="" autocomplete="off" placeholder="">
+                                <input type="text" id="categoryIdV" name="categoryId" style="display: none;">
                             </div>
                         </div>
 
@@ -70,8 +71,7 @@
                             </div>
                             <div class="cnt">
                                 <select name="" id="spec" class="wide">
-                                    <option value=""></option>
-                                    <option value="">个</option>
+                                    <option>请选择</option>
                                 </select>
                             </div>
                         </div>
@@ -92,8 +92,7 @@
                             </div>
                             <div class="cnt">
                                 <select name="originOf" id="originOf" class="wide">
-                                    <option value=""></option>
-                                    <option value="">安徽省</option>
+                                    <option>请选择</option>
                                 </select>
                             </div>
                         </div>
@@ -142,9 +141,9 @@
                             <div class="txt">
                                 <i>*</i>详细信息：
                             </div>
-                            <div class="cnt cnt-mul" name="details">
-                                <img width="700" height="400" src="uploads/editor.jpg" alt="">
+                            <div class="cnt cnt-mul" name="details" id="details" style="width: 700px; height: 350px; clear: both;">
                             </div>
+                            <div class="clear"></div>
                         </div>
 
                         <div class="group">
@@ -153,8 +152,8 @@
                             </div>
                             <div class="cnt">
                                 <select name="status" id="status" class="wide">
-                                    <option value=""></option>
-                                    <option value="0">激活</option>
+                                    <option>请选择</option>
+                                    <option value="0" selected="selected">激活</option>
                                     <option value="1">禁用</option>
                                 </select>
                             </div>
@@ -181,6 +180,11 @@
 <script src="/js/validator/jquery.validator.min.js"></script>
 <script src="/js/validator/local/zh-CN.js"></script>
 
+<!-- 编辑器相关 -->
+<link href="/js/umeditor1_2_2-utf8/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" charset="utf-8" src="/js/umeditor1_2_2-utf8/umeditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/umeditor1_2_2-utf8/umeditor.min.js"></script>
+<script type="text/javascript" src="/js/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js"></script>
 
 
 
@@ -198,9 +202,10 @@
             };
         },
         onSelect: function (suggestion) {
+            $("#categoryIdV").val(suggestion.data);
             //TODO: 获取品种的切制规格,原药产地,等级,执行标准
-            $("#spec").code({beedId:1,typeId:10000});//"切制规格"
-            $("#originOf").code({beedId:1,typeId:10001});//"原药产地"
+            $("#spec").code({beedId:suggestion.data,typeId:10000});//"切制规格"
+            $("#originOf").code({beedId:suggestion.data,typeId:10001});//"原药产地"
         }
     });
 
@@ -225,18 +230,24 @@
             // 提交事件
             submitEvent: function () {
                 var self = this;
+
+
                 $('button:submit').on('click', function () {
-                    $.notify({
-                        type: 'success',
-                        title: '保存成功',
-                        text: '3秒后自动跳转到商品详情页',
-                        delay: 3e3,
-                        call: function () {
-                            setTimeout(function () {
-                                location.href = 'goods.html';
-                            }, 3e3);
-                        }
-                    });
+                    var data = $("#form").serializeObject();
+
+                    $.post("/commodity/save",data, function(data){
+                        $.notify({
+                            type: 'success',
+                            title: '保存成功',
+                            text: '3秒后自动跳转到商品详情页',
+                            delay: 3e3,
+                            call: function () {
+                                setTimeout(function () {
+                                    location.href = 'goods.html';
+                                }, 3e3);
+                            }
+                        });
+                    })
                     return false;
                 })
             },
@@ -320,6 +331,10 @@
     }
     $(function () {
         commodityAddPage.fn.init();
+
+        //实例化编辑器
+        var um = UM.getEditor('details');
+        // .getContent() 获取内容
     })
 </script>
 </body>
