@@ -18,6 +18,12 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.elasticsearch.index.query.QueryBuilders;
+
+import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
+import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
+
+
 /**
  * Created by wangbin on 2016/7/14.
  */
@@ -62,23 +68,14 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     }
 
 
-
-    public Page<CommodityDoc> findAllField(Integer pageNum, Integer pageSize,String field){
+    public Page<CommodityDoc> findByNameOrCategoryName(Integer pageNum, Integer pageSize, String field){
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(QueryBuilders.matchQuery("name",field))
-                .withQuery(QueryBuilders.matchQuery("categoryName",field))
-                .withPageable(new PageRequest(pageNum,pageSize))
+                .withFilter(boolQuery().should(matchQuery("name", field)).should(matchQuery("categoryName",field)))
+                .withHighlightFields()
+                .withPageable(new PageRequest(pageNum-1,pageSize))
                 .build();
-
         Page<CommodityDoc> result = esTemplate.queryForPage(searchQuery, CommodityDoc.class);
         return result;
-    }
-
-
-    @Override
-    public Page<CommodityDoc> findByNameOrCategoryName(Integer pageNum, Integer pageSize, String filed) {
-        Page<CommodityDoc>  page= commoditySearchRepository.findByNameOrCategoryName(filed,filed,new PageRequest(pageNum,pageSize));
-        return page;
     }
 
     private CommodityDoc vo2doc(CommodityVO commodityVO){
