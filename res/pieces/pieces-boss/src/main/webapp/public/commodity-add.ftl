@@ -52,7 +52,7 @@
                             </div>
                             <div class="cnt">
                                 <input type="text" id="categoryId" class="ipt" value="" autocomplete="off" placeholder="">
-                                <input type="text" id="categoryIdV" name="categoryId" style="display: none;">
+                                <input type="text" id="categoryIdV" name="categoryId" style=" display: none;">
                             </div>
                         </div>
 

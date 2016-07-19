@@ -3,17 +3,19 @@
 <head>
     <#include "./inc/meta.ftl"/>
     <title>搜索结果-饮片B2B</title>
+
 </head>
 
 <body>
     <#include "./inc/header.ftl"/>
-
     <#include "./inc/nav.ftl"/>
 
 <div class="main-body">
     <div class="wrap">
         <div class="sitemap">
             <a href="#">搜索结果</a>
+            <em>&gt;</em>
+            <span>${keyword!}</span>
         </div>
 
         <div class="fa-pro-list">
@@ -85,7 +87,6 @@
         <#if commodityDocPage??>
             <@p.pager inPageNo=commodityDocPage.number pageSize=commodityDocPage.size recordCount=commodityDocPage.totalElements toURL="/pro/search?keyword=${keyword}"/>
         </#if>
-
     </div>
 </div>
 

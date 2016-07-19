@@ -24,9 +24,9 @@
         </div>
         <div class="search">
             <div class="form">
-                <form action="pro/search" method="get">
-                    <input class="ipt" name="keyword"  placeholder="请输入原药名称或饮片名称" value="${keyword!}" type="text">
-                    <button class="btn" type="submit">搜索</button>
+                <form id="_search_form" action="pro/search" method="get">
+                    <input id="_search_ipt" class="ipt" name="keyword"  placeholder="请输入原药名称或饮片名称" value="${keyword!}" type="text">
+                    <button  class="btn" type="submit">搜索</button>
                 </form>
             </div>
             <div class="hotwords">
@@ -48,5 +48,26 @@
 
 <script type="text/javascript">
 
+    $(function(){
+        $('#_search_ipt').autocomplete({
+            serviceUrl: '/pro/search/auto',
+            paramName:'keyword',
+            transformResult: function(response) {
+                response = JSON.parse(response);
+                return  {suggestions:$.map(response, function(dataItem) {
+                    if(dataItem.category){
+                        return {value: dataItem.category+":"+dataItem.value, data: {"category":dataItem.category}};
+                    }else{
+                        return {value: dataItem.value, data: {"category":dataItem.category}};
+                    }
+
+                })};
+            },
+            onSelect: function (suggestion) {
+                $("#_search_form").submit();
+            },
+            groupBy:"category"
+        });
+    })
 
 </script>

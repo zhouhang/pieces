@@ -2,6 +2,7 @@ package com.pieces.biz.controller;
 
 import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.service.CommoditySearchService;
+import com.pieces.tools.utils.WebUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by wangbin on 2016/7/18.
@@ -31,13 +36,24 @@ public class ProController extends BaseController{
                             ModelMap model,
                             String keyword){
         pageNum=pageNum==null?1:pageNum;
-        pageSize=pageSize==null?2:pageSize;
-        if(StringUtils.isNotBlank(keyword)){
-            Page<CommodityDoc> commodityDocPage= commoditySearchService.findByNameOrCategoryName(pageNum,pageSize,keyword);
-            model.put("commodityDocPage",commodityDocPage);
-            model.put("keyword",keyword);
-        }
+        pageSize=pageSize==null?10:pageSize;
+        Page<CommodityDoc> commodityDocPage= commoditySearchService.findByNameOrCategoryName(pageNum,pageSize,keyword);
+        model.put("commodityDocPage",commodityDocPage);
+        model.put("keyword",keyword);
         return "product_search_result";
+    }
+
+
+
+    @RequestMapping(value = "search/auto")
+    public void autoComplete(HttpServletRequest request,
+                             HttpServletResponse response,
+                             String keyword){
+        if(StringUtils.isBlank(keyword) ){
+            return;
+        }
+        List<Map<String,String>> result = commoditySearchService.findByName(keyword);
+        WebUtil.print(response,result);
     }
 
 
