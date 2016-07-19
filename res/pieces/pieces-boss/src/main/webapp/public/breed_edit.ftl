@@ -107,6 +107,7 @@
     <script src="/js/validator/jquery.validator.min.js?local=zh-CN"></script>
     <script src="/js/jquery.form.js"></script>
     <script src="/js/common.js"></script>
+    <script src="/js/layer/layer.js"></script>
     <script>
         var roleAddPage = {
             v: {},
@@ -114,24 +115,40 @@
                 init: function() {
                 	this.getCategory($("#classifyId"));
                     this.formValidate();
-                    $("#delete").click(function(){
-                    	$.ajax({
-    			            url: "/breed/delete/" + $("#id").val(),
-    			            type: "POST",
-    			            success: function(data){
-    			            	$.notify({
-    	                            type: 'success', 
-    	                            title: '删除成功',
-    	                            text: '3秒后自动跳转到类别列表页', 
-    	                            delay: 3e3, 
-    	                            call: function() {
-    	                                setTimeout(function() {
-    	                                    location.href = '/breed/list';
-    	                                }, 3e3);
-    	                            }
-    	                        });
-    			            }
-    			        });
+                    
+                    $('#delete').on('click', function() {
+                        var $self = $(this);
+                        layer.confirm('确认删除该品种？', {
+                            btn: ['确认','取消'] //按钮
+                        }, function(index){
+                        	layer.close(index);
+                        	$.ajax({
+        			            url: "/breed/delete/" + $("#id").val(),
+        			            type: "POST",
+        			            success: function(data){
+        			            	if(data.status == "y"){
+        			            		$.notify({
+            	                            type: 'success', 
+            	                            title: '删除品种成功。',
+            	                            text: '3秒后自动跳转到品种列表页', 
+            	                            delay: 3e3, 
+            	                            call: function() {
+            	                                setTimeout(function() {
+            	                                    location.href = '/breed/list';
+            	                                }, 3e3);
+            	                            }
+            	                        });
+        			            	}else{
+        			            		$.notify({
+            	                            type: 'error', 
+            	                            title: data.info, 
+            	                            delay: 3e3
+            	                        });
+        			            	}
+        			            }
+        			        });
+                        });
+                        return false;
                     });
                 },
                 formValidate: function() {
@@ -153,14 +170,8 @@
             			            success: function(data){
             			            	$.notify({
             	                            type: 'success', 
-            	                            title: '修改成功',
-            	                            text: '3秒后自动跳转到品种列表页', 
-            	                            delay: 3e3, 
-            	                            call: function() {
-            	                                setTimeout(function() {
-            	                                    location.href = '/breed/list';
-            	                                }, 3e3);
-            	                            }
+            	                            title: '修改品种成功。',
+            	                            delay: 3e3
             	                        });
             			            }
             			        });

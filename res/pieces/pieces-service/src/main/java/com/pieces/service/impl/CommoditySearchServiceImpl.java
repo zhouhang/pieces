@@ -7,9 +7,12 @@ import com.pieces.dao.model.Commodity;
 import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,20 +30,18 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     @Autowired
     private CommodityService commodityService;
 
+    @Autowired
+    ElasticsearchTemplate esTemplate;
+
     @Override
     public CommodityDoc create(Commodity commodity) {
-        return null;
+        CommodityVO commodityVO = commodityService.findVoById(commodity.getId());
+        CommodityDoc commodityDoc =  vo2doc(commodityVO);
+        commoditySearchRepository.save(commodityDoc);
+        return commodityDoc;
     }
 
-    @Override
-    public List<CommodityDoc> create(List<Commodity> commodityList) {
-        return null;
-    }
 
-    @Override
-    public Page<CommodityDoc> findByName(String name) {
-        return commoditySearchRepository.findByNameLike(name, new PageRequest(0,10));
-    }
 
 
     @Override
@@ -61,9 +62,22 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     }
 
 
+
+    public Page<CommodityDoc> findAllField(Integer pageNum, Integer pageSize,String field){
+        SearchQuery searchQuery = new NativeSearchQueryBuilder()
+                .withQuery(QueryBuilders.matchQuery("name",field))
+                .withQuery(QueryBuilders.matchQuery("categoryName",field))
+                .withPageable(new PageRequest(pageNum,pageSize))
+                .build();
+
+        Page<CommodityDoc> result = esTemplate.queryForPage(searchQuery, CommodityDoc.class);
+        return result;
+    }
+
+
     @Override
-    public Page<CommodityDoc> findByAnyField(Integer pageNum, Integer pageSize, String filed) {
-        Page<CommodityDoc>  page= commoditySearchRepository.findByField(filed,new PageRequest(pageNum,pageSize));
+    public Page<CommodityDoc> findByNameOrCategoryName(Integer pageNum, Integer pageSize, String filed) {
+        Page<CommodityDoc>  page= commoditySearchRepository.findByNameOrCategoryName(filed,filed,new PageRequest(pageNum,pageSize));
         return page;
     }
 
@@ -77,6 +91,7 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
         commodityDoc.setExecutiveStandard(commodityVO.getExecutiveStandardName());
         commodityDoc.setPictureUrl(commodityVO.getPictureUrl());
         commodityDoc.setSpec(commodityVO.getSpecName());
+        commodityDoc.setCategoryName(commodityVO.getCategoryName());
         return commodityDoc;
     }
 

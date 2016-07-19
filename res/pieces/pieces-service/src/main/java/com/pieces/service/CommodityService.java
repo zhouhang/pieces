@@ -30,12 +30,14 @@ public interface CommodityService extends ICommonService<Commodity>{
 
     public PageInfo<CommodityVO> findVoByPage(int pageNum, int pageSize);
 
+    public CommodityVO findVoById(Integer id);
     /**
      * 上传文件
      * @return
      */
     public CropResult uploadImage(MultipartFile img);
 
+    public CommodityVO findCommodityByBreedId(Integer id);
 
     /**
      * 裁剪图片

@@ -31,19 +31,19 @@
                         <tr>
                             <th width="100">编号</th>
                             <th>分类名称</th>
-                            <th width="150">状态</th>
+                            <!-- <th width="150">状态</th> -->
                             <th width="150">操作</th>
                         </tr>
                         <tr>
                             <td></td>
                             <td><div class="ipt-wrap"><input type="text" name="name" id="name" class="ipt" value="${category.name }"></div></td>
-                            <td>
+                            <!-- <td>
                                 <select name="status" id="status">
                                 	<option <#if (!category.status??)>selected</#if> value=""></option>
 									<option <#if (category.status==1)>selected</#if> value="1">激活</option>
 									<option <#if (category.status==0)>selected</#if> value="0">禁用</option>
                                 </select>
-                            </td>
+                            </td> -->
                             <td></td>
                         </tr>
                     </thead>
@@ -53,7 +53,7 @@
                         <tr>
                             <td>${category.id }</td>
                             <td><div class="tl">${category.name }</div></td>
-                            <td><#if (category.status==0)>禁用</#if><#if (category.status==1)>激活</#if></td>
+                            <!-- <td><#if (category.status==0)>禁用</#if><#if (category.status==1)>激活</#if></td> -->
                             <td><a href="/category/edit/${category.id }">修改</a></td>
                         </tr>
                         </#list>

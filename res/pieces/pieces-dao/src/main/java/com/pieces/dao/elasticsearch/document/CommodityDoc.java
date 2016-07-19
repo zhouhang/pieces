@@ -21,6 +21,10 @@ public class CommodityDoc {
     //外观描述
     @Field(index= FieldIndex.not_analyzed)
     private String exterior;
+
+    //品种名称
+    private String categoryName;
+
     //切制规格
     private String spec;
     //原药产地
@@ -96,5 +100,13 @@ public class CommodityDoc {
 
     public void setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 }

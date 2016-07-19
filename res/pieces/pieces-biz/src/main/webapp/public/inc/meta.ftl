@@ -8,3 +8,4 @@
 <script src="html5shiv/3.7.2/html5shiv.min.js"></script>
 <script src="respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
+<script src="/js/jquery.min.js"></script>

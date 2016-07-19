@@ -3,7 +3,7 @@ package com.pieces.service.impl;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.CommodityDao;
 import com.pieces.dao.ICommonDao;
-
+import com.pieces.dao.model.Area;
 import com.pieces.dao.model.Commodity;
 import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.AbsCommonService;
@@ -92,5 +92,15 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
             return CropResult.error("图片裁剪失败");
         }
 
+    }
+
+    @Override
+    public CommodityVO findVoById(Integer id) {
+        CommodityVO commodity =  commodityDao.findVoById(id);
+        return commodity;
+    }
+
+    public CommodityVO findCommodityByBreedId(Integer id) {
+    	return commodityDao.findCommodityByBreedId(id);
     }
 }

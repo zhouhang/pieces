@@ -40,7 +40,7 @@ import com.pieces.tools.utils.WebUtil;
  */
 @Controller
 @RequestMapping(value = "gen")
-public class GeneralController {
+public class GeneralController extends BaseController {
 
     @Autowired
     private SmsService smsService;
@@ -141,19 +141,7 @@ public class GeneralController {
         WebUtil.printJson(response, new Result(true).data(code));
     }
 
-    /**
-     * 发送验证码测试
-     * @throws Exception
-     */
-    @RequestMapping(value = "/send")
-    public void sendPost(HttpServletRequest request,
-                         HttpServletResponse response,
-                         @RequestParam(required = true) String mobile) throws Exception{
-        String code =  smsService.sendSmsCaptcha("18801285391");
-        Result result =  new Result(true).data(Collections.singletonMap("code",code)).info("短信验证码");
-        WebUtil.print(response,result);
-    }
-    
+
 	@RequestMapping(value="/code")
 	public void getMobileCode(String contactMobile,
 						HttpServletRequest request,
@@ -163,5 +151,8 @@ public class GeneralController {
 		result.put("ok", code);
         WebUtil.print(response,result);
 	}
+
+
+
 
 }

@@ -9,4 +9,8 @@ public interface CommodityDao extends ICommonDao<Commodity>{
     public PageInfo<CommodityVO> findVoByPage(int pageNum, int pageSize);
 
     public PageInfo<CommodityVO> findByParam (CommodityVO commodity, int pageNum, int pageSize);
+
+    public CommodityVO findVoById(Integer id);
+
+	public CommodityVO findCommodityByBreedId(Integer id);
 }
