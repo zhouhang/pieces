@@ -64,13 +64,5 @@ public class DemoController {
 
 
 
-    @RequestMapping("search")
-    public void search(HttpServletRequest request,
-                       HttpServletResponse response,
-                       String value){
-        Page<CommodityDoc> page = commoditySearchService.findAllField(value);
-        WebUtil.print(response,page.getContent());
-    }
-
 
 }

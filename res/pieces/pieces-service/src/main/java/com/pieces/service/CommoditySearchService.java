@@ -19,7 +19,14 @@ public interface CommoditySearchService {
     public CommodityDoc create(Commodity commodity);
 
 
-    public Page<CommodityDoc> findAllField(Integer pageNum,Integer pageSize,String field);
+    /**
+     * 搜索名称和类别名
+     * @param pageNum
+     * @param pageSize
+     * @param field
+     * @return
+     */
+    public Page<CommodityDoc> findByNameOrCategoryName(Integer pageNum, Integer pageSize, String field);
 
     /**
      * 更新商品库所有商品到索引
@@ -33,5 +40,4 @@ public interface CommoditySearchService {
      * @param filed
      * @return
      */
-    public Page<CommodityDoc> findByNameOrCategoryName(Integer pageNum, Integer pageSize, String filed);
 }

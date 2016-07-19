@@ -61,41 +61,30 @@
                 </thead>
                 <tfoot></tfoot>
                 <tbody>
-                <#list commodityDocPage.content as commodityDoc>
-                    <tr>
-                        <td><a href="product.html"><img src="${commodityDoc.pictureUrl!}" width="130" height="130" alt=""></a></td>
-                        <td class="tl">
-                            <div class="desc">
-                                <h3><a href="product.html">${commodityDoc.name!}</a></h3>
-                                <p>${commodityDoc.exterior!}</p>
-                            </div>
-                        </td>
-                        <td>${commodityDoc.spec!}</td>
-                        <td>${commodityDoc.originOf!}</td>
-                        <td class="tl">${commodityDoc.executiveStandard!}</td>
-                        <td>${commodityDoc.factory!}</td>
-                        <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
-                    </tr>
-                </#list>
-
-
+                <#if commodityDocPage??>
+                    <#list commodityDocPage.content as commodityDoc>
+                        <tr>
+                            <td><a href="product.html"><img src="${commodityDoc.pictureUrl!}" width="130" height="130" alt=""></a></td>
+                            <td class="tl">
+                                <div class="desc">
+                                    <h3><a href="product.html">${commodityDoc.name!}</a></h3>
+                                    <p>${commodityDoc.exterior!}</p>
+                                </div>
+                            </td>
+                            <td>${commodityDoc.spec!}</td>
+                            <td>${commodityDoc.originOf!}</td>
+                            <td class="tl">${commodityDoc.executiveStandard!}</td>
+                            <td>${commodityDoc.factory!}</td>
+                            <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
+                        </tr>
+                    </#list>
+                </#if>
                 </tbody>
             </table>
         </div>
-
-        <div class="pagin">
-            <span class="disabled">上一页</span>
-            <span class="curr">1</span>
-            <a href="?page=2">2</a>
-            <a href="?page=3">3</a>
-            <a href="?page=4">4</a>
-            <a href="?page=5">5</a>
-            <a href="?page=2">下一页</a>
-            <a href="?page=2">尾页</a>
-            <em>共 284 个商品 / 共29页 / 跳转到第</em>
-            <input class="ipt" type="text" onkeydown="javascript:if(event.keyCode==13){page_jump();return false;}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="1" maxlength="4" id="jPageSkip" >页
-            <button class="btn btn-gray" type="button" onclick="page_jump();">确定</button>
-        </div>
+        <#if commodityDocPage??>
+            <@p.pager inPageNo=commodityDocPage.number pageSize=commodityDocPage.size recordCount=commodityDocPage.totalElements toURL="/pro/search?keyword=${keyword}"/>
+        </#if>
 
     </div>
 </div>
