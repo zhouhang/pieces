@@ -23,6 +23,15 @@ public class FileUtil {
         return ext;
     }
 
+    public static String getFilePathNoExt(String fileName){
+        int index=fileName.lastIndexOf('.');
+        if(index==-1){
+            return "";
+        }
+        String path = fileName.substring(0, index);
+        return path;
+    }
+
     public static File save(InputStream inputStream, String path, String fileName)throws IOException{
         File file = new File(path,fileName);
         if(file.exists()){

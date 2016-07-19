@@ -16,6 +16,8 @@ public abstract class AbstractUploadFile {
 
     private String basePath;
 
+    private String url;
+
     /**
      * 上传文件
      * @param originalFileName
@@ -31,7 +33,7 @@ public abstract class AbstractUploadFile {
             //自定义文件名
             String fileName = customImageName(originalFileName);
             File file = FileUtil.save(inputStream,getBasePath(),fileName);
-            FileBo fileBo = new FileBo(file,file.getName(),basePath+fileName,ext);
+            FileBo fileBo = new FileBo(file,file.getName(),url+fileName,ext);
             return fileBo;
         }
         catch (FileUploadException fe){
@@ -65,5 +67,13 @@ public abstract class AbstractUploadFile {
 
     public void setBasePath(String basePath) {
         this.basePath = basePath;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

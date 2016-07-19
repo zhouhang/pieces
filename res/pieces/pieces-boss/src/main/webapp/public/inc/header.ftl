@@ -25,7 +25,7 @@
             <li>
             	<a href="#!">目录</a>
             	<div class="subnav">
-                    <a href="goods.html">商品管理</a>
+                    <a href="/commodity/index">商品管理</a>
                     <a href="/category/list">分类管理</a>
                     <a href="/breed/list">品种管理</a>
                 </div>

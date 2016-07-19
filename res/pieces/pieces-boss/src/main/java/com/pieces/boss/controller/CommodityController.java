@@ -1,22 +1,18 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.pieces.boss.commons.LogEnum;
 import com.pieces.dao.model.Commodity;
 import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.CommodityService;
 import com.pieces.service.constant.bean.Result;
-import com.pieces.tools.bean.FileBo;
+import com.pieces.service.vo.CropInfo;
+import com.pieces.service.vo.CropResult;
 import com.pieces.tools.log.annotation.BizLog;
-import com.pieces.tools.upload.DefaultUploadFile;
-import com.pieces.tools.utils.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.UUID;
 
 /**
  * Author: koabs
@@ -30,8 +26,6 @@ public class CommodityController extends BaseController{
     @Autowired
     CommodityService commodityService;
 
-//    @Autowired
-//    private DefaultUploadFile defaultUploadFile;
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Integer pageSize, Integer pageNum, CommodityVO commodityVO , ModelMap model){
 
@@ -52,6 +46,13 @@ public class CommodityController extends BaseController{
     public String addPage() {
        return "commodity-add";
     }
+
+    @RequestMapping(value = "/editer/{id}", method = RequestMethod.GET)
+    @BizLog(type = "", desc = "编辑商品信息页面")
+    public String editerPage(@PathVariable("id")Integer id) {
+        return "commodity-editer";
+    }
+
 
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
@@ -86,32 +87,22 @@ public class CommodityController extends BaseController{
 
     /**
      * 上传商品图片信息
-     * @param file
+     * @param img
      * @return
      */
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     @ResponseBody
-    public Result updateFile(@RequestParam(required = false) MultipartFile file) throws Exception{
-//        FileBo fileBo = defaultUploadFile.uploadFile(UUID.randomUUID().toString(), file.getInputStream());
-
-        return new Result(true).data("");
+    public CropResult updateFile(@RequestParam(required = false) MultipartFile img) throws Exception{
+        return commodityService.uploadImage(img);
     }
 
     /**
      * 图片裁剪
-     * @param src
-     * @param dest
-     * @param x
-     * @param y
-     * @param w
-     * @param h
-     * @param ext
      * @return
      */
-    @RequestMapping(value = "/clipping", method = RequestMethod.GET)
+    @RequestMapping(value = "/clipping", method = RequestMethod.POST)
     @ResponseBody
-    public Result clipping(String src, String dest, int x, int y, int w, int h, String ext) throws Exception{
-
-        return new Result(true).data(ImageUtil.clipping(src, dest,x,y,w,h,ext));
+    public CropResult clipping(CropInfo cropInfo) throws Exception{
+        return commodityService.cropImg(cropInfo);
     }
 }

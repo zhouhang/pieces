@@ -36,13 +36,13 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                        <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                        <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                        <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                        <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
+                        <td><div class="ipt-wrap"><input name="categoryName" type="text" class="ipt" value=""></div></td>
+                        <td><div class="ipt-wrap"><input name="name" type="text" class="ipt" value=""></div></td>
+                        <td><div class="ipt-wrap"><input type="specName" class="ipt" value=""></div></td>
+                        <td><div class="ipt-wrap"><input type="originOfName" class="ipt" value=""></div></td>
+                        <td><div class="ipt-wrap"><input type="factorys" class="ipt" value=""></div></td>
                         <td>
-                            <select name="" id="">
+                            <select name="status" id="">
                                 <option value=""></option>
                                 <option value="">激活</option>
                                 <option value="">禁用</option>
@@ -62,7 +62,7 @@
                         <td>${commodity.originOfName}</td>
                         <td>${commodity.factory}</td>
                         <td>${commodity.status}</td>
-                        <td><a href="commodity/info/${commodity.id}">修改</a></td>
+                        <td><a href="commodity/editer/${commodity.id}">修改</a></td>
                     </tr>
                     </#list>
 
