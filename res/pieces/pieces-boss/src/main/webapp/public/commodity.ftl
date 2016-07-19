@@ -17,7 +17,7 @@
             <div class="pagin">
                 <div class="extra">
                     <button class="btn btn-gray" type="button" id="reset">重置条件</button>
-                    <button class="btn btn-blue" type="button" id="submit"><i class="fa fa-search"></i><span>搜索</span></button>
+                    <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
                 <@p.pager pageInfo=pageInfo  pageUrl="commodity/index"  params=""/>
             </div>
@@ -38,14 +38,14 @@
                         <td></td>
                         <td><div class="ipt-wrap"><input name="categoryName" type="text" class="ipt" value=""></div></td>
                         <td><div class="ipt-wrap"><input name="name" type="text" class="ipt" value=""></div></td>
-                        <td><div class="ipt-wrap"><input type="specName" class="ipt" value=""></div></td>
-                        <td><div class="ipt-wrap"><input type="originOfName" class="ipt" value=""></div></td>
-                        <td><div class="ipt-wrap"><input type="factorys" class="ipt" value=""></div></td>
+                        <td><div class="ipt-wrap"><input name="specName" type="text" class="ipt" value=""></div></td>
+                        <td><div class="ipt-wrap"><input name="originOfName" type="text" class="ipt" value=""></div></td>
+                        <td><div class="ipt-wrap"><input name="factory" type="text" class="ipt" value=""></div></td>
                         <td>
                             <select name="status" id="">
                                 <option value=""></option>
-                                <option value="">激活</option>
-                                <option value="">禁用</option>
+                                <option value="1">激活</option>
+                                <option value="0">禁用</option>
                             </select>
                         </td>
                         <td></td>
@@ -61,7 +61,7 @@
                         <td>${commodity.specName}</td>
                         <td>${commodity.originOfName}</td>
                         <td>${commodity.factory}</td>
-                        <td>${commodity.status}</td>
+                        <td><#if commodity.status ==1>激活<#else>禁用</#if></td>
                         <td><a href="commodity/editer/${commodity.id}">修改</a></td>
                     </tr>
                     </#list>
@@ -100,7 +100,7 @@
                 // 筛选
                 filter: function() {
                     var $ipts = $('.chart .ipt, .chart select');
-                    var url="member/index?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
+                    var url="commodity/index?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
 
                     $('#search_btn').on('click', function() {
                         var params = [];

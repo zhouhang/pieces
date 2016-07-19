@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pieces.dao.CommodityMapper">
+
     <resultMap id="CommodityResultMap" type="com.pieces.dao.model.Commodity">
             <id column="id"  property="id" />
             <result column="name"  property="name" />
@@ -15,7 +16,6 @@
             <result column="status"  property="status" />
             <result column="category_id"  property="categoryId" />
             <result column="create_time"  property="createTime" />
-        
     </resultMap>
 
     <resultMap id="CommodityVOResultMap" type="com.pieces.dao.vo.CommodityVO">
@@ -33,8 +33,8 @@
         <result column="details"  property="details" />
         <result column="status"  property="status" />
         <result column="category_id"  property="categoryId" />
+        <result column="categoryName" property="categoryName" />
         <result column="create_time"  property="createTime" />
-
     </resultMap>
 
 
@@ -58,7 +58,7 @@
     <select id="findByParam"  parameterType="com.pieces.dao.vo.CommodityVO"  resultMap="CommodityVOResultMap">
         select
         coom.id as id,coom.name as name,spec,origin_of,executive_standard,factory,exterior,
-        picture_url,details,coom.status,category_id,coom.create_time as create_time,
+        picture_url,details,coom.status as status,category_id,coom.create_time as create_time,
         spec.name as specName,
         originOf.name as originOfName,
         category.name as categoryName
@@ -104,7 +104,7 @@
             </if>
 
             <if test="status != null">
-               and status = #{status}
+               and coom.status = #{status}
             </if>
 
             <if test="categoryId != null">
