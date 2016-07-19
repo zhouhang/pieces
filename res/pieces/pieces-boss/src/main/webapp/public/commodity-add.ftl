@@ -102,8 +102,8 @@
                                 <i>*</i>执行标准：
                             </div>
                             <div class="cnt">
-                                <select name="executiveStandard" id="executiveStandard" class="wide">
-                                </select>
+                                <input name="executiveStandard" id="executiveStandard" class="ipt">
+                                </input>
                             </div>
                         </div>
 
@@ -210,7 +210,6 @@
     });
 
     $("#level").code({beedId:null,typeId:10002});//"等级"
-    $("#executiveStandard").code({beedId:null,typeId:10003});//执行标准
 
     var commodityAddPage = {
         v: {},

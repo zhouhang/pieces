@@ -47,6 +47,13 @@ public class CommodityController extends BaseController{
        return "commodity-add";
     }
 
+    @RequestMapping(value = "/editer/{id}", method = RequestMethod.GET)
+    @BizLog(type = "", desc = "编辑商品信息页面")
+    public String editerPage(@PathVariable("id")Integer id) {
+        return "commodity-editer";
+    }
+
+
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
