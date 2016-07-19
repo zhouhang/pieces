@@ -26,7 +26,13 @@
         <property name="maxUploadSize" value="1024000000"/>  
         <property name="resolveLazily" value="true"/>  
         <property name="maxInMemorySize" value="4096"/>  
-    </bean>  
+    </bean>
+
+	<!--上传文件-->
+	<bean id="defaultUploadFile" class="com.pieces.tools.upload.DefaultUploadFile">
+		<property name="basePath" value="${boss.upload.path}"/>
+		<property name="url" value="${boss.upload.url}"/>
+	</bean>
     
 	<!-- 下面的变量从配置文件里面拿出来,子系统可以覆盖公共的 -->
     <bean id="scPropertyPlaceholderConfigurer"   
