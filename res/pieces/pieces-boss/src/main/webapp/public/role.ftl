@@ -20,7 +20,9 @@
 
             <div class="title title-btm">
                 <h3>角色管理</h3>
-                <div class="extra"><a class="btn btn-red" href="role/add"><i class="fa fa-plus"></i>增加新角色</a></div>
+                <@shiro.hasPermission name="role:add">
+                    <div class="extra"><a class="btn btn-red" href="role/add"><i class="fa fa-plus"></i>增加新角色</a></div>
+                </@shiro.hasPermission>
             </div>
             <div class="pagin">
                 <div class="extra">
@@ -50,7 +52,11 @@
                         <tr>
                             <td>${role.id}</td>
                             <td><div class="tl">${role.name}</div></td>
-                            <td><a href="role/info/${role.id}">配置</a></td>
+                            <td>
+                                <@shiro.hasPermission name="role:edit">
+                                    <a href="role/info/${role.id}">配置</a>
+                                </@shiro.hasPermission>
+                            </td>
                         </tr>
                     </#list>
                     </tbody>

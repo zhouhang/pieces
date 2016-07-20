@@ -13,6 +13,23 @@ public enum CodeEnum {
 
 
     //规格
+    SPEC_YINYANGSLICE(Type.SPEC, "阴阳片", 39),
+    SPEC_WALNUTSLICE(Type.SPEC, "佛手片", 40),
+    SPEC_ROUNDSLICE(Type.SPEC, "圆厚片", 41),
+    SPEC_DIGPACHYSLICE(Type.SPEC, "刨厚片", 42),
+    SPEC_BIASSLICE(Type.SPEC, "斜薄片", 43),
+    SPEC_LONGSTAGE(Type.SPEC, "长段", 44),
+    SPEC_TWOOPEN(Type.SPEC, "两开", 45),
+    SPEC_DIGSSLICE(Type.SPEC, "刨片", 46),
+    SPEC_PACHYSLICE(Type.SPEC, "厚片", 47),
+    SPEC_THINSLICE(Type.SPEC, "薄片", 48),
+    SPEC_SILK(Type.SPEC, "丝", 49),
+    SPEC_TINCA(Type.SPEC, "丁", 50),
+    SPEC_PIECE(Type.SPEC, "块", 51),
+    SPEC_GRAIN(Type.SPEC, "粒", 52),
+    SPEC_POWDER(Type.SPEC, "粉", 53),
+    SPEC_ROLL(Type.SPEC, "轧", 54),
+    SPEC_SMASH(Type.SPEC, "碎", 55),
     SPEC_STAGE(Type.SPEC, "段", 56),
     SPEC_STRIP(Type.SPEC, "条", 57),
     SPEC_BRANCH(Type.SPEC, "支", 58),
@@ -24,6 +41,7 @@ public enum CodeEnum {
     ORIGIN_HUBEI(Type.ORIGIN, "湖北", 100),
     ORIGIN_YUNNAN(Type.ORIGIN, "云南", 101),
     ORIGIN_GUIZOU(Type.ORIGIN, "贵州", 102),
+    ORIGIN_ANHUI(Type.ORIGIN, "安徽", 103),
 
     //等级
     LEVEL_ONE(Type.LEVEL, "1", 200),
@@ -84,7 +102,7 @@ public enum CodeEnum {
         for(int id : ids){
             String value =  findNameById(id);
             if(value==null){
-                throw new RuntimeException("找不到对应的ID:"+id);
+                throw new RuntimeException("找不到对应的属性,ID:"+id);
             }
             map.put(id,value);
         }
@@ -101,7 +119,7 @@ public enum CodeEnum {
     }
 
     //分类
-    public  enum Type{
+    public enum Type{
         SPEC,ORIGIN,LEVEL
     }
 

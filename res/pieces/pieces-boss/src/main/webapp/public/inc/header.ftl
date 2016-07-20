@@ -30,25 +30,33 @@
                     <a href="/breed/list">品种管理</a>
                 </div>
             </li>
-            <li>
-                <a href="#!">客户</a>
-                <div class="subnav">
-                    <a href="user/index">客户管理</a>
-                </div>
-            </li>
+            <@shiro.hasPermission name="customer:index">
+                <li>
+                    <a href="#!">客户</a>
+                    <div class="subnav">
+                        <a href="user/index">客户管理</a>
+                    </div>
+                </li>
+            </@shiro.hasPermission>
             <li>
                 <a href="#!">促销</a>
             </li>
             <li><a href="#!">邮件列表</a></li>
             <li><a href="#!">CMS</a></li>
             <li><a href="#!">报表</a></li>
-            <li>
-                <a class="curr" href="#!">系统</a>
-                <div class="subnav">
-                    <a class="on" href="member/index">用户管理</a>
-                    <a href="role/index">角色管理</a>
-                </div>
-            </li>
+            <@shiro.hasPermission name="member:index">
+                <li>
+                    <a class="curr" href="#!">系统</a>
+                    <div class="subnav">
+                        <@shiro.hasPermission name="member:view">
+                            <a class="on" href="member/index">用户管理</a>
+                        </@shiro.hasPermission>
+                        <@shiro.hasPermission name="role:view">
+                            <a href="role/index">角色管理</a>
+                        </@shiro.hasPermission>
+                    </div>
+                </li>
+            </@shiro.hasPermission>
         </ul>
     </div>
 </div>

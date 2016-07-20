@@ -21,7 +21,9 @@
 			<div class="title title-btm">
 				<h3>客户管理</h3>
 				<div class="extra">
-					<a class="btn btn-red" href="user/add"><i class="fa fa-plus"></i>增加新客户</a>
+				<@shiro.hasPermission name="role:add">
+    				<a class="btn btn-red" href="user/add"><i class="fa fa-plus"></i>增加新客户</a>
+				</@shiro.hasPermission>
 				</div>
 			</div>
 			<div class="pagin">
@@ -100,7 +102,11 @@
 							<td>${user.contactMobile}</td>
 							<td>${user.createTime?date}</td>
 							<td><#if (user.bindErp)>是 <#else>否</#if></td>
-							<td><a href="user/info/${user.id}">修改</a></td>
+							<td>
+								<@shiro.hasPermission name="role:edit">
+									<a href="user/info/${user.id}">修改</a>
+								</@shiro.hasPermission>
+							</td>
 						</tr>
 						</#list>
 					</tbody>

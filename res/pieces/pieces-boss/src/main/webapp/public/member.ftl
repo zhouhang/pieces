@@ -18,7 +18,9 @@
         </#if>
         <div class="title title-btm">
             <h3>用户管理</h3>
-            <div class="extra"><a class="btn btn-red" href="member/add"><i class="fa fa-plus"></i>增加新用户</a></div>
+            <@shiro.hasPermission name="member:add">
+                <div class="extra"><a class="btn btn-red" href="member/add"><i class="fa fa-plus"></i>增加新用户</a></div>
+            </@shiro.hasPermission>
         </div>
         <div class="pagin">
             <div class="extra">
@@ -66,7 +68,7 @@
                         <#else>激活</#if>
                         </td>
                         <td>
-                            <@shiro.hasPermission name="customer:update">
+                            <@shiro.hasPermission name="member:edit">
                                 <a href="member/edit/${member.id}">修改</a>
                             </@shiro.hasPermission>
                         </td>
