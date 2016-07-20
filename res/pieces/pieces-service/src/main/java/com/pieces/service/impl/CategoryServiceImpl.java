@@ -15,6 +15,7 @@ import com.pieces.dao.model.Code;
 import com.pieces.dao.vo.BreedVo;
 import com.pieces.dao.vo.CategoryVo;
 import com.pieces.service.CategoryService;
+import com.pieces.service.enums.CodeEnum;
 import com.pieces.service.enums.CommodityEnum;
 
 @Service
@@ -220,6 +221,21 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<Code> findCodeByString(String str) {
 		return codeDao.findByString(str);
+	}
+	
+	@Override
+	public List<Code> findCode(Integer breedId , String type) {
+		Category category = this.findById(breedId);
+		if(CodeEnum.Type.SPEC.name().equals(type)){
+			return this.findCodeByString(category.getSpecs());
+		}
+		if(CodeEnum.Type.ORIGIN.name().equals(type)){
+			return this.findCodeByString(category.getOrigins());
+		}
+		if(CodeEnum.Type.LEVEL.name().equals(type)){
+			return this.findCodeByString(category.getLevels());
+		}
+		return null;
 	}
 
 }

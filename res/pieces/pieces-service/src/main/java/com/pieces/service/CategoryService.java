@@ -33,5 +33,6 @@ public interface CategoryService extends ICommonService<Category> {
 	public CategoryVo findBreedByPartenId(Integer partenId);
 	
 	public List<Code> findCodeByString(String str);
+	List<Code> findCode(Integer breedId, String type);
 	
 }
