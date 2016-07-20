@@ -186,7 +186,8 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
     .fa-form .txt{position:absolute;top:0;left:0;width:130px;line-height:40px;text-align:right;}
       .fa-form .txt i{margin-right:6px;color:#c3272b;vertical-align:middle;}
     .fa-form .cnt{height:70px;}
-    .fa-form .cnt-mul{height:auto;min-height:70px;margin-bottom:20px;}
+    .fa-form .cnt-mul{width:360px;height:auto;min-height:40px;margin-bottom:20px;}
+      .fa-form .cnt-mul label{display:inline-block;width:80px;height:20px;padding-top:10px;vertical-align:top;overflow:hidden;}
       .fa-form .cnt .ipt{width:320px;height:20px;line-height:20px;padding:9px 14px;border:1px solid #ccc;}
       .fa-form .cnt .ipt:disabled{background:#ededed;color:#999;}
       .fa-form .cnt .ipt-mul{display:block;height:140px;resize:none;}
