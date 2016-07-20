@@ -44,6 +44,8 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .btn-gray:hover{background:#cfcfcf;color:#333;border-color:#aaa;}
 .btn-gray:disabled{color:#999;}
 .btn-gray:disabled:hover{background:#e7e7e7;}
+.btn-file{position:relative;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;overflow:hidden;}
+  .btn-file input{position:absolute;width:10000px;height:1000px;right:-20px;top:-20px;font-size:1000px;opacity:0;filter:alpha(opacity=0);z-index:1;cursor:pointer;}
 
 /* link */
 .c-blue{color:#1769ff;}
