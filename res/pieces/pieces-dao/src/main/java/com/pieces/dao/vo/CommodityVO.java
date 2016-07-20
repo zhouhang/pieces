@@ -1,6 +1,7 @@
 package com.pieces.dao.vo;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.Date;
 
 
@@ -243,5 +244,19 @@ public class CommodityVO implements Serializable {
 		this.checked = checked;
 	}
 	
-	
+    @Override
+    public String toString() {
+        Field[] fields = this.getClass().getDeclaredFields();
+        StringBuffer sb = new StringBuffer();
+        try {
+            for(Field field : fields){
+                if(field.get(this)!=null){
+                    sb.append("&").append(field.getName()).append("=").append(field.get(this).toString());
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
 }

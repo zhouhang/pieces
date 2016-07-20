@@ -107,6 +107,7 @@ public class CommodityController extends BaseController{
         model.put("pageSize", pageSize);
         model.put("pageInfo", pageInfo);
         model.put("commodity", commodityVO);
+        model.put("commodityParam", commodityVO.toString());
         return "product_list";
     }
     
