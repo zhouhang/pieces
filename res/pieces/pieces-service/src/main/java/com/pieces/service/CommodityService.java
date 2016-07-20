@@ -3,7 +3,11 @@ package com.pieces.service;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Commodity;
 import com.pieces.dao.vo.CommodityVO;
+import com.pieces.service.vo.CropInfo;
+import com.pieces.service.vo.CropResult;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -26,8 +30,22 @@ public interface CommodityService extends ICommonService<Commodity>{
 
     public PageInfo<CommodityVO> findVoByPage(int pageNum, int pageSize);
 
+    public CommodityVO findVoById(Integer id);
+    /**
+     * 上传文件
+     * @return
+     */
+    public CropResult uploadImage(MultipartFile img);
+
     public CommodityVO findCommodityByBreedId(Integer id);
     List<CommodityVO> findFactoryByBreedId(Integer id);
     List<CommodityVO> findStandardByBreedId(Integer id);
+
+    /**
+     * 裁剪图片
+     * @param crop
+     * @return
+     */
+    public CropResult cropImg(CropInfo crop);
 
 }

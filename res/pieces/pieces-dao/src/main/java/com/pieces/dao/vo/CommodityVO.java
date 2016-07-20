@@ -28,7 +28,7 @@ public class CommodityVO implements Serializable {
 	private String originOfNameStr;
 
 	//执行标准
-	private Integer executiveStandard;
+	private String executiveStandard;
 
 	private String executiveStandardName;
 	
@@ -99,11 +99,11 @@ public class CommodityVO implements Serializable {
 		this.originOf = originOf;
 	}
 	
-	public Integer getExecutiveStandard() {
+	public String getExecutiveStandard() {
 		return executiveStandard;
 	}
 
-	public void setExecutiveStandard(Integer executiveStandard) {
+	public void setExecutiveStandard(String executiveStandard) {
 		this.executiveStandard = executiveStandard;
 	}
 	
@@ -177,14 +177,6 @@ public class CommodityVO implements Serializable {
 
 	public void setOriginOfName(String originOfName) {
 		this.originOfName = originOfName;
-	}
-
-	public String getExecutiveStandardName() {
-		return executiveStandardName;
-	}
-
-	public void setExecutiveStandardName(String executiveStandardName) {
-		this.executiveStandardName = executiveStandardName;
 	}
 
 	public Integer getLevel() {

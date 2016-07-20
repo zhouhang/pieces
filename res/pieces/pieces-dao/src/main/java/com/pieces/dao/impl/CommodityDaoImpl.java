@@ -11,31 +11,37 @@ import java.util.List;
 
 
 @Repository
-public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao{
+public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao {
 
-        @Override
-        public Commodity findById(int id) {
-            return getSqlSession().selectOne("com.pieces.dao.CommodityMapper.findById", id);
-        }
+    @Override
+    public Commodity findById(int id) {
+        return getSqlSession().selectOne("com.pieces.dao.CommodityMapper.findById", id);
+    }
 
-        @Override
-        public List<Commodity> findAll() {
-            return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findAll");
-        }
+    @Override
+    public List<Commodity> findAll() {
+        return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findAll");
+    }
 
-        @Override
-        public PageInfo<Commodity> find(int pageNum, int pageSize) {
-            List<Commodity> list = getSqlSession().selectList("com.pieces.dao.CommodityMapper.findAll", null,new RowBounds(pageNum, pageSize));
-            PageInfo page = new PageInfo(list);
-            return page;
-        }
+    @Override
+    public PageInfo<Commodity> find(int pageNum, int pageSize) {
+        List<Commodity> list = getSqlSession().selectList("com.pieces.dao.CommodityMapper.findAll", null, new RowBounds(pageNum, pageSize));
+        PageInfo page = new PageInfo(list);
+        return page;
+    }
 
-        @Override
-        public PageInfo<CommodityVO> findByParam(CommodityVO commodity, int pageNum, int pageSize) {
-            List<Commodity> list = getSqlSession().selectList("com.pieces.dao.CommodityMapper.findByParam", commodity, new RowBounds(pageNum, pageSize));
-            PageInfo page = new PageInfo(list);
-            return page;
-        }
+    @Override
+    public PageInfo<CommodityVO> findByParam(CommodityVO commodity, int pageNum, int pageSize) {
+        List<Commodity> list = getSqlSession().selectList("com.pieces.dao.CommodityMapper.findByParam", commodity, new RowBounds(pageNum, pageSize));
+        PageInfo page = new PageInfo(list);
+        return page;
+    }
+
+    @Override
+    public CommodityVO findVoById(Integer id) {
+        CommodityVO commodityVO =  getSqlSession().selectOne("com.pieces.dao.CommodityMapper.findVoById",id);
+        return commodityVO;
+    }
 
     @Override
     public PageInfo<CommodityVO> findVoByPage(int pageNum, int pageSize) {
@@ -46,19 +52,19 @@ public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao{
 
 
     @Override
-        public int deleteById(int id) {
-            return getSqlSession().delete("com.pieces.dao.CommodityMapper.deleteById",id);
-        }
+    public int deleteById(int id) {
+        return getSqlSession().delete("com.pieces.dao.CommodityMapper.deleteById", id);
+    }
 
-        @Override
-        public int create(Commodity commodity) {
-            return getSqlSession().insert("com.pieces.dao.CommodityMapper.create",commodity);
-        }
+    @Override
+    public int create(Commodity commodity) {
+        return getSqlSession().insert("com.pieces.dao.CommodityMapper.create", commodity);
+    }
 
-        @Override
-        public int update(Commodity commodity) {
-            return getSqlSession().update("com.pieces.dao.CommodityMapper.update",commodity);
-        }
+    @Override
+    public int update(Commodity commodity) {
+        return getSqlSession().update("com.pieces.dao.CommodityMapper.update", commodity);
+    }
 
         @Override
         public CommodityVO findCommodityByBreedId(Integer id) {

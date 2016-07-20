@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pieces.dao.CommodityMapper">
+
     <resultMap id="CommodityResultMap" type="com.pieces.dao.model.Commodity">
             <id column="id"  property="id" />
             <result column="name"  property="name" />
@@ -15,7 +16,6 @@
             <result column="status"  property="status" />
             <result column="category_id"  property="categoryId" />
             <result column="create_time"  property="createTime" />
-        
     </resultMap>
 
     <resultMap id="CommodityVOResultMap" type="com.pieces.dao.vo.CommodityVO">
@@ -26,15 +26,19 @@
         <result column="specName"  property="specName" />
         <result column="origin_of"  property="originOf" />
         <result column="originOfName"  property="originOfName" />
+<<<<<<< HEAD
         <result column="executive_standard"  property="executiveStandardName" />
+=======
+        <result column="executive_standard"  property="executiveStandard" />
+>>>>>>> branch 'master' of https://github.com/zhouhang/pieces.git
         <result column="factory"  property="factory" />
         <result column="exterior"  property="exterior" />
         <result column="picture_url"  property="pictureUrl" />
         <result column="details"  property="details" />
         <result column="status"  property="status" />
         <result column="category_id"  property="categoryId" />
+        <result column="categoryName" property="categoryName" />
         <result column="create_time"  property="createTime" />
-
     </resultMap>
 
 
@@ -58,14 +62,14 @@
     <select id="findByParam"  parameterType="com.pieces.dao.vo.CommodityVO"  resultMap="CommodityVOResultMap">
         select
         coom.id as id,coom.name as name,spec,origin_of,executive_standard,factory,exterior,
-        picture_url,details,coom.status,category_id,coom.create_time as create_time,
+        picture_url,details,coom.status as status,category_id,coom.create_time as create_time,
         spec.name as specName,
         originOf.name as originOfName,
-        executiveStandard.name as executiveStandardName
+        category.name as categoryName
         from commodity coom
         left join code spec ON spec = spec.id
         left join code originOf on origin_of = originOf.id
-        left join code executiveStandard on executive_standard = executiveStandard.id
+        left join category on category_id = category.id
         <where>
             <if test="id != null">
                 id = #{id}
@@ -92,7 +96,7 @@
             </if>
 
             <if test="executiveStandard != null">
-               and executive_standard = #{executiveStandard}
+               and executive_standard like %#{executiveStandard}%
             </if>
             <!-- 根据executiveStandardNameStr使用in查询，使用在商品列表 -->
             <if test="executiveStandardNameStr != null">
@@ -100,7 +104,7 @@
             </if>
 
             <if test="factory != null">
-               and factory = #{factory}
+               and factory like %#{factory}%
             </if>
             <!-- 根据factoryStr使用in查询，使用在商品列表 -->
             <if test="factoryStr != null">
@@ -120,7 +124,7 @@
             </if>
 
             <if test="status != null">
-               and status = #{status}
+               and coom.status = #{status}
             </if>
 
             <if test="categoryId != null">
@@ -129,6 +133,15 @@
 
             <if test="createTime != null">
                and create_time = #{createTime}
+            </if>
+            <if test="categoryName != null">
+                and category.name like %#{categoryName}%
+            </if>
+            <if test="specName != null">
+                and spec.name like  %#{specName}%
+            </if>
+            <if test="originOfName != null">
+                and originOf.name like %#{originOfName}%
             </if>
         </where>
     </select>
@@ -218,11 +231,35 @@
         commodity.create_time,
         spec.name as specName,
         originOf.name as originOfName,
-        executiveStandard.name as executiveStandardName
+        category.name as categoryName
         from commodity
         left join code spec ON spec = spec.id
         left join code originOf on origin_of = originOf.id
-        left join code executiveStandard on executive_standard = executiveStandard.id
+        left join category on category_id = category.id
+    </select>
+
+    <select id="findVoById" parameterType="java.lang.Integer" resultMap="CommodityVOResultMap" >
+         select
+        commodity.id,
+        commodity.name,
+        spec,
+        origin_of,
+        executive_standard,
+        factory,
+        exterior,
+        picture_url,
+        details,
+        commodity.status,
+        category_id,
+        commodity.create_time,
+        spec.name as specName,
+        originOf.name as originOfName,
+        category.name as categoryName
+        from commodity
+        left join code spec ON spec = spec.id
+        left join code originOf on origin_of = originOf.id
+        left join category on category_id = category.id
+        where id = #{id}
     </select>
     
     <select id="findCommodityByBreedId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CommodityVO">
@@ -245,5 +282,7 @@
 	        where a.category_id = #{categoryId}
 	        and a.status = 1
     </select>
+
+
 
 </mapper>
