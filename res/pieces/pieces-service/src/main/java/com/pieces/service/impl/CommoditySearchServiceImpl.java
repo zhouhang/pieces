@@ -8,7 +8,6 @@ import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
 import org.apache.commons.lang.StringUtils;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -77,8 +76,8 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
                             .build();
         }
         else{
-            if(field.indexOf("品种:")>-1){
-                field = field.replace("品种:","");
+            if(field.contains("原药材:")){
+                field = field.replace("原药材:","");
                 searchQuery = new NativeSearchQueryBuilder()
                         .withQuery(boolQuery().must(matchQuery("categoryName", field)))
                         .withPageable(new PageRequest(pageNum-1,pageSize))
@@ -128,7 +127,7 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
         while (categoryIt.hasNext()){
             Map<String,String> map = new HashMap<>();
             map.put("value",categoryIt.next());
-            map.put("category","品种");
+            map.put("category","原药材");
             result.add(map);
         }
         return result;

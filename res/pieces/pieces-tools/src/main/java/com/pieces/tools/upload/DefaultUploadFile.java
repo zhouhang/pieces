@@ -23,6 +23,4 @@ public class DefaultUploadFile extends AbstractUploadFile{
         return sb.toString();
     }
 
-
-
 }

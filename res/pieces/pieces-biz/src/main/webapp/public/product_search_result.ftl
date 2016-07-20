@@ -3,7 +3,6 @@
 <head>
     <#include "./inc/meta.ftl"/>
     <title>搜索结果-饮片B2B</title>
-
 </head>
 
 <body>
@@ -17,7 +16,7 @@
             <em>&gt;</em>
             <span>${keyword!}</span>
         </div>
-
+        <#if (commodityDocPage??&&commodityDocPage.totalElements>0)>
         <div class="fa-pro-list">
             <table>
                 <thead>
@@ -63,7 +62,6 @@
                 </thead>
                 <tfoot></tfoot>
                 <tbody>
-                <#if commodityDocPage??>
                     <#list commodityDocPage.content as commodityDoc>
                         <tr>
                             <td><a href="product.html"><img src="${commodityDoc.pictureUrl!}" width="130" height="130" alt=""></a></td>
@@ -80,15 +78,32 @@
                             <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
                         </tr>
                     </#list>
+                <#else>
+                    <div class="fa-pro-empty">
+                        <div class="fa fa-frown"></div>
+                        <div class="text">
+                            <h1 class="title">对不起，没有找到关于“${keyword!}”的商品！</h1>
+                            <dl>
+                                <dt>建议您：</dt>
+                                <dd>1. 检查输入文字是否有误后重新搜索 </dd>
+                                <dd>2. 使用 <a href="#">快速询价</a> 功能，提交您的采购单</dd>
+                            </dl>
+                        </div>
+                    </div>
                 </#if>
+
+
                 </tbody>
             </table>
         </div>
         <#if commodityDocPage??>
-            <@p.pager inPageNo=commodityDocPage.number pageSize=commodityDocPage.size recordCount=commodityDocPage.totalElements toURL="/pro/search?keyword=${keyword}"/>
+            <@p.pager inPageNo=commodityDocPage.number pageSize=commodityDocPage.size recordCount=commodityDocPage.totalElements toURL="/commodity/search?keyword=${keyword}"/>
         </#if>
     </div>
 </div>
+
+    <#include "./inc/footer.ftl"/>
+
 
 </body>
 </html>
