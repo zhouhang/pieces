@@ -1,9 +1,21 @@
 package com.pieces.service.impl;
 
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.util.Date;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.CommodityDao;
 import com.pieces.dao.ICommonDao;
-import com.pieces.dao.model.Area;
 import com.pieces.dao.model.Commodity;
 import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.AbsCommonService;
@@ -13,17 +25,6 @@ import com.pieces.service.vo.CropInfo;
 import com.pieces.service.vo.CropResult;
 import com.pieces.tools.bean.FileBo;
 import com.pieces.tools.upload.DefaultUploadFile;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.util.Date;
 
 /**
  * Author: koabs
@@ -104,7 +105,18 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         return commodity;
     }
 
+    @Override
     public CommodityVO findCommodityByBreedId(Integer id) {
     	return commodityDao.findCommodityByBreedId(id);
+    }
+
+    @Override
+    public List<CommodityVO> findFactoryByBreedId(Integer id) {
+    	return commodityDao.findFactoryByBreedId(id);
+    }
+
+    @Override
+    public List<CommodityVO> findStandardByBreedId(Integer id) {
+    	return commodityDao.findStandardByBreedId(id);
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldIndex;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  * 商品索引文档
@@ -19,7 +20,7 @@ public class CommodityDoc {
     //生产厂家
     private String factory;
     //外观描述
-    @Field(index= FieldIndex.not_analyzed)
+    @Field( type = FieldType.String,index= FieldIndex.not_analyzed)
     private String exterior;
 
     //品种名称
@@ -30,12 +31,11 @@ public class CommodityDoc {
     //原药产地
     private String originOf;
     //执行标准
-    @Field(index=FieldIndex.not_analyzed)
+    @Field(type = FieldType.String,index=FieldIndex.not_analyzed)
     private String executiveStandard;
     //图片URL
-    @Field(index=FieldIndex.not_analyzed)
+    @Field(type = FieldType.String,index=FieldIndex.not_analyzed)
     private String pictureUrl;
-
 
 
     public Integer getId() {

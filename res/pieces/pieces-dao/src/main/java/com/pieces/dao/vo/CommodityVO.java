@@ -1,6 +1,7 @@
 package com.pieces.dao.vo;
 
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.Date;
 
 
@@ -17,14 +18,22 @@ public class CommodityVO implements Serializable {
 	private Integer spec;
 
 	private String specName;
+	
+	private String specNameStr;
 
 	//原药产地
 	private Integer originOf;
 
 	private String originOfName;
+	
+	private String originOfNameStr;
 
 	//执行标准
 	private String executiveStandard;
+
+	private String executiveStandardName;
+	
+	private String executiveStandardNameStr;
 
 	// 商品等级
 	private Integer level;
@@ -33,6 +42,8 @@ public class CommodityVO implements Serializable {
 
 	//生产厂家
 	private String factory;
+	
+	private String factoryStr;
 
 	//外观描述
 	private String exterior;
@@ -51,6 +62,9 @@ public class CommodityVO implements Serializable {
 	private String categoryName;
 
 	private Date createTime;
+	
+	//设置商品列表页面该code是否选中
+	private boolean checked;
 
 	public CommodityVO(){}
 	
@@ -195,4 +209,60 @@ public class CommodityVO implements Serializable {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
+
+	public String getSpecNameStr() {
+		return specNameStr;
+	}
+
+	public void setSpecNameStr(String specNameStr) {
+		this.specNameStr = specNameStr;
+	}
+
+	public String getOriginOfNameStr() {
+		return originOfNameStr;
+	}
+
+	public void setOriginOfNameStr(String originOfNameStr) {
+		this.originOfNameStr = originOfNameStr;
+	}
+
+	public String getExecutiveStandardNameStr() {
+		return executiveStandardNameStr;
+	}
+
+	public void setExecutiveStandardNameStr(String executiveStandardNameStr) {
+		this.executiveStandardNameStr = executiveStandardNameStr;
+	}
+
+	public String getFactoryStr() {
+		return factoryStr;
+	}
+
+	public void setFactoryStr(String factoryStr) {
+		this.factoryStr = factoryStr;
+	}
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+	
+    @Override
+    public String toString() {
+        Field[] fields = this.getClass().getDeclaredFields();
+        StringBuffer sb = new StringBuffer();
+        try {
+            for(Field field : fields){
+                if(field.get(this)!=null){
+                    sb.append("&").append(field.getName()).append("=").append(field.get(this).toString());
+                }
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
 }

@@ -7,6 +7,7 @@ import com.pieces.dao.model.Commodity;
 import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
+import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,8 +16,13 @@ import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+import org.elasticsearch.index.query.QueryBuilders;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
+import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
+
 
 /**
  * Created by wangbin on 2016/7/14.
@@ -62,24 +68,72 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     }
 
 
-
-    public Page<CommodityDoc> findAllField(Integer pageNum, Integer pageSize,String field){
-        SearchQuery searchQuery = new NativeSearchQueryBuilder()
-                .withQuery(QueryBuilders.matchQuery("name",field))
-                .withQuery(QueryBuilders.matchQuery("categoryName",field))
-                .withPageable(new PageRequest(pageNum,pageSize))
-                .build();
-
+    public Page<CommodityDoc> findByNameOrCategoryName(Integer pageNum, Integer pageSize, String field){
+        SearchQuery searchQuery =null;
+        if(StringUtils.isBlank(field)){
+            searchQuery = new NativeSearchQueryBuilder()
+                            .withQuery(matchAllQuery())
+                            .withPageable(new PageRequest(pageNum-1,pageSize))
+                            .build();
+        }
+        else{
+            if(field.indexOf("品种:")>-1){
+                field = field.replace("品种:","");
+                searchQuery = new NativeSearchQueryBuilder()
+                        .withQuery(boolQuery().must(matchQuery("categoryName", field)))
+                        .withPageable(new PageRequest(pageNum-1,pageSize))
+                        .build();
+            }else{
+                searchQuery = new NativeSearchQueryBuilder()
+                        .withFilter(boolQuery().should(matchQuery("name", field)))
+                        .withPageable(new PageRequest(pageNum-1,pageSize))
+                        .build();
+            }
+        }
         Page<CommodityDoc> result = esTemplate.queryForPage(searchQuery, CommodityDoc.class);
         return result;
     }
 
-
     @Override
-    public Page<CommodityDoc> findByNameOrCategoryName(Integer pageNum, Integer pageSize, String filed) {
-        Page<CommodityDoc>  page= commoditySearchRepository.findByNameOrCategoryName(filed,filed,new PageRequest(pageNum,pageSize));
-        return page;
+    public List<Map<String,String>> findByName(String keyword) {
+        //查询名称
+        SearchQuery nameSearchQuery = new NativeSearchQueryBuilder()
+                .withFilter(matchQuery("name",keyword))
+                .withPageable(new PageRequest(0,7)).build();
+        Page<CommodityDoc> nameResult = esTemplate.queryForPage(nameSearchQuery, CommodityDoc.class);
+        Set<String> nameSet = new HashSet<>();
+        for(CommodityDoc commodityDoc : nameResult.getContent()){
+            nameSet.add(commodityDoc.getName());
+        }
+        //查询品种
+        SearchQuery categorySearchQuery = new NativeSearchQueryBuilder()
+                .withFilter(matchQuery("categoryName",keyword))
+                .withPageable(new PageRequest(0,3)).build();
+        Page<CommodityDoc> categoryResult = esTemplate.queryForPage(categorySearchQuery, CommodityDoc.class);
+        Set<String> categorySet = new HashSet<>();
+        for(CommodityDoc commodityDoc : categoryResult.getContent()){
+            categorySet.add(commodityDoc.getCategoryName());
+        }
+
+        List<Map<String,String>> result = new ArrayList<>();
+
+        Iterator<String>  nameIt =   nameSet.iterator();
+        while (nameIt.hasNext()){
+            Map<String,String> map = new HashMap<>();
+            map.put("value",nameIt.next());
+            map.put("category","");
+            result.add(map);
+        }
+        Iterator<String>  categoryIt =   categorySet.iterator();
+        while (categoryIt.hasNext()){
+            Map<String,String> map = new HashMap<>();
+            map.put("value",categoryIt.next());
+            map.put("category","品种");
+            result.add(map);
+        }
+        return result;
     }
+
 
     private CommodityDoc vo2doc(CommodityVO commodityVO){
         CommodityDoc commodityDoc = new CommodityDoc();

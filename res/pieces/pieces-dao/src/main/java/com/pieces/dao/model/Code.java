@@ -26,6 +26,9 @@ public class Code  implements Serializable {
 	//Code 类型: 例如 切制规格, 原药产地..... 等
 	private Integer typeId;
 	
+	//商品列表页，该code是否选中
+	private boolean checked;
+	
 	private Date createTime;
 	
 	public Code(){}
@@ -85,5 +88,14 @@ public class Code  implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+	
 	
 }

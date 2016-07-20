@@ -17,27 +17,34 @@
         <div class="wrap">
             <div class="sitemap">
                 <a href="#">商品分类</a>
+                <#if (category??&&category.name??)>
                 <em>&gt;</em>
-                <a href="#">根茎类</a>
+                <a href="#">${category.name }</a>
+                </#if>
+                <#if (commodity??&&commodity.categoryName??)>
                 <em>&gt;</em>
-                <span>白芍</span>
+                <span>${commodity.categoryName }</span>
+                </#if>
             </div>
 
             <div class="fa-filter">
                 <dl>
                     <dt>你已筛选：</dt>
-                    <dd class="bd">
-                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                    <dd class="bd" id="screen">
+                    	<#list screens as screen>
+                        	<a data-name="${screen }" href="javascript:;">${screen }<i class='fa fa-times'></i></a>
+                        </#list>
                     </dd>
                     <dd class="extra">
-                        <a class="btn btn-gray" href="#">重置筛选条件</a>
+                        <a id="reset" class="btn btn-gray" href="javascript:;">重置筛选条件</a>
                     </dd>
                 </dl>
             </div>
 
             <div class="fa-pro-list">
+            <form id="myform" action="/commodity/index">
                 <table>
-                    <thead>
+                    <thead class="tc">
                         <tr>
                             <th width="150"></th>
                             <th width="240">商品信息</th>
@@ -53,14 +60,9 @@
                                                 <button class="btn btn-gray">确定</button>
                                             </dt>
                                             <dd>
-                                                <label><input type="checkbox" name="" id="" class="cbx">个</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">段</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">薄片</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">厚片</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">厚片</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">厚片</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">厚片</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">厚片</label>
+                                            	<#list specifications as specifications>
+                                                	<label><input type="checkbox" name="specNameStr" data-name="${specifications.name }"  class="cbx" value="${specifications.id }" <#if specifications.checked>checked="checked"</#if>>${specifications.name }</label>
+                                                </#list>
                                             </dd>
                                         </dl>
                                     </div>
@@ -78,9 +80,9 @@
                                                 <button class="btn btn-gray">确定</button>
                                             </dt>
                                             <dd>
-                                                <label><input type="checkbox" name="" id="" class="cbx">河北省</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">安徽省</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">湖北省</label>
+                                            	<#list place as place>
+                                                	<label><input type="checkbox" name="originOfNameStr" data-name="${place.name }" class="cbx" value="${place.id }" <#if place.checked>checked="checked"</#if>>${place.name }</label>
+                                                </#list>
                                             </dd>
                                         </dl>
                                     </div>
@@ -98,8 +100,9 @@
                                                 <button class="btn btn-gray">确定</button>
                                             </dt>
                                             <dd>
-                                                <label><input type="checkbox" name="" id="" class="cbx">《中国药典》2015版第一部</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">《上海市中药饮片炮制规范》2008年版</label>
+                                                <#list standards as standard>
+                                                	<label><input type="checkbox" name="executiveStandardNameStr" data-name="${standard.executiveStandard }" class="cbx" value="${standard.executiveStandard }"  <#if standard.checked>checked="checked"</#if>>${standard.executiveStandard }</label>
+                                                </#list>
                                             </dd>
                                         </dl>
                                     </div>
@@ -117,10 +120,9 @@
                                                 <button class="btn btn-gray">确定</button>
                                             </dt>
                                             <dd>
-                                                <label><input type="checkbox" name="" id="" class="cbx">安徽沪谯中药饮片厂</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">亳州市四方药业有限责任公司</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">湖北思安药业有限公司</label>
-                                                <label><input type="checkbox" name="" id="" class="cbx">葵花药业集团医药有限公司</label>
+                                                <#list factorys as factory>
+                                                	<label><input type="checkbox" name="factoryStr" class="cbx" data-name="${factory.factory }" value="${factory.factory }" <#if factory.checked>checked="checked"</#if>>${factory.factory }</label>
+                                                </#list>
                                             </dd>
                                         </dl>
                                     </div>
@@ -131,172 +133,28 @@
                     </thead>
                     <tfoot></tfoot>
                     <tbody>
+                    <#list pageInfo.list as commodity>
                         <tr>
-                            <td><a href="product.html"><img src="uploads/p0.jpg" width="130" height="130" alt=""></a></td>
+                            <td><a href=""><img src="${commodity.pictureUrl }" width="130" height="130" alt=""></a></td>
                             <td class="tl">                                
                                 <div class="desc">
-                                    <h3><a href="product.html">白芍</a></h3>
-                                    <p>圆片、厚2-3mm、直径1.8cm以上、14#- 18#无空心片、异形片、黑片</p>
+                                    <h3><a href="">${commodity.name }</a></h3>
+                                    <p>${commodity.exterior }</p>
                                 </div>
                             </td>
-                            <td>薄片</td>
-                            <td>河北省</td>
-                            <td class="tl">《中国药典》2015版第一部</td>
-                            <td>安徽沪谯中药饮片厂</td>
+                            <td>${commodity.specName }</td>
+                            <td>${commodity.originOfName }</td>
+                            <td class="tl">${commodity.executiveStandard }</td>
+                            <td>${commodity.factory }</td>
                             <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
                         </tr>
-
-                        <tr>
-                            <td><a href="product.html"><img src="uploads/p1.jpg" width="130" height="130" alt=""></a></td>
-                            <td class="tl">
-                                <div class="desc">
-                                    <h3><a href="product.html">白芍</a></h3>
-                                    <p>圆片、厚2-3mm、直径1.8cm以上、14#- 18#无空心片、异形片、黑片</p>
-                                </div>
-                            </td>
-                            <td>薄片</td>
-                            <td>河北省</td>
-                            <td class="tl">《上海市中药饮片炮制规范》2008年版</td>
-                            <td>安徽沪谯中药饮片厂</td>
-                            <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
-                        </tr>
-
-                        <tr>
-                            <td><a href="product.html"><img src="uploads/p0.jpg" width="130" height="130" alt=""></a></td>
-                            <td class="tl">
-                                <div class="desc">
-                                    <h3><a href="product.html">白芍</a></h3>
-                                    <p>圆片、厚2-3mm、直径1.8cm以上、14#- 18#无空心片、异形片、黑片</p>
-                                </div>
-                            </td>
-                            <td>薄片</td>
-                            <td>河北省</td>
-                            <td class="tl">《中国药典》2015版第一部</td>
-                            <td>安徽沪谯中药饮片厂</td>
-                            <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
-                        </tr>
-
-                        <tr>
-                            <td><a href="product.html"><img src="uploads/p1.jpg" width="130" height="130" alt=""></a></td>
-                            <td class="tl">
-                                <div class="desc">
-                                    <h3><a href="product.html">白芍</a></h3>
-                                    <p>圆片、厚2-3mm、直径1.8cm以上、14#- 18#无空心片、异形片、黑片</p>
-                                </div>
-                            </td>
-                            <td>薄片</td>
-                            <td>河北省</td>
-                            <td class="tl">《上海市中药饮片炮制规范》2008年版</td>
-                            <td>安徽沪谯中药饮片厂</td>
-                            <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
-                        </tr>
-
-                        <tr>
-                            <td><a href="product.html"><img src="uploads/p0.jpg" width="130" height="130" alt=""></a></td>
-                            <td class="tl">
-                                <div class="desc">
-                                    <h3><a href="product.html">白芍</a></h3>
-                                    <p>圆片、厚2-3mm、直径1.8cm以上、14#- 18#无空心片、异形片、黑片</p>
-                                </div>
-                            </td>
-                            <td>薄片</td>
-                            <td>河北省</td>
-                            <td class="tl">《中国药典》2015版第一部</td>
-                            <td>安徽沪谯中药饮片厂</td>
-                            <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
-                        </tr>
-
-                        <tr>
-                            <td><a href="product.html"><img src="uploads/p1.jpg" width="130" height="130" alt=""></a></td>
-                            <td class="tl">
-                                <div class="desc">
-                                    <h3><a href="product.html">白芍</a></h3>
-                                    <p>圆片、厚2-3mm、直径1.8cm以上、14#- 18#无空心片、异形片、黑片</p>
-                                </div>
-                            </td>
-                            <td>薄片</td>
-                            <td>河北省</td>
-                            <td class="tl">《上海市中药饮片炮制规范》2008年版</td>
-                            <td>安徽沪谯中药饮片厂</td>
-                            <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
-                        </tr>
-
-                        <tr>
-                            <td><a href="product.html"><img src="uploads/p0.jpg" width="130" height="130" alt=""></a></td>
-                            <td class="tl">
-                                <div class="desc">
-                                    <h3><a href="product.html">白芍</a></h3>
-                                    <p>圆片、厚2-3mm、直径1.8cm以上、14#- 18#无空心片、异形片、黑片</p>
-                                </div>
-                            </td>
-                            <td>薄片</td>
-                            <td>河北省</td>
-                            <td class="tl">《中国药典》2015版第一部</td>
-                            <td>安徽沪谯中药饮片厂</td>
-                            <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
-                        </tr>
-
-                        <tr>
-                            <td><a href="product.html"><img src="uploads/p1.jpg" width="130" height="130" alt=""></a></td>
-                            <td class="tl">
-                                <div class="desc">
-                                    <h3><a href="product.html">白芍</a></h3>
-                                    <p>圆片、厚2-3mm、直径1.8cm以上、14#- 18#无空心片、异形片、黑片</p>
-                                </div>
-                            </td>
-                            <td>薄片</td>
-                            <td>河北省</td>
-                            <td class="tl">《上海市中药饮片炮制规范》2008年版</td>
-                            <td>安徽沪谯中药饮片厂</td>
-                            <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
-                        </tr>
-
-                        <tr>
-                            <td><a href="product.html"><img src="uploads/p0.jpg" width="130" height="130" alt=""></a></td>
-                            <td class="tl">
-                                <div class="desc">
-                                    <h3><a href="product.html">白芍</a></h3>
-                                    <p>圆片、厚2-3mm、直径1.8cm以上、14#- 18#无空心片、异形片、黑片</p>
-                                </div>
-                            </td>
-                            <td>薄片</td>
-                            <td>河北省</td>
-                            <td class="tl">《中国药典》2015版第一部</td>
-                            <td>安徽沪谯中药饮片厂</td>
-                            <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
-                        </tr>
-
-                        <tr>
-                            <td><a href="product.html"><img src="uploads/p0.jpg" width="130" height="130" alt=""></a></td>
-                            <td class="tl">
-                                <div class="desc">
-                                    <h3><a href="product.html">白芍</a></h3>
-                                    <p>圆片、厚2-3mm、直径1.8cm以上、14#- 18#无空心片、异形片、黑片</p>
-                                </div>
-                            </td>
-                            <td>薄片</td>
-                            <td>河北省</td>
-                            <td class="tl">《中国药典》2015版第一部</td>
-                            <td>安徽沪谯中药饮片厂</td>
-                            <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
-                        </tr>
+                    </#list>
                     </tbody>
                 </table>
+                </form>
             </div>
 
-            <div class="pagin">
-                <span class="disabled">上一页</span>
-                <span class="curr">1</span>
-                <a href="?page=2">2</a>
-                <a href="?page=3">3</a>
-                <a href="?page=4">4</a>
-                <a href="?page=5">5</a>
-                <a href="?page=2">下一页</a>
-                <a href="?page=2">尾页</a>
-                <em>共 284 个商品 / 共29页 / 跳转到第</em>
-                <input class="ipt" type="text" onkeydown="javascript:if(event.keyCode==13){page_jump();return false;}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="1" maxlength="4" id="jPageSkip" >页
-                <button class="btn btn-gray" type="button" onclick="page_jump();">确定</button>
-            </div>
+            <@p.pager inPageNo=pageInfo.pageNum pageSize=pageInfo.pageSize toURL="/commodity/index?${commodityParam}" recordCount=pageInfo.total/>
         </div>
     </div>
 
@@ -338,12 +196,33 @@
 	<#include "./inc/footer.ftl"/>
 
     <script src="/js/jquery.min.js"></script>
+    <script src="/js/jquery.form.js"></script>
     <script>
     var productPage = {
         v: {
 
         },
         fn: {
+        	init: function(){
+        		$(".fa-times").click(function(){
+        			var name = $(this).parent().data('name');
+        			$(".cbx").filter(':checked').each(function() {
+        				var checkName = $(this).data('name');
+        				if(name === checkName){
+        					this.checked = false;
+        				}
+                    });
+        			$("#myform")[0].submit();
+                })
+        		
+        		$("#reset").click(function(){
+        			//console.log($('#myfrom th .cbx').length)
+                	$('.fa-pro-list th .cbx').prop('checked', false);
+        			$('#screen').html("");
+        			$("#myform")[0].submit();
+                	//return false;
+                })
+        	},
             // 全选事件
             checkboxEvent: function() {
                 var _self = this;
@@ -364,7 +243,6 @@
                 $checkList.on("click", function() {
                     total += this.checked ? 1 : -1;
                     $checkAll.prop('checked', total === amount);
-
                 }).each(function() {
                     // 统计已选个数
                     total += this.checked ? 1 : 0;
@@ -384,15 +262,23 @@
 
                 // 确定按钮
                 $checkAll.parent().next().on('click', function() {
-                    var val = [];
+                    //var val = [];
+                    //var modal = [];
+                    //$checkList.filter(':checked').each(function() {                        
+                    //    var name = $(this).data('name'); 
+                    //    modal.push('<a href="javascript:;">', name, '<i class="fa fa-times"></i></a>');
+                    //    val.push(name);
+                    //});
+					var val = [];
                     $checkList.filter(':checked').each(function() {
                         val.push(this.value);
                     });
 
                     // 关闭下拉
                     $(this).closest('.bd').hide();
-                    // window.open('search?' + $checkAll.val() + '=' + val.join('-'));
-                    // location.href = 'search?' + $checkAll.val() + '=' + val.join('-');
+                    $("#myform")[0].submit();
+                    //val.lenth !== total && $('#screen').append(modal.join()) && this.filer(val);                    
+                    return false;
                 })
             },
             // 下拉
@@ -423,6 +309,7 @@
     }
     $(function() {
         productPage.fn.checkboxEvent().dorpDown();
+        productPage.fn.init();
     })
     </script>
 </body>

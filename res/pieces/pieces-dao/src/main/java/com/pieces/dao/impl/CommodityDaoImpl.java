@@ -70,4 +70,14 @@ public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao {
         public CommodityVO findCommodityByBreedId(Integer id) {
             return getSqlSession().selectOne("com.pieces.dao.CommodityMapper.findCommodityByBreedId",id);
         }
+        
+        @Override
+        public List<CommodityVO> findStandardByBreedId(Integer id) {
+            return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findStandardByBreedId",id);
+        }
+
+		@Override
+		public List<CommodityVO> findFactoryByBreedId(Integer id) {
+			return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findFactoryByBreedId",id);
+		}
 }
