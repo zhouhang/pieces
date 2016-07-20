@@ -7,7 +7,7 @@ public class Result {
 
     private String status;
     private String info ="";
-    private Object data = new Object();
+    private Object data = null;
 
     public Result(Boolean status) {
         if(status){
