@@ -187,8 +187,8 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
         .fa-chart option{text-align:center;}
     .fa-chart tbody tr:nth-child(even){background:#f5f5f5;}
       .fa-chart .ipt-wrap{position:relative;}
-      	.fa-chart .ipt-wrap-focus{background:url(../images/ipt-shadow.png) repeat-x;}
-      	.fa-chart .ipt{width:100%;height:18px;line-height:18px;padding:11px 0;color:#666;border:none;vertical-align:top;text-align:center;background:none;}
+        .fa-chart .ipt{width:100%;height:18px;line-height:18px;padding:11px 0;color:#666;border:none;vertical-align:top;text-align:center;background:none;}
+      	.fa-chart .ipt:focus{background:url(../images/ipt-shadow.png) repeat-x;}
       .fa-chart td a{margin:0 4px;}
 .fa-chart-d{font-size:12px;}      
   .fa-chart-d .group{margin-bottom:10px;border:1px solid #ccc;overflow:hidden;*zoom:1;}      
@@ -221,7 +221,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
       .suggestions .w4{width:75px;}
 
 /* fa-table */
-.fa-table{padding:40px 30px 50px;}
+.fa-table{padding:40px 30px;}
 	.fa-table .caption{margin-bottom:30px;line-height:34px;color:#999;}
   	.fa-table .caption .btn{line-height:18px;margin:0 20px;padding:3px 15px;font-size:12px;color:#666;background:#ededed;border:1px solid #ccc;}
     .fa-table .caption .btn:hover{background:#d5d5d5;border-color:#aaa;color:#333;}
@@ -264,7 +264,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
   .fa-form .ft{padding:30px 0 0 140px;}
 
 /* pagin */
-.pagin{padding-top:50px;text-align:center;overflow:hidden;}
+.pagin{padding-top:40px;text-align:center;overflow:hidden;}
   .pagin em{font-size:12px;}
   .pagin span,
   .pagin a{display:inline-block;line-height:1;margin:0 1px;padding:10px 13px;text-decoration:none;background:#e7e7e7;color:#333;border:1px solid #ccc;vertical-align:middle;}
