@@ -75,12 +75,14 @@ public class CommodityController extends BaseController{
         	//获取类别
             Category category = categoryService.findById(commodityVO.getCategoryId());
             commodityVO.setCategoryName(category.getName());
-            category = categoryService.findById(category.getPartenId());     
-            model.put("category", category);
+            Category parent = categoryService.findById(category.getPartenId());     
+            model.put("parent", parent);
             
             //获取品种属性
-            List<Code> specifications = categoryService.findCode(commodityVO.getCategoryId(), CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
-            List<Code> place = categoryService.findCode(commodityVO.getCategoryId(), CommodityEnum.COMMODITY_PLACE.getValue());
+//            List<Code> specifications = categoryService.findCode(commodityVO.getCategoryId(), CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
+//            List<Code> place = categoryService.findCode(commodityVO.getCategoryId(), CommodityEnum.COMMODITY_PLACE.getValue());
+            List<Code> specifications = categoryService.findCodeByString(category.getSpecs());
+            List<Code> place = categoryService.findCodeByString(category.getOrigins());
             //设置code是否选中
             setCodeCheck(specifications,commodityVO.getSpecNameStr(),screens);
             setCodeCheck(place,commodityVO.getOriginOfNameStr(),screens);

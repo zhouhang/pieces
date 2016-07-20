@@ -7,5 +7,4 @@
     </div>
 </div>
 <!-- footer end -->
-
 <script src="/js/jquery.form.js"></script>

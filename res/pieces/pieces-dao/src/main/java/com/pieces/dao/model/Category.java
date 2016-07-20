@@ -23,6 +23,12 @@ public class Category  implements Serializable {
 	//类目级别 1 代表一级商品类别. 2 代表二级商品类别.
 	private Integer level;
 	
+	private String specs;
+	
+	private String origins;
+	
+	private String levels;
+	
 	private Date createTime;
 	
 	public Category(){}
@@ -83,6 +89,30 @@ public class Category  implements Serializable {
 		this.createTime = createTime;
 	}
 	
+	public String getSpecs() {
+		return specs;
+	}
+
+	public void setSpecs(String specs) {
+		this.specs = specs;
+	}
+
+	public String getOrigins() {
+		return origins;
+	}
+
+	public void setOrigins(String origins) {
+		this.origins = origins;
+	}
+
+	public String getLevels() {
+		return levels;
+	}
+
+	public void setLevels(String levels) {
+		this.levels = levels;
+	}
+
 	@Override
     public String toString() {
         Field[] fields = this.getClass().getFields();

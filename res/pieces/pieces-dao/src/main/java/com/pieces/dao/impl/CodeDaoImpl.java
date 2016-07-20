@@ -54,13 +54,20 @@ public class CodeDaoImpl extends BaseDaoImpl implements CodeDao{
 			return getSqlSession().selectList("com.pieces.dao.CodeMapper.find",code);
 		}
 		
+		@Override
+		public List<Code> findByString(String str) {
+			Code code = new Code();
+			code.setIdStr(str);
+			return getSqlSession().selectList("com.pieces.dao.CodeMapper.findByString",code);
+		}
+		
 		/**
 		 * upate code
 		 * @param newString 新的code字符串数组,如规格，产地
 		 * @param relatedCode 关联的品种
 		 * @param typeId code类型
 		 */
-		public void updateCode(String[] newString,Integer relatedCode,Integer typeId){
+		/*public void updateCode(String[] newString,Integer relatedCode,Integer typeId){
 			//查询原始specifications
 			Code code = new Code();
 			code.setRelatedCode(relatedCode);
@@ -102,7 +109,7 @@ public class CodeDaoImpl extends BaseDaoImpl implements CodeDao{
 					i++;
 				}
 			}
-		}
+		}*/
 		
 		/**
 		 * 根据条件构造code
@@ -112,7 +119,7 @@ public class CodeDaoImpl extends BaseDaoImpl implements CodeDao{
 		 * @param typeId
 		 * @return
 		 */
-		public Code getCode(int code,String name,Integer relatedCode,Integer typeId){
+		/*public Code getCode(int code,String name,Integer relatedCode,Integer typeId){
 			Code spe = new Code();
 			spe.setCode(String.valueOf(code));
 			spe.setName(name);
@@ -121,6 +128,5 @@ public class CodeDaoImpl extends BaseDaoImpl implements CodeDao{
 			spe.setTypeId(typeId);
 			spe.setCreateTime(new Date());
 			return spe;
-		}
-		
+		}*/
 }

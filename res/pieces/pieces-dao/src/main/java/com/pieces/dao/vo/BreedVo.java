@@ -1,5 +1,9 @@
 package com.pieces.dao.vo;
 
+import java.util.List;
+
+import com.pieces.dao.model.Code;
+
 public class BreedVo {
 	private String id;
 	//类别id
@@ -10,59 +14,106 @@ public class BreedVo {
 	private String name;
 	//别名
 	private String aliases;
-	//规格
-	private String specifications;
-	//产地
-	private String place;
-	//等级
-	private String level;
-	public Integer getClassifyId() {
-		return classifyId;
-	}
-	public void setClassifyId(Integer classifyId) {
-		this.classifyId = classifyId;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getAliases() {
-		return aliases;
-	}
-	public void setAliases(String aliases) {
-		this.aliases = aliases;
-	}
-	public String getSpecifications() {
-		return specifications;
-	}
-	public void setSpecifications(String specifications) {
-		this.specifications = specifications;
-	}
-	public String getPlace() {
-		return place;
-	}
-	public void setPlace(String place) {
-		this.place = place;
-	}
-	public String getClassifyName() {
-		return classifyName;
-	}
-	public void setClassifyName(String classifyName) {
-		this.classifyName = classifyName;
-	}
+	private String spece;
+	
+	private String origins;
+	
+	private String levels;
+	
+	private List<Code> specelist;
+	
+	private List<Code> originlist;
+	
+	private List<Code> levellist;
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getLevel() {
-		return level;
+
+	public Integer getClassifyId() {
+		return classifyId;
 	}
-	public void setLevel(String level) {
-		this.level = level;
+
+	public void setClassifyId(Integer classifyId) {
+		this.classifyId = classifyId;
 	}
+
+	public String getClassifyName() {
+		return classifyName;
+	}
+
+	public void setClassifyName(String classifyName) {
+		this.classifyName = classifyName;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getAliases() {
+		return aliases;
+	}
+
+	public void setAliases(String aliases) {
+		this.aliases = aliases;
+	}
+
+	public String getSpece() {
+		return spece;
+	}
+
+	public void setSpece(String spece) {
+		this.spece = spece;
+	}
+
+	public String getOrigins() {
+		return origins;
+	}
+
+	public void setOrigins(String origins) {
+		this.origins = origins;
+	}
+
+	public String getLevels() {
+		return levels;
+	}
+
+	public void setLevels(String levels) {
+		this.levels = levels;
+	}
+
+	public List<Code> getSpecelist() {
+		return specelist;
+	}
+
+	public void setSpecelist(List<Code> specelist) {
+		this.specelist = specelist;
+	}
+
+	public List<Code> getOriginlist() {
+		return originlist;
+	}
+
+	public void setOriginlist(List<Code> originlist) {
+		this.originlist = originlist;
+	}
+
+	public List<Code> getLevellist() {
+		return levellist;
+	}
+
+	public void setLevellist(List<Code> levellist) {
+		this.levellist = levellist;
+	}
+	
+	
 	
 }

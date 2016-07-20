@@ -113,30 +113,33 @@ public class CategoryServiceImpl implements CategoryService {
 		ca.setStatus(1);
 		ca.setLevel(2);
 		ca.setCreateTime(new Date());
+		ca.setSpecs(bvo.getSpece());
+		ca.setOrigins(bvo.getOrigins());
+		ca.setLevels(bvo.getLevels());
 		categoryDao.create(ca);
-		Integer breedid = ca.getId();
+//		Integer breedid = ca.getId();
 		//保存code
-		String[] specifications = bvo.getSpecifications().trim().replace("，", ",").split(",");
-		for(int i=0 ; i<specifications.length ; i++){
-			if(!specifications[i].trim().equals("")){
-				Code spe= codeDao.getCode(i, specifications[i].trim(), breedid, CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
-				codeDao.create(spe);
-			}
-		}
-		String[] place = bvo.getPlace().trim().replace("，", ",").split(",");
-		for(int i=0 ; i<place.length ; i++){
-			if(!place[i].trim().equals("")){
-				Code spe = codeDao.getCode(i, place[i].trim(), breedid, CommodityEnum.COMMODITY_PLACE.getValue());
-				codeDao.create(spe);
-			}
-		}
-		String[] level = bvo.getLevel().trim().replace("，", ",").split(",");
-		for(int i=0 ; i<level.length ; i++){
-			if(!level[i].trim().equals("")){
-				Code spe = codeDao.getCode(i, level[i].trim(), breedid, CommodityEnum.COMMODITY_LEVEL.getValue());
-				codeDao.create(spe);
-			}
-		}
+//		String[] specifications = bvo.getSpecifications().trim().replace("，", ",").split(",");
+//		for(int i=0 ; i<specifications.length ; i++){
+//			if(!specifications[i].trim().equals("")){
+//				Code spe= codeDao.getCode(i, specifications[i].trim(), breedid, CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
+//				codeDao.create(spe);
+//			}
+//		}
+//		String[] place = bvo.getPlace().trim().replace("，", ",").split(",");
+//		for(int i=0 ; i<place.length ; i++){
+//			if(!place[i].trim().equals("")){
+//				Code spe = codeDao.getCode(i, place[i].trim(), breedid, CommodityEnum.COMMODITY_PLACE.getValue());
+//				codeDao.create(spe);
+//			}
+//		}
+//		String[] level = bvo.getLevel().trim().replace("，", ",").split(",");
+//		for(int i=0 ; i<level.length ; i++){
+//			if(!level[i].trim().equals("")){
+//				Code spe = codeDao.getCode(i, level[i].trim(), breedid, CommodityEnum.COMMODITY_LEVEL.getValue());
+//				codeDao.create(spe);
+//			}
+//		}
 	}
 	
 	/**
@@ -146,12 +149,12 @@ public class CategoryServiceImpl implements CategoryService {
 	@Transactional
 	public void updateBreed(BreedVo bvo) {
 		//1.修改code
-		String[] specifications_new = bvo.getSpecifications().replace("，", ",").trim().split(",");
-		codeDao.updateCode(specifications_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
-		String[] place_new = bvo.getPlace().trim().replace("，", ",").split(",");
-		codeDao.updateCode(place_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_PLACE.getValue());
-		String[] level_new = bvo.getLevel().trim().replace("，", ",").split(",");
-		codeDao.updateCode(level_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_LEVEL.getValue());
+//		String[] specifications_new = bvo.getSpecifications().replace("，", ",").trim().split(",");
+//		codeDao.updateCode(specifications_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
+//		String[] place_new = bvo.getPlace().trim().replace("，", ",").split(",");
+//		codeDao.updateCode(place_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_PLACE.getValue());
+//		String[] level_new = bvo.getLevel().trim().replace("，", ",").split(",");
+//		codeDao.updateCode(level_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_LEVEL.getValue());
 		//修改category
 		Category ca = new Category();
 		ca.setName(bvo.getName());
@@ -160,6 +163,9 @@ public class CategoryServiceImpl implements CategoryService {
 		ca.setStatus(1);
 		ca.setLevel(2);
 		ca.setId(Integer.parseInt(bvo.getId()));
+		ca.setSpecs(bvo.getSpece());
+		ca.setOrigins(bvo.getOrigins());
+		ca.setLevels(bvo.getLevels());
 		categoryDao.update(ca);
 	}
 	
@@ -178,39 +184,42 @@ public class CategoryServiceImpl implements CategoryService {
 	public BreedVo getBreedById(Integer id) {
 		Category category = categoryDao.findById(id);
 		Category parten = categoryDao.findById(category.getPartenId());
-		String specifications = getbreedProtity(id,CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
-		String places = getbreedProtity(id,CommodityEnum.COMMODITY_PLACE.getValue());
-		String level = getbreedProtity(id,CommodityEnum.COMMODITY_LEVEL.getValue());
+//		String specifications = getbreedProtity(id,CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
+//		String places = getbreedProtity(id,CommodityEnum.COMMODITY_PLACE.getValue());
+//		String level = getbreedProtity(id,CommodityEnum.COMMODITY_LEVEL.getValue());
 		BreedVo bvo = new BreedVo();
 		bvo.setId(id.toString());
 		bvo.setAliases(category.getAliases());
 		bvo.setName(category.getName());
-		bvo.setPlace(places);
-		bvo.setSpecifications(specifications);
+		bvo.setSpece(category.getSpecs());
+		bvo.setOrigins(category.getOrigins());
 		bvo.setClassifyId(category.getPartenId());
 		bvo.setClassifyName(parten.getName());
-		bvo.setLevel(level);
+		bvo.setLevels(category.getLevels());
 		return bvo;
 	}
 	
+//	@Override
+//	public String getbreedProtity(Integer id,Integer codeType) {
+//		List<Code> list = findCode(id,codeType);
+//		String codes = "";
+//		for(Code code : list){
+//			codes = codes + code.getName() + ",";
+//		}
+//		codes = codes.substring(0, codes.length()-1);
+//		return codes;
+//	}
+
 	@Override
-	public String getbreedProtity(Integer id,Integer codeType) {
-		List<Code> list = findCode(id,codeType);
-		String codes = "";
-		for(Code code : list){
-			codes = codes + code.getName() + ",";
-		}
-		codes = codes.substring(0, codes.length()-1);
-		return codes;
+	public List<Code> findCode(String propoty) {
+		Code code = new Code();
+		code.setCode(propoty);
+		return codeDao.find(code);
 	}
 
 	@Override
-	public List<Code> findCode(Integer beedId,Integer typeId) {
-		Code code = new Code();
-		code.setTypeId(typeId);
-		code.setRelatedCode(beedId);
-		code.setStatus(1);
-		return codeDao.find(code);
+	public List<Code> findCodeByString(String str) {
+		return codeDao.findByString(str);
 	}
 
 }
