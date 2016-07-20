@@ -4,6 +4,8 @@
 <#include "./inc/meta.ftl"/>
     <title>新增分类-boss-饮片B2B</title>
 </head>
+<script>
+</script>
 
 <style>
     body { font-family: sans-serif; font-size: 14px; line-height: 1.6em; margin: 0; padding: 0; }
@@ -70,8 +72,8 @@
                                 <i>*</i>切制规格：
                             </div>
                             <div class="cnt">
-                                <select name="" id="spec" class="wide">
-                                    <option>请选择</option>
+                                <select name="spec" id="spec" class="wide">
+                                    <option value="-1">请选择</option>
                                 </select>
                             </div>
                         </div>
@@ -82,6 +84,7 @@
                             </div>
                             <div class="cnt">
                                 <select name="level" id="level" class="wide">
+                                    <option value="-1">请选择</option>
                                 </select>
                             </div>
                         </div>
@@ -92,7 +95,7 @@
                             </div>
                             <div class="cnt">
                                 <select name="originOf" id="originOf" class="wide">
-                                    <option>请选择</option>
+                                    <option value="-1">请选择</option>
                                 </select>
                             </div>
                         </div>
@@ -133,11 +136,11 @@
                                 <div class="goods-img">
                                     <!-- <img src="images/blank.gif"><i class="del"></i> -->
                                 </div>
-                                <input type="hidden" value="" id="imgUrl">
+                                <input type="hidden" name="imgUrl" value="" id="imgUrl">
                             </div>
                         </div>
 
-                        <div class="group">
+                        <div class="group" style="padding-bottom: 20px;">
                             <div class="txt">
                                 <i>*</i>详细信息：
                             </div>
@@ -206,13 +209,14 @@
             //TODO: 获取品种的切制规格,原药产地,等级,执行标准
             $("#spec").code({beedId:suggestion.data,typeId:10000});//"切制规格"
             $("#originOf").code({beedId:suggestion.data,typeId:10001});//"原药产地"
+            $("#level").code({beedId:suggestion.data,typeId:10002});//"等级"
         }
     });
 
-    $("#level").code({beedId:null,typeId:10002});//"等级"
-
     var commodityAddPage = {
-        v: {},
+        v: {
+            form:null
+        },
         fn: {
             init: function () {
                 this.formValidate();
@@ -220,18 +224,30 @@
                 this.goodsImg();
             },
             formValidate: function () {
-                $("#myform").validator({
+                commodityAddPage.v.form = $("#form").validator({
                     fields: {
-                        username: "required"
+                        categoryId: "required",
+                        name: "required",
+                        spec: "required(not, -1)",
+                        level: "required(not, -1)",
+                        originOf: "required(not, -1)",
+                        executiveStandard: "required",
+                        exterior: "required",
+                        factory: "required",
+                        imgUrl: "required",
+                        details: "required",
+                        status: "required"
                     }
                 });
             },
             // 提交事件
             submitEvent: function () {
-                var self = this;
-
 
                 $('button:submit').on('click', function () {
+
+                    console.log(commodityAddPage.v.form.isFormValid());
+                    return false;
+
                     var data = $("#form").serializeObject();
 
                     $.post("/commodity/save",data, function(data){
@@ -330,10 +346,8 @@
     }
     $(function () {
         commodityAddPage.fn.init();
-
         //实例化编辑器
         var um = UM.getEditor('details');
-        // .getContent() 获取内容
     })
 </script>
 </body>

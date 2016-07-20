@@ -19,7 +19,7 @@
                     <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                     <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
-                <@p.pager pageInfo=pageInfo  pageUrl="commodity/index"  params=""/>
+                <@p.pager pageInfo=pageInfo  pageUrl="commodity/index"  params=param />
             </div>
             <div class="chart">
                 <table class="tc">
@@ -100,7 +100,7 @@
                 // 筛选
                 filter: function() {
                     var $ipts = $('.chart .ipt, .chart select');
-                    var url="commodity/index?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
+                    var url="commodity/index?";
 
                     $('#search_btn').on('click', function() {
                         var params = [];
@@ -108,7 +108,7 @@
                             var val = $.trim(this.value);
                             val && params.push($(this).attr('name') + '=' + val);
                         })
-                        location.href=url+"&"+params.join('&');
+                        location.href=url+params.join('&');
                     })
                 }
             }

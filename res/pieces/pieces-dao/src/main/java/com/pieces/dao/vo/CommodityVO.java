@@ -119,10 +119,16 @@ public class CommodityVO implements Serializable {
 	}
 	
 	public String getDetails() {
+		if (details!=null) {
+			details = details.replace("&lt","<").replace("&gt",">");
+		}
 		return details;
 	}
 
 	public void setDetails(String details) {
+		if (details!=null) {
+			details = details.replace("&lt","<").replace("&gt",">");
+		}
 		this.details = details;
 	}
 	

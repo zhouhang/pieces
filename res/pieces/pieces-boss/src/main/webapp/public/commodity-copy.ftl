@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <#include "./inc/meta.ftl"/>
-    <title>新增分类-boss-饮片B2B</title>
+    <title>新增商品-boss-饮片B2B</title>
 </head>
 
 <style>
@@ -42,7 +42,7 @@
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                         <button type="reset" class="btn btn-gray">重置</button>
                         <button type="button" id="delete" class="btn btn-gray">删除</button>
-                        <button type="button" id="copy" class="btn btn-gray">复制</button>
+                        <button type="button" class="btn btn-gray">复制</button>
                         <button type="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
@@ -232,10 +232,6 @@
 
                 $("#delete").click(function(){
                     commodityAddPage.fn.deleteCommodity();
-                })
-
-                $("#copy").click(function(){
-                    window.location.href = "/commodity/add/${commodity.id}";
                 })
 
 

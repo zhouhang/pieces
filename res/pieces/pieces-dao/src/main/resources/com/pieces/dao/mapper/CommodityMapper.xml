@@ -59,6 +59,7 @@
         select
         coom.id as id,coom.name as name,spec,origin_of,executive_standard,factory,exterior,
         picture_url,details,coom.status as status,category_id,coom.create_time as create_time,
+        coom.level as level,
         spec.name as specName,
         originOf.name as originOfName,
         category.name as categoryName
@@ -220,7 +221,7 @@
 
     <select id="findVoById" parameterType="java.lang.Integer" resultMap="CommodityVOResultMap" >
          select
-        commodity.id,
+        commodity.id as id,
         commodity.name,
         spec,
         origin_of,
@@ -231,6 +232,7 @@
         details,
         commodity.status,
         category_id,
+        commodity.level as level,
         commodity.create_time,
         spec.name as specName,
         originOf.name as originOfName,
@@ -239,7 +241,7 @@
         left join code spec ON spec = spec.id
         left join code originOf on origin_of = originOf.id
         left join category on category_id = category.id
-        where id = #{id}
+        where commodity.id = #{id}
     </select>
     
     <select id="findCommodityByBreedId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CommodityVO">

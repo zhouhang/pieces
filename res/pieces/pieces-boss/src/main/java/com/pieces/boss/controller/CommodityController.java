@@ -1,6 +1,7 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.boss.commons.UEditorResult;
 import com.pieces.dao.model.Commodity;
 import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.CommodityService;
@@ -8,6 +9,8 @@ import com.pieces.service.constant.bean.Result;
 import com.pieces.service.vo.CropInfo;
 import com.pieces.service.vo.CropResult;
 import com.pieces.tools.log.annotation.BizLog;
+import com.pieces.tools.utils.Reflection;
+import com.sun.javafx.sg.prism.NGShape;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -37,6 +40,7 @@ public class CommodityController extends BaseController{
         model.put("pageNum", pageNum);
         model.put("pageSize", pageSize);
         model.put("pageInfo", pageInfo);
+        model.put("param", Reflection.serialize(commodityVO));
         return "commodity";
     }
 
@@ -47,20 +51,29 @@ public class CommodityController extends BaseController{
        return "commodity-add";
     }
 
-    @RequestMapping(value = "/editer/{id}", method = RequestMethod.GET)
-    @BizLog(type = "", desc = "编辑商品信息页面")
-    public String editerPage(@PathVariable("id")Integer id) {
-        return "commodity-editer";
+
+    @RequestMapping(value = "/add/{id}", method = RequestMethod.GET)
+    @BizLog(type = "", desc = "根据已有商品新增商品信息页面")
+    public String copyPage(@PathVariable("id")Integer id, ModelMap model) {
+        CommodityVO vo = commodityService.findVoById(id);
+        model.put("commodity", vo);
+        return "commodity-copy";
     }
 
-
+    @RequestMapping(value = "/editer/{id}", method = RequestMethod.GET)
+    @BizLog(type = "", desc = "编辑商品信息页面")
+    public String editerPage(@PathVariable("id")Integer id, ModelMap model) {
+        CommodityVO vo = commodityService.findVoById(id);
+        model.put("commodity", vo);
+        return "commodity-editer";
+    }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     @BizLog(type = "", desc = "保存商品信息")
     public Result save(Commodity commodity) {
         commodityService.saveOrUpdate(commodity);
-        return new Result(true).info("商品信息保存成功!");
+        return new Result(true).data(null).info("商品信息保存成功!");
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
@@ -105,4 +118,21 @@ public class CommodityController extends BaseController{
     public CropResult clipping(CropInfo cropInfo) throws Exception{
         return commodityService.cropImg(cropInfo);
     }
+
+
+    /**
+     * 富文本编辑器上传图片方法
+     * @param upfile
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
+    @ResponseBody
+    public UEditorResult updateUEditorFile(@RequestParam(required = false) MultipartFile upfile) throws Exception{
+
+        CropResult cropResult = commodityService.uploadImage(upfile);
+
+        return UEditorResult.success(upfile.getOriginalFilename(),upfile.getOriginalFilename(),cropResult.getUrl() );
+    }
+
 }
