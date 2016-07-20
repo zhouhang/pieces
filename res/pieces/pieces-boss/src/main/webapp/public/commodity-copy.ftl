@@ -30,7 +30,7 @@
             <dl>
                 <dt>商品信息</dt>
                 <dd>
-                    <a class="curr" href="goods.html">基本信息</a>
+                    <a class="curr" href="/commodity/index">基本信息</a>
                 </dd>
             </dl>
         </div>

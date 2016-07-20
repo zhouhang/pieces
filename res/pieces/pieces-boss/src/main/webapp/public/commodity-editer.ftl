@@ -30,14 +30,14 @@
             <dl>
                 <dt>商品信息</dt>
                 <dd>
-                    <a class="curr" href="goods.html">基本信息</a>
+                    <a class="curr" href="/commodity/index">基本信息</a>
                 </dd>
             </dl>
         </div>
         <div class="main">
             <form action="" id="form">
                 <div class="title">
-                    <h3><i class="fa fa-chevron-right"></i>修改商品“${commodity.name}”</h3>
+                    <h3><i class="fa fa-chevron-right"></i>复制商品“${commodity.name}”成功</h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                         <button type="reset" class="btn btn-gray">重置</button>
@@ -66,7 +66,6 @@
                             </div>
                             <div class="cnt">
                                 <input type="text" class="ipt" value="${commodity.name}" name="name" autocomplete="off" placeholder="">
-                                <input type="text" class="ipt" value="${commodity.id}" name="id" style="display: none">
                             </div>
                         </div>
 

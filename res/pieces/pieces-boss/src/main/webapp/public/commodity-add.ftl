@@ -31,7 +31,7 @@
             <dl>
                 <dt>商品信息</dt>
                 <dd>
-                    <a class="curr" href="goods.html">基本信息</a>
+                    <a class="curr" href="/commodity/index">基本信息</a>
                 </dd>
             </dl>
         </div>
@@ -193,6 +193,9 @@
 
 <script>
 
+    var categoryId = $('#categoryId').val();
+    var categoryIdV =   $("#categoryIdV").val();
+
     $('#categoryId').autocomplete({
         serviceUrl: '/breed/search',
         paramName:'name',
@@ -211,6 +214,20 @@
             $("#originOf").code({beedId:suggestion.data,typeId:10001});//"原药产地"
             $("#level").code({beedId:suggestion.data,typeId:10002});//"等级"
         }
+    });
+
+    $("#categoryId").blur(function(){
+        if($("#categoryIdV").val() == "") {
+            $("#categoryId").val("");
+            return;
+        }
+
+        if ($("#categoryIdV").val() == categoryIdV && categoryId != $("#categoryIdV").val()) {
+            $("#categoryId").val("");
+            $("#categoryIdV").val("");
+            return;
+        }
+
     });
 
     var commodityAddPage = {
