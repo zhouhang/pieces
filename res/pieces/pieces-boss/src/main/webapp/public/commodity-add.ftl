@@ -4,24 +4,6 @@
 <#include "./inc/meta.ftl"/>
     <title>新增分类-boss-饮片B2B</title>
 </head>
-<script>
-</script>
-
-<style>
-    body { font-family: sans-serif; font-size: 14px; line-height: 1.6em; margin: 0; padding: 0; }
-    .container { width: 800px; margin: 0 auto; }
-
-    .autocomplete-suggestions { border: 1px solid #999; background: #FFF; cursor: default; overflow: auto; -webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); -moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); }
-    .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
-    .autocomplete-no-suggestion { padding: 2px 5px;}
-    .autocomplete-selected { background: #F0F0F0; }
-    .autocomplete-suggestions strong { font-weight: bold; color: #000; }
-    .autocomplete-group { padding: 2px 5px; }
-    .autocomplete-group strong { font-weight: bold; font-size: 16px; color: #000; display: block; border-bottom: 1px solid #000; }
-
-    /*input { font-size: 28px; padding: 10px; border: 1px solid #CCC; display: block; margin: 20px 0; }*/
-
-</style>
 <body>
 <#include "./inc/header.ftl">
 <!-- fa-floor start -->
@@ -41,7 +23,7 @@
                     <h3><i class="fa fa-chevron-right"></i>新增商品</h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                        <button type="submit" class="btn btn-red">保存</button>
+                        <button type="button" id="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
 
@@ -136,7 +118,7 @@
                                 <div class="goods-img">
                                     <!-- <img src="images/blank.gif"><i class="del"></i> -->
                                 </div>
-                                <input type="hidden" name="imgUrl" value="" id="imgUrl">
+                                <input type="hidden" name="pictureUrl" value="" id="pictureUrl">
                             </div>
                         </div>
 
@@ -146,7 +128,8 @@
                             </div>
                             <div class="cnt cnt-mul" name="details" id="details" style="width: 700px; height: 350px; clear: both;">
                             </div>
-                            <div class="clear"></div>
+                            <div id="detailsError" style="padding-top: 10px;" class="clear">
+                            </div>
                         </div>
 
                         <div class="group">
@@ -155,9 +138,9 @@
                             </div>
                             <div class="cnt">
                                 <select name="status" id="status" class="wide">
-                                    <option>请选择</option>
-                                    <option value="0" selected="selected">激活</option>
-                                    <option value="1">禁用</option>
+                                    <option value="-1">请选择</option>
+                                    <option value="1" selected="selected">激活</option>
+                                    <option value="0">禁用</option>
                                 </select>
                             </div>
                         </div>
@@ -174,6 +157,8 @@
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
 <script src="/js/jquery.autocomplete.js"></script>
+<link type="text/css" rel="stylesheet" href="/js/autocomplete/style.css" />
+
 <script src="/js/code.js"></script>
 <script src="/js/common.js"></script>
 <script src="/js/croppic.min.js"></script>
@@ -189,46 +174,7 @@
 <script type="text/javascript" charset="utf-8" src="/js/umeditor1_2_2-utf8/umeditor.min.js"></script>
 <script type="text/javascript" src="/js/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js"></script>
 
-
-
 <script>
-
-    var categoryId = $('#categoryId').val();
-    var categoryIdV =   $("#categoryIdV").val();
-
-    $('#categoryId').autocomplete({
-        serviceUrl: '/breed/search',
-        paramName:'name',
-        transformResult: function(response) {
-            response = JSON.parse(response);
-            return {
-                suggestions: $.map(response.data, function(dataItem) {
-                    return { value: dataItem.name, data: dataItem.id };
-                })
-            };
-        },
-        onSelect: function (suggestion) {
-            $("#categoryIdV").val(suggestion.data);
-            //TODO: 获取品种的切制规格,原药产地,等级,执行标准
-            $("#spec").code({beedId:suggestion.data,typeId:10000});//"切制规格"
-            $("#originOf").code({beedId:suggestion.data,typeId:10001});//"原药产地"
-            $("#level").code({beedId:suggestion.data,typeId:10002});//"等级"
-        }
-    });
-
-    $("#categoryId").blur(function(){
-        if($("#categoryIdV").val() == "") {
-            $("#categoryId").val("");
-            return;
-        }
-
-        if ($("#categoryIdV").val() == categoryIdV && categoryId != $("#categoryIdV").val()) {
-            $("#categoryId").val("");
-            $("#categoryIdV").val("");
-            return;
-        }
-
-    });
 
     var commodityAddPage = {
         v: {
@@ -239,47 +185,97 @@
                 this.formValidate();
                 this.submitEvent();
                 this.goodsImg();
+                this.initAutocomplete();
+            },
+            initAutocomplete: function () {
+                var categoryId = $('#categoryId').val();
+                var categoryIdV =   $("#categoryIdV").val();
+
+                /**
+                 * 初始化自动提示框.
+                 */
+                $('#categoryId').autocomplete({
+                    serviceUrl: '/breed/search',
+                    paramName:'name',
+                    preventBadQueries:false,
+                    transformResult: function(response) {
+                        response = JSON.parse(response);
+                        return {
+                            suggestions: $.map(response.data, function(dataItem) {
+                                return { value: dataItem.name, data: dataItem.id };
+                            })
+                        };
+                    },
+                    onSelect: function (suggestion) {
+                        $("#categoryIdV").val(suggestion.data);
+                        //TODO: 获取品种的切制规格,原药产地,等级,执行标准
+                        $("#spec").code({beedId:suggestion.data,typeId:'SPEC'});//"切制规格"
+                        $("#originOf").code({beedId:suggestion.data,typeId:'ORIGIN'});//"原药产地"
+                        $("#level").code({beedId:suggestion.data,typeId:'LEVEL'});//"等级"
+                    }
+                });
+
+                /**
+                 * 清空品种输入框的值.
+                 */
+                $("#categoryId").blur(function(){
+                    if($("#categoryIdV").val() == "") {
+                        $("#categoryId").val("");
+                        return;
+                    }
+
+                    if ($("#categoryIdV").val() == categoryIdV && categoryId != $("#categoryIdV").val()) {
+                        $("#categoryId").val("");
+                        $("#categoryIdV").val("");
+                        return;
+                    }
+
+                });
             },
             formValidate: function () {
-                commodityAddPage.v.form = $("#form").validator({
+                $("#form").validator({
                     fields: {
                         categoryId: "required",
-                        name: "required",
+                        name: "required;length[2~20]",
                         spec: "required(not, -1)",
                         level: "required(not, -1)",
                         originOf: "required(not, -1)",
-                        executiveStandard: "required",
-                        exterior: "required",
-                        factory: "required",
+                        executiveStandard: "required;length[2~20]",
+                        exterior: "required;length[2~50]",
+                        factory: "required;length[2~20]",
                         imgUrl: "required",
-                        details: "required",
+                        details: {
+                            rule:  "required",
+                            target: "#detailsError"
+                        },
                         status: "required"
                     }
                 });
             },
             // 提交事件
             submitEvent: function () {
-
-                $('button:submit').on('click', function () {
-
-                    console.log(commodityAddPage.v.form.isFormValid());
-                    return false;
-
-                    var data = $("#form").serializeObject();
-
-                    $.post("/commodity/save",data, function(data){
-                        $.notify({
-                            type: 'success',
-                            title: '保存成功',
-                            text: '3秒后自动跳转到商品详情页',
-                            delay: 3e3,
-                            call: function () {
-                                setTimeout(function () {
-                                    location.href = 'goods.html';
-                                }, 3e3);
-                            }
-                        });
-                    })
+                $('#submit').on('click', function () {
+                    $('#form').isValid(function(v){
+                        console.log(v ? '表单验证通过' : '表单验证不通过');
+                        if(v) {
+                            var data = $("#form").serializeObject();
+                            $.post("/commodity/save",data, function(data){
+                                if(data.status == "y") {
+                                    $.notify({
+                                        type: 'success',
+                                        title: '保存成功',
+                                        text: '3秒后自动跳转到商品详情页',
+                                        delay: 3e3,
+                                        call: function () {
+                                            setTimeout(function () {
+                                                location.href = '/commodity/index';
+                                            }, 3e3);
+                                        }
+                                    });
+                                }
+                            })
+                        }
+                    });
                     return false;
                 })
             },
@@ -326,7 +322,7 @@
                 var options = {
                     uploadUrl: '/commodity/upload',
                     cropUrl: '/commodity/clipping',
-                    outputUrlId: 'imgUrl',
+                    outputUrlId: 'pictureUrl',
                     imgEyecandyOpacity: 0.5, // Transparent image showing current img zoom
                     loaderHtml: '<span class="loader">正在上传图片，请稍后...</span>',
                     onBeforeImgUpload: function () {
@@ -364,7 +360,7 @@
     $(function () {
         commodityAddPage.fn.init();
         //实例化编辑器
-        var um = UM.getEditor('details');
+        var um = UM.getEditor('details').setContent("");
     })
 </script>
 </body>

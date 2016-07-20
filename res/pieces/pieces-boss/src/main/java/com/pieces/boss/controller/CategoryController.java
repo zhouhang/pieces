@@ -328,9 +328,9 @@ public class CategoryController {
 	 * @param typeId
      * @return
      */
-//	@RequestMapping(value = "/code/query")
-//	@ResponseBody
-//	public Result findCode(Integer beedId,Integer typeId) {
-//		return new Result(true).data(categoryService.findCode(beedId, typeId));
-//	}
+	@RequestMapping(value = "/code/query")
+	@ResponseBody
+	public Result findCode(Integer beedId,String typeId) {
+		return new Result(true).data(categoryService.findCode(beedId, typeId));
+	}
 }

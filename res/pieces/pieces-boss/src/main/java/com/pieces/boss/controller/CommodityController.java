@@ -40,6 +40,7 @@ public class CommodityController extends BaseController{
         model.put("pageNum", pageNum);
         model.put("pageSize", pageSize);
         model.put("pageInfo", pageInfo);
+        model.put("vo", commodityVO);
         model.put("param", Reflection.serialize(commodityVO));
         return "commodity";
     }

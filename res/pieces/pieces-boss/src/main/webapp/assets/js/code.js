@@ -17,10 +17,9 @@
         })
     }
     $.fn.code.type = {
-        COMMODITY_SPECIFICATIONS: 10000,//"切制规格"
-        COMMODITY_PLACE: 10001,//"原药产地"
-        COMMODITY_LEVEL: 10002,//"等级"
-        COMMODITY_executiveStandard:10003 //执行标准
+        COMMODITY_SPECIFICATIONS: 'SPEC',//"切制规格"
+        COMMODITY_PLACE: 'ORIGIN',//"原药产地"
+        COMMODITY_LEVEL: 'LEVEL'//"等级"
     }
 
     $.fn.code.settings = {
