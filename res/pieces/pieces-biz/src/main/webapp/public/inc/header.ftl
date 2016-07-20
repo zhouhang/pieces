@@ -30,16 +30,16 @@
                 </form>
             </div>
             <div class="hotwords">
-                <a class="hot" href="/commodity/search?keyword=三七">三七</a>
+                <a href="/commodity/search?keyword=三七">三七</a>
                 <a href="/commodity/search?keyword=黄芪">黄芪</a>
                 <a href="/commodity/search?keyword=当归">当归</a>
                 <a href="/commodity/search?keyword=西洋参">西洋参</a>
                 <a href="/commodity/search?keyword=党参">党参</a>
-                <a class="hot" href="/commodity/search?keyword=天麻">天麻</a>
+                <a href="/commodity/search?keyword=天麻">天麻</a>
                 <a href="/commodity/search?keyword=人参">人参</a>
                 <a href="/commodity/search?keyword=枸杞子">枸杞子</a>
                 <a href="/commodity/search?keyword=丹参">丹参</a>
-                <a class="hot" href="/commodity/search?keyword=玛咖">玛咖</a>
+                <a href="/commodity/search?keyword=玛咖">玛咖</a>
             </div>
         </div>
     </div>

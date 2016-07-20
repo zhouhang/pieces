@@ -67,7 +67,7 @@
                             <td><a href="/commodity/${commodityDoc.id!}"><img src="${commodityDoc.pictureUrl!}" width="130" height="130" alt=""></a></td>
                             <td class="tl">
                                 <div class="desc">
-                                    <h3><a href="product.html">${commodityDoc.name!}</a></h3>
+                                    <h3><a href="/commodity/${commodityDoc.id!}">${commodityDoc.name!}</a></h3>
                                     <p>${commodityDoc.exterior!}</p>
                                 </div>
                             </td>
