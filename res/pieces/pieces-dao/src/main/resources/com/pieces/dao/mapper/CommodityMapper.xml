@@ -26,11 +26,7 @@
         <result column="specName"  property="specName" />
         <result column="origin_of"  property="originOf" />
         <result column="originOfName"  property="originOfName" />
-<<<<<<< HEAD
-        <result column="executive_standard"  property="executiveStandardName" />
-=======
         <result column="executive_standard"  property="executiveStandard" />
->>>>>>> branch 'master' of https://github.com/zhouhang/pieces.git
         <result column="factory"  property="factory" />
         <result column="exterior"  property="exterior" />
         <result column="picture_url"  property="pictureUrl" />

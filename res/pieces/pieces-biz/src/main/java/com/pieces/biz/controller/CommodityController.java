@@ -80,9 +80,9 @@ public class CommodityController extends BaseController{
             List<CommodityVO> standards = commodityService.findStandardByBreedId(commodityVO.getCategoryId());
             //设置执行标准是否选中
             for(CommodityVO vo : standards){
-            	if(StringUtils.isNotBlank(commodityVO.getExecutiveStandardNameStr()) && commodityVO.getExecutiveStandardNameStr().contains(vo.getExecutiveStandardName())){
+            	if(StringUtils.isNotBlank(commodityVO.getExecutiveStandardNameStr()) && commodityVO.getExecutiveStandardNameStr().contains(vo.getExecutiveStandard())){
             		vo.setChecked(true);
-            		screens.add(vo.getExecutiveStandardName());
+            		screens.add(vo.getExecutiveStandard());
             	}else{
             		vo.setChecked(false);
             	}

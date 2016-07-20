@@ -101,7 +101,7 @@
                                             </dt>
                                             <dd>
                                                 <#list standards as standard>
-                                                	<label><input type="checkbox" name="executiveStandardNameStr" data-name="${standard.executiveStandardName }" class="cbx" value="${standard.executiveStandardName }"  <#if standard.checked>checked="checked"</#if>>${standard.executiveStandardName }</label>
+                                                	<label><input type="checkbox" name="executiveStandardNameStr" data-name="${standard.executiveStandard }" class="cbx" value="${standard.executiveStandard }"  <#if standard.checked>checked="checked"</#if>>${standard.executiveStandard }</label>
                                                 </#list>
                                             </dd>
                                         </dl>
