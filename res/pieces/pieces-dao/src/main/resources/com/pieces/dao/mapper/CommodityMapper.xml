@@ -93,7 +93,7 @@
             </if>
 
             <if test="executiveStandard != null">
-               and executive_standard like %#{executiveStandard}%
+               and executive_standard like "%"#{executiveStandard}"%"
             </if>
             <!-- 根据executiveStandardNameStr使用in查询，使用在商品列表 -->
             <if test="executiveStandardNameStr != null">
@@ -101,7 +101,7 @@
             </if>
 
             <if test="factory != null">
-               and factory like %#{factory}%
+               and factory like "%"#{factory}"%"
             </if>
             <!-- 根据factoryStr使用in查询，使用在商品列表 -->
             <if test="factoryStr != null">
@@ -132,13 +132,13 @@
                and create_time = #{createTime}
             </if>
             <if test="categoryName != null">
-                and category.name like %#{categoryName}%
+                and category.name like "%"#{categoryName}"%"
             </if>
             <if test="specName != null">
-                and spec.name like  %#{specName}%
+                and spec.name like  "%"#{specName}"%"
             </if>
             <if test="originOfName != null">
-                and originOf.name like %#{originOfName}%
+                and originOf.name like "%"#{originOfName}"%"
             </if>
         </where>
     </select>
