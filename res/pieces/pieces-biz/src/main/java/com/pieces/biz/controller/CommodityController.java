@@ -185,7 +185,11 @@ public class CommodityController extends BaseController{
         WebUtil.print(response,result);
     }
 
-
-
+    @RequestMapping(value = "/{id}")
+    public String detail(@PathVariable("id")Integer id, ModelMap model) {
+        CommodityVO commodity =  commodityService.findVoById(id);
+        model.put("commodity", commodity);
+        return "product_detail";
+    }
 
 }

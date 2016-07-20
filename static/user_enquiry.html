@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>询价-饮片B2B</title>
+    <meta name="renderer" content="webkit" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+	
+
+    <!-- site-nav end -->
+    <div class="site-nav">
+        <div class="wrap">
+            <p class="fl">欢迎光临药优优饮片采购平台！</p>
+            <ul class="fr">
+                <li>ht****@163.com  <a href="logout.html">退出</a></li>
+                <li>|</li>
+                <li><a href="logout.html">我的供应链</a></li>
+                <li>|</li>
+                <li><a href="helper.html">帮助中心</a></li>
+                <li>|</li>
+                <li><a href="sitemap.html">网站导航 <i class="fa fa-chevron-down"></i></a></li>
+            </ul>
+        </div>
+    </div><!-- site-nav end -->
+
+
+    <!-- header start -->
+    <div class="header header-red">
+        <div class="wrap">
+            <div class="logo">
+                <a href="home.html">饮片B2B首页</a>
+            </div>
+            <div class="title">
+                <h1>我的供应链</h1>
+            </div>
+            <div class="plus">
+                <a class="back" href="home.html"><i class="fa fa-chevron-left"></i> 返回商城首页</a>
+            </div>
+        </div>
+    </div><!-- header end -->
+
+    <!-- member-box start -->
+    <div class="member-box">
+        <div class="wrap">
+            <div class="side">
+                <dl class="expand">
+                    <dt>
+                        <em class="fa fa-question-circle"></em>
+                        <span>询价</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </dt>
+                    <dd>
+                        <a class="curr" href="user_enquiry.html">我要询价</a>
+                        <a href="user_enquiry_record.html">询价记录</a>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <em class="fa fa-menu"></em>
+                        <span>订单</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </dt>
+                </dl>
+                <dl>
+                    <dt>
+                        <em class="fa fa-clock"></em>
+                        <span>交货周期</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </dt>
+                </dl>
+                <dl>
+                    <dt>
+                        <em class="fa fa-invoice"></em>
+                        <span>发票</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </dt>
+                </dl>
+                <dl>
+                    <dt>
+                        <em class="fa fa-bill"></em>
+                        <span>对账单</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </dt>
+                </dl>
+                <dl>
+                    <dt>
+                        <em class="fa fa-heart"></em>
+                        <span>收藏</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </dt>
+                </dl>
+                <dl>
+                    <dt>
+                        <em class="fa fa-setting"></em>
+                        <span>设置</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </dt>
+                    <dd>
+                        <a href="user_info.html">注册资料</a>
+                        <a href="user_update_password.html">修改密码</a>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="main">
+                <div class="title">
+                    <h3>我要询价</h3>
+                    <div class="extra"></div>
+                </div>
+
+                <div class="fa-table">
+                	<div class="caption">
+                		<p>请输入要询价的商品名称及对应数量，期望单价可以不输入。一次可以添加多个商品。</p>      
+                		<p>您还可以<a class="btn" href="#">下载模板</a>填入内容后，<a class="btn" href="#">上传文档</a>到网站。</p>       
+                	</div>
+				
+                	<div class="fa-chart">
+                		<form action="" id="myform">
+	                		<table>
+	                			<thead>
+	                				<tr>
+	                					<th width="180">商品名称</th>
+	                					<th>切制规格</th>
+	                					<th>等级</th>
+	                					<th>产地</th>
+	                					<th>数量<span>（公斤）</span></th>
+	                					<th width="130">期望单价<span>（元/公斤）</span></th>
+	                					<th width="110">期望交货日期</th>
+	                					<th width="100">操作</th>
+	                				</tr>
+	                			</thead>
+	                			<tfoot>
+	                				<tr>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="goodsName" autocomplete="off"></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="standard" autocomplete="off"></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="price" autocomplete="off"></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="date" autocomplete="off" onclick="laydate({min:laydate.now()})"></div></td>
+	                            		<td>
+	                            			<a class="add c-blue" href="javascript:;">添加</a>
+	                            			<a class="remove c-red" href="javascript:;">删除</a>
+	                            		</td>
+	                				</tr>
+	                			</tfoot>
+	                			<tbody>
+	                				<tr>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="goodsName" autocomplete="off"></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="standard" autocomplete="off"></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="price" autocomplete="off"></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="date" autocomplete="off" onclick="laydate({min:laydate.now()})"></div></td>
+	                            		<td>
+	                            			<a class="add c-blue" href="javascript:;">添加</a>
+	                            		</td>
+	                				</tr>
+	                			</tbody>
+	                		</table>
+	                		<div class="submit">
+	                			<button class="btn btn-red" type="button">提交</button>
+	                		</div>
+                		</form>
+                	</div>
+                </div>
+            </div>
+        </div>
+    </div><!-- member-box end -->
+
+
+    <!-- footer start -->
+    <div class="footer">
+        <div class="wrap">
+            <div class="links">
+                <a href="#">关于药优优</a>
+                <i>|</i>
+                <a href="#">联系我们</a>
+                <i>|</i>
+                <a href="#">法律申明</a>
+                <i>|</i>
+                <a href="#">建议与投诉</a>
+                <i>|</i>
+                <a href="#">友情链接</a>
+                <i>|</i>
+                <a href="#">站长统计</a>
+            </div>
+            <div class="copyright">
+                <p> 电信与信息服务业务经营许可证号：皖B20140001  备案号：皖ICP备13006003号  互联网药品交易服务资格证：皖B20130001  互联网药品信息服务资格证：（皖）-经营性-2016-0001</p>
+                <p>网站商务合作邮箱：bd@copy;yaoyy.com  客户服务企业邮箱：service@copy;yaoyy.com  Copyright &copy; 2015 – 2020 药优优 All Rights Reserved</p>
+            </div>
+        </div>
+    </div><!-- footer end -->
+	
+	<!-- 输入框联想 start -->
+    <div class="suggestions" id="suggestions">
+		<div class="hd">
+			<div class="group">
+				<span class="w1">商品名称</span><span class="w2">切制规格</span><span class="w3">等级</span><span class="w4">产地</span>
+			</div>
+		</div>
+		<div class="bd"></div>
+	</div><!-- 输入框联想 end -->
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/laydate/laydate.js"></script>
+    <script>
+    	var page = {
+    		v: {
+    		},
+    		fn: {
+    			init: function() {
+    				this.myformEvent();
+    			},
+    			// input
+    			myformEvent: function() {
+    				var self = this;
+	    			var $myform = $('#myform');
+	    			var $tbody  = $myform.find('tbody');
+	    			var $tfoot  = $myform.find('tfoot');
+	    			var $ipt = $tbody.find('.ipt:first');
+	    			var modal   = $tfoot.html();
+	    			var $suggestions = $('#suggestions');
+                    var $body = $('body');
+    				$tfoot.empty();
+
+                    // 数量
+                    $myform.on('keyup', '.amount', function(e) {
+                        var val = this.value;
+                        if (!/^\d*$/.test(val)) {
+                            val = Math.abs(parseInt(val));
+                            this.value = isNaN(val) ? '' : val;
+                        }
+                    });
+
+                    // 单价
+                    $myform.on('keyup', '.price', function(e) {
+                        var val = this.value;
+                        if (!/^\d+\.?\d*$/.test(val)) {
+                            val = Math.abs(parseFloat(val));
+                            this.value = isNaN(val) ? '' : val;
+                        }
+                    });
+
+                    // 商品名联想
+    				$myform.on({
+                        'click': function(event) {
+                            $(this).after($suggestions);
+                            // self.getKeywords(this.value);
+                            event.stopPropagation();
+                        },
+                        'input': function() {
+                            self.getKeywords(this.value);                           
+                        }
+    				}, '.ipt-name');
+
+                    // 关闭联想层
+    				$body.on('click', function() {
+    					$suggestions.hide();
+    				})
+    				$body.on('click', '.suggestions', function(event) {
+    					event.stopPropagation();
+    				})
+
+                    // 关键字自动填充
+                    $body.on('click', '.suggestions .bd .group', function() {
+                        var data = $(this).data('val').split('-');
+                        $suggestions.prev().val(data[0])
+                        .closest('td').next().find('.ipt').val(data[1]).end()
+                        .closest('td').next().find('.ipt').val(data[2]).end()
+                        .closest('td').next().find('.ipt').val(data[3]);
+
+                        $suggestions.hide();
+                    })
+
+
+    				// 第一个输入框不为空时自动获取焦点
+    				$ipt.val() === '' && $ipt.focus();
+
+    				// 新增一行
+    				$myform.on('click', '.add', function() {
+    					$tbody.append(modal);
+    					// 没有删除按钮时添加删除按钮
+    					$(this).siblings().length === 0 && $(this).after(' <a class="remove c-red" href="javascript:;">删除</a>');
+    					
+    				})
+
+    				// 删除一行
+    				$myform.on('click', '.remove', function() {
+    					var $tr = $(this).closest('tr'),
+    						$btnRemove = $tbody.find('.remove');
+
+    					if ($btnRemove.length < 2) {
+    						return false;
+    					} 
+
+    					layer.confirm('确认删除行？', {icon: 3, title:'提示'}, function(index){
+    						$btnRemove.length === 2 && $btnRemove.remove();
+    						$tr.remove();
+						  	layer.close(index);
+						});       
+    				})
+    			},
+    			// ajax 查询关键词
+    			getKeywords: function(keywords) {
+                    var self = this;
+    				var keywords = $.trim(keywords);
+                    var $suggestions = $('#suggestions');
+					if (keywords === '') {
+						$suggestions.hide();
+					} else {
+						// ajax 查询关键词
+                        self.ajax && self.ajax.abort();
+                        self.ajax = $.ajax({
+                            url: 'json/keywords.json',
+                            success: function(data) {
+                                // 显示查询结果 
+                                if (data.status === 'success') {
+                                    self.toHtml(data.list);
+                                } else {
+                                    $suggestions.hide();
+                                }
+                            }
+                        })
+					}
+    				
+    			},
+    			// 显示查询结果
+    			toHtml: function(json) {
+					var modal = [];
+					$.each(json, function(i, item) {
+                        var val = item.goodsName + '-' + item.standard + '-' + item.level + '-' + item.origin;
+						modal.push('<div class="group" data-val="', val, '">');
+						modal.push(		'<span class="w1">', item.goodsName, '</span>');
+						modal.push(		'<span class="w2">', item.standard, '</span>');
+						modal.push(		'<span class="w3">', item.level, '</span>');
+						modal.push(		'<span class="w4">', item.origin, '</span>');
+					 	modal.push('</div>');
+					})
+					$('#suggestions .bd').empty().html(modal.join('')).parent().show();
+    			}
+    		}
+    	}
+    	$(function() {
+    		page.fn.init();
+    	})
+    </script>
+</body>
+</html>
