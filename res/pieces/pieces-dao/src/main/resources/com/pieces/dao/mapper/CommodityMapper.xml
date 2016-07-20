@@ -26,8 +26,7 @@
         <result column="specName"  property="specName" />
         <result column="origin_of"  property="originOf" />
         <result column="originOfName"  property="originOfName" />
-        <result column="executive_standard"  property="executiveStandard" />
-        <result column="executiveStandardName"  property="executiveStandardName" />
+        <result column="executive_standard"  property="executiveStandardName" />
         <result column="factory"  property="factory" />
         <result column="exterior"  property="exterior" />
         <result column="picture_url"  property="pictureUrl" />
@@ -79,17 +78,33 @@
             <if test="spec != null">
                and spec = #{spec}
             </if>
+            <!-- 根据specNameStr使用in查询，使用在商品列表 -->
+            <if test="specNameStr != null">
+               and spec in (${specNameStr})
+            </if>
 
             <if test="originOf != null">
                and origin_of = #{originOf}
+            </if>
+            <!-- 根据originOfNameStr使用in查询，使用在商品列表 -->
+            <if test="originOfNameStr != null">
+               and origin_of in (${originOfNameStr})
             </if>
 
             <if test="executiveStandard != null">
                and executive_standard = #{executiveStandard}
             </if>
+            <!-- 根据executiveStandardNameStr使用in查询，使用在商品列表 -->
+            <if test="executiveStandardNameStr != null">
+               and executive_standard in (${executiveStandardNameStr})
+            </if>
 
             <if test="factory != null">
                and factory = #{factory}
+            </if>
+            <!-- 根据factoryStr使用in查询，使用在商品列表 -->
+            <if test="factoryStr != null">
+               and factory in (${factoryStr})
             </if>
 
             <if test="exterior != null">
@@ -212,6 +227,20 @@
     
     <select id="findCommodityByBreedId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CommodityVO">
         select *
+	        from commodity a
+	        where a.category_id = #{categoryId}
+	        and a.status = 1
+    </select>
+    
+    <select id="findStandardByBreedId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CommodityVO">
+        select distinct a.executive_standard as executiveStandardName
+	        from commodity a
+	        where a.category_id = #{categoryId}
+	        and a.status = 1
+    </select>
+    
+    <select id="findFactoryByBreedId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CommodityVO">
+        select distinct a.factory as factory
 	        from commodity a
 	        where a.category_id = #{categoryId}
 	        and a.status = 1

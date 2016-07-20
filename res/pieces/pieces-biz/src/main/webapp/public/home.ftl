@@ -62,7 +62,7 @@
             <div class="menu">
                 <ul>
                     <li><a href="/"><em>首页</em></a></li>
-                    <li><a href="products.html"><em>产品</em></a></li>
+                    <li><a href="/commodity/index"><em>产品</em></a></li>
                     <li><a href="manufacturers.html"><em>厂家</em></a></li>
                 </ul>
             </div>

@@ -49,7 +49,18 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         return pageInfo;
     }
     
+    @Override
     public CommodityVO findCommodityByBreedId(Integer id) {
     	return commodityDao.findCommodityByBreedId(id);
+    }
+    
+    @Override
+    public List<CommodityVO> findFactoryByBreedId(Integer id) {
+    	return commodityDao.findFactoryByBreedId(id);
+    }
+    
+    @Override
+    public List<CommodityVO> findStandardByBreedId(Integer id) {
+    	return commodityDao.findStandardByBreedId(id);
     }
 }
