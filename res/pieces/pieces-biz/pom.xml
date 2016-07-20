@@ -217,9 +217,9 @@
 		<profile>
 			<id>test</id>
 			<properties>
-				<biz.base.url>http://localhost:81</biz.base.url>
-				<biz.upload.url>http://localhost:81/files/upload/</biz.upload.url>
-				<biz.upload.path>E:\development\apache-tomcat-8.0.36\webapps\files\upload</biz.upload.path>
+				<biz.base.url>http://192.168.1.174:8088</biz.base.url>
+				<biz.upload.url>http://192.168.1.174:8088/files/upload/</biz.upload.url>
+				<biz.upload.path>E:\Program Files (x86)\nginx-1.10.0\html\files\upload</biz.upload.path>
 			</properties>
 		</profile>
 		<profile>
