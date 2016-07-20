@@ -144,7 +144,7 @@
                             </td>
                             <td>${commodity.specName }</td>
                             <td>${commodity.originOfName }</td>
-                            <td class="tl">${commodity.executiveStandardName }</td>
+                            <td class="tl">${commodity.executiveStandard }</td>
                             <td>${commodity.factory }</td>
                             <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
                         </tr>

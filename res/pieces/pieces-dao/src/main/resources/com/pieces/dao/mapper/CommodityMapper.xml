@@ -266,7 +266,7 @@
     </select>
     
     <select id="findStandardByBreedId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CommodityVO">
-        select distinct a.executive_standard as executiveStandardName
+        select distinct a.executive_standard as executiveStandard
 	        from commodity a
 	        where a.category_id = #{categoryId}
 	        and a.status = 1
