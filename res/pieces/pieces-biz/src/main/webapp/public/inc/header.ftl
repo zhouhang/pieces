@@ -24,22 +24,22 @@
         </div>
         <div class="search">
             <div class="form">
-                <form id="_search_form" action="pro/search" method="get">
+                <form id="_search_form" action="commodity/search" method="get">
                     <input id="_search_ipt" class="ipt" name="keyword"  placeholder="请输入原药名称或饮片名称" value="${keyword!}" type="text">
                     <button  class="btn" type="submit">搜索</button>
                 </form>
             </div>
             <div class="hotwords">
-                <a class="hot" href="/pro/search?keyword=三七">三七</a>
-                <a href="/pro/search?keyword=黄芪">黄芪</a>
-                <a href="/pro/search?keyword=当归">当归</a>
-                <a href="/pro/search?keyword=西洋参">西洋参</a>
-                <a href="/pro/search?keyword=党参">党参</a>
-                <a class="hot" href="/pro/search?keyword=天麻">天麻</a>
-                <a href="/pro/search?keyword=人参">人参</a>
-                <a href="/pro/search?keyword=枸杞子">枸杞子</a>
-                <a href="/pro/search?keyword=丹参">丹参</a>
-                <a class="hot" href="/pro/search?keyword=玛咖">玛咖</a>
+                <a class="hot" href="/commodity/search?keyword=三七">三七</a>
+                <a href="/commodity/search?keyword=黄芪">黄芪</a>
+                <a href="/commodity/search?keyword=当归">当归</a>
+                <a href="/commodity/search?keyword=西洋参">西洋参</a>
+                <a href="/commodity/search?keyword=党参">党参</a>
+                <a class="hot" href="/commodity/search?keyword=天麻">天麻</a>
+                <a href="/commodity/search?keyword=人参">人参</a>
+                <a href="/commodity/search?keyword=枸杞子">枸杞子</a>
+                <a href="/commodity/search?keyword=丹参">丹参</a>
+                <a class="hot" href="/commodity/search?keyword=玛咖">玛咖</a>
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@
 
     $(function(){
         $('#_search_ipt').autocomplete({
-            serviceUrl: '/pro/search/auto',
+            serviceUrl: '/commodity/search/auto',
             paramName:'keyword',
             transformResult: function(response) {
                 response = JSON.parse(response);
@@ -60,7 +60,6 @@
                     }else{
                         return {value: dataItem.value, data: {"category":dataItem.category}};
                     }
-
                 })};
             },
             onSelect: function (suggestion) {

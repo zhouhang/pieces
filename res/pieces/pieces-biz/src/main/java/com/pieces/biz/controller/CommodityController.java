@@ -2,9 +2,14 @@ package com.pieces.biz.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.pieces.dao.elasticsearch.document.CommodityDoc;
+import com.pieces.service.CommoditySearchService;
+import com.pieces.tools.utils.WebUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +32,9 @@ import com.pieces.service.enums.CommodityEnum;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.ImageUtil;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Author: ff
  * 7/19/16.
@@ -35,6 +43,10 @@ import com.pieces.tools.utils.ImageUtil;
 @Controller
 @RequestMapping("/commodity")
 public class CommodityController extends BaseController{
+
+    @Autowired
+    private CommoditySearchService commoditySearchService;
+
 
     @Autowired
     CommodityService commodityService;
@@ -141,4 +153,39 @@ public class CommodityController extends BaseController{
         	}
         }
     }
+
+
+
+
+    @RequestMapping(value = "search")
+    public String proResult(HttpServletRequest request,
+                            HttpServletResponse response,
+                            Integer pageNum,
+                            Integer pageSize,
+                            ModelMap model,
+                            String keyword){
+        pageNum=pageNum==null?1:pageNum;
+        pageSize=pageSize==null?10:pageSize;
+        Page<CommodityDoc> commodityDocPage= commoditySearchService.findByNameOrCategoryName(pageNum,pageSize,keyword);
+        model.put("commodityDocPage",commodityDocPage);
+        model.put("keyword",keyword);
+        return "product_search_result";
+    }
+
+
+
+    @RequestMapping(value = "search/auto")
+    public void autoComplete(HttpServletRequest request,
+                             HttpServletResponse response,
+                             String keyword){
+        if(StringUtils.isBlank(keyword) ){
+            return;
+        }
+        List<Map<String,String>> result = commoditySearchService.findByName(keyword);
+        WebUtil.print(response,result);
+    }
+
+
+
+
 }

@@ -7,6 +7,7 @@ import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.model.Area;
 import com.pieces.service.AreaService;
 import com.pieces.service.CommoditySearchService;
+import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -60,6 +61,7 @@ public class DemoController {
     public void searchIndexCreate(HttpServletRequest request,
                                   HttpServletResponse response){
         commoditySearchService.createAllCommodityDoc();
+        WebUtil.print(response,new Result(true).info("索引创建成功"));
     }
 
 
