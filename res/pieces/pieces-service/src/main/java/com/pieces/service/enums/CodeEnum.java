@@ -1,10 +1,12 @@
 package com.pieces.service.enums;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * 总数属性枚举
+ * 总属性枚举
  * Created by wangbin on 2016/7/20.
  */
 public enum CodeEnum {
@@ -69,6 +71,26 @@ public enum CodeEnum {
     }
 
 
+    /**
+     * 批量查询属性ID对应的属性名
+     * @param ids
+     * @return
+     */
+    public static Map<Integer,String> findNamesByIds(int... ids){
+        if(ids==null||ids.length==0){
+            return null;
+        }
+        Map<Integer,String> map = new HashMap<>();
+        for(int id : ids){
+            String value =  findNameById(id);
+            if(value==null){
+                throw new RuntimeException("找不到对应的ID:"+id);
+            }
+            map.put(id,value);
+        }
+        return map;
+    }
+
 
     public String getName() {
         return name;
@@ -78,11 +100,11 @@ public enum CodeEnum {
         return id;
     }
 
-
     //分类
-    public static enum Type{
+    public  enum Type{
         SPEC,ORIGIN,LEVEL
     }
+
 
 }
 
