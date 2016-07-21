@@ -18,6 +18,8 @@ import org.apache.shiro.util.ByteSource.Util;
 import com.pieces.dao.model.User;
 import com.pieces.service.UserService;
 import com.pieces.service.shiro.SerializableSimpleAuthenticationInfo;
+import com.pieces.service.utils.CommonUtils;
+import com.pieces.service.utils.ValidUtils;
 
 
 /**
@@ -53,15 +55,13 @@ public class BizRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authToken) throws AuthenticationException {
 		BizToken token = (BizToken) authToken;
-		User user = new User();
-		user.setUserName(token.getUsername());
-		List<User> users = userService.findUserByCondition(user);
-		if(users == null || users.size()==0){
+		User user = userService.findByUserName(token.getUsername());
+		if(user == null){
 			throw new AuthenticationException();
 		}
-		SerializableSimpleAuthenticationInfo authenticationInfo = new SerializableSimpleAuthenticationInfo(users.get(0).getUserName(),
-				users.get(0).getPassword(),
-				Util.bytes(users.get(0).getSalt()),
+		SerializableSimpleAuthenticationInfo authenticationInfo = new SerializableSimpleAuthenticationInfo(user.getUserName(),
+				user.getPassword(),
+				Util.bytes(user.getSalt()),
 				getName()); // realm name
 		return authenticationInfo;
 	}

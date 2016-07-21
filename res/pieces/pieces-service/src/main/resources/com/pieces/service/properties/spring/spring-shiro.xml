@@ -74,7 +74,7 @@
 
      <!--安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="defaultRealm"/>
+        <property name="realm" ref="${pieces.shiro.realm}"/>
         <property name="sessionManager" ref="sessionManager"/>
         <property name="cacheManager" ref="cacheManager"/>
         <property name="subjectFactory" ref="defaultSubjectFactory"/>
