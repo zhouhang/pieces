@@ -47,7 +47,7 @@
 
     <!-- 会话Cookie模板 -->
     <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-        <constructor-arg name="name" value="sid"/>
+        <constructor-arg name="name" value="${pieces.shiro.sessionCookie.name}"/>
         <property name="httpOnly" value="true"/>
         <property name="maxAge" value="${pieces.shiro.sessionIdCookie.maxAge}"/>
     </bean>
@@ -74,7 +74,7 @@
 
      <!--安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-        <property name="realm" ref="defaultRealm"/>
+        <property name="realm" ref="${pieces.shiro.realm}"/>
         <property name="sessionManager" ref="sessionManager"/>
         <property name="cacheManager" ref="cacheManager"/>
         <property name="subjectFactory" ref="defaultSubjectFactory"/>

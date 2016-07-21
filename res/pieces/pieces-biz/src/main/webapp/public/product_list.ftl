@@ -12,9 +12,9 @@
         <div class="wrap">
             <div class="sitemap">
                 <a href="#">商品分类</a>
-                <#if (category??&&category.name??)>
+                <#if (parent??&&parent.name??)>
                 <em>&gt;</em>
-                <a href="#">${category.name }</a>
+                <a href="#">${parent.name }</a>
                 </#if>
                 <#if (commodity??&&commodity.categoryName??)>
                 <em>&gt;</em>

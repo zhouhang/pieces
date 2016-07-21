@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>新增品种-boss-饮片B2B</title>
-    <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="/css/style.css" />
+    <#include "./inc/meta.ftl"/>
 </head>
 
 <body>
@@ -69,8 +66,9 @@
                                     <i>*</i>常见切制规格：
                                 </div>
                                 <div class="cnt cnt-mul">
-                                    <textarea name="specifications" class="ipt ipt-mul"></textarea>
-                                    <span class="tips">多个切制规格用逗号隔开</span>
+                                    <#list breed.specelist as specifications>
+                                           <label><input type="checkbox" name="spece"  class="cbx" value="${specifications.id }">${specifications.name }</label>
+                                    </#list>
                                 </div>
                             </div>
                             <div class="group">
@@ -78,8 +76,9 @@
                                     <i>*</i>常见原药产地：
                                 </div>
                                 <div class="cnt cnt-mul">
-                                    <textarea name="place" class="ipt ipt-mul"></textarea>
-                                    <span class="tips">多个产地用逗号隔开</span>
+                                    <#list breed.originlist as origin>
+                                           <label><input type="checkbox" name="origins"  class="cbx" value="${origin.id }">${origin.name }</label>
+                                    </#list>
                                 </div>
                             </div>
                             <div class="group">
@@ -87,8 +86,9 @@
                                     <i>*</i>等级：
                                 </div>
                                 <div class="cnt cnt-mul">
-                                    <textarea name="level" class="ipt ipt-mul"></textarea>
-                                    <span class="tips">多个等级用逗号隔开</span>
+                                    <#list breed.levellist as level>
+                                           <label><input type="checkbox" name="levels"  class="cbx" value="${level.id }">${level.name }</label>
+                                    </#list>
                                 </div>
                             </div>
                         </div>
@@ -101,9 +101,8 @@
 
     <#include "./inc/footer.ftl"/>
 
-    <script src="/js/jquery.min.js"></script>
+    
     <script src="/js/validator/jquery.validator.min.js?local=zh-CN"></script>
-    <script src="/js/jquery.form.js"></script>
     <script src="/js/common.js"></script>
     <script>
         var roleAddPage = {

@@ -373,7 +373,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 /* 登录框 */
 .login-box{width:300px;padding:20px 30px 45px;background:#fff;}
   .login-box .title{line-height:1;font-size:16px;}
-    .login-box .msg{margin:20px 0 6px;color:#c3272b;visibility:hidden;}
+    .login-box .msg{padding:20px 0 6px;color:#c3272b;visibility:hidden;}
     .login-box .vis{visibility:visible;}
     .login-box .group{position:relative;line-height:38px;padding-left:39px;}
       .login-box .txt{position:absolute;top:0;left:0;width:38px;height:38px;color:#ccc;border:1px solid #ccc;text-align:center;}
@@ -384,6 +384,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
     .login-box .links{margin-bottom:25px;}
     .login-box .button{text-align:center;}
       .login-box .btn{width:100%;font-size:16px;}
+.login-mini{padding:0 30px;}      
 
 /* 注册 */
 .reg-box{margin-top:10px;}

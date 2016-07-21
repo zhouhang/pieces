@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.*;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Category;
+import com.pieces.dao.model.Code;
 import com.pieces.dao.vo.BreedVo;
 import com.pieces.dao.vo.CategoryVo;
 import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.CategoryService;
 import com.pieces.service.CommodityService;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.service.enums.CodeEnum;
 import com.pieces.service.utils.ValidUtils;
 import com.pieces.tools.utils.GsonUtil;
 import com.pieces.tools.utils.WebUtil;
@@ -131,16 +133,13 @@ public class CategoryController {
 							  HttpServletResponse response,
 							  @PathVariable("id") Integer id,
 							  ModelMap model){
-		Category category = new Category();
-		category.setId(id);
-		category.setStatus(0);
 		CategoryVo vo = categoryService.findBreedByPartenId(id);
 		if(vo != null){
 			Result result = new Result(false).info("该分类已有关联品种，请先取消关联后再删除。");
 	        WebUtil.printJson(response, result);
 	        return;
 		}
-		categoryService.update(category);
+		categoryService.deleteById(id);
 		Result result = new Result(true);
         WebUtil.printJson(response, result);
 	}
@@ -211,7 +210,18 @@ public class CategoryController {
 	 */
 	@RequestMapping(value = "/breed/add")
 	public String addBreed(HttpServletRequest request,
-							  HttpServletResponse response){
+							  HttpServletResponse response,
+							  ModelMap model){
+		BreedVo breed = new BreedVo();
+		
+		//获取品种属性
+		List<Code> spaces = categoryService.findCode(CodeEnum.Type.SPEC.name());
+		List<Code> origins = categoryService.findCode(CodeEnum.Type.ORIGIN.name());
+		List<Code> levels = categoryService.findCode(CodeEnum.Type.LEVEL.name());
+		breed.setSpecelist(spaces);
+		breed.setOriginlist(origins);
+		breed.setLevellist(levels);
+		model.put("breed", breed);
 		return "breed_add";
 	}
 	
@@ -224,11 +234,22 @@ public class CategoryController {
 	 * @return
 	 */
 	@RequestMapping(value = "/breed/edit/{id}")
-	public String addBreed(HttpServletRequest request,
+	public String editBreed(HttpServletRequest request,
 							  HttpServletResponse response,
 							  @PathVariable("id") Integer id,
 							  ModelMap model){
 		BreedVo breed = categoryService.getBreedById(id);
+		
+		//获取品种属性
+		List<Code> spaces = categoryService.findCode(CodeEnum.Type.SPEC.name());
+		List<Code> origins = categoryService.findCode(CodeEnum.Type.ORIGIN.name());
+		List<Code> levels = categoryService.findCode(CodeEnum.Type.LEVEL.name());
+		setCodeCheck(spaces,breed.getSpece());
+		setCodeCheck(origins,breed.getOrigins());
+		setCodeCheck(levels,breed.getLevels());
+		breed.setSpecelist(spaces);
+		breed.setOriginlist(origins);
+		breed.setLevellist(levels);
 		model.put("breed", breed);
 		return "breed_edit";
 	}
@@ -269,18 +290,25 @@ public class CategoryController {
 							  HttpServletResponse response,
 							  @PathVariable("id") Integer id,
 							  ModelMap model){
-		Category category = new Category();
-		category.setId(id);
-		category.setStatus(0);
 		CommodityVO vo = commodityService.findCommodityByBreedId(id);
 		if(vo != null){
 			Result result = new Result(false).info("该品种下已有商品，请先将所有商品移除后再删除。");
 	        WebUtil.printJson(response, result);
 		}
-		categoryService.update(category);
+		categoryService.deleteById(id);
 		Result result = new Result(true);
         WebUtil.printJson(response, result);
 	}
+	
+    private void setCodeCheck(List<Code> source,String target){
+    	for(Code code : source){
+        	if(StringUtils.isNotBlank(target) && target.contains(code.getId().toString())){
+        		code.setChecked(true);
+        	}else{
+        		code.setChecked(false);
+        	}
+        }
+    }
 
 
 	/**
@@ -302,7 +330,7 @@ public class CategoryController {
      */
 	@RequestMapping(value = "/code/query")
 	@ResponseBody
-	public Result findCode(Integer beedId,Integer typeId) {
+	public Result findCode(Integer beedId,String typeId) {
 		return new Result(true).data(categoryService.findCode(beedId, typeId));
 	}
 }

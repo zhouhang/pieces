@@ -13,11 +13,11 @@
             <div class="sitemap">
                 <a href="#">商品分类</a>
                 <em>&gt;</em>
-                <a href="#">分类(根茎)</a>
+                <a href="#">${category}</a>
                 <em>&gt;</em>
                 <a href="#">${commodity.categoryName}</a>
                 <em>&gt;</em>
-                <span>$${commodity.name}</span>
+                <span>${commodity.name}</span>
             </div>
 
             <div class="hr"></div>
@@ -129,23 +129,23 @@
                             <ul>
                                 <li>
                                     <div class="dt">切制规格</div>
-                                    <div class="dd">>${commodity.specName}</div>
+                                    <div class="dd">${commodity.specName}</div>
                                 </li>
                                 <li>
                                     <div class="dt">原药产地</div>
-                                    <div class="dd">>${commodity.originOfName}</div>
+                                    <div class="dd">${commodity.originOfName}</div>
                                 </li>
                                 <li>
                                     <div class="dt">外观描述</div>
-                                    <div class="dd">>${commodity.exterior}</div>
+                                    <div class="dd">${commodity.exterior}</div>
                                 </li>
                                 <li>
                                     <div class="dt">执行标准</div>
-                                    <div class="dd">>${commodity.executiveStandard}</div>
+                                    <div class="dd">${commodity.executiveStandard}</div>
                                 </li>
                                 <li>
                                     <div class="dt">生产厂家</div>
-                                    <div class="dd">>${commodity.factory}</div>
+                                    <div class="dd">${commodity.factory}</div>
                                 </li>
                             </ul>
                         </div>

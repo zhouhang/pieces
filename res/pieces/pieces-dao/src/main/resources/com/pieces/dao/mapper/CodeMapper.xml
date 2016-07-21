@@ -5,15 +5,12 @@
             <id column="id"  property="id" />
             <result column="code"  property="code" />
             <result column="name"  property="name" />
-            <result column="related_code"  property="relatedCode" />
-            <result column="status"  property="status" />
-            <result column="type_id"  property="typeId" />
             <result column="create_time"  property="createTime" />
         
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,code,name,related_code,status,type_id,create_time
+        id,code,name,create_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="CodeResultMap">
@@ -36,9 +33,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Code">
         insert into
-        code (code,name,related_code,status,type_id,create_time)
+        code (code,name,create_time)
         values
-        (#{code},#{name},#{relatedCode},#{status},#{typeId},#{createTime})
+        (#{code},#{name},#{createTime})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.Code">
@@ -51,18 +48,6 @@
                                             
             <if test="name != null">
                 name = #{name},
-            </if>
-                                            
-            <if test="relatedCode != null">
-                related_code = #{relatedCode},
-            </if>
-                                            
-            <if test="status != null">
-                status = #{status},
-            </if>
-                                            
-            <if test="typeId != null">
-                type_id = #{typeId},
             </if>
                                             
             <if test="createTime != null">
@@ -78,15 +63,20 @@
         <include refid="Base_Column_List" />
         from code
         where 1=1
-        <if test="relatedCode != null">
-            and related_code = #{relatedCode}
+        <if test="code != null">
+            and code = #{code}
         </if>
-        <if test="typeId != null">
-            and type_id = #{typeId}
+        <if test="name != null">
+            and name = #{name}
         </if>
-        <if test="status != null">
-            and status = #{status}
-        </if>
+        order by create_time desc
+    </select>
+    
+    <select id="findByString" parameterType="com.pieces.dao.model.Code" resultMap="CodeResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from code
+        where id in (${idStr})
         order by create_time desc
     </select>
 </mapper>

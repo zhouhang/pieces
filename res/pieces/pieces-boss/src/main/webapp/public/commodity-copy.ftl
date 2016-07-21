@@ -5,22 +5,6 @@
     <title>新增商品-boss-饮片B2B</title>
 </head>
 
-<style>
-    body { font-family: sans-serif; font-size: 14px; line-height: 1.6em; margin: 0; padding: 0; }
-    .container { width: 800px; margin: 0 auto; }
-
-    .autocomplete-suggestions { border: 1px solid #999; background: #FFF; cursor: default; overflow: auto; -webkit-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); -moz-box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); box-shadow: 1px 4px 3px rgba(50, 50, 50, 0.64); }
-    .autocomplete-suggestion { padding: 2px 5px; white-space: nowrap; overflow: hidden; }
-    .autocomplete-no-suggestion { padding: 2px 5px;}
-    .autocomplete-selected { background: #F0F0F0; }
-    .autocomplete-suggestions strong { font-weight: bold; color: #000; }
-    .autocomplete-group { padding: 2px 5px; }
-    .autocomplete-group strong { font-weight: bold; font-size: 16px; color: #000; display: block; border-bottom: 1px solid #000; }
-
-    /*input { font-size: 28px; padding: 10px; border: 1px solid #CCC; display: block; margin: 20px 0; }*/
-
-</style>
-
 <body>
 <#include "./inc/header.ftl">
 <!-- fa-floor start -->
@@ -37,13 +21,13 @@
         <div class="main">
             <form action="" id="form">
                 <div class="title">
-                    <h3><i class="fa fa-chevron-right"></i>修改商品“${commodity.name}”</h3>
+                    <h3><i class="fa fa-chevron-right"></i>复制商品“${commodity.name}”成功</h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                        <button type="reset" class="btn btn-gray">重置</button>
+                        <button type="button" class="btn btn-gray" onclick="window.location.reload();">重置</button>
                         <button type="button" id="delete" class="btn btn-gray">删除</button>
-                        <button type="button" class="btn btn-gray">复制</button>
-                        <button type="submit" class="btn btn-red">保存</button>
+                        <button type="button" id="copy" class="btn btn-gray">复制</button>
+                        <button type="button" id="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
 
@@ -66,7 +50,6 @@
                             </div>
                             <div class="cnt">
                                 <input type="text" class="ipt" value="${commodity.name}" name="name" autocomplete="off" placeholder="">
-                                <input type="text" class="ipt" value="${commodity.id}" name="id" style="display: none">
                             </div>
                         </div>
 
@@ -117,9 +100,7 @@
                                 <i>*</i>外观描述：
                             </div>
                             <div class="cnt cnt-mul">
-                                <textarea class="ipt ipt-mul" name="exterior">
-                                    ${commodity.exterior}
-                                </textarea>
+                                <textarea class="ipt ipt-mul" name="exterior">${commodity.exterior}</textarea>
                             </div>
                         </div>
 
@@ -150,7 +131,8 @@
                             </div>
                             <div class="cnt cnt-mul" name="details" id="details" style="width: 700px; height: 350px; clear: both;">
                             </div>
-                            <div class="clear"></div>
+                            <div id="detailsError" style="padding-top: 10px;" class="clear">
+                            </div>
                         </div>
 
                         <div class="group">
@@ -177,6 +159,8 @@
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
 <script src="/js/jquery.autocomplete.js"></script>
+<link type="text/css" rel="stylesheet" href="/js/autocomplete/style.css" />
+
 <script src="/js/code.js"></script>
 <script src="/js/common.js"></script>
 <script src="/js/croppic.min.js"></script>
@@ -193,6 +177,9 @@
 <script type="text/javascript" src="/js/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js"></script>
 
 <script>
+    var categoryId = $('#categoryId').val();
+    var categoryIdV =   $("#categoryIdV").val();
+
     $('#categoryId').autocomplete({
         serviceUrl: '/breed/search',
         paramName:'name',
@@ -209,6 +196,23 @@
             $("#categoryIdV").val(suggestion.data);
             commodityAddPage.fn.initCode(suggestion.data);
         }
+    });
+
+    /**
+     * 清空品种输入框的值.
+     */
+    $("#categoryId").blur(function(){
+        if($("#categoryIdV").val() == "") {
+            $("#categoryId").val("");
+            return;
+        }
+
+        if ($("#categoryIdV").val() == categoryIdV && categoryId != $("#categoryIdV").val()) {
+            $("#categoryId").val("");
+            $("#categoryIdV").val("");
+            return;
+        }
+
     });
 
     var commodityAddPage = {
@@ -234,17 +238,32 @@
                     commodityAddPage.fn.deleteCommodity();
                 })
 
-
+                $("#copy").click(function(){
+                    window.location.href = "/commodity/add/${commodity.id}";
+                })
             },
             initCode: function(beedId) {
-                $("#spec").code({beedId:beedId,typeId:10000});//"切制规格"
-                $("#originOf").code({beedId:beedId,typeId:10001});//"原药产地"
-                $("#level").code({beedId:beedId,typeId:10002});//"等级"
+                $("#spec").code({beedId:beedId,typeId:'SPEC'});//"切制规格"
+                $("#originOf").code({beedId:beedId,typeId:'ORIGIN'});//"原药产地"
+                $("#level").code({beedId:beedId,typeId:'LEVEL'});//"等级"
             },
             formValidate: function () {
-                $("#myform").validator({
+                $("#form").validator({
                     fields: {
-                        username: "required"
+                        categoryId: "required",
+                        name: "required;length[2~20]",
+                        spec: "required(not, -1)",
+                        level: "required(not, -1)",
+                        originOf: "required(not, -1)",
+                        executiveStandard: "required;length[2~20]",
+                        exterior: "required;length[2~50]",
+                        factory: "required;length[2~20]",
+                        imgUrl: "required",
+                        details: {
+                            rule:  "required",
+                            target: "#detailsError"
+                        },
+                        status: "required"
                     }
                 });
             },
@@ -268,27 +287,30 @@
             // 提交事件
             submitEvent: function () {
                 var self = this;
+                $('#submit').on('click', function () {
+                    $('#form').isValid(function (v) {
+                        console.log(v ? '表单验证通过' : '表单验证不通过');
+                        if (v) {
+                            var data = $("#form").serializeObject();
 
-
-                $('button:submit').on('click', function () {
-                    var data = $("#form").serializeObject();
-
-                    $.post("/commodity/save",data, function(data){
-                        $.notify({
-                            type: 'success',
-                            title: '保存成功',
-                            text: '3秒后自动跳转到商品详情页',
-                            delay: 3e3,
-                            call: function () {
-                                setTimeout(function () {
-                                    location.href = '/commodity/index';
-                                }, 3e3);
-                            }
-                        });
+                            $.post("/commodity/save", data, function (data) {
+                                $.notify({
+                                    type: 'success',
+                                    title: '保存成功',
+                                    text: '3秒后自动跳转到商品详情页',
+                                    delay: 3e3,
+                                    call: function () {
+                                        setTimeout(function () {
+                                            location.href = '/commodity/index';
+                                        }, 3e3);
+                                    }
+                                });
+                            })
+                        }
+                        return false;
                     })
-                    return false;
                 })
-            },
+                        },
             // 商品图片
             goodsImg: function () {
                 var self = this;

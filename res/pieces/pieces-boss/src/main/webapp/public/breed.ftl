@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>品种管理-boss-饮片B2B</title>
-    <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="/css/style.css" />
+    <#include "./inc/meta.ftl"/>
 </head>
 
 <body>
@@ -65,7 +62,6 @@
 
     <#include "./inc/footer.ftl"/>
 
-    <script src="/js/jquery.min.js"></script>
         <script>
   //定义根变量
     !(function($) {

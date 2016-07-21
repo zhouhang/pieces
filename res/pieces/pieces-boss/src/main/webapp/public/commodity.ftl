@@ -36,11 +36,11 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td><div class="ipt-wrap"><input name="categoryName" type="text" class="ipt" value=""></div></td>
-                        <td><div class="ipt-wrap"><input name="name" type="text" class="ipt" value=""></div></td>
-                        <td><div class="ipt-wrap"><input name="specName" type="text" class="ipt" value=""></div></td>
-                        <td><div class="ipt-wrap"><input name="originOfName" type="text" class="ipt" value=""></div></td>
-                        <td><div class="ipt-wrap"><input name="factory" type="text" class="ipt" value=""></div></td>
+                        <td><div class="ipt-wrap"><input name="categoryName" type="text" class="ipt" value="${vo.categoryName}"></div></td>
+                        <td><div class="ipt-wrap"><input name="name" type="text" class="ipt" value="${vo.name}"></div></td>
+                        <td><div class="ipt-wrap"><input name="specName" type="text" class="ipt" value="${vo.specName}"></div></td>
+                        <td><div class="ipt-wrap"><input name="originOfName" type="text" class="ipt" value="${vo.originOfName}"></div></td>
+                        <td><div class="ipt-wrap"><input name="factory" type="text" class="ipt" value="${vo.factory}"></div></td>
                         <td>
                             <select name="status" id="">
                                 <option value=""></option>

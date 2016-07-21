@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>新增分类-boss-饮片B2B</title>
-    <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="/css/style.css" />
+    <#include "./inc/meta.ftl"/>
 </head>
 
 <body>
@@ -55,8 +52,6 @@
 
     <#include "./inc/footer.ftl"/>
 
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/jquery.form.js"></script>
     <script src="/js/validator/jquery.validator.min.js?local=zh-CN"></script>
     <script src="/js/common.js"></script>
     <script>

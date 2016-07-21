@@ -206,8 +206,8 @@
 		<profile>
 			<id>dev-ff</id>
 			<properties>
-				<boss.base.url>http://127.0.0.1:8080</boss.base.url>
-				<boss.upload.url>http://127.0.0.1:8080/files/</boss.upload.url>
+				<boss.base.url>http://127.0.0.1:8089</boss.base.url>
+				<boss.upload.url>http://127.0.0.1:8089/files/</boss.upload.url>
 				<boss.upload.path>/Software/JAVAEE/apache-tomcat-8.0.23/webapps/files/</boss.upload.path>
 			</properties>
 			<activation>
@@ -215,11 +215,20 @@
 			</activation>
 		</profile>
 		<profile>
+			<id>dev-ppc</id>
+			<properties>
+				<boss.base.url>http://127.0.0.1:8080</boss.base.url>
+				<boss.upload.url>http://127.0.0.1:8080/files/</boss.upload.url>
+				<boss.upload.path>/Software/JAVAEE/apache-tomcat-8.0.23/webapps/files/</boss.upload.path>
+			</properties>
+			
+		</profile>
+		<profile>
 			<id>test</id>
 			<properties>
-				<boss.base.url>http://192.168.1.174:8089</boss.base.url>
-				<boss.upload.url>http://192.168.1.174/files/upload/</boss.upload.url>
-				<boss.upload.path>E:\Program Files (x86)\nginx-1.10.0\html\files\upload</boss.upload.path>
+				<boss.base.url>http://boss.yaoyy.com</boss.base.url>
+				<boss.upload.url>http://static.yaoyy.com/files/upload/</boss.upload.url>
+				<boss.upload.path>E:\Program Files (x86)\nginx-1.10.0\html\files\upload\</boss.upload.path>
 			</properties>
 		</profile>
 	</profiles>
