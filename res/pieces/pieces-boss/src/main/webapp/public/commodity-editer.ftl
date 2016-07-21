@@ -131,7 +131,8 @@
                             </div>
                             <div class="cnt cnt-mul" name="details" id="details" style="width: 700px; height: 350px; clear: both;">
                             </div>
-                            <div id="detailClean" class="clear"></div>
+                            <div id="detailsError" style="padding-top: 10px;" class="clear">
+                            </div>
                         </div>
 
                         <div class="group">
@@ -226,8 +227,6 @@
                 var um = UM.getEditor('details');
                 um.setContent("${commodity.details}");
 
-                $("#umeditor_textarea_details").appendTo("#detailClean");
-
                 commodityAddPage.fn.initCode(${commodity.categoryId})
                 setTimeout(function(){
                     $("#spec").val("${commodity.spec}");
@@ -253,9 +252,22 @@
                 $("#level").code({beedId:beedId,typeId:'LEVEL'});//"等级"
             },
             formValidate: function () {
-                $("#myform").validator({
+                $("#form").validator({
                     fields: {
-                        username: "required"
+                        categoryId: "required",
+                        name: "required;length[2~20]",
+                        spec: "required(not, -1)",
+                        level: "required(not, -1)",
+                        originOf: "required(not, -1)",
+                        executiveStandard: "required;length[2~20]",
+                        exterior: "required;length[2~50]",
+                        factory: "required;length[2~20]",
+                        imgUrl: "required",
+                        details: {
+                            rule:  "required",
+                            target: "#detailsError"
+                        },
+                        status: "required"
                     }
                 });
             },

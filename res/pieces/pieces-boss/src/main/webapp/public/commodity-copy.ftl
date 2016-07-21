@@ -131,7 +131,8 @@
                             </div>
                             <div class="cnt cnt-mul" name="details" id="details" style="width: 700px; height: 350px; clear: both;">
                             </div>
-                            <div class="clear"></div>
+                            <div id="detailsError" style="padding-top: 10px;" class="clear">
+                            </div>
                         </div>
 
                         <div class="group">
