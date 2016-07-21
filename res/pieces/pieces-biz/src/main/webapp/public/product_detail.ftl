@@ -13,7 +13,7 @@
             <div class="sitemap">
                 <a href="#">商品分类</a>
                 <em>&gt;</em>
-                <a href="#">分类(根茎)</a>
+                <a href="#">${category}</a>
                 <em>&gt;</em>
                 <a href="#">${commodity.categoryName}</a>
                 <em>&gt;</em>
