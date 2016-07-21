@@ -141,6 +141,7 @@
                 and originOf.name like "%"#{originOfName}"%"
             </if>
         </where>
+        order by coom.id DESC
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
