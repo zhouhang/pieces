@@ -101,7 +101,6 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
             logger.error(e.getMessage());
             return CropResult.error("图片裁剪失败");
         }
-
     }
 
     @Override

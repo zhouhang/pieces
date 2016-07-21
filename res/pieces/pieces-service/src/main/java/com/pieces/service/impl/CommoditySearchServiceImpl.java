@@ -47,8 +47,6 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     }
 
 
-
-
     @Override
     public void createAllCommodityDoc() {
         List<CommodityDoc> commodityDocList = new ArrayList<>();
