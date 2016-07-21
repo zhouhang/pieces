@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import com.pieces.service.CommoditySearchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,8 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 
     @Autowired
     private DefaultUploadFile defaultUploadFile;
+    @Autowired
+    private CommoditySearchService commoditySearchService;
 
     @Override
     public ICommonDao<Commodity> getDao() {
@@ -56,6 +59,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
             commodity.setCreateTime(new Date());
             commodityDao.create(commodity);
         }
+        commoditySearchService.save(commodity);
     }
 
 

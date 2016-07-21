@@ -157,8 +157,16 @@ public class CommodityController extends BaseController{
     }
 
 
-
-
+    /**
+     * 搜索并跳转到搜索结果页面
+     * @param request
+     * @param response
+     * @param pageNum
+     * @param pageSize
+     * @param model
+     * @param keyword
+     * @return
+     */
     @RequestMapping(value = "search")
     public String proResult(HttpServletRequest request,
                             HttpServletResponse response,
@@ -175,7 +183,12 @@ public class CommodityController extends BaseController{
     }
 
 
-
+    /**
+     * 自动补全搜索关键字
+     * @param request
+     * @param response
+     * @param keyword
+     */
     @RequestMapping(value = "search/auto")
     public void autoComplete(HttpServletRequest request,
                              HttpServletResponse response,

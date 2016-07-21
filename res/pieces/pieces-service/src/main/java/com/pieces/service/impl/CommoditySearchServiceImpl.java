@@ -39,7 +39,7 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     ElasticsearchTemplate esTemplate;
 
     @Override
-    public CommodityDoc create(Commodity commodity) {
+    public CommodityDoc save(Commodity commodity) {
         CommodityVO commodityVO = commodityService.findVoById(commodity.getId());
         CommodityDoc commodityDoc =  vo2doc(commodityVO);
         commoditySearchRepository.save(commodityDoc);

@@ -18,7 +18,7 @@ public interface CommoditySearchService {
      * @param commodity
      * @return
      */
-    public CommodityDoc create(Commodity commodity);
+    public CommodityDoc save(Commodity commodity);
 
     /**
      * 搜索名称和类别名
