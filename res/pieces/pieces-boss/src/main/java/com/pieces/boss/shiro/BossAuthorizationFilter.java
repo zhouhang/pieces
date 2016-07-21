@@ -22,9 +22,8 @@ public class BossAuthorizationFilter extends AuthorizationFilter {
 
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
 		HttpServletRequest req = (HttpServletRequest) request;
-
-
 		Subject subject = getSubject(request, response);
+
 //		Session session = subject.getSession();
 //		session.getAttributeKeys();
 		//如果前台登录后，修改浏览器地址登录后台，会取到前台的的subject，所以在这里判断一下

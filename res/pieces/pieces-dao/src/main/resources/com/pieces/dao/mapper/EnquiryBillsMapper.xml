@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.EnquiryBillsMapper">
+    <resultMap id="EnquiryBillsResultMap" type="com.pieces.dao.model.EnquiryBills">
+            <id column="id"  property="id" />
+            <result column="code"  property="code" />
+            <result column="user_id"  property="userId" />
+            <result column="member_id"  property="memberId" />
+            <result column="status"  property="status" />
+            <result column="create_time"  property="createTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,code,user_id,member_id,status,create_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="EnquiryBillsResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from enquiry_bills
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="EnquiryBillsResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from enquiry_bills
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from enquiry_bills
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.EnquiryBills">
+        insert into
+        enquiry_bills (code,user_id,member_id,status,create_time)
+        values
+        (#{code},#{userId},#{memberId},#{status},#{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.EnquiryBills">
+        update enquiry_bills
+        <set>
+                                                        
+            <if test="code != null">
+                code = #{code},
+            </if>
+                                            
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+                                            
+            <if test="memberId != null">
+                member_id = #{memberId},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
