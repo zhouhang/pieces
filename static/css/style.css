@@ -116,7 +116,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
       .header .search .hotwords .hot{color:#c3272b;}
     .header .search .form{height:40px;overflow:hidden;*zoom:1;}
       .header .search .ipt{float:left;width:376px;height:26px;padding:5px 10px;line-height:26px;border:2px solid #c3272b;}
-      .header .search .btn{float:left;width:100px;height:100%;font-size:16px;color:#fff;cursor:pointer;border:none;background:#c3272b;overflow:hidden;}
+      .header .search .btn{float:left;width:100px;height:40px;font-size:16px;color:#fff;cursor:pointer;border:none;background:#c3272b;overflow:hidden;}
   .header .plus{float:right;}
     .header .plus .btn{display:block;width:180px;height:40px;line-height:40px;padding:0 10px;background:#999;color:#fff;}
   .header .title{float:left;padding:25px 24px;}
@@ -170,13 +170,15 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
   .fa-guide .curr strong{color:#333;}
 
 /* fa-filter */
-.fa-filter{min-height:21px;margin-bottom:20px;padding:7px;border:1px solid #ccc;}
-  .fa-filter dl{position:relative;padding-left:80px;}
-    .fa-filter dt{position:absolute;top:0;left:0;line-height:20px;font-weight:700;}
+.fa-filter{margin-bottom:20px;padding:3px 10px;border:1px solid #ccc;}
+  .fa-filter dl{overflow:hidden;*zoom:1;}
+    .fa-filter dt{float:left;width:80px;padding-top:5px;font-weight:700;}
     .fa-filter dd{font-size:12px;}
-      .fa-filter .bd a{display:inline-block;padding:0 8px;color:#c3272b;border:1px solid #e7e7e7;}
+    .fa-filter .bd{margin:0 110px 0 80px;}
+      .fa-filter .bd a{float:left;margin:5px;padding:0 8px;color:#c3272b;border:1px solid #e7e7e7;}
+      .fa-filter .bd a:hover{text-decoration:none;}
         .fa-filter .bd i{margin-left:6px;font-size:12px;}
-    .fa-filter .extra{position:absolute;top:0;right:13px;}
+    .fa-filter .extra{float:right;width:110px;padding-top:5px;}
       .fa-filter .extra a{padding:0 13px;}
 
 /* table */
@@ -324,7 +326,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
       .fa-pro-list td h3{margin-bottom:12px;line-height:20px;font-size:16px;font-weight:700;}
         .fa-pro-list td h3 a:hover{text-decoration:none;}
       .fa-pro-list td p{width:220px;color:#999;font-size:12px;}
-      .fa-pro-list td img{width:130px;height:130px;}
+      .fa-pro-list td img{display:inline-block;width:130px;height:130px;}
       .fa-pro-list td .btn-quote{padding:5px 25px;font-size:12px;}
       .fa-pro-list .drop-dowm{position:relative;display:inline-block;height:100%;}
         .fa-pro-list .drop-dowm .hd{line-height:30px;cursor:pointer;}
@@ -371,7 +373,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 /* 登录框 */
 .login-box{width:300px;padding:20px 30px 45px;background:#fff;}
   .login-box .title{line-height:1;font-size:16px;}
-    .login-box .msg{margin:20px 0 6px;color:#c3272b;visibility:hidden;}
+    .login-box .msg{padding:20px 0 6px;color:#c3272b;visibility:hidden;}
     .login-box .vis{visibility:visible;}
     .login-box .group{position:relative;line-height:38px;padding-left:39px;}
       .login-box .txt{position:absolute;top:0;left:0;width:38px;height:38px;color:#ccc;border:1px solid #ccc;text-align:center;}
@@ -382,6 +384,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
     .login-box .links{margin-bottom:25px;}
     .login-box .button{text-align:center;}
       .login-box .btn{width:100%;font-size:16px;}
+.login-mini{padding:0 30px;}      
 
 /* 注册 */
 .reg-box{margin-top:10px;}
@@ -435,12 +438,3 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
   .slide-full .bd{height:560px;}
   .slide-full .login-box{position:absolute;top:100px;left:50%;margin-left:160px;}
 
-/* jquery.autocomplete */
-.container{width:800px;margin:0 auto;}
-.autocomplete-suggestions{border:1px solid #999;background:#FFF;cursor:default;overflow:auto;box-shadow:1px 4px 3px rgba(50,50,50,0.64);}
-.autocomplete-suggestion{padding:2px 5px;white-space:nowrap;overflow:hidden;}
-.autocomplete-no-suggestion{padding:2px 5px;}
-.autocomplete-selected{background:#F0F0F0;}
-.autocomplete-suggestions strong{font-weight:bold;color:#000;}
-.autocomplete-group{padding:2px 5px;}
-.autocomplete-group strong{font-weight:bold;font-size:16px;color:#000;display:block;border-bottom:1px solid #000;}

@@ -1,0 +1,18 @@
+{
+    "status": "success",
+    "msg": "",
+    "list": [
+	    {
+	        "goodsName": "巴戟肉",
+	        "standard": "个",
+	        "level": "1",
+	        "origin": "湖北省"
+	    },
+	    {
+	        "goodsName": "巴戟肉",
+	        "standard": "碎",
+	        "level": "2",
+	        "origin": "安徽省"
+	    }
+    ]
+}

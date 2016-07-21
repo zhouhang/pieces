@@ -96,11 +96,34 @@
             <div class="fa-filter">
                 <dl>
                     <dt>你已筛选：</dt>
-                    <dd class="bd">
-                        <a href="#">薄片<i class='fa fa-times'></i></a>
-                    </dd>
                     <dd class="extra">
                         <a class="btn btn-gray" href="#">重置筛选条件</a>
+                    </dd>
+                    <dd class="bd">
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
+                        <a href="#">薄片<i class='fa fa-times'></i></a>
                     </dd>
                 </dl>
             </div>
@@ -435,16 +458,21 @@
                 <a href="#"><img src="images/atc5.png" width="120" height="48" alt=""></a>
             </div>
         </div>
-    </div><!-- footer end -->
+    </div><!-- footer end -->    
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.form.js"></script>
+    <script src="js/layer/layer.js"></script>
     <script>
-    var productPage = {
+    var page = {
         v: {
 
         },
         fn: {
+            init: function() {
+                this.checkboxEvent();
+                this.dorpDown();
+                this.quote();
+            },
             // 全选事件
             checkboxEvent: function() {
                 var _self = this;
@@ -524,11 +552,26 @@
                     }
                 })
                 return this;
+            },
+            // 询价
+            quote: function() {
+                $('#myform').on('click', '.btn-quote', function() {
+                    layer.open({
+                        type: 2,
+                        title: '账户登录',
+                        area: ['360px', '360px'],
+                        content: ['login_mini.html', 'no']
+                    });
+                    return false;
+                })
+            },
+            logined: function() {
+                layer.closeAll();
             }
         }
     }
     $(function() {
-        productPage.fn.checkboxEvent().dorpDown();
+        page.fn.init();
     })
     </script>
 </body>

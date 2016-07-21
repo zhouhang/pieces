@@ -1,0 +1,11 @@
+{
+    "status": "success",
+    "txt": "公斤",
+    "rank": [
+    	{"text": "不限", "val": "1"}
+    ],
+    "unit": [
+    	{"text": "公斤", "val": "1"},
+    	{"text": "斤", "val": "2"}
+    ]
+}
