@@ -1,6 +1,7 @@
 package com.pieces.tools.upload;
 
 import java.util.Calendar;
+import java.util.UUID;
 
 /**
  * 默认文件上传
@@ -19,7 +20,7 @@ public class DefaultUploadFile extends AbstractUploadFile{
         int year=now.get(Calendar.YEAR);
         int month=now.get(Calendar.MONTH)+1;
         StringBuffer sb = new StringBuffer();
-        sb.append("files").append("/").append(year).append("/").append(month).append("/").append(fileName);
+        sb.append("files").append("/").append(year).append("/").append(month).append("/").append(UUID.randomUUID() + fileName);
         return sb.toString();
     }
 
