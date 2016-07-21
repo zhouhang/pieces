@@ -217,8 +217,8 @@
 		<profile>
 			<id>test</id>
 			<properties>
-				<biz.base.url>http://192.168.1.174:8088</biz.base.url>
-				<biz.upload.url>http://192.168.1.174:8088/files/upload/</biz.upload.url>
+				<biz.base.url>http://www.yaoyy.com</biz.base.url>
+				<biz.upload.url>http://www.yaoyy.com/files/upload/</biz.upload.url>
 				<biz.upload.path>E:\Program Files (x86)\nginx-1.10.0\html\files\upload</biz.upload.path>
 			</properties>
 		</profile>

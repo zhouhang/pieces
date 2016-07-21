@@ -217,8 +217,8 @@
 		<profile>
 			<id>test</id>
 			<properties>
-				<boss.base.url>http://192.168.1.174:8089</boss.base.url>
-				<boss.upload.url>http://192.168.1.174/files/upload/</boss.upload.url>
+				<boss.base.url>http://boss.yaoyy.com</boss.base.url>
+				<boss.upload.url>http://static.yaoyy.com/files/upload/</boss.upload.url>
 				<boss.upload.path>E:\Program Files (x86)\nginx-1.10.0\html\files\upload</boss.upload.path>
 			</properties>
 		</profile>
