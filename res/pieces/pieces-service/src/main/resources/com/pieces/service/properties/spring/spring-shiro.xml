@@ -47,7 +47,7 @@
 
     <!-- 会话Cookie模板 -->
     <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
-        <constructor-arg name="name" value="sid"/>
+        <constructor-arg name="name" value="${pieces.shiro.sessionCookie.name}"/>
         <property name="httpOnly" value="true"/>
         <property name="maxAge" value="${pieces.shiro.sessionIdCookie.maxAge}"/>
     </bean>
