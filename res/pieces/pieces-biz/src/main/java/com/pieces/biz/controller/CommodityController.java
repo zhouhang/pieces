@@ -203,9 +203,9 @@ public class CommodityController extends BaseController{
     @RequestMapping(value = "/{id}")
     public String detail(@PathVariable("id")Integer id, ModelMap model) {
         CommodityVO commodity =  commodityService.findVoById(id);
-        CategoryVo vo = new CategoryVo();
-//        vo.setId(commodity.getCategoryId();
-//        categoryService.findBreed();
+        Category category = categoryService.findById(commodity.getCategoryId());
+        Category category1 = categoryService.findById(category.getPartenId());
+        model.put("category", category1.getName());
         model.put("commodity", commodity);
         return "product_detail";
     }
