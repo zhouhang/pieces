@@ -73,7 +73,7 @@
             </if>
 
             <if test="name != null">
-               and name = #{name}
+               and coom.name like "%"#{name}"%"
             </if>
 
             <if test="spec != null">

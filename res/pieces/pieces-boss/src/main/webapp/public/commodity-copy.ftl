@@ -24,10 +24,10 @@
                     <h3><i class="fa fa-chevron-right"></i>复制商品“${commodity.name}”成功</h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                        <button type="reset" class="btn btn-gray">重置</button>
+                        <button type="button" class="btn btn-gray" onclick="window.location.reload();">重置</button>
                         <button type="button" id="delete" class="btn btn-gray">删除</button>
-                        <button type="button" class="btn btn-gray">复制</button>
-                        <button type="submit" class="btn btn-red">保存</button>
+                        <button type="button" id="copy" class="btn btn-gray">复制</button>
+                        <button type="button" id="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
 
@@ -217,7 +217,9 @@
                     commodityAddPage.fn.deleteCommodity();
                 })
 
-
+                $("#copy").click(function(){
+                    window.location.href = "/commodity/add/${commodity.id}";
+                })
             },
             initCode: function(beedId) {
                 $("#spec").code({beedId:beedId,typeId:'SPEC'});//"切制规格"
@@ -225,9 +227,22 @@
                 $("#level").code({beedId:beedId,typeId:'LEVEL'});//"等级"
             },
             formValidate: function () {
-                $("#myform").validator({
+                $("#form").validator({
                     fields: {
-                        username: "required"
+                        categoryId: "required",
+                        name: "required;length[2~20]",
+                        spec: "required(not, -1)",
+                        level: "required(not, -1)",
+                        originOf: "required(not, -1)",
+                        executiveStandard: "required;length[2~20]",
+                        exterior: "required;length[2~50]",
+                        factory: "required;length[2~20]",
+                        imgUrl: "required",
+                        details: {
+                            rule:  "required",
+                            target: "#detailsError"
+                        },
+                        status: "required"
                     }
                 });
             },
@@ -251,27 +266,30 @@
             // 提交事件
             submitEvent: function () {
                 var self = this;
+                $('#submit').on('click', function () {
+                    $('#form').isValid(function (v) {
+                        console.log(v ? '表单验证通过' : '表单验证不通过');
+                        if (v) {
+                            var data = $("#form").serializeObject();
 
-
-                $('button:submit').on('click', function () {
-                    var data = $("#form").serializeObject();
-
-                    $.post("/commodity/save",data, function(data){
-                        $.notify({
-                            type: 'success',
-                            title: '保存成功',
-                            text: '3秒后自动跳转到商品详情页',
-                            delay: 3e3,
-                            call: function () {
-                                setTimeout(function () {
-                                    location.href = '/commodity/index';
-                                }, 3e3);
-                            }
-                        });
+                            $.post("/commodity/save", data, function (data) {
+                                $.notify({
+                                    type: 'success',
+                                    title: '保存成功',
+                                    text: '3秒后自动跳转到商品详情页',
+                                    delay: 3e3,
+                                    call: function () {
+                                        setTimeout(function () {
+                                            location.href = '/commodity/index';
+                                        }, 3e3);
+                                    }
+                                });
+                            })
+                        }
+                        return false;
                     })
-                    return false;
                 })
-            },
+                        },
             // 商品图片
             goodsImg: function () {
                 var self = this;

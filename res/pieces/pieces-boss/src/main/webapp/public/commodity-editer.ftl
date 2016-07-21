@@ -26,7 +26,7 @@
                         <button type="button" class="btn btn-gray" onclick="window.location.reload();">重置</button>
                         <button type="button" id="delete" class="btn btn-gray">删除</button>
                         <button type="button" id="copy" class="btn btn-gray">复制</button>
-                        <button type="submit" class="btn btn-red">保存</button>
+                        <button type="button" id="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
 
@@ -261,22 +261,27 @@
                 var self = this;
 
 
-                $('button:submit').on('click', function () {
-                    var data = $("#form").serializeObject();
+                $('#submit').on('click', function () {
+                            $('#form').isValid(function(v) {
+                                console.log(v ? '表单验证通过' : '表单验证不通过');
+                                if (v) {
+                                    var data = $("#form").serializeObject();
 
-                    $.post("/commodity/save",data, function(data){
-                        $.notify({
-                            type: 'success',
-                            title: '保存成功',
-                            text: '3秒后自动跳转到商品详情页',
-                            delay: 3e3,
-                            call: function () {
-                                setTimeout(function () {
-                                    location.href = '/commodity/index';
-                                }, 3e3);
-                            }
-                        });
-                    })
+                                    $.post("/commodity/save", data, function (data) {
+                                        $.notify({
+                                            type: 'success',
+                                            title: '保存成功',
+                                            text: '3秒后自动跳转到商品详情页',
+                                            delay: 3e3,
+                                            call: function () {
+                                                setTimeout(function () {
+                                                    location.href = '/commodity/index';
+                                                }, 3e3);
+                                            }
+                                        });
+                                    })
+                                }
+                            })
                     return false;
                 })
             },
