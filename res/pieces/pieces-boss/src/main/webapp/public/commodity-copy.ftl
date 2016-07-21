@@ -176,6 +176,9 @@
 <script type="text/javascript" src="/js/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js"></script>
 
 <script>
+    var categoryId = $('#categoryId').val();
+    var categoryIdV =   $("#categoryIdV").val();
+
     $('#categoryId').autocomplete({
         serviceUrl: '/breed/search',
         paramName:'name',
@@ -192,6 +195,23 @@
             $("#categoryIdV").val(suggestion.data);
             commodityAddPage.fn.initCode(suggestion.data);
         }
+    });
+
+    /**
+     * 清空品种输入框的值.
+     */
+    $("#categoryId").blur(function(){
+        if($("#categoryIdV").val() == "") {
+            $("#categoryId").val("");
+            return;
+        }
+
+        if ($("#categoryIdV").val() == categoryIdV && categoryId != $("#categoryIdV").val()) {
+            $("#categoryId").val("");
+            $("#categoryIdV").val("");
+            return;
+        }
+
     });
 
     var commodityAddPage = {
