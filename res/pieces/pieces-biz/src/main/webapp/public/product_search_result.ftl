@@ -11,12 +11,12 @@
 
 <div class="main-body">
     <div class="wrap">
+    <#if (commodityDocPage??&&commodityDocPage.totalElements>0)>
         <div class="sitemap">
             <a href="#">搜索结果</a>
             <em>&gt;</em>
             <span>${keyword!}</span>
         </div>
-        <#if (commodityDocPage??&&commodityDocPage.totalElements>0)>
         <div class="fa-pro-list">
             <table>
                 <thead>
