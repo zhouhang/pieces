@@ -6,14 +6,6 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-      <!-- 安全管理器 -->
- <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
-     <property name="realm" ref="bossRealm"/>
-     <property name="sessionManager" ref="sessionManager"/>
-     <property name="cacheManager" ref="cacheManager"/>
-     <property name="rememberMeManager" ref="rememberMeManager"/>
-     <property name="subjectFactory" ref="defaultSubjectFactory"/>
- </bean>
     <!-- 定义boss子系统的realm配置     -->
  <bean id="bossRealm" class="com.pieces.boss.shiro.BossRealm">
      <property name="cachingEnabled" value="true"/>
