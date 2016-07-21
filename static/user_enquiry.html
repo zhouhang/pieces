@@ -164,7 +164,7 @@
 	                			</tbody>
 	                		</table>
 	                		<div class="submit">
-	                			<button class="btn btn-red" type="button">提交</button>
+	                			<button class="btn btn-red" type="button" id="submit">提交</button>
 	                		</div>
                 		</form>
                 	</div>
@@ -210,6 +210,7 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
+    <script src="js/common.js"></script>
     <script>
     	var page = {
     		v: {
@@ -217,18 +218,22 @@
     		fn: {
     			init: function() {
     				this.myformEvent();
+                    this.submit();
     			},
     			// input
     			myformEvent: function() {
-    				var self = this;
-	    			var $myform = $('#myform');
-	    			var $tbody  = $myform.find('tbody');
-	    			var $tfoot  = $myform.find('tfoot');
-	    			var $ipt = $tbody.find('.ipt:first');
-	    			var modal   = $tfoot.html();
-	    			var $suggestions = $('#suggestions');
-                    var $body = $('body');
+                    var $body        = $('body');
+                    var $suggestions = $('#suggestions');
+                    var $myform      = $('#myform');
+                    var $tbody       = $myform.find('tbody');
+                    var $ipt         = $tbody.find('.ipt:first');
+                    var $tfoot       = $myform.find('tfoot');
+                    var modal        = $tfoot.html();
+                    var self         = this;
     				$tfoot.empty();
+
+                    // 第一个输入框不为空时自动获取焦点
+                    $ipt.val() === '' && $ipt.focus();
 
                     // 数量
                     $myform.on('keyup', '.amount', function(e) {
@@ -252,7 +257,7 @@
     				$myform.on({
                         'click': function(event) {
                             $(this).after($suggestions);
-                            // self.getKeywords(this.value);
+                            // self.getKeywords(this.value); // 获取焦点时查询一次
                             event.stopPropagation();
                         },
                         'input': function() {
@@ -275,13 +280,8 @@
                         .closest('td').next().find('.ipt').val(data[1]).end()
                         .closest('td').next().find('.ipt').val(data[2]).end()
                         .closest('td').next().find('.ipt').val(data[3]);
-
                         $suggestions.hide();
                     })
-
-
-    				// 第一个输入框不为空时自动获取焦点
-    				$ipt.val() === '' && $ipt.focus();
 
     				// 新增一行
     				$myform.on('click', '.add', function() {
@@ -299,7 +299,7 @@
     					if ($btnRemove.length < 2) {
     						return false;
     					} 
-
+                        // 弹层确认删除
     					layer.confirm('确认删除行？', {icon: 3, title:'提示'}, function(index){
     						$btnRemove.length === 2 && $btnRemove.remove();
     						$tr.remove();
@@ -316,21 +316,27 @@
 						$suggestions.hide();
 					} else {
 						// ajax 查询关键词
-                        self.ajax && self.ajax.abort();
-                        self.ajax = $.ajax({
-                            url: 'json/keywords.json',
-                            success: function(data) {
-                                // 显示查询结果 
-                                if (data.status === 'success') {
-                                    self.toHtml(data.list);
-                                } else {
-                                    $suggestions.hide();
-                                }
-                            }
-                        })
-					}
-    				
+                        self.timer && clearTimeout(self.timer);
+                        self.timer = setTimeout(function() {
+                            self.ajaxSearch();
+                        }, 500);                
+					}    			
     			},
+                ajaxSearch: function() {
+                    var self = this;
+                    $.ajax({
+                        url: 'json/keywords.php',
+                        dataType: 'json',
+                        success: function(data) {
+                            // 显示查询结果 
+                            if (data.status === 'success') {
+                                self.toHtml(data.list);
+                            } else {
+                                $suggestions.hide();
+                            }
+                        }
+                    })
+                },
     			// 显示查询结果
     			toHtml: function(json) {
 					var modal = [];
@@ -344,7 +350,16 @@
 					 	modal.push('</div>');
 					})
 					$('#suggestions .bd').empty().html(modal.join('')).parent().show();
-    			}
+    			},
+                submit: function() {
+                    $('#submit').on('click', function() {
+                        $.notify({
+                            type: 'success',
+                            title: '提交成功',
+                            text: '您的询价已成功提交'
+                        })
+                    })
+                }
     		}
     	}
     	$(function() {

@@ -288,6 +288,19 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
   .sitemap span{color:#999;}
 .hr{margin-bottom:20px;border-top:1px solid #ccc;}
 
+/* 气泡式弹出层组件 */
+.notify-wrapper{position:fixed;top:5px;right:5px;z-index:2147483641;width:350px;}   
+  .notify-wrapper .message{display:none;margin-bottom:5px;font-size:12px;border:1px solid #ccc;background:#f5f5f5;} 
+  .notify-wrapper .hidable{cursor:pointer;} 
+  .notify-wrapper .error{background:#c3272b;border-color:#af2327;}
+  .notify-wrapper .success{background:#58c805;border-color:#4fb404;}
+  .notify-wrapper .warn{background:#fca31d;border-color:#e2921a;}
+    .notify-wrapper .inner{position:relative;min-height:38px;padding:10px 20px 10px 60px;color:#fff;}    
+      .notify-wrapper .inner .icon{position:absolute;top:50%;left:10px;width:40px;height:40px;margin-top:-20px;}    
+      .notify-wrapper .inner .text h3{line-height:20px;font-size:16px;}  
+      .notify-wrapper .inner .mid h3{padding-top:9px;}
+        .notify-wrapper .fa{line-height:1;font-size:40px;}
+
 /* main-body */
 .main-body{padding:20px 0 50px;}
   .main-body .side{float:left;width:200px;}
