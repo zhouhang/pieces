@@ -120,6 +120,9 @@
         	<if test="status != null">
             	and a.status = #{status}
         	</if>
+            <if test="partenId != null">
+                and a.partenId = #{partenId}
+            </if>
         	order by a.create_time desc
     </select>
     

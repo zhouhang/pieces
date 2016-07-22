@@ -60,8 +60,10 @@ public class CommodityVO implements Serializable {
 	private Integer categoryId;
 
 	private String categoryName;
-	
-	
+
+	// 商品类别ID的集合 1,2,3
+	private String categoryIds;
+
 	//与商品相关联的二级品种ID
 	private Integer breedId;
 	
@@ -278,6 +280,14 @@ public class CommodityVO implements Serializable {
 
 	public void setBreedName(String breedName) {
 		this.breedName = breedName;
+	}
+
+	public String getCategoryIds() {
+		return categoryIds;
+	}
+
+	public void setCategoryIds(String categoryIds) {
+		this.categoryIds = categoryIds;
 	}
 
 	@Override

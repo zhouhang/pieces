@@ -24,96 +24,18 @@
             <div class="side">
                 <dl>
                     <dt>—— <em>为您推荐</em> ——</dt>
+
+                    <#list featured as commodity>
                     <dd>
                         <div class="pic">
-                            <a href="product.html"><img src="uploads/p2.jpg" width="80" height="80" alt=""></a>
+                            <a href="/commodity/${commodity.id}"><img src="${commodity.pictureUrl}" width="80" height="80" alt=""></a>
                         </div>
                         <div class="desc">
-                            <h3><a href="product.html">白芍</a></h3>
-                            <P>薄片</P>
+                            <h3><a href="/commodity/${commodity.id}">${commodity.name}</a></h3>
+                            <P>${commodity.specName}</P>
                         </div>
                     </dd>
-                    <dd>
-                        <div class="pic">
-                            <a href="product.html"><img src="uploads/p3.jpg" width="80" height="80" alt=""></a>
-                        </div>
-                        <div class="desc">
-                            <h3><a href="product.html">向日葵花盘</a></h3>
-                            <P>薄片</P>
-                        </div>
-                    </dd>
-                    <dd>
-                        <div class="pic">
-                            <a href="product.html"><img src="uploads/p2.jpg" width="80" height="80" alt=""></a>
-                        </div>
-                        <div class="desc">
-                            <h3><a href="product.html">白芍</a></h3>
-                            <P>薄片</P>
-                        </div>
-                    </dd>
-                    <dd>
-                        <div class="pic">
-                            <a href="product.html"><img src="uploads/p3.jpg" width="80" height="80" alt=""></a>
-                        </div>
-                        <div class="desc">
-                            <h3><a href="product.html">向日葵花盘</a></h3>
-                            <P>薄片</P>
-                        </div>
-                    </dd>
-                    <dd>
-                        <div class="pic">
-                            <a href="product.html"><img src="uploads/p2.jpg" width="80" height="80" alt=""></a>
-                        </div>
-                        <div class="desc">
-                            <h3><a href="product.html">白芍</a></h3>
-                            <P>薄片</P>
-                        </div>
-                    </dd>
-                    <dd>
-                        <div class="pic">
-                            <a href="product.html"><img src="uploads/p3.jpg" width="80" height="80" alt=""></a>
-                        </div>
-                        <div class="desc">
-                            <h3><a href="product.html">向日葵花盘</a></h3>
-                            <P>薄片</P>
-                        </div>
-                    </dd>
-                    <dd>
-                        <div class="pic">
-                            <a href="product.html"><img src="uploads/p2.jpg" width="80" height="80" alt=""></a>
-                        </div>
-                        <div class="desc">
-                            <h3><a href="product.html">白芍</a></h3>
-                            <P>薄片</P>
-                        </div>
-                    </dd>
-                    <dd>
-                        <div class="pic">
-                            <a href="product.html"><img src="uploads/p3.jpg" width="80" height="80" alt=""></a>
-                        </div>
-                        <div class="desc">
-                            <h3><a href="product.html">向日葵花盘</a></h3>
-                            <P>薄片</P>
-                        </div>
-                    </dd>
-                    <dd>
-                        <div class="pic">
-                            <a href="product.html"><img src="uploads/p2.jpg" width="80" height="80" alt=""></a>
-                        </div>
-                        <div class="desc">
-                            <h3><a href="product.html">白芍</a></h3>
-                            <P>薄片</P>
-                        </div>
-                    </dd>
-                    <dd>
-                        <div class="pic">
-                            <a href="product.html"><img src="uploads/p3.jpg" width="80" height="80" alt=""></a>
-                        </div>
-                        <div class="desc">
-                            <h3><a href="product.html">向日葵花盘</a></h3>
-                            <P>薄片</P>
-                        </div>
-                    </dd>
+                    </#list>
                 </dl>
             </div>
 
