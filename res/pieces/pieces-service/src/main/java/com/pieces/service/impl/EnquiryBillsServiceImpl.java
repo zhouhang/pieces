@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> implements EnquiryBillsService{
+
     @Autowired
     private EnquiryBillsDao enquiryBillsDao;
 
@@ -21,4 +22,7 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     public ICommonDao<EnquiryBills> getDao() {
         return enquiryBillsDao;
     }
+
+
+
 }

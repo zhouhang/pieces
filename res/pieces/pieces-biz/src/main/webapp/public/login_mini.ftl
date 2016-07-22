@@ -42,7 +42,6 @@
         </form>
     </div>
 </div>
-    <script src="js/jquery.min.js"></script>
     <script src="js/login.js"></script>
     <script>
         // 关闭弹层

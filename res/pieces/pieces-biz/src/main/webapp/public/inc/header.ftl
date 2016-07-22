@@ -1,20 +1,4 @@
-
-<!-- site-nav end -->
-<div class="site-nav">
-    <div class="wrap">
-        <p class="fl">欢迎光临药优优采购平台！</p>
-        <ul class="fr">
-            <li><a href="user/login">登录</a> <a href="user/register">注册</a></li>
-            <li>|</li>
-            <li><a href="logout.html">我的供应链</a></li>
-            <li>|</li>
-            <li><a href="helper.html">帮助中心</a></li>
-            <li>|</li>
-            <li><a href="sitemap.html">网站导航 <i class="fa fa-chevron-down"></i></a></li>
-        </ul>
-    </div>
-</div><!-- site-nav end -->
-
+<#include "./inc/nav.ftl"/>
 
 <!-- header start -->
 <div class="header">
@@ -70,3 +54,30 @@
     })
 
 </script>
+
+
+<!-- nav start -->
+<div class="nav">
+    <div class="wrap">
+        <div class="cat">
+            <h2 class="hd">商品分类</h2>
+            <div class="bd">
+                <dl>
+                    <dt><a href="#!">团购分类1</a></dt>
+                </dl>
+            </div>
+        </div>
+        <div class="menu">
+            <ul>
+                <li><a href="/">首页</a></li>
+                <li><a href="/commodity/index">产品</a></li>
+                <li><a href="manufacturers.html">厂家</a></li>
+                <li><a href="manufacturers.html">经方</a></li>
+                <li><a href="manufacturers.html">功效</a></li>
+            </ul>
+        </div>
+        <div class="plus">
+            <a class="btn btn-gray" href="/center/enquiry/index"><i class="fa fa-question-circle"></i>快速询价</a>
+        </div>
+    </div>
+</div><!-- nav end -->

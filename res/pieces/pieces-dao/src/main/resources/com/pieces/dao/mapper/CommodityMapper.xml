@@ -229,10 +229,12 @@
         commodity.create_time,
         spec.name as specName,
         originOf.name as originOfName,
-        category.name as categoryName
+        category.name as categoryName,
+        levels.name as levelName
         from commodity
         left join code spec ON spec = spec.id
         left join code originOf on origin_of = originOf.id
+        left join code levels ON commodity.level = levels.id
         left join category on category_id = category.id
     </select>
 
@@ -253,10 +255,12 @@
         commodity.create_time,
         spec.name as specName,
         originOf.name as originOfName,
-        category.name as categoryName
+        category.name as categoryName,
+        levels.NAME as levelName
         from commodity
         left join code spec ON spec = spec.id
         left join code originOf on origin_of = originOf.id
+        left join code levels ON commodity.level = levels.id
         left join category on category_id = category.id
         where commodity.id = #{id}
     </select>
