@@ -1,3 +1,95 @@
+// 防抖动函数
+function debounce(func, wait, immediate) {
+    var timeout;
+    return function() {
+        var context = this, args = arguments;
+        var later = function() {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        var callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
+};
+
+// 简单的节流函数
+function throttle(func, wait, mustRun) {
+    var timeout,
+        startTime = new Date();
+ 
+    return function() {
+        var context = this,
+            args = arguments,
+            curTime = new Date();
+ 
+        clearTimeout(timeout);
+        // 如果达到了规定的触发时间间隔，触发 handler
+        if(curTime - startTime >= mustRun){
+            func.apply(context,args);
+            startTime = curTime;
+        // 没达到触发间隔，重新设定定时器
+        }else{
+            timeout = setTimeout(func, wait);
+        }
+    };
+};
+
+// 图片懒加载
+function loazyload() {
+	var $images = $('img[data-original]'),
+		size = $images.length,
+		count = 0;
+		
+	var getEleCoord = function(element) {
+		var h = element.offsetHeight,
+			t = 0;
+
+	    while (element.offsetParent) {
+			t += element.offsetTop;
+	        element = element.offsetParent;
+	    }
+	    return {top: t, height: h};
+	}
+
+	var imgLoad = function() {
+		$images.each(function() {
+			var src = this.getAttribute('data-original');
+			if ($(this).attr('loaded') === '1') {
+				return true; // continue
+			}
+
+			if (src) {
+				var docHeight = document.documentElement.clientHeight || document.body.clientHeight;
+				var docTop  = document.documentElement.scrollTop || document.body.scrollTop;
+				var coord  = getEleCoord(this);
+				if (coord.top <= docTop + docHeight && coord.top + coord.height >= docTop) {
+					this.onerror = function() {
+						this.onerror = null;
+						this.src = 'images/default-img.png';
+					}
+					this.src = src;
+					this.removeAttribute('data-original');
+				 	count ++;
+					$(this).removeClass('lazyload').attr('loaded', '1');
+				}
+			} else {
+				count ++;
+				$(this).removeClass('lazyload').attr({
+					'loaded': '1',
+					'src': 'images/default-img.png'
+				});
+			}
+
+			count === size && $(window).off('scroll.lazyload');
+		})
+	}
+	imgLoad();
+	count < size && $(window).on('scroll.lazyload', throttle(imgLoad,200,500));
+}
+
+
 ;(function($){
 	var defaults = {
 		clickToHide: true 	// 点击关闭
@@ -50,4 +142,7 @@
 			$self.remove();
 		});
 	})
+
+	// 开启图片懒加载
+	loazyload();
 })(jQuery)

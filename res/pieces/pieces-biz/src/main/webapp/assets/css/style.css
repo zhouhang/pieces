@@ -29,7 +29,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .cf:after,.wrap:after{content:".";display:block;height:0;clear:both;visibility:hidden}
 .opacity{opacity:.7;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";filter:alpha(opacity=70);}
 .cbx{width:14px;height:14px;margin-right:4px;vertical-align:-2px;*vertical-align:0;}
-
+.lazyload{background:url(../images/loader.gif) no-repeat 50%;border:1px solid #e7e7e7;}
 
 .site-nav, .nav, .header, .footer, .wrap{min-width:1200px;}
 
@@ -127,9 +127,9 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
     .header-red .plus .back{display:inline-block;margin-top:37px;padding:4px 11px;font-size:12px;color:#c3272b;background:#e7e7e7;}
 
 /* nav */
-.nav{height:40px;background:#fff;border-bottom:2px solid #333;}
+.nav{height:38px;background:#fff;border-bottom:2px solid #333;}
   .nav .cat{position:relative;z-index:5;float:left;width:200px;height:40px;}
-    .nav .cat .hd{position:absolute;top:0;left:-8px;width:100%;line-height:40px;padding:0 8px 2px;color:#fff;font-size:16px;text-indent:20px;background:url(../images/nav-bg.png) no-repeat;}
+    .nav .cat .hd{position:absolute;top:0;left:-8px;width:100%;line-height:38px;padding:0 8px 2px;color:#fff;font-size:16px;text-indent:20px;background:url(../images/nav-bg.png) no-repeat;}
     .nav .cat .bd{position:absolute;z-index:5;top:33px;left:0;width:178px;height:433px;padding-top:5px;background:#fff;border:1px solid #e50012;display:none;}
   .nav .menu{float:left;font-size:16px;}
     .nav .menu li{float:left;text-align:center;}
