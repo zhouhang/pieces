@@ -206,7 +206,9 @@ public class CommodityController extends BaseController{
         Category category = categoryService.findById(commodity.getCategoryId());
         Category category1 = categoryService.findById(category.getPartenId());
         model.put("category", category1.getName());
+        model.put("categoryId", category1.getId());
         model.put("commodity", commodity);
+
         return "product_detail";
     }
 
