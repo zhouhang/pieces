@@ -58,7 +58,7 @@ public class CommodityVO implements Serializable {
 
 	//类别id
 	private Integer categoryId;
-
+	
 	private String categoryName;
 
 	// 商品类别ID的集合 1,2,3

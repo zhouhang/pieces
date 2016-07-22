@@ -58,7 +58,6 @@ public class CommodityController extends BaseController{
 //    private DefaultUploadFile defaultUploadFile;
     @RequestMapping(value = "/index")
     public String index(Integer pageSize, Integer pageNum, CommodityVO commodityVO , ModelMap model){
-    	commodityVO.setCategoryId(45);
         pageNum=pageNum==null?1:pageNum;
         pageSize=pageSize==null?10:pageSize;
         
@@ -79,8 +78,6 @@ public class CommodityController extends BaseController{
             model.put("parent", parent);
             
             //获取品种属性
-//            List<Code> specifications = categoryService.findCode(commodityVO.getCategoryId(), CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
-//            List<Code> place = categoryService.findCode(commodityVO.getCategoryId(), CommodityEnum.COMMODITY_PLACE.getValue());
             List<Code> specifications = categoryService.findCodeByString(category.getSpecs());
             List<Code> place = categoryService.findCodeByString(category.getOrigins());
             //设置code是否选中

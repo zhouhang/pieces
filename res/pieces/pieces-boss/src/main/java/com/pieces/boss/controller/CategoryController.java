@@ -268,6 +268,7 @@ public class CategoryController {
 							  HttpServletResponse response,
 							  BreedVo bvo,
 							  ModelMap model){
+		bvo.setAliases(bvo.getAliases().replace("，", ","));
 		if(StringUtils.isNotBlank(bvo.getId())){
 			categoryService.updateBreed(bvo);
 		}else{

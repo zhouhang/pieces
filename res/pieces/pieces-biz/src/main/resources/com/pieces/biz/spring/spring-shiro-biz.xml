@@ -15,5 +15,6 @@
      <property name="credentialsMatcher" ref="credentialsMatcher"/>
  </bean>
     
- <bean id="bizAuthorizationFilter" class="com.pieces.biz.shiro.BizAuthorizationFilter" /> 
+ <bean id="bizAuthorizationFilter" class="com.pieces.biz.shiro.BizAuthorizationFilter" />
+  
 </beans>
