@@ -36,6 +36,11 @@ public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao {
         PageInfo page = new PageInfo(list);
         return page;
     }
+    
+    @Override
+    public List<Commodity> findByParamNoPage(CommodityVO commodity) {
+        return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findByParam", commodity);
+    }
 
     @Override
     public CommodityVO findVoById(Integer id) {
@@ -67,8 +72,8 @@ public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao {
     }
 
         @Override
-        public CommodityVO findCommodityByBreedId(Integer id) {
-            return getSqlSession().selectOne("com.pieces.dao.CommodityMapper.findCommodityByBreedId",id);
+        public List<CommodityVO> findCommodityByBreedId(Integer id) {
+            return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findCommodityByBreedId",id);
         }
         
         @Override

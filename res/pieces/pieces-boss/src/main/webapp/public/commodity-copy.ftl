@@ -19,9 +19,13 @@
             </dl>
         </div>
         <div class="main">
+            <div class="info">
+                <h3><i class="fa"></i>复制商品成功.</h3>
+            </div>
+
             <form action="" id="form">
                 <div class="title">
-                    <h3><i class="fa fa-chevron-right"></i>复制商品“${commodity.name}”成功</h3>
+                    <h3><i class="fa fa-chevron-right"></i>${commodity.name}</h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                         <button type="button" class="btn btn-gray" onclick="window.location.reload();">重置</button>

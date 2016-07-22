@@ -290,10 +290,11 @@ public class CategoryController {
 							  HttpServletResponse response,
 							  @PathVariable("id") Integer id,
 							  ModelMap model){
-		CommodityVO vo = commodityService.findCommodityByBreedId(id);
-		if(vo != null){
+		List<CommodityVO> vos = commodityService.findCommodityByBreedId(id);
+		if(ValidUtils.listNotBlank(vos)){
 			Result result = new Result(false).info("该品种下已有商品，请先将所有商品移除后再删除。");
 	        WebUtil.printJson(response, result);
+	        return;
 		}
 		categoryService.deleteById(id);
 		Result result = new Result(true);

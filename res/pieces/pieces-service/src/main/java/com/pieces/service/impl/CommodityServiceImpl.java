@@ -67,6 +67,11 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     public PageInfo<CommodityVO> query(CommodityVO commodity, int pageNum, int pageSize) {
         return commodityDao.findByParam(commodity, pageNum, pageSize);
     }
+    
+    @Override
+    public List<Commodity> queryNoPage(CommodityVO commodity) {
+        return commodityDao.findByParamNoPage(commodity);
+    }
 
     @Override
     public PageInfo<CommodityVO> findVoByPage(int pageNum, int pageSize) {
@@ -110,7 +115,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     }
 
     @Override
-    public CommodityVO findCommodityByBreedId(Integer id) {
+    public List<CommodityVO> findCommodityByBreedId(Integer id) {
     	return commodityDao.findCommodityByBreedId(id);
     }
 

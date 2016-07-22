@@ -37,7 +37,7 @@ public interface CommodityService extends ICommonService<Commodity>{
      */
     public CropResult uploadImage(MultipartFile img);
 
-    public CommodityVO findCommodityByBreedId(Integer id);
+    public List<CommodityVO> findCommodityByBreedId(Integer id);
     List<CommodityVO> findFactoryByBreedId(Integer id);
     List<CommodityVO> findStandardByBreedId(Integer id);
 
@@ -47,5 +47,6 @@ public interface CommodityService extends ICommonService<Commodity>{
      * @return
      */
     public CropResult cropImg(CropInfo crop);
+	List<Commodity> queryNoPage(CommodityVO commodity);
 
 }

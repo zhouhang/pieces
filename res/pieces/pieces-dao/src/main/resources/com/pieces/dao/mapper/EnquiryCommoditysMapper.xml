@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.EnquiryCommoditysMapper">
+    <resultMap id="EnquiryCommoditysResultMap" type="com.pieces.dao.model.EnquiryCommoditys">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="bills_id"  property="billsId" />
+            <result column="commodity_id"  property="commodityId" />
+            <result column="commodity_name"  property="commodityName" />
+            <result column="specs"  property="specs" />
+            <result column="level"  property="level" />
+            <result column="origin"  property="origin" />
+            <result column="amount"  property="amount" />
+            <result column="expect_price"  property="expectPrice" />
+            <result column="expect_date"  property="expectDate" />
+            <result column="my_price"  property="myPrice" />
+            <result column="expire_date"  property="expireDate" />
+            <result column="create_time"  property="createTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,expect_price,expect_date,my_price,expire_date,create_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="EnquiryCommoditysResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from enquiry_commoditys
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="EnquiryCommoditysResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from enquiry_commoditys
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from enquiry_commoditys
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.EnquiryCommoditys">
+        insert into
+        enquiry_commoditys (user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,expect_price,expect_date,my_price,expire_date,create_time)
+        values
+        (#{userId},#{billsId},#{commodityId},#{commodityName},#{specs},#{level},#{origin},#{amount},#{expectPrice},#{expectDate},#{myPrice},#{expireDate},#{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.EnquiryCommoditys">
+        update enquiry_commoditys
+        <set>
+                                                        
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+                                            
+            <if test="billsId != null">
+                bills_id = #{billsId},
+            </if>
+                                            
+            <if test="commodityId != null">
+                commodity_id = #{commodityId},
+            </if>
+                                            
+            <if test="commodityName != null">
+                commodity_name = #{commodityName},
+            </if>
+                                            
+            <if test="specs != null">
+                specs = #{specs},
+            </if>
+                                            
+            <if test="level != null">
+                level = #{level},
+            </if>
+                                            
+            <if test="origin != null">
+                origin = #{origin},
+            </if>
+                                            
+            <if test="amount != null">
+                amount = #{amount},
+            </if>
+                                            
+            <if test="expectPrice != null">
+                expect_price = #{expectPrice},
+            </if>
+                                            
+            <if test="expectDate != null">
+                expect_date = #{expectDate},
+            </if>
+                                            
+            <if test="myPrice != null">
+                my_price = #{myPrice},
+            </if>
+                                            
+            <if test="expireDate != null">
+                expire_date = #{expireDate},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

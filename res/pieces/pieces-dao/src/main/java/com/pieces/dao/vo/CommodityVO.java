@@ -56,10 +56,16 @@ public class CommodityVO implements Serializable {
 
 	private Integer status;
 
-	//与商品相关联的二级品种ID
+	//类别id
 	private Integer categoryId;
 
 	private String categoryName;
+	
+	
+	//与商品相关联的二级品种ID
+	private Integer breedId;
+	
+	private String breedName;
 
 	private Date createTime;
 	
@@ -250,7 +256,31 @@ public class CommodityVO implements Serializable {
 		this.checked = checked;
 	}
 	
-    @Override
+    public String getExecutiveStandardName() {
+		return executiveStandardName;
+	}
+
+	public void setExecutiveStandardName(String executiveStandardName) {
+		this.executiveStandardName = executiveStandardName;
+	}
+
+	public Integer getBreedId() {
+		return breedId;
+	}
+
+	public void setBreedId(Integer breedId) {
+		this.breedId = breedId;
+	}
+
+	public String getBreedName() {
+		return breedName;
+	}
+
+	public void setBreedName(String breedName) {
+		this.breedName = breedName;
+	}
+
+	@Override
     public String toString() {
         Field[] fields = this.getClass().getDeclaredFields();
         StringBuffer sb = new StringBuffer();

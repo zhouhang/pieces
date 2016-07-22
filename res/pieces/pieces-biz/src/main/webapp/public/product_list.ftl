@@ -7,7 +7,6 @@
 
 <body>
 	<#include "./inc/header.ftl"/>
-	<#include "./inc/nav.ftl"/>
     <div class="main-body">
         <div class="wrap">
             <div class="sitemap">
@@ -25,13 +24,14 @@
             <div class="fa-filter">
                 <dl>
                     <dt>你已筛选：</dt>
-                    <dd class="bd" id="screen">
+                    
+                    <dd class="extra">
+                        <a id="reset" class="btn btn-gray" href="javascript:;">重置筛选条件</a>
+                    </dd>
+					<dd class="bd" id="screen">
                     	<#list screens as screen>
                         	<a data-name="${screen }" href="javascript:;">${screen }<i class='fa fa-times'></i></a>
                         </#list>
-                    </dd>
-                    <dd class="extra">
-                        <a id="reset" class="btn btn-gray" href="javascript:;">重置筛选条件</a>
                     </dd>
                 </dl>
             </div>
@@ -130,10 +130,10 @@
                     <tbody>
                     <#list pageInfo.list as commodity>
                         <tr>
-                            <td><a href=""><img src="${commodity.pictureUrl }" width="130" height="130" alt=""></a></td>
+                            <td><a href="/commodity/${commodity.id }" target="_blank"><img src="${commodity.pictureUrl }" width="130" height="130" alt=""></a></td>
                             <td class="tl">                                
                                 <div class="desc">
-                                    <h3><a href="">${commodity.name }</a></h3>
+                                    <h3><a href="/commodity/${commodity.id }" target="_blank">${commodity.name }</a></h3>
                                     <p>${commodity.exterior }</p>
                                 </div>
                             </td>
@@ -141,7 +141,7 @@
                             <td>${commodity.originOfName }</td>
                             <td class="tl">${commodity.executiveStandard }</td>
                             <td>${commodity.factory }</td>
-                            <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
+                            <td><a class="btn btn-white btn-quote" href="">立即询价</a></td>
                         </tr>
                     </#list>
                     </tbody>
@@ -153,8 +153,10 @@
         </div>
     </div>
 
-	<#include "./inc/footer.ftl"/>
+    <#include "./inc/helper.ftl"/>
+    <#include "./inc/footer.ftl"/>
     <script src="/js/jquery.form.js"></script>
+    <script src="/js/layer/layer.js"></script>
     <script>
     var productPage = {
         v: {
@@ -162,6 +164,10 @@
         },
         fn: {
         	init: function(){
+				this.checkboxEvent();
+                this.dorpDown();
+                this.quote();
+				
         		$(".fa-times").click(function(){
         			var name = $(this).parent().data('name');
         			$(".cbx").filter(':checked').each(function() {
@@ -262,11 +268,26 @@
                     }
                 })
                 return this;
+			},
+            // 询价
+            quote: function() {
+                $('#myform').on('click', '.btn-quote', function() {
+                    layer.open({
+                        type: 2,
+                        title: '账户登录',
+                        area: ['360px', '360px'],
+                        content: ['login_mini.html', 'no']
+                    });
+                    return false;
+                })
+            },
+            logined: function() {
+                layer.closeAll();
             }
         }
     }
     $(function() {
-        productPage.fn.checkboxEvent().dorpDown();
+
         productPage.fn.init();
     })
     </script>

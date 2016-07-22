@@ -21,11 +21,7 @@ public class BossPermission implements Permission,Serializable {
     @Override
     public boolean implies(Permission permission) {
         BossPermission bp =   (BossPermission)permission;
-        if(bp.getUrl().equals(url)){
-            return true;
-        }else{
-            return false;
-        }
+        return true;
     }
 
     public String getUrl() {

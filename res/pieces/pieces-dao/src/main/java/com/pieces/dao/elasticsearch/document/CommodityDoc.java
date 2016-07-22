@@ -23,6 +23,9 @@ public class CommodityDoc {
     @Field( type = FieldType.String,index= FieldIndex.not_analyzed)
     private String exterior;
 
+    @Field( type = FieldType.String,index= FieldIndex.not_analyzed)
+    private String level;
+
     //品种名称
     private String categoryName;
 
@@ -108,5 +111,13 @@ public class CommodityDoc {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 }
