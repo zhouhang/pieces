@@ -264,22 +264,22 @@
     <select id="findCommodityByBreedId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CommodityVO">
         select *
 	        from commodity a
-	        where a.category_id = #{categoryId}
-	        and a.status = 1
+	        where a.status = 1
+	        and a.category_id = #{categoryId}
     </select>
     
     <select id="findStandardByBreedId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CommodityVO">
         select distinct a.executive_standard as executiveStandard
 	        from commodity a
-	        where a.category_id = #{categoryId}
-	        and a.status = 1
+	        where a.status = 1
+	        and a.category_id = #{categoryId}
     </select>
     
     <select id="findFactoryByBreedId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CommodityVO">
         select distinct a.factory as factory
 	        from commodity a
-	        where a.category_id = #{categoryId}
-	        and a.status = 1
+	        where a.status = 1
+	        and a.category_id = #{categoryId}
     </select>
 
 
