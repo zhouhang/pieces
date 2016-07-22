@@ -116,13 +116,16 @@
                 },
                 formValidate: function() {
                     $("#myform").validator({
+                    	rules: {
+                			aliases: [/^[,，\u4E00-\u9FA5]+$/, "请填写中文和大小写逗号"]
+                	    },
                         fields: {
                         	classifyId: "required",
                         	name: "required",
-                        	aliases: "required",
-                        	specifications: "required",
-                        	place: "required",
-                        	level:"required"
+                        	aliases: "required,aliases",
+                        	spece: "checked",
+                        	origins: "checked",
+                        	levels: "checked"
                         },
                         valid: function(form) {
             		    	if ( $(form).isValid() ) {

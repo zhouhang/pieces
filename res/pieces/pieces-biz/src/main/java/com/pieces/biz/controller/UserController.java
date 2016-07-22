@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -186,7 +187,7 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String toLogin(Model model, HttpServletRequest request) {
+	public String toLogin(ModelMap model, HttpServletRequest request) {
 		return "login";
 	}
 

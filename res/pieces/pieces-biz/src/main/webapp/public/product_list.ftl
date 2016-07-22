@@ -141,7 +141,7 @@
                             <td>${commodity.originOfName }</td>
                             <td class="tl">${commodity.executiveStandard }</td>
                             <td>${commodity.factory }</td>
-                            <td><a class="btn btn-white btn-quote" href="">立即询价</a></td>
+                            <td><a class="btn btn-white btn-quote">立即询价</a></td>
                         </tr>
                     </#list>
                     </tbody>
@@ -160,7 +160,7 @@
     <script>
     var productPage = {
         v: {
-
+			url : '/center/enquiry/index'
         },
         fn: {
         	init: function(){
@@ -272,17 +272,30 @@
             // 询价
             quote: function() {
                 $('#myform').on('click', '.btn-quote', function() {
-                    layer.open({
-                        type: 2,
-                        title: '账户登录',
-                        area: ['360px', '360px'],
-                        content: ['login_mini.html', 'no']
-                    });
-                    return false;
+                	$.ajax({
+			            url: "/pop",
+			            type: "POST",
+			            dataType : "json",
+			            success: function(data){
+			            	var status = data.status;
+			            	if(status === 'y'){
+			            		window.location.href = productPage.v.url;
+			            	}else{
+			            		layer.open({
+			                        type: 2,
+			                        title: '账户登录',
+			                        area: ['360px', '360px'],
+			                        content: ['/popLogin', 'no']
+			                    });
+			            	}
+			            }
+			        });
+                	return false;
                 })
             },
             logined: function() {
                 layer.closeAll();
+                window.location.href = productPage.v.url;
             }
         }
     }
