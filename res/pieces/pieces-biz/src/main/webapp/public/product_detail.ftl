@@ -10,11 +10,11 @@
     <div class="main-body">
         <div class="wrap">
             <div class="sitemap">
-                <a href="#">商品分类</a>
+                <span>商品分类</span>
                 <em>&gt;</em>
-                <a href="#">${category}</a>
+                <a href="/commodity/index?categoryId=${categoryId}">${category}</a>
                 <em>&gt;</em>
-                <a href="#">${commodity.categoryName}</a>
+                <a href="/commodity/index?categoryId=${commodity.categoryId}">${commodity.categoryName}</a>
                 <em>&gt;</em>
                 <span>${commodity.name}</span>
             </div>
@@ -129,6 +129,10 @@
                                 <li>
                                     <div class="dt">切制规格</div>
                                     <div class="dd">${commodity.specName}</div>
+                                </li>
+                                <li>
+                                    <div class="dt">等级</div>
+                                    <div class="dd">${commodity.levelName}</div>
                                 </li>
                                 <li>
                                     <div class="dt">原药产地</div>
