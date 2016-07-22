@@ -7,7 +7,6 @@
 
 <body>
 	<#include "./inc/header.ftl"/>
-	<#include "./inc/nav.ftl"/>
     <div class="main-body">
         <div class="wrap">
             <div class="sitemap">
@@ -154,7 +153,8 @@
         </div>
     </div>
 
-	<#include "./inc/footer.ftl"/>
+    <#include "./inc/helper.ftl"/>
+    <#include "./inc/footer.ftl"/>
     <script src="/js/jquery.form.js"></script>
     <script src="/js/layer/layer.js"></script>
     <script>

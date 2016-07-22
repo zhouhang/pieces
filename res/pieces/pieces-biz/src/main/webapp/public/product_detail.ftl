@@ -7,15 +7,14 @@
 
 <body>
 	<#include "./inc/header.ftl"/>
-	<#include "./inc/nav.ftl"/>
     <div class="main-body">
         <div class="wrap">
             <div class="sitemap">
-                <a href="#">商品分类</a>
+                <span>商品分类</span>
                 <em>&gt;</em>
-                <a href="#">${category}</a>
+                <a href="/commodity/index?categoryId=${categoryId}">${category}</a>
                 <em>&gt;</em>
-                <a href="#">${commodity.categoryName}</a>
+                <a href="/commodity/index?categoryId=${commodity.categoryId}">${commodity.categoryName}</a>
                 <em>&gt;</em>
                 <span>${commodity.name}</span>
             </div>
@@ -132,6 +131,10 @@
                                     <div class="dd">${commodity.specName}</div>
                                 </li>
                                 <li>
+                                    <div class="dt">等级</div>
+                                    <div class="dd">${commodity.levelName}</div>
+                                </li>
+                                <li>
                                     <div class="dt">原药产地</div>
                                     <div class="dd">${commodity.originOfName}</div>
                                 </li>
@@ -168,39 +171,7 @@
     </div>
 
 
-    <div class="helper">
-        <div class="wrap">
-            <dl>
-                <dt>新手指南</dt>
-                <dd><a href="#">用户注册</a></dd>
-                <dd><a href="#">注册协议</a></dd>
-                <dd><a href="#">视频介绍</a></dd>
-            </dl>
-            <dl>
-                <dt>产品询价</dt>
-                <dd><a href="#">寻找商品</a></dd>
-                <dd><a href="#">在线询价</a></dd>
-                <dd><a href="#">一键下单</a></dd>
-            </dl>
-            <dl>
-                <dt>交期管理</dt>
-                <dd><a href="#">验货签收</a></dd>
-                <dd><a href="#">交货周期</a></dd>
-                <dd><a href="#">用户确认</a></dd>
-            </dl>
-            <dl>
-                <dt>增值服务</dt>
-                <dd><a href="#">关于发票</a></dd>
-                <dd><a href="#">统计分析</a></dd>
-                <dd><a href="#">在线对账</a></dd>
-            </dl>
-            <dl>
-                <dt>服务说明</dt>
-                <dd><a href="#">隐私声明</a></dd>
-                <dd><a href="#">产权保护</a></dd>
-                <dd><a href="#">法律声明</a></dd>
-            </dl>
-        </div>
-    </div>
+    <#include "./inc/helper.ftl"/>
+    <#include "./inc/footer.ftl"/>
 </body>
 </html>

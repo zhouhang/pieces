@@ -73,15 +73,7 @@
 		<filter-name>shiroFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
-	<filter>
-		<filter-name>xssFilter</filter-name>
-		<filter-class>com.pieces.biz.filter.XSSFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>xssFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+
 
 	<!--error -->
 	<error-page>

@@ -23,6 +23,7 @@
         <result column="name"  property="name" />
         <result column="spec"  property="spec" />
         <result column="level"  property="level" />
+        <result column="levelName"  property="levelName" />
         <result column="specName"  property="specName" />
         <result column="origin_of"  property="originOf" />
         <result column="originOfName"  property="originOfName" />
@@ -60,10 +61,12 @@
         coom.id as id,coom.name as name,spec,origin_of,executive_standard,factory,exterior,
         picture_url,details,coom.status as status,category_id,coom.create_time as create_time,
         coom.level as level,
+        level.name as levelName,
         spec.name as specName,
         originOf.name as originOfName,
         category.name as categoryName
         from commodity coom
+        left join code level on coom.level = level.id
         left join code spec ON spec = spec.id
         left join code originOf on origin_of = originOf.id
         left join category on category_id = category.id
@@ -229,10 +232,12 @@
         commodity.create_time,
         spec.name as specName,
         originOf.name as originOfName,
-        category.name as categoryName
+        category.name as categoryName,
+        levels.name as levelName
         from commodity
         left join code spec ON spec = spec.id
         left join code originOf on origin_of = originOf.id
+        left join code levels ON commodity.level = levels.id
         left join category on category_id = category.id
     </select>
 
@@ -253,10 +258,12 @@
         commodity.create_time,
         spec.name as specName,
         originOf.name as originOfName,
-        category.name as categoryName
+        category.name as categoryName,
+        levels.name as levelName
         from commodity
         left join code spec ON spec = spec.id
         left join code originOf on origin_of = originOf.id
+        left join code levels ON commodity.level = levels.id
         left join category on category_id = category.id
         where commodity.id = #{id}
     </select>

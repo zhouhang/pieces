@@ -7,7 +7,6 @@
 
 <body>
     <#include "./inc/header.ftl"/>
-    <#include "./inc/nav.ftl"/>
 
 <div class="main-body">
     <div class="wrap">
@@ -33,6 +32,13 @@
                         <div class="drop-dowm">
                             <div class="hd">
                                 <span>切割规格</span></i>
+                            </div>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="drop-dowm">
+                            <div class="hd">
+                                <span>等级</span></i>
                             </div>
                         </div>
                     </th>
@@ -72,6 +78,7 @@
                                 </div>
                             </td>
                             <td>${commodityDoc.spec!}</td>
+                            <td>${commodityDoc.level!}</td>
                             <td>${commodityDoc.originOf!}</td>
                             <td class="tl">${commodityDoc.executiveStandard!}</td>
                             <td>${commodityDoc.factory!}</td>
@@ -101,7 +108,7 @@
         </#if>
     </div>
 </div>
-
+    <#include "./inc/helper.ftl"/>
     <#include "./inc/footer.ftl"/>
 
 
