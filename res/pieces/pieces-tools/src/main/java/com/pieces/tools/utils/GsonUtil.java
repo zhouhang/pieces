@@ -1,21 +1,22 @@
 package com.pieces.tools.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.pieces.tools.utils.gson.DateConverter;
 import com.pieces.tools.utils.gson.GsonExclusion;
 import com.pieces.tools.utils.gson.GsonInclusion;
+import com.pieces.tools.utils.gson.SetDeserialize;
 import org.apache.commons.io.IOUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.security.InvalidParameterException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * gson的工具类
@@ -91,6 +92,8 @@ public class GsonUtil {
     public static <T> T jsonToEntity(String json,Class<T> clazz, String... excludeFields){
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Date.class, new DateConverter());
+        builder.registerTypeHierarchyAdapter(Set.class,new SetDeserialize());
+
         //要排除的字段
         if (excludeFields != null && excludeFields.length > 0) {
             GsonExclusion exclusions = new GsonExclusion();
@@ -98,6 +101,7 @@ public class GsonUtil {
             builder.setExclusionStrategies(exclusions);
         }
         Gson gson = builder.create();
+
         T entity = gson.fromJson(json, clazz);
         return entity;
     }

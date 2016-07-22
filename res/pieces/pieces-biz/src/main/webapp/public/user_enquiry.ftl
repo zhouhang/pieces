@@ -57,18 +57,37 @@
 	                				</tr>
 	                			</tfoot>
 	                			<tbody>
-	                				<tr>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="goodsName" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="standard" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="price" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="date" autocomplete="off" onclick="laydate({min:laydate.now()})"></div></td>
-	                            		<td>
-	                            			<a class="add c-blue" href="javascript:;">添加</a>
-	                            		</td>
-	                				</tr>
+								<#if (commodityList?size)<2>
+									<tr>
+										<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="goodsName" autocomplete="off"></div></td>
+										<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="standard" autocomplete="off"></div></td>
+										<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"></div></td>
+										<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"></div></td>
+										<td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"></div></td>
+										<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="price" autocomplete="off"></div></td>
+										<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="date" autocomplete="off" onclick="laydate({min:laydate.now()})"></div></td>
+										<td>
+											<a class="add c-blue" href="javascript:;">添加</a>
+										</td>
+									</tr>
+									<#else>
+										<#list commodityList as commodity>
+											<tr>
+												<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="goodsName" autocomplete="off"></div></td>
+												<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="standard" autocomplete="off"></div></td>
+												<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"></div></td>
+												<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"></div></td>
+												<td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"></div></td>
+												<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="price" autocomplete="off"></div></td>
+												<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="date" autocomplete="off" onclick="laydate({min:laydate.now()})"></div></td>
+												<td>
+													<a class="add c-blue" href="javascript:;">添加</a>
+													<a class="remove c-red" href="javascript:;">删除</a>
+												</td>
+											</tr>
+										</#list>
+								</#if>
+
 	                			</tbody>
 	                		</table>
 	                		<div class="submit">
