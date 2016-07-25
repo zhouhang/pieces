@@ -154,10 +154,10 @@
                     <tbody>
                     <#list pageInfo.list as commodity>
                         <tr>
-                            <td><a href="/commodity/${commodity.id }" target="_blank"><img src="${commodity.pictureUrl }" width="130" height="130" alt=""></a></td>
+                            <td><a href="/commodity/${commodity.id }"><img src="${commodity.pictureUrl }" width="130" height="130" alt=""></a></td>
                             <td class="tl">                                
                                 <div class="desc">
-                                    <h3><a href="/commodity/${commodity.id }" target="_blank">${commodity.name }</a></h3>
+                                    <h3><a href="/commodity/${commodity.id }">${commodity.name }</a></h3>
                                     <p>${commodity.exterior }</p>
                                 </div>
                             </td>

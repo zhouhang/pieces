@@ -24,6 +24,8 @@ import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.CategoryService;
 import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
+import com.pieces.service.enums.CodeEnum;
+import com.pieces.service.utils.ValidUtils;
 import com.pieces.tools.utils.WebUtil;
 
 /**
@@ -88,50 +90,70 @@ public class CommodityController extends BaseController{
             commodityVO.setCategoryName(category.getName());
             List<CategoryVo> breedList = categoryService.findBreedByPartenId(commodityVO.getCategoryId());
             model.put("parent", category);
-            for(CategoryVo vo : breedList){
-            	if(StringUtils.isNotBlank(vo.getSpecs())){
-            		specs = specs + vo.getSpecs() + ",";
-            	}
-            	if(StringUtils.isNotBlank(vo.getLevels())){
-            		level = level + vo.getLevels() + ",";
-            	}
-            	if(StringUtils.isNotBlank(vo.getSpecs())){
-            		origins = origins + vo.getOrigins() + ",";
-            	}
-            	if(StringUtils.isNotBlank(vo.getSpecs())){
-            		breedIds = breedIds + vo.getId() + ",";
-            	}
+            if(ValidUtils.listNotBlank(breedList)){
+                for(CategoryVo vo : breedList){
+                	if(StringUtils.isNotBlank(vo.getSpecs())){
+                		specs = specs + vo.getSpecs() + ",";
+                	}
+                	if(StringUtils.isNotBlank(vo.getLevels())){
+                		level = level + vo.getLevels() + ",";
+                	}
+                	if(StringUtils.isNotBlank(vo.getSpecs())){
+                		origins = origins + vo.getOrigins() + ",";
+                	}
+                	if(StringUtils.isNotBlank(vo.getSpecs())){
+                		breedIds = breedIds + vo.getId() + ",";
+                	}
+                }
+                specs = specs.substring(0 , specs.length() - 1);
+                level = level.substring(0 , level.length() - 1);
+                origins = origins.substring(0 , origins.length() - 1);
+                breedIds = breedIds.substring(0 , breedIds.length() - 1);
             }
-            specs = specs.substring(0 , specs.length() - 1);
-            level = level.substring(0 , level.length() - 1);
-            origins = origins.substring(0 , origins.length() - 1);
-            breedIds = breedIds.substring(0 , breedIds.length() - 1);
         }
         
         //查询所有
         if(commodityVO.getBreedId() == null && commodityVO.getCategoryId() == null){
         	//获取类别
             List<CategoryVo> breedList = categoryService.findBreedNoPage(new CategoryVo());
-            for(CategoryVo vo : breedList){
-            	if(StringUtils.isNotBlank(vo.getSpecs())){
-            		specs = specs + vo.getSpecs() + ",";
-            	}
-            	if(StringUtils.isNotBlank(vo.getLevels())){
-            		level = level + vo.getLevels() + ",";
-            	}
-            	if(StringUtils.isNotBlank(vo.getSpecs())){
-            		origins = origins + vo.getOrigins() + ",";
-            	}
-            }
-            specs = specs.substring(0 , specs.length() - 1);
-            level = level.substring(0 , level.length() - 1);
-            origins = origins.substring(0 , origins.length() - 1);
+            if(ValidUtils.listNotBlank(breedList)){
+	            for(CategoryVo vo : breedList){
+	            	if(StringUtils.isNotBlank(vo.getSpecs())){
+	            		specs = specs + vo.getSpecs() + ",";
+	            	}
+	            	if(StringUtils.isNotBlank(vo.getLevels())){
+	            		level = level + vo.getLevels() + ",";
+	            	}
+	            	if(StringUtils.isNotBlank(vo.getSpecs())){
+	            		origins = origins + vo.getOrigins() + ",";
+	            	}
+	            }
+	            specs = specs.substring(0 , specs.length() - 1);
+	            level = level.substring(0 , level.length() - 1);
+	            origins = origins.substring(0 , origins.length() - 1);
+	        }
         }
         
         //获取品种属性
-        List<Code> specifications = categoryService.findCodeByString(specs);
-        List<Code> place = categoryService.findCodeByString(origins);
-        List<Code> levels = categoryService.findCodeByString(level);
+        List<Code> specifications;
+        List<Code> place;
+        List<Code> levels;
+        if(StringUtils.isNotBlank(specs)){
+        	specifications = categoryService.findCodeByString(specs);
+        }else{
+        	specifications = categoryService.findCode(CodeEnum.Type.ORIGIN.name());
+        }
+        if(StringUtils.isNotBlank(origins)){
+        	place = categoryService.findCodeByString(origins);
+        }else{
+        	place = categoryService.findCode(CodeEnum.Type.ORIGIN.name());
+        }
+        if(StringUtils.isNotBlank(specs)){
+        	levels = categoryService.findCodeByString(level);
+        }else{
+        	levels = categoryService.findCode(CodeEnum.Type.LEVEL.name());
+        }
+        
         //设置code是否选中
         setCodeCheck(specifications,commodityVO.getSpecNameStr(),screens);
         setCodeCheck(place,commodityVO.getOriginOfNameStr(),screens);
@@ -197,14 +219,16 @@ public class CommodityController extends BaseController{
     }
     
     private void setCodeCheck(List<Code> source,String target,List<String> screens){
-    	for(Code code : source){
-        	if(StringUtils.isNotBlank(target) && target.contains(code.getId().toString())){
-        		code.setChecked(true);
-        		screens.add(code.getName());
-        	}else{
-        		code.setChecked(false);
-        	}
-        }
+    	if(ValidUtils.listNotBlank(source)){
+        	for(Code code : source){
+            	if(StringUtils.isNotBlank(target) && target.contains(code.getId().toString())){
+            		code.setChecked(true);
+            		screens.add(code.getName());
+            	}else{
+            		code.setChecked(false);
+            	}
+            }
+    	}
     }
 
 
