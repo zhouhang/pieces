@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
 
+import org.apache.commons.lang.StringUtils;
+
 
 public class CommodityVO implements Serializable {
 
@@ -39,6 +41,8 @@ public class CommodityVO implements Serializable {
 	private Integer level;
 
 	private String levelName;
+	
+	private String levelNameStr;
 
 	//生产厂家
 	private String factory;
@@ -66,6 +70,8 @@ public class CommodityVO implements Serializable {
 
 	//与商品相关联的二级品种ID
 	private Integer breedId;
+	
+	private String breedIds;
 	
 	private String breedName;
 
@@ -281,6 +287,22 @@ public class CommodityVO implements Serializable {
 	public void setBreedName(String breedName) {
 		this.breedName = breedName;
 	}
+	
+	public String getBreedIds() {
+		return breedIds;
+	}
+
+	public void setBreedIds(String breedIds) {
+		this.breedIds = breedIds;
+	}
+	
+	public String getLevelNameStr() {
+		return levelNameStr;
+	}
+
+	public void setLevelNameStr(String levelNameStr) {
+		this.levelNameStr = levelNameStr;
+	}
 
 	public String getCategoryIds() {
 		return categoryIds;
@@ -296,13 +318,17 @@ public class CommodityVO implements Serializable {
         StringBuffer sb = new StringBuffer();
         try {
             for(Field field : fields){
-                if(field.get(this)!=null){
+                if(field.get(this)!=null && (!field.getName().equals("serialVersionUID") &&  !field.getName().equals("checked"))){
                     sb.append("&").append(field.getName()).append("=").append(field.get(this).toString());
                 }
             }
         }catch (Exception e){
             e.printStackTrace();
         }
-        return sb.toString();
+        String str = sb.toString();
+        if(StringUtils.isNotBlank(str)){
+        	str = str.substring(1,str.length());
+        }
+        return str;
     }
 }

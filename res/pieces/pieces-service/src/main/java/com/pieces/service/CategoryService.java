@@ -30,9 +30,10 @@ public interface CategoryService extends ICommonService<Category> {
 	//通过propoty查询品种属性
 	public List<Code> findCode(String propoty);
 	//public String getbreedProtity(Integer id, Integer codeType);
-	public CategoryVo findBreedByPartenId(Integer partenId);
+	public List<CategoryVo> findBreedByPartenId(Integer partenId);
 	
 	public List<Code> findCodeByString(String str);
 	List<Code> findCode(Integer breedId, String type);
+	public List<CategoryVo> findBreedNoPage(CategoryVo categoryVo);
 	
 }

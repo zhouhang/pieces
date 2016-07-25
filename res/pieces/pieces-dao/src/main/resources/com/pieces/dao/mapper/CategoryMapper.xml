@@ -103,6 +103,21 @@
         order by create_time desc
     </select>
     
+    <select id="findBreedNoPage" parameterType="com.pieces.dao.vo.CategoryVo" resultType="com.pieces.dao.vo.CategoryVo">
+        select
+        <include refid="Base_Column_List" />
+        from category
+        where 1=1
+        and level = 2
+        <if test="name != null">
+            and name like CONCAT('%','${name}','%' )
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        order by create_time desc
+    </select>
+    
     <select id="findBreed" parameterType="com.pieces.dao.vo.CategoryVo" resultType="com.pieces.dao.vo.CategoryVo">
         select a.*,b.name as classifyName
 	        from category a

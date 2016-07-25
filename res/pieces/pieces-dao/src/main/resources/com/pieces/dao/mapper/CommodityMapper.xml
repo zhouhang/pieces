@@ -86,7 +86,10 @@
             <if test="specNameStr != null">
                and spec in (${specNameStr})
             </if>
-
+            <!-- 根据levelNameStr使用in查询，使用在商品列表 -->
+            <if test="levelNameStr != null">
+               and coom.level in (${levelNameStr})
+            </if>
             <if test="originOf != null">
                and origin_of = #{originOf}
             </if>
@@ -279,18 +282,22 @@
 	        and a.category_id = #{categoryId}
     </select>
     
-    <select id="findStandardByBreedId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CommodityVO">
+    <select id="findStandardByBreedId" parameterType="com.pieces.dao.vo.CommodityVO" resultType="com.pieces.dao.vo.CommodityVO">
         select distinct a.executive_standard as executiveStandard
 	        from commodity a
 	        where a.status = 1
-	        and a.category_id = #{categoryId}
+	        <if test="breedIds != null and breedIds != ''">
+	        	and a.category_id in (${breedIds})
+	        </if>
     </select>
     
-    <select id="findFactoryByBreedId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CommodityVO">
+    <select id="findFactoryByBreedId" parameterType="com.pieces.dao.vo.CommodityVO" resultType="com.pieces.dao.vo.CommodityVO">
         select distinct a.factory as factory
 	        from commodity a
 	        where a.status = 1
-	        and a.category_id = #{categoryId}
+	        <if test="breedIds != null and breedIds != ''">
+	        	and a.category_id in (${breedIds})
+	        </if>
     </select>
 
 

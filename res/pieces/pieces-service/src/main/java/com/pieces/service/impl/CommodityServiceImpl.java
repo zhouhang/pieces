@@ -131,13 +131,13 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     }
 
     @Override
-    public List<CommodityVO> findFactoryByBreedId(Integer id) {
-    	return commodityDao.findFactoryByBreedId(id);
+    public List<CommodityVO> findFactoryByBreedId(String ids) {
+    	return commodityDao.findFactoryByBreedId(ids);
     }
 
     @Override
-    public List<CommodityVO> findStandardByBreedId(Integer id) {
-    	return commodityDao.findStandardByBreedId(id);
+    public List<CommodityVO> findStandardByBreedId(String ids) {
+    	return commodityDao.findStandardByBreedId(ids);
     }
 
     @Override

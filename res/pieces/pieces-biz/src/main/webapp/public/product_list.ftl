@@ -10,17 +10,18 @@
     <div class="main-body">
         <div class="wrap">
             <div class="sitemap">
-                <a href="#">商品分类</a>
+                <a href="/commodity/index">商品分类</a>
                 <#if (parent??&&parent.name??)>
                 <em>&gt;</em>
-                <a href="#">${parent.name }</a>
+                <a href="/commodity/index?categoryId=${parent.id }">${parent.name }</a>
                 </#if>
-                <#if (commodity??&&commodity.categoryName??)>
+                <#if (commodity??&&commodity.breedName??)>
                 <em>&gt;</em>
-                <span>${commodity.categoryName }</span>
+                <span>${commodity.breedName }</span>
                 </#if>
             </div>
-
+			
+			<#if (screens?size>0)>
             <div class="fa-filter">
                 <dl>
                     <dt>你已筛选：</dt>
@@ -35,6 +36,7 @@
                     </dd>
                 </dl>
             </div>
+            </#if>
 
             <div class="fa-pro-list">
             <form id="myform" action="/commodity/index">
@@ -44,6 +46,8 @@
                             <th width="150"></th>
                             <th width="240">商品信息</th>
                             <th>
+                            <input type="hidden" name="categoryId"  value="${commodity.categoryId }">
+                            <input type="hidden" name="breedId"  value="${commodity.breedId }">
                                 <div class="drop-dowm">
                                     <div class="hd">
                                         <span>切割规格</span><i class="fa fa-chevron-down"></i>
@@ -57,6 +61,26 @@
                                             <dd>
                                             	<#list specifications as specifications>
                                                 	<label><input type="checkbox" name="specNameStr" data-name="${specifications.name }"  class="cbx" value="${specifications.id }" <#if specifications.checked>checked="checked"</#if>>${specifications.name }</label>
+                                                </#list>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="drop-dowm">
+                                    <div class="hd">
+                                        <span>等级</span><i class="fa fa-chevron-down"></i>
+                                    </div>
+                                    <div class="bd">
+                                        <dl>
+                                            <dt>
+                                                <label><input type="checkbox" name="" id="" class="cbx">全选</label>
+                                                <button class="btn btn-gray">确定</button>
+                                            </dt>
+                                            <dd>
+                                            	<#list levels as level>
+                                                	<label><input type="checkbox" name="levelNameStr" data-name="${level.name }" class="cbx" value="${level.id }" <#if level.checked>checked="checked"</#if>>${level.name }</label>
                                                 </#list>
                                             </dd>
                                         </dl>
@@ -138,6 +162,7 @@
                                 </div>
                             </td>
                             <td>${commodity.specName }</td>
+                            <td>${commodity.levelName }</td>
                             <td>${commodity.originOfName }</td>
                             <td class="tl">${commodity.executiveStandard }</td>
                             <td>${commodity.factory }</td>
@@ -149,7 +174,7 @@
                 </form>
             </div>
 
-            <@p.pager inPageNo=pageInfo.pageNum pageSize=pageInfo.pageSize toURL="/commodity/index?${commodityParam}" recordCount=pageInfo.total/>
+            <@p.pager inPageNo=pageInfo.pageNum-1 pageSize=pageInfo.pageSize recordCount=pageInfo.total toURL="/commodity/index?${commodityParam}"/>
         </div>
     </div>
 
