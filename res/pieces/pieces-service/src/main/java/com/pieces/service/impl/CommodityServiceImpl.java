@@ -89,6 +89,9 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 
     @Override
     public CropResult uploadImage(MultipartFile img) {
+        if (img.getSize()/(1024*1024) >= 2) {
+            return  CropResult.error("上传的图片大小不能超过2M");
+        }
         try {
             FileBo fileBo = defaultUploadFile.uploadFile(img.getOriginalFilename(), img.getInputStream());
             BufferedImage sourceImg = ImageIO.read(new FileInputStream(fileBo.getFile()));
