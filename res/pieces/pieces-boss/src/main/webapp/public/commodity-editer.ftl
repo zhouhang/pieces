@@ -225,7 +225,7 @@
 
                 // 初始化 切制规格,等级,原药产地,详细信息
                 var um = UM.getEditor('details');
-                um.setContent("${commodity.details}");
+                um.setContent('${commodity.details}');
 
                 commodityAddPage.fn.initCode(${commodity.categoryId})
                 setTimeout(function(){
@@ -357,6 +357,7 @@
                 });
             },
             croppic: function () {
+                var self = this;
                 var options = {
                     uploadUrl: '/commodity/upload',
                     cropUrl: '/commodity/clipping',
@@ -364,6 +365,19 @@
                     imgEyecandyOpacity: 0.5, // Transparent image showing current img zoom
                     loaderHtml: '<span class="loader">正在上传图片，请稍后...</span>',
                     onBeforeImgUpload: function () {
+
+                        // 检查图片大小
+                        var size =  $("#imgCrop_imgUploadField")[0].files[0].size;
+                        if (size && size/(1024*1024) >2) {
+                            $.notify({
+                                type: 'error',
+                                title: "提示消息",   // 不允许的文件类型
+                                text: "上传的图片大小不能超过2M.",     //'支持 jpg、jepg、png、gif等格式图片文件',
+                                delay: 3e3
+                            });
+                            self.cropModal.reset();
+                            throw new Error("图片超过2M无法上传!");
+                        }
                     },
                     onAfterImgUpload: function () {
                     },

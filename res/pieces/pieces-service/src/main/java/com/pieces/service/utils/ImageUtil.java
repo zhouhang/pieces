@@ -15,8 +15,11 @@ public class ImageUtil {
         String imgPath = cropInfo.getImgUrl();
 
         String descPath = FileUtil.getFilePathNoExt(imgPath) + "Crop" + FileUtil.getFileExt(imgPath);
-        Thumbnails.of(imgPath).forceSize(cropInfo.getImgW(), cropInfo.getImgH())
-                .sourceRegion(cropInfo.getImgX1(),cropInfo.getImgY1(),cropInfo.getCropW(),cropInfo.getCropH()).toFile(descPath);
+        Thumbnails.of(imgPath).forceSize(cropInfo.getImgW().intValue(), cropInfo.getImgH().intValue())
+                .sourceRegion(cropInfo.getImgX1().intValue(),cropInfo.getImgY1().intValue(),
+                        cropInfo.getCropW().intValue(),cropInfo.getCropH().intValue()).toFile(descPath);
+
+        // 保存缩略图
 
         return descPath;
     }

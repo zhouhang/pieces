@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.pieces.dao.elasticsearch.document.CommodityDoc;
-import com.pieces.service.CommoditySearchService;
-import com.pieces.tools.utils.WebUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,26 +14,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.model.Category;
 import com.pieces.dao.model.Code;
-import com.pieces.dao.model.Commodity;
 import com.pieces.dao.vo.CategoryVo;
 import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.CategoryService;
+import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
-import com.pieces.service.constant.bean.Result;
-import com.pieces.service.enums.CommodityEnum;
-import com.pieces.tools.log.annotation.BizLog;
-import com.pieces.tools.utils.ImageUtil;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.pieces.service.enums.CodeEnum;
+import com.pieces.service.utils.ValidUtils;
+import com.pieces.tools.utils.WebUtil;
 
 /**
  * Author: ff
@@ -67,52 +60,151 @@ public class CommodityController extends BaseController{
         //处理中文字符串，加单引号
         commodityVO.setExecutiveStandardNameStr(formatString(commodityVO.getExecutiveStandardNameStr()));
         commodityVO.setFactoryStr(formatString(commodityVO.getFactoryStr()));
-
-        PageInfo<CommodityVO> pageInfo = commodityService.query(commodityVO,pageNum, pageSize);
         
-        if(commodityVO.getCategoryId() != null){
+        PageInfo<CommodityVO> pageInfo = null;
+        
+        //产地，规格和等级参数字符串
+        String specs = "";
+        String origins = "";
+        String level = "";
+        //品种id字符串
+        String breedIds = "";
+        //查询品种
+        if(commodityVO.getBreedId() != null){
         	//获取类别
-            Category category = categoryService.findById(commodityVO.getCategoryId());
-            commodityVO.setCategoryName(category.getName());
+            Category category = categoryService.findById(commodityVO.getBreedId());
+            model.put("category", category);
             Category parent = categoryService.findById(category.getPartenId());     
             model.put("parent", parent);
-            
-            //获取品种属性
-            List<Code> specifications = categoryService.findCodeByString(category.getSpecs());
-            List<Code> place = categoryService.findCodeByString(category.getOrigins());
-            //设置code是否选中
-            setCodeCheck(specifications,commodityVO.getSpecNameStr(),screens);
-            setCodeCheck(place,commodityVO.getOriginOfNameStr(),screens);
-            
-            model.put("specifications", specifications);
-            model.put("place", place);
-            
-            //获取执行标准
-            List<CommodityVO> standards = commodityService.findStandardByBreedId(commodityVO.getCategoryId());
-            //设置执行标准是否选中
-            for(CommodityVO vo : standards){
-            	if(StringUtils.isNotBlank(commodityVO.getExecutiveStandardNameStr()) && commodityVO.getExecutiveStandardNameStr().contains(vo.getExecutiveStandard())){
-            		vo.setChecked(true);
-            		screens.add(vo.getExecutiveStandard());
-            	}else{
-            		vo.setChecked(false);
-            	}
-            }
-            //获取生产厂家
-            List<CommodityVO> factorys = commodityService.findFactoryByBreedId(commodityVO.getCategoryId());
-            //设置生产厂家是否选中
-            for(CommodityVO vo : factorys){
-            	if(StringUtils.isNotBlank(commodityVO.getFactoryStr()) && commodityVO.getFactoryStr().contains(vo.getFactory())){
-            		vo.setChecked(true);
-            		screens.add(vo.getFactory());
-            	}else{
-            		vo.setChecked(false);
-            	}
-            }
-            model.put("standards", standards);
-            model.put("factorys", factorys);
-            model.put("screens", screens);
+            specs = category.getSpecs();
+            origins = category.getOrigins();
+            level = category.getLevels();
+            breedIds = category.getId().toString();
+            //查询分页数据
+            pageInfo = commodityService.query(commodityVO,pageNum, pageSize);
         }
+        
+        //查询分类
+        if(commodityVO.getBreedId() == null && commodityVO.getCategoryId() != null){
+        	//获取类别
+            Category category = categoryService.findById(commodityVO.getCategoryId());
+            List<CategoryVo> breedList = categoryService.findBreedByPartenId(commodityVO.getCategoryId());
+            model.put("parent", category);
+            if(ValidUtils.listNotBlank(breedList)){
+                for(CategoryVo vo : breedList){
+                	if(StringUtils.isNotBlank(vo.getSpecs())){
+                		specs = specs + vo.getSpecs() + ",";
+                	}
+                	if(StringUtils.isNotBlank(vo.getLevels())){
+                		level = level + vo.getLevels() + ",";
+                	}
+                	if(StringUtils.isNotBlank(vo.getSpecs())){
+                		origins = origins + vo.getOrigins() + ",";
+                	}
+                	if(StringUtils.isNotBlank(vo.getId().toString())){
+                		breedIds = breedIds + vo.getId() + ",";
+                	}
+                }
+                specs = specs.substring(0 , specs.length() - 1);
+                level = level.substring(0 , level.length() - 1);
+                origins = origins.substring(0 , origins.length() - 1);
+                breedIds = breedIds.substring(0 , breedIds.length() - 1);
+                
+                //查询分页数据
+                commodityVO.setCategoryIds(breedIds);
+                Integer cid = commodityVO.getCategoryId();
+                commodityVO.setCategoryId(null);
+                pageInfo = commodityService.query(commodityVO,pageNum, pageSize);
+                commodityVO.setCategoryId(cid);
+            }
+        }
+        
+        //查询所有
+        if(commodityVO.getBreedId() == null && commodityVO.getCategoryId() == null){
+        	//获取类别
+            List<CategoryVo> breedList = categoryService.findBreedNoPage(new CategoryVo());
+            if(ValidUtils.listNotBlank(breedList)){
+	            for(CategoryVo vo : breedList){
+	            	if(StringUtils.isNotBlank(vo.getSpecs())){
+	            		specs = specs + vo.getSpecs() + ",";
+	            	}
+	            	if(StringUtils.isNotBlank(vo.getLevels())){
+	            		level = level + vo.getLevels() + ",";
+	            	}
+	            	if(StringUtils.isNotBlank(vo.getSpecs())){
+	            		origins = origins + vo.getOrigins() + ",";
+	            	}
+                	if(StringUtils.isNotBlank(vo.getId().toString())){
+                		breedIds = breedIds + vo.getId() + ",";
+                	}
+	            }
+	            specs = specs.substring(0 , specs.length() - 1);
+	            level = level.substring(0 , level.length() - 1);
+	            origins = origins.substring(0 , origins.length() - 1);
+	            breedIds = breedIds.substring(0 , breedIds.length() - 1);
+	            //查询分页数据
+                commodityVO.setCategoryIds(breedIds);
+                pageInfo = commodityService.query(commodityVO,pageNum, pageSize);
+	        }
+        }
+        
+        //获取品种属性
+        List<Code> specifications;
+        List<Code> place;
+        List<Code> levels;
+        if(StringUtils.isNotBlank(specs)){
+        	specifications = categoryService.findCodeByString(specs);
+        }else{
+        	specifications = categoryService.findCode(CodeEnum.Type.ORIGIN.name());
+        }
+        
+        if(StringUtils.isNotBlank(origins)){
+        	place = categoryService.findCodeByString(origins);
+        }else{
+        	place = categoryService.findCode(CodeEnum.Type.ORIGIN.name());
+        }
+        
+        if(StringUtils.isNotBlank(specs)){
+        	levels = categoryService.findCodeByString(level);
+        }else{
+        	levels = categoryService.findCode(CodeEnum.Type.LEVEL.name());
+        }
+        
+        //设置code是否选中
+        setCodeCheck(specifications,commodityVO.getSpecNameStr(),screens);
+        setCodeCheck(place,commodityVO.getOriginOfNameStr(),screens);
+        setCodeCheck(levels,commodityVO.getLevelNameStr(),screens);
+        
+        model.put("specifications", specifications);
+        model.put("place", place);
+        model.put("levels", levels);
+        
+        //获取执行标准
+        List<CommodityVO> standards = commodityService.findStandardByBreedId(breedIds);
+        //设置执行标准是否选中
+        for(CommodityVO vo : standards){
+        	if(StringUtils.isNotBlank(commodityVO.getExecutiveStandardNameStr()) && commodityVO.getExecutiveStandardNameStr().contains(vo.getExecutiveStandard())){
+        		vo.setChecked(true);
+        		screens.add(vo.getExecutiveStandard());
+        	}else{
+        		vo.setChecked(false);
+        	}
+        }
+        //获取生产厂家
+        List<CommodityVO> factorys = commodityService.findFactoryByBreedId(breedIds);
+        //设置生产厂家是否选中
+        for(CommodityVO vo : factorys){
+        	if(StringUtils.isNotBlank(commodityVO.getFactoryStr()) && commodityVO.getFactoryStr().contains(vo.getFactory())){
+        		vo.setChecked(true);
+        		screens.add(vo.getFactory());
+        	}else{
+        		vo.setChecked(false);
+        	}
+        }
+        model.put("standards", standards);
+        model.put("factorys", factorys);
+        model.put("screens", screens);
+        
         
         model.put("pageNum", pageNum);
         model.put("pageSize", pageSize);
@@ -143,14 +235,16 @@ public class CommodityController extends BaseController{
     }
     
     private void setCodeCheck(List<Code> source,String target,List<String> screens){
-    	for(Code code : source){
-        	if(StringUtils.isNotBlank(target) && target.contains(code.getId().toString())){
-        		code.setChecked(true);
-        		screens.add(code.getName());
-        	}else{
-        		code.setChecked(false);
-        	}
-        }
+    	if(ValidUtils.listNotBlank(source)){
+        	for(Code code : source){
+            	if(StringUtils.isNotBlank(target) && target.contains(code.getId().toString())){
+            		code.setChecked(true);
+            		screens.add(code.getName());
+            	}else{
+            		code.setChecked(false);
+            	}
+            }
+    	}
     }
 
 
@@ -200,6 +294,10 @@ public class CommodityController extends BaseController{
     @RequestMapping(value = "/{id}")
     public String detail(@PathVariable("id")Integer id, ModelMap model) {
         CommodityVO commodity =  commodityService.findVoById(id);
+        if (commodity == null) {
+            //TODO: 商品不存在
+            return  "redirect:error/404";
+        }
         Category category = categoryService.findById(commodity.getCategoryId());
         Category category1 = categoryService.findById(category.getPartenId());
 

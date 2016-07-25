@@ -1,6 +1,9 @@
 package com.pieces.boss.controller;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -144,18 +147,21 @@ public class UserController extends  BaseController{
 	@RequestMapping(value = "/username/check" ,method= RequestMethod.POST)
 	public void checkUserName(HttpServletRequest request,
 							  HttpServletResponse response,
-							  @RequestParam(required = true) String name,
-							  @RequestParam(required = true) String param){
-		if("userName".equals(name)&&StringUtils.isNotBlank(param)){
-			User user =	userService.findByUserName(param);
+							  @RequestParam(required = true) String userName){
+		Map<String, String> result = new HashMap<String, String>();
+		if(StringUtils.isNotBlank(userName)){
+			User user =	userService.findByUserName(userName);
 			if(user!=null){
-				WebUtil.print(response,new Result(false).info("该用户名已存在!"));
+				
+				result.put("error", "名字已被占用!");
+				WebUtil.print(response,result);
 			}else{
 				WebUtil.print(response,new Result(true).info("可以注册用户名!"));
 			}
 			return;
 		}
-		WebUtil.print(response,new Result(false).info("用户名不能为空!"));
+		result.put("error", "用户名不能为空!");
+		WebUtil.print(response,result);
 	}
 
 

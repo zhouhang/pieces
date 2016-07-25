@@ -10,17 +10,18 @@
     <div class="main-body">
         <div class="wrap">
             <div class="sitemap">
-                <a href="#">商品分类</a>
+                <a href="/commodity/index">商品分类</a>
                 <#if (parent??&&parent.name??)>
                 <em>&gt;</em>
-                <a href="#">${parent.name }</a>
+                <a href="/commodity/index?categoryId=${parent.id }">${parent.name }</a>
                 </#if>
-                <#if (commodity??&&commodity.categoryName??)>
+                <#if (category??&&category.name??)>
                 <em>&gt;</em>
-                <span>${commodity.categoryName }</span>
+                <span>${category.name }</span>
                 </#if>
             </div>
-
+			
+			<#if (screens?size>0)>
             <div class="fa-filter">
                 <dl>
                     <dt>你已筛选：</dt>
@@ -35,6 +36,7 @@
                     </dd>
                 </dl>
             </div>
+            </#if>
 
             <div class="fa-pro-list">
             <form id="myform" action="/commodity/index">
@@ -44,6 +46,8 @@
                             <th width="150"></th>
                             <th width="240">商品信息</th>
                             <th>
+                            <input type="hidden" name="categoryId"  value="${commodity.categoryId }">
+                            <input type="hidden" name="breedId"  value="${commodity.breedId }">
                                 <div class="drop-dowm">
                                     <div class="hd">
                                         <span>切割规格</span><i class="fa fa-chevron-down"></i>
@@ -57,6 +61,26 @@
                                             <dd>
                                             	<#list specifications as specifications>
                                                 	<label><input type="checkbox" name="specNameStr" data-name="${specifications.name }"  class="cbx" value="${specifications.id }" <#if specifications.checked>checked="checked"</#if>>${specifications.name }</label>
+                                                </#list>
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="drop-dowm">
+                                    <div class="hd">
+                                        <span>等级</span><i class="fa fa-chevron-down"></i>
+                                    </div>
+                                    <div class="bd">
+                                        <dl>
+                                            <dt>
+                                                <label><input type="checkbox" name="" id="" class="cbx">全选</label>
+                                                <button class="btn btn-gray">确定</button>
+                                            </dt>
+                                            <dd>
+                                            	<#list levels as level>
+                                                	<label><input type="checkbox" name="levelNameStr" data-name="${level.name }" class="cbx" value="${level.id }" <#if level.checked>checked="checked"</#if>>${level.name }</label>
                                                 </#list>
                                             </dd>
                                         </dl>
@@ -128,28 +152,35 @@
                     </thead>
                     <tfoot></tfoot>
                     <tbody>
-                    <#list pageInfo.list as commodity>
-                        <tr>
-                            <td><a href="/commodity/${commodity.id }" target="_blank"><img src="${commodity.pictureUrl }" width="130" height="130" alt=""></a></td>
-                            <td class="tl">                                
-                                <div class="desc">
-                                    <h3><a href="/commodity/${commodity.id }" target="_blank">${commodity.name }</a></h3>
-                                    <p>${commodity.exterior }</p>
-                                </div>
-                            </td>
-                            <td>${commodity.specName }</td>
-                            <td>${commodity.originOfName }</td>
-                            <td class="tl">${commodity.executiveStandard }</td>
-                            <td>${commodity.factory }</td>
-                            <td><a class="btn btn-white btn-quote">立即询价</a></td>
-                        </tr>
-                    </#list>
+	                    <#list pageInfo.list as commodity>
+	                        <tr>
+	                            <td><a href="/commodity/${commodity.id }"><img class="lazyload" src="/images/blank.gif" data-original="${commodity.pictureUrl }" width="130" height="130" alt=""></a></td>
+	                            <td class="tl">                                
+	                                <div class="desc">
+	                                    <h3><a href="/commodity/${commodity.id }">${commodity.name }</a></h3>
+	                                    <p>${commodity.exterior }</p>
+	                                </div>
+	                            </td>
+	                            <td>${commodity.specName }</td>
+	                            <td>${commodity.levelName }</td>
+	                            <td>${commodity.originOfName }</td>
+	                            <td class="tl">${commodity.executiveStandard }</td>
+	                            <td>${commodity.factory }</td>
+	                            <td><a class="btn btn-white btn-quote">立即询价</a></td>
+	                        </tr>
+	                    </#list>
                     </tbody>
                 </table>
                 </form>
             </div>
-
-            <@p.pager inPageNo=pageInfo.pageNum pageSize=pageInfo.pageSize toURL="/commodity/index?${commodityParam}" recordCount=pageInfo.total/>
+            
+            <#if pageInfo.list?size == 0>
+	            <div class="fa-pro-empty">
+	                <p class="tc">对不起，找不到您需要的商品，建议您：重新选择筛选条件。</p>
+	            </div>
+			</#if>
+			
+            <@p.pager inPageNo=pageInfo.pageNum-1 pageSize=pageInfo.pageSize recordCount=pageInfo.total toURL="/commodity/index?${commodityParam}"/>
         </div>
     </div>
 
@@ -157,6 +188,7 @@
     <#include "./inc/footer.ftl"/>
     <script src="/js/jquery.form.js"></script>
     <script src="/js/layer/layer.js"></script>
+    <script src="/js/common.js"></script>
     <script>
     var productPage = {
         v: {

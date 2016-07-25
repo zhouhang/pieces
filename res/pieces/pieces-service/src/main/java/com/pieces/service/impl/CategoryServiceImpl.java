@@ -97,7 +97,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	
 	@Override
-	public CategoryVo findBreedByPartenId(Integer partenId) {
+	public List<CategoryVo> findBreedByPartenId(Integer partenId) {
 		return categoryDao.findBreedByPartenId(partenId);
 	}
 	/**
@@ -118,29 +118,6 @@ public class CategoryServiceImpl implements CategoryService {
 		ca.setOrigins(bvo.getOrigins());
 		ca.setLevels(bvo.getLevels());
 		categoryDao.create(ca);
-//		Integer breedid = ca.getId();
-		//保存code
-//		String[] specifications = bvo.getSpecifications().trim().replace("，", ",").split(",");
-//		for(int i=0 ; i<specifications.length ; i++){
-//			if(!specifications[i].trim().equals("")){
-//				Code spe= codeDao.getCode(i, specifications[i].trim(), breedid, CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
-//				codeDao.create(spe);
-//			}
-//		}
-//		String[] place = bvo.getPlace().trim().replace("，", ",").split(",");
-//		for(int i=0 ; i<place.length ; i++){
-//			if(!place[i].trim().equals("")){
-//				Code spe = codeDao.getCode(i, place[i].trim(), breedid, CommodityEnum.COMMODITY_PLACE.getValue());
-//				codeDao.create(spe);
-//			}
-//		}
-//		String[] level = bvo.getLevel().trim().replace("，", ",").split(",");
-//		for(int i=0 ; i<level.length ; i++){
-//			if(!level[i].trim().equals("")){
-//				Code spe = codeDao.getCode(i, level[i].trim(), breedid, CommodityEnum.COMMODITY_LEVEL.getValue());
-//				codeDao.create(spe);
-//			}
-//		}
 	}
 	
 	/**
@@ -149,13 +126,6 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	@Transactional
 	public void updateBreed(BreedVo bvo) {
-		//1.修改code
-//		String[] specifications_new = bvo.getSpecifications().replace("，", ",").trim().split(",");
-//		codeDao.updateCode(specifications_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
-//		String[] place_new = bvo.getPlace().trim().replace("，", ",").split(",");
-//		codeDao.updateCode(place_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_PLACE.getValue());
-//		String[] level_new = bvo.getLevel().trim().replace("，", ",").split(",");
-//		codeDao.updateCode(level_new,Integer.parseInt(bvo.getId()),CommodityEnum.COMMODITY_LEVEL.getValue());
 		//修改category
 		Category ca = new Category();
 		ca.setName(bvo.getName());
@@ -185,9 +155,6 @@ public class CategoryServiceImpl implements CategoryService {
 	public BreedVo getBreedById(Integer id) {
 		Category category = categoryDao.findById(id);
 		Category parten = categoryDao.findById(category.getPartenId());
-//		String specifications = getbreedProtity(id,CommodityEnum.COMMODITY_SPECIFICATIONS.getValue());
-//		String places = getbreedProtity(id,CommodityEnum.COMMODITY_PLACE.getValue());
-//		String level = getbreedProtity(id,CommodityEnum.COMMODITY_LEVEL.getValue());
 		BreedVo bvo = new BreedVo();
 		bvo.setId(id.toString());
 		bvo.setAliases(category.getAliases());
@@ -199,17 +166,6 @@ public class CategoryServiceImpl implements CategoryService {
 		bvo.setLevels(category.getLevels());
 		return bvo;
 	}
-	
-//	@Override
-//	public String getbreedProtity(Integer id,Integer codeType) {
-//		List<Code> list = findCode(id,codeType);
-//		String codes = "";
-//		for(Code code : list){
-//			codes = codes + code.getName() + ",";
-//		}
-//		codes = codes.substring(0, codes.length()-1);
-//		return codes;
-//	}
 
 	@Override
 	public List<Code> findCode(String propoty) {
@@ -237,4 +193,11 @@ public class CategoryServiceImpl implements CategoryService {
 		}
 		return null;
 	}
+
+	@Override
+	public List<CategoryVo> findBreedNoPage(CategoryVo categoryVo) {
+		return categoryDao.findBreedNoPage(categoryVo);
+	}
+	
+	
 }

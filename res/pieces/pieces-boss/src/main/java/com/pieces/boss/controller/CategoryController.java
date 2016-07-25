@@ -133,8 +133,8 @@ public class CategoryController {
 							  HttpServletResponse response,
 							  @PathVariable("id") Integer id,
 							  ModelMap model){
-		CategoryVo vo = categoryService.findBreedByPartenId(id);
-		if(vo != null){
+		List<CategoryVo> vo = categoryService.findBreedByPartenId(id);
+		if(ValidUtils.listNotBlank(vo)){
 			Result result = new Result(false).info("该分类已有关联品种，请先取消关联后再删除。");
 	        WebUtil.printJson(response, result);
 	        return;

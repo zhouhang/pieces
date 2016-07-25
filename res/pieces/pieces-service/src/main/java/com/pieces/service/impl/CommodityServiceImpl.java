@@ -89,6 +89,9 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 
     @Override
     public CropResult uploadImage(MultipartFile img) {
+        if (img.getSize()/(1024*1024) >= 2) {
+            return  CropResult.error("上传的图片大小不能超过2M");
+        }
         try {
             FileBo fileBo = defaultUploadFile.uploadFile(img.getOriginalFilename(), img.getInputStream());
             BufferedImage sourceImg = ImageIO.read(new FileInputStream(fileBo.getFile()));
@@ -128,13 +131,13 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     }
 
     @Override
-    public List<CommodityVO> findFactoryByBreedId(Integer id) {
-    	return commodityDao.findFactoryByBreedId(id);
+    public List<CommodityVO> findFactoryByBreedId(String ids) {
+    	return commodityDao.findFactoryByBreedId(ids);
     }
 
     @Override
-    public List<CommodityVO> findStandardByBreedId(Integer id) {
-    	return commodityDao.findStandardByBreedId(id);
+    public List<CommodityVO> findStandardByBreedId(String ids) {
+    	return commodityDao.findStandardByBreedId(ids);
     }
 
     @Override
@@ -158,9 +161,10 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
                 String categoryIds = "";
                 for (CategoryVo vo : categoryVos) {
                     if(!vo.getId().equals(breedId)){
-                        categoryIds += vo.getId() + ",";
+                        categoryIds += "'" + vo.getId() + "',";
                     }
                 }
+                categoryIds = categoryIds.substring(0, categoryIds.length()-1);
                 CommodityVO commodityVO = new CommodityVO();
                 commodityVO.setCategoryIds(categoryIds);
                 List<CommodityVO> listc = commodityDao.findByParam(commodityVO, 1,5).getList();
