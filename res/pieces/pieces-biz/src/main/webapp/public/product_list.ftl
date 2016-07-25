@@ -15,9 +15,9 @@
                 <em>&gt;</em>
                 <a href="/commodity/index?categoryId=${parent.id }">${parent.name }</a>
                 </#if>
-                <#if (category??&&category.breedName??)>
+                <#if (category??&&category.name??)>
                 <em>&gt;</em>
-                <span>${category.breedName }</span>
+                <span>${category.name }</span>
                 </#if>
             </div>
 			
@@ -154,7 +154,7 @@
                     <tbody>
 	                    <#list pageInfo.list as commodity>
 	                        <tr>
-	                            <td><a href="/commodity/${commodity.id }"><img src="${commodity.pictureUrl }" width="130" height="130" alt=""></a></td>
+	                            <td><a href="/commodity/${commodity.id }"><img class="lazyload" src="/images/blank.gif" data-original="${commodity.pictureUrl }" width="130" height="130" alt=""></a></td>
 	                            <td class="tl">                                
 	                                <div class="desc">
 	                                    <h3><a href="/commodity/${commodity.id }">${commodity.name }</a></h3>
@@ -188,6 +188,7 @@
     <#include "./inc/footer.ftl"/>
     <script src="/js/jquery.form.js"></script>
     <script src="/js/layer/layer.js"></script>
+    <script src="/js/common.js"></script>
     <script>
     var productPage = {
         v: {

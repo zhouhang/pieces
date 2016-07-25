@@ -88,7 +88,6 @@ public class CommodityController extends BaseController{
         if(commodityVO.getBreedId() == null && commodityVO.getCategoryId() != null){
         	//获取类别
             Category category = categoryService.findById(commodityVO.getCategoryId());
-            model.put("category", category);
             List<CategoryVo> breedList = categoryService.findBreedByPartenId(commodityVO.getCategoryId());
             model.put("parent", category);
             if(ValidUtils.listNotBlank(breedList)){
@@ -113,8 +112,10 @@ public class CommodityController extends BaseController{
                 
                 //查询分页数据
                 commodityVO.setCategoryIds(breedIds);
+                Integer cid = commodityVO.getCategoryId();
                 commodityVO.setCategoryId(null);
                 pageInfo = commodityService.query(commodityVO,pageNum, pageSize);
+                commodityVO.setCategoryId(cid);
             }
         }
         
@@ -143,7 +144,6 @@ public class CommodityController extends BaseController{
 	            breedIds = breedIds.substring(0 , breedIds.length() - 1);
 	            //查询分页数据
                 commodityVO.setCategoryIds(breedIds);
-                commodityVO.setCategoryId(null);
                 pageInfo = commodityService.query(commodityVO,pageNum, pageSize);
 	        }
         }
