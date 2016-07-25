@@ -278,6 +278,10 @@ public class CommodityController extends BaseController{
     @RequestMapping(value = "/{id}")
     public String detail(@PathVariable("id")Integer id, ModelMap model) {
         CommodityVO commodity =  commodityService.findVoById(id);
+        if (commodity == null) {
+            //TODO: 商品不存在
+            return  "redirect:error/404";
+        }
         Category category = categoryService.findById(commodity.getCategoryId());
         Category category1 = categoryService.findById(category.getPartenId());
 

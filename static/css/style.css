@@ -337,7 +337,6 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
           .fa-pro-list .drop-dowm dd{display:block;width:100%;max-height:184px;line-height:30px;padding:7px 0;overflow:hidden;overflow-y:auto;background:#fff;}
             .fa-pro-list .drop-dowm label{display:block;padding:0 15px;white-space:nowrap;}
         .fa-pro-list .drop-dowm:hover .hd{color:#c3272b;}
-        /*.fa-pro-list .drop-dowm:hover .bd{display:block;}*/
     .fa-pro-list tr:hover td{background:#f5f5f5;}
 /* 无搜索结果 */
 .fa-pro-empty{width:500px;margin:0 auto;padding:80px 0 50px;overflow:hidden;*zoom:1;}
