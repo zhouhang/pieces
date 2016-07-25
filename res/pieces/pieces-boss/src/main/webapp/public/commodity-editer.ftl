@@ -225,7 +225,7 @@
 
                 // 初始化 切制规格,等级,原药产地,详细信息
                 var um = UM.getEditor('details');
-                um.setContent("${commodity.details}");
+                um.setContent('${commodity.details}');
 
                 commodityAddPage.fn.initCode(${commodity.categoryId})
                 setTimeout(function(){
