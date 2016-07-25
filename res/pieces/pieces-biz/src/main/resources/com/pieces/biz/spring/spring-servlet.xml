@@ -26,7 +26,17 @@
 	</bean>
 	
 	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
-	
+
+	<bean id="jsonHttpMessageConverter"
+		  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>application/json</value>
+			</list>
+		</property>
+	</bean>
+
+
 	<!-- 配置freeMarker的模板路径 -->
 	<bean id="freemarkerConfig" class="com.pieces.service.utils.ShiroTagFreeMarkerConfigurer">
 	    <property name="templateLoaderPaths">

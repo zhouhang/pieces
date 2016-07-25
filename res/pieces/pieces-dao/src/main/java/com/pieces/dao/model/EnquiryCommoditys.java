@@ -9,7 +9,8 @@ public class EnquiryCommoditys  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	
+
+
 	//用户ID
 	private Integer userId;
 	
@@ -34,22 +35,21 @@ public class EnquiryCommoditys  implements Serializable {
 	private Integer amount;
 	
 	//期望价格
-	private Float expectPrice;
+	private Double expectPrice;
 	
 	//期望交货日期
 	private Date expectDate;
 	
 	//我方报价
-	private Float myPrice;
+	private Double myPrice;
 	
 	//过期时间
 	private Date expireDate;
 	
 	//创建时间
 	private Date createTime;
-	
-	public EnquiryCommoditys(){}
-	
+
+
 	public Integer getId() {
 		return id;
 	}
@@ -122,14 +122,6 @@ public class EnquiryCommoditys  implements Serializable {
 		this.amount = amount;
 	}
 	
-	public Float getExpectPrice() {
-		return expectPrice;
-	}
-
-	public void setExpectPrice(Float expectPrice) {
-		this.expectPrice = expectPrice;
-	}
-	
 	public Date getExpectDate() {
 		return expectDate;
 	}
@@ -137,15 +129,7 @@ public class EnquiryCommoditys  implements Serializable {
 	public void setExpectDate(Date expectDate) {
 		this.expectDate = expectDate;
 	}
-	
-	public Float getMyPrice() {
-		return myPrice;
-	}
 
-	public void setMyPrice(Float myPrice) {
-		this.myPrice = myPrice;
-	}
-	
 	public Date getExpireDate() {
 		return expireDate;
 	}
@@ -161,5 +145,20 @@ public class EnquiryCommoditys  implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	
+
+	public Double getExpectPrice() {
+		return expectPrice;
+	}
+
+	public void setExpectPrice(Double expectPrice) {
+		this.expectPrice = expectPrice;
+	}
+
+	public Double getMyPrice() {
+		return myPrice;
+	}
+
+	public void setMyPrice(Double myPrice) {
+		this.myPrice = myPrice;
+	}
 }

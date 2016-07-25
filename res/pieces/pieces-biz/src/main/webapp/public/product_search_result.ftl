@@ -98,8 +98,6 @@
                         </div>
                     </div>
                 </#if>
-
-
                 </tbody>
             </table>
         </div>

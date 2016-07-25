@@ -27,7 +27,7 @@
                 	</div>
 				
                 	<div class="fa-chart">
-                		<form action="" id="myform">
+                		<form action="/center/enquiry/submit" method="post" id="enquiryForm">
 	                		<table>
 	                			<thead>
 	                				<tr>
@@ -59,13 +59,15 @@
 	                			<tbody>
 								<#if (commodityList?size)<2>
 									<tr>
-										<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="goodsName" autocomplete="off"></div></td>
-										<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="standard" autocomplete="off"></div></td>
-										<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"></div></td>
-										<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"></div></td>
-										<td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"></div></td>
-										<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="price" autocomplete="off"></div></td>
-										<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="date" autocomplete="off" onclick="laydate({min:laydate.now()})"></div></td>
+                                        <input name="commodityId" type="hidden" value="<#if commodityList[0]??>${commodityList[0].id!}</#if>" />
+
+                                        <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="<#if commodityList[0]??>${commodityList[0].name!}</#if>" name="commodityName" autocomplete="off"></div></td>
+										<td><div class="ipt-wrap"><input type="text" class="ipt" value="<#if commodityList[0]??>${commodityList[0].specName!}</#if>" name="specs" autocomplete="off"></div></td>
+										<td><div class="ipt-wrap"><input type="text" class="ipt" value="<#if commodityList[0]??>${commodityList[0].levelName!}</#if>" name="level" autocomplete="off"></div></td>
+										<td><div class="ipt-wrap"><input type="text" class="ipt" value="<#if commodityList[0]??>${commodityList[0].factory!}</#if>" name="origin" autocomplete="off"></div></td>
+										<td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount"  autocomplete="off"></div></td>
+										<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"></div></td>
+										<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"></div></td>
 										<td>
 											<a class="add c-blue" href="javascript:;">添加</a>
 										</td>
@@ -73,13 +75,14 @@
 									<#else>
 										<#list commodityList as commodity>
 											<tr>
-												<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="goodsName" autocomplete="off"></div></td>
-												<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="standard" autocomplete="off"></div></td>
-												<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"></div></td>
-												<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"></div></td>
+												<input name="commodityId" type="hidden" value="${commodity.id!}" />
+												<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="${commodity.name!}" name="commodityName" autocomplete="off"></div></td>
+												<td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.specName!}" name="specs" autocomplete="off"></div></td>
+												<td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.levelName!}" name="level" autocomplete="off"></div></td>
+												<td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.factory!}" name="origin" autocomplete="off"></div></td>
 												<td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"></div></td>
-												<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="price" autocomplete="off"></div></td>
-												<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="date" autocomplete="off" onclick="laydate({min:laydate.now()})"></div></td>
+												<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"></div></td>
+												<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"></div></td>
 												<td>
 													<a class="add c-blue" href="javascript:;">添加</a>
 													<a class="remove c-red" href="javascript:;">删除</a>
@@ -112,6 +115,7 @@
 		<div class="bd"></div>
 	</div><!-- 输入框联想 end -->
 
+    <script src="/js/jquery.form.js"></script>
     <script src="/js/member.js"></script>
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
@@ -129,7 +133,7 @@
     			myformEvent: function() {
                     var $body        = $('body');
                     var $suggestions = $('#suggestions');
-                    var $myform      = $('#myform');
+                    var $myform      = $('#enquiryForm');
                     var $tbody       = $myform.find('tbody');
                     var $ipt         = $tbody.find('.ipt:first');
                     var $tfoot       = $myform.find('tfoot');
@@ -207,8 +211,18 @@
                         // 弹层确认删除
     					layer.confirm('确认删除行？', {icon: 3, title:'提示'}, function(index){
     						$btnRemove.length === 2 && $btnRemove.remove();
+                            var commodityId =  $tr.find("input[name='commodityId']").val();
     						$tr.remove();
 						  	layer.close(index);
+							//请求服务器删除cookie
+							if(commodityId){
+                                $.ajax({
+                                    url: 'center/enquiry/delete',
+                                    dataType: 'json',
+                                    data:{commodityId:commodityId}
+                                })
+							}
+
 						});       
     				})
     			},
@@ -257,12 +271,18 @@
 					$('#suggestions .bd').empty().html(modal.join('')).parent().show();
     			},
                 submit: function() {
+
                     $('#submit').on('click', function() {
-                        $.notify({
-                            type: 'success',
-                            title: '提交成功',
-                            text: '您的询价已成功提交'
+
+                        $('#enquiryForm').ajaxSubmit({
+                            success:function(result){
+                                if(result.status=="y"){
+
+                                }
+                            }
                         })
+
+
                     })
                 }
     		}

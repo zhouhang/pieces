@@ -1,5 +1,6 @@
 package com.pieces.tools.utils;
 
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -32,6 +33,18 @@ public class SeqNoUtil {
         return sb.toString();
     }
 
+    public static final String getEnquiryCode(Integer id,int len){
+        return get("E",id,len);
+    }
+
+
+    public static final String get(String prefix, Integer id, int len){
+        String seq=id+"";
+        for(int i=seq.length(); i<len;i++){
+            seq="0"+seq;
+        }
+        return prefix+DateUtils.dateToStringWithFormat(new Date(), "yy")+seq;
+    }
 
 
 }

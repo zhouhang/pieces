@@ -23,7 +23,12 @@ public class CustomDateEditor extends PropertyEditorSupport {
 			try {
 				value = df.parse(text);
 			} catch (Exception e) {
-				e.printStackTrace();
+				df = new SimpleDateFormat("yyyy-MM-dd");
+				try {
+					value = df.parse(text);
+				}catch (Exception ex){
+					ex.printStackTrace();
+				}
 			}
 		}
 		setValue(value);

@@ -31,6 +31,7 @@
     <#if (pageNo == 1)>
         <span class="disabled">上一页</span>
     <#else>
+        <a  href="${toURL}">首页</a>
         <a  href="${toURL}&pageNum=${pageNo-1}">上一页</a>
     </#if>
 
@@ -58,7 +59,7 @@
 
 <#-- 下一页处理 -->
     <#if (pageNo == pageCount)>
-        <span class="disabled">上一页</span>
+        <span class="disabled">下一页</span>
     <#else>
         <a href="${toURL}&pageNum=${pageNo + 1}" >下一页</a>
     </#if>
