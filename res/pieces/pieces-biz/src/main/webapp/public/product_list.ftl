@@ -15,9 +15,9 @@
                 <em>&gt;</em>
                 <a href="/commodity/index?categoryId=${parent.id }">${parent.name }</a>
                 </#if>
-                <#if (commodity??&&commodity.breedName??)>
+                <#if (category??&&category.breedName??)>
                 <em>&gt;</em>
-                <span>${commodity.breedName }</span>
+                <span>${category.breedName }</span>
                 </#if>
             </div>
 			
@@ -152,28 +152,34 @@
                     </thead>
                     <tfoot></tfoot>
                     <tbody>
-                    <#list pageInfo.list as commodity>
-                        <tr>
-                            <td><a href="/commodity/${commodity.id }"><img src="${commodity.pictureUrl }" width="130" height="130" alt=""></a></td>
-                            <td class="tl">                                
-                                <div class="desc">
-                                    <h3><a href="/commodity/${commodity.id }">${commodity.name }</a></h3>
-                                    <p>${commodity.exterior }</p>
-                                </div>
-                            </td>
-                            <td>${commodity.specName }</td>
-                            <td>${commodity.levelName }</td>
-                            <td>${commodity.originOfName }</td>
-                            <td class="tl">${commodity.executiveStandard }</td>
-                            <td>${commodity.factory }</td>
-                            <td><a class="btn btn-white btn-quote">立即询价</a></td>
-                        </tr>
-                    </#list>
+	                    <#list pageInfo.list as commodity>
+	                        <tr>
+	                            <td><a href="/commodity/${commodity.id }"><img src="${commodity.pictureUrl }" width="130" height="130" alt=""></a></td>
+	                            <td class="tl">                                
+	                                <div class="desc">
+	                                    <h3><a href="/commodity/${commodity.id }">${commodity.name }</a></h3>
+	                                    <p>${commodity.exterior }</p>
+	                                </div>
+	                            </td>
+	                            <td>${commodity.specName }</td>
+	                            <td>${commodity.levelName }</td>
+	                            <td>${commodity.originOfName }</td>
+	                            <td class="tl">${commodity.executiveStandard }</td>
+	                            <td>${commodity.factory }</td>
+	                            <td><a class="btn btn-white btn-quote">立即询价</a></td>
+	                        </tr>
+	                    </#list>
                     </tbody>
                 </table>
                 </form>
             </div>
-
+            
+            <#if pageInfo.list?size == 0>
+	            <div class="fa-pro-empty">
+	                <p class="tc">对不起，找不到您需要的商品，建议您：重新选择筛选条件。</p>
+	            </div>
+			</#if>
+			
             <@p.pager inPageNo=pageInfo.pageNum-1 pageSize=pageInfo.pageSize recordCount=pageInfo.total toURL="/commodity/index?${commodityParam}"/>
         </div>
     </div>

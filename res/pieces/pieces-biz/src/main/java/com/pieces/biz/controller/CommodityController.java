@@ -61,8 +61,7 @@ public class CommodityController extends BaseController{
         commodityVO.setExecutiveStandardNameStr(formatString(commodityVO.getExecutiveStandardNameStr()));
         commodityVO.setFactoryStr(formatString(commodityVO.getFactoryStr()));
         
-        //查询分页数据
-        PageInfo<CommodityVO> pageInfo = commodityService.query(commodityVO,pageNum, pageSize);
+        PageInfo<CommodityVO> pageInfo = null;
         
         //产地，规格和等级参数字符串
         String specs = "";
@@ -74,20 +73,22 @@ public class CommodityController extends BaseController{
         if(commodityVO.getBreedId() != null){
         	//获取类别
             Category category = categoryService.findById(commodityVO.getBreedId());
-            commodityVO.setBreedName(category.getName());
+            model.put("category", category);
             Category parent = categoryService.findById(category.getPartenId());     
             model.put("parent", parent);
             specs = category.getSpecs();
             origins = category.getOrigins();
             level = category.getLevels();
             breedIds = category.getId().toString();
+            //查询分页数据
+            pageInfo = commodityService.query(commodityVO,pageNum, pageSize);
         }
         
         //查询分类
         if(commodityVO.getBreedId() == null && commodityVO.getCategoryId() != null){
         	//获取类别
             Category category = categoryService.findById(commodityVO.getCategoryId());
-            commodityVO.setCategoryName(category.getName());
+            model.put("category", category);
             List<CategoryVo> breedList = categoryService.findBreedByPartenId(commodityVO.getCategoryId());
             model.put("parent", category);
             if(ValidUtils.listNotBlank(breedList)){
@@ -101,7 +102,7 @@ public class CommodityController extends BaseController{
                 	if(StringUtils.isNotBlank(vo.getSpecs())){
                 		origins = origins + vo.getOrigins() + ",";
                 	}
-                	if(StringUtils.isNotBlank(vo.getSpecs())){
+                	if(StringUtils.isNotBlank(vo.getId().toString())){
                 		breedIds = breedIds + vo.getId() + ",";
                 	}
                 }
@@ -109,6 +110,11 @@ public class CommodityController extends BaseController{
                 level = level.substring(0 , level.length() - 1);
                 origins = origins.substring(0 , origins.length() - 1);
                 breedIds = breedIds.substring(0 , breedIds.length() - 1);
+                
+                //查询分页数据
+                commodityVO.setCategoryIds(breedIds);
+                commodityVO.setCategoryId(null);
+                pageInfo = commodityService.query(commodityVO,pageNum, pageSize);
             }
         }
         
@@ -127,10 +133,18 @@ public class CommodityController extends BaseController{
 	            	if(StringUtils.isNotBlank(vo.getSpecs())){
 	            		origins = origins + vo.getOrigins() + ",";
 	            	}
+                	if(StringUtils.isNotBlank(vo.getId().toString())){
+                		breedIds = breedIds + vo.getId() + ",";
+                	}
 	            }
 	            specs = specs.substring(0 , specs.length() - 1);
 	            level = level.substring(0 , level.length() - 1);
 	            origins = origins.substring(0 , origins.length() - 1);
+	            breedIds = breedIds.substring(0 , breedIds.length() - 1);
+	            //查询分页数据
+                commodityVO.setCategoryIds(breedIds);
+                commodityVO.setCategoryId(null);
+                pageInfo = commodityService.query(commodityVO,pageNum, pageSize);
 	        }
         }
         
@@ -143,11 +157,13 @@ public class CommodityController extends BaseController{
         }else{
         	specifications = categoryService.findCode(CodeEnum.Type.ORIGIN.name());
         }
+        
         if(StringUtils.isNotBlank(origins)){
         	place = categoryService.findCodeByString(origins);
         }else{
         	place = categoryService.findCode(CodeEnum.Type.ORIGIN.name());
         }
+        
         if(StringUtils.isNotBlank(specs)){
         	levels = categoryService.findCodeByString(level);
         }else{
