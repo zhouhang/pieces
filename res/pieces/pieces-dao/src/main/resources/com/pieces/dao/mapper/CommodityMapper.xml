@@ -132,7 +132,7 @@
             </if>
 
             <if test="categoryIds != null">
-                and categoryIds = in (${categoryIds})
+                and category_id in (${categoryIds})
             </if>
 
             <if test="createTime != null">

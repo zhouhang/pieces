@@ -158,9 +158,10 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
                 String categoryIds = "";
                 for (CategoryVo vo : categoryVos) {
                     if(!vo.getId().equals(breedId)){
-                        categoryIds += vo.getId() + ",";
+                        categoryIds += "'" + vo.getId() + "',";
                     }
                 }
+                categoryIds = categoryIds.substring(0, categoryIds.length()-1);
                 CommodityVO commodityVO = new CommodityVO();
                 commodityVO.setCategoryIds(categoryIds);
                 List<CommodityVO> listc = commodityDao.findByParam(commodityVO, 1,5).getList();
