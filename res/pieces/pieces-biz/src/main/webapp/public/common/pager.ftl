@@ -31,11 +31,19 @@
     <#if (pageNo == 1)>
         <span class="disabled">上一页</span>
     <#else>
-        <a  href="${toURL}&pageNum=${pageNo-1}">上一页</a>
+        <#if toURL?ends_with("?")>
+        	<a  href="${toURL}pageNum=${pageNo-1}">上一页</a>
+        <#else>
+        	<a  href="${toURL}&pageNum=${pageNo-1}">上一页</a>
+        </#if>
     </#if>
 
     <#if (start>1)>
-        <a href="${toURL}&pageNum=1">1</a>
+    	<#if toURL?ends_with("?")>
+        	<a href="${toURL}pageNum=1">1</a>
+        <#else>
+        	<a href="${toURL}&pageNum=1">1</a>
+        </#if>
         &hellip;
     </#if>
 
@@ -44,7 +52,11 @@
         <#if (pageNo==i)>
             <span class="curr">${i}</span>
         <#else>
-            <a href="${toURL}&pageNum=${i}">${i}</a>
+        	<#if toURL?ends_with("?")>
+	        	<a href="${toURL}pageNum=${i}">${i}</a>
+	        <#else>
+	        	<a href="${toURL}&pageNum=${i}">${i}</a>
+	        </#if>
         </#if>
     </#list>
 
@@ -53,20 +65,32 @@
         <#if !(end==pageCount-1)>
             &hellip;
         </#if>
-        <a href="${toURL}&pageNum=${pageCount}"  >${pageCount}</a>
+        <#if toURL?ends_with("?")>
+        	<a href="${toURL}pageNum=${pageCount}"  >${pageCount}</a>
+        <#else>
+        	<a href="${toURL}&pageNum=${pageCount}"  >${pageCount}</a>
+        </#if>
     </#if>
 
 <#-- 下一页处理 -->
     <#if (pageNo == pageCount)>
         <span class="disabled">上一页</span>
     <#else>
-        <a href="${toURL}&pageNum=${pageNo + 1}" >下一页</a>
+        <#if toURL?ends_with("?")>
+        	<a href="${toURL}pageNum=${pageNo + 1}" >下一页</a>
+        <#else>
+        	<a href="${toURL}&pageNum=${pageNo + 1}" >下一页</a>
+        </#if>
     </#if>
 <#-- 下一页处理 -->
 
     <#-- 尾页处理 -->
     <#if (pageCount>1)>
-        <a  href="${toURL}&pageNum=${pageCount}">尾页</a>
+    	<#if toURL?ends_with("?")>
+        	<a  href="${toURL}pageNum=${pageCount}">尾页</a>
+        <#else>
+        	<a  href="${toURL}&pageNum=${pageCount}">尾页</a>
+        </#if>
         <em>共 ${recordCount} 个商品 / 共${pageCount}页 / 跳转到第</em>
         <input class="ipt" type="text" onkeydown="javascript:if(event.keyCode==13){page_jump();return false;}" onkeyup="this.value=this.value.replace(/[^0-9]/g,'');" value="${pageNo}" maxlength="4" id="jPageSkip" >页
         <button class="btn btn-gray" type="button" onclick="page_jump();">确定</button>

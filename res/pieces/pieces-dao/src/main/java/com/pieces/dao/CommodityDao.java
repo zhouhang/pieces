@@ -16,9 +16,9 @@ public interface CommodityDao extends ICommonDao<Commodity>{
 
 	public List<CommodityVO> findCommodityByBreedId(Integer id);
 
-	List<CommodityVO> findStandardByBreedId(Integer id);
+	List<CommodityVO> findStandardByBreedId(String ids);
 	
-	List<CommodityVO> findFactoryByBreedId(Integer id);
+	List<CommodityVO> findFactoryByBreedId(String ids);
 
 	List<Commodity> findByParamNoPage(CommodityVO commodity);
 }

@@ -38,8 +38,8 @@ public interface CommodityService extends ICommonService<Commodity>{
     public CropResult uploadImage(MultipartFile img);
 
     public List<CommodityVO> findCommodityByBreedId(Integer id);
-    List<CommodityVO> findFactoryByBreedId(Integer id);
-    List<CommodityVO> findStandardByBreedId(Integer id);
+    List<CommodityVO> findFactoryByBreedId(String ids);
+    List<CommodityVO> findStandardByBreedId(String ids);
 
     /**
      * 裁剪图片
