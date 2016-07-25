@@ -14,7 +14,7 @@
                 <em>&gt;</em>
                 <a href="/commodity/index?categoryId=${categoryId}">${category}</a>
                 <em>&gt;</em>
-                <a href="/commodity/index?categoryId=${commodity.categoryId}">${commodity.categoryName}</a>
+                <a href="/commodity/index?breedId=${commodity.categoryId}">${commodity.categoryName}</a>
                 <em>&gt;</em>
                 <span>${commodity.name}</span>
             </div>
