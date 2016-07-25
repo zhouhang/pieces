@@ -28,5 +28,6 @@ public interface BasicConstants {
 
 	String KAPTCHA_SESSION_KEY = "kaptcha_session_key";  //验证码Session的key
 
+	String ENQUIRY_COOKIES= "enquiry_cookies";
 
 }

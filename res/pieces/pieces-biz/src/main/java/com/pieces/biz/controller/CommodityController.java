@@ -256,9 +256,12 @@ public class CommodityController extends BaseController{
         CommodityVO commodity =  commodityService.findVoById(id);
         Category category = categoryService.findById(commodity.getCategoryId());
         Category category1 = categoryService.findById(category.getPartenId());
+
+        List<CommodityVO> featured = commodityService.featured(null, category.getId(),category1.getId());
         model.put("category", category1.getName());
         model.put("categoryId", category1.getId());
         model.put("commodity", commodity);
+        model.put("featured", featured);
 
         return "product_detail";
     }

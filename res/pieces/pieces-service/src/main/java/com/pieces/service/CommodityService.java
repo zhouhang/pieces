@@ -2,6 +2,7 @@ package com.pieces.service;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Commodity;
+import com.pieces.dao.model.User;
 import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.vo.CropInfo;
 import com.pieces.service.vo.CropResult;
@@ -47,6 +48,20 @@ public interface CommodityService extends ICommonService<Commodity>{
      * @return
      */
     public CropResult cropImg(CropInfo crop);
+
 	List<Commodity> queryNoPage(CommodityVO commodity);
+
+    /**
+     * 商品推荐
+     * 推荐规则:
+     *  1、用户曾经询价过的品种，取询价次数最多的 5 个，如果不足 5 个，用第 2条规则填补；
+     *  2、当前商品同品种最新发布的前 5 个商品，如果不足 5 个，用第3条规则填补；
+     *  3、当前商品同分类最新发布的前 5 个商品。
+     * @param user
+     * @return
+     */
+    List<CommodityVO> featured(User user, Integer breedId, Integer categoryId);
+
+
 
 }

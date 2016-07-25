@@ -7,6 +7,11 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import com.pieces.dao.model.Category;
+import com.pieces.dao.model.User;
+import com.pieces.dao.vo.BreedVo;
+import com.pieces.dao.vo.CategoryVo;
+import com.pieces.service.CategoryService;
 import com.pieces.service.CommoditySearchService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,6 +50,9 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     @Autowired
     private CommoditySearchService commoditySearchService;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @Override
     public ICommonDao<Commodity> getDao() {
         return commodityDao;
@@ -81,6 +89,9 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 
     @Override
     public CropResult uploadImage(MultipartFile img) {
+        if (img.getSize()/(1024*1024) >= 2) {
+            return  CropResult.error("上传的图片大小不能超过2M");
+        }
         try {
             FileBo fileBo = defaultUploadFile.uploadFile(img.getOriginalFilename(), img.getInputStream());
             BufferedImage sourceImg = ImageIO.read(new FileInputStream(fileBo.getFile()));
@@ -127,5 +138,41 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     @Override
     public List<CommodityVO> findStandardByBreedId(String ids) {
     	return commodityDao.findStandardByBreedId(ids);
+    }
+
+    @Override
+    public List<CommodityVO> featured(User user, Integer breedId, Integer categoryId) {
+//        *  1、用户曾经询价过的品种，取询价次数最多的 5 个，如果不足 5 个，用第 2条规则填补；
+//        *  2、当前商品同品种最新发布的前 5 个商品，如果不足 5 个，用第3条规则填补；
+//        *  3、当前商品同分类最新发布的前 5 个商品。
+        List<CommodityVO> list = null;
+        // TODO: 用户询价商品.
+        CommodityVO param = new CommodityVO();
+        param.setCategoryId(breedId);
+        PageInfo<CommodityVO> pageInfo = commodityDao.findByParam(param, 1, 5);
+        list = pageInfo.getList();
+        if (list == null || list.size() < 5) {
+            // 找到的商品数量不足从同分类的商品中找.
+            // 根据品种ID 找到所属的类别
+            // 根据类别ID 找到下面的品种, 判处当前的品种.找前几条和上面查出来的凑足5条.
+                CategoryVo categoryVo = new CategoryVo();
+                categoryVo.setPartenId(String.valueOf(categoryId));
+                List<CategoryVo> categoryVos = categoryService.findBreed(categoryVo,1,5).getList();
+                String categoryIds = "";
+                for (CategoryVo vo : categoryVos) {
+                    if(!vo.getId().equals(breedId)){
+                        categoryIds += "'" + vo.getId() + "',";
+                    }
+                }
+                categoryIds = categoryIds.substring(0, categoryIds.length()-1);
+                CommodityVO commodityVO = new CommodityVO();
+                commodityVO.setCategoryIds(categoryIds);
+                List<CommodityVO> listc = commodityDao.findByParam(commodityVO, 1,5).getList();
+               // 整合数据
+                list.addAll(listc);
+                list = list.subList(0, 5);
+        }
+
+        return list;
     }
 }
