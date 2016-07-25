@@ -86,7 +86,10 @@
             <if test="specNameStr != null">
                and spec in (${specNameStr})
             </if>
-
+            <!-- 根据levelNameStr使用in查询，使用在商品列表 -->
+            <if test="levelNameStr != null">
+               and coom.level in (${levelNameStr})
+            </if>
             <if test="originOf != null">
                and origin_of = #{originOf}
             </if>
