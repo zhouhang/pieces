@@ -21,7 +21,13 @@
     <div class="wrap">
         <ul>
             <li><a href="#!">首页</a></li>
-            <li><a href="#!">销售</a></li>
+            <li>
+                <a href="#!">销售</a>
+                <div class="subnav">
+                    <a href="/enquiry/index">询价管理</a>
+                    <a href="/enquiry/index">订单管理</a>
+                </div>
+            </li>
             <li>
             	<a href="#!">目录</a>
             	<div class="subnav">
