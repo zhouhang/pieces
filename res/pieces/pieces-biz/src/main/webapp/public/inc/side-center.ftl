@@ -1,12 +1,12 @@
 <div class="side">
-    <dl class="expand">
+    <dl>
         <dt>
             <em class="fa fa-question-circle"></em>
             <span>询价</span>
             <i class="fa fa-chevron-right"></i>
         </dt>
         <dd>
-            <a class="curr" href="center/enquiry/index">我要询价</a>
+            <a href="center/enquiry/index">我要询价</a>
             <a href="user_enquiry_record.html">询价记录</a>
         </dd>
     </dl>
@@ -57,3 +57,5 @@
         </dd>
     </dl>
 </div>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/member.js"></script>
