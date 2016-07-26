@@ -38,7 +38,9 @@ public class EnquiryController extends BaseController{
     @Autowired
     private EnquiryBillsService enquiryBillsService;
 
-
+    /**
+     * 客户询价页面
+     */
     @RequestMapping(value = "index")
     public String index(HttpServletRequest request,
                         HttpServletResponse response,
@@ -80,7 +82,9 @@ public class EnquiryController extends BaseController{
         return "user_enquiry";
     }
 
-
+    /**
+     * 删除询价单里的一个商品
+     */
     @RequestMapping(value = "delete")
     public void delete(HttpServletRequest request,
                        HttpServletResponse response,
@@ -95,7 +99,9 @@ public class EnquiryController extends BaseController{
         WebUtil.print(response,new Result(true));
     }
 
-
+    /**
+     * 提交询价单
+     */
     @RequestMapping(value = "submit")
     public void submit(HttpServletRequest request,
                        HttpServletResponse response,
@@ -107,11 +113,12 @@ public class EnquiryController extends BaseController{
                        Integer[] amount,
                        Double[] expectPrice,
                        Date[] expectDate){
-
         List<EnquiryCommoditys> list = params2Object(commodityId,commodityName,specs,level,origin,amount,expectPrice,expectDate);
         User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         enquiryBillsService.create(list,user);
     }
+
+
 
     private List<EnquiryCommoditys> params2Object(Integer[] commodityId,
                                                    String[] commodityName,
