@@ -26,12 +26,11 @@
         <#assign  end = pageCount>
     </#if>
 
-
+    <a  href="${toURL}">首页</a>
 <#-- 上一页处理 -->
     <#if (pageNo == 1)>
         <span class="disabled">上一页</span>
     <#else>
-        <a  href="${toURL}">首页</a>
         <#if toURL?ends_with("?")>
         	<a  href="${toURL}pageNum=${pageNo-1}">上一页</a>
         <#else>
