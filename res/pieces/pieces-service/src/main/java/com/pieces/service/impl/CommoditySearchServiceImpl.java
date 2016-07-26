@@ -77,12 +77,12 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
             if(field.contains("原药材:")){
                 field = field.replace("原药材:","");
                 searchQuery = new NativeSearchQueryBuilder()
-                        .withQuery(boolQuery().must(matchQuery("categoryName", field)))
+                        .withQuery(matchQuery("categoryName", field))
                         .withPageable(new PageRequest(pageNum-1,pageSize))
                         .build();
             }else{
                 searchQuery = new NativeSearchQueryBuilder()
-                        .withFilter(boolQuery().should(matchQuery("name", field)))
+                        .withQuery(matchQuery("name", field))
                         .withPageable(new PageRequest(pageNum-1,pageSize))
                         .build();
             }
@@ -95,7 +95,7 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     public List<Map<String,String>> findByName(String keyword) {
         //查询名称
         SearchQuery nameSearchQuery = new NativeSearchQueryBuilder()
-                .withFilter(matchQuery("name",keyword))
+                .withQuery(matchQuery("name",keyword))
                 .withPageable(new PageRequest(0,7)).build();
         Page<CommodityDoc> nameResult = esTemplate.queryForPage(nameSearchQuery, CommodityDoc.class);
         Set<String> nameSet = new HashSet<>();
@@ -104,7 +104,7 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
         }
         //查询品种
         SearchQuery categorySearchQuery = new NativeSearchQueryBuilder()
-                .withFilter(matchQuery("categoryName",keyword))
+                .withQuery(matchQuery("categoryName",keyword))
                 .withPageable(new PageRequest(0,3)).build();
         Page<CommodityDoc> categoryResult = esTemplate.queryForPage(categorySearchQuery, CommodityDoc.class);
         Set<String> categorySet = new HashSet<>();
@@ -129,6 +129,16 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
             result.add(map);
         }
         return result;
+    }
+
+
+    @Override
+    public List<CommodityDoc> findByCommodityName(String commodityName) {
+        SearchQuery nameSearchQuery = new NativeSearchQueryBuilder()
+                .withQuery(matchQuery("name",commodityName))
+                .withPageable(new PageRequest(0,10)).build();
+        Page<CommodityDoc> commodityDocPage = esTemplate.queryForPage(nameSearchQuery, CommodityDoc.class);
+        return commodityDocPage.getContent();
     }
 
 

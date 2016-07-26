@@ -68,4 +68,9 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     public EnquiryBillsVO findVOById(Integer id) {
         return enquiryBillsDao.findVOById(id);
     }
+    @Override
+    public PageInfo<EnquiryBills> findByPage(int pageNum, int pageSize, String commodityName, Date startDate, Date endDate) {
+        return enquiryBillsDao.findByCommoditys(pageNum,pageSize,commodityName,startDate,endDate);
+    }
+
 }

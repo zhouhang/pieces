@@ -3,6 +3,9 @@ package com.pieces.dao;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.vo.EnquiryBillsVO;
+import com.pieces.dao.model.EnquiryCommoditys;
+
+import java.util.Date;
 
 public interface EnquiryBillsDao extends ICommonDao<EnquiryBills>{
 
@@ -22,4 +25,5 @@ public interface EnquiryBillsDao extends ICommonDao<EnquiryBills>{
      * @return
      */
     public EnquiryBillsVO findVOById(Integer id);
+    public PageInfo<EnquiryBills> findByCommoditys(int pageNum, int pageSize, String commodityName, Date startDate,Date endDate);
 }

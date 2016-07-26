@@ -192,7 +192,11 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
     .fa-chart tbody tr:nth-child(even){background:#f5f5f5;}
       .fa-chart .ipt-wrap{position:relative;}
         .fa-chart .ipt{width:100%;height:18px;line-height:18px;padding:11px 0;color:#666;border:none;vertical-align:top;text-align:center;background:none;}
-      	.fa-chart .ipt:focus{background:url(../images/ipt-shadow.png) repeat-x;}
+        .fa-chart .ipt:focus{background:url(../images/ipt-shadow.png) repeat-x;}
+        .fa-chart .error{position:absolute;z-index:2;top:110%;left:0;padding:5px;color:#fa5468;border:1px solid #fa5468;border-radius:2px;white-space:nowrap;display:none;}
+        .fa-chart .error:before{position:absolute;top:-16px;left:14px;content:"";border:8px dashed transparent;border-bottom:8px solid #fa5468;}
+        .fa-chart .error:after{position:absolute;top:-13px;left:16px;content:"";border:6px dashed transparent;border-bottom:7px solid #fff;}
+
       .fa-chart td a{margin:0 4px;}
 .fa-chart-d{font-size:12px;}      
   .fa-chart-d .group{margin-bottom:10px;border:1px solid #ccc;overflow:hidden;*zoom:1;}      

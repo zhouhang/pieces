@@ -4,10 +4,15 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.EnquiryBillsDao;
 import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.vo.EnquiryBillsVO;
+import com.pieces.dao.model.EnquiryCommoditys;
+import com.pieces.dao.vo.Params;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -45,6 +50,16 @@ public class EnquiryBillsDaoImpl extends BaseDaoImpl implements EnquiryBillsDao 
     public int update(EnquiryBills enquiryBills) {
         return getSqlSession().update("com.pieces.dao.EnquiryBillsMapper.update", enquiryBills);
     }
+
+        public PageInfo<EnquiryBills> findByCommoditys(int pageNum, int pageSize, String commodityName, Date startDate, Date endDate){
+            Map<String,Object> params = new HashMap<>();
+            params.put("commodityName",commodityName);
+            params.put("startDate",startDate);
+            params.put("endDate",endDate);
+            List<EnquiryBills> list = getSqlSession().selectList("com.pieces.dao.EnquiryBillsMapper.findAll", params,new RowBounds(pageNum, pageSize));
+            PageInfo page = new PageInfo(list);
+            return page;
+        }
 
 
     @Override

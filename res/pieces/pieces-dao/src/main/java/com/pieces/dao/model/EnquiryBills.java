@@ -2,6 +2,7 @@ package com.pieces.dao.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 public class EnquiryBills  implements Serializable {
@@ -33,7 +34,9 @@ public class EnquiryBills  implements Serializable {
 
 	// 最后报价时间
 	private Date quotedTime;
-	
+
+	private List<EnquiryCommoditys> enquiryCommoditys;
+
 	public EnquiryBills(){}
 	
 	public Integer getId() {
@@ -106,5 +109,13 @@ public class EnquiryBills  implements Serializable {
 
 	public void setQuotedTime(Date quotedTime) {
 		this.quotedTime = quotedTime;
+	}
+
+	public List<EnquiryCommoditys> getEnquiryCommoditys() {
+		return enquiryCommoditys;
+	}
+
+	public void setEnquiryCommoditys(List<EnquiryCommoditys> enquiryCommoditys) {
+		this.enquiryCommoditys = enquiryCommoditys;
 	}
 }
