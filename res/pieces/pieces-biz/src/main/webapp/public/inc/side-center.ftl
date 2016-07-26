@@ -7,7 +7,7 @@
         </dt>
         <dd>
             <a class="curr" href="center/enquiry/index">我要询价</a>
-            <a href="user_enquiry_record.html">询价记录</a>
+            <a href="center/enquiry/record">询价记录</a>
         </dd>
     </dl>
     <dl>

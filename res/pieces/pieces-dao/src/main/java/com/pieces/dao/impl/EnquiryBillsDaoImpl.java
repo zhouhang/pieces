@@ -2,10 +2,12 @@ package com.pieces.dao.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.EnquiryBillsDao;
+import com.pieces.dao.EnquiryCommoditysDao;
 import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.vo.Params;
 import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
@@ -16,7 +18,8 @@ import java.util.Map;
 
 @Repository
 public class EnquiryBillsDaoImpl extends BaseDaoImpl implements EnquiryBillsDao{
-
+        @Autowired
+        private EnquiryCommoditysDao enquiryCommoditysDao;
         @Override
         public EnquiryBills findById(int id) {
             return getSqlSession().selectOne("com.pieces.dao.EnquiryBillsMapper.findById", id);
@@ -55,7 +58,10 @@ public class EnquiryBillsDaoImpl extends BaseDaoImpl implements EnquiryBillsDao{
             params.put("commodityName",commodityName);
             params.put("startDate",startDate);
             params.put("endDate",endDate);
-            List<EnquiryBills> list = getSqlSession().selectList("com.pieces.dao.EnquiryBillsMapper.findAll", params,new RowBounds(pageNum, pageSize));
+            List<EnquiryBills> list = getSqlSession().selectList("com.pieces.dao.EnquiryBillsMapper.findByCommoditys", params,new RowBounds(pageNum, pageSize));
+            for(EnquiryBills enquiryBills :list){
+
+            }
             PageInfo page = new PageInfo(list);
             return page;
         }

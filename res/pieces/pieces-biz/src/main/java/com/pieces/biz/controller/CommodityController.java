@@ -160,7 +160,11 @@ public class CommodityController extends BaseController{
         model.put("commodityParam", commodityVO.toString());
         return "product_list";
     }
-    
+
+
+
+
+
     /**
      * 处理中文字符串，加单引号
      * @param str

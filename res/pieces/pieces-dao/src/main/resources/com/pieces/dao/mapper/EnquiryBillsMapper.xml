@@ -82,25 +82,13 @@
 
 
     <select id="findByCommoditys"  parameterType="java.util.HashMap" resultMap="EnquiryBillsResultMap">
-         select
+         select distinct
             b.id,
             b. code,
             b.user_id,
             b.member_id,
             b.status,
-            b.create_time,
-            c.id as encomd_id,
-            c.commodity_id,
-            c.commodity_name,
-            c.specs,
-            c.level,
-            c.origin,
-            c.amount,
-            c.expect_price,
-            c.expect_date,
-            c.my_price,
-            c.expire_date,
-            c.create_time as  encomd_create_time
+            b.create_time
         from
             enquiry_bills b
         left outer join enquiry_commoditys c on b.id = c.bills_id

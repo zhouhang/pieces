@@ -1,6 +1,8 @@
 package com.pieces.biz.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.pieces.dao.elasticsearch.document.CommodityDoc;
+import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.CommodityVO;
@@ -147,9 +149,16 @@ public class EnquiryController extends BaseController{
     @RequestMapping(value = "record")
     public String enquiryRecord(HttpServletRequest request,
                                 HttpServletResponse response,
-                                ModelMap modelMap){
-
-
+                                ModelMap modelMap,
+                                Integer pageSize,
+                                Integer pageNum,
+                                String commodityName,
+                                Date startDate,
+                                Date endDate){
+        pageNum=pageNum==null?1:pageNum;
+        pageSize=pageSize==null?10:pageSize;
+        PageInfo<EnquiryBills> billsPageInfo =  enquiryBillsService.findByPage(pageNum,pageSize,commodityName,startDate,endDate);
+        modelMap.put("billsPage",billsPageInfo);
         return "user_enquiry_record";
     }
 
