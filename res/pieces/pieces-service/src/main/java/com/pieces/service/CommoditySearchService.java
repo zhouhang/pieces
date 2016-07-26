@@ -29,19 +29,24 @@ public interface CommoditySearchService {
      */
     public Page<CommodityDoc> findByNameOrCategoryName(Integer pageNum, Integer pageSize, String field);
 
+    /**
+     * 通过名称搜索名称和分类
+     * @param keyword
+     * @return
+     */
     public List<Map<String,String>> findByName(String keyword);
 
+    /**
+     * 搜索索引名称
+     * @param commodityName
+     * @return
+     */
+    public List<CommodityDoc> findByCommodityName(String commodityName);
 
     /**
      * 更新商品库所有商品到索引
      */
     public void createAllCommodityDoc();
 
-    /**
-     * 对商品名和品种名搜索
-     * @param pageNum
-     * @param pageSize
-     * @param filed
-     * @return
-     */
+
 }

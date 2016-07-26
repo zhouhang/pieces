@@ -8,7 +8,20 @@
             <result column="member_id"  property="memberId" />
             <result column="status"  property="status" />
             <result column="create_time"  property="createTime" />
-        
+            <collection property="enquiryCommoditys" ofType="com.pieces.dao.model.EnquiryCommoditys">
+                <id property="id" column="encomd_id"/>
+                <id property="commodityId" column="commodity_id"/>
+                <id property="commodityName" column="commodity_name"/>
+                <id property="specs" column="specs"/>
+                <id property="level" column="level"/>
+                <id property="origin" column="origin"/>
+                <id property="amount" column="amount"/>
+                <id property="expectPrice" column="expect_price"/>
+                <id property="expectDate" column="expect_date"/>
+                <id property="myPrice" column="my_price"/>
+                <id property="expireDate" column="expire_date"/>
+                <id property="createTime" column="encomd_create_time"/>
+            </collection>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -63,8 +76,44 @@
             <if test="createTime != null">
                 create_time = #{createTime},
             </if>
-                            
         </set>
         where id = #{id}
     </update>
+
+
+    <select id="findByCommoditys"  parameterType="java.util.HashMap" resultMap="EnquiryBillsResultMap">
+         select
+            b.id,
+            b. code,
+            b.user_id,
+            b.member_id,
+            b.status,
+            b.create_time,
+            c.id as encomd_id,
+            c.commodity_id,
+            c.commodity_name,
+            c.specs,
+            c.level,
+            c.origin,
+            c.amount,
+            c.expect_price,
+            c.expect_date,
+            c.my_price,
+            c.expire_date,
+            c.create_time as  encomd_create_time
+        from
+            enquiry_bills b
+        left outer join enquiry_commoditys c on b.id = c.bills_id
+        where 1=1
+        <if test="commodityName != null">
+            and c.commodity_name like "%"#{commodityName}"%"
+        </if>
+        <if test="startDate != null ">
+            and DATE_FORMAT(b.create_time, '%Y-%m-%d') >= DATE_FORMAT(#{startDate},'%Y-%m-%d')
+        </if>
+        <if test="endDate != null ">
+            and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<]]> DATE_FORMAT(DATE_ADD(#{endDate},INTERVAL 1 DAY),'%Y-%m-%d')
+        </if>
+    </select>
+
 </mapper>

@@ -43,7 +43,7 @@ public class SeqNoUtil {
         for(int i=seq.length(); i<len;i++){
             seq="0"+seq;
         }
-        return prefix+DateUtils.dateToStringWithFormat(new Date(), "yy")+seq;
+        return prefix+DateUtils.dateToStringWithFormat(new Date(), "yyyyMMddHHmm")+seq;
     }
 
 
