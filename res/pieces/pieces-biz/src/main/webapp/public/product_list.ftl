@@ -21,7 +21,7 @@
                 </#if>
             </div>
 			
-			<#if (screens?size>0)>
+			<#if (screens??&&screens?size>0)>
             <div class="fa-filter">
                 <dl>
                     <dt>你已筛选：</dt>
@@ -152,6 +152,7 @@
                     </thead>
                     <tfoot></tfoot>
                     <tbody>
+                    <#if (pageInfo??&&pageInfo.list?size>0)>
 	                    <#list pageInfo.list as commodity>
 	                        <tr>
 	                            <td><a href="/commodity/${commodity.id }"><img class="lazyload" src="/images/blank.gif" data-original="${commodity.pictureUrl }" width="130" height="130" alt=""></a></td>
@@ -169,18 +170,21 @@
 	                            <td><a class="btn btn-white btn-quote">立即询价</a></td>
 	                        </tr>
 	                    </#list>
+	                </#if>
                     </tbody>
                 </table>
                 </form>
             </div>
             
-            <#if pageInfo.list?size == 0>
+            <#if !pageInfo??||(pageInfo??&&pageInfo.list?size == 0)>
 	            <div class="fa-pro-empty">
 	                <p class="tc">对不起，找不到您需要的商品，建议您：重新选择筛选条件。</p>
 	            </div>
 			</#if>
 			
-            <@p.pager inPageNo=pageInfo.pageNum-1 pageSize=pageInfo.pageSize recordCount=pageInfo.total toURL="/commodity/index?${commodityParam}"/>
+			<#if pageInfo??>
+            	<@p.pager inPageNo=pageInfo.pageNum-1 pageSize=pageInfo.pageSize recordCount=pageInfo.total toURL="/commodity/index?${commodityParam}"/>
+        	</#if>
         </div>
     </div>
 
