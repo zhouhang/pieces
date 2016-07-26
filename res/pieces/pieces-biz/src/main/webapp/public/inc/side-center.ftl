@@ -1,5 +1,5 @@
 <div class="side">
-    <dl class="expand">
+    <dl>
         <dt>
             <em  class="fa fa-question-circle"></em>
             <span>询价</span>
@@ -57,3 +57,5 @@
         </dd>
     </dl>
 </div>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/member.js"></script>

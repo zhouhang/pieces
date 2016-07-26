@@ -26,8 +26,17 @@ public class EnquiryBills  implements Serializable {
 	//创建时间
 	private Date createTime;
 
+	// 最后更新时间
+	private Date updateTime;
+
+	// 最后更新用户
+	private Integer updateUser;
+
+	// 最后报价时间
+	private Date quotedTime;
+
 	private List<EnquiryCommoditys> enquiryCommoditys;
-	
+
 	public EnquiryBills(){}
 	
 	public Integer getId() {
@@ -76,6 +85,30 @@ public class EnquiryBills  implements Serializable {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
+	}
+
+	public Date getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	public Integer getUpdateUser() {
+		return updateUser;
+	}
+
+	public void setUpdateUser(Integer updateUser) {
+		this.updateUser = updateUser;
+	}
+
+	public Date getQuotedTime() {
+		return quotedTime;
+	}
+
+	public void setQuotedTime(Date quotedTime) {
+		this.quotedTime = quotedTime;
 	}
 
 	public List<EnquiryCommoditys> getEnquiryCommoditys() {
