@@ -1,8 +1,10 @@
 package com.pieces.biz.controller;
 
+import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.CommodityVO;
+import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
 import com.pieces.service.EnquiryBillsService;
 import com.pieces.service.constant.BasicConstants;
@@ -37,6 +39,8 @@ public class EnquiryController extends BaseController{
     private CommodityService commodityService;
     @Autowired
     private EnquiryBillsService enquiryBillsService;
+    @Autowired
+    private CommoditySearchService commoditySearchService;
 
     /**
      * 客户询价页面
@@ -78,7 +82,6 @@ public class EnquiryController extends BaseController{
         CookieUtils.setCookie(response, BasicConstants.ENQUIRY_COOKIES,GsonUtil.toJson(cookieSet),COOKIE_EXPIRE);
 
         modelMap.put("commodityList",list);
-
         return "user_enquiry";
     }
 
@@ -116,6 +119,38 @@ public class EnquiryController extends BaseController{
         List<EnquiryCommoditys> list = params2Object(commodityId,commodityName,specs,level,origin,amount,expectPrice,expectDate);
         User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         enquiryBillsService.create(list,user);
+        WebUtil.print(response,new Result(true));
+    }
+
+    /**
+     * 联想输入
+     * @param request
+     * @param response
+     * @param commodityName
+     */
+    @RequestMapping(value = "auto")
+    public void inputAuto(HttpServletRequest request,
+                          HttpServletResponse response,
+                          String commodityName){
+        List<CommodityDoc> commodityDocList = commoditySearchService.findByCommodityName(commodityName);
+        WebUtil.print(response,new Result(true).data(commodityDocList));
+    }
+
+
+    /**
+     * 询价记录页面
+     * @param request
+     * @param response
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "record")
+    public String enquiryRecord(HttpServletRequest request,
+                                HttpServletResponse response,
+                                ModelMap modelMap){
+
+
+        return "user_enquiry_record";
     }
 
 

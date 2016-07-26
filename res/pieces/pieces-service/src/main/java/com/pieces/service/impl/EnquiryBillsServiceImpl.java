@@ -1,5 +1,6 @@
 package com.pieces.service.impl;
 
+import com.github.pagehelper.PageInfo;
 import com.pieces.dao.EnquiryBillsDao;
 import com.pieces.dao.EnquiryCommoditysDao;
 import com.pieces.dao.ICommonDao;
@@ -53,6 +54,11 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
             enquiryCommoditys.setCreateTime(new Date());
             enquiryCommoditysService.create(enquiryCommoditys);
         }
+    }
+
+    @Override
+    public PageInfo<EnquiryBills> findByPage(int pageNum, int pageSize, String commodityName, Date startDate, Date endDate) {
+        return enquiryBillsDao.findByCommoditys(pageNum,pageSize,commodityName,startDate,endDate);
     }
 
 }

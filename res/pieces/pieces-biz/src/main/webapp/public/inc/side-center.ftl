@@ -1,7 +1,7 @@
 <div class="side">
     <dl>
         <dt>
-            <em class="fa fa-question-circle"></em>
+            <em  class="fa fa-question-circle"></em>
             <span>询价</span>
             <i class="fa fa-chevron-right"></i>
         </dt>

@@ -2,6 +2,7 @@ package com.pieces.dao.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 public class EnquiryBills  implements Serializable {
@@ -24,6 +25,8 @@ public class EnquiryBills  implements Serializable {
 	
 	//创建时间
 	private Date createTime;
+
+	private List<EnquiryCommoditys> enquiryCommoditys;
 	
 	public EnquiryBills(){}
 	
@@ -74,5 +77,12 @@ public class EnquiryBills  implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	
+
+	public List<EnquiryCommoditys> getEnquiryCommoditys() {
+		return enquiryCommoditys;
+	}
+
+	public void setEnquiryCommoditys(List<EnquiryCommoditys> enquiryCommoditys) {
+		this.enquiryCommoditys = enquiryCommoditys;
+	}
 }

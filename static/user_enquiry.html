@@ -47,14 +47,14 @@
     <div class="member-box">
         <div class="wrap">
             <div class="side">
-                <dl class="expand">
+                <dl>
                     <dt>
                         <em class="fa fa-question-circle"></em>
                         <span>询价</span>
                         <i class="fa fa-chevron-right"></i>
                     </dt>
                     <dd>
-                        <a class="curr" href="user_enquiry.html">我要询价</a>
+                        <a href="user_enquiry.html">我要询价</a>
                         <a href="user_enquiry_record.html">询价记录</a>
                     </dd>
                 </dl>
@@ -135,13 +135,13 @@
 	                			</thead>
 	                			<tfoot>
 	                				<tr>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="goodsName" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="standard" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="price" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="date" autocomplete="off" onclick="laydate({min:laydate.now()})"></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="goodsName" autocomplete="off"><span class="error"></span></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="standard" autocomplete="off"><span class="error"></span></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"><span class="error"></span></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"><span class="error"></span></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"><span class="error"></span></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="price" autocomplete="off"><span class="error"></span></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="date" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
 	                            		<td>
 	                            			<a class="add c-blue" href="javascript:;">添加</a>
 	                            			<a class="remove c-red" href="javascript:;">删除</a>
@@ -150,13 +150,13 @@
 	                			</tfoot>
 	                			<tbody>
 	                				<tr>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="goodsName" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="standard" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="price" autocomplete="off"></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="date" autocomplete="off" onclick="laydate({min:laydate.now()})"></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="goodsName" autocomplete="off"><span class="error"></span></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="standard" autocomplete="off"><span class="error"></span></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"><span class="error"></span></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"><span class="error"></span></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"><span class="error"></span></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="price" autocomplete="off"><span class="error"></span></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="date" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
 	                            		<td>
 	                            			<a class="add c-blue" href="javascript:;">添加</a>
 	                            		</td>
@@ -211,6 +211,7 @@
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/member.js"></script>
     <script>
     	var page = {
     		v: {
@@ -234,6 +235,11 @@
 
                     // 第一个输入框不为空时自动获取焦点
                     $ipt.val() === '' && $ipt.focus();
+
+                    // 隐藏错误提示
+                    $myform.on('focus', '.ipt', function() {
+                        $(this).nextAll('.error').html('').hide();
+                    })
 
                     // 数量
                     $myform.on('keyup', '.amount', function(e) {
@@ -277,9 +283,9 @@
                     $body.on('click', '.suggestions .bd .group', function() {
                         var data = $(this).data('val').split('-');
                         $suggestions.prev().val(data[0])
-                        .closest('td').next().find('.ipt').val(data[1]).end()
-                        .closest('td').next().find('.ipt').val(data[2]).end()
-                        .closest('td').next().find('.ipt').val(data[3]);
+                        .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
+                        .closest('td').next().find('.ipt').val(data[2]).trigger('focus').end()
+                        .closest('td').next().find('.ipt').val(data[3]).trigger('focus');
                         $suggestions.hide();
                     })
 
@@ -306,6 +312,7 @@
 						  	layer.close(index);
 						});       
     				})
+
     			},
     			// ajax 查询关键词
     			getKeywords: function(keywords) {
@@ -352,14 +359,123 @@
 					$('#suggestions .bd').empty().html(modal.join('')).parent().show();
     			},
                 submit: function() {
+                    var 
+                        self     = this,
+                        isSubmit = false;
+
                     $('#submit').on('click', function() {
-                        $.notify({
-                            type: 'success',
-                            title: '提交成功',
-                            text: '您的询价已成功提交'
-                        })
+                        if (isSubmit) {
+                            return false;
+                        }
+                        var result = self.checkForm();
+                        if (result.pass) {
+                            isSubmit = true;
+                            $('body').append('<div class="loading"><i></i></div>');
+                            $.ajax({
+                                url: '',
+                                // type: 'POST',
+                                // dataType: 'json',
+                                data: {data: result.serialize},
+                                success: function() {
+                                    isSubmit = false;
+                                    $('.loading').remove();
+                                    $.notify({
+                                        type: 'success',
+                                        title: '提交成功',
+                                        text: '您的询价已成功提交'
+                                    })
+                                },
+                                error: function() {
+                                    isSubmit = false;
+                                    $('.loading').remove();
+                                }
+                            })
+                        } else {
+                            isSubmit = false;
+                        }
+                        return false;
                     })
+                },
+                checkForm: function() {
+                    var $myform = $('#myform');
+                    var result = {
+                        pass: true,
+                        serialize: []
+                    };
+                    $myform.find('tbody tr').each(function() {
+                        var 
+                            $name     = $(this).find('.ipt[name="goodsName"]'),
+                            name      = $.trim($name.val()),
+                            $standard = $(this).find('.ipt[name="standard"]'),
+                            standard  = $.trim($standard.val()),
+                            $level    = $(this).find('.ipt[name="level"]'),
+                            level     = $.trim($level.val()),
+                            $origin   = $(this).find('.ipt[name="origin"]'),
+                            origin    = $.trim($origin.val()),
+                            $amount   = $(this).find('.ipt[name="amount"]'),
+                            amount    = $.trim($amount.val()),
+                            $price    = $(this).find('.ipt[name="price"]'),
+                            price     = $.trim($price.val()),
+                            $date     = $(this).find('.ipt[name="date"]'),
+                            date      = $.trim($date.val());
+
+                        if (name) {
+                            $name.nextAll('.error').html('').hide();
+                        } else {
+                            $name.nextAll('.error').html('此处不可空白').show();
+                            result.pass = false;
+                        }
+
+                        if (standard) {
+                            $standard.nextAll('.error').css('display','none').html('');
+                        } else {
+                            $standard.nextAll('.error').css('display','block').html('此处不可空白');
+                            result.pass = false;
+                        }
+
+                        if (level) {
+                            $level.nextAll('.error').css('display','none').html('');
+                        } else {
+                            $level.nextAll('.error').css('display','block').html('此处不可空白');
+                            result.pass = false;
+                        }
+
+                        if (origin) {
+                            $origin.nextAll('.error').css('display','none').html('');
+                        } else {
+                            $origin.nextAll('.error').css('display','block').html('此处不可空白');
+                            result.pass = false;
+                        }
+
+                        if (amount) {
+                            $amount.nextAll('.error').css('display','none').html('');
+                        } else {
+                            $amount.nextAll('.error').css('display','block').html('此处不可空白');
+                            result.pass = false;
+                        }
+
+                        if (date) {
+                            $date.nextAll('.error').css('display','none').html('');
+                        } else {
+                            $date.nextAll('.error').css('display','block').html('此处不可空白');
+                            result.pass = false;
+                        }
+
+                        if (result.pass) {
+                            result.serialize.push({
+                                name: name,                             
+                                standard: standard,                                
+                                level: level,    
+                                origin: origin,    
+                                amount: amount,            
+                                price: price,
+                                date: date        
+                            })
+                        }
+                    })
+                    return result;
                 }
+
     		}
     	}
     	$(function() {
