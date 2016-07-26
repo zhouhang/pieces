@@ -8,11 +8,21 @@
             <result column="member_id"  property="memberId" />
             <result column="status"  property="status" />
             <result column="create_time"  property="createTime" />
-        
+            <result column="update_time"  property="updateTime" />
+            <result column="update_user"  property="updateUser" />
+            <result column="quoted_time"  property="quotedTime" />
+    </resultMap>
+
+    <resultMap id="EnquiryBillsVOResultMap" type="com.pieces.dao.vo.EnquiryBillsVO" extends="EnquiryBillsResultMap">
+        <result column="userName"  property="userName" />
+        <result column="companyFullName"  property="companyFullName" />
+        <result column="areaFull"  property="areaFull" />
+        <result column="contactMobile"  property="contactMobile" />
+        <result column="contactName"  property="contactName" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,code,user_id,member_id,status,create_time
+        id,code,user_id,member_id,status,create_time,update_time,update_user,quoted_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="EnquiryBillsResultMap">
@@ -26,6 +36,72 @@
         select
         <include refid="Base_Column_List" />
         from enquiry_bills
+    </select>
+
+    <select id="findByParam" parameterType="com.pieces.dao.vo.EnquiryBillsVO"  resultMap="EnquiryBillsVOResultMap">
+        select
+        enquiry_bills.id as id,code,user_id,member_id,status,enquiry_bills.create_time as create_time,
+        enquiry_bills.update_time as update_time,update_user,quoted_time,
+        user_name AS userName,company_full_name as companyFullName,area_full as areaFull,
+        user.contact_mobile as contactMobile, user.contact_name as contactName
+        from enquiry_bills
+        left join user on user_id = user.id
+        <where>
+            <if test="id != null">
+                enquiry_bills.id = #{id}
+            </if>
+
+            <if test="code != null">
+                and code like "%"#{code}"%"
+            </if>
+
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+
+            <if test="memberId != null">
+                and member_id = #{memberId}
+            </if>
+
+            <if test="status != null">
+                and status = #{status}
+            </if>
+
+            <if test="createTime != null">
+                and enquiry_bills.create_time = #{createTime}
+            </if>
+            <if test="startTime != null">
+                and enquiry_bills.create_time <![CDATA[ >= ]]> #{startTime}
+            </if>
+
+            <if test="endTime != null">
+                and enquiry_bills.create_time <![CDATA[ <= ]]> #{endTime}
+            </if>
+
+            <if test="userName != null">
+                and user_name like "%"#{userName}"%"
+            </if>
+
+            <if test="companyFullName != null">
+                and company_full_name like "%"#{companyFullName}"%"
+            </if>
+
+            <if test="areaFull != null">
+                and area_full like "%"#{areaFull}"%"
+            </if>
+        </where>
+        order by enquiry_bills.id DESC
+    </select>
+
+    <select id="findVOById" parameterType="java.lang.Integer"  resultMap="EnquiryBillsVOResultMap">
+         select
+        enquiry_bills.id as id,code,user_id,member_id,status,enquiry_bills.create_time as create_time,
+        enquiry_bills.update_time as update_time,update_user,quoted_time,
+        user_name AS userName,company_full_name as companyFullName,area_full as areaFull,
+        user.contact_mobile as contactMobile, user.contact_name as contactName
+        from enquiry_bills
+        left join user on user_id = user.id
+        WHERE enquiry_bills.id = #{id}
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
@@ -63,7 +139,18 @@
             <if test="createTime != null">
                 create_time = #{createTime},
             </if>
-                            
+
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+
+            <if test="updateUser != null">
+                update_user = #{updateUser},
+            </if>
+
+            <if test="quotedTime != null">
+                quoted_time = #{quotedTime},
+            </if>
         </set>
         where id = #{id}
     </update>
