@@ -4,7 +4,7 @@
 <div class="header">
     <div class="wrap">
         <div class="logo">
-            <a href="home.html">饮片B2B首页</a>
+            <a href="/">饮片B2B首页</a>
         </div>
         <div class="search">
             <div class="form">

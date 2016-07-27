@@ -10,7 +10,7 @@
 	<div class="header">
 		<div class="wrap">
 			<div class="logo">
-				<a href="home.html">饮片B2B首页</a>
+				<a href="/">饮片B2B首页</a>
 			</div>
 			<div class="title">
 				<h1>欢迎登录</h1>
@@ -91,7 +91,7 @@
 							if (status != "y") {
 								loginPage.fn.showMsg("用户名密码错误!");
 							} else {
-								window.location = "/user/info";
+								window.location = data.info;
 							}
 						}
 					});

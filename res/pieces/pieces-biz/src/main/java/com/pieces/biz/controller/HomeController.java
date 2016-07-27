@@ -50,11 +50,11 @@ public class HomeController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/pop", method = RequestMethod.POST)
-	public void login(ModelMap model, HttpServletRequest request,
+	public void login(ModelMap model,String url, HttpServletRequest request,
 			HttpServletResponse response) {
 		Subject subject = SecurityUtils.getSubject();
 		if(subject.isAuthenticated() && !subject.isRemembered()){
-			Result result = new Result(true);
+			Result result = new Result(true).info(url);
 			WebUtil.print(response, result);
 			return;
 		}
@@ -71,9 +71,8 @@ public class HomeController {
 	 * @return
 	 */
 	@RequestMapping(value = "/popLogin", method = RequestMethod.GET)
-	public String toLogin(ModelMap model, HttpServletRequest request) {
+	public String toLogin(ModelMap model,String url, HttpServletRequest request) {
+		model.put("url", url);
 		return "login_mini";
 	}
-	
-
 }
