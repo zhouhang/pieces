@@ -85,13 +85,6 @@
     </update>
 
 
-    <select id="findByUsernameAndPassword" parameterType="java.util.HashMap" resultMap="MemberResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from member
-        where username = #{username} and password = #{password} and is_del = false
-    </select>
-
     <!-- 通过用户名查找用户-->
     <select id="findByUsername" parameterType="java.lang.String" resultMap="MemberResultMap">
         select

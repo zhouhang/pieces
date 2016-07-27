@@ -82,7 +82,6 @@ public class EnquiryController extends BaseController{
         }
         cookieSet.removeAll(removesSet);
         CookieUtils.setCookie(response, BasicConstants.ENQUIRY_COOKIES,GsonUtil.toJson(cookieSet),COOKIE_EXPIRE);
-
         modelMap.put("commodityList",list);
         return "user_enquiry";
     }
@@ -94,7 +93,6 @@ public class EnquiryController extends BaseController{
     public void delete(HttpServletRequest request,
                        HttpServletResponse response,
                        Integer commodityId){
-
         String cookieValue = CookieUtils.getCookieValue(request, BasicConstants.ENQUIRY_COOKIES);
         Set<Integer> cookieSet = GsonUtil.jsonToEntity(cookieValue,Set.class);
         if(!cookieSet.isEmpty()){
@@ -121,7 +119,7 @@ public class EnquiryController extends BaseController{
         List<EnquiryCommoditys> list = params2Object(commodityId,commodityName,specs,level,origin,amount,expectPrice,expectDate);
         User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         enquiryBillsService.create(list,user);
-        WebUtil.print(response,new Result(true));
+        WebUtil.print(response,new Result(true).info("您的询价提交成功!"));
     }
 
     /**
@@ -159,9 +157,11 @@ public class EnquiryController extends BaseController{
         pageSize=pageSize==null?10:pageSize;
         PageInfo<EnquiryBills> billsPageInfo =  enquiryBillsService.findByPage(pageNum,pageSize,commodityName,startDate,endDate);
         modelMap.put("billsPage",billsPageInfo);
+        modelMap.put("pageNum",pageNum);
+        modelMap.put("pageSize",pageSize);
+
         return "user_enquiry_record";
     }
-
 
 
     private List<EnquiryCommoditys> params2Object(Integer[] commodityId,

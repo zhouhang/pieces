@@ -5,7 +5,6 @@ import com.pieces.dao.MemberDao;
 import com.pieces.dao.model.Member;
 import com.pieces.dao.model.Resources;
 import com.pieces.dao.vo.MemberVo;
-import com.pieces.dao.vo.Params;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
@@ -48,11 +47,6 @@ public class MemberDaoImpl extends BaseDaoImpl implements MemberDao {
         return getSqlSession().update("com.pieces.dao.MemberMapper.update", member);
     }
 
-    @Override
-    public Member findByUsernameAndPassword(String username, String password) {
-        Member member =  getSqlSession().selectOne("com.pieces.dao.MemberMapper.findByUsernameAndPassword",new Params("username",username).add("password",password));
-        return member;
-    }
 
     @Override
     public Member findByUsername(String username) {
