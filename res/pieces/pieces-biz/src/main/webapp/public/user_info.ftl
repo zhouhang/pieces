@@ -63,6 +63,6 @@
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
 
-    <script src="/js/member.js"></script>
+    <script src="/js/common.js"></script>
 </body>
 </html>

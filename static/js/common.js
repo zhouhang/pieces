@@ -1,3 +1,10 @@
+// 载入js
+function loadScript(url) {
+    var script = document.createElement('script');
+    script.src = url;
+    document.getElementsByTagName('body')[0].appendChild(script);
+}
+
 // 防抖动函数
 function debounce(func, wait, immediate) {
     var timeout;
@@ -76,6 +83,7 @@ function loazyload() {
 				}
 			} else {
 				count ++;
+				this.removeAttribute('data-original');
 				$(this).removeClass('lazyload').attr({
 					'loaded': '1',
 					'src': 'images/default-img.png'
@@ -89,6 +97,71 @@ function loazyload() {
 	count < size && $(window).on('scroll.lazyload', throttle(imgLoad,200,500));
 }
 
+function bindSearch() {
+	var $searchForm = $('#_search_form'),
+		timer, call;
+
+	if ($searchForm.length === 0) {
+		return false;
+	}
+
+
+	// 可以页面其他地方引入了autocomplete.js
+	if($.isFunction($.fn.autocomplete)){ 
+		call();
+	} else {
+		loadScript('js/jquery.autocomplete.min.js');
+		timer = setInterval(function() {
+			call();
+		}, 300);
+	}
+
+	call = function() {
+		timer && clearTimeout(timer);
+		$('#_search_ipt').autocomplete({
+	        serviceUrl: '/commodity/search/auto',
+	        paramName: 'keyword',
+	        groupBy: 'category',
+	        transformResult: function(response) {
+	            response = JSON.parse(response);
+	            return  {suggestions:$.map(response, function(dataItem) {
+	            	return {
+	            		value: (dataItem.category ? dataItem.category + ':' : '') + dataItem.value
+	            	}
+	            })};
+	        },
+	        onSelect: function (suggestion) {
+	            $searchForm.submit();
+	        }
+	    });
+	}
+}
+
+// 用户中心导航高亮
+function currNav() {
+	var $side = $('.side'),
+        URL = document.URL.split('#')[0].split('?')[0];
+
+    $side.find('a').each(function() {
+        if (URL.toLowerCase().indexOf(this.href.toLowerCase()) !== -1) {
+            $(this).addClass("curr").closest('dl').addClass('expand');
+            return false; // break
+        }
+    }) 
+
+	$side.on('click', 'dt', function() {
+		$(this).parent().toggleClass('expand').siblings().removeClass('expand');
+	})
+}
+
+function pageInit() {
+	// 开启图片懒加载
+	loazyload();
+	// search
+	bindSearch();
+	// 用户中心导航高亮
+	currNav();
+}
 
 ;(function($){
 	var defaults = {
@@ -105,7 +178,7 @@ function loazyload() {
 		,success: '<i class="fa fa-check-circle"></i>'
 		,warn: '<i class="fa fa-prompt"></i>'
 	}
-	var $wrapper = $('<div class="notify-wrapper" />').appendTo($('body'));
+	var $wrapper = $('<div class="notify-wrapper" />').prependTo($('body'));
 
 	$.notify = function(options) {
 		var settings = $.extend({}, defaults, options);
@@ -136,13 +209,15 @@ function loazyload() {
 	};
 
 	// 点击关闭
-	$('body').on('click', '.hidable', function() {
+	$wrapper.on('click', '.hidable', function() {
 		var $self = $(this);
 		$self.stop().slideUp(200, function() {
 			$self.remove();
 		});
 	})
 
-	// 开启图片懒加载
-	loazyload();
 })(jQuery)
+
+$(function() {
+	pageInit();
+})

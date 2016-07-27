@@ -30,32 +30,6 @@
 </div><!-- header end -->
 
 
-<script type="text/javascript">
-
-    $(function(){
-        $('#_search_ipt').autocomplete({
-            serviceUrl: '/commodity/search/auto',
-            paramName:'keyword',
-            transformResult: function(response) {
-                response = JSON.parse(response);
-                return  {suggestions:$.map(response, function(dataItem) {
-                    if(dataItem.category){
-                        return {value: dataItem.category+":"+dataItem.value, data: {"category":dataItem.category}};
-                    }else{
-                        return {value: dataItem.value, data: {"category":dataItem.category}};
-                    }
-                })};
-            },
-            onSelect: function (suggestion) {
-                $("#_search_form").submit();
-            },
-            groupBy:"category"
-        });
-    })
-
-</script>
-
-
 <!-- nav start -->
 <div class="nav">
     <div class="wrap">

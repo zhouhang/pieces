@@ -47,7 +47,6 @@
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="specs" autocomplete="off"></div></td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"></div></td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"></div></td>
-                                        <td style="display: none"><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="commodityId" autocomplete="off"></div></td>
                                         <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"></div></td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"></div></td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"></div></td>
@@ -59,12 +58,11 @@
 	                			</tfoot>
 	                			<tbody>
 								<#if (commodityList?size)<2>
-									<tr>
+									<tr data-cid="<#if commodityList[0]??>${commodityList[0].id!}</#if>">
                                         <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="<#if commodityList[0]??>${commodityList[0].name!}</#if>" name="commodityName" autocomplete="off"></div></td>
 										<td><div class="ipt-wrap"><input type="text" class="ipt" value="<#if commodityList[0]??>${commodityList[0].specName!}</#if>" name="specs" autocomplete="off"></div></td>
 										<td><div class="ipt-wrap"><input type="text" class="ipt" value="<#if commodityList[0]??>${commodityList[0].levelName!}</#if>" name="level" autocomplete="off"></div></td>
 										<td><div class="ipt-wrap"><input type="text" class="ipt" value="<#if commodityList[0]??>${commodityList[0].factory!}</#if>" name="origin" autocomplete="off"></div></td>
-                                        <td style="display: none"><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="<#if commodityList[0]??>${commodityList[0].id!}</#if>" name="commodityId" autocomplete="off"></div></td>
                                         <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount"  autocomplete="off"></div></td>
 										<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"></div></td>
 										<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"></div></td>
@@ -74,13 +72,11 @@
 									</tr>
 									<#else>
 										<#list commodityList as commodity>
-											<tr>
-												<input name="commodityId" type="hidden" value="${commodity.id!}" />
+											<tr data-cid="<#if commodityList[0]??>${commodityList[0].id!}</#if>">
 												<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="${commodity.name!}" name="commodityName" autocomplete="off"></div></td>
 												<td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.specName!}" name="specs" autocomplete="off"></div></td>
 												<td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.levelName!}" name="level" autocomplete="off"></div></td>
 												<td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.factory!}" name="origin" autocomplete="off"></div></td>
-                                                <td style="display: none"><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="<#if commodityList[0]??>${commodityList[0].id!}</#if>" name="commodityId" autocomplete="off"></div></td>
                                                 <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"></div></td>
 												<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"></div></td>
 												<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"></div></td>
@@ -117,7 +113,6 @@
 	</div><!-- 输入框联想 end -->
 
     <script src="/js/jquery.form.js"></script>
-    <script src="/js/member.js"></script>
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
     <script src="js/common.js"></script>
@@ -204,8 +199,10 @@
 
     				// 删除一行
     				$myform.on('click', '.remove', function() {
-    					var $tr = $(this).closest('tr'),
-    						$btnRemove = $tbody.find('.remove');
+    					var 
+                            $tr         = $(this).closest('tr'),
+                            $btnRemove  = $tbody.find('.remove'),
+                            cid = $tr.data('cid');
 
     					if ($btnRemove.length < 2) {
     						return false;
@@ -213,18 +210,16 @@
                         // 弹层确认删除
     					layer.confirm('确认删除行？', {icon: 3, title:'提示'}, function(index){
     						$btnRemove.length === 2 && $btnRemove.remove();
-                            var commodityId =  $tr.find("input[name='commodityId']").val();
     						$tr.remove();
 						  	layer.close(index);
 							//请求服务器删除cookie
-							if(commodityId){
+							if(cid) {
                                 $.ajax({
                                     url: 'center/enquiry/delete',
                                     dataType: 'json',
-                                    data:{commodityId:commodityId}
+                                    data:{commodityId: cid}
                                 })
 							}
-
 						});       
     				})
     			},
