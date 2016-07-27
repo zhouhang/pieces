@@ -31,6 +31,12 @@ public class EnquiryBillsVO extends EnquiryBills{
     //询价结束日期
     private Date endTime;
 
+    // 最后更新用户名称
+    private String updateUserName;
+
+    // 报价人名称
+    private String quotedName;
+
     public String getUserName() {
         return userName;
     }
@@ -85,5 +91,21 @@ public class EnquiryBillsVO extends EnquiryBills{
 
     public void setContactName(String contactName) {
         this.contactName = contactName;
+    }
+
+    public String getUpdateUserName() {
+        return updateUserName;
+    }
+
+    public void setUpdateUserName(String updateUserName) {
+        this.updateUserName = updateUserName;
+    }
+
+    public String getQuotedName() {
+        return quotedName;
+    }
+
+    public void setQuotedName(String quotedName) {
+        this.quotedName = quotedName;
     }
 }

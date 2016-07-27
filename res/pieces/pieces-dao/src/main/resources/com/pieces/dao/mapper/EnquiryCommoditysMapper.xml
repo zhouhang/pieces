@@ -56,6 +56,25 @@
         (#{userId},#{billsId},#{commodityId},#{commodityName},#{specs},#{level},#{origin},#{amount},#{expectPrice},#{expectDate},#{myPrice},#{expireDate},#{createTime})
     </insert>
 
+    <!-- 批量更新报价信息 -->
+    <update id="quotedUpdate" parameterType="java.util.List">
+        <if test="list != null">
+            <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                update enquiry_commoditys
+                <set>
+                    <if test="item.myPrice != null">
+                        my_price = #{item.myPrice},
+                    </if>
+
+                    <if test="item.expireDate != null">
+                        expire_date = #{item.expireDate},
+                    </if>
+                </set>
+                where id = #{item.id}
+            </foreach>
+        </if>
+    </update>
+
     <update id="update" parameterType="com.pieces.dao.model.EnquiryCommoditys">
         update enquiry_commoditys
         <set>

@@ -23,7 +23,7 @@
                 <h3><i class="fa fa-chevron-right"></i>E20160620170402</h3>
                 <div class="extra">
                     <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                    <button type="button" id="submit" class="btn btn-red">报价</button>
+                    <button type="button" id="submit" class="btn btn-red"><#if enquiryBills.status ==1>保存<#else>报价</#if></button>
                 </div>
             </div>
 
@@ -34,6 +34,12 @@
                     <span>所在地区：<em>${enquiryBills.areaFull}</em></span>
                     <span>联系人姓名：<em>${enquiryBills.userName}</em></span>
                     <span>联系人手机号：<em>${enquiryBills.contactMobile}</em></span>
+                    <#if enquiryBills.status ==1>
+                    <span>报价时间：<em>${enquiryBills.quotedTime?date}</em></span>
+                    <span>报价人：<em>${enquiryBills.quotedName}</em></span>
+                    <span>修改时间：<em>${enquiryBills.updateTime?date}</em></span>
+                    <span>修改人：<em>${enquiryBills.updateUserName}</em></span>
+                    </#if>
                 </div>
                 <form action="" id="myform" class="chart">
                     <table id="form">
@@ -61,12 +67,12 @@
                             <td>${commodity.origin}</td>
                             <td>${commodity.amount}</td>
                             <td>${commodity.expectPrice}</td>
-                            <td>${commodity.expectDate?date}</td>
+                            <td><#if commodity.expectDate?exists>${commodity.expectDate?date}</#if></td>
                             <td>
                                 <input type="text" name="id" style="display: none" value="${commodity.id}">
-                                <input type="text" name="myPrice" class="ipt ipt-price" value="">
+                                <input type="text" name="myPrice" class="ipt ipt-price" value="${commodity.myPrice}">
                             </td>
-                            <td><input type="text" name="expireDate" class="ipt ipt-date" value=""></td>
+                            <td><input type="text" name="expireDate" class="ipt ipt-date" value="<#if commodity.expireDate?exists>${commodity.expireDate?date}</#if>"></td>
                         </tr>
                         </#list>
                         </tbody>
@@ -82,6 +88,7 @@
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
 <script src="js/laydate/laydate.js"></script>
+<script src="/js/common.js"></script>
 <script>
 
     var enquiryPage = {
@@ -97,9 +104,17 @@
                         }
                     });
 
-                    $(this).attr("disable", "true");
-                    $.post("enquiry/quoted", JSON.stringify(enquiryPage.fn.formatTableData()),function(data){
-                        console.log(data);
+                    $(this).attr("disabled", "disabled");
+                    $.post( "<#if enquiryBills.status ==1>enquiry/quotedUpdate<#else>enquiry/quoted</#if>?billsId=${enquiryBills.id}", JSON.stringify(enquiryPage.fn.formatTableData()),function(data){
+                        if(data.status == "y") {
+                            $.notify({
+                                type: 'success',
+                                title: '保存成功',
+                                text: data.info,
+                                delay: 3e3,
+                                call: function () {}
+                            });
+                        }
                     },"json")
                 });
             },
