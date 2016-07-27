@@ -36,6 +36,14 @@
         from enquiry_commoditys
     </select>
 
+    <select id="findByBillId"  parameterType="java.lang.Integer" resultMap="EnquiryCommoditysResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from enquiry_commoditys
+        where bills_id = #{billId}
+    </select>
+
+
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from enquiry_commoditys
         where id = #{id}

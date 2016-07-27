@@ -46,7 +46,7 @@ public class CommodityController extends BaseController {
 
 	/**
 	 * 获取商品列表分页
-	 * 
+	 *
 	 * @param pageSize
 	 * @param pageNum
 	 * @param commodityVO
@@ -216,7 +216,7 @@ public class CommodityController extends BaseController {
 
 	/**
 	 * 处理中文字符串，加单引号
-	 * 
+	 *
 	 * @param str
 	 * @return
 	 */
@@ -241,7 +241,7 @@ public class CommodityController extends BaseController {
 
 	/**
 	 * 设置code是否选中
-	 * 
+	 *
 	 * @param source
 	 *            所有code
 	 * @param target
@@ -266,7 +266,7 @@ public class CommodityController extends BaseController {
 
 	/**
 	 * 搜索并跳转到搜索结果页面
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param pageNum
@@ -289,7 +289,7 @@ public class CommodityController extends BaseController {
 
 	/**
 	 * 自动补全搜索关键字
-	 * 
+	 *
 	 * @param request
 	 * @param response
 	 * @param keyword

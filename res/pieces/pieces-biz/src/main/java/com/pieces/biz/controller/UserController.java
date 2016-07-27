@@ -2,7 +2,6 @@ package com.pieces.biz.controller;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,10 +28,8 @@ import com.pieces.dao.model.User;
 import com.pieces.service.UserService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
-import com.pieces.service.enums.SessionEnum;
 import com.pieces.service.redis.RedisManager;
 import com.pieces.service.utils.CommonUtils;
-import com.pieces.service.utils.ValidUtils;
 import com.pieces.tools.utils.WebUtil;
 
 /**

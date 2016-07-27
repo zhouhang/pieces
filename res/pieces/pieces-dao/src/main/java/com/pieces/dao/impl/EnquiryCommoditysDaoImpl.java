@@ -45,4 +45,14 @@ public class EnquiryCommoditysDaoImpl extends BaseDaoImpl implements EnquiryComm
             return getSqlSession().update("com.pieces.dao.EnquiryCommoditysMapper.update",enquiryCommoditys);
         }
 
+    @Override
+    public List<EnquiryCommoditys> findByBillId(Integer billId, Integer pageSize) {
+        List<EnquiryCommoditys> list = null;
+        if(pageSize==null){
+           list = getSqlSession().selectList("com.pieces.dao.EnquiryCommoditysMapper.findByBillId", billId);
+        }else{
+           list = getSqlSession().selectList("com.pieces.dao.EnquiryCommoditysMapper.findByBillId", billId,new RowBounds(0, pageSize));
+        }
+        return list;
+    }
 }

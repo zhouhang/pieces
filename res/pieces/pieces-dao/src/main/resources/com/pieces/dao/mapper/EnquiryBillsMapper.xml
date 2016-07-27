@@ -11,20 +11,6 @@
             <result column="update_time"  property="updateTime" />
             <result column="update_user"  property="updateUser" />
             <result column="quoted_time"  property="quotedTime" />
-            <collection property="enquiryCommoditys" ofType="com.pieces.dao.model.EnquiryCommoditys">
-                <id property="id" column="encomd_id"/>
-                <id property="commodityId" column="commodity_id"/>
-                <id property="commodityName" column="commodity_name"/>
-                <id property="specs" column="specs"/>
-                <id property="level" column="level"/>
-                <id property="origin" column="origin"/>
-                <id property="amount" column="amount"/>
-                <id property="expectPrice" column="expect_price"/>
-                <id property="expectDate" column="expect_date"/>
-                <id property="myPrice" column="my_price"/>
-                <id property="expireDate" column="expire_date"/>
-                <id property="createTime" column="encomd_create_time"/>
-            </collection>
     </resultMap>
 
     <resultMap id="EnquiryBillsVOResultMap" type="com.pieces.dao.vo.EnquiryBillsVO" extends="EnquiryBillsResultMap">
@@ -171,25 +157,13 @@
 
 
     <select id="findByCommoditys"  parameterType="java.util.HashMap" resultMap="EnquiryBillsResultMap">
-         select
+         select distinct
             b.id,
             b. code,
             b.user_id,
             b.member_id,
             b.status,
-            b.create_time,
-            c.id as encomd_id,
-            c.commodity_id,
-            c.commodity_name,
-            c.specs,
-            c.level,
-            c.origin,
-            c.amount,
-            c.expect_price,
-            c.expect_date,
-            c.my_price,
-            c.expire_date,
-            c.create_time as  encomd_create_time
+            b.create_time
         from
             enquiry_bills b
         left outer join enquiry_commoditys c on b.id = c.bills_id

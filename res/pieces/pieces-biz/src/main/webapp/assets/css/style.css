@@ -204,7 +204,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
     .fa-chart-d .th{line-height:48px;padding-bottom:0;background:#ededed;font-weight:700;overflow:hidden;*zoom:1;}      
     .fa-chart-d .hd{line-height:38px;margin-bottom:18px;padding-bottom:0;background:#f0eff5;color:#999;}      
       .fa-chart-d .hd span{margin-right:50px;}      
-    .fa-chart-d .td{float:left;}      
+    .fa-chart-d .td{float:left;min-height:18px;}      
       .fa-chart-d .td span{font-weight:400;}      
     .fa-chart-d .w1{width:102px;}      
     .fa-chart-d .w2{width:68px;}      
@@ -298,9 +298,9 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .notify-wrapper{position:fixed;top:5px;right:5px;z-index:2147483641;width:350px;}   
   .notify-wrapper .message{display:none;margin-bottom:5px;font-size:12px;border:1px solid #ccc;background:#f5f5f5;} 
   .notify-wrapper .hidable{cursor:pointer;} 
-  .notify-wrapper .error{background:#c3272b;border-color:#af2327;}
+  .notify-wrapper .error{background:#ff4a1a;border-color:#e54217;}
   .notify-wrapper .success{background:#58c805;border-color:#4fb404;}
-  .notify-wrapper .warn{background:#fca31d;border-color:#e2921a;}
+  .notify-wrapper .warn{background:#ffb200;border-color:#e5a000;}
     .notify-wrapper .inner{position:relative;min-height:38px;padding:10px 20px 10px 60px;color:#fff;}    
       .notify-wrapper .inner .icon{position:absolute;top:50%;left:10px;width:40px;height:40px;margin-top:-20px;}    
       .notify-wrapper .inner .text h3{line-height:20px;font-size:16px;}  
