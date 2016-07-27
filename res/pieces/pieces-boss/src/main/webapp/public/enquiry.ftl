@@ -48,8 +48,8 @@
                     <td>
                         <div class="ipt-wrap"><input type="text" name="areaFull" class="ipt" value="${param.areaFull}"></div>
                     </td>
-                    <td><input type="text" class="ipt date" value=" <#if date?exists>${param.startTime?datetime}</#if>" name="startTime" id="start"> -
-                        <input type="text" class="ipt date" value="<#if date?exists>${param.endTime?datetime}</#if>" name="endTime" id="end"></td>
+                    <td><input type="text" class="ipt date" value=" <#if param.startTime?exists>${param.startTime?datetime}</#if>" name="startTime" id="start"> -
+                        <input type="text" class="ipt date" value="<#if param.endTime?exists>${param.endTime?datetime}</#if>" name="endTime" id="end"></td>
                     <td>
                         <select name="status" id="status">
                             <option value=""></option>

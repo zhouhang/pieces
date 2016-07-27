@@ -27,6 +27,10 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
 
     @Autowired
     private EnquiryBillsDao enquiryBillsDao;
+
+    @Autowired
+    private EnquiryCommoditysDao enquiryCommoditysDao;
+
     @Autowired
     private EnquiryCommoditysService enquiryCommoditysService;
 
@@ -66,7 +70,9 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
 
     @Override
     public EnquiryBillsVO findVOById(Integer id) {
-        return enquiryBillsDao.findVOById(id);
+        EnquiryBillsVO vo = enquiryBillsDao.findVOById(id);
+        vo.setEnquiryCommoditys(enquiryCommoditysDao.findByBillId(id, null));
+        return vo;
     }
     @Override
     public PageInfo<EnquiryBills> findByPage(int pageNum, int pageSize, String commodityName, Date startDate, Date endDate) {

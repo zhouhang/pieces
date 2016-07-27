@@ -55,4 +55,9 @@ public class EnquiryCommoditysDaoImpl extends BaseDaoImpl implements EnquiryComm
         }
         return list;
     }
+
+    @Override
+    public Integer quotedUpdate(List<EnquiryCommoditys> list) {
+        return getSqlSession().update("com.pieces.dao.EnquiryCommoditysMapper.quotedUpdate",list);
+    }
 }
