@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface MemberDao extends ICommonDao<Member>{
 
-	Member  findByUsernameAndPassword(String username,String password);
 
 	Member findByUsername(String username);
 
