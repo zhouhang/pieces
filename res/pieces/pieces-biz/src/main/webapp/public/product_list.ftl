@@ -196,7 +196,7 @@
     <script>
     var productPage = {
         v: {
-			url : '/center/enquiry/index'
+        	url : "/center/enquiry/index"
         },
         fn: {
         	init: function(){
@@ -312,16 +312,17 @@
 			            url: "/pop",
 			            type: "POST",
 			            dataType : "json",
+			            data : {url : productPage.v.url},
 			            success: function(data){
 			            	var status = data.status;
 			            	if(status === 'y'){
-			            		window.location.href = productPage.v.url;
+			            		window.location.href = data.info;
 			            	}else{
 			            		layer.open({
 			                        type: 2,
 			                        title: '账户登录',
 			                        area: ['360px', '360px'],
-			                        content: ['/popLogin', 'no']
+			                        content: ['/popLogin?url='+productPage.v.url, 'no']
 			                    });
 			            	}
 			            }
@@ -329,9 +330,9 @@
                 	return false;
                 })
             },
-            logined: function() {
+            logined: function(url) {
                 layer.closeAll();
-                window.location.href = productPage.v.url;
+                window.location = url;
             }
         }
     }

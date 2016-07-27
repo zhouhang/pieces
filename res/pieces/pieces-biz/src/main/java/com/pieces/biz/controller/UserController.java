@@ -29,6 +29,7 @@ import com.pieces.dao.model.User;
 import com.pieces.service.UserService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.enums.SessionEnum;
 import com.pieces.service.redis.RedisManager;
 import com.pieces.service.utils.CommonUtils;
 import com.pieces.service.utils.ValidUtils;
@@ -197,12 +198,13 @@ public class UserController extends BaseController {
 	 * @param model
 	 * @param userName
 	 * @param password
+	 * @param url  跳转url
 	 * @param request
 	 * @param response
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public void login(Model model, String userName, String password, HttpServletRequest request,
+	public void login(Model model, String userName, String password, String url, HttpServletRequest request,
 			HttpServletResponse response) {
 		// 登陆验证
 		Subject subject = SecurityUtils.getSubject();
@@ -216,12 +218,15 @@ public class UserController extends BaseController {
 			return;
 		}
 		// 存入用户信息到session
+		if(StringUtils.isBlank(url)){
+			url = WebUtils.getSavedRequest(request) != null ? WebUtils.getSavedRequest(request).getRequestUrl() : "/user/info";
+		}
 		User user = userService.findByUserName(token.getUsername());
 		user.setPassword(null);
 		user.setSalt(null);
 		Session s = subject.getSession();
 		s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), user);
-		Result result = new Result(true);
+		Result result = new Result(true).info(url);
 		WebUtil.print(response, result);
 	}
 
