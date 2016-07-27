@@ -204,7 +204,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
     .fa-chart-d .th{line-height:48px;padding-bottom:0;background:#ededed;font-weight:700;overflow:hidden;*zoom:1;}      
     .fa-chart-d .hd{line-height:38px;margin-bottom:18px;padding-bottom:0;background:#f0eff5;color:#999;}      
       .fa-chart-d .hd span{margin-right:50px;}      
-    .fa-chart-d .td{float:left;}      
+    .fa-chart-d .td{float:left;min-height:18px;}      
       .fa-chart-d .td span{font-weight:400;}      
     .fa-chart-d .w1{width:102px;}      
     .fa-chart-d .w2{width:68px;}      
