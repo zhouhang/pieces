@@ -14,7 +14,7 @@
             <dl>
                 <dt>询价信息</dt>
                 <dd>
-                    <a class="curr" href="enquiry.html">询价信息</a>
+                    <a class="curr" href="enquiry/index">询价信息</a>
                 </dd>
             </dl>
         </div>
@@ -23,19 +23,20 @@
                 <h3><i class="fa fa-chevron-right"></i>E20160620170402</h3>
                 <div class="extra">
                     <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                    <button type="submit" class="btn btn-red">报价</button>
+                    <button type="button" id="submit" class="btn btn-red">报价</button>
                 </div>
             </div>
 
             <div class="user-table">
                 <div class="caption">
-                    <span>用药单位：<em>速采科技</em></span>
-                    <span>所在地区：<em>湖北省武汉市洪山区</em></span>
-                    <span>联系人姓名：<em>胡先生</em></span>
-                    <span>联系人手机号：<em>17000105620</em></span>
+                    <!-- id -->
+                    <span>用药单位：<em>${enquiryBills.companyFullName}</em></span>
+                    <span>所在地区：<em>${enquiryBills.areaFull}</em></span>
+                    <span>联系人姓名：<em>${enquiryBills.userName}</em></span>
+                    <span>联系人手机号：<em>${enquiryBills.contactMobile}</em></span>
                 </div>
                 <form action="" id="myform" class="chart">
-                    <table>
+                    <table id="form">
                         <thead>
                         <tr>
                             <th>商品名称</th>
@@ -52,115 +53,22 @@
                         <tfoot></tfoot>
                         <tbody>
                         <tr>
-                            <td>艾绒</td>
-                            <td>个</td>
-                            <td>1</td>
-                            <td>安徽省</td>
-                            <td>60</td>
-                            <td>20</td>
-                            <td>2016-06-20</td>
-                            <td><input type="text" class="ipt ipt-price" value=""></td>
-                            <td><input type="text" class="ipt ipt-date" value=""></td>
+                        <#list enquiryBills.enquiryCommoditys as commodity>
+                            <!-- id -->
+                            <td>${commodity.commodityName}</td>
+                            <td>${commodity.specs}</td>
+                            <td>${commodity.level}</td>
+                            <td>${commodity.origin}</td>
+                            <td>${commodity.amount}</td>
+                            <td>${commodity.expectPrice}</td>
+                            <td>${commodity.expectDate?date}</td>
+                            <td>
+                                <input type="text" name="id" style="display: none" value="${commodity.id}">
+                                <input type="text" name="myPrice" class="ipt ipt-price" value="">
+                            </td>
+                            <td><input type="text" name="expireDate" class="ipt ipt-date" value=""></td>
                         </tr>
-                        <tr>
-                            <td>天南星</td>
-                            <td>个</td>
-                            <td>2</td>
-                            <td>安徽省</td>
-                            <td>60</td>
-                            <td>20</td>
-                            <td>2016-06-20</td>
-                            <td><input type="text" class="ipt ipt-price" value=""></td>
-                            <td><input type="text" class="ipt ipt-date" value=""></td>
-                        </tr>
-                        <tr>
-                            <td>艾绒</td>
-                            <td>个</td>
-                            <td>1</td>
-                            <td>安徽省</td>
-                            <td>60</td>
-                            <td>20</td>
-                            <td>2016-06-20</td>
-                            <td><input type="text" class="ipt ipt-price" value=""></td>
-                            <td><input type="text" class="ipt ipt-date" value=""></td>
-                        </tr>
-                        <tr>
-                            <td>天南星</td>
-                            <td>个</td>
-                            <td>2</td>
-                            <td>安徽省</td>
-                            <td>60</td>
-                            <td>20</td>
-                            <td>2016-06-20</td>
-                            <td><input type="text" class="ipt ipt-price" value=""></td>
-                            <td><input type="text" class="ipt ipt-date" value=""></td>
-                        </tr>
-                        <tr>
-                            <td>艾绒</td>
-                            <td>个</td>
-                            <td>1</td>
-                            <td>安徽省</td>
-                            <td>60</td>
-                            <td>20</td>
-                            <td>2016-06-20</td>
-                            <td><input type="text" class="ipt ipt-price" value=""></td>
-                            <td><input type="text" class="ipt ipt-date" value=""></td>
-                        </tr>
-                        <tr>
-                            <td>天南星</td>
-                            <td>个</td>
-                            <td>2</td>
-                            <td>安徽省</td>
-                            <td>60</td>
-                            <td>20</td>
-                            <td>2016-06-20</td>
-                            <td><input type="text" class="ipt ipt-price" value=""></td>
-                            <td><input type="text" class="ipt ipt-date" value=""></td>
-                        </tr>
-                        <tr>
-                            <td>艾绒</td>
-                            <td>个</td>
-                            <td>1</td>
-                            <td>安徽省</td>
-                            <td>60</td>
-                            <td>20</td>
-                            <td>2016-06-20</td>
-                            <td><input type="text" class="ipt ipt-price" value=""></td>
-                            <td><input type="text" class="ipt ipt-date" value=""></td>
-                        </tr>
-                        <tr>
-                            <td>天南星</td>
-                            <td>个</td>
-                            <td>2</td>
-                            <td>安徽省</td>
-                            <td>60</td>
-                            <td>20</td>
-                            <td>2016-06-20</td>
-                            <td><input type="text" class="ipt ipt-price" value=""></td>
-                            <td><input type="text" class="ipt ipt-date" value=""></td>
-                        </tr>
-                        <tr>
-                            <td>艾绒</td>
-                            <td>个</td>
-                            <td>1</td>
-                            <td>安徽省</td>
-                            <td>60</td>
-                            <td>20</td>
-                            <td>2016-06-20</td>
-                            <td><input type="text" class="ipt ipt-price" value=""></td>
-                            <td><input type="text" class="ipt ipt-date" value=""></td>
-                        </tr>
-                        <tr>
-                            <td>天南星</td>
-                            <td>个</td>
-                            <td>2</td>
-                            <td>安徽省</td>
-                            <td>60</td>
-                            <td>20</td>
-                            <td>2016-06-20</td>
-                            <td><input type="text" class="ipt ipt-price" value=""></td>
-                            <td><input type="text" class="ipt ipt-date" value=""></td>
-                        </tr>
+                        </#list>
                         </tbody>
                     </table>
                 </form>
@@ -182,6 +90,18 @@
             init: function () {
                 this.pirceInput();
                 this.dateInit();
+                $("#submit").click(function () {
+                    $.ajaxSetup({
+                        headers : {
+                            'Content-Type' : 'application/json;charset=utf-8'
+                        }
+                    });
+
+                    $(this).attr("disable", "true");
+                    $.post("enquiry/quoted", JSON.stringify(enquiryPage.fn.formatTableData()),function(data){
+                        console.log(data);
+                    },"json")
+                });
             },
             // 裸价
             pirceInput: function () {
@@ -213,6 +133,17 @@
 
 
             },
+            formatTableData: function () {
+                var tableObj = $('#form tbody tr').map(function (i) {
+                    var row = {};
+                    $(this).find('input').each(function (i) {
+                        row[$(this).attr("name")] = $(this).val();
+                    });
+                    return row;
+                }).get();
+
+                return tableObj;
+            }
         }
     }
     $(function () {
