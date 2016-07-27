@@ -8,6 +8,8 @@ import com.pieces.service.EnquiryCommoditysService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by wangbin on 2016/7/21.
  */
@@ -21,5 +23,10 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
     @Override
     public ICommonDao<EnquiryCommoditys> getDao() {
         return enquiryCommoditysDao;
+    }
+
+    @Override
+    public List<EnquiryCommoditys> findByBillId(Integer billId, Integer pageSize) {
+        return enquiryCommoditysDao.findByBillId(billId,pageSize);
     }
 }

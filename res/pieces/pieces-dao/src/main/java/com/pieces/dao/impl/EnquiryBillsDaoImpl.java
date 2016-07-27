@@ -6,6 +6,7 @@ import com.pieces.dao.EnquiryCommoditysDao;
 import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.vo.EnquiryBillsVO;
+import com.pieces.dao.vo.EnquiryRecordVo;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -54,12 +55,9 @@ public class EnquiryBillsDaoImpl extends BaseDaoImpl implements EnquiryBillsDao 
         return getSqlSession().update("com.pieces.dao.EnquiryBillsMapper.update", enquiryBills);
     }
 
-    public PageInfo<EnquiryBills> findByCommoditys(int pageNum, int pageSize, String commodityName, Date startDate, Date endDate) {
-        Map<String, Object> params = new HashMap<>();
-        params.put("commodityName", commodityName);
-        params.put("startDate", startDate);
-        params.put("endDate", endDate);
-        List<EnquiryBills> list = getSqlSession().selectList("com.pieces.dao.EnquiryBillsMapper.findByCommoditys", params, new RowBounds(pageNum, pageSize));
+    public PageInfo<EnquiryBills> findByCommoditys(int pageNum, int pageSize, EnquiryRecordVo enquiryRecordVo) {
+
+        List<EnquiryBills> list = getSqlSession().selectList("com.pieces.dao.EnquiryBillsMapper.findByCommoditys", enquiryRecordVo, new RowBounds(pageNum, pageSize));
         for (EnquiryBills enquiryBills : list) {
             List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysDao.findByBillId(enquiryBills.getId(), 10);
             enquiryBills.setEnquiryCommoditys(enquiryCommoditysList);

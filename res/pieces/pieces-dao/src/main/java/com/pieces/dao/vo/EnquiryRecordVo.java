@@ -10,9 +10,9 @@ public class EnquiryRecordVo {
 
     private String commodityName;
 
-    private Date startDate;
+    private String startDate;
 
-    private Date endDate;
+    private String endDate;
 
     public String getCommodityName() {
         return commodityName;
@@ -22,19 +22,20 @@ public class EnquiryRecordVo {
         this.commodityName = commodityName;
     }
 
-    public Date getStartDate() {
+
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 

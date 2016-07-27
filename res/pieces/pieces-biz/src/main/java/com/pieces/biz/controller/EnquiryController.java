@@ -6,9 +6,11 @@ import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.CommodityVO;
+import com.pieces.dao.vo.EnquiryRecordVo;
 import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
 import com.pieces.service.EnquiryBillsService;
+import com.pieces.service.EnquiryCommoditysService;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
@@ -43,6 +45,9 @@ public class EnquiryController extends BaseController{
     private EnquiryBillsService enquiryBillsService;
     @Autowired
     private CommoditySearchService commoditySearchService;
+    @Autowired
+    private EnquiryCommoditysService enquiryCommoditysService;
+
 
     /**
      * 客户询价页面
@@ -150,17 +155,30 @@ public class EnquiryController extends BaseController{
                                 ModelMap modelMap,
                                 Integer pageSize,
                                 Integer pageNum,
-                                String commodityName,
-                                Date startDate,
-                                Date endDate){
+                                EnquiryRecordVo enquiryRecordVo){
         pageNum=pageNum==null?1:pageNum;
         pageSize=pageSize==null?10:pageSize;
-        PageInfo<EnquiryBills> billsPageInfo =  enquiryBillsService.findByPage(pageNum,pageSize,commodityName,startDate,endDate);
+        PageInfo<EnquiryBills> billsPageInfo =  enquiryBillsService.findByPage(pageNum,pageSize,enquiryRecordVo);
         modelMap.put("billsPage",billsPageInfo);
-        modelMap.put("pageNum",pageNum);
-        modelMap.put("pageSize",pageSize);
+        String enquiryRecordParam = enquiryRecordVo.toString();
+        if(StringUtils.isNotBlank(enquiryRecordParam)){
+            enquiryRecordParam = enquiryRecordVo.toString().substring(1);
+        }
+        modelMap.put("enquiryRecordParam",enquiryRecordParam);
 
         return "user_enquiry_record";
+    }
+
+    /**
+     * 查询询价单下所有订购商品
+     */
+    @RequestMapping(value = "commodity")
+    public void commodityAll(HttpServletRequest request,
+                             HttpServletResponse response,
+                             Integer billId){
+        List<EnquiryCommoditys> enquiryCommoditysList =  enquiryCommoditysService.findByBillId(billId,null);
+        WebUtil.print(response,new Result(true).data(enquiryCommoditysList));
+
     }
 
 
