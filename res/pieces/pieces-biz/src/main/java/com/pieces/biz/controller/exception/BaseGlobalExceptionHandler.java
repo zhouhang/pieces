@@ -1,6 +1,8 @@
 package com.pieces.biz.controller.exception;
 
 import com.google.common.base.Throwables;
+import com.pieces.service.constant.bean.Result;
+import com.pieces.tools.utils.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -26,33 +28,23 @@ public class BaseGlobalExceptionHandler {
         if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null){
             throw e;
         }
-
         String errorMsg =  DEFAULT_ERROR_MESSAGE;
         String errorStack = Throwables.getStackTraceAsString(e);
-
         getLogger().error("Request: {} raised {}", req.getRequestURI(), errorStack);
-//        if (Ajax.isAjax(req)) {
-//            return handleAjaxError(rsp, errorMsg, status);
-//        }
+        String xRequested=req.getHeader("X-Requested-With");
+        if(xRequested!=null && xRequested.indexOf("XMLHttpRequest")!=-1){
+            return handleAjaxError(rsp, errorMsg, status);
+        }
+
         return handleViewError(req.getRequestURL().toString(), errorStack, errorMsg, viewName);
     }
 
     protected ModelAndView handleViewError(String url, String errorStack, String errorMessage, String viewName) {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("exception", errorStack);
-        mav.addObject("url", url);
-        mav.addObject("message", errorMessage);
-        mav.addObject("timestamp", new Date());
-        mav.setViewName(viewName);
-        return mav;
+         return new ModelAndView("redirect:/user/login");
     }
 
     protected ModelAndView handleAjaxError(HttpServletResponse rsp, String errorMessage, HttpStatus status) throws IOException {
-        rsp.setCharacterEncoding("UTF-8");
-        rsp.setStatus(status.value());
-        PrintWriter writer = rsp.getWriter();
-        writer.write(errorMessage);
-        writer.flush();
+        WebUtil.print(rsp,new Result(false).info(DEFAULT_ERROR_MESSAGE));
         return null;
     }
 

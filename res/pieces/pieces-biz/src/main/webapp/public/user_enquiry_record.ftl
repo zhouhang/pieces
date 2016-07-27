@@ -23,221 +23,66 @@
                 <div class="fa-table">
                 	<div class="filter">
                         <form action="">
-                        <button class="btn btn-red btn-submit" type="button">查询</button>
-                            <label><span>商品名称：</span><input class="ipt" type="text"></label>
-                            <label><span>询价日期：</span><input class="ipt date" type="text" id="start"  value=""><em>-</em><input class="ipt date" type="text" id="end"  value=""></label>
+                        <button id="search_btn" class="btn btn-red btn-submit" type="button">查询</button>
+                            <label><span>商品名称：</span><input class="ipt" name="commodityName" type="text"></label>
+                            <label><span>询价日期：</span><input class="ipt date" name="startDate" type="text" id="start"  value=""><em>-</em><input class="ipt date" name="endDate" type="text" id="end"  value=""></label>
                         </form>     
                 	</div>
-				
+
                 	<div class="fa-chart-d">
-                        <div class="group">
-                            <div class="tr th">
-                                <div class="td w1">商品名称</div>
-                                <div class="td w2">切制规格</div>
-                                <div class="td w3">等级</div>
-                                <div class="td w4">产地</div>
-                                <div class="td w5">数量<span>（公斤）</span></div>
-                                <div class="td w6">期望单价<span>（元/公斤）</span></div>
-                                <div class="td w7">期望交货日期</div>
-                                <div class="td w8">裸价<span>（元/公斤）</span></div>
-                                <div class="td w9">报价有效期至</div>
-                                <div class="td w10">操作</div>
+                        <#if billsPage??&&billsPage.list?has_content>
+                            <div class="group">
+                                <div class="tr th">
+                                    <div class="td w1">商品名称</div>
+                                    <div class="td w2">切制规格</div>
+                                    <div class="td w3">等级</div>
+                                    <div class="td w4">产地</div>
+                                    <div class="td w5">数量<span>（公斤）</span></div>
+                                    <div class="td w6">期望单价<span>（元/公斤）</span></div>
+                                    <div class="td w7">期望交货日期</div>
+                                    <div class="td w8">裸价<span>（元/公斤）</span></div>
+                                    <div class="td w9">报价有效期至</div>
+                                    <div class="td w10">操作</div>
+                                </div>
                             </div>
-                        </div> 
 
-                        <div class="group">
-                            <div class="tr hd">
-                                <a class="fr c-blue" href="#">重新询价</a>
-                                <span>询价单号：E201606201024001</span>
-                                <span>询价日期：2016-06-20</span>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1">艾绒</div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8"></div>
-                                <div class="td w9"></div>
-                                <div class="td w10"></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1">艾绒</div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8"></div>
-                                <div class="td w9"></div>
-                                <div class="td w10"></div>
-                            </div>
-                        </div> 
-
-                        <div class="group">
-                            <div class="tr hd">
-                                <a class="fr c-blue" href="#">订购已选商品</a>
-                                <span>询价单号：E201606201024001</span>
-                                <span>询价日期：2016-06-20</span>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                        </div>
-
-                        <div class="group">
-                            <div class="tr hd">
-                                <a class="fr c-blue" href="#">订购已选商品</a>
-                                <span>询价单号：E201606201024001</span>
-                                <span>询价日期：2016-06-20</span>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1">艾绒</div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8"></div>
-                                <div class="td w9"></div>
-                                <div class="td w10"></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1">艾绒</div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8"></div>
-                                <div class="td w9"></div>
-                                <div class="td w10"></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                            <div class="expand">展开 <i class="fa fa-chevron-down"></i></div>
-                        </div>
+                            <#list billsPage.list as bill>
+                                <div class="group">
+                                    <div class="tr hd">
+                                        <a class="fr c-blue" href="#">订购已选商品</a>
+                                        <span>询价单号：${bill.code!}</span>
+                                        <span>询价日期：${bill.createTime?string("yyyy-MM-dd")}</span>
+                                    </div>
+                                    <#list bill.enquiryCommoditys as commodity>
+                                        <div class="tr">
+                                            <div class="td w1"><label><input class="cbx" type="checkbox">${commodity.commodityName!}</label></div>
+                                            <div class="td w2">${commodity.specs!}</div>
+                                            <div class="td w3">${commodity.level!}</div>
+                                            <div class="td w4">${commodity.origin!}</div>
+                                            <div class="td w5">${commodity.amount!}</div>
+                                            <div class="td w6">${commodity.expectPrice!}</div>
+                                            <div class="td w7">
+                                            <#if commodity.expectDate??>
+                                                ${commodity.expectDate?string("yyyy-MM-dd")}
+                                            </#if>
+                                            </div>
+                                            <div class="td w8">${commodity.myPrice!}</div>
+                                            <div class="td w9">
+                                            <#if commodity.expireDate??>
+                                                ${commodity.expireDate?string("yyyy-MM-dd")}
+                                            </#if>
+                                            </div>
+                                            <div class="td w10"><a href="#">订购</a></div>
+                                        </div>
+                                    </#list>
+                                </div>
+                            </#list>
+                        </#if>
                     </div>
+                    <#if billsPage??>
+                        <@p.pager inPageNo=billsPage.pageNum-1 pageSize=billsPage.pageSize recordCount=billsPage.total toURL="/center/enquiry/record"/>
+                    </#if>
 
-                    <div class="pagin">
-                        <span class="disabled">上一页</span>
-                        <span class="curr">1</span>
-                        <a href="?page=2">2</a>
-                        <a href="?page=3">3</a>
-                        <a href="?page=4">4</a>
-                        <a href="?page=5">5</a>
-                        <a href="?page=2">下一页</a>
-                        <a href="?page=2">尾页</a>
-                        <em>共 284 个商品 / 共29页</em>
-                    </div>
                 </div>
             </div>
         </div>
@@ -263,21 +108,24 @@
         var page = {
             //定义全局变量区
             v: {
-                id: "page"
+                id: "page",
+                pageNum:${pageNum},
+                pageSize:${pageSize}
             },
             //定义方法区
             fn: {
                 //初始化方法区
                 init: function () {
                     page.fn.dateInit();
+                    this.filter();
                 },
                 //日期选择
                 dateInit: function () {
                     var start = {
                         elem: '#start',
-                        format: 'YYYY/MM/DD hh:mm:ss',
-                        min: laydate.now(), //设定最小日期为当前日期
-                        max: '2099-06-16 23:59:59', //最大日期
+                        format: 'YYYY/MM/DD',
+                        min: '2016-7-1', //设定最小日期为当前日期
+                        max: laydate.now(), //最大日期
                         istime: true,
                         istoday: false,
                         choose: function(datas){
@@ -288,9 +136,9 @@
                     };
                     var end = {
                         elem: '#end',
-                        format: 'YYYY/MM/DD hh:mm:ss',
-                        min: laydate.now(),
-                        max: '2099-06-16 23:59:59',
+                        format: 'YYYY/MM/DD',
+                        min: '2016-7-1',
+                        max: laydate.now(),
                         istime: true,
                         istoday: false,
                         choose: function(datas){
@@ -300,7 +148,20 @@
                     };
                     laydate(start);
                     laydate(end);
+                },filter: function() {
+                    var $ipts = $('.filter .ipt');
+                    var url="center/enquiry/record?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
+
+                    $('#search_btn').on('click', function() {
+                        var params = [];
+                        $ipts.each(function() {
+                            var val = $.trim(this.value);
+                            val && params.push($(this).attr('name') + '=' + val);
+                        })
+                        location.href=url+"&"+params.join('&');
+                    })
                 }
+
             }
         }
         //加载页面js
