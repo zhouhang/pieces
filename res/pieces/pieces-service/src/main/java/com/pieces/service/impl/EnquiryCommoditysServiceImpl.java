@@ -1,7 +1,9 @@
 package com.pieces.service.impl;
 
+import com.pieces.dao.EnquiryBillsDao;
 import com.pieces.dao.EnquiryCommoditysDao;
 import com.pieces.dao.ICommonDao;
+import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.EnquiryCommoditysService;
@@ -46,6 +48,11 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
         enquiryBills.setUpdateUser(memberId);
         enquiryBillsDao.update(enquiryBills);
         return enquiryCommoditysDao.quotedUpdate(list);
+    }
+
+    @Override
+    public List<EnquiryCommoditys> findByBillId(Integer billId, Integer pageSize) {
+        return enquiryCommoditysDao.findByBillId(billId,pageSize);
     }
 
     @Override

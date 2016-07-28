@@ -2,6 +2,8 @@ package com.pieces.service;
 
 import com.pieces.dao.model.EnquiryCommoditys;
 
+import java.util.List;
+
 /**
  * Created by wangbin on 2016/7/21.
  */
