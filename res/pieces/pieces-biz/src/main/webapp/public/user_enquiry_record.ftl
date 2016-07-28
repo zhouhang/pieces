@@ -24,13 +24,14 @@
                 	<div class="filter">
                         <form action="">
                         <button id="search_btn" class="btn btn-red btn-submit" type="button">查询</button>
-                            <label><span>商品名称：</span><input class="ipt" name="commodityName" type="text"></label>
-                            <label><span>询价日期：</span><input class="ipt date" name="startDate" type="text" id="start"  value=""><em>-</em><input class="ipt date" name="endDate" type="text" id="end"  value=""></label>
+                        ${enquiryRecordVo.startDate!}
+                            <label><span>商品名称：</span><input class="ipt" value="${enquiryRecordVo.commodityName!}" name="commodityName" type="text"></label>
+                            <label><span>询价日期：</span><input class="ipt date" name="startDate" type="text" id="start"  value="${enquiryRecordVo.startDate!}"><em>-</em><input class="ipt date" name="endDate" type="text" id="end"  value="${enquiryRecordVo.endDate!}"></label>
                         </form>     
                 	</div>
 
                 	<div class="fa-chart-d">
-                        <#if billsPage??&&billsPage.list?has_content>
+
                             <div class="group">
                                 <div class="tr th">
                                     <div class="td w1">商品名称</div>
@@ -45,7 +46,7 @@
                                     <div class="td w10">操作</div>
                                 </div>
                             </div>
-
+                        <#if billsPage??&&billsPage.list?has_content>
                             <#list billsPage.list as bill>
                                 <div class="group">
                                     <div class="tr hd">
@@ -55,7 +56,7 @@
                                     </div>
                                     <#list bill.enquiryCommoditys as commodity>
                                         <div class="tr">
-                                            <div class="td w1"><label><input class="cbx" type="checkbox">${commodity.commodityName!}</label></div>
+                                            <div class="td w1"><label>  <#if commodity.myPrice??><input class="cbx" type="checkbox"> </#if>${commodity.commodityName!}</label></div>
                                             <div class="td w2">${commodity.specs!}</div>
                                             <div class="td w3">${commodity.level!}</div>
                                             <div class="td w4">${commodity.origin!}</div>
@@ -74,13 +75,18 @@
                                             </div>
                                             <div class="td w10"><a href="#">订购</a></div>
                                         </div>
+
                                     </#list>
+                                    <#if (bill.enquiryCommoditys?size>=10) >
+                                        <div data-val="${bill.id!}" class="expand">展开 <i class="fa fa-chevron-down"></i></div>
+                                    </#if>
                                 </div>
+
                             </#list>
                         </#if>
                     </div>
                     <#if billsPage??>
-                        <@p.pager inPageNo=billsPage.pageNum-1 pageSize=billsPage.pageSize recordCount=billsPage.total toURL="/center/enquiry/record"/>
+                        <@p.pager inPageNo=billsPage.pageNum-1 pageSize=billsPage.pageSize recordCount=billsPage.total toURL="/center/enquiry/record?${enquiryRecordParam}"/>
                     </#if>
 
                 </div>
@@ -103,14 +109,17 @@
 	</div><!-- 输入框联想 end -->
 
     <script src="js/layer/layer.js"></script>
+    <script src="js/member.js"></script>
     <script src="js/laydate/laydate.js"></script>
+    <script src="js/common.js"></script>
+
     <script>
         var page = {
             //定义全局变量区
             v: {
                 id: "page",
-                pageNum:${pageNum},
-                pageSize:${pageSize}
+                pageNum:${billsPage.pageNum},
+                pageSize:${billsPage.pageSize}
             },
             //定义方法区
             fn: {
@@ -118,6 +127,7 @@
                 init: function () {
                     page.fn.dateInit();
                     this.filter();
+                    this.expand();
                 },
                 //日期选择
                 dateInit: function () {
@@ -160,6 +170,65 @@
                         })
                         location.href=url+"&"+params.join('&');
                     })
+                },expand: function() {
+                    var
+                            self = this,
+                            txt = ['展开 <i class="fa fa-chevron-down"></i>', '收起 <i class="fa fa-chevron-up"></i>'];
+
+                    $('.fa-table').on('click', '.expand', function() {
+                        var $self = $(this);
+                        var billId = $self.data("val")
+                        if ($self.data('loader') === 'true') {
+                            var status = $self.data('expand') === 0 ? 1 : 0;
+                            $self.data('expand', status).html(txt[status]).prev().slideToggle();
+                        } else {
+                            $.ajax({
+                                url: 'center/enquiry/commodity',
+                                dataType: 'json',
+                                data: {billId: billId},
+                                success: function(result) {
+                                    $self.data('loader', 'true');
+
+                                    if (result.status=="y") {
+                                        result.data.splice(0, 10); // 去掉前10条数据
+                                        $self.before(self.toHtml(result.data));
+                                        $self.data('expand', '1').html(txt[1]).prev().slideDown();
+                                    }else{
+                                        $.notify({
+                                            type: 'error',
+                                            title: '提交错误',
+                                            text: result.info
+                                        })
+                                    }
+                                }
+                            })
+                        }
+                    })
+                },
+                // 插入html
+                toHtml: function(data) {
+                    var modal = [];
+                    modal.push('<div class="more" style="display:none;">');
+                    $.each(data, function(i, item) {
+                        modal.push('<div class="tr">');
+                        var checkBox = "";
+                        if(item.myPrice!=null){
+                            checkBox = '<label><input class="cbx" type="checkbox">';
+                        }
+                        modal.push('<div class="td w1">'+checkBox, item.commodityName,'</label></div>');
+                        modal.push('<div class="td w2">', item.specs,'</div>');
+                        modal.push('<div class="td w3">', item.level,'</div>');
+                        modal.push('<div class="td w4">', item.origin,'</div>');
+                        modal.push('<div class="td w5">', item.amount,'</div>');
+                        modal.push('<div class="td w6">', item.expectPrice,'</div>');
+                        modal.push('<div class="td w7">', item.expectDate,'</div>');
+                        modal.push('<div class="td w8">', item.myPrice,'</div>');
+                        modal.push('<div class="td w9">', item.expireDate,'</div>');
+                        modal.push('<div class="td w10"><a href="#">订购</a></div>');
+                        modal.push('</div>');
+                    })
+                    modal.push('</div>');
+                    return modal.join('');
                 }
 
             }

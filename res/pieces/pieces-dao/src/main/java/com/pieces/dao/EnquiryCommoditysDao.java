@@ -7,5 +7,12 @@ import java.util.List;
 public interface EnquiryCommoditysDao extends ICommonDao<EnquiryCommoditys>{
 
     public List<EnquiryCommoditys> findByBillId(Integer billId,Integer pageSize);
+
+    /**
+     * 批量更新报价信息
+     * @param list
+     * @return
+     */
+    public Integer quotedUpdate(List<EnquiryCommoditys> list);
 	
 }

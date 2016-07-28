@@ -57,69 +57,130 @@ public class CommodityController extends BaseController {
 	public String index(Integer pageSize, Integer pageNum, CommodityVO commodityVO, ModelMap model) {
 		pageNum = pageNum == null ? 1 : pageNum;
 		pageSize = pageSize == null ? 10 : pageSize;
-		List<String> screens = new ArrayList<String>(); // 列表页“已经筛选”处显示
+
 		commodityVO.setExecutiveStandardNameStr(formatString(commodityVO.getExecutiveStandardNameStr()));
 		commodityVO.setFactoryStr(formatString(commodityVO.getFactoryStr()));
-		PageInfo<CommodityVO> pageInfo = null;// 分页对象
-		String specs = "";// 产地，规格和等级参数字符串
+
+		PageInfo<CommodityVO> pageInfo = null;
+		CommodityVO indexParameter = new CommodityVO();
+		
+		if(commodityVO.getBreedId() != null){
+			pageInfo = indexBreed(pageSize, pageNum, commodityVO, indexParameter, model);
+		}else{
+			pageInfo = indexCategory(pageSize, pageNum, commodityVO, indexParameter, model);
+		}
+		
+		model.put("pageNum", pageNum);
+		model.put("pageSize", pageSize);
+		model.put("pageInfo", pageInfo);
+		if(pageInfo == null){
+			model.put("commodity", commodityVO);
+			model.put("commodityParam", commodityVO.toString());
+			return "product_list";
+		}
+		
+		indexParameter(commodityVO, indexParameter, model);
+		
+		model.put("commodity", commodityVO);
+		model.put("commodityParam", commodityVO.toString());
+		return "product_list";
+	}
+	
+	/**
+	 * 查询品种列表，及需要参数
+	 * @param pageSize
+	 * @param pageNum
+	 * @param commodityVO
+	 * @param indexParameter 封装参数
+	 * @param pageInfo
+	 * @param model
+	 */
+	private PageInfo<CommodityVO> indexBreed(Integer pageSize, Integer pageNum, CommodityVO commodityVO, CommodityVO indexParameter, ModelMap model) {
+		Category category = categoryService.findById(commodityVO.getBreedId());
+		if(category == null){
+			return null;
+		}
+		model.put("category", category);
+		Category parent = categoryService.findById(category.getPartenId());
+		model.put("parent", parent);
+		indexParameter.setSpecNameStr(category.getSpecs());
+		indexParameter.setOriginOfNameStr(category.getSpecs());
+		indexParameter.setLevelNameStr(category.getLevels());
+		indexParameter.setBreedIds(category.getId().toString());
+		Integer cid = commodityVO.getCategoryId();
+		commodityVO.setCategoryId(commodityVO.getBreedId());
+		PageInfo<CommodityVO> pageInfo = commodityService.query(commodityVO, pageNum, pageSize);
+		commodityVO.setCategoryId(cid);
+		return pageInfo;
+	}
+	
+	/**
+	 * 查询分类列表及参数
+	 * @param pageSize
+	 * @param pageNum
+	 * @param commodityVO
+	 * @param indexParameter
+	 * @param pageInfo
+	 * @param model
+	 * @return
+	 */
+	private PageInfo<CommodityVO> indexCategory(Integer pageSize, Integer pageNum, CommodityVO commodityVO, CommodityVO indexParameter, ModelMap model) {
+		List<CategoryVo> breedList = null;
+		String specs = "";
 		String origins = "";
 		String level = "";
-		String breedIds = "";// 品种id字符串
-		if (commodityVO.getBreedId() != null) {// 查询品种
-			Category category = categoryService.findById(commodityVO.getBreedId());
-			model.put("category", category);
-			Category parent = categoryService.findById(category.getPartenId());
-			model.put("parent", parent);
-			specs = category.getSpecs();
-			origins = category.getOrigins();
-			level = category.getLevels();
-			breedIds = category.getId().toString();
-			Integer cid = commodityVO.getCategoryId();
-			commodityVO.setCategoryId(commodityVO.getBreedId());
-			pageInfo = commodityService.query(commodityVO, pageNum, pageSize);
-			commodityVO.setCategoryId(cid);
+		String breedIds = "";
+		if (commodityVO.getCategoryId() != null) {
+			Category category = categoryService.findById(commodityVO.getCategoryId());
+			breedList = categoryService.findBreedByPartenId(commodityVO.getCategoryId());
+			model.put("parent", category);
+		} else {
+			breedList = categoryService.findBreedNoPage(new CategoryVo());
 		}
-		if (commodityVO.getBreedId() == null) {// 查询分类
-			List<CategoryVo> breedList = null;
-			if (commodityVO.getCategoryId() != null) {
-				Category category = categoryService.findById(commodityVO.getCategoryId());
-				breedList = categoryService.findBreedByPartenId(commodityVO.getCategoryId());
-				model.put("parent", category);
-			} else {
-				breedList = categoryService.findBreedNoPage(new CategoryVo());
-			}
-			if (!ValidUtils.listNotBlank(breedList)) {
-				return "product_list";
-			}
-			for (CategoryVo vo : breedList) {
-				if (StringUtils.isNotBlank(vo.getSpecs())) {
-					specs = specs + vo.getSpecs() + ",";
-				}
-				if (StringUtils.isNotBlank(vo.getLevels())) {
-					level = level + vo.getLevels() + ",";
-				}
-				if (StringUtils.isNotBlank(vo.getSpecs())) {
-					origins = origins + vo.getOrigins() + ",";
-				}
-				if (StringUtils.isNotBlank(vo.getId().toString())) {
-					breedIds = breedIds + vo.getId() + ",";
-				}
-			}
-			specs = specs.substring(0, specs.length() - 1);
-			level = level.substring(0, level.length() - 1);
-			origins = origins.substring(0, origins.length() - 1);
-			breedIds = breedIds.substring(0, breedIds.length() - 1);
-			commodityVO.setCategoryIds(breedIds);// 查询分页数据
-			Integer cid = commodityVO.getCategoryId();
-			commodityVO.setCategoryId(null);
-			pageInfo = commodityService.query(commodityVO, pageNum, pageSize);
-			commodityVO.setCategoryId(cid);
-
+		if (!ValidUtils.listNotBlank(breedList)) {
+			return null;
 		}
-
-		List<Code> specifications = categoryService.findCodeByString(specs);// 获取品种属性
-		List<Code> place = categoryService.findCodeByString(origins);
-		List<Code> levels = categoryService.findCodeByString(level);
+		for (CategoryVo vo : breedList) {
+			if (StringUtils.isNotBlank(vo.getSpecs())) {
+				specs = specs + vo.getSpecs() + ",";
+			}
+			if (StringUtils.isNotBlank(vo.getLevels())) {
+				level = level + vo.getLevels() + ",";
+			}
+			if (StringUtils.isNotBlank(vo.getSpecs())) {
+				origins = origins + vo.getOrigins() + ",";
+			}
+			if (StringUtils.isNotBlank(vo.getId().toString())) {
+				breedIds = breedIds + vo.getId() + ",";
+			}
+		}
+		specs = specs.substring(0, specs.length() - 1);
+		level = level.substring(0, level.length() - 1);
+		origins = origins.substring(0, origins.length() - 1);
+		breedIds = breedIds.substring(0, breedIds.length() - 1);
+		commodityVO.setCategoryIds(breedIds);// 查询分页数据
+		Integer cid = commodityVO.getCategoryId();
+		commodityVO.setCategoryId(null);
+		PageInfo<CommodityVO> pageInfo = new PageInfo<CommodityVO>(commodityService.query(commodityVO, pageNum, pageSize).getList());
+		commodityVO.setCategoryId(cid);
+		indexParameter.setSpecNameStr(specs);
+		indexParameter.setOriginOfNameStr(origins);
+		indexParameter.setLevelNameStr(level);
+		indexParameter.setBreedIds(breedIds);
+		return pageInfo;
+	}
+	
+	/**
+	 * 根据参数获取参数数据
+	 * @param commodityVO
+	 * @param indexParameter
+	 * @param model
+	 */
+	private void indexParameter(CommodityVO commodityVO, CommodityVO indexParameter, ModelMap model) {
+		List<String> screens = new ArrayList<String>();
+		List<Code> specifications = categoryService.findCodeByString(indexParameter.getSpecNameStr());// 获取品种属性
+		List<Code> place = categoryService.findCodeByString(indexParameter.getOriginOfNameStr());
+		List<Code> levels = categoryService.findCodeByString(indexParameter.getLevelNameStr());
 		setCodeCheck(specifications, commodityVO.getSpecNameStr(), screens);
 		setCodeCheck(place, commodityVO.getOriginOfNameStr(), screens);
 		setCodeCheck(levels, commodityVO.getLevelNameStr(), screens);
@@ -127,7 +188,7 @@ public class CommodityController extends BaseController {
 		model.put("place", place);
 		model.put("levels", levels);
 
-		List<CommodityVO> standards = commodityService.findStandardByBreedId(breedIds);// 获取执行标准
+		List<CommodityVO> standards = commodityService.findStandardByBreedId(indexParameter.getBreedIds());// 获取执行标准
 		for (CommodityVO vo : standards) {// 设置执行标准是否选中
 			if (StringUtils.isNotBlank(commodityVO.getExecutiveStandardNameStr())
 					&& commodityVO.getExecutiveStandardNameStr().contains(vo.getExecutiveStandard())) {
@@ -138,7 +199,7 @@ public class CommodityController extends BaseController {
 			}
 		}
 
-		List<CommodityVO> factorys = commodityService.findFactoryByBreedId(breedIds);// 获取生产厂家
+		List<CommodityVO> factorys = commodityService.findFactoryByBreedId(indexParameter.getBreedIds());// 获取生产厂家
 		for (CommodityVO vo : factorys) {// 设置生产厂家是否选中
 			if (StringUtils.isNotBlank(commodityVO.getFactoryStr())
 					&& commodityVO.getFactoryStr().contains(vo.getFactory())) {
@@ -151,12 +212,6 @@ public class CommodityController extends BaseController {
 		model.put("standards", standards);
 		model.put("factorys", factorys);
 		model.put("screens", screens);
-		model.put("pageNum", pageNum);
-		model.put("pageSize", pageSize);
-		model.put("pageInfo", pageInfo);
-		model.put("commodity", commodityVO);
-		model.put("commodityParam", commodityVO.toString());
-		return "product_list";
 	}
 
 	/**

@@ -57,7 +57,8 @@
 						url : "/user/login",
 						data : {
 							userName : $('#username').val(),
-							password : $('#pwd').val()
+							password : $('#pwd').val(),
+							url      : $('#url').val()
 						},
 						dataType : "json",
 						success : function(data) {
@@ -65,7 +66,7 @@
 							if (status != "y") {
 								loginPage.fn.showMsg("用户名密码错误!");
 							} else {
-								window.parent.productPage.fn.logined();
+								window.parent.productPage.fn.logined(data.info);
 							}
 						}
 					});

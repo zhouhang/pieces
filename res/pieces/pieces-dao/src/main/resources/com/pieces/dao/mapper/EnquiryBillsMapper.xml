@@ -19,6 +19,8 @@
         <result column="areaFull"  property="areaFull" />
         <result column="contactMobile"  property="contactMobile" />
         <result column="contactName"  property="contactName" />
+        <result column="updateUserName"  property="updateUserName" />
+        <result column="quotedName"  property="quotedName" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -98,9 +100,12 @@
         enquiry_bills.id as id,code,user_id,member_id,status,enquiry_bills.create_time as create_time,
         enquiry_bills.update_time as update_time,update_user,quoted_time,
         user_name AS userName,company_full_name as companyFullName,area_full as areaFull,
-        user.contact_mobile as contactMobile, user.contact_name as contactName
+        user.contact_mobile as contactMobile, user.contact_name as contactName,
+        updateUser.name as updateUserName, member.name as quotedName
         from enquiry_bills
         left join user on user_id = user.id
+        left join member updateUser on update_user = updateUser.id
+        left join member on member_id = member.id
         WHERE enquiry_bills.id = #{id}
     </select>
 

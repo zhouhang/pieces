@@ -8,6 +8,7 @@ import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.EnquiryBillsVO;
+import com.pieces.dao.vo.EnquiryRecordVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.EnquiryBillsService;
 import com.pieces.service.EnquiryCommoditysService;
@@ -27,6 +28,10 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
 
     @Autowired
     private EnquiryBillsDao enquiryBillsDao;
+
+    @Autowired
+    private EnquiryCommoditysDao enquiryCommoditysDao;
+
     @Autowired
     private EnquiryCommoditysService enquiryCommoditysService;
 
@@ -66,11 +71,13 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
 
     @Override
     public EnquiryBillsVO findVOById(Integer id) {
-        return enquiryBillsDao.findVOById(id);
+        EnquiryBillsVO vo = enquiryBillsDao.findVOById(id);
+        vo.setEnquiryCommoditys(enquiryCommoditysDao.findByBillId(id, null));
+        return vo;
     }
     @Override
-    public PageInfo<EnquiryBills> findByPage(int pageNum, int pageSize, String commodityName, Date startDate, Date endDate) {
-        return enquiryBillsDao.findByCommoditys(pageNum,pageSize,commodityName,startDate,endDate);
+    public PageInfo<EnquiryBills> findByPage(int pageNum, int pageSize,EnquiryRecordVo enquiryRecordVo) {
+        return enquiryBillsDao.findByCommoditys(pageNum,pageSize,enquiryRecordVo);
     }
 
 }
