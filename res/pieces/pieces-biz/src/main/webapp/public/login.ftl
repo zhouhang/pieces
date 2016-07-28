@@ -102,9 +102,8 @@
 							isSubmit = false;
 						}
 					});
-				} else {
-					return false;
 				}
+                return false;
 			})
 		})
 	</script>

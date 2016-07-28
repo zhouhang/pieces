@@ -43,7 +43,8 @@
 	                			</thead>
 	                			<tfoot>
 	                				<tr>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="commodityName" autocomplete="off"><span class="error"></span></div></td>
+	                            		<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="commodityName" autocomplete="off"><span class="error"></span></div>
+                                            <input name="commodityId" type="hidden" value="<#if commodityList[0]??>${commodityList[0].id!}</#if>" /></td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="specs" autocomplete="off"><span class="error"></span></div></td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"><span class="error"></span></div></td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"><span class="error"></span></div></td>
@@ -58,8 +59,8 @@
 	                			</tfoot>
 	                			<tbody>
 								<#if (commodityList?size)<2>
-									<tr data-cid="<#if commodityList[0]??>${commodityList[0].id!}</#if>">
-                                        <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="<#if commodityList[0]??>${commodityList[0].name!}</#if>" name="commodityName" autocomplete="off"><span class="error"></span></div></td>
+									<tr>
+                                        <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="<#if commodityList[0]??>${commodityList[0].name!}</#if>" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="<#if commodityList[0]??>${commodityList[0].id!}</#if>" /></td>
 										<td><div class="ipt-wrap"><input type="text" class="ipt" value="<#if commodityList[0]??>${commodityList[0].specName!}</#if>" name="specs" autocomplete="off"><span class="error"></span></div></td>
 										<td><div class="ipt-wrap"><input type="text" class="ipt" value="<#if commodityList[0]??>${commodityList[0].levelName!}</#if>" name="level" autocomplete="off"><span class="error"></span></div></td>
 										<td><div class="ipt-wrap"><input type="text" class="ipt" value="<#if commodityList[0]??>${commodityList[0].factory!}</#if>" name="origin" autocomplete="off"><span class="error"></span></div></td>
@@ -72,8 +73,8 @@
 									</tr>
 									<#else>
 										<#list commodityList as commodity>
-											<tr data-cid="<#if commodityList[0]??>${commodityList[0].id!}</#if>">
-												<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="${commodity.name!}" name="commodityName" autocomplete="off"><span class="error"></span></div></td>
+											<tr>
+												<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="${commodity.name!}" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="<#if commodityList[0]??>${commodityList[0].id!}</#if>" /></td>
 												<td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.specName!}" name="specs" autocomplete="off"><span class="error"></span></div></td>
 												<td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.levelName!}" name="level" autocomplete="off"><span class="error"></span></div></td>
 												<td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.factory!}" name="origin" autocomplete="off"><span class="error"></span></div></td>
@@ -112,11 +113,9 @@
 		<div class="bd"></div>
 	</div><!-- 输入框联想 end -->
 
-    <script src="/js/jquery.form.js"></script>
-    <script src="/js/member.js"></script>
+    <script src="js/jquery.form.js"></script>
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
-    <script src="js/common.js"></script>
     <script>
     	var page = {
     		v: {
@@ -143,7 +142,7 @@
     				$tfoot.empty();
 
                     // 第一个输入框不为空时自动获取焦点
-                    $ipt.val() === '' && $ipt.focus();
+                    $ipt.val() === '' && $ipt.focus() && $ipt.after($suggestions);
 
 
                     // 隐藏错误提示
@@ -196,8 +195,10 @@
                         $suggestions.prev().val(data[0])
                         .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
                         .closest('td').next().find('.ipt').val(data[2]).trigger('focus').end()
-                        .closest('td').next().find('.ipt').val(data[3]).trigger('focus').end()
-                        .closest('td').next().find('.ipt').val(data[4]);
+                        .closest('td').next().find('.ipt').val(data[3]).trigger('focus').end();
+
+                        // .closest('td').next().find('.ipt').val(data[4]);
+                        $suggestions.parent().next().val(data[4]);
                         $suggestions.hide();
                     })
 
@@ -214,15 +215,13 @@
                         var 
                             $tr         = $(this).closest('tr'),
                             $btnRemove  = $tbody.find('.remove'),
-                            cid = $tr.data('cid');
+                            cid = $tr.find('input[name="commodityId"]').val();
 
     					if ($btnRemove.length < 2) {
     						return false;
     					} 
                         // 弹层确认删除
     					layer.confirm('确认删除行？', {icon: 3, title:'提示'}, function(index){
-    						$btnRemove.length === 2 && $btnRemove.remove();
-                            var commodityId =  $tr.find("input[name='commodityId']").val();
     						$tr.remove();
 						  	layer.close(index);
 							//请求服务器删除cookie

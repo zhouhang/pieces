@@ -126,9 +126,10 @@ function bindSearch() {
 	            response = JSON.parse(response);
 	            return  {suggestions:$.map(response, function(dataItem) {
 	            	return {
-	            		value: (dataItem.category ? dataItem.category + ':' : '') + dataItem.value
+	            		value: (dataItem.category ? dataItem.category + ':' : '') + dataItem.value,data: {'category': dataItem.category}
 	            	}
 	            })};
+
 	        },
 	        onSelect: function (suggestion) {
 	            $searchForm.submit();

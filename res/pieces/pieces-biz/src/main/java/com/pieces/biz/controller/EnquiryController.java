@@ -14,7 +14,6 @@ import com.pieces.service.EnquiryCommoditysService;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
-import com.pieces.tools.log.util.JSONUtils;
 import com.pieces.tools.utils.CookieUtils;
 import com.pieces.tools.utils.GsonUtil;
 import com.pieces.tools.utils.WebUtil;
@@ -22,7 +21,6 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -178,7 +176,6 @@ public class EnquiryController extends BaseController{
                              Integer billId){
         List<EnquiryCommoditys> enquiryCommoditysList =  enquiryCommoditysService.findByBillId(billId,null);
         WebUtil.print(response,new Result(true).data(enquiryCommoditysList));
-
     }
 
 
@@ -201,12 +198,12 @@ public class EnquiryController extends BaseController{
             enquiryCommoditys.setExpectDate(expectDate[i]);
             commoditysList.add(enquiryCommoditys);
         }
-        if(commodityId.length>0){
+        if(commodityId!=null&&commodityId.length>0){
             for(int i=0;i<commodityId.length;i++){
                 commoditysList.get(i).setCommodityId(commodityId[i]);
             }
         }
-        if(expectPrice.length>0){
+        if(expectPrice!=null||expectPrice.length>0){
             for(int i=0;i<expectPrice.length;i++){
                 commoditysList.get(i).setExpectPrice(expectPrice[i]);
             }
