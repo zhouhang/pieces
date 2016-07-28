@@ -54,7 +54,19 @@ public class EnquiryController extends BaseController{
     public String index(HttpServletRequest request,
                         HttpServletResponse response,
                         ModelMap modelMap,
+                        Integer billId,
                         Integer commodityId){
+        //重新询价删除之前的询价记录
+        if(billId!=null){
+            List<EnquiryCommoditys> enquiryCommoditysList = handleEnquiryAgain(billId);
+            if(!enquiryCommoditysList.isEmpty()){
+                modelMap.put("enquiryCommoditysList",enquiryCommoditysList);
+                modelMap.put("billId",billId);
+                return "user_enquiry";
+            }
+        }
+
+
         Set<Integer> cookieSet = null;
         String cookieValue = CookieUtils.getCookieValue(request, BasicConstants.ENQUIRY_COOKIES);
         if(StringUtils.isBlank(cookieValue)){
@@ -89,6 +101,13 @@ public class EnquiryController extends BaseController{
         return "user_enquiry";
     }
 
+
+    private List<EnquiryCommoditys> handleEnquiryAgain(Integer billId){
+        List<EnquiryCommoditys> enquiryCommoditysList =  enquiryCommoditysService.findByBillId(billId,null);
+        return enquiryCommoditysList;
+    }
+
+
     /**
      * 删除询价单里的一个商品
      */
@@ -111,6 +130,7 @@ public class EnquiryController extends BaseController{
     @RequestMapping(value = "submit")
     public void submit(HttpServletRequest request,
                        HttpServletResponse response,
+                       Integer billId,
                        Integer[] commodityId,
                        String[] commodityName,
                        String[] specs,
@@ -119,10 +139,21 @@ public class EnquiryController extends BaseController{
                        Integer[] amount,
                        Double[] expectPrice,
                        Date[] expectDate){
-        List<EnquiryCommoditys> list = params2Object(commodityId,commodityName,specs,level,origin,amount,expectPrice,expectDate);
-        User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-        enquiryBillsService.create(list,user);
-        WebUtil.print(response,new Result(true).info("您的询价提交成功!"));
+            String message = "您的询价提交成功!";
+            List<EnquiryCommoditys> list = params2Object(commodityId,commodityName,specs,level,origin,amount,expectPrice,expectDate);
+            User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+            if(billId==null){
+                enquiryBillsService.create(list,user);
+            }else{
+                try {
+                    message="您的询价单重新修改成功!";
+                    enquiryBillsService.update(list,user,billId);
+                }catch (Exception e){
+                    WebUtil.print(response,new Result(true).info(e.getMessage()));
+                    return;
+                }
+            }
+            WebUtil.print(response,new Result(true).info(message));
     }
 
     /**

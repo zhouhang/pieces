@@ -49,6 +49,11 @@
         where id = #{id}
     </delete>
 
+    <delete id="deleteByBillId" parameterType="java.lang.Integer">
+        delete from enquiry_commoditys
+        where bills_id = #{billId}
+    </delete>
+
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.EnquiryCommoditys">
         insert into
         enquiry_commoditys (user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,expect_price,expect_date,my_price,expire_date,create_time)

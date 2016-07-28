@@ -44,6 +44,23 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
 
     @Override
     @Transactional
+    public void update(List<EnquiryCommoditys> enquiryCommoditysList, User user, int billId) {
+        EnquiryBills enquiryBills = findById(billId);
+        if(enquiryBills.getStatus().equals(1)){
+            throw new RuntimeException("该询价单已报价，无法重新报价!");
+        }
+        enquiryCommoditysDao.deleteByBillId(billId);
+        enquiryBills.setCreateTime(new Date());
+        enquiryBillsDao.update(enquiryBills);
+
+        //创建报价单商品
+        createCommoditys(enquiryCommoditysList,user.getId(),billId);
+
+
+    }
+
+    @Override
+    @Transactional
     public void create(List<EnquiryCommoditys> enquiryCommoditysList, User user) {
         EnquiryBills enquiryBills = new EnquiryBills();
         enquiryBills.setUserId(user.getId());
@@ -54,12 +71,9 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
         enquiryBills.setCode(code);
         enquiryBillsDao.update(enquiryBills);
 
-        for(EnquiryCommoditys enquiryCommoditys : enquiryCommoditysList){
-            enquiryCommoditys.setBillsId(enquiryBills.getId());
-            enquiryCommoditys.setUserId(user.getId());
-            enquiryCommoditys.setCreateTime(new Date());
-            enquiryCommoditysService.create(enquiryCommoditys);
-        }
+
+        //创建报价单商品
+        createCommoditys(enquiryCommoditysList,user.getId(),enquiryBills.getId());
     }
 
     @Override
@@ -78,6 +92,16 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     @Override
     public PageInfo<EnquiryBills> findByPage(int pageNum, int pageSize,EnquiryRecordVo enquiryRecordVo) {
         return enquiryBillsDao.findByCommoditys(pageNum,pageSize,enquiryRecordVo);
+    }
+
+
+    private void createCommoditys(List<EnquiryCommoditys> enquiryCommoditysList, Integer userId, Integer billId){
+        for(EnquiryCommoditys enquiryCommoditys : enquiryCommoditysList){
+            enquiryCommoditys.setBillsId(billId);
+            enquiryCommoditys.setUserId(userId);
+            enquiryCommoditys.setCreateTime(new Date());
+            enquiryCommoditysService.create(enquiryCommoditys);
+        }
     }
 
 }

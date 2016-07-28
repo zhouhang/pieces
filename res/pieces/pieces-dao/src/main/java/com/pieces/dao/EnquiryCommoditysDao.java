@@ -14,5 +14,7 @@ public interface EnquiryCommoditysDao extends ICommonDao<EnquiryCommoditys>{
      * @return
      */
     public Integer quotedUpdate(List<EnquiryCommoditys> list);
+
+    public void deleteByBillId(Integer billId);
 	
 }
