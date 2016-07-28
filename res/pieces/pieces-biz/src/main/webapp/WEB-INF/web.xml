@@ -9,6 +9,20 @@
 	</welcome-file-list>
 
 
+	<context-param>
+		<param-name>logbackConfigLocation</param-name>
+		<param-value>com/pieces/biz/logback.xml</param-value>
+	</context-param>
+
+	<!-- Spring配置 -->
+	<!-- ====================================== -->
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+
 	<filter>
 		<filter-name>Encoding</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter
@@ -23,6 +37,22 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+	<filter>
+		<filter-name>shiroFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>shiroFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+
+
 	<servlet>
 		<servlet-name>piecesbiz</servlet-name>
 		<servlet-class>com.pieces.service.servlet.PiecesDispatcherServlet</servlet-class>
@@ -30,6 +60,10 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>classpath*:com/pieces/biz/spring/spring-servlet.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>throwExceptionIfNoHandlerFound</param-name>
+			<param-value>true</param-value>
 		</init-param>
 	</servlet>
 	
@@ -48,37 +82,6 @@
 
 
 
-	<!-- Spring配置 -->
-	<!-- ====================================== -->
-	<listener>
-		<listener-class>
-			org.springframework.web.context.ContextLoaderListener
-		</listener-class>
-	</listener>
 
-	<context-param>
-		<param-name>logbackConfigLocation</param-name>
-		<param-value>com/pieces/biz/logback.xml</param-value>
-	</context-param>
-	
-	<filter>
-		<filter-name>shiroFilter</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-		<init-param>  
-            <param-name>targetFilterLifecycle</param-name>  
-            <param-value>true</param-value>  
-        </init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>shiroFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-
-
-	<!--error -->
-	<error-page>
-		<error-code>404</error-code>
-		<location>/error/404.html</location>
-	</error-page>
 
 </web-app>

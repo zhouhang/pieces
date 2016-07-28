@@ -123,9 +123,10 @@
             fn: {
                 //初始化方法区
                 init: function () {
-                    page.fn.dateInit();
+                    this.dateInit();
                     this.filter();
                     this.expand();
+
                 },
                 //日期选择
                 dateInit: function () {
@@ -189,7 +190,7 @@
 
                                     if (result.status=="y") {
                                         result.data.splice(0, 10); // 去掉前10条数据
-                                        $self.before(self.toHtml(result.data));
+                                        $self.before(self.toHtml(result.data, $self));
                                         $self.data('expand', '1').html(txt[1]).prev().slideDown();
                                     }else{
                                         $.notify({
@@ -202,16 +203,31 @@
                             })
                         }
                     })
+
+
+                    // 询价操作
+                    $('.fa-chart-d').find('.group:gt(0)').each(function() {
+                        if ($(this).find('.cbx').length === 0) {
+                            $(this).find('.hd .c-blue').html('重新询价');
+                        } else {
+                            $(this).find('.hd .c-blue').html('订购已选商品');
+                        }
+                    });
                 },
                 // 插入html
-                toHtml: function(data) {
-                    var modal = [];
+                toHtml: function(data, $expend) {
+                    var
+                        self = this,
+                        flag = false, // 判断是否有复选框
+                        modal = [];
+
                     modal.push('<div class="more" style="display:none;">');
                     $.each(data, function(i, item) {
                         modal.push('<div class="tr">');
                         var checkBox = "";
                         if(item.myPrice!=null){
                             checkBox = '<label><input class="cbx" type="checkbox">';
+                            flag = true;
                         }
                         modal.push('<div class="td w1">'+checkBox, item.commodityName,'</label></div>');
                         modal.push('<div class="td w2">', item.specs,'</div>');
@@ -219,16 +235,19 @@
                         modal.push('<div class="td w4">', item.origin,'</div>');
                         modal.push('<div class="td w5">', item.amount,'</div>');
                         modal.push('<div class="td w6">', item.expectPrice,'</div>');
-                        modal.push('<div class="td w7">', item.expectDate,'</div>');
+                        modal.push('<div class="td w7">', self.formatDate(item.expectDate),'</div>');
                         modal.push('<div class="td w8">', item.myPrice,'</div>');
-                        modal.push('<div class="td w9">', item.expireDate,'</div>');
+                        modal.push('<div class="td w9">', self.formatDate(item.expireDate),'</div>');
                         modal.push('<div class="td w10"><a href="#">订购</a></div>');
                         modal.push('</div>');
                     })
                     modal.push('</div>');
+                    $expend.parent().find('.hd .c-blue').html('订购已选商品');
                     return modal.join('');
+                },
+                formatDate: function(date) {
+                    return date ? date.split(' ')[0] : '';
                 }
-
             }
         }
         //加载页面js

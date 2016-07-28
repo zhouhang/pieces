@@ -35,12 +35,17 @@ public class BaseGlobalExceptionHandler {
         if(xRequested!=null && xRequested.indexOf("XMLHttpRequest")!=-1){
             return handleAjaxError(rsp, errorMsg, status);
         }
-
         return handleViewError(req.getRequestURL().toString(), errorStack, errorMsg, viewName);
     }
 
     protected ModelAndView handleViewError(String url, String errorStack, String errorMessage, String viewName) {
-         return new ModelAndView("redirect:/user/login");
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("exception", errorStack);
+        mav.addObject("url", url);
+        mav.addObject("message", errorMessage);
+        mav.addObject("timestamp", new Date());
+        mav.setViewName(viewName);
+        return mav;
     }
 
     protected ModelAndView handleAjaxError(HttpServletResponse rsp, String errorMessage, HttpStatus status) throws IOException {

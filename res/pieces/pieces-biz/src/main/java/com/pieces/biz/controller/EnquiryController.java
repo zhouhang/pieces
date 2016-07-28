@@ -163,7 +163,6 @@ public class EnquiryController extends BaseController{
             enquiryRecordParam = enquiryRecordVo.toString().substring(1);
         }
         modelMap.put("enquiryRecordParam",enquiryRecordParam);
-
         return "user_enquiry_record";
     }
 
