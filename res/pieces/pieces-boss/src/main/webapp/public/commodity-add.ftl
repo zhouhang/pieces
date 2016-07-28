@@ -256,7 +256,7 @@
             submitEvent: function () {
                 $('#submit').on('click', function () {
                     $('#form').isValid(function(v){
-                        console.log(v ? '表单验证通过' : '表单验证不通过');
+                        //console.log(v ? '表单验证通过' : '表单验证不通过');
                         if(v) {
                             var data = $("#form").serializeObject();
                             $.post("/commodity/save",data, function(data){
