@@ -233,7 +233,7 @@
     				$tfoot.empty();
 
                     // 第一个输入框不为空时自动获取焦点
-                    $ipt.val() === '' && $ipt.focus();
+                    $ipt.val() === '' && $ipt.focus() && $ipt.after($suggestions);
 
                     // 隐藏错误提示
                     $myform.on('focus', '.ipt', function() {
