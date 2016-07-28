@@ -20,6 +20,8 @@ public class CropInfo {
     private Double cropW;        // cropped image width
     private Double cropH;    // cropped image height
 
+    private Double rotation; // 旋转角度
+
     public String getImgUrl() {
         return imgUrl;
     }
@@ -90,5 +92,13 @@ public class CropInfo {
 
     public void setCropH(Double cropH) {
         this.cropH = cropH;
+    }
+
+    public Double getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(Double rotation) {
+        this.rotation = rotation;
     }
 }

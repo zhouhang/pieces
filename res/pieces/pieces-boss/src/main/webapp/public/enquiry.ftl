@@ -120,7 +120,7 @@
                 dateInit: function () {
                     var start = {
                         elem: '#start',
-                        format: 'YYYY/MM/DD hh:mm:ss',
+                        format: 'YYYY-MM-DD hh:mm:ss',
                         min: laydate.now(), //设定最小日期为当前日期
                         max: '2099-06-16 23:59:59', //最大日期
                         istime: true,
@@ -133,7 +133,7 @@
                     };
                     var end = {
                         elem: '#end',
-                        format: 'YYYY/MM/DD hh:mm:ss',
+                        format: 'YYYY-MM-DD hh:mm:ss',
                         min: laydate.now(),
                         max: '2099-06-16 23:59:59',
                         istime: true,
