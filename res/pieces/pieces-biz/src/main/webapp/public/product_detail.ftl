@@ -28,7 +28,7 @@
                     <#list featured as commodity>
                     <dd>
                         <div class="pic">
-                            <a href="/commodity/${commodity.id}"><img src="${commodity.pictureUrl}" width="80" height="80" alt=""></a>
+                            <a href="/commodity/${commodity.id}"><img class="lazyload" src="/images/blank.gif" data-original="${commodity.pictureUrl}" width="80" height="80" alt=""></a>
                         </div>
                         <div class="desc">
                             <h3><a href="/commodity/${commodity.id}">${commodity.name}</a></h3>
@@ -85,7 +85,9 @@
                         <span class="on">详细信息</span>
                     </div>
                     <div class="tab-cont">
-                        ${commodity.details}
+                        <div class="item">
+                            ${commodity.details}
+                        </div>
                     </div>
                 </div>
             </div>

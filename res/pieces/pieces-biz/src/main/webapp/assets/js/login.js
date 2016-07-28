@@ -9,12 +9,6 @@ var loginPage = {
             init: function() {
             	this.bindEvent();
             },
-            keyDown:function(event){
-                if (event.keyCode == 13)
-                {
-                    $("#submit").click();
-                }
-            },
             // 错误提示
             showMsg: function(txt) {
                 if (!txt) {

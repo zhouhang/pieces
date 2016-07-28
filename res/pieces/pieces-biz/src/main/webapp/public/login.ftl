@@ -50,7 +50,7 @@
 							<i class="fa fa-lock"></i>
 						</div>
 						<div class="cnt">
-							<input onkeydown="loginPage.fn.keyDown(event)" type="password"
+							<input type="password"
 								class="ipt" value="" autocomplete="off" name="password" id="pwd"
 								placeholder="密码">
 						</div>
@@ -62,7 +62,7 @@
 					</div>
 
 					<div class="button">
-						<button type="button" class="btn btn-red" id="submit">登 录</button>
+						<button type="submit" class="btn btn-red" id="submit">登 录</button>
 					</div>
 				</form>
 			</div>
@@ -75,24 +75,31 @@
 	<script src="/js/login.js"></script>
 	<script>
 		$(function() {
-			var $submit = $('#submit');
+			var 
+				$submit = $('#submit'),
+				isSubmit = false;
+
 			$submit.on('click', function() {
-				if (loginPage.fn.checkForm()) {
+				if (!isSubmit && loginPage.fn.checkForm()) {
+					isSubmit = true;
 					$.ajax({
-						type : "POST",
-						url : "/user/login",
+						type : 'POST',
+						url : '/user/login',
 						data : {
-							userName : $('#username').val(),
-							password : $('#pwd').val()
+							userName : loginPage.v.$username.val(),
+							password : loginPage.v.$pwd.val()
 						},
-						dataType : "json",
+						dataType : 'json',
 						success : function(data) {
 							var status = data.status;
-							if (status != "y") {
-								loginPage.fn.showMsg("用户名密码错误!");
+							if (status != 'y') {
+								loginPage.fn.showMsg('用户名密码错误!');
 							} else {
 								window.location = data.info;
 							}
+						},
+						complete: function() {
+							isSubmit = false;
 						}
 					});
 				} else {

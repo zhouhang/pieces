@@ -372,7 +372,8 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
     .product-detail .tab span{float:left;width:120px;text-align:center;}
     .product-detail .tab .on{position:relative;margin:-1px 0 0 -1px;color:#c3272b;background:#fff;border-top:2px solid #c3272b;border-left:1px solid #e7e7e7;border-right:1px solid #e7e7e7;}
   .product-detail .tab-cont{padding:20px;}
-  .product-detail p{font-size:12px;line-height:24px;}
+    .product-detail p{font-size:12px;line-height:24px;}
+      .product-detail img{max-width:100%;}
 
 /* 登录框 */
 .login-box{width:300px;padding:20px 30px 45px;background:#fff;}
