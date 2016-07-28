@@ -31,3 +31,5 @@
 </div><!-- footer end -->
 
 <script src="/js/jquery.min.js"></script>
+<script src="js/common.js"></script>
+
