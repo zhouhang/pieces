@@ -109,9 +109,7 @@
 	</div><!-- 输入框联想 end -->
 
     <script src="js/layer/layer.js"></script>
-    <script src="js/member.js"></script>
     <script src="js/laydate/laydate.js"></script>
-    <script src="js/common.js"></script>
 
     <script>
         var page = {
