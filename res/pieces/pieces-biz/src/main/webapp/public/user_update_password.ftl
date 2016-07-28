@@ -86,7 +86,6 @@
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/validator/jquery.validator.js?local=zh-CN"></script>
 	<script src="/js/jquery.form.js"></script>
-	<script src="/js/common.js"></script>
 	<script>
 		$(function() {
 			$('.tips').hide();

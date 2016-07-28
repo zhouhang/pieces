@@ -192,7 +192,6 @@
     <#include "./inc/footer.ftl"/>
     <script src="/js/jquery.form.js"></script>
     <script src="/js/layer/layer.js"></script>
-    <script src="/js/common.js"></script>
     <script>
     var productPage = {
         v: {
