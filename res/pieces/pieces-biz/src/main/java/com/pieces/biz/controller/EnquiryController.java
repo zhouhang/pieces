@@ -224,7 +224,7 @@ public class EnquiryController extends BaseController{
      * @param excel
      * @return
      */
-    @RequestMapping(value = "parseXsl", method = RequestMethod.POST)
+    @RequestMapping(value = "/parseXsl", method = RequestMethod.POST)
     @ResponseBody
     public List<EnquiryCommoditys> parseXsl(@RequestParam(required = false) MultipartFile excel) {
         List<EnquiryCommoditys> list = null;
