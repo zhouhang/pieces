@@ -61,8 +61,7 @@ public class ExcelParse {
                                 commoditys.setExpectPrice(Double.valueOf(getCellValue(c)));
                                 break;
                             case 6:
-                                Date date = new Date();
-                                date.setTime(Double.valueOf(getCellValue(c)).longValue());
+                                Date date = new Date(Double.valueOf(getCellValue(c)).longValue());
                                 commoditys.setExpectDate(date);
 
                         }
