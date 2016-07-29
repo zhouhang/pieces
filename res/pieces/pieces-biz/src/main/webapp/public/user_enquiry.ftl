@@ -60,20 +60,7 @@
 	                			</tfoot>
 	                			<tbody>
 
-                                <#if enquiryCommoditysList??&&((enquiryCommoditysList?size)<2)>
-                                <tr>
-                                    <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="<#if enquiryCommoditysList[0]??>${enquiryCommoditysList[0].commodityName!}</#if>" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="<#if enquiryCommoditysList[0]??>${enquiryCommoditysList[0].commodityId!}</#if>" /></td>
-                                    <td><div class="ipt-wrap"><input type="text" class="ipt" value="<#if enquiryCommoditysList[0]??>${enquiryCommoditysList[0].specs!}</#if>" name="specs" autocomplete="off"><span class="error"></span></div></td>
-                                    <td><div class="ipt-wrap"><input type="text" class="ipt" value="<#if enquiryCommoditysList[0]??>${enquiryCommoditysList[0].level!}</#if>" name="level" autocomplete="off"><span class="error"></span></div></td>
-                                    <td><div class="ipt-wrap"><input type="text" class="ipt" value="<#if enquiryCommoditysList[0]??>${enquiryCommoditysList[0].origin!}</#if>" name="origin" autocomplete="off"><span class="error"></span></div></td>
-                                    <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="<#if enquiryCommoditysList[0]??>${enquiryCommoditysList[0].amount!}</#if>" name="amount"  autocomplete="off"><span class="error"></span></div></td>
-                                    <td><div class="ipt-wrap"><input type="text" class="ipt price" value="<#if enquiryCommoditysList[0]??>${enquiryCommoditysList[0].expectPrice!}</#if>" name="expectPrice" autocomplete="off"><span class="error"></span></div></td>
-                                    <td><div class="ipt-wrap"><input type="text" class="ipt date" value="<#if enquiryCommoditysList[0]??>${commodity.expectDate?string("yyyy-MM-dd")}</#if>" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
-                                    <td>
-                                        <a class="add c-blue" href="javascript:;">添加</a>
-                                    </td>
-                                </tr>
-                                <#else>
+                                <#if enquiryCommoditysList??>
                                     <#list enquiryCommoditysList as enquiryCommodity>
                                     <tr>
                                         <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="${enquiryCommodity.commodityName!}" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="<#if enquiryCommodity??>${enquiryCommodity.id!}</#if>" /></td>
@@ -85,42 +72,48 @@
                                         <td><div class="ipt-wrap"><input type="text" class="ipt date" value="${enquiryCommodity.expectDate?string("yyyy-MM-dd")}" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                         <td>
                                             <a class="add c-blue" href="javascript:;">添加</a>
-                                            <a class="remove c-red" href="javascript:;">删除</a>
+                                            <#if (enquiryCommoditysList?size>1)>
+                                                <a class="remove c-red" href="javascript:;">删除</a>
+                                            </#if>
                                         </td>
                                     </tr>
                                     </#list>
                                 </#if>
 
 
-                                <#if commodityList??&&((commodityList?size)<2)>
-									<tr>
-                                        <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="<#if commodityList[0]??>${commodityList[0].name!}</#if>" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="<#if commodityList[0]??>${commodityList[0].id!}</#if>" /></td>
-										<td><div class="ipt-wrap"><input type="text" class="ipt" value="<#if commodityList[0]??>${commodityList[0].specName!}</#if>" name="specs" autocomplete="off"><span class="error"></span></div></td>
-										<td><div class="ipt-wrap"><input type="text" class="ipt" value="<#if commodityList[0]??>${commodityList[0].levelName!}</#if>" name="level" autocomplete="off"><span class="error"></span></div></td>
-										<td><div class="ipt-wrap"><input type="text" class="ipt" value="<#if commodityList[0]??>${commodityList[0].originOfName!}</#if>" name="origin" autocomplete="off"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount"  autocomplete="off"><span class="error"></span></div></td>
-										<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"><span class="error"></span></div></td>
-										<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
-                                        <td>
-											<a class="add c-blue" href="javascript:;">添加</a>
-										</td>
-									</tr>
-									<#else>
-										<#list commodityList as commodity>
-											<tr>
-												<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="${commodity.name!}" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="<#if commodityList[0]??>${commodityList[0].id!}</#if>" /></td>
-												<td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.specName!}" name="specs" autocomplete="off"><span class="error"></span></div></td>
-												<td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.levelName!}" name="level" autocomplete="off"><span class="error"></span></div></td>
-												<td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.originOfName!}" name="origin" autocomplete="off"><span class="error"></span></div></td>
+                                <#if commodityList??&&commodityList?has_content>
+                                    <#list commodityList as commodity>
+                                        <tr>
+                                            <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="${commodity.name!}" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="<#if commodityList[0]??>${commodityList[0].id!}</#if>" /></td>
+                                            <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.specName!}" name="specs" autocomplete="off"><span class="error"></span></div></td>
+                                            <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.levelName!}" name="level" autocomplete="off"><span class="error"></span></div></td>
+                                            <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.originOfName!}" name="origin" autocomplete="off"><span class="error"></span></div></td>
+                                            <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"></div><span class="error"></span></td>
+                                            <td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"></div><span class="error"></span></td>
+                                            <td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
+                                            <td>
+                                                <a class="add c-blue" href="javascript:;">添加</a>
+                                                <#if (commodityList?size>1)>
+                                                    <a class="remove c-red" href="javascript:;">删除</a>
+                                                </#if>
+                                            </td>
+                                        </tr>
+                                    </#list>
+                                    <#else>
+                                        <#if !enquiryCommoditysList??>
+                                            <tr>
+                                                <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="" /></td>
+                                                <td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="specs" autocomplete="off"><span class="error"></span></div></td>
+                                                <td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"><span class="error"></span></div></td>
+                                                <td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"><span class="error"></span></div></td>
                                                 <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"></div><span class="error"></span></td>
-												<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"></div><span class="error"></span></td>
-												<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
+                                                <td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"></div><span class="error"></span></td>
+                                                <td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                                 <td>
-													<a class="add c-blue" href="javascript:;">添加</a>
-													<a class="remove c-red" href="javascript:;">删除</a>
-												</td>
-											</tr>
-										</#list>
+                                                    <a class="add c-blue" href="javascript:;">添加</a>
+                                                </td>
+                                            </tr>
+                                        </#if>
 								</#if>
 
 	                			</tbody>
@@ -256,6 +249,7 @@
     					} 
                         // 弹层确认删除
     					layer.confirm('确认删除行？', {icon: 3, title:'提示'}, function(index){
+                            $btnRemove.length === 2 && $btnRemove.remove();
     						$tr.remove();
 						  	layer.close(index);
 							//请求服务器删除cookie
@@ -324,15 +318,25 @@
                         var result = self.checkForm();
                         if (result.pass) {
                             isSubmit = true;
-                            self.$myform.ajaxSubmit({
-                                success: function(result) {
+                            var list = JSON.stringify(page.fn.formatTableData());
+                            console.log(list)
+                            var billId = $("#billId").val()
+                            $.ajax({
+                                type : 'post',
+                                url : '/center/enquiry/submit?billId='+billId,
+                                contentType : 'application/json',
+                                data :list,
+                                dataType : 'json',
+                                success : function(result) {
                                     isSubmit = false;
                                     self.response(result);
                                 },
-                                error: function() {
+                                complete: function() {
                                     isSubmit = false;
                                 }
-                            })
+                            });
+
+
                         }else{
                             isSubmit = false;
                         }
@@ -416,6 +420,17 @@
                         }
                     })
                     return result;
+                },
+                formatTableData: function () {
+                    var tableObj = $('#enquiryForm tbody tr').map(function (i) {
+                        var row = {};
+                        $(this).find('input').each(function (i) {
+                            row[$(this).attr("name")] = $(this).val();
+                        });
+                        return row;
+                    }).get();
+
+                    return tableObj;
                 },
                 response:function(result){
                     if(result.status=="y"){

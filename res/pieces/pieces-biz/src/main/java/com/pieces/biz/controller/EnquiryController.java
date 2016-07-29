@@ -21,6 +21,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
@@ -131,16 +132,8 @@ public class EnquiryController extends BaseController{
     public void submit(HttpServletRequest request,
                        HttpServletResponse response,
                        Integer billId,
-                       Integer[] commodityId,
-                       String[] commodityName,
-                       String[] specs,
-                       String[] level,
-                       String[] origin,
-                       Integer[] amount,
-                       Double[] expectPrice,
-                       Date[] expectDate){
+                       @RequestBody List<EnquiryCommoditys> list){
             String message = "您的询价提交成功!";
-            List<EnquiryCommoditys> list = params2Object(commodityId,commodityName,specs,level,origin,amount,expectPrice,expectDate);
             User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
             if(billId==null){
                 enquiryBillsService.create(list,user);
@@ -149,11 +142,14 @@ public class EnquiryController extends BaseController{
                     message="您的询价单重新修改成功!";
                     enquiryBillsService.update(list,user,billId);
                 }catch (Exception e){
-                    WebUtil.print(response,new Result(true).info(e.getMessage()));
+                    e.printStackTrace();
+                    WebUtil.print(response,new Result(false).info(e.getMessage()));
                     return;
                 }
             }
-            WebUtil.print(response,new Result(true).info(message));
+        CookieUtils.deleteCookie(request,response, BasicConstants.ENQUIRY_COOKIES);
+
+        WebUtil.print(response,new Result(true).info(message));
     }
 
     /**
@@ -208,39 +204,6 @@ public class EnquiryController extends BaseController{
         WebUtil.print(response,new Result(true).data(enquiryCommoditysList));
     }
 
-
-    private List<EnquiryCommoditys> params2Object(Integer[] commodityId,
-                                                   String[] commodityName,
-                                                   String[] specs,
-                                                   String[] level,
-                                                   String[] origin,
-                                                   Integer[] amount,
-                                                   Double[] expectPrice,
-                                                   Date[] expectDate){
-        List<EnquiryCommoditys> commoditysList = new ArrayList<>();
-        for(int i=0;i<commodityName.length;i++){
-            EnquiryCommoditys enquiryCommoditys = new EnquiryCommoditys();
-            enquiryCommoditys.setCommodityName(commodityName[i]);
-            enquiryCommoditys.setSpecs(specs[i]);
-            enquiryCommoditys.setLevel(level[i]);
-            enquiryCommoditys.setOrigin(origin[i]);
-            enquiryCommoditys.setAmount(amount[i]);
-            enquiryCommoditys.setExpectDate(expectDate[i]);
-            commoditysList.add(enquiryCommoditys);
-        }
-        if(commodityId!=null&&commodityId.length>0){
-            for(int i=0;i<commodityId.length;i++){
-                commoditysList.get(i).setCommodityId(commodityId[i]);
-            }
-        }
-        if(expectPrice!=null||expectPrice.length>0){
-            for(int i=0;i<expectPrice.length;i++){
-                commoditysList.get(i).setExpectPrice(expectPrice[i]);
-            }
-        }
-
-        return commoditysList;
-    }
 
 
 }

@@ -49,9 +49,7 @@ public class DemoController {
 
         pageNum = pageNum==null?1:pageNum;
         pageSize = pageSize==null?10:pageSize;
-
         PageInfo<Area> areaPage =  areaService.findByPage(1,pageNum,pageSize);
-
         modelMap.put("areaPage",areaPage);
         return "customers_test";
     }

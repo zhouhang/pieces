@@ -50,7 +50,7 @@
                             <#list billsPage.list as bill>
                                 <div class="group">
                                     <div class="tr hd">
-                                        <a class="fr c-blue" href="#">订购已选商品</a>
+                                        <a data-billid="${bill.id!}" data-status="${bill.status!}" class="fr c-blue" href="/center/enquiry/index?billId=${bill.id!}">重新询价</a>
                                         <span>询价单号：${bill.code!}</span>
                                         <span>询价日期：${bill.createTime?string("yyyy-MM-dd")}</span>
                                     </div>
@@ -73,7 +73,11 @@
                                                 ${commodity.expireDate?string("yyyy-MM-dd")}
                                             </#if>
                                             </div>
-                                            <div class="td w10"><a href="#">订购</a></div>
+                                            <div class="td w10">
+                                                <#if commodity.myPrice??>
+                                                    <a href="#">订购</a>
+                                                </#if>
+                                            </div>
                                         </div>
 
                                     </#list>
@@ -207,10 +211,18 @@
 
                     // 询价操作
                     $('.fa-chart-d').find('.group:gt(0)').each(function() {
+                        var status = $(this).find('.hd .c-blue').data("status");
+                        var $AgaleTag  = $(this).find('.hd .c-blue');
                         if ($(this).find('.cbx').length === 0) {
-                            $(this).find('.hd .c-blue').html('重新询价');
+                            if(status=='0'){
+                                $AgaleTag.attr("href","/center/enquiry/index?billId="+$AgaleTag.data("billid"))
+                                $AgaleTag.html('重新询价');
+                            }else{
+                                $(this).find('.hd .c-blue').remove();
+                            }
                         } else {
-                            $(this).find('.hd .c-blue').html('订购已选商品');
+                            $AgaleTag.html('订购已选商品');
+                            $AgaleTag.attr("href","#");
                         }
                     });
                 },
@@ -225,8 +237,10 @@
                     $.each(data, function(i, item) {
                         modal.push('<div class="tr">');
                         var checkBox = "";
+                        var order = "";
                         if(item.myPrice!=null){
                             checkBox = '<label><input class="cbx" type="checkbox">';
+                            order = '<a href="#">订购</a>';
                             flag = true;
                         }
                         modal.push('<div class="td w1">'+checkBox, item.commodityName,'</label></div>');
@@ -238,7 +252,7 @@
                         modal.push('<div class="td w7">', self.formatDate(item.expectDate),'</div>');
                         modal.push('<div class="td w8">', item.myPrice,'</div>');
                         modal.push('<div class="td w9">', self.formatDate(item.expireDate),'</div>');
-                        modal.push('<div class="td w10"><a href="#">订购</a></div>');
+                        modal.push('<div class="td w10">'+order+'</div>');
                         modal.push('</div>');
                     })
                     modal.push('</div>');
