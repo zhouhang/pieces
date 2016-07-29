@@ -22,13 +22,13 @@
 
                 <div class="fa-table">
                 	<div class="caption">
-                		<p>请输入要询价的商品名称及对应数量，期望单价可以不输入。一次可以添加多个商品。</p>      
-                		<p>您还可以<a class="btn" href="#">下载模板</a>填入内容后，
                         <form id="excelForm" action=""/center/enquiry/parseXsl" method="post" enctype="multipart/form-data">
+                        <p>请输入要询价的商品名称及对应数量，期望单价可以不输入。一次可以添加多个商品。</p>
+                        <p>您还可以<a class="btn" href="/file/批量采购模版.xls">下载模板</a>填入内容后，
                             <span class="btn btn-file">上传文档<input type="file" id="excel" name="excel"></span>
-                        </form>
                             到网站。</p>
-                	</div>
+                        </form>
+                    </div>
 				
                 	<div class="fa-chart">
                 		<form action="/center/enquiry/submit" method="post" id="enquiryForm">
@@ -162,12 +162,11 @@
                     $("#excelForm").ajaxForm({
                         url:"/center/enquiry/parseXsl",
                         beforeSend: function() {
-
                         },
                         uploadProgress: function(event, position, total, percentComplete) {
                         },
-                        success: function(data) {
-                            console.log(data);
+                        success: function(result) {
+                            page.fn.toTable(result)
                         },
                         complete: function(xhr) {
 
@@ -176,6 +175,34 @@
                     $("#excel").change(function(){
                         $("#excelForm").submit();
                     })
+                },
+                toTable:function(result){
+                    var getItemVal = function(val){
+                        if(val){
+                            return val;
+                        }else{
+                            return "";
+                        }
+                    }
+                    var html = "";
+                    $.each(result,function(i,item){
+                        html+='<tr>'+
+                              '<td>'+
+                              '<div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="'+getItemVal(item.commodityName)+'" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="'+getItemVal(item.commodityId)+'" /></td>'+
+                              '<td><div class="ipt-wrap"><input type="text" class="ipt" value="'+getItemVal(item.specs)+'" name="specs" autocomplete="off"><span class="error"></span></div></td>'+
+                              '<td><div class="ipt-wrap"><input type="text" class="ipt" value="'+getItemVal(item.level)+'" name="level" autocomplete="off"><span class="error"></span></div></td>'+
+                              '<td><div class="ipt-wrap"><input type="text" class="ipt" value="'+getItemVal(item.origin)+'" name="origin" autocomplete="off"><span class="error"></span></div></td>'+
+                              '<td><div class="ipt-wrap"><input type="text" class="ipt amount" value="'+getItemVal(item.amount)+'" name="amount" autocomplete="off"></div><span class="error"></span></td>'+
+                              '<td><div class="ipt-wrap"><input type="text" class="ipt price" value="'+getItemVal(item.expectPrice)+'" name="expectPrice" autocomplete="off"></div><span class="error"></span></td>'+
+                              '<td><div class="ipt-wrap"><input type="text" class="ipt date" value="'+page.fn.formatDate(getItemVal(item.expectDate))+'" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>'+
+                              '<td>'+
+                              '<a class="add c-blue" href="javascript:;">添加</a>'+
+                                (result.length >1?'<a class="remove c-red" href="javascript:;">删除</a>':'')+
+                              '</td>'+
+                              '</tr>'
+                    })
+                    this.$tbody.empty();
+                    this.$tbody.html(html);
                 },
     			// input
     			myformEvent: function() {
@@ -473,6 +500,9 @@
                             text: result.info
                         })
                     }
+                },
+                formatDate: function(date) {
+                    return date ? date.split(' ')[0] : '';
                 }
 
     		}

@@ -112,6 +112,7 @@
 	<!-- css,js路径 -->
 	<mvc:resources mapping="/css/**" location="/assets/css/" />
 	<mvc:resources mapping="/js/**" location="/assets/js/" />
+	<mvc:resources mapping="/file/**" location="/assets/file/" />
 	<mvc:resources mapping="/fonts/**" location="/assets/fonts/" />
 	<mvc:resources mapping="/images/**" location="/assets/images/" />
 	<mvc:resources mapping="/error/**" location="/assets/error/" />
