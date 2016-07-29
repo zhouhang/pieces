@@ -7,7 +7,7 @@
         <div class="user">
             <span>登录用户 ${member_session_boss.username }</span>
             <i>|</i>
-            <span>2016年7月12日 星期三</span>
+            <span>${.now?string.full}</span>
             <i>|</i>
             <a href="logout">退出</a>
         </div>
