@@ -23,7 +23,11 @@
                 <div class="fa-table">
                 	<div class="caption">
                 		<p>请输入要询价的商品名称及对应数量，期望单价可以不输入。一次可以添加多个商品。</p>      
-                		<p>您还可以<a class="btn" href="#">下载模板</a>填入内容后，<span class="btn btn-file">上传文档<input type="file"></span>到网站。</p>       
+                		<p>您还可以<a class="btn" href="#">下载模板</a>填入内容后，
+                        <form id="excelForm" action=""/center/enquiry/parseXsl" method="post" enctype="multipart/form-data">
+                            <span class="btn btn-file">上传文档<input type="file" id="excel" name="excel"></span>
+                        </form>
+                            到网站。</p>
                 	</div>
 				
                 	<div class="fa-chart">
@@ -151,6 +155,7 @@
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
     <script>
+
     	var page = {
     		v: {
     		},
@@ -158,7 +163,27 @@
     			init: function() {
     				this.myformEvent();
                     this.submit();
+                    this.uploadExcel();
     			},
+                uploadExcel:function(){
+                    $("#excelForm").ajaxForm({
+                        url:"/center/enquiry/parseXsl",
+                        beforeSend: function() {
+
+                        },
+                        uploadProgress: function(event, position, total, percentComplete) {
+                        },
+                        success: function(data) {
+                            console.log(data);
+                        },
+                        complete: function(xhr) {
+
+                        }
+                    });
+                    $("#excel").change(function(){
+                        $("#excelForm").submit();
+                    })
+                },
     			// input
     			myformEvent: function() {
                     var $body        = $('body');
