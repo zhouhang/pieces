@@ -8,11 +8,14 @@ import java.util.Date;
  */
 public class EnquiryRecordVo {
 
+    private Integer userId;
+
     private String commodityName;
 
     private String startDate;
 
     private String endDate;
+
 
     public String getCommodityName() {
         return commodityName;
@@ -37,6 +40,14 @@ public class EnquiryRecordVo {
 
     public void setEndDate(String endDate) {
         this.endDate = endDate;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     @Override

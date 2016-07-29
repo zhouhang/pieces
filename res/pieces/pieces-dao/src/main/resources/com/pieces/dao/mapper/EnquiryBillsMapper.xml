@@ -172,7 +172,7 @@
         from
             enquiry_bills b
         left outer join enquiry_commoditys c on b.id = c.bills_id
-        where 1=1
+        where b.user_id=#{userId}
         <if test="commodityName != null">
             and c.commodity_name like "%"#{commodityName}"%"
         </if>

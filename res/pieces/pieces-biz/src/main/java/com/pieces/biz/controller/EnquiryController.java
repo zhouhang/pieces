@@ -112,7 +112,7 @@ public class EnquiryController extends BaseController{
 
 
     private List<EnquiryCommoditys> handleEnquiryAgain(Integer userId,Integer billId){
-        List<EnquiryCommoditys> enquiryCommoditysList =  enquiryCommoditysService.findByBillId(billId,null);
+        List<EnquiryCommoditys> enquiryCommoditysList =  enquiryCommoditysService.findByBillId(userId,billId,null);
         return enquiryCommoditysList;
     }
 
@@ -212,7 +212,8 @@ public class EnquiryController extends BaseController{
     public void commodityAll(HttpServletRequest request,
                              HttpServletResponse response,
                              Integer billId){
-        List<EnquiryCommoditys> enquiryCommoditysList =  enquiryCommoditysService.findByBillId(billId,null);
+        User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        List<EnquiryCommoditys> enquiryCommoditysList =  handleEnquiryAgain(user.getId(),billId);
         WebUtil.print(response,new Result(true).data(enquiryCommoditysList));
     }
 

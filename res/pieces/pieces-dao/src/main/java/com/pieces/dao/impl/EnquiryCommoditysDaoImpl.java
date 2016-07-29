@@ -6,7 +6,9 @@ import com.pieces.dao.model.EnquiryCommoditys;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Repository
@@ -52,6 +54,21 @@ public class EnquiryCommoditysDaoImpl extends BaseDaoImpl implements EnquiryComm
            list = getSqlSession().selectList("com.pieces.dao.EnquiryCommoditysMapper.findByBillId", billId);
         }else{
            list = getSqlSession().selectList("com.pieces.dao.EnquiryCommoditysMapper.findByBillId", billId,new RowBounds(0, pageSize));
+        }
+        return list;
+    }
+
+    @Override
+    public List<EnquiryCommoditys> findByBillId(Integer userId, Integer billId, Integer pageSize) {
+        List<EnquiryCommoditys> list = null;
+        Map<String,Integer> param = new HashMap<>();
+        param.put("userId",userId);
+        param.put("billId",billId);
+
+        if(pageSize==null){
+            list = getSqlSession().selectList("com.pieces.dao.EnquiryCommoditysMapper.findByUserAndBillId", param);
+        }else{
+            list = getSqlSession().selectList("com.pieces.dao.EnquiryCommoditysMapper.findByUserAndBillId", param,new RowBounds(0, pageSize));
         }
         return list;
     }

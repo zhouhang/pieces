@@ -67,6 +67,7 @@ public class RoleMemberServiceImpl  extends AbsCommonService<RoleMember> impleme
         return roleMemberDao.findByRole(roleId);
     }
 
+
     @Override
     @Transactional
     public void updateRoleMember(Integer roleId, Integer[] memberIds) {

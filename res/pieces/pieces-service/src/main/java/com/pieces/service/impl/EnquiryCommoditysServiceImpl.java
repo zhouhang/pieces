@@ -59,6 +59,11 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
     }
 
     @Override
+    public List<EnquiryCommoditys> findByBillId(Integer userId, Integer billId, Integer pageSize) {
+        return enquiryCommoditysDao.findByBillId(userId, billId, pageSize);
+    }
+
+    @Override
     @Transactional
     public void quoted(List<EnquiryCommoditys> list, Integer memberId, Integer billsId) {
         EnquiryBills enquiryBills = new EnquiryBills();

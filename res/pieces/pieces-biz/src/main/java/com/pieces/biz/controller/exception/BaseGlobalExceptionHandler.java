@@ -31,8 +31,7 @@ public class BaseGlobalExceptionHandler {
         String errorMsg =  DEFAULT_ERROR_MESSAGE;
         String errorStack = Throwables.getStackTraceAsString(e);
         getLogger().error("Request: {} raised {}", req.getRequestURI(), errorStack);
-        String xRequested=req.getHeader("X-Requested-With");
-        if(xRequested!=null && xRequested.indexOf("XMLHttpRequest")!=-1){
+        if(isAjaxRequest(req)){
             return handleAjaxError(rsp, errorMsg, status);
         }
         return handleViewError(req.getRequestURL().toString(), errorStack, errorMsg, viewName);
@@ -55,5 +54,15 @@ public class BaseGlobalExceptionHandler {
 
     public Logger getLogger() {
         return LoggerFactory.getLogger(BaseGlobalExceptionHandler.class);
+    }
+
+
+    public static boolean isAjaxRequest(HttpServletRequest request) {
+        String requestType = request.getHeader("X-Requested-With");
+        if (requestType != null && requestType.indexOf("XMLHttpRequest")!=-1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

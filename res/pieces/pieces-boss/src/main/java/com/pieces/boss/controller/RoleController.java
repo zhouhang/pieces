@@ -1,6 +1,7 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.boss.shiro.BossRealm;
 import com.pieces.dao.model.Member;
 import com.pieces.dao.model.Resources;
 import com.pieces.dao.model.Role;
@@ -11,6 +12,7 @@ import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.utils.WebUtil;
 import com.pieces.tools.utils.gson.GsonExclusion;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -42,6 +44,8 @@ public class RoleController extends BaseController{
     @Autowired
     private RoleMemberService roleMemberService;
 
+    @Autowired
+    private BossRealm bossRealm;
 
     /**
      * 角色列表页
@@ -54,6 +58,7 @@ public class RoleController extends BaseController{
      * @param model
      * @return
      */
+    @RequiresPermissions(value = "role:view")
     @RequestMapping(value = "/index")
     public String index(HttpServletRequest request,
                         HttpServletResponse response,
@@ -171,6 +176,7 @@ public class RoleController extends BaseController{
                               Integer roleId,
                               @RequestParam(value="resourcesIds[]",required = false)Integer[] resourcesIds){
         roleResourcesService.updateRoleResources(roleId,resourcesIds);
+        bossRealm.removeAuthorizationCacheInfo();
         WebUtil.print(response,new Result(true).info("权限保存成功!"));
     }
 
@@ -270,6 +276,7 @@ public class RoleController extends BaseController{
                          Integer roleId,
                          @RequestParam(value="memberIds[]")Integer[] memberIds){
         roleMemberService.updateRoleMember(roleId,memberIds);
+
         WebUtil.print(response,new Result(true).info("角色保存成功!"));
     }
 
