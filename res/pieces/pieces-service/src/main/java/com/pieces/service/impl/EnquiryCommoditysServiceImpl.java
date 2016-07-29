@@ -33,21 +33,24 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
 
     @Override
     @Transactional
-    public Integer quotedUpdate(List<EnquiryCommoditys> list, Integer memberId, Integer billsId) {
+    public void quotedUpdate(List<EnquiryCommoditys> list, Integer memberId, Integer billsId) {
         EnquiryBills enquiryBills = new EnquiryBills();
-
-        Iterator<EnquiryCommoditys> iter = list.iterator();
-        while(iter.hasNext()){
-            EnquiryCommoditys commoditys = iter.next();
-            if(commoditys.getMyPrice() == null && commoditys.getExpireDate() == null){
-                iter.remove();
-            }
-        }
         enquiryBills.setId(billsId);
         enquiryBills.setUpdateTime(new Date());
         enquiryBills.setUpdateUser(memberId);
         enquiryBillsDao.update(enquiryBills);
-        return enquiryCommoditysDao.quotedUpdate(list);
+
+        if(list != null && list.size()>0) {
+            Iterator<EnquiryCommoditys> iter = list.iterator();
+            while(iter.hasNext()){
+                EnquiryCommoditys commoditys = iter.next();
+                if(commoditys.getMyPrice() == null && commoditys.getExpireDate() == null){
+                    iter.remove();
+                }
+            }
+            enquiryCommoditysDao.quotedUpdate(list);
+        }
+
     }
 
     @Override
@@ -57,7 +60,7 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
 
     @Override
     @Transactional
-    public Integer quoted(List<EnquiryCommoditys> list, Integer memberId, Integer billsId) {
+    public void quoted(List<EnquiryCommoditys> list, Integer memberId, Integer billsId) {
         EnquiryBills enquiryBills = new EnquiryBills();
         enquiryBills.setId(billsId);
         enquiryBills.setQuotedTime(new Date());
@@ -67,13 +70,16 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
         enquiryBills.setUpdateUser(memberId);
         enquiryBills.setStatus(1);
         enquiryBillsDao.update(enquiryBills);
-        Iterator<EnquiryCommoditys> iter = list.iterator();
-        while(iter.hasNext()){
-            EnquiryCommoditys commoditys = iter.next();
-            if(commoditys.getMyPrice() == null && commoditys.getExpireDate() == null){
-                iter.remove();
+
+        if(list != null && list.size()>0) {
+            Iterator<EnquiryCommoditys> iter = list.iterator();
+            while(iter.hasNext()){
+                EnquiryCommoditys commoditys = iter.next();
+                if(commoditys.getMyPrice() == null && commoditys.getExpireDate() == null){
+                    iter.remove();
+                }
             }
+            enquiryCommoditysDao.quotedUpdate(list);
         }
-        return enquiryCommoditysDao.quotedUpdate(list);
     }
 }

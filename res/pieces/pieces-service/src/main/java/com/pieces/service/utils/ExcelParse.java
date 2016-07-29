@@ -15,12 +15,9 @@ import java.util.List;
  * 解析上传的报价excel文件
  */
 public class ExcelParse {
-    public static List<EnquiryCommoditys> parseEnquiryXLS(String path) throws IOException, InvalidFormatException {
+    public static List<EnquiryCommoditys> parseEnquiryXLS(InputStream inp) throws IOException, InvalidFormatException {
 
         List<EnquiryCommoditys> list = new ArrayList<>();
-
-        InputStream inp = new FileInputStream(path);
-        //InputStream inp = new FileInputStream("workbook.xlsx");
 
         Workbook wb = WorkbookFactory.create(inp);
         Sheet sheet = wb.getSheetAt(0);
@@ -43,31 +40,36 @@ public class ExcelParse {
                     // The spreadsheet is empty in this cell
                     continue;
                 } else {
-                    switch (cn) {
-                        case 0:
-                            commoditys.setCommodityName(getCellValue(c));
-                            break;
-                        case 1:
-                            commoditys.setSpecs(getCellValue(c));
-                            break;
-                        case 2:
-                            commoditys.setLevel(getCellValue(c));
-                            break;
-                        case 3:
-                            commoditys.setOrigin(getCellValue(c));
-                            break;
-                        case 4:
-                            commoditys.setAmount(Double.valueOf(getCellValue(c)).intValue());
-                            break;
-                        case 5:
-                            commoditys.setExpectPrice(Double.valueOf(getCellValue(c)));
-                            break;
-                        case 6:
-                            Date date = new Date();
-                            date.setTime(Double.valueOf(getCellValue(c)).longValue());
-                            commoditys.setExpectDate(date);
+                    try {
+                        switch (cn) {
+                            case 0:
+                                commoditys.setCommodityName(getCellValue(c));
+                                break;
+                            case 1:
+                                commoditys.setSpecs(getCellValue(c));
+                                break;
+                            case 2:
+                                commoditys.setLevel(getCellValue(c));
+                                break;
+                            case 3:
+                                commoditys.setOrigin(getCellValue(c));
+                                break;
+                            case 4:
+                                commoditys.setAmount(Double.valueOf(getCellValue(c)).intValue());
+                                break;
+                            case 5:
+                                commoditys.setExpectPrice(Double.valueOf(getCellValue(c)));
+                                break;
+                            case 6:
+                                Date date = new Date();
+                                date.setTime(Double.valueOf(getCellValue(c)).longValue());
+                                commoditys.setExpectDate(date);
 
+                        }
+                    } catch (Exception e) {
+                        //TODO: continue
                     }
+
 
                 }
             }
@@ -107,8 +109,8 @@ public class ExcelParse {
 
 
     public static void main(String[] args) throws IOException, InvalidFormatException {
-        List<EnquiryCommoditys> list = ExcelParse.parseEnquiryXLS("/Users/kevin1/Downloads/批量采购模版.xls");
-
-        System.out.println("args = [" + args + "]");
+//        List<EnquiryCommoditys> list = ExcelParse.parseEnquiryXLS("/Users/kevin1/Downloads/批量采购模版.xls");
+//
+//        System.out.println("args = [" + args + "]");
     }
 }

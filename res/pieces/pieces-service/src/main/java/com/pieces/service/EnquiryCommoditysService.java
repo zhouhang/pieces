@@ -18,7 +18,7 @@ public interface EnquiryCommoditysService extends ICommonService<EnquiryCommodit
      * @param list
      * @return
      */
-    public Integer quoted(List<EnquiryCommoditys> list, Integer memberId, Integer billsId);
+    public void quoted(List<EnquiryCommoditys> list, Integer memberId, Integer billsId);
 
 
 
@@ -28,6 +28,6 @@ public interface EnquiryCommoditysService extends ICommonService<EnquiryCommodit
      * @param list
      * @return
      */
-    public Integer quotedUpdate(List<EnquiryCommoditys> list, Integer menmberId, Integer billsId);
+    public void quotedUpdate(List<EnquiryCommoditys> list, Integer menmberId, Integer billsId);
 
 }
