@@ -83,7 +83,6 @@
 	<#include "./inc/footer.ftl"/>
     <!-- footer end -->
 
-	<script src="/js/jquery.min.js"></script>
 	<script src="/js/validator/jquery.validator.js?local=zh-CN"></script>
 	<script src="/js/jquery.form.js"></script>
 	<script>
@@ -94,13 +93,7 @@
 				fields : {
 					pwdOld : '原始密码: required',
 					pwd : '密码: required; password',
-					pwdRepeat : '确认密码: required; match(pwd)',
-					companyFullName : '用药单位: required, company',
-					areaId : '所在地区: required',
-					contactName : '联系人: required;nickName',
-					contactMobile : '手机号码: required;mobile',
-					mobileCode : '验证码: required',
-					agreement : '同意协议：checked'
+					pwdRepeat : '确认密码: required; match(pwd)'
 				},
 				valid : function(form) {
 					var myfromValid = this;
@@ -113,7 +106,12 @@
 								var status = data.status;
 								var info = data.info;
 								if (status == 'y') {
-									$('.tips').show();
+									$('.fa-form :input').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+        			            	$.notify({
+        	                            type: 'success', 
+        	                            title: '修改密码成功。',
+        	                            delay: 3e3
+        	                        });
 								} else {
 									myfromValid.showMsg("#pwdOld", {
 										type : "error",
