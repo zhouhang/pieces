@@ -66,7 +66,8 @@ public class EnquiryController extends BaseController{
                         Integer commodityId){
         //重新询价删除之前的询价记录
         if(billId!=null){
-            List<EnquiryCommoditys> enquiryCommoditysList = handleEnquiryAgain(billId);
+            User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+            List<EnquiryCommoditys> enquiryCommoditysList = handleEnquiryAgain(user.getId(),billId);
             if(!enquiryCommoditysList.isEmpty()){
                 modelMap.put("enquiryCommoditysList",enquiryCommoditysList);
                 modelMap.put("billId",billId);
@@ -110,7 +111,7 @@ public class EnquiryController extends BaseController{
     }
 
 
-    private List<EnquiryCommoditys> handleEnquiryAgain(Integer billId){
+    private List<EnquiryCommoditys> handleEnquiryAgain(Integer userId,Integer billId){
         List<EnquiryCommoditys> enquiryCommoditysList =  enquiryCommoditysService.findByBillId(billId,null);
         return enquiryCommoditysList;
     }
@@ -190,8 +191,12 @@ public class EnquiryController extends BaseController{
                                 EnquiryRecordVo enquiryRecordVo){
         pageNum=pageNum==null?1:pageNum;
         pageSize=pageSize==null?10:pageSize;
+        User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        enquiryRecordVo.setUserId(user.getId());
+        //查询用户的询价单
         PageInfo<EnquiryBills> billsPageInfo =  enquiryBillsService.findByPage(pageNum,pageSize,enquiryRecordVo);
         modelMap.put("billsPage",billsPageInfo);
+        enquiryRecordVo.setUserId(null);
         String enquiryRecordParam = enquiryRecordVo.toString();
         if(StringUtils.isNotBlank(enquiryRecordParam)){
             enquiryRecordParam = enquiryRecordVo.toString().substring(1);
