@@ -50,6 +50,13 @@
         where id = #{id}
     </select>
 
+    <select id="findByIds" parameterType="java.lang.String" resultMap="CommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from commodity
+        where id = (${ids})
+    </select>
+
     <select id="findAll"  resultMap="CommodityResultMap">
         select
         <include refid="Base_Column_List" />

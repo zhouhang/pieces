@@ -82,4 +82,9 @@ public class EnquiryCommoditysDaoImpl extends BaseDaoImpl implements EnquiryComm
     public void deleteByBillId(Integer billId) {
          getSqlSession().delete("com.pieces.dao.EnquiryCommoditysMapper.deleteByBillId",billId);
     }
+
+    @Override
+    public List<EnquiryCommoditys> findCommoditysByUser(String userId) {
+        return getSqlSession().selectList("com.pieces.dao.EnquiryCommoditysMapper.findCommoditysByUser",userId);
+    }
 }
