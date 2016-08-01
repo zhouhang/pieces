@@ -68,9 +68,10 @@
 						success : function(data) {
 							var status = data.status;
 							if (status != 'y') {
-								loginPage.fn.showMsg('用户名密码错误!');
+								loginPage.fn.showMsg('用户名密码错误!'); // login.js
 							} else {
-								window.parent.productPage.fn.logined(data.info);
+								window.parent.location.href = data.info;
+								// window.parent.productPage.fn.logined(data.info);
 							}
 						},
 						complete: function() {

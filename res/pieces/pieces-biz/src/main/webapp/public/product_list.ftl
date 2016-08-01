@@ -192,6 +192,7 @@
     <#include "./inc/footer.ftl"/>
     <script src="/js/jquery.form.js"></script>
     <script src="/js/layer/layer.js"></script>
+    <script src="/js/common.js"></script>
     <script>
     var productPage = {
         v: {
@@ -201,7 +202,6 @@
         	init: function(){
 				this.checkboxEvent();
                 this.dorpDown();
-                this.quote();
 				
         		$(".fa-times").click(function(){
         			var name = $(this).parent().data('name');
@@ -303,36 +303,7 @@
                     }
                 })
                 return this;
-			},
-            // 询价
-            quote: function() {
-                $('#myform').on('click', '.btn-quote', function() {
-                	$.ajax({
-			            url: "/pop",
-			            type: "POST",
-			            dataType : "json",
-			            data : {url : productPage.v.url},
-			            success: function(data){
-			            	var status = data.status;
-			            	if(status === 'y'){
-			            		window.location.href = data.info;
-			            	}else{
-			            		layer.open({
-			                        type: 2,
-			                        title: '账户登录',
-			                        area: ['360px', '360px'],
-			                        content: ['/popLogin?url='+productPage.v.url, 'no']
-			                    });
-			            	}
-			            }
-			        });
-                	return false;
-                })
-            },
-            logined: function(url) {
-                layer.closeAll();
-                window.location = url;
-            }
+			}
         }
     }
     $(function() {
