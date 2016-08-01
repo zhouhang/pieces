@@ -7,7 +7,7 @@
         <div class="user">
             <span>登录用户 ${member_session_boss.username }</span>
             <i>|</i>
-            <span>${.now?string.full}</span>
+            <span>${.now?string("yyyy-MM-dd EEEE")}</span>
             <i>|</i>
             <a href="logout">退出</a>
         </div>
@@ -52,10 +52,10 @@
             <li><a href="#!">报表</a></li>
             <@shiro.hasPermission name="member:index">
                 <li>
-                    <a class="curr" href="#!">系统</a>
+                    <a href="#!">系统</a>
                     <div class="subnav">
                         <@shiro.hasPermission name="member:view">
-                            <a class="on" href="member/index">用户管理</a>
+                            <a href="member/index">用户管理</a>
                         </@shiro.hasPermission>
                         <@shiro.hasPermission name="role:view">
                             <a href="role/index">角色管理</a>

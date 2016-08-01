@@ -87,6 +87,10 @@
                                 </div>
 
                             </#list>
+                            <#else>
+                            <div>
+                                您还没有询价记录,现在立即询价吧!
+                            </div>
                         </#if>
                     </div>
                     <#if billsPage??>

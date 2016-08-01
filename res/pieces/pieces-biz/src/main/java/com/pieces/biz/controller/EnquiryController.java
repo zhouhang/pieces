@@ -155,6 +155,7 @@ public class EnquiryController extends BaseController{
                     return;
                 }
             }
+        //删除之前的询价记录
         CookieUtils.deleteCookie(request,response, BasicConstants.ENQUIRY_COOKIES);
 
         WebUtil.print(response,new Result(true).info(message));
@@ -225,8 +226,9 @@ public class EnquiryController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/parseXsl", method = RequestMethod.POST)
-    @ResponseBody
-    public List<EnquiryCommoditys> parseXsl(@RequestParam(required = false) MultipartFile excel) {
+    public void parseXsl(HttpServletRequest request,
+                         HttpServletResponse response,
+                         @RequestParam(required = false) MultipartFile excel) {
         List<EnquiryCommoditys> list = null;
         try {
             list = ExcelParse.parseEnquiryXLS(excel.getInputStream());
@@ -235,6 +237,8 @@ public class EnquiryController extends BaseController{
         } catch (InvalidFormatException e) {
             e.printStackTrace();
         }
-        return list;
+        WebUtil.print(response,list);
+
     }
+
 }

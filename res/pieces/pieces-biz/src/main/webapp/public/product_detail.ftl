@@ -75,7 +75,7 @@
                             </ul>
                         </div>
                         <div class="buttons">
-                            <a class="btn btn-red" href="#">询价</a>
+                            <a class="btn btn-red j_pop_login" href="/center/enquiry/index?commodityId=${commodity.id!}">询价</a>
                             <a class="btn btn-gray" href="#"><i class="fa fa-heart"></i>收藏</a>
                         </div>
                     </div>
@@ -97,5 +97,7 @@
 
     <#include "./inc/helper.ftl"/>
     <#include "./inc/footer.ftl"/>
+    <script src="/js/common.js"></script>
+
 </body>
 </html>
