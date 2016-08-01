@@ -158,16 +158,16 @@
 	                            <td><a href="/commodity/${commodity.id }"><img class="lazyload" src="/images/blank.gif" data-original="${commodity.pictureUrl }" width="130" height="130" alt=""></a></td>
 	                            <td class="tl">                                
 	                                <div class="desc">
-	                                    <h3><a href="/commodity/${commodity.id }">${commodity.name }</a></h3>
+	                                    <h3><a href="/commodity/${commodity.id}">${commodity.name }</a></h3>
 	                                    <p>${commodity.exterior }</p>
 	                                </div>
 	                            </td>
-	                            <td>${commodity.specName }</td>
-	                            <td>${commodity.levelName }</td>
-	                            <td>${commodity.originOfName }</td>
-	                            <td class="tl">${commodity.executiveStandard }</td>
+	                            <td>${commodity.specName}</td>
+	                            <td>${commodity.levelName}</td>
+	                            <td>${commodity.originOfName}</td>
+	                            <td class="tl">${commodity.executiveStandard}</td>
 	                            <td>${commodity.factory }</td>
-	                            <td><a class="btn btn-white btn-quote">立即询价</a></td>
+	                            <td><a href="/center/enquiry/index?commodityId=${commodity.id!}" class="btn btn-white btn-quote j_pop_login">立即询价</a></td>
 	                        </tr>
 	                    </#list>
 	                </#if>

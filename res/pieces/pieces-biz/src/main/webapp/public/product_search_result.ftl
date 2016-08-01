@@ -108,6 +108,7 @@
 </div>
     <#include "./inc/helper.ftl"/>
     <#include "./inc/footer.ftl"/>
+    <script src="/js/common.js"></script>
 
 
 </body>
