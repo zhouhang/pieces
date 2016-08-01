@@ -17,6 +17,14 @@ public interface EnquiryCommoditysDao extends ICommonDao<EnquiryCommoditys>{
      */
     public Integer quotedUpdate(List<EnquiryCommoditys> list);
 
+
+    /**
+     * 根据用户ID 查询用户最近询价的商品
+     * @param userId
+     * @return
+     */
+    public List<EnquiryCommoditys> findCommoditysByUser(String userId);
+
     public void deleteByBillId(Integer billId);
 	
 }
