@@ -84,6 +84,7 @@ public class RoleController extends BaseController{
      * @param model
      * @return
      */
+    @RequiresPermissions(value = "role:edit")
     @RequestMapping(value = "/info/{id}")
     public String info(HttpServletRequest request,
                        HttpServletResponse response,
@@ -104,6 +105,7 @@ public class RoleController extends BaseController{
      * @param model
      * @return
      */
+    @RequiresPermissions(value = "role:add")
     @RequestMapping(value = "/add")
     public String add(HttpServletRequest request,
                       HttpServletResponse response,
@@ -119,6 +121,7 @@ public class RoleController extends BaseController{
      * @param model
      * @return
      */
+
     @RequestMapping(value = "/power/{id}")
     public String power(HttpServletRequest request,
                         HttpServletResponse response,

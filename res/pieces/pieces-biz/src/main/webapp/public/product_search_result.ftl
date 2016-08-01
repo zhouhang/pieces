@@ -82,7 +82,7 @@
                             <td>${commodityDoc.originOf!}</td>
                             <td class="tl">${commodityDoc.executiveStandard!}</td>
                             <td>${commodityDoc.factory!}</td>
-                            <td><a class="btn btn-white btn-quote" href="product.html">立即询价</a></td>
+                            <td><a class="btn btn-white btn-quote j_pop_login" href="/center/enquiry/index?commodityId=${commodityDoc.id!}">立即询价</a></td>
                         </tr>
                     </#list>
                 <#else>

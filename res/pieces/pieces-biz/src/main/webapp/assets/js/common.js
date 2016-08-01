@@ -157,7 +157,7 @@ function currNav() {
 
 // 询价
 function quoteEvent() {
-	$('body').on('click', '.btn-quote', function() {
+	$('body').on('click', '.j_pop_login', function() {
         var url = $(this).attr('href');
 
 		// 检查登录状态
