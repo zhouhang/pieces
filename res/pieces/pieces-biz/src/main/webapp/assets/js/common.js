@@ -126,10 +126,10 @@ function bindSearch() {
 	            response = JSON.parse(response);
 	            return  {suggestions:$.map(response, function(dataItem) {
 	            	return {
-	            		value: (dataItem.category ? dataItem.category + ':' : '') + dataItem.value,data: {'category': dataItem.category}
+	            		value: (dataItem.category ? dataItem.category + ':' : '') + dataItem.value,
+	            		data: {'category': dataItem.category}
 	            	}
 	            })};
-
 	        },
 	        onSelect: function (suggestion) {
 	            $searchForm.submit();
@@ -155,6 +155,34 @@ function currNav() {
 	})
 }
 
+// 询价
+function quoteEvent() {
+	$('body').on('click', '.btn-quote', function() {
+        var url = $(this).attr('href');
+
+		// 检查登录状态
+    	$.ajax({
+            url: "/pop",
+            type: "POST",
+            dataType : "json",
+            // data : {url : url},
+            success: function(data){
+            	var status = data.status;
+            	if(status === 'y') {
+            		location.href = url;
+            	}else{
+            		layer.open({
+                        type: 2,
+                        title: '账户登录',
+                        area: ['360px', '360px'],
+                        content: ['/popLogin?url=' + url, 'no']
+                    });
+            	}
+            }
+        });
+    	return false;
+    })
+}
 function pageInit() {
 	// 开启图片懒加载
 	loazyload();
@@ -162,6 +190,8 @@ function pageInit() {
 	bindSearch();
 	// 用户中心导航高亮
 	currNav();
+	// 询价按钮
+	quoteEvent();
 }
 
 ;(function($){
