@@ -20,7 +20,7 @@
         </div>
         <div class="main">
             <div class="title">
-                <h3><i class="fa fa-chevron-right"></i>E20160620170402</h3>
+                <h3><i class="fa fa-chevron-right"></i>${enquiryBills.code}</h3>
                 <div class="extra">
                     <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                     <button type="button" id="submit" class="btn btn-red"><#if enquiryBills.status ==1>保存<#else>报价</#if></button>
@@ -32,7 +32,7 @@
                     <!-- id -->
                     <span>用药单位：<em>${enquiryBills.companyFullName}</em></span>
                     <span>所在地区：<em>${enquiryBills.areaFull}</em></span>
-                    <span>联系人姓名：<em>${enquiryBills.userName}</em></span>
+                    <span>联系人姓名：<em>${enquiryBills.contactName}</em></span>
                     <span>联系人手机号：<em>${enquiryBills.contactMobile}</em></span>
                     <#if enquiryBills.status ==1>
                     <span>报价时间：<em>${enquiryBills.quotedTime?date}</em></span>
