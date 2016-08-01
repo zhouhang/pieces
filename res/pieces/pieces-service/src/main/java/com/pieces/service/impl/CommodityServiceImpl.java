@@ -16,6 +16,7 @@ import com.pieces.dao.vo.BreedVo;
 import com.pieces.dao.vo.CategoryVo;
 import com.pieces.service.CategoryService;
 import com.pieces.service.CommoditySearchService;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,6 +162,8 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
                 for (EnquiryCommoditys vo : commodityses) {
                     ids += "'" + vo.getId() + "',";
                 }
+
+                // TODO: StringUtils.join()
                 ids = ids.substring(0, ids.length()-1);
                 List<CommodityVO> commodityVOs = commodityDao.findByIds(ids);
                 list.addAll(commodityVOs);

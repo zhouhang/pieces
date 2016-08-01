@@ -91,6 +91,8 @@ public class CategoryServiceImpl implements CategoryService {
 		return this.create(t);
 	}
 
+
+
 	@Override
 	public List<Category> findBreedByName(String breedName) {
 		return categoryDao.findBreedByName(breedName);
@@ -178,7 +180,13 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<Code> findCodeByString(String str) {
 		return codeDao.findByString(str);
 	}
-	
+
+	/**
+	 * TODO: 枚举里面要加个getByName 方法.
+	 * @param breedId
+	 * @param type
+     * @return
+     */
 	@Override
 	public List<Code> findCode(Integer breedId , String type) {
 		Category category = this.findById(breedId);

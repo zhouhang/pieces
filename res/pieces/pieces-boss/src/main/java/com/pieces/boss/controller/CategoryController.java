@@ -156,17 +156,20 @@ public class CategoryController {
 	@RequestMapping(value = "/category/save")
 	public void saveCategory(HttpServletRequest request,
 							  HttpServletResponse response,
-							  String id,
+							  Integer id,
 							  String name,
 							  ModelMap model){
-		if(StringUtils.isNotBlank(name)){
-			if(StringUtils.isNotBlank(id)){
-				categoryService.updateClassify(name, Integer.parseInt(id));
-			}else{
+		Result result = new Result(true);
+
+		if(StringUtils.isNotBlank(name) ) {
+			if (id == null) {
 				categoryService.addClassify(name);
+				result.info("");
+			} else {
+				categoryService.updateClassify(name, id);
+				result.info("");
 			}
 		}
-		Result result = new Result(true);
         WebUtil.printJson(response, result);
 	}
 	
