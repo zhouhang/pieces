@@ -1,3 +1,25 @@
+// 用户中心导航高亮
+function currNav() {
+	var $side = $('.wrap'),
+		URL = document.URL.split('#')[0].split('?')[0];
+
+	$side.find('a').each(function() {
+		if (URL.toLowerCase().indexOf(this.href.toLowerCase()) !== -1) {
+			$(this).addClass("on").parent().prev("a").addClass('curr');
+			return false; // break
+		}
+	})
+
+/*	$side.on('click', 'div a', function() {
+		$(this).parent().toggleClass('expand').siblings().removeClass('expand');
+	})*/
+}
+
+function pageInit() {
+	// 用户中心导航高亮
+	currNav();
+}
+
 ;(function($){
 	var defaults = {
 		clickToHide: true 	// 点击关闭
@@ -51,3 +73,7 @@
 		});
 	})
 })(jQuery)
+
+$(function() {
+	pageInit();
+})
