@@ -14,6 +14,13 @@ public interface CommodityDao extends ICommonDao<Commodity>{
 
     public CommodityVO findVoById(Integer id);
 
+	/**
+	 * 根据id 的字符串查询id列表
+	 * @param ids
+	 * @return
+     */
+	public List<CommodityVO> findByIds(String ids);
+
 	public List<CommodityVO> findCommodityByBreedId(Integer id);
 
 	List<CommodityVO> findStandardByBreedId(String ids);

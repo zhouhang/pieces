@@ -2,12 +2,15 @@ package com.pieces.service.impl;
 
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import com.pieces.dao.EnquiryCommoditysDao;
 import com.pieces.dao.model.Category;
+import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.BreedVo;
 import com.pieces.dao.vo.CategoryVo;
@@ -52,6 +55,9 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private EnquiryCommoditysDao enquiryCommoditysDao;
 
     @Override
     public ICommonDao<Commodity> getDao() {
@@ -145,13 +151,30 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 //        *  1、用户曾经询价过的品种，取询价次数最多的 5 个，如果不足 5 个，用第 2条规则填补；
 //        *  2、当前商品同品种最新发布的前 5 个商品，如果不足 5 个，用第3条规则填补；
 //        *  3、当前商品同分类最新发布的前 5 个商品。
-        List<CommodityVO> list = null;
+        List<CommodityVO> list = new ArrayList<>();
         // TODO: 用户询价商品.
-        CommodityVO param = new CommodityVO();
-        param.setCategoryId(breedId);
-        PageInfo<CommodityVO> pageInfo = commodityDao.findByParam(param, 1, 5);
-        list = pageInfo.getList();
-        if (list == null || list.size() < 5) {
+        if (user != null) {
+            List<EnquiryCommoditys> commodityses = enquiryCommoditysDao.findCommoditysByUser(String.valueOf(user.getId()));
+
+            if (!commodityses.isEmpty()){
+                String ids = "";
+                for (EnquiryCommoditys vo : commodityses) {
+                    ids += "'" + vo.getId() + "',";
+                }
+                ids = ids.substring(0, ids.length()-1);
+                List<CommodityVO> commodityVOs = commodityDao.findByIds(ids);
+                list.addAll(commodityVOs);
+            }
+
+        }
+
+        if (list.size() < 5) {
+            CommodityVO param = new CommodityVO();
+            param.setCategoryId(breedId);
+            PageInfo<CommodityVO> pageInfo = commodityDao.findByParam(param, 1, 5-list.size());
+            list.addAll(pageInfo.getList());
+        }
+        if (list.size() < 5) {
             // 找到的商品数量不足从同分类的商品中找.
             // 根据品种ID 找到所属的类别
             // 根据类别ID 找到下面的品种, 判处当前的品种.找前几条和上面查出来的凑足5条.
@@ -167,8 +190,8 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
                 categoryIds = categoryIds.substring(0, categoryIds.length()-1);
                 CommodityVO commodityVO = new CommodityVO();
                 commodityVO.setCategoryIds(categoryIds);
-                List<CommodityVO> listc = commodityDao.findByParam(commodityVO, 1,5).getList();
-               // 整合数据
+                List<CommodityVO> listc = commodityDao.findByParam(commodityVO, 1,5-list.size()).getList();
+                // 整合数据
                 list.addAll(listc);
                 list = list.subList(0, 5);
         }

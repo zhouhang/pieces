@@ -6,7 +6,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.pieces.dao.model.User;
+import com.pieces.service.enums.RedisEnum;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +27,6 @@ import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.CategoryService;
 import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
-import com.pieces.service.enums.CodeEnum;
 import com.pieces.service.utils.ValidUtils;
 import com.pieces.tools.utils.WebUtil;
 
@@ -43,6 +45,9 @@ public class CommodityController extends BaseController {
 
 	@Autowired
 	private CategoryService categoryService;
+
+	@Autowired
+	private HttpSession session;
 
 	/**
 	 * 获取商品列表分页
@@ -312,8 +317,8 @@ public class CommodityController extends BaseController {
 		}
 		Category category = categoryService.findById(commodity.getCategoryId());
 		Category category1 = categoryService.findById(category.getPartenId());
-
-		List<CommodityVO> featured = commodityService.featured(null, category.getId(), category1.getId());
+		User user = (User) session.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+		List<CommodityVO> featured = commodityService.featured(user, category.getId(), category1.getId());
 		model.put("category", category1.getName());
 		model.put("categoryId", category1.getId());
 		model.put("commodity", commodity);

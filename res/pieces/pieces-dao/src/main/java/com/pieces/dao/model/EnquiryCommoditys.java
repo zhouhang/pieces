@@ -1,5 +1,7 @@
 package com.pieces.dao.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -38,6 +40,7 @@ public class EnquiryCommoditys  implements Serializable {
 	private Double expectPrice;
 	
 	//期望交货日期
+	@JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
 	private Date expectDate;
 	
 	//我方报价
@@ -47,6 +50,7 @@ public class EnquiryCommoditys  implements Serializable {
 	private Date expireDate;
 	
 	//创建时间
+	@JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
 	private Date createTime;
 
 
@@ -121,7 +125,7 @@ public class EnquiryCommoditys  implements Serializable {
 	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
-	
+	@JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
 	public Date getExpectDate() {
 		return expectDate;
 	}

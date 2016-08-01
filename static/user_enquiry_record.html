@@ -512,6 +512,7 @@
                 init: function () {
                     this.dateInit();
                     this.expand();
+                    this.handle();
                 },
                 //日期选择
                 dateInit: function () {
@@ -628,6 +629,16 @@
                     })
                     modal.push('</div>');
                     return modal.join('');
+                },
+                // 操作
+                handle: function() {
+                    $('.fa-chart-d').find('.group:gt(0)').each(function() {
+                        if ($(this).find('.cbx').length === 0) {
+                            $(this).find('.hd .c-blue').html('重新询价');
+                        } else {
+                            $(this).find('.hd .c-blue').html('订购已选商品');
+                        }
+                    });
                 }
             }
         }
