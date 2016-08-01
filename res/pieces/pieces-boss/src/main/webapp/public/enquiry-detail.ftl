@@ -72,7 +72,7 @@
                                 <input type="text" name="id" style="display: none" value="${commodity.id}">
                                 <input type="text" name="myPrice" class="ipt ipt-price" value="${commodity.myPrice}">
                             </td>
-                            <td><input type="text" name="expireDate" class="ipt ipt-date" value="<#if commodity.expireDate?exists>${commodity.expireDate?date}</#if>"></td>
+                            <td><input type="text" name="expireDate" class="ipt ipt-date" value="<#if commodity.expireDate?exists>${commodity.expireDate?date}</#if>" onclick="laydate({min: laydate.now(),istoday:false})"></td>
                         </tr>
                         </#list>
                         </tbody>
@@ -130,23 +130,14 @@
             },
             //日期选择
             dateInit: function () {
-                $('.ipt-date').each(function (index) {
-                    var id = 'iptDate' + index;
-                    this.id = id;
-                    laydate({
-                        elem: '#' + id,
-                        format: 'YYYY-MM-DD',
-                        min: laydate.now(),
-                        max: '2099-06-16',
-                        istime: true,
-                        istoday: false,
-                        choose: function (datas) {
-
-                        }
-                    });
+                // 重新定位
+                $('.ipt-date').on('click', function() {
+                    var 
+                        posX = $(this).offset().left,
+                        w = this.offsetWidth,
+                        obj = document.getElementById('laydate_box');
+                    obj.style.left = posX + w - obj.offsetWidth + 'px';
                 })
-
-
             },
             formatTableData: function () {
                 var tableObj = $('#form tbody tr').map(function (i) {
