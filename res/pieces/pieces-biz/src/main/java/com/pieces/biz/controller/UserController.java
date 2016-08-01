@@ -47,8 +47,8 @@ public class UserController extends BaseController {
 	@Autowired
 	private BizRealm bizRealm;
 	
-	 @Autowired
-	 private RedisManager redisManager;
+	@Autowired
+	private RedisManager redisManager;
 
 	/**
 	 * 进入注册页面

@@ -8,6 +8,7 @@ import com.pieces.dao.vo.CommodityVO;
 import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
 import org.apache.commons.lang.StringUtils;
+import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -74,19 +75,19 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
                             .build();
         }
         else{
+            MatchQueryBuilder matchQueryBuilder = null;
             if(field.contains("原药材:")){
                 field = field.replace("原药材:","");
-                searchQuery = new NativeSearchQueryBuilder()
-                        .withQuery(matchQuery("categoryName", field))
-                        .withPageable(new PageRequest(pageNum-1,pageSize))
-                        .build();
+                matchQueryBuilder = matchQuery("categoryName", field);
             }else{
-                searchQuery = new NativeSearchQueryBuilder()
-                        .withQuery(matchQuery("name", field))
-                        .withPageable(new PageRequest(pageNum-1,pageSize))
-                        .build();
+                matchQueryBuilder = matchQuery("name", field);
             }
+            searchQuery = new NativeSearchQueryBuilder()
+                    .withQuery(matchQueryBuilder)
+                    .withPageable(new PageRequest(pageNum-1,pageSize))
+                    .build();
         }
+
         Page<CommodityDoc> result = esTemplate.queryForPage(searchQuery, CommodityDoc.class);
         return result;
     }
