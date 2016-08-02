@@ -79,7 +79,6 @@
                                                 </#if>
                                             </div>
                                         </div>
-
                                     </#list>
                                     <#if (bill.enquiryCommoditys?size>=10) >
                                         <div data-val="${bill.id!}" class="expand">展开 <i class="fa fa-chevron-down"></i></div>

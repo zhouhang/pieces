@@ -10,6 +10,7 @@ import com.pieces.service.RoleMemberService;
 import com.pieces.service.RoleService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.utils.WebUtil;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -120,6 +121,7 @@ public class MemberController extends BaseController{
      * @param response
      * @return
      */
+    @RequiresPermissions(value = "member:role")
     @RequestMapping(value = "/role/{id}")
     public String role(HttpServletRequest request,
                        HttpServletResponse response,
@@ -140,6 +142,7 @@ public class MemberController extends BaseController{
      * @param request
      * @param response
      */
+    @RequiresPermissions(value = "member:role")
     @RequestMapping(value = "/role/save")
     public void roleSave(HttpServletRequest request,
                          HttpServletResponse response,
