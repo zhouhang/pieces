@@ -121,7 +121,7 @@ public class RoleController extends BaseController{
      * @param model
      * @return
      */
-
+    @RequiresPermissions(value = "role:power")
     @RequestMapping(value = "/power/{id}")
     public String power(HttpServletRequest request,
                         HttpServletResponse response,
@@ -188,6 +188,7 @@ public class RoleController extends BaseController{
      * @param request
      * @param response
      */
+    @RequiresPermissions(value = "role:edit")
     @RequestMapping(value = "/save")
     public void save(HttpServletRequest request,
                      HttpServletResponse response,
@@ -249,39 +250,7 @@ public class RoleController extends BaseController{
         return "role-list";
     }
 
-    /**
-     * 查询角色下有哪些用户
-     * @param request
-     * @param response
-     * @param roleId
-     */
-    @RequestMapping(value = "/have")
-    public void roleMember(HttpServletRequest request,
-                           HttpServletResponse response,
-                           Integer roleId){
-        List<Integer> memberIds = new ArrayList<>();
-        List<RoleMember> roleMemberList = roleMemberService.findByRole(roleId);
-        for(RoleMember roleMember : roleMemberList){
-            memberIds.add(roleMember.getMemberId());
-        }
-        WebUtil.print(response,memberIds);
-    }
 
-    /**
-     * 保存用户到角色
-     * @param request
-     * @param response
-     * @param memberIds
-     */
-    @RequestMapping(value = "/member/save")
-    public void roleSave(HttpServletRequest request,
-                         HttpServletResponse response,
-                         Integer roleId,
-                         @RequestParam(value="memberIds[]")Integer[] memberIds){
-        roleMemberService.updateRoleMember(roleId,memberIds);
-
-        WebUtil.print(response,new Result(true).info("角色保存成功!"));
-    }
 
     /**
      *  删除角色
@@ -290,6 +259,7 @@ public class RoleController extends BaseController{
      * @param roleId
      * @return
      */
+    @RequiresPermissions(value = "role:delete")
     @RequestMapping(value = "delete")
     public String delete(HttpServletRequest request,
                          HttpServletResponse response,

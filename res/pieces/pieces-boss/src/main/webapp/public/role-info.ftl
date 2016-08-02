@@ -41,8 +41,9 @@
                             <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
 
                             <#if role??>
-                            <#--//location.href='role/delete?roleId=${role.id}'-->
-                                <button type="button" class="btn btn-gray" onclick="javascript:if(confirm('你确定删除吗？')){location.href='role/delete?roleId=${role.id}'}" >删除</button>
+                                <@shiro.hasPermission name="role:delete">
+                                    <button type="button" class="btn btn-gray" onclick="javascript:if(confirm('你确定删除吗？')){location.href='role/delete?roleId=${role.id}'}" >删除</button>
+                                </@shiro.hasPermission>
                             </#if>
                             <button id="submit" type="button" class="btn btn-red">保存</button>
                             <#if role??>
