@@ -139,7 +139,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
       .nav .plus i{margin-right:4px;color:#c3272b;}
 
 /* footer */
-.footer{line-height:36px;padding:75px 0 60px;font-size:12px;text-align:center;color:#999;}
+.footer{line-height:36px;margin:40px 0;font-size:12px;text-align:center;color:#999;}
   .footer .links a{margin:0 10px;color:#999;}
   .footer .links a:hover{color:#333;}
   .footer .authentication{margin-top:15px;}
@@ -310,7 +310,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
         .notify-wrapper .fa{line-height:1;font-size:40px;}
 
 /* main-body */
-.main-body{padding:20px 0 50px;}
+.main-body{margin:20px 0 50px;}
   .main-body .side{float:left;width:200px;}
     .main-body .side dl{border:1px solid #e7e7e7;}
     .main-body .side dt{margin-bottom:-1px;line-height:40px;border-bottom:1px solid #e7e7e7;text-align:center;color:#ccc;}
@@ -414,16 +414,19 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
     .member-box .side dl{border-bottom:1px solid #e7e7e7;} 
       .member-box .side dt{line-height:50px;padding:0 20px;color:#999;cursor:pointer;} 
         .member-box .side dt span{display:inline-block;width:130px;margin-left:4px;vertical-align:middle;} 
-        .member-box .side dt .fa{color:#ccc;} 
-        .member-box .side dt em{font-size:24px;} 
-      .member-box .side dd{line-height:30px;padding:0 20px 20px;display:none;} 
+        .member-box .side dt em{color:#ccc;font-size:24px;} 
+        .member-box .side dt i{font-size:14px;} 
+      .member-box .side dd{line-height:30px;padding:5px 20px 25px;font-size:12px;display:none;} 
         .member-box .side dd a{display:block;padding-left:30px;} 
       .member-box .side .expand{background:#f0eff5;}  
         .member-box .side .expand dt{color:#333;}  
-          .member-box .side .expand .fa{color:#c3272b;}  
+          .member-box .side .expand em{color:#c3272b;}  
             .member-box .side .expand .fa-chevron-right:before{content:"\e60c";}  
           .member-box .side .expand .curr{color:#c3272b;}  
         .member-box .side .expand dd{display:block;}  
+    .member-box .side-helper dt{padding:0 0 0 30px;}
+      .member-box .side-helper dt span{width:148px;margin-left:0;}
+      .member-box .side-helper dd a{padding-left:10px;}
   .member-box .main{margin-left:260px;border:1px solid #e7e7e7;} 
     .member-box .main .title{padding:0 30px;border-bottom:1px solid #e7e7e7;overflow:hidden;*zoom:1;} 
       .member-box .main .title h3{float:left;line-height:50px;} 
@@ -431,6 +434,8 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
       .member-box .main .tips{line-height:48px;padding:0 30px;font-size:16px;font-weight:700;border-bottom:1px solid #e7e7e7;background:#f0eff5;}
         .member-box .main .tips i{margin-right:6px;color:#58c805;font-size:28px;}
       .member-box .main .fa-form{padding-left:50px;}
+      .member-box .main .article{line-height:30px;padding:40px 30px;color:#666;font-size:12px;}
+        .member-box .main .article p{margin:1em 0;text-indent:2em;}
 
 /* 幻灯片 */
 .slide{position:relative;width:900px;margin:0 auto;}
@@ -452,3 +457,18 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .autocomplete-suggestions strong{font-weight:bold;color:#000;}
 .autocomplete-group{padding:2px 5px;}
 .autocomplete-group strong{height:0px;overflow:hidden;font-size:16px;color:#000;display:block;border-bottom:1px solid #000;}
+
+/* 新闻公告 */
+.news{margin:20px 0 50px;overflow:hidden;*zoom:1;}
+  .news .side{float:left;width:198px;border:1px solid #e7e7e7;}
+    .news .side .hd{line-height:48px;border-bottom:1px solid #e7e7e7;background:#f0eff5;text-align:center;font-weight:700;}
+    .news .side .bd{padding:20px 10px;font-size:12px;}
+      .news .side .bd li{height:32px;line-height:32px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+        .news .side .bd li a{color:#999;}
+        .news .side .bd li a:hover{color:#c3272b;}
+        .news .side .bd li .curr{color:#c3272b;}
+  .news .main{margin-left:240px;padding:0 30px;border:1px solid #e7e7e7;text-align:center;}
+    .news .main h1{line-height:40px;padding-top:20px;font-size:20px;}
+    .news .main .date{height:40px;font-size:12px;color:#999;}
+    .news .main .article{line-height:30px;padding:17px 0;color:#666;font-size:12px;text-align:left;border-top:1px solid #e7e7e7;}
+        .news .main .article p{margin:2em 0;text-indent:2em;}
