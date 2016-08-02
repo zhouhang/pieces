@@ -41,11 +41,8 @@
                 <div class="title">
                     <h3><i class="fa fa-people"></i> <#if member??>${member.username}<#else>创建用户</#if></h3>
                     <div class="extra">
-                        <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
+                        <a  class="btn btn-gray" href="member/index">返回</a>
                         <button id="memberSubmit" type="button" class="btn btn-red">保存</button>
-                        <#if member??>
-                            <button id="ajaxSubmit" type="button" class="btn btn-red">保存并继续</button>
-                        </#if>
                     </div>
                 </div>
 
@@ -152,15 +149,18 @@
                 $("#memberForm").ajaxSubmit({
                     dataType: "json",
                     success: function (result) {
+                        var type = "error";
+                        var title = "操作失败";
                         if(result.status=="y"){
-                            if(ajax){
-                                $("#success_advices").show();
-                            }else{
-                                location.href="member/index?advices="+result.info
-                            }
-                        }else{
-                            $("#error_advices").show();
+                            type="success";
+                            title="操作成功";
                         }
+                        $.notify({
+                            type: type,
+                            title: title,
+                            text: result.info,
+                            delay: 3e3
+                        });
                     }
                 });
             },

@@ -277,8 +277,7 @@
                         }
                     });
                 })
-                    return false;
-
+                return false;
             },
             // 商品图片
             goodsImg: function () {

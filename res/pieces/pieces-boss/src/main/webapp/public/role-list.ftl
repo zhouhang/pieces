@@ -29,7 +29,7 @@
                 <div class="title title-btm">
                     <h3><i class="fa fa-people"></i>修改角色 “${role.name}”</h3>
                     <div class="extra">
-                        <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
+                        <a  class="btn btn-gray" href="role/index">返回</a>
                     </div>
                 </div>
 

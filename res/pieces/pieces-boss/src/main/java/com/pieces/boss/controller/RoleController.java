@@ -172,6 +172,7 @@ public class RoleController extends BaseController{
      * @param roleId
      * @param resourcesIds
      */
+    @RequiresPermissions(value = "role:power")
     @RequestMapping(value = "/resources/save")
     public void resourcesSave(HttpServletRequest request,
                               HttpServletResponse response,
@@ -192,12 +193,15 @@ public class RoleController extends BaseController{
     public void save(HttpServletRequest request,
                      HttpServletResponse response,
                      Role role){
+        String message = null;
         if(role.getId()==null){
+            message="角色添加成功!";
             roleService.add(role);
         }else{
+            message="角色修改成功!";
             roleService.update(role);
         }
-        WebUtil.print(response,new Result(true).data(role));
+        WebUtil.print(response,new Result(true).data(role).info(message));
     }
 
 

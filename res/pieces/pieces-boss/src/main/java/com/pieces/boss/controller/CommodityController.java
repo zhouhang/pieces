@@ -129,10 +129,9 @@ public class CommodityController extends BaseController{
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     @ResponseBody
     public UEditorResult updateUEditorFile(@RequestParam(required = false) MultipartFile upfile) throws Exception{
-
         CropResult cropResult = commodityService.uploadImage(upfile);
-
         return UEditorResult.success(upfile.getOriginalFilename(),upfile.getOriginalFilename(),cropResult.getUrl() );
     }
+
 
 }

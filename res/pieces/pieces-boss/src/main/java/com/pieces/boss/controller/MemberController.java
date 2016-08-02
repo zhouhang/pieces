@@ -1,6 +1,7 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.boss.shiro.BossRealm;
 import com.pieces.dao.model.Member;
 import com.pieces.dao.model.Role;
 import com.pieces.dao.model.RoleMember;
@@ -36,7 +37,8 @@ public class MemberController extends BaseController{
     private RoleService roleService;
     @Autowired
     private RoleMemberService roleMemberService;
-
+    @Autowired
+    private BossRealm bossRealm;
     /**
      * BOSS用户列表页
      * @param request
@@ -111,6 +113,7 @@ public class MemberController extends BaseController{
             memberService.updateMember(member);
             advices = "修改用户信息成功!";
         }
+        bossRealm.removeAuthenticationCacheInfo();
         WebUtil.print(response,new Result(true).info(advices));
     }
 
