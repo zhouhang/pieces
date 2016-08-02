@@ -4,7 +4,7 @@
     <resultMap id="CategoryResultMap" type="com.pieces.dao.model.Category">
             <id column="id"  property="id" />
             <result column="name"  property="name" />
-            <result column="partenId"  property="partenId" />
+            <result column="parentId"  property="parentId" />
             <result column="aliases"  property="aliases" />
             <result column="status"  property="status" />
             <result column="level"  property="level" />
@@ -16,7 +16,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,partenId,aliases,status,level,specs,origins,levels,create_time
+        id,name,parentId,aliases,status,level,specs,origins,levels,create_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="CategoryResultMap">
@@ -39,9 +39,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Category">
         insert into
-        category (name,partenId,aliases,status,level,specs,origins,levels,create_time)
+        category (name,parentId,aliases,status,level,specs,origins,levels,create_time)
         values
-        (#{name},#{partenId},#{aliases},#{status},#{level},#{specs},#{origins},#{levels},#{createTime})
+        (#{name},#{parentId},#{aliases},#{status},#{level},#{specs},#{origins},#{levels},#{createTime})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.Category">
@@ -52,8 +52,8 @@
                 name = #{name},
             </if>
                                             
-            <if test="partenId != null">
-                partenId = #{partenId},
+            <if test="parentId != null">
+                parentId = #{parentId},
             </if>
                                             
             <if test="aliases != null">
@@ -121,7 +121,7 @@
     <select id="findBreed" parameterType="com.pieces.dao.vo.CategoryVo" resultType="com.pieces.dao.vo.CategoryVo">
         select a.*,b.name as classifyName
 	        from category a
-	        inner join category b on a.partenId = b.id 
+	        inner join category b on a.parentId = b.id
 	        <if test="classifyName != null">
             	and b.name like CONCAT('%','${classifyName}','%' )
         	</if>
@@ -135,17 +135,17 @@
         	<if test="status != null">
             	and a.status = #{status}
         	</if>
-            <if test="partenId != null">
-                and a.partenId = #{partenId}
+            <if test="parentId != null">
+                and a.parentId = #{parentId}
             </if>
         	order by a.create_time desc
     </select>
     
-    <select id="findBreedByPartenId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CategoryVo">
+    <select id="findBreedByParentId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CategoryVo">
         select *
 	        from category a
 	        where a.level = 2
-	        and a.partenId = #{partenId}
+	        and a.parentId = #{parentId}
 	        and a.status = 1
     </select>
 </mapper>

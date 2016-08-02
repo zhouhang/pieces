@@ -13,7 +13,7 @@ public class Category  implements Serializable {
 	
 	private String name;
 	
-	private Integer partenId;
+	private Integer parentId;
 	
 	//别名
 	private String aliases;
@@ -49,12 +49,12 @@ public class Category  implements Serializable {
 		this.name = name;
 	}
 	
-	public Integer getPartenId() {
-		return partenId;
+	public Integer getParentId() {
+		return parentId;
 	}
 
-	public void setPartenId(Integer partenId) {
-		this.partenId = partenId;
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
 	}
 	
 	public String getAliases() {

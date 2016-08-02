@@ -41,13 +41,7 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
         enquiryBillsDao.update(enquiryBills);
 
         if(list != null && list.size()>0) {
-            Iterator<EnquiryCommoditys> iter = list.iterator();
-            while(iter.hasNext()){
-                EnquiryCommoditys commoditys = iter.next();
-                if(commoditys.getMyPrice() == null && commoditys.getExpireDate() == null){
-                    iter.remove();
-                }
-            }
+            removeNullQuoted(list);
             enquiryCommoditysDao.quotedUpdate(list);
         }
 
@@ -82,14 +76,18 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
         enquiryBillsDao.update(enquiryBills);
 
         if(list != null && list.size()>0) {
-            Iterator<EnquiryCommoditys> iter = list.iterator();
-            while(iter.hasNext()){
-                EnquiryCommoditys commoditys = iter.next();
-                if(commoditys.getMyPrice() == null && commoditys.getExpireDate() == null){
-                    iter.remove();
-                }
-            }
+            removeNullQuoted(list);
             enquiryCommoditysDao.quotedUpdate(list);
+        }
+    }
+
+    private void removeNullQuoted(List<EnquiryCommoditys> list){
+        Iterator<EnquiryCommoditys> iter = list.iterator();
+        while(iter.hasNext()){
+            EnquiryCommoditys commoditys = iter.next();
+            if(commoditys.getMyPrice() == null && commoditys.getExpireDate() == null){
+                iter.remove();
+            }
         }
     }
 }

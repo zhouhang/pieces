@@ -16,7 +16,6 @@ import com.pieces.dao.vo.BreedVo;
 import com.pieces.dao.vo.CategoryVo;
 import com.pieces.service.CategoryService;
 import com.pieces.service.enums.CodeEnum;
-import com.pieces.service.enums.CommodityEnum;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -72,7 +71,7 @@ public class CategoryServiceImpl implements CategoryService {
 		Category t = new Category();
 		t.setId(id);
 		t.setName(classifyName);
-		t.setPartenId(0);
+		t.setParentId(0);
 		t.setAliases(classifyName);
 		t.setLevel(1);
 		t.setStatus(1);
@@ -83,7 +82,7 @@ public class CategoryServiceImpl implements CategoryService {
 	public int addClassify(String classifyName) {
 		Category t = new Category();
 		t.setName(classifyName);
-		t.setPartenId(0);
+		t.setParentId(0);
 		t.setAliases(classifyName);
 		t.setCreateTime(new Date());
 		t.setLevel(1);
@@ -99,8 +98,8 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	
 	@Override
-	public List<CategoryVo> findBreedByPartenId(Integer partenId) {
-		return categoryDao.findBreedByPartenId(partenId);
+	public List<CategoryVo> findBreedByParentId(Integer parentId) {
+		return categoryDao.findBreedByParentId(parentId);
 	}
 	/**
 	 * 添加品种
@@ -111,7 +110,7 @@ public class CategoryServiceImpl implements CategoryService {
 		//保存品种
 		Category ca = new Category();
 		ca.setName(bvo.getName());
-		ca.setPartenId(bvo.getClassifyId());
+		ca.setParentId(bvo.getClassifyId());
 		ca.setAliases(bvo.getAliases());
 		ca.setStatus(1);
 		ca.setLevel(2);
@@ -131,7 +130,7 @@ public class CategoryServiceImpl implements CategoryService {
 		//修改category
 		Category ca = new Category();
 		ca.setName(bvo.getName());
-		ca.setPartenId(bvo.getClassifyId());
+		ca.setParentId(bvo.getClassifyId());
 		ca.setAliases(bvo.getAliases());
 		ca.setStatus(1);
 		ca.setLevel(2);
@@ -156,15 +155,15 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public BreedVo getBreedById(Integer id) {
 		Category category = categoryDao.findById(id);
-		Category parten = categoryDao.findById(category.getPartenId());
+		Category parent = categoryDao.findById(category.getParentId());
 		BreedVo bvo = new BreedVo();
 		bvo.setId(id.toString());
 		bvo.setAliases(category.getAliases());
 		bvo.setName(category.getName());
 		bvo.setSpece(category.getSpecs());
 		bvo.setOrigins(category.getOrigins());
-		bvo.setClassifyId(category.getPartenId());
-		bvo.setClassifyName(parten.getName());
+		bvo.setClassifyId(category.getParentId());
+		bvo.setClassifyName(parent.getName());
 		bvo.setLevels(category.getLevels());
 		return bvo;
 	}

@@ -10,14 +10,11 @@ import java.util.Set;
 import javax.imageio.ImageIO;
 
 import com.pieces.dao.EnquiryCommoditysDao;
-import com.pieces.dao.model.Category;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.User;
-import com.pieces.dao.vo.BreedVo;
 import com.pieces.dao.vo.CategoryVo;
 import com.pieces.service.CategoryService;
 import com.pieces.service.CommoditySearchService;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -170,7 +167,6 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
                     ids += "'" + vo.getId() + "',";
                 }
 
-                // TODO: StringUtils.join()
                 ids = ids.substring(0, ids.length()-1);
                 List<CommodityVO> commodityVOs = commodityDao.findByIds(ids);
                 list.addAll(commodityVOs);
@@ -189,7 +185,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
             // 根据品种ID 找到所属的类别
             // 根据类别ID 找到下面的品种, 判处当前的品种.找前几条和上面查出来的凑足5条.
                 CategoryVo categoryVo = new CategoryVo();
-                categoryVo.setPartenId(String.valueOf(categoryId));
+                categoryVo.setParentId(String.valueOf(categoryId));
                 List<CategoryVo> categoryVos = categoryService.findBreed(categoryVo,1,5).getList();
                 String categoryIds = "";
                 for (CategoryVo vo : categoryVos) {
