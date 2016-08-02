@@ -469,6 +469,8 @@
                                 price: price,
                                 date: date
                             })
+                        } else {
+                            return false;
                         }
                     })
                     return result;

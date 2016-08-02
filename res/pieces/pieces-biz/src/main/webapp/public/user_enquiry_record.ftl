@@ -88,9 +88,9 @@
 
                             </#list>
                             <#else>
-                            <div>
-                                您还没有询价记录,现在立即询价吧!
-                            </div>
+                                <div class="empty">
+                                    <p>您还没有询价记录，现在<a href="/center/enquiry/index">立即询价</a>吧！</p>
+                                </div>
                         </#if>
                     </div>
                     <#if billsPage??>
