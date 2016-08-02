@@ -20,9 +20,9 @@
         </div>
         <div class="main">
             <div class="title">
-                <h3><i class="fa fa-chevron-right"></i>E20160620170402</h3>
+                <h3><i class="fa fa-chevron-right"></i>${enquiryBills.code}</h3>
                 <div class="extra">
-                    <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
+                    <a class="btn btn-gray" href="enquiry/index">返回</a>
                     <button type="button" id="submit" class="btn btn-red"><#if enquiryBills.status ==1>保存<#else>报价</#if></button>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                     <!-- id -->
                     <span>用药单位：<em>${enquiryBills.companyFullName}</em></span>
                     <span>所在地区：<em>${enquiryBills.areaFull}</em></span>
-                    <span>联系人姓名：<em>${enquiryBills.userName}</em></span>
+                    <span>联系人姓名：<em>${enquiryBills.contactName}</em></span>
                     <span>联系人手机号：<em>${enquiryBills.contactMobile}</em></span>
                     <#if enquiryBills.status ==1>
                     <span>报价时间：<em>${enquiryBills.quotedTime?date}</em></span>
@@ -72,7 +72,7 @@
                                 <input type="text" name="id" style="display: none" value="${commodity.id}">
                                 <input type="text" name="myPrice" class="ipt ipt-price" value="${commodity.myPrice}">
                             </td>
-                            <td><input type="text" name="expireDate" class="ipt ipt-date" value="<#if commodity.expireDate?exists>${commodity.expireDate?date}</#if>"></td>
+                            <td><input type="text" name="expireDate" class="ipt ipt-date" value="<#if commodity.expireDate?exists>${commodity.expireDate?date}</#if>" onclick="laydate({min: laydate.now(),istoday:false})"></td>
                         </tr>
                         </#list>
                         </tbody>
@@ -130,23 +130,14 @@
             },
             //日期选择
             dateInit: function () {
-                $('.ipt-date').each(function (index) {
-                    var id = 'iptDate' + index;
-                    this.id = id;
-                    laydate({
-                        elem: '#' + id,
-                        format: 'YYYY-MM-DD',
-                        min: laydate.now(),
-                        max: '2099-06-16',
-                        istime: true,
-                        istoday: false,
-                        choose: function (datas) {
-
-                        }
-                    });
+                // 重新定位
+                $('.ipt-date').on('click', function() {
+                    var 
+                        posX = $(this).offset().left,
+                        w = this.offsetWidth,
+                        obj = document.getElementById('laydate_box');
+                    obj.style.left = posX + w - obj.offsetWidth + 'px';
                 })
-
-
             },
             formatTableData: function () {
                 var tableObj = $('#form tbody tr').map(function (i) {

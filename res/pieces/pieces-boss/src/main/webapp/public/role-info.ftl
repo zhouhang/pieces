@@ -38,16 +38,13 @@
                     <div class="title">
                         <h3><i class="fa fa-people"></i><#if !role??>新增角色<#else>${role.name}</#if></h3>
                         <div class="extra">
-                            <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-
+                            <a  class="btn btn-gray" href="role/index">返回</a>
                             <#if role??>
-                            <#--//location.href='role/delete?roleId=${role.id}'-->
-                                <button type="button" class="btn btn-gray" onclick="javascript:if(confirm('你确定删除吗？')){location.href='role/delete?roleId=${role.id}'}" >删除</button>
+                                <@shiro.hasPermission name="role:delete">
+                                    <button type="button" class="btn btn-gray" onclick="javascript:if(confirm('你确定删除吗？')){location.href='role/delete?roleId=${role.id}'}" >删除</button>
+                                </@shiro.hasPermission>
                             </#if>
                             <button id="submit" type="button" class="btn btn-red">保存</button>
-                            <#if role??>
-                                <button  id="ajaxSubmit" type="button" class="btn btn-red">保存并继续</button>
-                            </#if>
                         </div>
                     </div>
 
@@ -82,9 +79,6 @@
                 init: function() {
                     this.formValidate();
 
-                    $("#ajaxSubmit").click(function(){
-                        roleAddPage.fn.save(true);
-                    })
 
                     $("#submit").click(function(){
                         roleAddPage.fn.save();
@@ -99,21 +93,26 @@
                         }
                     });
                 },
-                save:function(ajax){
+                save:function(){
                     $("#roleForm").ajaxSubmit({
                         success:function(result){
+                            var type = "error";
+                            var title = "操作失败";
                             if(result.status=="y"){
-                                if(ajax){
+                                type="success";
+                                title="操作成功";
+                            }
+                            $.notify({
+                                type: type,
+                                title: title,
+                                text: result.info,
+                                delay: 3e3,
+                                call: function () {
                                     $("#role_info_a").attr("href","role/info/"+result.data.id)
                                     $("#role_power_a").attr("href","role/power/"+result.data.id)
                                     $("#role_list_a").attr("href","role/list/"+result.data.id)
-                                    $("#success_advices").show();
-                                }else{
-                                    location.href = "role/index?advices=角色信息编辑成功!"
                                 }
-                            }else{
-                                $("#error_advices").show();
-                            }
+                            });
 
                         }
                     })

@@ -34,13 +34,12 @@
                     <div class="title">
                         <h3>修改角色“${role.name}”</h3>
                         <div class="extra">
-                            <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
+                            <a class="btn btn-gray" href="role/index">返回</a>
                             <#if role??>
                             <#--//location.href='role/delete?roleId=${role.id}'-->
                                 <button type="button" class="btn btn-gray" onclick="javascript:if(confirm('你确定删除吗？')){location.href='role/delete?roleId=${role.id}'}" >删除</button>
                             </#if>
                             <button id="submit" type="button" class="btn btn-red">保存</button>
-                            <button  id="ajaxSubmit" type="button" class="btn btn-red">保存并继续</button>
                         </div>
                     </div>
 
@@ -118,12 +117,9 @@
             $("#submit").click(function(){
                 save();
             })
-            //保存并继续
-            $("#ajaxSubmit").click(function(){
-                save(true);
-            })
 
-            function save(ajax){
+
+            function save(){
                 var arrIds = [];
                 //获取所有选中的节点
                 var checkNodes = rootTree.getCheckedNodes(true);
@@ -138,13 +134,18 @@
                     type: "POST",
                     data:{roleId:roleId,resourcesIds:arrIds},
                     success: function(result){
+                        var type = "error";
+                        var title = "操作失败";
                         if(result.status=="y"){
-                            if(ajax){
-                                $("#success_advices").show();
-                            }else{
-                                location.href = "role/index?advices="+result.info
-                            }
+                            type="success";
+                            title="操作成功";
                         }
+                        $.notify({
+                            type: type,
+                            title: title,
+                            text: result.info,
+                            delay: 3e3
+                        });
                     }
                 });
             }

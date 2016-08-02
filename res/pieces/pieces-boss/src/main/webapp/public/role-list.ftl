@@ -29,7 +29,7 @@
                 <div class="title title-btm">
                     <h3><i class="fa fa-people"></i>修改角色 “${role.name}”</h3>
                     <div class="extra">
-                        <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
+                        <a  class="btn btn-gray" href="role/index">返回</a>
                     </div>
                 </div>
 
@@ -109,14 +109,6 @@
                 init: function () {
                     page.fn.filter();
 
-//                    page.fn.initRoleChecked();
-
-                    $("#ajaxSubmit").click(function(){
-                        page.fn.saveResourcesAjax();
-                    })
-                    $("#submit").click(function(){
-                        page.fn.saveResources();
-                    })
 
 
                     $("#reset").click(function(){
@@ -137,59 +129,9 @@
                         })
                         location.href=url+"&"+params.join('&');
                     })
-                },
-                saveResources:function(){
-                    var memberIds = [];
-                    $("input[name='haveRole']:checked").each(function(){
-                        memberIds.push($(this).val());
-                    })
-
-                    $.ajax({
-                        url: "/role/member/save",
-                        type: "POST",
-                        data:{memberIds:memberIds,roleId:'${role.id}'},
-                        success: function(result){
-                            if(result.status=="y"){
-                                location.href="role/index?advices="+result.info
-                            }
-
-                        }
-                    });
-                },
-                saveResourcesAjax:function(){
-                    var memberIds = [];
-                    $("input[name='haveRole']:checked").each(function(){
-                            memberIds.push($(this).val());
-                    })
-
-                    $.ajax({
-                        url: "/role/member/save",
-                        type: "POST",
-                        data:{memberIds:memberIds,roleId:'${role.id}'},
-                        success: function(result){
-                           if(result.status=="y"){
-                               $("#success_advices").show();
-                           }
-
-                        }
-                    });
-                },
-                initRoleChecked:function () {
-                    $.ajax({
-                        url: "/role/have",
-                        type: "POST",
-                        data:{roleId:${role.id}},
-                        success: function(result){
-                            $("input[name='haveRole']").each(function(){
-                                var id =  $(this).data("id")
-                                if($.inArray(id, result)>=0){
-                                    $(this).attr("checked",'checked')
-                                }
-                            })
-
-                        }
-                    });
                 }
+
+
             }
         }
         //加载页面js

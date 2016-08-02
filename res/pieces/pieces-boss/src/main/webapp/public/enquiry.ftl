@@ -97,11 +97,14 @@
                 init: function () {
                     page.fn.dateInit();
                     page.fn.eventInit();
+
+                    $("#status").val("${param.status}");
                 },
                 //事件初始化
                 eventInit: function () {
                     // 清空输入数据
                     $("#reset").click(function(){
+                        window.location.href="enquiry/index";
                         $('.chart .ipt, .chart select').val("")
                     })
 

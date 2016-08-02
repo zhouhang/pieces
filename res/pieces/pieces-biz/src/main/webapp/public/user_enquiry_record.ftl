@@ -79,7 +79,6 @@
                                                 </#if>
                                             </div>
                                         </div>
-
                                     </#list>
                                     <#if (bill.enquiryCommoditys?size>=10) >
                                         <div data-val="${bill.id!}" class="expand">展开 <i class="fa fa-chevron-down"></i></div>
@@ -87,6 +86,10 @@
                                 </div>
 
                             </#list>
+                            <#else>
+                                <div class="empty">
+                                    <p>您还没有询价记录，现在<a href="/center/enquiry/index">立即询价</a>吧！</p>
+                                </div>
                         </#if>
                     </div>
                     <#if billsPage??>

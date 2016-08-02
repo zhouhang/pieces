@@ -1,6 +1,7 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.boss.shiro.BossRealm;
 import com.pieces.dao.model.Member;
 import com.pieces.dao.model.Role;
 import com.pieces.dao.model.RoleMember;
@@ -10,6 +11,7 @@ import com.pieces.service.RoleMemberService;
 import com.pieces.service.RoleService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.utils.WebUtil;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -35,7 +37,8 @@ public class MemberController extends BaseController{
     private RoleService roleService;
     @Autowired
     private RoleMemberService roleMemberService;
-
+    @Autowired
+    private BossRealm bossRealm;
     /**
      * BOSS用户列表页
      * @param request
@@ -110,6 +113,7 @@ public class MemberController extends BaseController{
             memberService.updateMember(member);
             advices = "修改用户信息成功!";
         }
+        bossRealm.removeAuthenticationCacheInfo();
         WebUtil.print(response,new Result(true).info(advices));
     }
 
@@ -120,6 +124,7 @@ public class MemberController extends BaseController{
      * @param response
      * @return
      */
+    @RequiresPermissions(value = "member:role")
     @RequestMapping(value = "/role/{id}")
     public String role(HttpServletRequest request,
                        HttpServletResponse response,
@@ -140,6 +145,7 @@ public class MemberController extends BaseController{
      * @param request
      * @param response
      */
+    @RequiresPermissions(value = "member:role")
     @RequestMapping(value = "/role/save")
     public void roleSave(HttpServletRequest request,
                          HttpServletResponse response,
