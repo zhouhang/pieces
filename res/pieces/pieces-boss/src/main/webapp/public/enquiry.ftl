@@ -104,7 +104,7 @@
                 eventInit: function () {
                     // 清空输入数据
                     $("#reset").click(function(){
-                        window.location.href="enquiry/indexß";
+                        window.location.href="enquiry/index";
                         $('.chart .ipt, .chart select').val("")
                     })
 
