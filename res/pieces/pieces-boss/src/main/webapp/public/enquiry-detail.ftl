@@ -22,7 +22,7 @@
             <div class="title">
                 <h3><i class="fa fa-chevron-right"></i>${enquiryBills.code}</h3>
                 <div class="extra">
-                    <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
+                    <a class="btn btn-gray" href="enquiry/index">返回</a>
                     <button type="button" id="submit" class="btn btn-red"><#if enquiryBills.status ==1>保存<#else>报价</#if></button>
                 </div>
             </div>
