@@ -106,7 +106,7 @@ public class CommodityController extends BaseController {
 			return null;
 		}
 		model.put("category", category);
-		Category parent = categoryService.findById(category.getPartenId());
+		Category parent = categoryService.findById(category.getParentId());
 		model.put("parent", parent);
 		indexParameter.setSpecNameStr(category.getSpecs());
 		indexParameter.setOriginOfNameStr(category.getSpecs());
@@ -137,7 +137,7 @@ public class CommodityController extends BaseController {
 		String breedIds = "";
 		if (commodityVO.getCategoryId() != null) {
 			Category category = categoryService.findById(commodityVO.getCategoryId());
-			breedList = categoryService.findBreedByPartenId(commodityVO.getCategoryId());
+			breedList = categoryService.findBreedByParentId(commodityVO.getCategoryId());
 			model.put("parent", category);
 		} else {
 			breedList = categoryService.findBreedNoPage(new CategoryVo());
@@ -314,11 +314,11 @@ public class CommodityController extends BaseController {
 		if (commodity == null) {
 
 			// TODO: 商品不存在
-			
+
 			return "redirect:error/404";
 		}
 		Category category = categoryService.findById(commodity.getCategoryId());
-		Category category1 = categoryService.findById(category.getPartenId());
+		Category category1 = categoryService.findById(category.getParentId());
 		User user = (User) session.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		List<CommodityVO> featured = commodityService.featured(user, category.getId(), category1.getId());
 		model.put("category", category1.getName());
