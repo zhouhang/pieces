@@ -43,7 +43,6 @@ public class RoleController extends BaseController{
     private RoleResourcesService roleResourcesService;
     @Autowired
     private RoleMemberService roleMemberService;
-
     @Autowired
     private BossRealm bossRealm;
 
