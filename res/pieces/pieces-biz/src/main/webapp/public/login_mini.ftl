@@ -40,7 +40,7 @@
 				</div>
 
 				<div class="button">
-					<button type="button" class="btn btn-red" id="submit">登 录</button>
+					<button type="submit" class="btn btn-red" id="submit">登 录</button>
 				</div>
 			</form>
 		</div>
