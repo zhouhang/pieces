@@ -12,6 +12,7 @@ import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.utils.WebUtil;
 import com.pieces.tools.utils.gson.GsonExclusion;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -188,7 +189,7 @@ public class RoleController extends BaseController{
      * @param request
      * @param response
      */
-    @RequiresPermissions(value = "role:edit")
+    @RequiresPermissions(value = {"role:add","role:edit"} ,logical = Logical.OR)
     @RequestMapping(value = "/save")
     public void save(HttpServletRequest request,
                      HttpServletResponse response,

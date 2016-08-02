@@ -56,7 +56,6 @@ public class EnquiryBillsDaoImpl extends BaseDaoImpl implements EnquiryBillsDao 
     }
 
     public PageInfo<EnquiryBills> findByCommoditys(int pageNum, int pageSize, EnquiryRecordVo enquiryRecordVo) {
-
         List<EnquiryBills> list = getSqlSession().selectList("com.pieces.dao.EnquiryBillsMapper.findByCommoditys", enquiryRecordVo, new RowBounds(pageNum, pageSize));
         for (EnquiryBills enquiryBills : list) {
             List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysDao.findByBillId(enquiryBills.getId(), 10);
@@ -65,7 +64,6 @@ public class EnquiryBillsDaoImpl extends BaseDaoImpl implements EnquiryBillsDao 
         PageInfo page = new PageInfo(list);
         return page;
     }
-
 
     @Override
     public PageInfo<EnquiryBillsVO> findByParam(EnquiryBillsVO enquiryBillsVO, int pageNum, int pageSize) {

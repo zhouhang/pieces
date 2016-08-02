@@ -161,10 +161,10 @@
     </update>
 
 
-    <select id="findByCommoditys"  parameterType="java.util.HashMap" resultMap="EnquiryBillsResultMap">
+    <select id="findByCommoditys"  parameterType="com.pieces.dao.vo.EnquiryRecordVo" resultMap="EnquiryBillsResultMap">
          select distinct
             b.id,
-            b. code,
+            b.code,
             b.user_id,
             b.member_id,
             b.status,
@@ -182,6 +182,7 @@
         <if test="endDate != null ">
             and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<]]> DATE_FORMAT(DATE_ADD(#{endDate},INTERVAL 1 DAY),'%Y-%m-%d')
         </if>
+        order by  b.create_time DESC
     </select>
 
 </mapper>

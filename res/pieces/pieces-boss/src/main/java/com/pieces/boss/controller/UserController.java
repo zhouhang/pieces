@@ -13,6 +13,7 @@ import com.pieces.service.impl.SmsService;
 import com.pieces.tools.utils.SeqNoUtil;
 import com.pieces.tools.utils.WebUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,6 +46,7 @@ public class UserController extends  BaseController{
 	 * @param model
      * @return
      */
+	@RequiresPermissions(value = "customer:view")
 	@RequestMapping(value = "/index")
 	public String userIndex(HttpServletRequest request,
 							HttpServletResponse response,
@@ -70,6 +72,7 @@ public class UserController extends  BaseController{
 	 * @param model
      * @return
      */
+	@RequiresPermissions(value = "customer:edit" )
 	@RequestMapping(value = "/info/{id}")
 	public String userInfo(HttpServletRequest request,
 						   HttpServletResponse response,
@@ -88,9 +91,11 @@ public class UserController extends  BaseController{
 	 * @param response
      * @return
      */
+	@RequiresPermissions(value = "customer:add" )
 	@RequestMapping(value = "/add" ,method= RequestMethod.GET)
 	public String userAdd(HttpServletRequest request,
 						  HttpServletResponse response){
+
 		return "customers-add";
 	}
 
@@ -101,6 +106,7 @@ public class UserController extends  BaseController{
 	 * @param user
 	 * @param random
      */
+	@RequiresPermissions(value = {"customer:add","customer:edit"} ,logical = Logical.OR)
 	@RequestMapping(value = "/save" ,method= RequestMethod.POST)
 	public void userSubmit(HttpServletRequest request,
 						   HttpServletResponse response,
@@ -173,6 +179,7 @@ public class UserController extends  BaseController{
 	 * @param model
      * @return
      */
+	@RequiresPermissions(value = "customer:edit" )
 	@RequestMapping(value = "/edit/{id}" ,method= RequestMethod.GET)
 	public String edit(HttpServletRequest request,
 					   HttpServletResponse response,
