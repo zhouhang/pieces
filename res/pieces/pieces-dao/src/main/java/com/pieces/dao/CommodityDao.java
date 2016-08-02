@@ -1,6 +1,7 @@
 package com.pieces.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Commodity;
@@ -13,6 +14,8 @@ public interface CommodityDao extends ICommonDao<Commodity>{
     public PageInfo<CommodityVO> findByParam (CommodityVO commodity, int pageNum, int pageSize);
 
     public CommodityVO findVoById(Integer id);
+
+    public List<CommodityVO> findVoByIds(Set<Integer> ids);
 
 	/**
 	 * 根据id 的字符串查询id列表

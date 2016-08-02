@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by kevin1 on 7/12/16.
@@ -32,6 +33,8 @@ public interface CommodityService extends ICommonService<Commodity>{
     public PageInfo<CommodityVO> findVoByPage(int pageNum, int pageSize);
 
     public CommodityVO findVoById(Integer id);
+
+    public List<CommodityVO> findVoByIds(Set<Integer> ids);
     /**
      * 上传文件
      * @return

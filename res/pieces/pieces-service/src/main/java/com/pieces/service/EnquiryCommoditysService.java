@@ -14,6 +14,8 @@ public interface EnquiryCommoditysService extends ICommonService<EnquiryCommodit
     public List<EnquiryCommoditys> findByBillId(Integer userId,Integer billId, Integer pageSize);
 
 
+    public void create(List<EnquiryCommoditys> enquiryCommoditysList);
+
     /**
      * 报价
      * 更新报价人,报价时间字段

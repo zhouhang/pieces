@@ -7,7 +7,9 @@ import com.pieces.dao.vo.CommodityVO;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 @Repository
@@ -47,6 +49,13 @@ public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao {
         CommodityVO commodityVO =  getSqlSession().selectOne("com.pieces.dao.CommodityMapper.findVoById",id);
         return commodityVO;
     }
+
+    @Override
+    public List<CommodityVO> findVoByIds(Set<Integer> ids) {
+        List<CommodityVO> commodityVOList =  getSqlSession().selectList("com.pieces.dao.CommodityMapper.findVoByIds",new ArrayList<>(ids));
+        return commodityVOList;
+    }
+
 
     @Override
     public PageInfo<CommodityVO> findVoByPage(int pageNum, int pageSize) {

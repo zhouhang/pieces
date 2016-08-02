@@ -77,6 +77,17 @@
         (#{userId},#{billsId},#{commodityId},#{commodityName},#{specs},#{level},#{origin},#{amount},#{expectPrice},#{expectDate},#{myPrice},#{expireDate},#{createTime})
     </insert>
 
+    <insert id="batchCreate" useGeneratedKeys="true"  parameterType="com.pieces.dao.model.EnquiryCommoditys">
+        insert into
+        enquiry_commoditys (user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,expect_price,expect_date,my_price,expire_date,create_time)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.userId},#{item.billsId},#{item.commodityId},#{item.commodityName},#{item.specs},#{item.level},#{item.origin},#{item.amount},#{item.expectPrice},#{item.expectDate},#{item.myPrice},#{item.expireDate},#{item.createTime})
+        </foreach>
+    </insert>
+
+
+
     <!-- 批量更新报价信息 -->
     <update id="quotedUpdate" parameterType="java.util.List">
         <if test="list != null">

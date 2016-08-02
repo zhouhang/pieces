@@ -10,6 +10,8 @@ public interface EnquiryCommoditysDao extends ICommonDao<EnquiryCommoditys>{
 
     public List<EnquiryCommoditys> findByBillId(Integer userId,Integer billId,Integer pageSize);
 
+    public void batchCreate(List<EnquiryCommoditys> enquiryCommoditysList);
+
     /**
      * 批量更新报价信息
      * @param list

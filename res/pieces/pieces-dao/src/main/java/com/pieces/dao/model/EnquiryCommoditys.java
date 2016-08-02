@@ -40,7 +40,7 @@ public class EnquiryCommoditys  implements Serializable {
 	private Double expectPrice;
 	
 	//期望交货日期
-	@JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date expectDate;
 	
 	//我方报价

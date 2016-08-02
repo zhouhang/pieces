@@ -24,7 +24,7 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
     private EnquiryCommoditysDao enquiryCommoditysDao;
 
     @Autowired
-    EnquiryBillsDao enquiryBillsDao;
+    private EnquiryBillsDao enquiryBillsDao;
 
     @Override
     public ICommonDao<EnquiryCommoditys> getDao() {
@@ -61,6 +61,11 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
     @Override
     public List<EnquiryCommoditys> findByBillId(Integer userId, Integer billId, Integer pageSize) {
         return enquiryCommoditysDao.findByBillId(userId, billId, pageSize);
+    }
+
+    @Override
+    public void create(List<EnquiryCommoditys> enquiryCommoditysList) {
+        enquiryCommoditysDao.batchCreate(enquiryCommoditysList);
     }
 
     @Override

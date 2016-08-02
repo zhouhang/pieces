@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
@@ -131,6 +132,12 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         CommodityVO commodity =  commodityDao.findVoById(id);
         return commodity;
     }
+
+    @Override
+    public List<CommodityVO> findVoByIds(Set<Integer> ids) {
+        return commodityDao.findVoByIds(ids);
+    }
+
 
     @Override
     public List<CommodityVO> findCommodityByBreedId(Integer id) {

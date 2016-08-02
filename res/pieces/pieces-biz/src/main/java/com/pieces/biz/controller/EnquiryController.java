@@ -87,24 +87,13 @@ public class EnquiryController extends BaseController{
             cookieSet.add(commodityId);
         }
 
-        //删除没用的ID
-        Set<Integer> removesSet = new HashSet<>();
-
         //把询价的商品ID转换成集合对象
         List<CommodityVO> list = new ArrayList<>();
         if(!cookieSet.isEmpty()){
-           Iterator<Integer> it = cookieSet.iterator();
-           while (it.hasNext()){
-               Integer id = it.next();
-               CommodityVO commodityVO =  commodityService.findVoById(id);
-               if(commodityVO!=null){
-                   list.add(commodityVO);
-               }else{
-                   removesSet.add(id);
-               }
-           }
+            list = commodityService.findVoByIds(cookieSet);
         }
-        cookieSet.removeAll(removesSet);
+
+
         CookieUtils.setCookie(response, BasicConstants.ENQUIRY_COOKIES,GsonUtil.toJson(cookieSet),COOKIE_EXPIRE);
         modelMap.put("commodityList",list);
         return "user_enquiry";

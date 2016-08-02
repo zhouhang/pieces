@@ -100,8 +100,9 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
             enquiryCommoditys.setBillsId(billId);
             enquiryCommoditys.setUserId(userId);
             enquiryCommoditys.setCreateTime(new Date());
-            enquiryCommoditysService.create(enquiryCommoditys);
         }
+        enquiryCommoditysService.create(enquiryCommoditysList);
+
     }
 
 }
