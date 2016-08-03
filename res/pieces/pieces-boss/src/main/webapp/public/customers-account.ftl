@@ -131,13 +131,14 @@
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
 	<script src="/js/validator/jquery.validator.js?local=zh-CN"></script>
-	<script src="/js/jquery.form.js"></script>
     <script src="js/area.js"></script>
 
 
 <script>
     $(function() {
-    	$('#userForm').validator({
+        var $myform = $('#userForm');
+
+        $myform.validator({
 			fields : {
 				password : '密码: required; password',
 				companyFullName : '用药单位: required, company',
@@ -169,16 +170,16 @@
         var _setpassword = function() {
             var flag = $contactMobileCode.prop('checked');
             if (flag) {
-            	$('#userForm').data('validator').options.ignore = '#password';
-                //formValidate.ignore($pwd);
+                $myform.data('validator').options.ignore = '#password';
                 $password.removeClass('n-invalid').nextAll('.msg-box').html('');
             } else {
-            	$('#userForm').data('validator').options.ignore = '';
+                $myform.data('validator').options.ignore = '';
             }
             $password.prop('disabled', flag);
         }
         $contactMobileCode.on('click', _setpassword);
-        _setpassword();
+        setTimeout(_setpassword, 200);
+        //_setpassword();
 
 
     })
