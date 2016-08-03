@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 
-public class CommodityVO implements Serializable {
+public class CommodityVo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -81,7 +81,7 @@ public class CommodityVO implements Serializable {
 	//设置商品列表页面该code是否选中
 	private boolean checked;
 
-	public CommodityVO(){}
+	public CommodityVo(){}
 	
 	public Integer getId() {
 		return id;

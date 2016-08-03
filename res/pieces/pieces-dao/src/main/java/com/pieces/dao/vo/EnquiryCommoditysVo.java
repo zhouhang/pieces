@@ -8,5 +8,5 @@ import com.pieces.dao.model.EnquiryCommoditys;
  * 7/26/16.
  * 询价单商品VO
  */
-public class EnquiryCommoditysVO extends EnquiryCommoditys{
+public class EnquiryCommoditysVo extends EnquiryCommoditys{
 }
