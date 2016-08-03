@@ -115,6 +115,9 @@ public enum CodeEnum {
         return map;
     }
 
+    public String getTitle(){
+        return name;
+    }
 
     public String getName() {
         return name;
