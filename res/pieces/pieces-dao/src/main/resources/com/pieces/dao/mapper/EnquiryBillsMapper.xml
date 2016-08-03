@@ -13,7 +13,7 @@
             <result column="quoted_time"  property="quotedTime" />
     </resultMap>
 
-    <resultMap id="EnquiryBillsVOResultMap" type="com.pieces.dao.vo.EnquiryBillsVO" extends="EnquiryBillsResultMap">
+    <resultMap id="EnquiryBillsVOResultMap" type="com.pieces.dao.vo.EnquiryBillsVo" extends="EnquiryBillsResultMap">
         <result column="userName"  property="userName" />
         <result column="companyFullName"  property="companyFullName" />
         <result column="areaFull"  property="areaFull" />
@@ -40,7 +40,7 @@
         from enquiry_bills
     </select>
 
-    <select id="findByParam" parameterType="com.pieces.dao.vo.EnquiryBillsVO"  resultMap="EnquiryBillsVOResultMap">
+    <select id="findByParam" parameterType="com.pieces.dao.vo.EnquiryBillsVo" resultMap="EnquiryBillsVOResultMap">
         select
         enquiry_bills.id as id,code,user_id,member_id,status,enquiry_bills.create_time as create_time,
         enquiry_bills.update_time as update_time,update_user,quoted_time,

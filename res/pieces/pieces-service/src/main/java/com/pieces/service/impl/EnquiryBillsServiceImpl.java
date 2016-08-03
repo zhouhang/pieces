@@ -7,7 +7,7 @@ import com.pieces.dao.ICommonDao;
 import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.User;
-import com.pieces.dao.vo.EnquiryBillsVO;
+import com.pieces.dao.vo.EnquiryBillsVo;
 import com.pieces.dao.vo.EnquiryRecordVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.EnquiryBillsService;
@@ -77,15 +77,15 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     }
 
     @Override
-    public PageInfo<EnquiryBillsVO> findByParam(EnquiryBillsVO enquiryBillsVO, Integer pageNum, Integer pageSize) {
+    public PageInfo<EnquiryBillsVo> findByParam(EnquiryBillsVo enquiryBillsVO, Integer pageNum, Integer pageSize) {
         pageNum=pageNum==null?1:pageNum;
         pageSize=pageSize==null?10:pageSize;
         return enquiryBillsDao.findByParam(enquiryBillsVO, pageNum, pageSize);
     }
 
     @Override
-    public EnquiryBillsVO findVOById(Integer id) {
-        EnquiryBillsVO vo = enquiryBillsDao.findVOById(id);
+    public EnquiryBillsVo findVOById(Integer id) {
+        EnquiryBillsVo vo = enquiryBillsDao.findVOById(id);
         vo.setEnquiryCommoditys(enquiryCommoditysDao.findByBillId(id, null));
         return vo;
     }

@@ -1,11 +1,9 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.Member;
-import com.pieces.dao.vo.EnquiryBillsVO;
-import com.pieces.dao.vo.EnquiryCommoditysVO;
+import com.pieces.dao.vo.EnquiryBillsVo;
 import com.pieces.service.EnquiryBillsService;
 import com.pieces.service.EnquiryCommoditysService;
 import com.pieces.service.constant.bean.Result;
@@ -37,9 +35,9 @@ public class EnquiryController extends BaseController{
     EnquiryCommoditysService enquiryCommoditysService;
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String index(EnquiryBillsVO enquiryBillsVO, Integer pageNum, Integer pageSize, ModelMap modelMap) {
+    public String index(EnquiryBillsVo enquiryBillsVO, Integer pageNum, Integer pageSize, ModelMap modelMap) {
 
-        PageInfo<EnquiryBillsVO> pageInfo = enquiryBillsService.findByParam(enquiryBillsVO,pageNum,pageSize);
+        PageInfo<EnquiryBillsVo> pageInfo = enquiryBillsService.findByParam(enquiryBillsVO,pageNum,pageSize);
         modelMap.put("pageInfo", pageInfo);
         modelMap.put("param", enquiryBillsVO);
         modelMap.put("paramGet", Reflection.serialize(enquiryBillsVO));
@@ -49,7 +47,7 @@ public class EnquiryController extends BaseController{
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable("id") Integer id, ModelMap modelMap) {
-        EnquiryBillsVO vo = enquiryBillsService.findVOById(id);
+        EnquiryBillsVo vo = enquiryBillsService.findVOById(id);
         modelMap.put("enquiryBills", vo);
         return "enquiry-detail";
     }

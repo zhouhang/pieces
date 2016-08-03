@@ -4,7 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.elasticsearch.repository.CommoditySearchRepository;
 import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.model.Commodity;
-import com.pieces.dao.vo.CommodityVO;
+import com.pieces.dao.vo.CommodityVo;
 import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
 import org.apache.commons.lang.StringUtils;
@@ -17,8 +17,6 @@ import org.springframework.data.elasticsearch.core.query.*;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-
-import org.elasticsearch.index.query.QueryBuilders;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
@@ -41,7 +39,7 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
 
     @Override
     public CommodityDoc save(Commodity commodity) {
-        CommodityVO commodityVO = commodityService.findVoById(commodity.getId());
+        CommodityVo commodityVO = commodityService.findVoById(commodity.getId());
         CommodityDoc commodityDoc =  vo2doc(commodityVO);
         commoditySearchRepository.save(commodityDoc);
         return commodityDoc;
@@ -52,8 +50,8 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     public void createAllCommodityDoc() {
         List<CommodityDoc> commodityDocList = new ArrayList<>();
         for(int i=1;;i++){
-            PageInfo<CommodityVO> commodityVoPageInfo = commodityService.findVoByPage(i,50);
-            for(CommodityVO commodityVO : commodityVoPageInfo.getList()){
+            PageInfo<CommodityVo> commodityVoPageInfo = commodityService.findVoByPage(i,50);
+            for(CommodityVo commodityVO : commodityVoPageInfo.getList()){
                 CommodityDoc commodityDoc = vo2doc(commodityVO);
                 commodityDocList.add(commodityDoc);
             }
@@ -143,7 +141,7 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     }
 
 
-    private CommodityDoc vo2doc(CommodityVO commodityVO){
+    private CommodityDoc vo2doc(CommodityVo commodityVO){
         CommodityDoc commodityDoc = new CommodityDoc();
         commodityDoc.setId(commodityVO.getId());
         commodityDoc.setName(commodityVO.getName());

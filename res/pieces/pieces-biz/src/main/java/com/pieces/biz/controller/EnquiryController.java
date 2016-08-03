@@ -5,7 +5,7 @@ import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.User;
-import com.pieces.dao.vo.CommodityVO;
+import com.pieces.dao.vo.CommodityVo;
 import com.pieces.dao.vo.EnquiryRecordVo;
 import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -88,7 +87,7 @@ public class EnquiryController extends BaseController{
         }
 
         //把询价的商品ID转换成集合对象
-        List<CommodityVO> list = new ArrayList<>();
+        List<CommodityVo> list = new ArrayList<>();
         if(!cookieSet.isEmpty()){
             list = commodityService.findVoByIds(cookieSet);
         }

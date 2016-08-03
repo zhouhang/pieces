@@ -4,10 +4,9 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.User;
-import com.pieces.dao.vo.EnquiryBillsVO;
+import com.pieces.dao.vo.EnquiryBillsVo;
 import com.pieces.dao.vo.EnquiryRecordVo;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,7 +30,7 @@ public interface EnquiryBillsService extends ICommonService<EnquiryBills>{
      * @param pageSize
      * @return
      */
-    public PageInfo<EnquiryBillsVO> findByParam (EnquiryBillsVO enquiryBillsVO, Integer pageNum, Integer pageSize);
+    public PageInfo<EnquiryBillsVo> findByParam (EnquiryBillsVo enquiryBillsVO, Integer pageNum, Integer pageSize);
 
-    public EnquiryBillsVO findVOById(Integer id);
+    public EnquiryBillsVo findVOById(Integer id);
 }

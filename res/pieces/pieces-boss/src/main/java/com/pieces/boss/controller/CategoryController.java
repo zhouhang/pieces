@@ -16,7 +16,7 @@ import com.pieces.dao.model.Category;
 import com.pieces.dao.model.Code;
 import com.pieces.dao.vo.BreedVo;
 import com.pieces.dao.vo.CategoryVo;
-import com.pieces.dao.vo.CommodityVO;
+import com.pieces.dao.vo.CommodityVo;
 import com.pieces.service.CategoryService;
 import com.pieces.service.CommodityService;
 import com.pieces.service.constant.bean.Result;
@@ -294,7 +294,7 @@ public class CategoryController {
 							  HttpServletResponse response,
 							  @PathVariable("id") Integer id,
 							  ModelMap model){
-		List<CommodityVO> vos = commodityService.findCommodityByBreedId(id);
+		List<CommodityVo> vos = commodityService.findCommodityByBreedId(id);
 		if(ValidUtils.listNotBlank(vos)){
 			Result result = new Result(false).info("该品种下已有商品，请先将所有商品移除后再删除。");
 	        WebUtil.printJson(response, result);
