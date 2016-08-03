@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.ArticleMapper">
+    <resultMap id="ArticleResultMap" type="com.pieces.dao.model.Article">
+            <id column="id"  property="id" />
+            <result column="title"  property="title" />
+            <result column="category_id"  property="categoryId" />
+            <result column="status"  property="status" />
+            <result column="content"  property="content" />
+            <result column="create_user"  property="createUser" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_user"  property="updateUser" />
+            <result column="update_time"  property="updateTime" />
+            <result column="sort"  property="sort" />
+            <result column="model"  property="model" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,title,category_id,status,content,create_user,create_time,update_user,update_time,sort,model
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="ArticleResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from article
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="ArticleResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from article
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from article
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Article">
+        insert into
+        article (title,category_id,status,content,create_user,create_time,update_user,update_time,sort,model)
+        values
+        (#{title},#{categoryId},#{status},#{content},#{createUser},#{createTime},#{updateUser},#{updateTime},#{sort},#{model})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.Article">
+        update article
+        <set>
+                                                        
+            <if test="title != null">
+                title = #{title},
+            </if>
+                                            
+            <if test="categoryId != null">
+                category_id = #{categoryId},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                                            
+            <if test="content != null">
+                content = #{content},
+            </if>
+                                            
+            <if test="createUser != null">
+                create_user = #{createUser},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="updateUser != null">
+                update_user = #{updateUser},
+            </if>
+                                            
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+                                            
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+                                            
+            <if test="model != null">
+                model = #{model},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

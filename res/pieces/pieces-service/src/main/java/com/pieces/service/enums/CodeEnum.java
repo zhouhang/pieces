@@ -46,7 +46,13 @@ public enum CodeEnum {
     //等级
     LEVEL_ONE(Type.LEVEL, "1", 200),
     LEVEL_TWO(Type.LEVEL, "2", 201),
-    LEVEL_THREE(Type.LEVEL, "3", 202);
+    LEVEL_THREE(Type.LEVEL, "3", 202),
+
+
+    //广告类型
+    AD_SEARCH(Type.AD,"搜索关键字",301),
+    AD_BANNER(Type.AD,"首页Banner",302);
+
 
     private Type code;
     private String name;
@@ -120,7 +126,7 @@ public enum CodeEnum {
 
     //分类
     public enum Type{
-        SPEC,ORIGIN,LEVEL
+        SPEC,ORIGIN,LEVEL,AD
     }
 
 

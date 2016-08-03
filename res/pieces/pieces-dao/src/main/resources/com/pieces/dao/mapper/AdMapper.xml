@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.AdMapper">
+    <resultMap id="AdResultMap" type="com.pieces.dao.model.Ad">
+            <id column="id"  property="id" />
+            <result column="title"  property="title" />
+            <result column="type_id"  property="typeId" />
+            <result column="picture_url"  property="pictureUrl" />
+            <result column="start_time"  property="startTime" />
+            <result column="end_time"  property="endTime" />
+            <result column="link"  property="link" />
+            <result column="sort"  property="sort" />
+            <result column="status"  property="status" />
+            <result column="create_time"  property="createTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,title,type_id,picture_url,start_time,end_time,link,sort,status,create_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="AdResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ad
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="AdResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ad
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from ad
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Ad">
+        insert into
+        ad (title,type_id,picture_url,start_time,end_time,link,sort,status,create_time)
+        values
+        (#{title},#{typeId},#{pictureUrl},#{startTime},#{endTime},#{link},#{sort},#{status},#{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.Ad">
+        update ad
+        <set>
+                                                        
+            <if test="title != null">
+                title = #{title},
+            </if>
+                                            
+            <if test="typeId != null">
+                type_id = #{typeId},
+            </if>
+                                            
+            <if test="pictureUrl != null">
+                picture_url = #{pictureUrl},
+            </if>
+                                            
+            <if test="startTime != null">
+                start_time = #{startTime},
+            </if>
+                                            
+            <if test="endTime != null">
+                end_time = #{endTime},
+            </if>
+                                            
+            <if test="link != null">
+                link = #{link},
+            </if>
+                                            
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
