@@ -301,12 +301,10 @@
                                 $.notify({
                                     type: 'success',
                                     title: '保存成功',
-                                    text: '3秒后自动跳转到商品详情页',
+                                    text: '商品保存成功',
                                     delay: 3e3,
                                     call: function () {
-                                        setTimeout(function () {
-                                            location.href = '/commodity/index';
-                                        }, 3e3);
+                                        $("#submit").attr("disabled", "disabled");
                                     }
                                 });
                             })
