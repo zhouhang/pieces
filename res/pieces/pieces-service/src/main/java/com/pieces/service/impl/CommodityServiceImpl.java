@@ -66,6 +66,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     @Override
     @Transactional
     public void saveOrUpdate(Commodity commodity) {
+//        commodity.setPictureUrl(commodity.getPictureUrl().replace(defaultUploadFile.getUrl(), ""));
         if(commodity.getId()!= null) {
             commodityDao.update(commodity);
         } else {

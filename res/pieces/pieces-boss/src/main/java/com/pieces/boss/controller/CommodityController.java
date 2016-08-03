@@ -98,40 +98,4 @@ public class CommodityController extends BaseController{
         return new Result(true).data(commodityService.findById(id));
     }
 
-    /**
-     * 上传商品图片信息
-     * @param img
-     * @return
-     */
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    @ResponseBody
-    public CropResult updateFile(@RequestParam(required = false) MultipartFile img) throws Exception{
-        return commodityService.uploadImage(img);
-    }
-
-    /**
-     * 图片裁剪
-     * @return
-     */
-    @RequestMapping(value = "/clipping", method = RequestMethod.POST)
-    @ResponseBody
-    public CropResult clipping(CropInfo cropInfo) throws Exception{
-        return commodityService.cropImg(cropInfo);
-    }
-
-
-    /**
-     * 富文本编辑器上传图片方法
-     * @param upfile
-     * @return
-     * @throws Exception
-     */
-    @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    @ResponseBody
-    public UEditorResult updateUEditorFile(@RequestParam(required = false) MultipartFile upfile) throws Exception{
-        CropResult cropResult = commodityService.uploadImage(upfile);
-        return UEditorResult.success(upfile.getOriginalFilename(),upfile.getOriginalFilename(),cropResult.getUrl() );
-    }
-
-
 }

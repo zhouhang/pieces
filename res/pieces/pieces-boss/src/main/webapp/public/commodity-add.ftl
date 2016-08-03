@@ -319,8 +319,8 @@
             croppic: function () {
                 var self = this;
                 var options = {
-                    uploadUrl: '/commodity/upload',
-                    cropUrl: '/commodity/clipping',
+                    uploadUrl: '/gen/upload',
+                    cropUrl: '/gen/clipping',
                     outputUrlId: 'pictureUrl',
                     imgEyecandyOpacity: 0.5, // Transparent image showing current img zoom
                     loaderHtml: '<span class="loader">正在上传图片，请稍后...</span>',
