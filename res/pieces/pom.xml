@@ -56,6 +56,7 @@
 		<automaton.version>1.11-8</automaton.version>
 		<spring-data-elasticsearch>2.0.0.RELEASE</spring-data-elasticsearch>
 		<google.guava>18.0</google.guava>
+		<jpinyin>1.1.6</jpinyin>
 	</properties>
 
 	<dependencyManagement>
@@ -348,6 +349,11 @@
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
 				<version>${google.guava}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.stuxuhai</groupId>
+				<artifactId>jpinyin</artifactId>
+				<version>${jpinyin}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

@@ -3,6 +3,7 @@ package com.pieces.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.pieces.tools.utils.PinyinUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -205,6 +206,18 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<CategoryVo> findBreedNoPage(CategoryVo categoryVo) {
 		return categoryDao.findBreedNoPage(categoryVo);
 	}
-	
-	
+
+	@Override
+	@Transactional
+	public void allCategory2Pinyin() {
+		List<Category> categoryList = this.findAll();
+		for(Category category :categoryList){
+			String name = category.getName();
+			String pinyin = PinyinUtil.field2Pinyin(name);
+			category.setPinyin(pinyin);
+			this.update(category);
+		}
+	}
+
+
 }

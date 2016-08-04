@@ -14,7 +14,9 @@ public class Category  implements Serializable {
 	private String name;
 	
 	private Integer parentId;
-	
+
+	private String pinyin;
+
 	//别名
 	private String aliases;
 	
@@ -111,6 +113,14 @@ public class Category  implements Serializable {
 
 	public void setLevels(String levels) {
 		this.levels = levels;
+	}
+
+	public String getPinyin() {
+		return pinyin;
+	}
+
+	public void setPinyin(String pinyin) {
+		this.pinyin = pinyin;
 	}
 
 	@Override

@@ -13,7 +13,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 广告管理
@@ -28,7 +30,7 @@ public class AdController {
     private AdService adService;
 
     /**
-     * 光谷管理列表页
+     * 广告管理列表页
      * @param model
      * @return
      */
@@ -70,6 +72,17 @@ public class AdController {
     }
 
 
+    /**
+     * 删除广告
+     * @param id
+     * @return
+     */
+    @RequestMapping("delete")
+    @ResponseBody
+    public Result delete(Integer id){
+        adService.deleteById(id);
+        return new Result(true).info("删除成功!");
+    }
 
 
 
