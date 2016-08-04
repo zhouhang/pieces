@@ -5,7 +5,7 @@
             <id column="id"  property="id" />
             <result column="name"  property="name" />
             <result column="pinyin"  property="pinyin" />
-            <result column="parentId"  property="parentId" />
+            <result column="parent_id"  property="parentId" />
             <result column="aliases"  property="aliases" />
             <result column="status"  property="status" />
             <result column="level"  property="level" />
@@ -17,7 +17,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,pinyin,parentId,aliases,status,level,specs,origins,levels,create_time
+        id,name,pinyin,parent_id,aliases,status,level,specs,origins,levels,create_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="CategoryResultMap">
@@ -40,7 +40,7 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Category">
         insert into
-        category (name,parentId,aliases,status,level,specs,origins,levels,create_time)
+        category (name,parent_id,aliases,status,level,specs,origins,levels,create_time)
         values
         (#{name},#{parentId},#{aliases},#{status},#{level},#{specs},#{origins},#{levels},#{createTime})
     </insert>
@@ -54,7 +54,7 @@
             </if>
                                             
             <if test="parentId != null">
-                parentId = #{parentId},
+                parent_id = #{parentId},
             </if>
                                             
             <if test="aliases != null">
@@ -137,7 +137,7 @@
             	and a.status = #{status}
         	</if>
             <if test="parentId != null">
-                and a.parentId = #{parentId}
+                and a.parent_id = #{parentId}
             </if>
         	order by a.create_time desc
     </select>
@@ -146,7 +146,7 @@
         select *
 	        from category a
 	        where a.level = 2
-	        and a.parentId = #{parentId}
+	        and a.parent_id = #{parentId}
 	        and a.status = 1
     </select>
 </mapper>
