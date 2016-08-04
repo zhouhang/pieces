@@ -127,7 +127,7 @@
         			            	if(data.status == "y"){
         			            		$.notify({
             	                            type: 'success', 
-            	                            title: '删除品种成功。',
+            	                            title: data.info,
             	                            text: '3秒后自动跳转到品种列表页', 
             	                            delay: 3e3, 
             	                            call: function() {
@@ -171,7 +171,7 @@
             			            success: function(data){
             			            	$.notify({
             	                            type: 'success', 
-            	                            title: '修改品种成功。',
+            	                            title: data.info,
             	                            delay: 3e3
             	                        });
             			            }

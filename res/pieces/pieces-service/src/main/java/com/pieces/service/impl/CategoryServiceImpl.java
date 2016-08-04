@@ -3,6 +3,8 @@ package com.pieces.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.pieces.service.enums.CategoryEnum;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,10 +73,7 @@ public class CategoryServiceImpl implements CategoryService {
 		Category t = new Category();
 		t.setId(id);
 		t.setName(classifyName);
-		t.setParentId(0);
 		t.setAliases(classifyName);
-		t.setLevel(1);
-		t.setStatus(1);
 		return this.update(t);
 	}
 
@@ -85,8 +84,8 @@ public class CategoryServiceImpl implements CategoryService {
 		t.setParentId(0);
 		t.setAliases(classifyName);
 		t.setCreateTime(new Date());
-		t.setLevel(1);
-		t.setStatus(1);
+		t.setLevel(CategoryEnum.LEVEL_CATEGORY.getValue());
+		t.setStatus(CategoryEnum.STATUS_VALID.getValue());
 		return this.create(t);
 	}
 
@@ -112,8 +111,8 @@ public class CategoryServiceImpl implements CategoryService {
 		ca.setName(bvo.getName());
 		ca.setParentId(bvo.getClassifyId());
 		ca.setAliases(bvo.getAliases());
-		ca.setStatus(1);
-		ca.setLevel(2);
+		ca.setStatus(CategoryEnum.STATUS_VALID.getValue());
+		ca.setLevel(CategoryEnum.LEVEL_BREED.getValue());
 		ca.setCreateTime(new Date());
 		ca.setSpecs(bvo.getSpece());
 		ca.setOrigins(bvo.getOrigins());
@@ -129,15 +128,8 @@ public class CategoryServiceImpl implements CategoryService {
 	public void updateBreed(BreedVo bvo) {
 		//修改category
 		Category ca = new Category();
-		ca.setName(bvo.getName());
+		BeanUtils.copyProperties(bvo, ca);
 		ca.setParentId(bvo.getClassifyId());
-		ca.setAliases(bvo.getAliases());
-		ca.setStatus(1);
-		ca.setLevel(2);
-		ca.setId(Integer.parseInt(bvo.getId()));
-		ca.setSpecs(bvo.getSpece());
-		ca.setOrigins(bvo.getOrigins());
-		ca.setLevels(bvo.getLevels());
 		categoryDao.update(ca);
 	}
 	
@@ -157,14 +149,8 @@ public class CategoryServiceImpl implements CategoryService {
 		Category category = categoryDao.findById(id);
 		Category parent = categoryDao.findById(category.getParentId());
 		BreedVo bvo = new BreedVo();
-		bvo.setId(id.toString());
-		bvo.setAliases(category.getAliases());
-		bvo.setName(category.getName());
-		bvo.setSpece(category.getSpecs());
-		bvo.setOrigins(category.getOrigins());
-		bvo.setClassifyId(category.getParentId());
+		BeanUtils.copyProperties(category, bvo);
 		bvo.setClassifyName(parent.getName());
-		bvo.setLevels(category.getLevels());
 		return bvo;
 	}
 

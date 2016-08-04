@@ -137,7 +137,6 @@ public class UserController extends BaseController {
 	 * 验证用户名
 	 * 
 	 * @param model
-	 * @param userName
 	 *            用户名
 	 * @return
 	 */
