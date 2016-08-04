@@ -122,7 +122,7 @@
     <select id="findBreed" parameterType="com.pieces.dao.vo.CategoryVo" resultType="com.pieces.dao.vo.CategoryVo">
         select a.*,b.name as classifyName
 	        from category a
-	        inner join category b on a.parentId = b.id
+	        inner join category b on a.parent_Id = b.id
 	        <if test="classifyName != null">
             	and b.name like CONCAT('%','${classifyName}','%' )
         	</if>
