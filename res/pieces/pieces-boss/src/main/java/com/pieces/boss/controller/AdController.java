@@ -23,6 +23,7 @@ import java.util.List;
 @RequestMapping("/ad")
 public class AdController {
 
+
     @Autowired
     private AdService adService;
 
@@ -46,6 +47,7 @@ public class AdController {
         model.put("typeList",adTypeList);
         return "ad";
     }
+
 
 
     /**
