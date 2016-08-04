@@ -2,11 +2,8 @@ package com.pieces.dao;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.EnquiryBills;
-import com.pieces.dao.vo.EnquiryBillsVO;
-import com.pieces.dao.model.EnquiryCommoditys;
+import com.pieces.dao.vo.EnquiryBillsVo;
 import com.pieces.dao.vo.EnquiryRecordVo;
-
-import java.util.Date;
 
 public interface EnquiryBillsDao extends ICommonDao<EnquiryBills>{
 
@@ -17,7 +14,7 @@ public interface EnquiryBillsDao extends ICommonDao<EnquiryBills>{
      * @param pageSize
      * @return
      */
-    public PageInfo<EnquiryBillsVO> findByParam (EnquiryBillsVO enquiryBillsVO, int pageNum, int pageSize);
+    public PageInfo<EnquiryBillsVo> findByParam (EnquiryBillsVo enquiryBillsVO, int pageNum, int pageSize);
 
 
     /**
@@ -25,7 +22,7 @@ public interface EnquiryBillsDao extends ICommonDao<EnquiryBills>{
      * @param id
      * @return
      */
-    public EnquiryBillsVO findVOById(Integer id);
+    public EnquiryBillsVo findVOById(Integer id);
 
     public PageInfo<EnquiryBills> findByCommoditys(int pageNum, int pageSize,EnquiryRecordVo enquiryRecordVo);
 }

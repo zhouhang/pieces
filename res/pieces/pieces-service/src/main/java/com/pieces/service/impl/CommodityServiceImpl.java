@@ -26,7 +26,7 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.CommodityDao;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.model.Commodity;
-import com.pieces.dao.vo.CommodityVO;
+import com.pieces.dao.vo.CommodityVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.CommodityService;
 import com.pieces.service.utils.ImageUtil;
@@ -66,6 +66,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     @Override
     @Transactional
     public void saveOrUpdate(Commodity commodity) {
+//        commodity.setPictureUrl(commodity.getPictureUrl().replace(defaultUploadFile.getUrl(), ""));
         if(commodity.getId()!= null) {
             commodityDao.update(commodity);
         } else {
@@ -77,18 +78,18 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 
 
     @Override
-    public PageInfo<CommodityVO> query(CommodityVO commodity, int pageNum, int pageSize) {
+    public PageInfo<CommodityVo> query(CommodityVo commodity, int pageNum, int pageSize) {
         return commodityDao.findByParam(commodity, pageNum, pageSize);
     }
     
     @Override
-    public List<Commodity> queryNoPage(CommodityVO commodity) {
+    public List<Commodity> queryNoPage(CommodityVo commodity) {
         return commodityDao.findByParamNoPage(commodity);
     }
 
     @Override
-    public PageInfo<CommodityVO> findVoByPage(int pageNum, int pageSize) {
-        PageInfo<CommodityVO> pageInfo = commodityDao.findVoByPage(pageNum,pageSize);
+    public PageInfo<CommodityVo> findVoByPage(int pageNum, int pageSize) {
+        PageInfo<CommodityVo> pageInfo = commodityDao.findVoByPage(pageNum,pageSize);
         return pageInfo;
     }
 
@@ -125,38 +126,38 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     }
 
     @Override
-    public CommodityVO findVoById(Integer id) {
-        CommodityVO commodity =  commodityDao.findVoById(id);
+    public CommodityVo findVoById(Integer id) {
+        CommodityVo commodity =  commodityDao.findVoById(id);
         return commodity;
     }
 
     @Override
-    public List<CommodityVO> findVoByIds(Set<Integer> ids) {
+    public List<CommodityVo> findVoByIds(Set<Integer> ids) {
         return commodityDao.findVoByIds(ids);
     }
 
 
     @Override
-    public List<CommodityVO> findCommodityByBreedId(Integer id) {
+    public List<CommodityVo> findCommodityByBreedId(Integer id) {
     	return commodityDao.findCommodityByBreedId(id);
     }
 
     @Override
-    public List<CommodityVO> findFactoryByBreedId(String ids) {
+    public List<CommodityVo> findFactoryByBreedId(String ids) {
     	return commodityDao.findFactoryByBreedId(ids);
     }
 
     @Override
-    public List<CommodityVO> findStandardByBreedId(String ids) {
+    public List<CommodityVo> findStandardByBreedId(String ids) {
     	return commodityDao.findStandardByBreedId(ids);
     }
 
     @Override
-    public List<CommodityVO> featured(User user, Integer breedId, Integer categoryId) {
+    public List<CommodityVo> featured(User user, Integer breedId, Integer categoryId) {
 //        *  1、用户曾经询价过的品种，取询价次数最多的 5 个，如果不足 5 个，用第 2条规则填补；
 //        *  2、当前商品同品种最新发布的前 5 个商品，如果不足 5 个，用第3条规则填补；
 //        *  3、当前商品同分类最新发布的前 5 个商品。
-        List<CommodityVO> list = new ArrayList<>();
+        List<CommodityVo> list = new ArrayList<>();
         // TODO: 用户询价商品.
         if (user != null) {
             List<EnquiryCommoditys> commodityses = enquiryCommoditysDao.findCommoditysByUser(String.valueOf(user.getId()));
@@ -168,16 +169,16 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
                 }
 
                 ids = ids.substring(0, ids.length()-1);
-                List<CommodityVO> commodityVOs = commodityDao.findByIds(ids);
+                List<CommodityVo> commodityVOs = commodityDao.findByIds(ids);
                 list.addAll(commodityVOs);
             }
 
         }
 
         if (list.size() < 5) {
-            CommodityVO param = new CommodityVO();
+            CommodityVo param = new CommodityVo();
             param.setCategoryId(breedId);
-            PageInfo<CommodityVO> pageInfo = commodityDao.findByParam(param, 1, 5-list.size());
+            PageInfo<CommodityVo> pageInfo = commodityDao.findByParam(param, 1, 5-list.size());
             list.addAll(pageInfo.getList());
         }
         if (list.size() < 5) {
@@ -194,9 +195,9 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
                     }
                 }
                 categoryIds = categoryIds.substring(0, categoryIds.length()-1);
-                CommodityVO commodityVO = new CommodityVO();
+                CommodityVo commodityVO = new CommodityVo();
                 commodityVO.setCategoryIds(categoryIds);
-                List<CommodityVO> listc = commodityDao.findByParam(commodityVO, 1,5-list.size()).getList();
+                List<CommodityVo> listc = commodityDao.findByParam(commodityVO, 1,5-list.size()).getList();
                 // 整合数据
                 list.addAll(listc);
                 list = list.subList(0, 5);

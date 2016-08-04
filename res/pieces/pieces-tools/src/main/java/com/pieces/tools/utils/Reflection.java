@@ -1,6 +1,9 @@
 package com.pieces.tools.utils;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Author: koabs
@@ -14,18 +17,30 @@ public class Reflection {
      * @return
      */
     public static String serialize(Object object) {
-
-        Field[] fields = object.getClass().getFields();
+        List<Field> fieldList = new ArrayList<>();
         StringBuffer sb = new StringBuffer();
         try {
-            for(Field field : fields){
-                if(field.get(object)!=null){
+            Class<?> clazz = object.getClass();
+            //获取所有父类
+            for (; clazz != Object.class; clazz = clazz.getSuperclass()) {
+                Field[] field = clazz.getDeclaredFields();
+                fieldList.addAll(Arrays.asList(field));
+            }
+            //获取所有字段
+            for(Field field : fieldList){
+                field.setAccessible(true);
+                if(field.get(object)!=null&&(!field.getName().equals("serialVersionUID"))){
                     sb.append("&").append(field.getName()).append("=").append(field.get(object).toString());
                 }
             }
-        }catch (Exception e){
+        }
+        catch (Exception e){
             e.printStackTrace();
         }
         return sb.toString();
     }
+
+
+
+
 }

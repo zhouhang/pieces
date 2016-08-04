@@ -8,7 +8,7 @@ import java.util.Date;
  * Author: koabs
  * 7/26/16.
  */
-public class EnquiryBillsVO extends EnquiryBills{
+public class EnquiryBillsVo extends EnquiryBills{
 
     //用户名
     private String userName;

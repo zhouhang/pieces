@@ -5,30 +5,30 @@ import java.util.Set;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Commodity;
-import com.pieces.dao.vo.CommodityVO;
+import com.pieces.dao.vo.CommodityVo;
 
 public interface CommodityDao extends ICommonDao<Commodity>{
 
-    public PageInfo<CommodityVO> findVoByPage(int pageNum, int pageSize);
+    public PageInfo<CommodityVo> findVoByPage(int pageNum, int pageSize);
 
-    public PageInfo<CommodityVO> findByParam (CommodityVO commodity, int pageNum, int pageSize);
+    public PageInfo<CommodityVo> findByParam (CommodityVo commodity, int pageNum, int pageSize);
 
-    public CommodityVO findVoById(Integer id);
+    public CommodityVo findVoById(Integer id);
 
-    public List<CommodityVO> findVoByIds(Set<Integer> ids);
+    public List<CommodityVo> findVoByIds(Set<Integer> ids);
 
 	/**
 	 * 根据id 的字符串查询id列表
 	 * @param ids
 	 * @return
      */
-	public List<CommodityVO> findByIds(String ids);
+	public List<CommodityVo> findByIds(String ids);
 
-	public List<CommodityVO> findCommodityByBreedId(Integer id);
+	public List<CommodityVo> findCommodityByBreedId(Integer id);
 
-	List<CommodityVO> findStandardByBreedId(String ids);
+	List<CommodityVo> findStandardByBreedId(String ids);
 	
-	List<CommodityVO> findFactoryByBreedId(String ids);
+	List<CommodityVo> findFactoryByBreedId(String ids);
 
-	List<Commodity> findByParamNoPage(CommodityVO commodity);
+	List<Commodity> findByParamNoPage(CommodityVo commodity);
 }

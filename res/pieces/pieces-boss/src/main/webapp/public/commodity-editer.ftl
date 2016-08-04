@@ -303,12 +303,10 @@
                                         $.notify({
                                             type: 'success',
                                             title: '保存成功',
-                                            text: '3秒后自动跳转到商品详情页',
+                                            text: '商品保存成功',
                                             delay: 3e3,
                                             call: function () {
-                                                setTimeout(function () {
-                                                    location.href = '/commodity/index';
-                                                }, 3e3);
+                                                $("#submit").attr("disabled", "disabled");
                                             }
                                         });
                                     })
@@ -359,8 +357,8 @@
             croppic: function () {
                 var self = this;
                 var options = {
-                    uploadUrl: '/commodity/upload',
-                    cropUrl: '/commodity/clipping',
+                    uploadUrl: '/gen/upload',
+                    cropUrl: '/gen/clipping',
                     outputUrlId: 'pictureUrl',
                     imgEyecandyOpacity: 0.5, // Transparent image showing current img zoom
                     loaderHtml: '<span class="loader">正在上传图片，请稍后...</span>',

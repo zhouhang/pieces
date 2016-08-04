@@ -18,7 +18,7 @@
             <result column="create_time"  property="createTime" />
     </resultMap>
 
-    <resultMap id="CommodityVOResultMap" type="com.pieces.dao.vo.CommodityVO">
+    <resultMap id="CommodityVOResultMap" type="com.pieces.dao.vo.CommodityVo">
         <id column="id"  property="id" />
         <result column="name"  property="name" />
         <result column="spec"  property="spec" />
@@ -63,7 +63,7 @@
         from commodity
     </select>
 
-    <select id="findByParam"  parameterType="com.pieces.dao.vo.CommodityVO"  resultMap="CommodityVOResultMap">
+    <select id="findByParam" parameterType="com.pieces.dao.vo.CommodityVo" resultMap="CommodityVOResultMap">
         select
         coom.id as id,coom.name as name,spec,origin_of,executive_standard,factory,exterior,
         picture_url,details,coom.status as status,category_id,coom.create_time as create_time,
@@ -315,14 +315,14 @@
     </select>
 
 
-    <select id="findCommodityByBreedId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CommodityVO">
+    <select id="findCommodityByBreedId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CommodityVo">
         select *
 	        from commodity a
 	        where a.status = 1
 	        and a.category_id = #{categoryId}
     </select>
     
-    <select id="findStandardByBreedId" parameterType="com.pieces.dao.vo.CommodityVO" resultType="com.pieces.dao.vo.CommodityVO">
+    <select id="findStandardByBreedId" parameterType="com.pieces.dao.vo.CommodityVo" resultType="com.pieces.dao.vo.CommodityVo">
         select distinct a.executive_standard as executiveStandard
 	        from commodity a
 	        where a.status = 1
@@ -331,7 +331,7 @@
 	        </if>
     </select>
     
-    <select id="findFactoryByBreedId" parameterType="com.pieces.dao.vo.CommodityVO" resultType="com.pieces.dao.vo.CommodityVO">
+    <select id="findFactoryByBreedId" parameterType="com.pieces.dao.vo.CommodityVo" resultType="com.pieces.dao.vo.CommodityVo">
         select distinct a.factory as factory
 	        from commodity a
 	        where a.status = 1

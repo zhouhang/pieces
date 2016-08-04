@@ -23,7 +23,7 @@ import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.model.Category;
 import com.pieces.dao.model.Code;
 import com.pieces.dao.vo.CategoryVo;
-import com.pieces.dao.vo.CommodityVO;
+import com.pieces.dao.vo.CommodityVo;
 import com.pieces.service.CategoryService;
 import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
@@ -59,15 +59,15 @@ public class CommodityController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/index")
-	public String index(Integer pageSize, Integer pageNum, CommodityVO commodityVO, ModelMap model) {
+	public String index(Integer pageSize, Integer pageNum, CommodityVo commodityVO, ModelMap model) {
 		pageNum = pageNum == null ? 1 : pageNum;
 		pageSize = pageSize == null ? 10 : pageSize;
 
 		commodityVO.setExecutiveStandardNameStr(formatString(commodityVO.getExecutiveStandardNameStr()));
 		commodityVO.setFactoryStr(formatString(commodityVO.getFactoryStr()));
 
-		PageInfo<CommodityVO> pageInfo = null;
-		CommodityVO indexParameter = new CommodityVO();
+		PageInfo<CommodityVo> pageInfo = null;
+		CommodityVo indexParameter = new CommodityVo();
 		
 		if(commodityVO.getBreedId() != null){
 			pageInfo = indexBreed(pageSize, pageNum, commodityVO, indexParameter, model);
@@ -100,7 +100,7 @@ public class CommodityController extends BaseController {
 	 * @param pageInfo
 	 * @param model
 	 */
-	private PageInfo<CommodityVO> indexBreed(Integer pageSize, Integer pageNum, CommodityVO commodityVO, CommodityVO indexParameter, ModelMap model) {
+	private PageInfo<CommodityVo> indexBreed(Integer pageSize, Integer pageNum, CommodityVo commodityVO, CommodityVo indexParameter, ModelMap model) {
 		Category category = categoryService.findById(commodityVO.getBreedId());
 		if(category == null){
 			return null;
@@ -114,7 +114,7 @@ public class CommodityController extends BaseController {
 		indexParameter.setBreedIds(category.getId().toString());
 		Integer cid = commodityVO.getCategoryId();
 		commodityVO.setCategoryId(commodityVO.getBreedId());
-		PageInfo<CommodityVO> pageInfo = commodityService.query(commodityVO, pageNum, pageSize);
+		PageInfo<CommodityVo> pageInfo = commodityService.query(commodityVO, pageNum, pageSize);
 		commodityVO.setCategoryId(cid);
 		return pageInfo;
 	}
@@ -129,7 +129,7 @@ public class CommodityController extends BaseController {
 	 * @param model
 	 * @return
 	 */
-	private PageInfo<CommodityVO> indexCategory(Integer pageSize, Integer pageNum, CommodityVO commodityVO, CommodityVO indexParameter, ModelMap model) {
+	private PageInfo<CommodityVo> indexCategory(Integer pageSize, Integer pageNum, CommodityVo commodityVO, CommodityVo indexParameter, ModelMap model) {
 		List<CategoryVo> breedList = null;
 		String specs = "";
 		String origins = "";
@@ -166,7 +166,7 @@ public class CommodityController extends BaseController {
 		commodityVO.setCategoryIds(breedIds);// 查询分页数据
 		Integer cid = commodityVO.getCategoryId();
 		commodityVO.setCategoryId(null);
-		PageInfo<CommodityVO> pageInfo = new PageInfo<CommodityVO>(commodityService.query(commodityVO, pageNum, pageSize).getList());
+		PageInfo<CommodityVo> pageInfo = new PageInfo<CommodityVo>(commodityService.query(commodityVO, pageNum, pageSize).getList());
 		commodityVO.setCategoryId(cid);
 		indexParameter.setSpecNameStr(specs);
 		indexParameter.setOriginOfNameStr(origins);
@@ -181,7 +181,7 @@ public class CommodityController extends BaseController {
 	 * @param indexParameter
 	 * @param model
 	 */
-	private void indexParameter(CommodityVO commodityVO, CommodityVO indexParameter, ModelMap model) {
+	private void indexParameter(CommodityVo commodityVO, CommodityVo indexParameter, ModelMap model) {
 		List<String> screens = new ArrayList<String>();
 		List<Code> specifications = categoryService.findCodeByString(indexParameter.getSpecNameStr());// 获取品种属性
 		List<Code> place = categoryService.findCodeByString(indexParameter.getOriginOfNameStr());
@@ -193,8 +193,8 @@ public class CommodityController extends BaseController {
 		model.put("place", place);
 		model.put("levels", levels);
 
-		List<CommodityVO> standards = commodityService.findStandardByBreedId(indexParameter.getBreedIds());// 获取执行标准
-		for (CommodityVO vo : standards) {// 设置执行标准是否选中
+		List<CommodityVo> standards = commodityService.findStandardByBreedId(indexParameter.getBreedIds());// 获取执行标准
+		for (CommodityVo vo : standards) {// 设置执行标准是否选中
 			if (StringUtils.isNotBlank(commodityVO.getExecutiveStandardNameStr())
 					&& commodityVO.getExecutiveStandardNameStr().contains(vo.getExecutiveStandard())) {
 				vo.setChecked(true);
@@ -204,8 +204,8 @@ public class CommodityController extends BaseController {
 			}
 		}
 
-		List<CommodityVO> factorys = commodityService.findFactoryByBreedId(indexParameter.getBreedIds());// 获取生产厂家
-		for (CommodityVO vo : factorys) {// 设置生产厂家是否选中
+		List<CommodityVo> factorys = commodityService.findFactoryByBreedId(indexParameter.getBreedIds());// 获取生产厂家
+		for (CommodityVo vo : factorys) {// 设置生产厂家是否选中
 			if (StringUtils.isNotBlank(commodityVO.getFactoryStr())
 					&& commodityVO.getFactoryStr().contains(vo.getFactory())) {
 				vo.setChecked(true);
@@ -310,7 +310,7 @@ public class CommodityController extends BaseController {
 
 	@RequestMapping(value = "/{id}")
 	public String detail(@PathVariable("id") Integer id, ModelMap model) {
-		CommodityVO commodity = commodityService.findVoById(id);
+		CommodityVo commodity = commodityService.findVoById(id);
 		if (commodity == null) {
 
 			// TODO: 商品不存在
@@ -320,7 +320,7 @@ public class CommodityController extends BaseController {
 		Category category = categoryService.findById(commodity.getCategoryId());
 		Category category1 = categoryService.findById(category.getParentId());
 		User user = (User) session.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-		List<CommodityVO> featured = commodityService.featured(user, category.getId(), category1.getId());
+		List<CommodityVo> featured = commodityService.featured(user, category.getId(), category1.getId());
 		model.put("category", category1.getName());
 		model.put("categoryId", category1.getId());
 		model.put("commodity", commodity);

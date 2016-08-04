@@ -3,12 +3,11 @@ package com.pieces.service;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Commodity;
 import com.pieces.dao.model.User;
-import com.pieces.dao.vo.CommodityVO;
+import com.pieces.dao.vo.CommodityVo;
 import com.pieces.service.vo.CropInfo;
 import com.pieces.service.vo.CropResult;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 
@@ -28,22 +27,22 @@ public interface CommodityService extends ICommonService<Commodity>{
      * @param commodity
      * @return
      */
-    public PageInfo<CommodityVO> query(CommodityVO commodity, int pageNum, int pageSize);
+    public PageInfo<CommodityVo> query(CommodityVo commodity, int pageNum, int pageSize);
 
-    public PageInfo<CommodityVO> findVoByPage(int pageNum, int pageSize);
+    public PageInfo<CommodityVo> findVoByPage(int pageNum, int pageSize);
 
-    public CommodityVO findVoById(Integer id);
+    public CommodityVo findVoById(Integer id);
 
-    public List<CommodityVO> findVoByIds(Set<Integer> ids);
+    public List<CommodityVo> findVoByIds(Set<Integer> ids);
     /**
      * 上传文件
      * @return
      */
     public CropResult uploadImage(MultipartFile img);
 
-    public List<CommodityVO> findCommodityByBreedId(Integer id);
-    List<CommodityVO> findFactoryByBreedId(String ids);
-    List<CommodityVO> findStandardByBreedId(String ids);
+    public List<CommodityVo> findCommodityByBreedId(Integer id);
+    List<CommodityVo> findFactoryByBreedId(String ids);
+    List<CommodityVo> findStandardByBreedId(String ids);
 
     /**
      * 裁剪图片
@@ -52,7 +51,7 @@ public interface CommodityService extends ICommonService<Commodity>{
      */
     public CropResult cropImg(CropInfo crop);
 
-	List<Commodity> queryNoPage(CommodityVO commodity);
+	List<Commodity> queryNoPage(CommodityVo commodity);
 
     /**
      * 商品推荐
@@ -63,7 +62,7 @@ public interface CommodityService extends ICommonService<Commodity>{
      * @param user
      * @return
      */
-    List<CommodityVO> featured(User user, Integer breedId, Integer categoryId);
+    List<CommodityVo> featured(User user, Integer breedId, Integer categoryId);
 
 
 
