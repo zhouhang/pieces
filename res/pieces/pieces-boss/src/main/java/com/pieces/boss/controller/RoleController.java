@@ -58,7 +58,7 @@ public class RoleController extends BaseController{
      * @param model
      * @return
      */
-    @RequiresPermissions(value = "role:view")
+    @RequiresPermissions(value = "role:index")
     @RequestMapping(value = "/index")
     public String index(HttpServletRequest request,
                         HttpServletResponse response,

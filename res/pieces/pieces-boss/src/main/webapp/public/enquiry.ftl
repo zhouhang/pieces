@@ -71,7 +71,11 @@
                     <td>${enquiry.areaFull}</td>
                     <td>${enquiry.createTime?datetime}</td>
                     <td><#if enquiry.status ==1>已报价<#else>未报价</#if></td>
-                    <td><a href="enquiry/${enquiry.id}">查看</a></td>
+                    <td>
+                        <@shiro.hasPermission name="enquiry:info">
+                        <a href="enquiry/${enquiry.id}">查看</a>
+                        </@shiro.hasPermission>
+                    </td>
                 </tr>
                 </#list>
                 </tbody>

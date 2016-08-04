@@ -15,7 +15,11 @@
         <div class="wrap">
             <div class="title title-btm">
                 <h3>品种管理</h3>
-                <div class="extra"><a class="btn btn-red" href="/breed/add"><i class="fa fa-plus"></i>增加新品种</a></div>
+                <div class="extra">
+                <@shiro.hasPermission name="breed:add">
+                    <a class="btn btn-red" href="/breed/add"><i class="fa fa-plus"></i>增加新品种</a>
+                </@shiro.hasPermission>
+                </div>
             </div>
             <div class="pagin">
                 <div class="extra">
@@ -50,7 +54,11 @@
                             <td><div class="tl">${category.name }</div></td>
                             <td><div class="tl">${category.aliases }</div></td>
                             <td>${category.classifyName }</td>
-                            <td><a href="/breed/edit/${category.id }">修改</a></td>
+                            <td>
+                                <@shiro.hasPermission name="breed:edit">
+                                <a href="/breed/edit/${category.id }">修改</a>
+                                </@shiro.hasPermission>
+                            </td>
                         </tr>
                     </#list>
                     </tbody>

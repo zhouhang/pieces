@@ -21,21 +21,32 @@
     <div class="wrap">
         <ul>
             <li><a href="#!">首页</a></li>
-            <li>
-                <a href="#!">销售</a>
-                <div class="subnav">
+            <@shiro.hasPermission name="sales:index">
+                <li>
+                    <a href="#!">销售</a>
+                    <div class="subnav">
+                    <@shiro.hasPermission name="enquiry:index">
                     <a href="/enquiry/index">询价管理</a>
-                    <a href="/enquiry/index">订单管理</a>
-                </div>
-            </li>
-            <li>
-            	<a href="#!">目录</a>
-            	<div class="subnav">
-                    <a href="/commodity/index">商品管理</a>
-                    <a href="/category/list">分类管理</a>
-                    <a href="/breed/list">品种管理</a>
-                </div>
-            </li>
+                    </@shiro.hasPermission>
+                    </div>
+                </li>
+            </@shiro.hasPermission>
+            <@shiro.hasPermission name="directory:index">
+                <li>
+                    <a href="#!">目录</a>
+                    <div class="subnav">
+                    <@shiro.hasPermission name="commodity:index">
+                        <a href="/commodity/index">商品管理</a>
+                    </@shiro.hasPermission>
+                    <@shiro.hasPermission name="category:index">
+                        <a href="/category/list">分类管理</a>
+                    </@shiro.hasPermission>
+                    <@shiro.hasPermission name="breed:index">
+                        <a href="/breed/list">品种管理</a>
+                    </@shiro.hasPermission>
+                    </div>
+                </li>
+            </@shiro.hasPermission>
             <@shiro.hasPermission name="customer:index">
                 <li>
                     <a href="#!">客户</a>
@@ -54,14 +65,14 @@
             <li><a href="#!">邮件列表</a></li>
             <li><a href="#!">CMS</a></li>
             <li><a href="#!">报表</a></li>
-            <@shiro.hasPermission name="member:index">
+            <@shiro.hasPermission name="system:index">
                 <li>
                     <a href="#!">系统</a>
                     <div class="subnav">
-                        <@shiro.hasPermission name="member:view">
+                        <@shiro.hasPermission name="member:index">
                             <a href="member/index">用户管理</a>
                         </@shiro.hasPermission>
-                        <@shiro.hasPermission name="role:view">
+                        <@shiro.hasPermission name="role:index">
                             <a href="role/index">角色管理</a>
                         </@shiro.hasPermission>
                     </div>

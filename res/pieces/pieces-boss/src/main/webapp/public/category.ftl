@@ -13,7 +13,11 @@
         <div class="wrap">
             <div class="title title-btm">
                 <h3>分类管理</h3>
-                <div class="extra"><a class="btn btn-red" href="/category/add"><i class="fa fa-plus"></i>增加新分类</a></div>
+                <div class="extra">
+                <@shiro.hasPermission name="category:add">
+                    <a class="btn btn-red" href="/category/add"><i class="fa fa-plus"></i>增加新分类</a>
+                </@shiro.hasPermission>
+                </div>
             </div>
             <div class="pagin">
                 <div class="extra">
@@ -51,7 +55,11 @@
                             <td>${category.id }</td>
                             <td><div class="tl">${category.name }</div></td>
                             <!-- <td><#if (category.status==0)>禁用</#if><#if (category.status==1)>激活</#if></td> -->
-                            <td><a href="/category/edit/${category.id }">修改</a></td>
+                            <td>
+                                <@shiro.hasPermission name="category:edit">
+                                    <a href="/category/edit/${category.id }">修改</a>
+                                </@shiro.hasPermission>
+                            </td>
                         </tr>
                         </#list>
                     </tbody>

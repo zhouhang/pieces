@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -40,11 +42,10 @@ public class CategoryController {
 	 * @param response
 	 * @param pageNum
 	 * @param pageSize
-	 * @param categoryName
-	 * @param status
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions(value = "category:index")
 	@RequestMapping(value = "/category/list" ,method = RequestMethod.GET)
 	public String getCategory(HttpServletRequest request,
 							  HttpServletResponse response,
@@ -69,10 +70,6 @@ public class CategoryController {
 	 * 分类列表
 	 * @param request
 	 * @param response
-	 * @param pageNum
-	 * @param pageSize
-	 * @param categoryName
-	 * @param status
 	 * @param model
 	 * @return
 	 */
@@ -92,10 +89,9 @@ public class CategoryController {
 	 * 添加分类
 	 * @param request
 	 * @param response
-	 * @param categoryName
-	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions(value = "category:add")
 	@RequestMapping(value = "/category/add")
 	public String addCategory(HttpServletRequest request,
 							  HttpServletResponse response){
@@ -110,6 +106,7 @@ public class CategoryController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions(value = "category:edit")
 	@RequestMapping(value = "/category/edit/{id}")
 	public String editCategory(HttpServletRequest request,
 							  HttpServletResponse response,
@@ -128,6 +125,7 @@ public class CategoryController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions(value = "category:delete")
 	@RequestMapping(value = "/category/delete/{id}")
 	public void deleteCategory(HttpServletRequest request,
 							  HttpServletResponse response,
@@ -149,10 +147,10 @@ public class CategoryController {
 	 * @param request
 	 * @param response
 	 * @param id
-	 * @param categoryName
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions(value = {"category:add","category:edit"},logical = Logical.OR)
 	@RequestMapping(value = "/category/save")
 	public void saveCategory(HttpServletRequest request,
 							  HttpServletResponse response,
@@ -179,11 +177,10 @@ public class CategoryController {
 	 * @param response
 	 * @param pageNum
 	 * @param pageSize
-	 * @param categoryName
-	 * @param status
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions(value = "breed:index")
 	@RequestMapping(value = "/breed/list")
 	public String getBreed(HttpServletRequest request,
 							  HttpServletResponse response,
@@ -207,10 +204,10 @@ public class CategoryController {
 	 * 添加品种
 	 * @param request
 	 * @param response
-	 * @param categoryName
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions(value = "breed:add")
 	@RequestMapping(value = "/breed/add")
 	public String addBreed(HttpServletRequest request,
 							  HttpServletResponse response,
@@ -236,6 +233,7 @@ public class CategoryController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions(value = "breed:edit")
 	@RequestMapping(value = "/breed/edit/{id}")
 	public String editBreed(HttpServletRequest request,
 							  HttpServletResponse response,
@@ -261,11 +259,10 @@ public class CategoryController {
 	 * 保存品种，id为空新增，id不为空修改
 	 * @param request
 	 * @param response
-	 * @param id
-	 * @param categoryName
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions(value = {"breed:add","breed:edit"} ,logical = Logical.OR)
 	@RequestMapping(value = "/breed/save")
 	public void saveBreed(HttpServletRequest request,
 							  HttpServletResponse response,
@@ -289,6 +286,7 @@ public class CategoryController {
 	 * @param model
 	 * @return
 	 */
+	@RequiresPermissions(value = "breed:delete")
 	@RequestMapping(value = "/breed/delete/{id}")
 	public void deleteBreed(HttpServletRequest request,
 							  HttpServletResponse response,
@@ -338,4 +336,13 @@ public class CategoryController {
 	public Result findCode(Integer beedId,String typeId) {
 		return new Result(true).data(categoryService.findCode(beedId, typeId));
 	}
+
+
+	@RequestMapping(value = "/category/gen/pinyin")
+	@ResponseBody
+	public Result genCategory2Pinyin(){
+		categoryService.allCategory2Pinyin();
+		return new Result(true).info("拼音生成完成!");
+	}
+
 }

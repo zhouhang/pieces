@@ -11,6 +11,7 @@ import com.pieces.service.RoleMemberService;
 import com.pieces.service.RoleService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.utils.WebUtil;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,6 +46,7 @@ public class MemberController extends BaseController{
      * @param response
      * @return
      */
+    @RequiresPermissions(value = "member:index")
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public String index(HttpServletRequest request,
                         HttpServletResponse response,
@@ -68,6 +70,7 @@ public class MemberController extends BaseController{
      * @param response
      * @return
      */
+    @RequiresPermissions(value = "member:add")
     @RequestMapping(value = "/add",method = RequestMethod.GET)
     public String add(HttpServletRequest request,
                        HttpServletResponse response,
@@ -83,6 +86,7 @@ public class MemberController extends BaseController{
      * @param response
      * @return
      */
+    @RequiresPermissions(value = "member:edit")
     @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
     public String edit(HttpServletRequest request,
                        HttpServletResponse response,
@@ -102,6 +106,7 @@ public class MemberController extends BaseController{
      * @param response
      * @param member
      */
+    @RequiresPermissions(value = {"member:add","member:edit"},logical = Logical.OR)
     @RequestMapping(value = "/save",method = RequestMethod.POST)
     public void save(HttpServletRequest request,
                      HttpServletResponse response,

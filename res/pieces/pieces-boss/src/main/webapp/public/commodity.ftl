@@ -12,7 +12,11 @@
         <div class="wrap">
             <div class="title title-btm">
                 <h3>商品管理</h3>
-                <div class="extra"><a class="btn btn-red" href="commodity/add"><i class="fa fa-plus"></i>增加新产品</a></div>
+                <div class="extra">
+                <@shiro.hasPermission name="commodity:add">
+                    <a class="btn btn-red" href="commodity/add"><i class="fa fa-plus"></i>增加新产品</a>
+                </@shiro.hasPermission>
+                </div>
             </div>
             <div class="pagin">
                 <div class="extra">
@@ -62,7 +66,11 @@
                         <td>${commodity.originOfName}</td>
                         <td>${commodity.factory}</td>
                         <td><#if commodity.status ==1>激活<#else>禁用</#if></td>
-                        <td><a href="commodity/editer/${commodity.id}">修改</a></td>
+                        <td>
+                            <@shiro.hasPermission name="commodity:edit">
+                            <a href="commodity/editer/${commodity.id}">修改</a>
+                            </@shiro.hasPermission>
+                        </td>
                     </tr>
                     </#list>
 

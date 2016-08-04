@@ -14,7 +14,7 @@
                 <h1 class="title">对不起，系统忙！请稍后再试</h1>
                 <dl>
                     <dt>您可以：</dt>
-                    <dd>2. 返回 <a href="#">首页</a> 或 <a href="#">看看其他商品</a></dd>
+                    <dd>返回 <a href="/">首页</a> 或 <a href="/commodity/index">看看其他商品</a></dd>
                 </dl>
             </div>
         </div>

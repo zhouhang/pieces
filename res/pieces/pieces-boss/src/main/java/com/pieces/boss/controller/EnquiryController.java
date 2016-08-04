@@ -10,6 +10,7 @@ import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.utils.Reflection;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ public class EnquiryController extends BaseController{
     @Autowired
     EnquiryCommoditysService enquiryCommoditysService;
 
+    @RequiresPermissions(value = "enquiry:index")
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(EnquiryBillsVo enquiryBillsVO, Integer pageNum, Integer pageSize, ModelMap modelMap) {
 
@@ -44,7 +46,7 @@ public class EnquiryController extends BaseController{
         return "enquiry";
     }
 
-
+    @RequiresPermissions(value = "enquiry:info")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable("id") Integer id, ModelMap modelMap) {
         EnquiryBillsVo vo = enquiryBillsService.findVOById(id);
@@ -58,6 +60,7 @@ public class EnquiryController extends BaseController{
      * @param commodityses
      * @return
      */
+    @RequiresPermissions(value = "enquiry:quote")
     @RequestMapping(value = "/quoted", method = RequestMethod.POST)
     @ResponseBody
     public Result quoted(@RequestBody List<EnquiryCommoditys> commodityses, Integer billsId) {
@@ -76,6 +79,7 @@ public class EnquiryController extends BaseController{
      * @param commodityses
      * @return
      */
+    @RequiresPermissions(value = "enquiry:quote")
     @RequestMapping(value = "/quotedUpdate", method = RequestMethod.POST)
     @ResponseBody
     public Result quotedUpdate(@RequestBody List<EnquiryCommoditys> commodityses, Integer billsId) {

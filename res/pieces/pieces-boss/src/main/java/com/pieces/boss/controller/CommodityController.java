@@ -7,6 +7,8 @@ import com.pieces.service.CommodityService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,6 +26,7 @@ public class CommodityController extends BaseController{
     @Autowired
     CommodityService commodityService;
 
+    @RequiresPermissions(value = "commodity:index")
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Integer pageSize, Integer pageNum, CommodityVo commodityVO , ModelMap model){
 
@@ -40,7 +43,7 @@ public class CommodityController extends BaseController{
         return "commodity";
     }
 
-
+    @RequiresPermissions(value = "commodity:add")
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     @BizLog(type = "", desc = "新增商品信息页面")
     public String addPage() {
@@ -48,6 +51,7 @@ public class CommodityController extends BaseController{
     }
 
 
+    @RequiresPermissions(value = "commodity:add")
     @RequestMapping(value = "/add/{id}", method = RequestMethod.GET)
     @BizLog(type = "", desc = "根据已有商品新增商品信息页面")
     public String copyPage(@PathVariable("id")Integer id, ModelMap model) {
@@ -56,6 +60,7 @@ public class CommodityController extends BaseController{
         return "commodity-copy";
     }
 
+    @RequiresPermissions(value = "commodity:edit")
     @RequestMapping(value = "/editer/{id}", method = RequestMethod.GET)
     @BizLog(type = "", desc = "编辑商品信息页面")
     public String editerPage(@PathVariable("id")Integer id, ModelMap model) {
@@ -64,6 +69,7 @@ public class CommodityController extends BaseController{
         return "commodity-editer";
     }
 
+    @RequiresPermissions(value = {"commodity:add","commodity:edit"},logical = Logical.OR)
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     @BizLog(type = "商品信息", desc = "保存商品信息")
@@ -72,6 +78,7 @@ public class CommodityController extends BaseController{
         return new Result(true).data(null).info("商品信息保存成功!");
     }
 
+    @RequiresPermissions(value = "commodity:delete")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
     @BizLog(type = "商品信息", desc = "根据ID删除商品")

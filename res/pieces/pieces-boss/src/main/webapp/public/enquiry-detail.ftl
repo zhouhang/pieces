@@ -23,7 +23,9 @@
                 <h3><i class="fa fa-chevron-right"></i>${enquiryBills.code}</h3>
                 <div class="extra">
                     <a class="btn btn-gray" href="enquiry/index">返回</a>
+                    <@shiro.hasPermission name="enquiry:quote">
                     <button type="button" id="submit" class="btn btn-red"><#if enquiryBills.status ==1>保存<#else>报价</#if></button>
+                    </@shiro.hasPermission>
                 </div>
             </div>
 
