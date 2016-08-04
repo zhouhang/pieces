@@ -46,6 +46,10 @@
             </@shiro.hasPermission>
             <li>
                 <a href="#!">促销</a>
+                <div class="subnav">
+                    <a href="ad/index">广告管理</a>
+                    <a href="role/index">促销商品管理</a>
+                </div>
             </li>
             <li><a href="#!">邮件列表</a></li>
             <li><a href="#!">CMS</a></li>

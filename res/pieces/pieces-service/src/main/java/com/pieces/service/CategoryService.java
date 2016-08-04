@@ -35,5 +35,8 @@ public interface CategoryService extends ICommonService<Category> {
 	public List<Code> findCodeByString(String str);
 	List<Code> findCode(Integer breedId, String type);
 	public List<CategoryVo> findBreedNoPage(CategoryVo categoryVo);
+
+
+	void allCategory2Pinyin();
 	
 }

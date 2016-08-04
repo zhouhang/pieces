@@ -22,12 +22,10 @@ public class AdServiceImpl extends AbsCommonService<Ad> implements AdService{
     @Autowired
     private AdDao adDao;
 
-
     @Override
     public ICommonDao<Ad> getDao() {
         return adDao;
     }
-
 
 
     @Transactional

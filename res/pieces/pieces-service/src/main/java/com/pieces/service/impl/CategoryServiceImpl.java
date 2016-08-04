@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.pieces.service.enums.CategoryEnum;
 import org.springframework.beans.BeanUtils;
+import com.pieces.tools.utils.PinyinUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -114,7 +115,7 @@ public class CategoryServiceImpl implements CategoryService {
 		ca.setStatus(CategoryEnum.STATUS_VALID.getValue());
 		ca.setLevel(CategoryEnum.LEVEL_BREED.getValue());
 		ca.setCreateTime(new Date());
-		ca.setSpecs(bvo.getSpece());
+		ca.setSpecs(bvo.getSpeces());
 		ca.setOrigins(bvo.getOrigins());
 		ca.setLevels(bvo.getLevels());
 		categoryDao.create(ca);
@@ -151,6 +152,7 @@ public class CategoryServiceImpl implements CategoryService {
 		BreedVo bvo = new BreedVo();
 		BeanUtils.copyProperties(category, bvo);
 		bvo.setClassifyName(parent.getName());
+		bvo.setClassifyId(category.getParentId());
 		return bvo;
 	}
 
@@ -191,6 +193,18 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<CategoryVo> findBreedNoPage(CategoryVo categoryVo) {
 		return categoryDao.findBreedNoPage(categoryVo);
 	}
-	
-	
+
+	@Override
+	@Transactional
+	public void allCategory2Pinyin() {
+		List<Category> categoryList = this.findAll();
+		for(Category category :categoryList){
+			String name = category.getName();
+			String pinyin = PinyinUtil.field2Pinyin(name);
+			category.setPinyin(pinyin);
+			this.update(category);
+		}
+	}
+
+
 }
