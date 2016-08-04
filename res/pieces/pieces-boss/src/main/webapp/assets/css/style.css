@@ -188,7 +188,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
     .fa-form .txt{position:absolute;top:0;left:0;width:130px;line-height:40px;text-align:right;}
       .fa-form .txt i{margin-right:6px;color:#c3272b;vertical-align:middle;}
     .fa-form .cnt{height:70px;}
-    .fa-form .cnt-mul{width:360px;height:auto;min-height:40px;margin-bottom:20px;}
+    .fa-form .cnt-mul{width:360px;height:auto;min-height:40px;margin-bottom:30px;}
       .fa-form .cnt-mul label{display:inline-block;width:80px;height:20px;padding-top:10px;vertical-align:top;overflow:hidden;}
       .fa-form .cnt .ipt{width:320px;height:20px;line-height:20px;padding:9px 14px;border:1px solid #ccc;}
       .fa-form .cnt .ipt:disabled{background:#ededed;color:#999;}
@@ -208,6 +208,9 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
       .fa-form .cnt .Validform_loading{position:absolute;top:12px;left:460px;width:16px;height:16px;background:url(../images/loader.gif) no-repeat 50%;}
       .fa-form .cnt .msg-box .error{color:#c3272b;}
     .fa-form .cnt-extra{height:46px;}
+#imgCropWrap{display:none;}    
+#imgCrop{display:block !important;}    
+#imgCrop img{cursor:pointer;}    
 
 /* 新增商品 */
 .goods-img{position:relative;width:98px;height:98px;line-height:98px;border:1px dashed #ccc;background:#fff url(../images/plus.png) no-repeat 50%;cursor:pointer;text-align:center;}
