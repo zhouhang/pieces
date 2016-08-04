@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pieces.service.enums.CategoryEnum;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -58,7 +59,7 @@ public class CategoryController {
 		pageSize = pageSize==null?10:pageSize;
 		CategoryVo t = new CategoryVo();
 		t.setName(name);
-		t.setStatus("1");
+		t.setStatus(CategoryEnum.STATUS_VALID.getValue().toString());
 		PageInfo<Category> categoryPage = categoryService.findClassify(t, pageNum, pageSize);
 		model.put("categoryPage", categoryPage);
 		model.put("categoryParams", t.toString());
@@ -79,7 +80,7 @@ public class CategoryController {
 							  ModelMap model){
 		
 		CategoryVo t = new CategoryVo();
-		t.setStatus("1");
+		t.setStatus(CategoryEnum.STATUS_VALID.getValue().toString());
 		List<Category> categorys = categoryService.findClassify(t);
         String result = GsonUtil.toJsonInclude(categorys, "id", "name");
         WebUtil.printJson(response, result);
@@ -138,7 +139,7 @@ public class CategoryController {
 	        return;
 		}
 		categoryService.deleteById(id);
-		Result result = new Result(true);
+		Result result = new Result(true).info("删除分类成功。");
         WebUtil.printJson(response, result);
 	}
 	
@@ -158,14 +159,13 @@ public class CategoryController {
 							  String name,
 							  ModelMap model){
 		Result result = new Result(true);
-
 		if(StringUtils.isNotBlank(name) ) {
 			if (id == null) {
 				categoryService.addClassify(name);
-				result.info("");
+				result.info("新增分类成功。");
 			} else {
 				categoryService.updateClassify(name, id);
-				result.info("");
+				result.info("修改分类成功。");
 			}
 		}
         WebUtil.printJson(response, result);
@@ -191,7 +191,7 @@ public class CategoryController {
 		
 		pageNum = pageNum==null?1:pageNum;
 		pageSize = pageSize==null?10:pageSize;
-		vo.setStatus("1");
+		vo.setStatus(CategoryEnum.STATUS_VALID.getValue().toString());
 		PageInfo<CategoryVo> categoryPage = categoryService.findBreed(vo, pageNum, pageSize);
 		model.put("categoryPage", categoryPage);
 		model.put("categoryParams", vo.toString());
@@ -245,7 +245,7 @@ public class CategoryController {
 		List<Code> spaces = categoryService.findCode(CodeEnum.Type.SPEC.name());
 		List<Code> origins = categoryService.findCode(CodeEnum.Type.ORIGIN.name());
 		List<Code> levels = categoryService.findCode(CodeEnum.Type.LEVEL.name());
-		setCodeCheck(spaces,breed.getSpece());
+		setCodeCheck(spaces,breed.getSpeces());
 		setCodeCheck(origins,breed.getOrigins());
 		setCodeCheck(levels,breed.getLevels());
 		breed.setSpecelist(spaces);
@@ -268,13 +268,16 @@ public class CategoryController {
 							  HttpServletResponse response,
 							  BreedVo bvo,
 							  ModelMap model){
+		Result result = new Result(true);
 		bvo.setAliases(bvo.getAliases().replace("，", ","));
-		if(StringUtils.isNotBlank(bvo.getId())){
+		if(bvo.getId() != null){
 			categoryService.updateBreed(bvo);
+			result.info("修改品种成功。");
 		}else{
 			categoryService.addBreed(bvo);
+			result.info("新增品种成功。");
 		}
-		Result result = new Result(true);
+
         WebUtil.printJson(response, result);
 	}
 	
@@ -299,7 +302,7 @@ public class CategoryController {
 	        return;
 		}
 		categoryService.deleteById(id);
-		Result result = new Result(true);
+		Result result = new Result(true).info("删除品种成功。");
         WebUtil.printJson(response, result);
 	}
 	

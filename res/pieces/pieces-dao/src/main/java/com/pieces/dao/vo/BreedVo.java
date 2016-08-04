@@ -5,7 +5,7 @@ import java.util.List;
 import com.pieces.dao.model.Code;
 
 public class BreedVo {
-	private String id;
+	private Integer id;
 	//类别id
 	private Integer classifyId;
 	//类别中文
@@ -14,7 +14,7 @@ public class BreedVo {
 	private String name;
 	//别名
 	private String aliases;
-	private String spece;
+	private String speces;
 	
 	private String origins;
 	
@@ -26,11 +26,11 @@ public class BreedVo {
 	
 	private List<Code> levellist;
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -66,12 +66,12 @@ public class BreedVo {
 		this.aliases = aliases;
 	}
 
-	public String getSpece() {
-		return spece;
+	public String getSpeces() {
+		return speces;
 	}
 
-	public void setSpece(String spece) {
-		this.spece = spece;
+	public void setSpeces(String speces) {
+		this.speces = speces;
 	}
 
 	public String getOrigins() {

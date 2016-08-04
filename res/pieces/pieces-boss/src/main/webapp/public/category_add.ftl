@@ -76,7 +76,7 @@
             			            	$('#name').val('');
             			            	$.notify({
             	                            type: 'success', 
-            	                            title: '新增分类成功。',
+            	                            title: data.info,
             	                            delay: 3e3
             	                        });
             			            }

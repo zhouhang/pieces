@@ -137,7 +137,7 @@
             			            	$('.user-info :input').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
             			            	$.notify({
             	                            type: 'success', 
-            	                            title: '新增品种成功。',
+            	                            title: data.info,
             	                            delay: 3e3
             	                        });
             			            }
