@@ -164,6 +164,8 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
         .chart .button span{margin-left:4px;vertical-align:middle;}
       .chart a{color:#1769ff;}
       .chart a:hover{color:#155ee5;}
+      .chart .link{color:#666;}
+      .chart .link:hover{color:#333;}
       .chart .tl{text-align:left;padding-left:27px;}
 
 /* pagin */
