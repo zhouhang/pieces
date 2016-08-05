@@ -143,8 +143,9 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
     .fa-floor .main .title{height:50px;}
       .fa-floor .main .title h3{font-weight:400;font-size:14px;}
         .fa-floor .main .title h3 i{margin-right:6px;color:#666;}
-      .fa-floor .main .title .extra .btn{width:60px;height:30px;margin-left:10px;}
-      .fa-floor .main .title .extra .btn-red{width:100px;}
+      .fa-floor .main .title .extra .btn{width:60px;margin-left:10px;}
+      .fa-floor .main .title .extra .btn-red{width:100px;padding:4px 7px;}
+      .fa-floor .main .title .extra a.btn-gray{padding:4px 0;width:58px;}
   .fa-floor .chart{margin-top:20px;}
     
 /* table */
