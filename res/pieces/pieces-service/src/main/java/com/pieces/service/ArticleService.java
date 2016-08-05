@@ -2,16 +2,53 @@ package com.pieces.service;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Area;
+import com.pieces.dao.model.Article;
 import com.pieces.dao.model.ArticleCategory;
+import com.pieces.dao.vo.ArticleCategoryVo;
+import com.pieces.dao.vo.ArticleVo;
+
+import java.util.List;
 
 /**
  * Author: koabs
  * 8/3/16.
  * 文章管理
  */
-public interface ArticleService extends ICommonService<Area> {
+public interface ArticleService extends ICommonService<Article> {
 
 
+    /**
+     * 保存文章分类信息
+     * @param article
+     */
+    public void saveOrUpdateArticle(Article article);
+
+    /**
+     * 根据传入的参数查询文章信息
+     * @param articleVo
+     * @return
+     */
+    public PageInfo<ArticleVo> queryArticle(ArticleVo articleVo, int pageNum, int pageSize);
+
+    /**
+     * 根据ID获取文章详细信息
+     * @param id
+     * @return
+     */
+    public Article findArticleById(Integer id);
+
+    /**
+     * 根据ID删除文章
+     * @param id
+     */
+    public void deleteArticleById(Integer id);
+
+    /**
+     * 根据模块ID 获取模块的类别列表和下属文章的相关信息
+     * @param modelId
+     * @return
+     */
+    public List<ArticleCategoryVo> getCategoryListByModelId(Integer modelId);
 
     /**
      * 保存文章分类信息
@@ -28,8 +65,8 @@ public interface ArticleService extends ICommonService<Area> {
 
     /**
      * 根据传入的参数查询文章分类信息
-     * @param commodity
+     * @param category
      * @return
      */
-    public PageInfo<ArticleCategory> queryCategory(ArticleCategory commodity, int pageNum, int pageSize);
+    public PageInfo<ArticleCategory> queryCategory(ArticleCategory category, int pageNum, int pageSize);
 }

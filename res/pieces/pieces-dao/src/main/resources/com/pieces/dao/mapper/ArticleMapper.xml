@@ -13,7 +13,10 @@
             <result column="update_time"  property="updateTime" />
             <result column="sort"  property="sort" />
             <result column="model"  property="model" />
-        
+    </resultMap>
+    
+    <resultMap id="ArticleVoResultMap" type="com.pieces.dao.vo.ArticleVo" extends="ArticleResultMap">
+        <result column="articleCategoryName"  property="articleCategoryName" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -92,4 +95,58 @@
         </set>
         where id = #{id}
     </update>
+
+    <!-- 根据参数查询文章信息 -->
+    <select id="findByParam" parameterType="com.pieces.dao.vo.ArticleVo" resultMap="ArticleVoResultMap">
+        select
+        a.id as id,a.title as title,a.category_id as category_id,
+        a.status as status,
+        a.create_user as create_user,a.create_time as create_time,
+        a.update_user as update_user,a.update_time as update_time,
+        a.sort as sort, a.model as model,c.name as articleCategoryName
+        from article a
+        left join article_category c on article.category_id = c.id
+        <where>
+            <if test="title != null">
+                a.title like "%"#{title}"%"
+            </if>
+
+            <if test="categoryId != null">
+                and a.category_id = #{categoryId}
+            </if>
+
+            <if test="status != null">
+                and a.status = #{status}
+            </if>
+
+            <if test="createUser != null">
+                and a.create_user = #{createUser}
+            </if>
+
+            <if test="createTime != null">
+                and a.create_time = #{createTime}
+            </if>
+
+            <if test="updateUser != null">
+                and a.update_user = #{updateUser}
+            </if>
+
+            <if test="updateTime != null">
+                a.update_time = #{updateTime},
+            </if>
+
+            <if test="sort != null">
+                a.sort = #{sort},
+            </if>
+
+            <if test="model != null">
+                a.model = #{model},
+            </if>
+
+            <if test="articleCategoryName != null">
+                c.name like "%"#{articleCategoryName}"%",
+            </if>
+        </where>
+    </select>
+
 </mapper>
