@@ -34,10 +34,12 @@ public class MemberServiceImpl extends AbsCommonService<Member> implements Membe
     @Autowired
     private RoleMemberService roleMemberService;
 
+
     @Override
     public ICommonDao<Member> getDao() {
         return memberDao;
     }
+
 
     @Override
     public Member findByUsernameAndPassword(String username, String passwords) {

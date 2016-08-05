@@ -80,7 +80,11 @@
     <script>
         var setting = {
             check: {
-                enable: true
+                enable: true,
+                chkboxType:{
+                    'Y' : 'ps',
+                    'N' : 's'
+                }
             },
             data: {
                 simpleData: {

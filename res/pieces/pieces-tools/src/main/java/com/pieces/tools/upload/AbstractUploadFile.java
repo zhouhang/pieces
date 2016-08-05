@@ -33,7 +33,7 @@ public abstract class AbstractUploadFile {
             //自定义文件名
             String fileName = customImageName(originalFileName);
             File file = FileUtil.save(inputStream,getBasePath(),fileName);
-            FileBo fileBo = new FileBo(file,file.getName(),url+fileName,ext);
+            FileBo fileBo = new FileBo(file,file.getName(),fileName,ext);
             return fileBo;
         }
         catch (FileUploadException fe){
