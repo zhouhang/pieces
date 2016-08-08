@@ -65,5 +65,6 @@ public interface CommodityService extends ICommonService<Commodity>{
     List<CommodityVo> featured(User user, Integer breedId, Integer categoryId);
 
 
+    List<CommodityVo> findVoByIds(String ids);
 
 }

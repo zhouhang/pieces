@@ -2,10 +2,7 @@ package com.pieces.service.impl;
 
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.imageio.ImageIO;
 
@@ -204,5 +201,14 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         }
 
         return list;
+    }
+
+    @Override
+    public List<CommodityVo> findVoByIds(String ids) {
+        List<Integer> list = new ArrayList<>();
+        for(String id :ids.split(",")){
+            list.add(Integer.parseInt(id));
+        }
+        return commodityDao.findVoByIds(list);
     }
 }

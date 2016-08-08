@@ -1,5 +1,6 @@
 package com.pieces.dao;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -15,7 +16,7 @@ public interface CommodityDao extends ICommonDao<Commodity>{
 
     public CommodityVo findVoById(Integer id);
 
-    public List<CommodityVo> findVoByIds(Set<Integer> ids);
+    public List<CommodityVo> findVoByIds(Collection<Integer> ids);
 
 	/**
 	 * 根据id 的字符串查询id列表
