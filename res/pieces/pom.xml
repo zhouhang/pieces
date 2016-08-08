@@ -57,6 +57,7 @@
 		<spring-data-elasticsearch>2.0.0.RELEASE</spring-data-elasticsearch>
 		<google.guava>18.0</google.guava>
 		<jpinyin>1.1.6</jpinyin>
+		<commons-configuration>1.6</commons-configuration>
 	</properties>
 
 	<dependencyManagement>
@@ -354,6 +355,11 @@
 				<groupId>com.github.stuxuhai</groupId>
 				<artifactId>jpinyin</artifactId>
 				<version>${jpinyin}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-configuration</groupId>
+				<artifactId>commons-configuration</artifactId>
+				<version>${commons-configuration}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
