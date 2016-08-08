@@ -12,7 +12,7 @@
             <li>|</li>
             <li><a href="logout.html">我的供应链</a></li>
             <li>|</li>
-            <li><a href="helper.html">帮助中心</a></li>
+            <li><a href="/help/0">帮助中心</a></li>
             <li>|</li>
             <li><a href="sitemap.html">网站导航 <i class="fa fa-chevron-down"></i></a></li>
         </ul>

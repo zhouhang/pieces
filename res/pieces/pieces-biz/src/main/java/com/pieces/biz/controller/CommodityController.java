@@ -81,13 +81,12 @@ public class CommodityController extends BaseController {
 		if(pageInfo == null){
 			model.put("commodity", commodityVO);
 			model.put("commodityParam", commodityVO.toString());
-			return "product_list";
+		}else{
+			indexParameter(commodityVO, indexParameter, model);
+
+			model.put("commodity", commodityVO);
+			model.put("commodityParam", commodityVO.toString());
 		}
-		
-		indexParameter(commodityVO, indexParameter, model);
-		
-		model.put("commodity", commodityVO);
-		model.put("commodityParam", commodityVO.toString());
 		return "product_list";
 	}
 	
@@ -97,7 +96,6 @@ public class CommodityController extends BaseController {
 	 * @param pageNum
 	 * @param commodityVO
 	 * @param indexParameter 封装参数
-	 * @param pageInfo
 	 * @param model
 	 */
 	private PageInfo<CommodityVo> indexBreed(Integer pageSize, Integer pageNum, CommodityVo commodityVO, CommodityVo indexParameter, ModelMap model) {
@@ -125,7 +123,6 @@ public class CommodityController extends BaseController {
 	 * @param pageNum
 	 * @param commodityVO
 	 * @param indexParameter
-	 * @param pageInfo
 	 * @param model
 	 * @return
 	 */
