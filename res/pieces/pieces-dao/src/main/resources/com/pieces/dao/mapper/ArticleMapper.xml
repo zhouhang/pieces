@@ -105,7 +105,7 @@
         a.update_user as update_user,a.update_time as update_time,
         a.sort as sort, a.model as model,c.name as articleCategoryName
         from article a
-        left join article_category c on article.category_id = c.id
+        left join article_category c on a.category_id = c.id
         <where>
             <if test="title != null">
                 a.title like "%"#{title}"%"
@@ -132,19 +132,19 @@
             </if>
 
             <if test="updateTime != null">
-                a.update_time = #{updateTime},
+                and a.update_time = #{updateTime}
             </if>
 
             <if test="sort != null">
-                a.sort = #{sort},
+                and a.sort = #{sort}
             </if>
 
             <if test="model != null">
-                a.model = #{model},
+                and a.model = #{model}
             </if>
 
             <if test="articleCategoryName != null">
-                c.name like "%"#{articleCategoryName}"%",
+                and c.name like "%"#{articleCategoryName}"%"
             </if>
         </where>
     </select>

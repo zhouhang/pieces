@@ -48,13 +48,13 @@ public class ArticleDaoImpl extends BaseDaoImpl implements ArticleDao {
 
     @Override
     public PageInfo<ArticleVo> findByParam(ArticleVo articleVo, Integer pageNum, Integer pageSize) {
-        List<ArticleVo> list = getSqlSession().selectList("com.pieces.dao.ArticleMapper.findByParam", null, new RowBounds(pageNum, pageSize));
+        List<ArticleVo> list = getSqlSession().selectList("com.pieces.dao.ArticleMapper.findByParam", articleVo, new RowBounds(pageNum, pageSize));
         PageInfo page = new PageInfo(list);
         return page;
     }
 
     @Override
     public List<ArticleVo> findByParam(ArticleVo articleVo) {
-        return getSqlSession().selectList("com.pieces.dao.ArticleMapper.findByParam");
+        return getSqlSession().selectList("com.pieces.dao.ArticleMapper.findByParam",articleVo);
     }
 }

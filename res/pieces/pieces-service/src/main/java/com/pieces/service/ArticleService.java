@@ -69,4 +69,13 @@ public interface ArticleService extends ICommonService<Article> {
      * @return
      */
     public PageInfo<ArticleCategory> queryCategory(ArticleCategory category, int pageNum, int pageSize);
+
+
+    /**
+     * 根据模块id 获取模块下所有分类
+     * @param modelId
+     * @return
+     */
+    public List<ArticleCategory> getCategoryByModelId(Integer modelId, Integer status);
+
 }

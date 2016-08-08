@@ -11,6 +11,8 @@ import com.pieces.dao.vo.ArticleVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,6 +20,7 @@ import java.util.List;
  * Author: koabs
  * 8/5/16.
  */
+@Service
 public class ArticleServiceImpl extends AbsCommonService<Article> implements ArticleService {
 
     @Autowired
@@ -37,6 +40,7 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
     }
 
     @Override
+    @Transactional
     public void saveOrUpdateArticle(Article article) {
         if (article.getId() == null) {
             articleDao.create(article);
@@ -56,6 +60,7 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
     }
 
     @Override
+    @Transactional
     public void deleteArticleById(Integer id) {
         articleDao.deleteById(id);
     }
@@ -66,6 +71,7 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
     }
 
     @Override
+    @Transactional
     public void saveOrUpdateCategory(ArticleCategory category) {
         if (category.getId() == null) {
             articleCategoryDao.create(category);
@@ -75,7 +81,17 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
     }
 
     @Override
+    @Transactional
     public void deleteCategory(Integer id) {
         articleCategoryDao.deleteById(id);
+    }
+
+    @Override
+    public List<ArticleCategory> getCategoryByModelId(Integer modelId, Integer status) {
+        ArticleCategory category = new ArticleCategory();
+        category.setModel(modelId);
+        category.setStatus(status);
+        List<ArticleCategory> list = this.queryCategory(category, 1,20).getList();
+        return list;
     }
 }

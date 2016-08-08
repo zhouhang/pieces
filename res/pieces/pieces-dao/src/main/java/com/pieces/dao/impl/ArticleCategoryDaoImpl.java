@@ -53,7 +53,7 @@ public class ArticleCategoryDaoImpl extends BaseDaoImpl implements ArticleCatego
 
     @Override
     public PageInfo<ArticleCategory> findByParam(ArticleCategory category, Integer pageNum, Integer pageSize) {
-        List<ArticleCategory> list = getSqlSession().selectList("com.pieces.dao.ArticleCategoryMapper.findByParam", null, new RowBounds(pageNum, pageSize));
+        List<ArticleCategory> list = getSqlSession().selectList("com.pieces.dao.ArticleCategoryMapper.findByParam", category, new RowBounds(pageNum, pageSize));
         PageInfo page = new PageInfo(list);
         return page;
     }
