@@ -21,7 +21,7 @@ public interface ArticleService extends ICommonService<Article> {
      * 保存文章分类信息
      * @param article
      */
-    public void saveOrUpdateArticle(Article article);
+    public void saveOrUpdateArticle(Article article, Integer memberId);
 
     /**
      * 根据传入的参数查询文章信息

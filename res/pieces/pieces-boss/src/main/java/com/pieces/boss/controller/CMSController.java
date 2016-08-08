@@ -4,10 +4,12 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Article;
 import com.pieces.dao.model.ArticleCategory;
 import com.pieces.dao.model.Category;
+import com.pieces.dao.model.Member;
 import com.pieces.dao.vo.ArticleVo;
 import com.pieces.service.ArticleService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.ModelEnum;
+import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.enums.StatusEnum;
 import com.pieces.tools.utils.Reflection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -31,6 +34,9 @@ public class CMSController {
 
     @Autowired
     ArticleService articleService;
+
+    @Autowired
+    HttpSession httpSession;
 
     /**
      * 文章列表页面
@@ -63,14 +69,20 @@ public class CMSController {
     public String add(Integer model, ModelMap modelMap){
         List<ArticleCategory> categories = articleService.getCategoryByModelId(model, StatusEnum.enable.getValue());
         modelMap.put("categorys",categories);
+        modelMap.put("model", model);
 
-        return "help-detail";
+        return "help-detail-add";
     }
 
 
     @RequestMapping(value = "article/detail/{id}", method = RequestMethod.GET)
-    public String detail(@PathVariable("id") Integer id){
-        return "help-detail";
+    public String detail(@PathVariable("id") Integer id, ModelMap modelMap){
+        Article article = articleService.findArticleById(id);
+        modelMap.put("article",article);
+        List<ArticleCategory> categories = articleService.getCategoryByModelId(article.getModel(), StatusEnum.enable.getValue());
+        modelMap.put("categorys",categories);
+
+        return "help-detail-editer";
     }
 
 
@@ -81,10 +93,12 @@ public class CMSController {
         return "help-detail";
     }
 
-    @RequestMapping(value = "article/save", method = RequestMethod.GET)
+    @RequestMapping(value = "article/save", method = RequestMethod.POST)
     @ResponseBody
-    public String save (Article article){
-        return "help-detail";
+    public Result save (Article article){
+        Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
+        articleService.saveOrUpdateArticle(article, mem.getId());
+        return new Result(true).info("保存成功!");
     }
 
     /**

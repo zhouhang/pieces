@@ -13,7 +13,7 @@
     <div class="wrap">
         <div class="title title-btm">
             <h3>单页面管理</h3>
-            <div class="extra"><a class="btn btn-red" href="cms/article/add"><i class="fa fa-plus"></i>增加单页面</a></div>
+            <div class="extra"><a class="btn btn-red" href="cms/article/add?model=1"><i class="fa fa-plus"></i>增加单页面</a></div>
         </div>
         <div class="pagin">
             <div class="extra">
