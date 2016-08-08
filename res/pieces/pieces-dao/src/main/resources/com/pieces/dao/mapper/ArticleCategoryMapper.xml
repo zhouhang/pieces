@@ -13,6 +13,14 @@
         
     </resultMap>
 
+    <resultMap id="ArticleCategoryVoResultMap"
+               type="com.pieces.dao.vo.ArticleCategoryVo" extends="ArticleCategoryResultMap">
+        <collection property="articles" ofType="com.pieces.dao.model.Article">
+            <id column="id"  property="article_id" />
+            <result column="title"  property="article_title" />
+        </collection>
+    </resultMap>
+
     <sql id="Base_Column_List">
         id,name,status,sort,model,create_user,create_time,icon
     </sql>
@@ -77,4 +85,52 @@
         </set>
         where id = #{id}
     </update>
+
+    <!-- 根据模块id获取模块下的分类和文章列表 -->
+    <select id="findVoByModelId" parameterType="java.lang.Integer" resultMap="ArticleCategoryResultMap">
+        select
+        <include refid="Base_Column_List" />,
+        c.id as article_id, c.title as article_title, c.sort as article_sort
+        from article_category c
+        left join article a on c.id = a.category_id
+        where model = #{modelId}
+        and c.status = 1
+        and a.status = 1
+        ORDER BY sort DESC , article_sort DESC
+    </select>
+
+    <select id="findByParam" parameterType="com.pieces.dao.model.ArticleCategory"  resultMap="ArticleCategoryResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from article_category
+        <where>
+            <if test="name != null">
+                name = "%"#{name}"%"
+            </if>
+
+            <if test="status != null">
+                and status = #{status}
+            </if>
+
+            <if test="sort != null">
+                and sort = #{sort}
+            </if>
+
+            <if test="model != null">
+                and model = #{model}
+            </if>
+
+            <if test="createUser != null">
+                and create_user = #{createUser}
+            </if>
+
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+
+            <if test="icon != null">
+                and icon = #{icon}
+            </if>
+        </where>
+    </select>
 </mapper>
