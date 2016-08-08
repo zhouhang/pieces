@@ -87,7 +87,7 @@
     </update>
 
     <!-- 根据模块id获取模块下的分类和文章列表 -->
-    <select id="findVoByModelId" parameterType="java.lang.Integer" resultMap="ArticleCategoryResultMap">
+    <select id="findVoByModelId" parameterType="java.lang.Integer" resultMap="ArticleCategoryVoResultMap">
         select
         c.id as id,c.name as name,c.sort as sort,c.model as model, c.icon,
         a.id as article_id, a.title as article_title, a.sort as article_sort
