@@ -109,7 +109,6 @@
     <#include "./inc/helper.ftl"/>
     <#include "./inc/footer.ftl"/>
     <script src="/js/layer/layer.js"></script>
-    <script src="/js/common.js"></script>
 
 
 </body>
