@@ -8,8 +8,11 @@ import com.pieces.dao.model.Article;
 import com.pieces.dao.model.Category;
 import com.pieces.dao.vo.ArticleVo;
 import com.pieces.dao.vo.CategoryVo;
+import com.pieces.dao.vo.CommodityVo;
 import com.pieces.service.ArticleService;
 import com.pieces.service.CategoryService;
+import com.pieces.service.HomeWeightService;
+import com.pieces.service.enums.WeightEnum;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -45,13 +48,17 @@ public class HomeController extends BaseController{
 	private CategoryService categoryService;
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
+	private HomeWeightService homeWeightService;
 
     @RequestMapping(value = "/")
     public String index(HttpServletRequest request,
                         HttpServletResponse response,
 						ModelMap model){
 		PageInfo<ArticleVo> page = articleService.findByModel(2,1,5);
+		List<CommodityVo> commodityVos = homeWeightService.getHomeCommoditys(WeightEnum.COMMODITY.name());
 		model.put("articles",page.getList());
+		model.put("commodityList",commodityVos);
         return "home";
     }
 
