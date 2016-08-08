@@ -49,7 +49,7 @@
                             <#if commodity.categoryId??>
                                 <input type="hidden" name="categoryId"  value="${commodity.categoryId }">
                             </#if>
-                            <#if commodity.breedIds??>
+                            <#if commodity.breedId??>
                                 <input type="hidden" name="breedId"  value="${commodity.breedId }">
                             </#if>
                                 <div class="drop-dowm">
