@@ -103,6 +103,14 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
     }
 
     @Override
+    public PageInfo<ArticleVo> findByModel(int model, int pageNum, int pageSize) {
+        PageInfo<ArticleVo> pageInfo = articleDao.findByModel(model,pageNum,pageSize);
+        return pageInfo;
+    }
+
+
+
+    @Override
     public ArticleCategory getCategoryById(Integer id) {
         return articleCategoryDao.findById(id);
     }

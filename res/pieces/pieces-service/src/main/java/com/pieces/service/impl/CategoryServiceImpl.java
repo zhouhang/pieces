@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.pieces.service.enums.CategoryEnum;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import com.pieces.tools.utils.PinyinUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -193,6 +194,18 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<CategoryVo> findBreedNoPage(CategoryVo categoryVo) {
 		return categoryDao.findBreedNoPage(categoryVo);
 	}
+
+
+	@Override
+	public List<CategoryVo> findByLevelAndPinyin(Integer level, String pinyin) {
+		CategoryVo categoryVo = new CategoryVo();
+		categoryVo.setLevel(level);
+		if(StringUtils.isNotBlank(pinyin)){
+			categoryVo.setPinyins(pinyin.split(","));
+		}
+		return categoryDao.findByLevelAndPinyin(categoryVo);
+	}
+
 
 	@Override
 	@Transactional

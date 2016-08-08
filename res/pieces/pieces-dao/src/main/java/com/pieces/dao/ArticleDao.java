@@ -12,4 +12,6 @@ public interface ArticleDao extends ICommonDao<Article>{
 
     public List<ArticleVo> findByParam(ArticleVo articleVo);
 
+    public PageInfo<ArticleVo>  findByModel(Integer model, Integer pageNum, Integer pageSize);
+
 }
