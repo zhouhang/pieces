@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,10 +42,14 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
 
     @Override
     @Transactional
-    public void saveOrUpdateArticle(Article article) {
+    public void saveOrUpdateArticle(Article article, Integer memberId) {
         if (article.getId() == null) {
+            article.setCreateUser(memberId);
+            article.setCreateTime(new Date());
             articleDao.create(article);
         } else {
+            article.setUpdateUser(memberId);
+            article.setUpdateTime(new Date());
             articleDao.update(article);
         }
     }
