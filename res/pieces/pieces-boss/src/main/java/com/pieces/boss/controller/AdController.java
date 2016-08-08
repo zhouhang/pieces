@@ -7,8 +7,7 @@ import com.pieces.dao.vo.AdVo;
 import com.pieces.service.AdService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.CodeEnum;
-import com.pieces.service.upload.AdUploadFile;
-import com.pieces.tools.bean.FileBo;
+import com.pieces.boss.upload.AdUploadFile;
 import com.pieces.tools.utils.Reflection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +15,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

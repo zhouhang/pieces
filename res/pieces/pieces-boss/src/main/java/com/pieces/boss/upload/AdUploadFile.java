@@ -1,8 +1,7 @@
-package com.pieces.service.upload;
+package com.pieces.boss.upload;
 
 import com.pieces.tools.bean.FileBo;
 import com.pieces.tools.upload.AbstractUploadFile;
-import com.pieces.tools.upload.DefaultUploadFile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
