@@ -89,11 +89,11 @@
     <!-- 根据模块id获取模块下的分类和文章列表 -->
     <select id="findVoByModelId" parameterType="java.lang.Integer" resultMap="ArticleCategoryResultMap">
         select
-        <include refid="Base_Column_List" />,
-        c.id as article_id, c.title as article_title, c.sort as article_sort
+        c.id as id,c.name as name,c.sort as sort,c.model as model, c.icon,
+        a.id as article_id, a.title as article_title, a.sort as article_sort
         from article_category c
         left join article a on c.id = a.category_id
-        where model = #{modelId}
+        where c.model = #{modelId}
         and c.status = 1
         and a.status = 1
         ORDER BY sort DESC , article_sort DESC
