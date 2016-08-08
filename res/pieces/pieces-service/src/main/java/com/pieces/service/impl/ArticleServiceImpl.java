@@ -99,4 +99,12 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
         List<ArticleCategory> list = this.queryCategory(category, 1,20).getList();
         return list;
     }
+
+    @Override
+    public PageInfo<ArticleVo> findByModel(int model, int pageNum, int pageSize) {
+        PageInfo<ArticleVo> pageInfo = articleDao.findByModel(model,pageNum,pageSize);
+        return pageInfo;
+    }
+
+
 }

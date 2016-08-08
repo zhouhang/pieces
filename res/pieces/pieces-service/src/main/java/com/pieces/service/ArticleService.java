@@ -1,7 +1,6 @@
 package com.pieces.service;
 
 import com.github.pagehelper.PageInfo;
-import com.pieces.dao.model.Area;
 import com.pieces.dao.model.Article;
 import com.pieces.dao.model.ArticleCategory;
 import com.pieces.dao.vo.ArticleCategoryVo;
@@ -77,5 +76,8 @@ public interface ArticleService extends ICommonService<Article> {
      * @return
      */
     public List<ArticleCategory> getCategoryByModelId(Integer modelId, Integer status);
+
+
+    public PageInfo<ArticleVo> findByModel(int model, int pageNum, int pageSize);
 
 }

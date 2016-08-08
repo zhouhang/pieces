@@ -149,4 +149,11 @@
         </where>
     </select>
 
+
+    <select id="findByModel" parameterType="java.lang.Integer" resultMap="ArticleVoResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from article
+        where model = #{model} and status = 1 order by sort desc
+    </select>
 </mapper>

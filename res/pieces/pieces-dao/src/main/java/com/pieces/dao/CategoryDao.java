@@ -19,4 +19,7 @@ public interface CategoryDao extends ICommonDao<Category>{
 	public List<Category> findBreedByName(String breedName);
 	public List<CategoryVo> findBreedByParentId(Integer parentId);
 	public List<CategoryVo> findBreedNoPage(CategoryVo categoryVo);
+
+
+	public List<CategoryVo> findByLevelAndPinyin(CategoryVo categoryVo);
 }

@@ -7,7 +7,9 @@ public class CategoryVo{
 	private Integer id;
 	
 	private String name;
-	
+
+	private String pinyin;
+
 	private String classifyName;
 	
 	private String parentId;
@@ -24,6 +26,8 @@ public class CategoryVo{
 	private String origins;
 	
 	private String levels;
+
+	private String[] pinyins;
 
 	public Integer getId() {
 		return id;
@@ -104,6 +108,22 @@ public class CategoryVo{
 
 	public void setLevels(String levels) {
 		this.levels = levels;
+	}
+
+	public String getPinyin() {
+		return pinyin;
+	}
+
+	public void setPinyin(String pinyin) {
+		this.pinyin = pinyin;
+	}
+
+	public String[] getPinyins() {
+		return pinyins;
+	}
+
+	public void setPinyins(String[] pinyins) {
+		this.pinyins = pinyins;
 	}
 
 	@Override
