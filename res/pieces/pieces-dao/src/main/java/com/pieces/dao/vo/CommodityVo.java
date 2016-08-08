@@ -319,7 +319,10 @@ public class CommodityVo implements Serializable {
         StringBuffer sb = new StringBuffer();
         try {
             for(Field field : fields){
-                if(field.get(this)!=null && (!field.getName().equals("serialVersionUID") &&  !field.getName().equals("checked"))){
+                if(field.get(this)!=null
+						&& (!field.getName().equals("serialVersionUID")
+						&&  !field.getName().equals("checked")
+						&& !field.getName().equals("categoryIds"))){
                     sb.append("&").append(field.getName()).append("=").append(field.get(this).toString());
                 }
             }

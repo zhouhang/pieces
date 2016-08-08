@@ -46,8 +46,12 @@
                             <th width="150"></th>
                             <th width="240">商品信息</th>
                             <th>
-                            <input type="hidden" name="categoryId"  value="${commodity.categoryId }">
-                            <input type="hidden" name="breedId"  value="${commodity.breedId }">
+                            <#if commodity.categoryId??>
+                                <input type="hidden" name="categoryId"  value="${commodity.categoryId }">
+                            </#if>
+                            <#if commodity.breedIds??>
+                                <input type="hidden" name="breedId"  value="${commodity.breedId }">
+                            </#if>
                                 <div class="drop-dowm">
                                     <div class="hd">
                                         <span>切割规格</span><i class="fa fa-chevron-down"></i>
