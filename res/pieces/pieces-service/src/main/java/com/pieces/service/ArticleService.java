@@ -1,7 +1,6 @@
 package com.pieces.service;
 
 import com.github.pagehelper.PageInfo;
-import com.pieces.dao.model.Area;
 import com.pieces.dao.model.Article;
 import com.pieces.dao.model.ArticleCategory;
 import com.pieces.dao.vo.ArticleCategoryVo;
@@ -54,7 +53,7 @@ public interface ArticleService extends ICommonService<Article> {
      * 保存文章分类信息
      * @param category
      */
-    public void saveOrUpdateCategory(ArticleCategory category);
+    public void saveOrUpdateCategory(ArticleCategory category, Integer memberId);
 
     /**
      * 删除文章分类 By ID
@@ -77,5 +76,15 @@ public interface ArticleService extends ICommonService<Article> {
      * @return
      */
     public List<ArticleCategory> getCategoryByModelId(Integer modelId, Integer status);
+
+
+    public PageInfo<ArticleVo> findByModel(int model, int pageNum, int pageSize);
+
+    /**
+     * 根据id获取类别信息
+     * @param id
+     * @return
+     */
+    public ArticleCategory getCategoryById(Integer id);
 
 }

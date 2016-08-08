@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <#include "./inc/meta.ftl"/>
-    <title>商品管理-boss-饮片B2B</title>
+    <title>编辑新闻分类-boss-饮片B2B</title>
 </head>
 
 <body>
@@ -12,16 +12,16 @@
     <div class="wrap">
         <div class="side">
             <dl>
-                <dt>单页面分类信息</dt>
+                <dt>文章类信息</dt>
                 <dd>
-                    <a class="curr" href="category.html">基本信息</a>
+                    <a class="curr" href="cms/category/index?model=${category.model}">基本信息</a>
                 </dd>
             </dl>
         </div>
         <div class="main">
-            <form action="" id="myform">
+            <form action="" id="form">
                 <div class="title">
-                    <h3><i class="fa fa-chevron-right"></i>新增单页面分类</h3>
+                    <h3><i class="fa fa-chevron-right"></i>修改文章分类</h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                         <button type="submit" class="btn btn-red">保存</button>
@@ -36,8 +36,9 @@
                                 <i>*</i>分类名称：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="" autocomplete="off" name="name" id="name"
+                                <input type="text" class="ipt" value="${category.name}" autocomplete="off" name="name" id="name"
                                        placeholder="">
+                                <input type="text" value="${category.id}" name="id" id="id" style="display: none">
                             </div>
                         </div>
                     </div>
@@ -61,9 +62,29 @@
                 this.formValidate();
             },
             formValidate: function () {
-                $('#myform').validator({
+                $('#form').validator({
                     fields: {
-                        name: 'required'
+                        name: 'required',
+                        sort: 'required'
+                    },
+                    valid: function (form) {
+                        if ($(form).isValid()) {
+                            $.ajax({
+                                url: 'cms/category/save',
+                                data: $(form).serialize(),
+                                type: 'POST',
+                                success: function (data) {
+                                    $("#submit").attr("disabled", "disabled");
+                                    if (data.status == "y") {
+                                        $.notify({
+                                            type: 'success',
+                                            title: '新增成功。',
+                                            delay: 3e3
+                                        });
+                                    }
+                                }
+                            });
+                        }
                     }
                 });
             }

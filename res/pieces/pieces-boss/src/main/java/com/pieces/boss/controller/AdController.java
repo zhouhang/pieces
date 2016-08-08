@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/ad")
-public class AdController {
+public class AdController extends BaseController{
 
 
     @Autowired

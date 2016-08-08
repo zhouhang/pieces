@@ -21,4 +21,17 @@ public enum ModelEnum {
     public void setValue(Integer value) {
         this.value = value;
     }
+
+    public static String getUrl(String uri, Integer model) {
+        String preStr = "";
+        switch (model) {
+            case 1 :
+                preStr = "help";
+                break;
+            case 2 :
+                preStr = "news";
+                break;
+        }
+        return preStr + "-" + uri;
+    }
 }

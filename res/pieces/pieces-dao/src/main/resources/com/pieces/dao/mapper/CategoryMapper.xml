@@ -153,4 +153,19 @@
 	        and a.parent_id = #{parentId}
 	        and a.status = 1
     </select>
+
+    <select id="findByLevelAndPinyin" parameterType="com.pieces.dao.vo.CategoryVo" resultType="com.pieces.dao.vo.CategoryVo">
+        SELECT id,name,pinyin
+        FROM category
+        WHERE 1=1
+        <if test="level != null">
+        and level = #{level}
+        </if>
+        <if test="pinyins != null">
+            and
+            <foreach collection="pinyins" item="item" index="index" open="(" close=")" separator=" or ">
+                pinyin like #{item}"%"
+            </foreach>
+        </if>
+    </select>
 </mapper>

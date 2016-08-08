@@ -3,6 +3,13 @@ package com.pieces.biz.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.github.pagehelper.PageInfo;
+import com.pieces.dao.model.Article;
+import com.pieces.dao.model.Category;
+import com.pieces.dao.vo.ArticleVo;
+import com.pieces.dao.vo.CategoryVo;
+import com.pieces.service.ArticleService;
+import com.pieces.service.CategoryService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -21,30 +28,49 @@ import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.utils.CommonUtils;
 import com.pieces.tools.utils.WebUtil;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * 处理主页业务
  * Created by wangbin on 2016/6/28.
  */
 @Controller
-public class HomeController {
+public class HomeController extends BaseController{
 	
 	@Autowired
 	private UserService userService;
-
+	@Autowired
+	private CategoryService categoryService;
+	@Autowired
+	private ArticleService articleService;
 
     @RequestMapping(value = "/")
     public String index(HttpServletRequest request,
-                        HttpServletResponse response){
+                        HttpServletResponse response,
+						ModelMap model){
+		PageInfo<ArticleVo> page = articleService.findByModel(2,1,5);
+		model.put("articles",page.getList());
         return "home";
     }
+
+	/**
+	查询所有分类和品种信息
+	 */
+	@RequestMapping(value = "/category")
+	@ResponseBody
+	public List category(Integer level,
+						 String pinyin){
+		List<CategoryVo> categoryList =  categoryService.findByLevelAndPinyin(level,pinyin);
+		return categoryList;
+	}
+
     
 	/**
 	 * 是否弹框登录
 	 * 
 	 * @param model
-	 * @param userName
-	 * @param password
 	 * @param request
 	 * @param response
 	 * @throws Exception
@@ -65,7 +91,6 @@ public class HomeController {
 
     /**
 	 * 进入弹框登录页
-	 * 
 	 * @param model
 	 * @param request
 	 * @return
