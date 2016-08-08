@@ -165,6 +165,7 @@ public class CommodityController extends BaseController {
 		commodityVO.setCategoryId(null);
 		PageInfo<CommodityVo> pageInfo = new PageInfo<CommodityVo>(commodityService.query(commodityVO, pageNum, pageSize).getList());
 		commodityVO.setCategoryId(cid);
+		commodityVO.setCategoryIds(null);
 		indexParameter.setSpecNameStr(specs);
 		indexParameter.setOriginOfNameStr(origins);
 		indexParameter.setLevelNameStr(level);
