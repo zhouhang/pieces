@@ -40,9 +40,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Category">
         insert into
-        category (name,parent_id,aliases,status,level,specs,origins,levels,create_time)
+        category (name,parent_id,aliases,pinyin,status,level,specs,origins,levels,create_time)
         values
-        (#{name},#{parentId},#{aliases},#{status},#{level},#{specs},#{origins},#{levels},#{createTime})
+        (#{name},#{parentId},#{aliases},#{pinyin},#{status},#{level},#{specs},#{origins},#{levels},#{createTime})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.Category">
@@ -59,6 +59,10 @@
                                             
             <if test="aliases != null">
                 aliases = #{aliases},
+            </if>
+
+            <if test="pinyin != null">
+                pinyin = #{pinyin},
             </if>
                                             
             <if test="status != null">
