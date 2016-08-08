@@ -77,7 +77,9 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
 
     @Override
     @Transactional
-    public void saveOrUpdateCategory(ArticleCategory category) {
+    public void saveOrUpdateCategory(ArticleCategory category, Integer memberId) {
+        category.setCreateTime(new Date());
+        category.setCreateUser(memberId);
         if (category.getId() == null) {
             articleCategoryDao.create(category);
         } else {
@@ -98,5 +100,10 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
         category.setStatus(status);
         List<ArticleCategory> list = this.queryCategory(category, 1,20).getList();
         return list;
+    }
+
+    @Override
+    public ArticleCategory getCategoryById(Integer id) {
+        return articleCategoryDao.findById(id);
     }
 }

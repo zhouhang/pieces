@@ -3,7 +3,6 @@ package com.pieces.boss.controller;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Article;
 import com.pieces.dao.model.ArticleCategory;
-import com.pieces.dao.model.Category;
 import com.pieces.dao.model.Member;
 import com.pieces.dao.vo.ArticleVo;
 import com.pieces.service.ArticleService;
@@ -45,6 +44,7 @@ public class CMSController {
      */
     @RequestMapping(value = "article/index", method = RequestMethod.GET)
     public String index(ArticleVo articleVo, Integer pageSize, Integer pageNum, ModelMap model){
+        String url = "";
 
         pageNum=pageNum==null?1:pageNum;
         pageSize=pageSize==null?10:pageSize;
@@ -58,41 +58,64 @@ public class CMSController {
         model.put("vo", articleVo);
         model.put("param", Reflection.serialize(articleVo));
 
-        return "help";
+        if (articleVo.getModel() == ModelEnum.help.getValue()) {
+            url = "help";
+        } else {
+            url = "news";
+        }
+        return url;
     }
 
     /**
-     * 文章详情页
+     * 添加文章
      * @return
      */
     @RequestMapping(value = "article/add", method = RequestMethod.GET)
     public String add(Integer model, ModelMap modelMap){
+        String url = "";
+
         List<ArticleCategory> categories = articleService.getCategoryByModelId(model, StatusEnum.enable.getValue());
         modelMap.put("categorys",categories);
         modelMap.put("model", model);
 
-        return "help-detail-add";
+        return ModelEnum.getUrl("detail-add",model);
     }
 
 
+    /**
+     * 文章详情
+     * @param id
+     * @param modelMap
+     * @return
+     */
     @RequestMapping(value = "article/detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable("id") Integer id, ModelMap modelMap){
+
         Article article = articleService.findArticleById(id);
         modelMap.put("article",article);
         List<ArticleCategory> categories = articleService.getCategoryByModelId(article.getModel(), StatusEnum.enable.getValue());
         modelMap.put("categorys",categories);
 
-        return "help-detail-editer";
+        return ModelEnum.getUrl("detail-editer", article.getModel());
     }
 
 
-
+    /**
+     * 删除文章
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "article/delete/{id}", method = RequestMethod.GET)
     @ResponseBody
     public String delete (@PathVariable("id") Integer id){
         return "help-detail";
     }
 
+    /**
+     * 保存文章
+     * @param article
+     * @return
+     */
     @RequestMapping(value = "article/save", method = RequestMethod.POST)
     @ResponseBody
     public Result save (Article article){
@@ -107,23 +130,53 @@ public class CMSController {
      * @return
      */
     @RequestMapping(value = "category/index", method = RequestMethod.GET)
-    public String categoryIndex(Integer  model){
+    public String categoryIndex(ArticleCategory category, Integer pageSize, Integer pageNum, ModelMap modelMap){
 
-        return "help-category";
+        pageNum=pageNum==null?1:pageNum;
+        pageSize=pageSize==null?10:pageSize;
+        PageInfo<ArticleCategory> pageInfo = articleService.queryCategory(category, pageNum, pageSize);
+        modelMap.put("pageInfo", pageInfo);
+        modelMap.put("vo", category);
+        modelMap.put("param", Reflection.serialize(category));
+
+        return ModelEnum.getUrl("category", category.getModel());
     }
-
 
     /**
-     * 类别详情页
+     * 新增类别页面
+     * @param model
+     * @param modelMap
      * @return
      */
-    @RequestMapping(value = "category/detail", method = RequestMethod.GET)
-    public String categoryDetail(Integer model){
-        return "help-category-detail";
+    @RequestMapping(value = "category/add", method = RequestMethod.GET)
+    public String addCategory(Integer model, ModelMap modelMap) {
+        modelMap.put("model", model);
+
+        return ModelEnum.getUrl("category-add", model);
     }
 
+    /**
+     * 保存类别信息
+     * @param category
+     * @return
+     */
+    @RequestMapping(value = "category/save", method = RequestMethod.POST)
+    @ResponseBody
+    public Result saveCategory(ArticleCategory category) {
+        Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
+        articleService.saveOrUpdateCategory(category, mem.getId());
+        return new Result(true).info("保存成功");
+    }
 
-//    public Result save
-
+    /**
+     * 修改类别页面
+     * @return
+     */
+    @RequestMapping(value = "category/detail/{id}", method = RequestMethod.GET)
+    public String categoryDetail(@PathVariable("id")Integer id, ModelMap modelMap){
+        ArticleCategory category = articleService.getCategoryById(id);
+        modelMap.put("category", category);
+        return  ModelEnum.getUrl("category-editer", category.getModel());
+    }
 
 }
