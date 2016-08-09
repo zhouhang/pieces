@@ -168,4 +168,17 @@
             </foreach>
         </if>
     </select>
+
+
+    <select id="findByIds" parameterType="java.lang.Integer" resultType="com.pieces.dao.model.Category">
+        select   <include refid="Base_Column_List" />
+        from category a
+        where id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        and status = 1
+    </select>
+
+
 </mapper>

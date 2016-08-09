@@ -4,14 +4,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.model.Ad;
 import com.pieces.dao.model.Article;
 import com.pieces.dao.model.Category;
+import com.pieces.dao.vo.AdVo;
 import com.pieces.dao.vo.ArticleVo;
 import com.pieces.dao.vo.CategoryVo;
 import com.pieces.dao.vo.CommodityVo;
-import com.pieces.service.ArticleService;
-import com.pieces.service.CategoryService;
-import com.pieces.service.HomeWeightService;
+import com.pieces.service.*;
+import com.pieces.service.enums.CodeEnum;
 import com.pieces.service.enums.WeightEnum;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -26,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.pieces.biz.shiro.BizToken;
 import com.pieces.dao.model.User;
-import com.pieces.service.UserService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.utils.CommonUtils;
@@ -34,6 +34,7 @@ import com.pieces.tools.utils.WebUtil;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 处理主页业务
@@ -50,15 +51,33 @@ public class HomeController extends BaseController{
 	private ArticleService articleService;
 	@Autowired
 	private HomeWeightService homeWeightService;
-
+	@Autowired
+	private AdService adService;
+	/**
+	 * 首页
+	 * @param request
+	 * @param response
+	 * @param model
+     * @return
+     */
     @RequestMapping(value = "/")
     public String index(HttpServletRequest request,
                         HttpServletResponse response,
 						ModelMap model){
+		//新闻
 		PageInfo<ArticleVo> page = articleService.findByModel(2,1,5);
-		List<CommodityVo> commodityVos = homeWeightService.getHomeCommoditys(WeightEnum.COMMODITY.name());
 		model.put("articles",page.getList());
+		//商品和分类
+		List<CommodityVo> commodityVos = homeWeightService.getHomeCommoditys(WeightEnum.COMMODITY.name());
+		List<Category> categoryList = homeWeightService.getHomeCategorys(WeightEnum.CATEGORY.name());
+		Map<Integer,List<Category>> categoryBreedList = homeWeightService.getHomeBreeds(WeightEnum.BREED.name());
+		Map<Integer,List<CommodityVo>> cateCommodityList = homeWeightService.getHomeCategoryCommoditys(WeightEnum.CATE_COMMODITY.name());
 		model.put("commodityList",commodityVos);
+		model.put("categoryList",categoryList);
+		model.put("categoryBreedList",categoryBreedList);
+		model.put("cateCommodityList",cateCommodityList);
+		//广告
+		adModels(model);
         return "home";
     }
 
@@ -76,7 +95,6 @@ public class HomeController extends BaseController{
     
 	/**
 	 * 是否弹框登录
-	 * 
 	 * @param model
 	 * @param request
 	 * @param response
@@ -107,4 +125,16 @@ public class HomeController extends BaseController{
 		model.put("url", url);
 		return "login_mini";
 	}
+
+
+	private void adModels(ModelMap model){
+		List<AdVo> adBannerList =adService.findByType(CodeEnum.AD_BANNER.getId());
+		List<AdVo> adSearchList =adService.findByType(CodeEnum.AD_SEARCH.getId());
+
+		model.put(CodeEnum.AD_BANNER.name(),adBannerList);
+		model.put(CodeEnum.AD_SEARCH.name(),adSearchList);
+
+
+	}
+
 }

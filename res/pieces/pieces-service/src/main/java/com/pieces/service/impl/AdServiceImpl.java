@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by wangbin on 2016/8/3.
@@ -40,6 +41,11 @@ public class AdServiceImpl extends AbsCommonService<Ad> implements AdService{
     public PageInfo<AdVo> findByParam(AdVo adVo, int pageNum, int pageSize) {
         PageInfo<AdVo> adVoPageInfo = adDao.findByParam(adVo,pageNum,pageSize);
         return adVoPageInfo;
+    }
+
+    @Override
+    public List<AdVo> findByType(Integer typeId) {
+        return adDao.findByType(typeId);
     }
 
 

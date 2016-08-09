@@ -5,7 +5,7 @@ package com.pieces.service.enums;
  */
 public enum  WeightEnum {
 
-    COMMODITY;
+    COMMODITY,CATEGORY,BREED,CATE_COMMODITY;
 
 
 }

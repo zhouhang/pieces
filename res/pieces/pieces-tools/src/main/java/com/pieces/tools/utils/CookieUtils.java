@@ -5,6 +5,8 @@ import org.apache.commons.lang.StringUtils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 /**
  * cookie工具类
@@ -32,12 +34,13 @@ public class CookieUtils {
      *
      * @param name
      */
-    public static String getCookieValue(HttpServletRequest request, String name) {
+    public static String getCookieValue(HttpServletRequest request, String name)throws Exception {
         Cookie[] cookies = request.getCookies();
         if(cookies == null)	return null;
         for (Cookie ck : cookies) {
-            if (StringUtils.equalsIgnoreCase(name,ck.getName()))
-                return ck.getValue();
+            if (StringUtils.equalsIgnoreCase(name,ck.getName())){
+                return URLDecoder.decode(ck.getValue(),"utf-8");
+            }
         }
         return null;
     }
@@ -51,8 +54,8 @@ public class CookieUtils {
      * @param maxAge
      */
     public static void setCookie( HttpServletResponse response, String name,
-                                 String value, int maxAge) {
-        Cookie cookie = new Cookie(name, value);
+                                 String value, int maxAge) throws Exception{
+        Cookie cookie = new Cookie(name, URLEncoder.encode(value,"utf-8"));
         cookie.setMaxAge(maxAge);
         cookie.setPath("/");
         response.addCookie(cookie);

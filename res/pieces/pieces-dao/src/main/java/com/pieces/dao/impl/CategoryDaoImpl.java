@@ -8,6 +8,8 @@ import com.pieces.dao.vo.CategoryVo;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -92,6 +94,11 @@ public class CategoryDaoImpl extends BaseDaoImpl implements CategoryDao {
     @Override
     public List<CategoryVo> findByLevelAndPinyin(CategoryVo categoryVo) {
         return getSqlSession().selectList("com.pieces.dao.CategoryMapper.findByLevelAndPinyin", categoryVo);
+    }
+
+    @Override
+    public List<Category> findByIds(Collection<Integer> collection) {
+        return getSqlSession().selectList("com.pieces.dao.CategoryMapper.findByIds", new ArrayList<>(collection));
     }
 
 }

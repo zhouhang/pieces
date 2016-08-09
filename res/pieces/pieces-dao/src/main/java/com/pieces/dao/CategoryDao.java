@@ -1,5 +1,6 @@
 package com.pieces.dao;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
@@ -17,9 +18,13 @@ public interface CategoryDao extends ICommonDao<Category>{
 	
 	//根据条件查询分类表,分页
 	public List<Category> findBreedByName(String breedName);
+
 	public List<CategoryVo> findBreedByParentId(Integer parentId);
+
 	public List<CategoryVo> findBreedNoPage(CategoryVo categoryVo);
 
-
 	public List<CategoryVo> findByLevelAndPinyin(CategoryVo categoryVo);
+
+	public List<Category>  findByIds(Collection<Integer> collection);
+
 }

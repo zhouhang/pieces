@@ -122,4 +122,15 @@
         </if>
     </select>
 
+    <select id="findByType" parameterType="java.lang.Integer"  resultMap="AdResultMapVo">
+        select
+        a.id,a.title,a.type_id,a.picture_url,a.start_time,a.end_time,a.link,a.sort,a.status
+        from ad a
+        where a.type_id = #{typeId}
+        and status = 1
+        and DATE_FORMAT(now(), '%Y-%m-%d %h:%i:%s') >= DATE_FORMAT(a.start_time,'%Y-%m-%d %h:%i:%s')
+        and DATE_FORMAT(now(), '%Y-%m-%d %h:%i:%s') <![CDATA[<=]]> DATE_FORMAT(a.end_time,'%Y-%m-%d %h:%i:%s')
+        order by a.sort desc
+    </select>
+
 </mapper>

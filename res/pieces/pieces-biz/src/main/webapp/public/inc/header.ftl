@@ -4,7 +4,7 @@
 <div class="header">
     <div class="wrap">
         <div class="logo">
-            <a href="/">饮片B2B首页</a>
+            <a href="/">上工之选首页</a>
         </div>
         <div class="search">
             <div class="form">
@@ -14,16 +14,7 @@
                 </form>
             </div>
             <div class="hotwords">
-                <a href="/commodity/search?keyword=三七">三七</a>
-                <a href="/commodity/search?keyword=黄芪">黄芪</a>
-                <a href="/commodity/search?keyword=当归">当归</a>
-                <a href="/commodity/search?keyword=西洋参">西洋参</a>
-                <a href="/commodity/search?keyword=党参">党参</a>
-                <a href="/commodity/search?keyword=天麻">天麻</a>
-                <a href="/commodity/search?keyword=人参">人参</a>
-                <a href="/commodity/search?keyword=枸杞子">枸杞子</a>
-                <a href="/commodity/search?keyword=丹参">丹参</a>
-                <a href="/commodity/search?keyword=玛咖">玛咖</a>
+                <@search_keyword />
             </div>
         </div>
     </div>
@@ -31,14 +22,171 @@
 
 
 <!-- nav start -->
+<!-- nav start -->
 <div class="nav">
     <div class="wrap">
-        <div class="cat">
-            <h2 class="hd">商品分类</h2>
-            <div class="bd">
-                <dl>
-                    <dt><a href="#!">团购分类1</a></dt>
-                </dl>
+        <div class="cat cat-show">
+            <div class="hd">商品分类</div>
+            <div class="bd" id="jcat">
+                <ul>
+                    <li>
+                        <div class="cat-name">根茎类</div>
+                        <div class="cat-list">
+                            <dl>
+                                <dt><b>A</b>~<b>E</b> &gt;</dt>
+                                <dd>
+                                    <a href="#">南天竹叶</a>
+                                    <a href="#">密蒙花</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><b>F</b>~<b>J</b> &gt;</dt>
+                                <dd>
+                                    <a href="#">南天竹叶</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><b>K</b>~<b>O</b> &gt;</dt>
+                                <dd>
+                                    <a href="#">南天竹叶</a>
+                                    <a href="#">密蒙花</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><b>P</b>~<b>T</b> &gt;</dt>
+                                <dd>
+                                    <a href="#">南天竹叶</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><b>U</b>~<b>Z</b> &gt;</dt>
+                                <dd>
+                                    <a href="#">南天竹叶</a>
+                                    <a href="#">密蒙花</a>
+                                </dd>
+                            </dl>
+
+                            <div class="more">
+                                <a href="#" class="c-blue">查看更多 &gt;</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cat-name">果实籽仁类</div>
+                        <div class="cat-list">
+                            <dl>
+                                <dt><b>A</b>~<b>E</b> &gt;</dt>
+                                <dd>
+                                    <a href="#">栀子</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cat-name">全草类</div>
+                        <div class="cat-list">
+                            <dl>
+                                <dt><b>A</b>~<b>E</b> &gt;</dt>
+                                <dd>
+                                    <a href="#">鸡蛋花</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cat-name">花类</div>
+                        <div class="cat-list">
+                            <dl>
+                                <dt><b>A</b>~<b>E</b> &gt;</dt>
+                                <dd>
+                                    <a href="#">龙胆</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cat-name">叶类</div>
+                        <div class="cat-list">
+                            <dl>
+                                <dt><b>A</b>~<b>E</b> &gt;</dt>
+                                <dd>
+                                    <a href="#">密蒙花</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cat-name">树皮类</div>
+                        <div class="cat-list">
+                            <dl>
+                                <dt><b>A</b>~<b>E</b> &gt;</dt>
+                                <dd>
+                                    <a href="#">淡竹叶</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cat-name">藤木类</div>
+                        <div class="cat-list">
+                            <dl>
+                                <dt><b>A</b>~<b>E</b> &gt;</dt>
+                                <dd>
+                                    <a href="#">藤木类</a>
+                                    <a href="#">密蒙花</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cat-name">树脂类</div>
+                        <div class="cat-list">
+                            <dl>
+                                <dt><b>A</b>~<b>E</b> &gt;</dt>
+                                <dd>
+                                    <a href="#">龙胆</a>
+                                    <a href="#">天花粉</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cat-name">菌藻类</div>
+                        <div class="cat-list">
+                            <dl>
+                                <dt><b>A</b>~<b>E</b> &gt;</dt>
+                                <dd>
+                                    <a href="#">南天竹叶</a>
+                                    <a href="#">密蒙花</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cat-name">矿物类</div>
+                        <div class="cat-list">
+                            <dl>
+                                <dt><b>A</b>~<b>E</b> &gt;</dt>
+                                <dd>
+                                    <a href="#">南天竹叶</a>
+                                    <a href="#">密蒙花</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="cat-name">动物类</div>
+                        <div class="cat-list">
+                            <dl>
+                                <dt><b>A</b>~<b>E</b> &gt;</dt>
+                                <dd>
+                                    <a href="#">龙胆</a>
+                                    <a href="#">天花粉</a>
+                                </dd>
+                            </dl>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="menu">
@@ -51,7 +199,7 @@
             </ul>
         </div>
         <div class="plus">
-            <a class="btn btn-gray" href="/center/enquiry/index"><i class="fa fa-question-circle"></i>快速询价</a>
+            <a href="#" class="btn btn-gray"><i class="fa fa-question-circle"></i>快速询价</a>
         </div>
     </div>
 </div><!-- nav end -->

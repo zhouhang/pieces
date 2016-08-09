@@ -39,5 +39,11 @@ public interface CategoryService extends ICommonService<Category> {
 	public List<CategoryVo> findByLevelAndPinyin(Integer level,String pinyin);
 
 	void allCategory2Pinyin();
+
+	public List<Category> findByIds(List<Integer> ids);
+
+	public List<Category> findByIds(String ids);
+
+
 	
 }

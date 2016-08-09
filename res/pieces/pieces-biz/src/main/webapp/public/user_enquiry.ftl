@@ -71,8 +71,8 @@
                                         <td><div class="ipt-wrap"><input type="text" class="ipt" value="${enquiryCommodity.specs!}" name="specs" autocomplete="off"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text" class="ipt" value="${enquiryCommodity.level!}" name="level" autocomplete="off"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text" class="ipt" value="${enquiryCommodity.origin!}" name="origin" autocomplete="off"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="${enquiryCommodity.amount!}" name="amount" autocomplete="off"></div><span class="error"></span></td>
-                                        <td><div class="ipt-wrap"><input type="text" class="ipt price" value="${enquiryCommodity.expectPrice!}" name="expectPrice" autocomplete="off"></div><span class="error"></span></td>
+                                        <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="${enquiryCommodity.amount!}" name="amount" autocomplete="off"><span class="error"></span></div></td>
+                                        <td><div class="ipt-wrap"><input type="text" class="ipt price" value="${enquiryCommodity.expectPrice!}" name="expectPrice" autocomplete="off"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text" class="ipt date" value="${enquiryCommodity.expectDate?string("yyyy-MM-dd")}" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                         <td>
                                             <a class="add c-blue" href="javascript:;">添加</a>
@@ -92,8 +92,8 @@
                                             <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.specName!}" name="specs" autocomplete="off"><span class="error"></span></div></td>
                                             <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.levelName!}" name="level" autocomplete="off"><span class="error"></span></div></td>
                                             <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.originOfName!}" name="origin" autocomplete="off"><span class="error"></span></div></td>
-                                            <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"></div><span class="error"></span></td>
-                                            <td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"></div><span class="error"></span></td>
+                                            <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"><span class="error"></span></div></td>
+                                            <td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"><span class="error"></span></div></td>
                                             <td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                             <td>
                                                 <a class="add c-blue" href="javascript:;">添加</a>
@@ -110,8 +110,8 @@
                                                 <td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="specs" autocomplete="off"><span class="error"></span></div></td>
                                                 <td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"><span class="error"></span></div></td>
                                                 <td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"><span class="error"></span></div></td>
-                                                <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"></div><span class="error"></span></td>
-                                                <td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"></div><span class="error"></span></td>
+                                                <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"><span class="error"></span></div></td>
+                                                <td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"><span class="error"></span></div></td>
                                                 <td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                                 <td>
                                                     <a class="add c-blue" href="javascript:;">添加</a>
@@ -119,7 +119,6 @@
                                             </tr>
                                         </#if>
 								</#if>
-
 	                			</tbody>
 	                		</table>
 	                		<div class="submit">
@@ -444,6 +443,8 @@
                             $origin.nextAll('.error').css('display','block').html('此处不可空白');
                             result.pass = false;
                         }
+
+
 
                         if (amount) {
                             $amount.nextAll('.error').css('display','none').html('');

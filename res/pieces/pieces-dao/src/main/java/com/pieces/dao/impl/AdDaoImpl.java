@@ -52,4 +52,10 @@ public class AdDaoImpl extends BaseDaoImpl implements AdDao {
         PageInfo page = new PageInfo(list);
         return page;
     }
+
+    @Override
+    public List<AdVo> findByType(Integer typeId) {
+        List<AdVo> list = getSqlSession().selectList("com.pieces.dao.AdMapper.findByType", typeId);
+        return list;
+    }
 }

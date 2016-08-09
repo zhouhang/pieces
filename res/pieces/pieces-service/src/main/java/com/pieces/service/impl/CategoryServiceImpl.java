@@ -1,5 +1,6 @@
 package com.pieces.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -217,6 +218,20 @@ public class CategoryServiceImpl implements CategoryService {
 			category.setPinyin(pinyin);
 			this.update(category);
 		}
+	}
+
+	@Override
+	public List<Category> findByIds(List<Integer> ids) {
+		return categoryDao.findByIds(ids);
+	}
+
+	@Override
+	public List<Category> findByIds(String ids) {
+		List<Integer> list = new ArrayList<>();
+		for(String id :ids.split(",")){
+			list.add(Integer.parseInt(id));
+		}
+		return categoryDao.findByIds(list);
 	}
 
 
