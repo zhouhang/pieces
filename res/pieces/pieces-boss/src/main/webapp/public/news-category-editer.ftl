@@ -23,7 +23,7 @@
                 <div class="title">
                     <h3><i class="fa fa-chevron-right"></i>修改文章分类</h3>
                     <div class="extra">
-                        <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
+                        <a class="btn btn-gray" href="cms/category/index?model=${category.model}">返回</a>
                         <button type="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>

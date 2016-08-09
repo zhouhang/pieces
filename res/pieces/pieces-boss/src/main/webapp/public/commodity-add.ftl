@@ -22,7 +22,7 @@
                 <div class="title">
                     <h3><i class="fa fa-chevron-right"></i>新增商品</h3>
                     <div class="extra">
-                        <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
+                        <a class="btn btn-gray" href="/commodity/index">返回</a>
                         <button type="button" id="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>

@@ -22,7 +22,7 @@
                 <div class="title">
                     <h3><i class="fa fa-chevron-right"></i>修改商品“${commodity.name}”</h3>
                     <div class="extra">
-                        <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
+                        <a class="btn btn-gray" href="/commodity/index">返回</a>
                         <button type="button" class="btn btn-gray" onclick="window.location.reload();">重置</button>
                         <@shiro.hasPermission name="commodity:delete">
                         <button type="button" id="delete" class="btn btn-gray">删除</button>

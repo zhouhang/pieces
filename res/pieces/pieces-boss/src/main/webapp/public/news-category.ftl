@@ -33,7 +33,6 @@
                     <td></td>
                     <td><div class="ipt-wrap"><input type="text" name="name" class="ipt" value="${vo.name}"></div></td>
                     <td></td>
-                    <td></td>
                 </tr>
                 </thead>
                 <tfoot></tfoot>
