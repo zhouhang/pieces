@@ -7,8 +7,6 @@
 
 <body>
 
-    <#include "./inc/nav.ftl"/>
-
     <#include "./inc/header.ftl"/>
 
     <div class="news">
@@ -24,10 +22,10 @@
                 </div>
             </div>
             <div class="main">
-                <h1>${articles.title}</h1>
-                <div class="date">发布时间：${articles.createTime}</div>
+                <h1>${article.title}</h1>
+                <div class="date">发布时间：${article.createTime?date}</div>
                 <div class="article">
-                    ${articles.content}
+                    ${article.content}
                 </div>
             </div>
         </div>
