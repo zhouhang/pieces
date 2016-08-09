@@ -61,7 +61,7 @@
                                 <i>*</i>发布时间:
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="" name="publishedDate" autocomplete="off" placeholder="" onclick="laydate()">
+                                <input type="text" class="ipt" value="<#if article.publishedDate?exists>${article.publishedDate?date}</#if>" name="publishedDate" autocomplete="off" placeholder="" onclick="laydate()">
                             </div>
                         </div>
 

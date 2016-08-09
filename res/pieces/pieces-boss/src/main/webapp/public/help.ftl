@@ -49,7 +49,7 @@
                     </td>
                     <td></td>
                     <td>
-                        <select id="" name="statu">
+                        <select id="status" name="status">
                             <option value=""></option>
                             <option value="1">激活</option>
                             <option value="0">禁用</option>
@@ -95,9 +95,16 @@
                 //初始化方法区
                 init: function () {
                     page.fn.filter();
+                    $("#status").val("${vo.status}");
+                    $("#categoryId").val("${vo.categoryId}");
                 },
                 // 筛选
                 filter: function () {
+                    var url = "/cms/article/index?model=1";
+                    $("#reset").on("click", function(){
+                        window.location.href=url;
+                    })
+
                     var $ipts = $('.chart .ipt, .chart select');
 
                     $('#submit').on('click', function () {
@@ -106,7 +113,8 @@
                             var val = $.trim(this.value);
                             val && params.push($(this).attr('name') + '=' + val);
                         })
-                        console.log(params.join('&'))
+//                        console.log(params.join('&'))
+                        window.location.href = url + "&" + params.join('&');
                     })
                 }
             }

@@ -33,6 +33,9 @@ public class Article  implements Serializable {
 	
 	//1 帮助中心 2 新闻模块
 	private Integer model;
+
+	// 文章发布时间
+	private Date publishedDate;
 	
 	public Article(){}
 	
@@ -69,10 +72,16 @@ public class Article  implements Serializable {
 	}
 	
 	public String getContent() {
+		if (content!=null) {
+			content = content.replace("&lt","<").replace("&gt",">");
+		}
 		return content;
 	}
 
 	public void setContent(String content) {
+		if (content!=null) {
+			content = content.replace("&lt","<").replace("&gt",">");
+		}
 		this.content = content;
 	}
 	
@@ -123,5 +132,12 @@ public class Article  implements Serializable {
 	public void setModel(Integer model) {
 		this.model = model;
 	}
-	
+
+	public Date getPublishedDate() {
+		return publishedDate;
+	}
+
+	public void setPublishedDate(Date publishedDate) {
+		this.publishedDate = publishedDate;
+	}
 }

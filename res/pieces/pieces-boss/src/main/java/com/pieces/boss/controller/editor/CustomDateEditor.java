@@ -20,6 +20,9 @@ public class CustomDateEditor extends PropertyEditorSupport {
 		Date value = null;
 		if (null != text && !text.equals("")) {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			if (text.length()<12) {
+				text += " 00:00:00";
+			}
 			try {
 				value = df.parse(text);
 			} catch (Exception e) {

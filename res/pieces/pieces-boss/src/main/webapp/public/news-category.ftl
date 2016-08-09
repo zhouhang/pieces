@@ -70,6 +70,12 @@
                 },
                 // 筛选
                 filter: function() {
+                    var url = "/cms/category/index?model=2";
+
+                    $("#reset").on("click", function(){
+                        window.location.href=url;
+                    })
+
                     var $ipts = $('.chart .ipt, .chart select');
 
                     $('#submit').on('click', function() {
@@ -79,6 +85,7 @@
                             val && params.push($(this).attr('name') + '=' + val);
                         })
                         // console.log(params.join('&'))
+                        location.href=url + "&" + params.join('&');
                     })
                 }
             }

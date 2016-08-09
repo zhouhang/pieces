@@ -29,7 +29,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("cms/")
-public class CMSController {
+public class CMSController extends BaseController{
 
     @Autowired
     ArticleService articleService;

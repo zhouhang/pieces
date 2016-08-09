@@ -105,7 +105,7 @@
         from article_category
         <where>
             <if test="name != null">
-                name = "%"#{name}"%"
+                name like "%"#{name}"%"
             </if>
 
             <if test="status != null">

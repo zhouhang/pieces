@@ -11,6 +11,7 @@
             <result column="create_time"  property="createTime" />
             <result column="update_user"  property="updateUser" />
             <result column="update_time"  property="updateTime" />
+            <result column="published_date"  property="publishedDate" />
             <result column="sort"  property="sort" />
             <result column="model"  property="model" />
     </resultMap>
@@ -20,7 +21,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,title,category_id,status,content,create_user,create_time,update_user,update_time,sort,model
+        id,title,published_date,category_id,status,content,create_user,create_time,update_user,update_time,sort,model
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="ArticleResultMap">
@@ -43,9 +44,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Article">
         insert into
-        article (title,category_id,status,content,create_user,create_time,update_user,update_time,sort,model)
+        article (title,category_id,status,content,create_user,create_time,update_user,update_time,sort,model,published_date)
         values
-        (#{title},#{categoryId},#{status},#{content},#{createUser},#{createTime},#{updateUser},#{updateTime},#{sort},#{model})
+        (#{title},#{categoryId},#{status},#{content},#{createUser},#{createTime},#{updateUser},#{updateTime},#{sort},#{model},#{publishedDate})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.Article">
@@ -91,6 +92,11 @@
             <if test="model != null">
                 model = #{model},
             </if>
+
+            <if test="publishedDate != null">
+                published_date = #{publishedDate},
+            </if>
+
                             
         </set>
         where id = #{id}
@@ -102,7 +108,7 @@
         a.id as id,a.title as title,a.category_id as category_id,
         a.status as status,
         a.create_user as create_user,a.create_time as create_time,
-        a.update_user as update_user,a.update_time as update_time,
+        a.update_user as update_user,a.update_time as update_time,published_date,
         a.sort as sort, a.model as model,c.name as articleCategoryName
         from article a
         left join article_category c on a.category_id = c.id
@@ -146,6 +152,10 @@
             <if test="articleCategoryName != null">
                 and c.name like "%"#{articleCategoryName}"%"
             </if>
+            <if test="publishedDate != null">
+                and DATE_FORMAT(published_date,  '%Y-%m-%d') =  DATE_FORMAT(#{publishedDate},  '%Y-%m-%d')
+            </if>
+
         </where>
     </select>
 

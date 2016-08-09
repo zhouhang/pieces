@@ -47,9 +47,9 @@
                         </#list>
                         </select>
                     </td>
-                    <td><input type="text" class="ipt" value="" onclick="laydate()"></div></td>
+                    <td><input type="text" name="publishedDate" class="ipt" value="<#if vo.publishedDate?exists>${vo.publishedDate?date}</#if>" onclick="laydate()"></div></td>
                     <td>
-                        <select id="" name="statu">
+                        <select id="status" name="status">
                             <option value=""></option>
                             <option value="1">激活</option>
                             <option value="0">禁用</option>
@@ -67,7 +67,7 @@
                         <div class="tl">${article.title}</div>
                     </td>
                     <td>${article.articleCategoryName}</td>
-                    <td><#if article.createTime?exists>${article.createTime?date}</#if></td>
+                    <td><#if article.publishedDate?exists>${article.publishedDate?date}</#if></td>
                     <td><#if article.status ==1>激活<#else>禁用</#if></td>
                     <td><a href="cms/article/detail/${article.id}">修改</a></td>
                 </tr>
@@ -96,9 +96,16 @@
                 //初始化方法区
                 init: function () {
                     page.fn.filter();
+                    $("#status").val("${vo.status}");
+                    $("#categoryId").val("${vo.categoryId}");
                 },
                 // 筛选
                 filter: function () {
+                    var url = "cms/article/index?model=2";
+                    $("#reset").on("click", function(){
+                        window.location.href=url;
+                    })
+
                     var $ipts = $('.chart .ipt, .chart select');
 
                     $('#submit').on('click', function () {
@@ -107,7 +114,8 @@
                             var val = $.trim(this.value);
                             val && params.push($(this).attr('name') + '=' + val);
                         })
-                        console.log(params.join('&'))
+                        // console.log(params.join('&'))
+                        location.href= url + "&" + params.join('&');
                     })
                 }
             }
