@@ -24,7 +24,7 @@
                     <h3><i class="fa fa-chevron-right"></i>修改单页面分类</h3>
                     <div class="extra">
                         <a class="btn btn-gray" href="cms/category/index?model=1">返回</a>
-                        <button type="submit" class="btn btn-red">保存</button>
+                        <button id="submit" type="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
 
@@ -74,7 +74,7 @@
                 $('#form').validator({
                     fields: {
                         name: 'required',
-                        sort: 'required'
+                        sort: 'required;integer[+0]'
                     },
                     valid: function (form) {
                         if ($(form).isValid()) {
@@ -87,7 +87,7 @@
                                     if (data.status == "y") {
                                         $.notify({
                                             type: 'success',
-                                            title: '新增成功。',
+                                            title: '保存成功。',
                                             delay: 3e3
                                         });
                                     }

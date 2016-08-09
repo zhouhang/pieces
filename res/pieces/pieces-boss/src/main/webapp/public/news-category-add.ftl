@@ -24,7 +24,7 @@
                     <h3><i class="fa fa-chevron-right"></i>新增文章分类</h3>
                     <div class="extra">
                         <a class="btn btn-gray" href="cms/category/index?model=${model}">返回</a>
-                        <button type="submit" class="btn btn-red">保存</button>
+                        <button id="submit" type="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
 

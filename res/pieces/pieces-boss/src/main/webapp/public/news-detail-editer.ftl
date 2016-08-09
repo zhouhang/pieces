@@ -73,7 +73,7 @@
                                  style="width: 700px; height: 350px; clear: both;">
                             </div>
                             <div id="contentError" style="margin-bottom: 10px; padding-top: 10px;">
-                        </div>
+                            </div>
 
                         </div>
 
@@ -119,9 +119,9 @@
             formValidate: function () {
                 $('#form').validator({
                     fields: {
-                        category: 'required',
+                        categoryId: 'required',
                         title: 'required',
-                        state: 'required',
+                        status: 'required',
                         content: {
                             rule:  "required",
                             target: "#contentError"
