@@ -32,6 +32,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.*;
 
 /**
@@ -62,7 +64,7 @@ public class EnquiryController extends BaseController{
                         HttpServletResponse response,
                         ModelMap modelMap,
                         Integer billId,
-                        Integer commodityId){
+                        Integer commodityId)throws  Exception{
         //重新询价删除之前的询价记录
         if(billId!=null){
             User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
@@ -76,7 +78,7 @@ public class EnquiryController extends BaseController{
 
 
         Set<Integer> cookieSet = null;
-        String cookieValue = CookieUtils.getCookieValue(request, BasicConstants.ENQUIRY_COOKIES);
+        String cookieValue = URLDecoder.decode(CookieUtils.getCookieValue(request, BasicConstants.ENQUIRY_COOKIES),"utf-8") ;
         if(StringUtils.isBlank(cookieValue)){
             cookieSet = new HashSet<>();
         }else{
@@ -91,9 +93,9 @@ public class EnquiryController extends BaseController{
         if(!cookieSet.isEmpty()){
             list = commodityService.findVoByIds(cookieSet);
         }
+        String cookieVal = GsonUtil.toJson(cookieSet);
 
-
-        CookieUtils.setCookie(response, BasicConstants.ENQUIRY_COOKIES,GsonUtil.toJson(cookieSet),COOKIE_EXPIRE);
+        CookieUtils.setCookie(response, BasicConstants.ENQUIRY_COOKIES, URLEncoder.encode(cookieVal,"utf-8"),COOKIE_EXPIRE);
         modelMap.put("commodityList",list);
         return "user_enquiry";
     }
