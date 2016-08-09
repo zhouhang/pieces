@@ -275,7 +275,7 @@
         exterior,
         picture_url,
         details,
-        commodity.status,
+        commodity.status,d
         category_id,
         commodity.level as level,
         commodity.create_time,

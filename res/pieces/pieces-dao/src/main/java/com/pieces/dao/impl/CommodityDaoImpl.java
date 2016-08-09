@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +39,7 @@ public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao {
         PageInfo page = new PageInfo(list);
         return page;
     }
-    
+
     @Override
     public List<Commodity> findByParamNoPage(CommodityVo commodity) {
         return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findByParam", commodity);
@@ -46,13 +47,13 @@ public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao {
 
     @Override
     public CommodityVo findVoById(Integer id) {
-        CommodityVo commodityVO =  getSqlSession().selectOne("com.pieces.dao.CommodityMapper.findVoById",id);
+        CommodityVo commodityVO = getSqlSession().selectOne("com.pieces.dao.CommodityMapper.findVoById", id);
         return commodityVO;
     }
 
     @Override
-    public List<CommodityVo> findVoByIds(Set<Integer> ids) {
-        List<CommodityVo> commodityVOList =  getSqlSession().selectList("com.pieces.dao.CommodityMapper.findVoByIds",new ArrayList<>(ids));
+    public List<CommodityVo> findVoByIds(Collection<Integer> ids) {
+        List<CommodityVo> commodityVOList = getSqlSession().selectList("com.pieces.dao.CommodityMapper.findVoByIds", new ArrayList<>(ids));
         return commodityVOList;
     }
 
@@ -80,27 +81,27 @@ public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao {
         return getSqlSession().update("com.pieces.dao.CommodityMapper.update", commodity);
     }
 
-        @Override
-        public List<CommodityVo> findCommodityByBreedId(Integer id) {
-            return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findCommodityByBreedId",id);
-        }
-        
-        @Override
-        public List<CommodityVo> findStandardByBreedId(String ids) {
-        	CommodityVo vo = new CommodityVo();
-        	vo.setBreedIds(ids);
-            return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findStandardByBreedId",vo);
-        }
+    @Override
+    public List<CommodityVo> findCommodityByBreedId(Integer id) {
+        return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findCommodityByBreedId", id);
+    }
 
-		@Override
-		public List<CommodityVo> findFactoryByBreedId(String ids) {
-			CommodityVo vo = new CommodityVo();
-        	vo.setBreedIds(ids);
-			return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findFactoryByBreedId",vo);
-		}
+    @Override
+    public List<CommodityVo> findStandardByBreedId(String ids) {
+        CommodityVo vo = new CommodityVo();
+        vo.setBreedIds(ids);
+        return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findStandardByBreedId", vo);
+    }
+
+    @Override
+    public List<CommodityVo> findFactoryByBreedId(String ids) {
+        CommodityVo vo = new CommodityVo();
+        vo.setBreedIds(ids);
+        return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findFactoryByBreedId", vo);
+    }
 
     @Override
     public List<CommodityVo> findByIds(String ids) {
-        return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findByIds",ids);
+        return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findByIds", ids);
     }
 }

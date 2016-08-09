@@ -23,6 +23,17 @@
         where id = #{id}
     </select>
 
+    <select id="findByParams" parameterType="com.pieces.dao.model.HomeWeight" resultMap="HomeWeightResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from home_weight
+        where 1=1
+        <if test="type != null and type !=''">
+        and type = #{type}
+        </if>
+        order by sort desc
+    </select>
+
     <select id="findAll"  resultMap="HomeWeightResultMap">
         select
         <include refid="Base_Column_List" />
@@ -72,4 +83,6 @@
         </set>
         where id = #{id}
     </update>
+
+
 </mapper>
