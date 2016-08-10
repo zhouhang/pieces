@@ -24,7 +24,9 @@ public class Ad  implements Serializable {
 	
 	//结束时间
 	private Date endTime;
-	
+
+	private String color;
+
 	//链接
 	private String link;
 	
@@ -118,5 +120,12 @@ public class Ad  implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
 }

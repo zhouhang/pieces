@@ -1,9 +1,8 @@
 package com.pieces.service.impl;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
+import com.pieces.dao.vo.HomeCategoryVo;
 import com.pieces.service.enums.CategoryEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -198,9 +197,10 @@ public class CategoryServiceImpl implements CategoryService {
 
 
 	@Override
-	public List<CategoryVo> findByLevelAndPinyin(Integer level, String pinyin) {
+	public List<CategoryVo> findByLevelAndPinyin(Integer level, Integer parentId, String pinyin) {
 		CategoryVo categoryVo = new CategoryVo();
 		categoryVo.setLevel(level);
+		categoryVo.setParentId(parentId);
 		if(StringUtils.isNotBlank(pinyin)){
 			categoryVo.setPinyins(pinyin.split(","));
 		}
@@ -234,5 +234,40 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryDao.findByIds(list);
 	}
 
+
+
+	@Override
+	public List<HomeCategoryVo> findHomeCategoryByIds(List<Integer> ids) {
+		return categoryDao.findHomeCategoryByIds(ids);
+	}
+
+
+	@Override
+	public List<CategoryVo> menuCategoryBreed(Integer parentId, String letter) {
+		String pinyin = letterShift(letter,false);
+		List<CategoryVo> breedList=	findByLevelAndPinyin(2,parentId,pinyin);
+		return breedList;
+	}
+
+	private String letterShift(String letter,Boolean capital){
+		String[] letters =  new String[]{"A","B","C","D","E","F","G","H","I","J",
+				"K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
+
+		String[] lesArr  = letter.split("~");
+		if(lesArr.length!=2){
+			throw new RuntimeException("参数必须是A~H的格式!");
+		}
+		Integer  index1 = Arrays.binarySearch(letters,lesArr[0]);
+		Integer  index2 = Arrays.binarySearch(letters,lesArr[1]);
+		List<String> tempList = new ArrayList<>();
+		for(int i = index1;i<=index2;i++){
+			tempList.add(letters[i]);
+		}
+		String result =  StringUtils.join(tempList, ",");
+		if(!capital){
+			return result.toLowerCase();
+		}
+		return result;
+	}
 
 }

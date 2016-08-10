@@ -6,6 +6,7 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Category;
 import com.pieces.dao.vo.CategoryVo;
+import com.pieces.dao.vo.HomeCategoryVo;
 
 public interface CategoryDao extends ICommonDao<Category>{
 	//根据条件查询分类表,分页
@@ -26,5 +27,7 @@ public interface CategoryDao extends ICommonDao<Category>{
 	public List<CategoryVo> findByLevelAndPinyin(CategoryVo categoryVo);
 
 	public List<Category>  findByIds(Collection<Integer> collection);
+
+	public List<HomeCategoryVo>  findHomeCategoryByIds(Collection<Integer> collection);
 
 }

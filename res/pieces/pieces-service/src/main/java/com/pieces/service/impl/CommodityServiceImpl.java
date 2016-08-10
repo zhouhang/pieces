@@ -216,7 +216,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
             // 根据品种ID 找到所属的类别
             // 根据类别ID 找到下面的品种, 判处当前的品种.找前几条和上面查出来的凑足5条.
                 CategoryVo categoryVo = new CategoryVo();
-                categoryVo.setParentId(String.valueOf(categoryId));
+                categoryVo.setParentId(categoryId);
                 List<CategoryVo> categoryVos = categoryService.findBreed(categoryVo,1,5).getList();
                 String categoryIds = "";
                 for (CategoryVo vo : categoryVos) {

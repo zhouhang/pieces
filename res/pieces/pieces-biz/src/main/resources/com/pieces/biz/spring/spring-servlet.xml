@@ -48,7 +48,7 @@
 	            <entry key="xml_escape" value-ref="fmXmlEscape" />
 				<entry key="baseUrl" value="${biz.base.url}"/>
 				<entry key="search_keyword" value-ref="search_keyword"/>
-				<entry key="help_foot" value-ref="help_foot"/>
+				<entry key="pinyin_category" value-ref="pinyin_category"/>
 			</map>
 	    </property>
 	    <property name="freemarkerSettings">
@@ -62,6 +62,8 @@
 	</bean>
 
 	<bean id="search_keyword" class="com.pieces.biz.tag.SearchKeywordDirective"/>
+	<bean id="pinyin_category" class="com.pieces.biz.tag.PinyinCategoryBreedDirective"/>
+
 	<bean id="help_foot" class="com.pieces.biz.tag.HelpFootDirective"/>
 
 

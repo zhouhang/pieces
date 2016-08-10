@@ -90,7 +90,16 @@
 
                         <div class="group">
                             <div class="txt">
-                                <i>*</i>链接：
+                                背景颜色：
+                            </div>
+                            <div class="cnt">
+                                <input type="text" class="ipt" name="color" value="<#if ad??>${ad.color!}</#if>" autocomplete="off" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="group">
+                            <div class="txt">
+                                链接：
                             </div>
                             <div class="cnt">
                                 <input type="text" class="ipt" name="link" value="<#if ad??>${ad.link!}</#if>" autocomplete="off" placeholder="">
@@ -174,7 +183,7 @@
                     fields: {
                         category: 'required',
                         title: 'required',
-                        state: 'required'
+                        status: 'required'
                     },
                     valid: function(form) {
                         if ( $(form).isValid() ) {

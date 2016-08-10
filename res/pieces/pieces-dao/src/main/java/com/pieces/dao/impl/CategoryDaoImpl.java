@@ -5,6 +5,7 @@ import com.pieces.dao.CategoryDao;
 import com.pieces.dao.model.Category;
 import com.pieces.dao.vo.CategoryVo;
 
+import com.pieces.dao.vo.HomeCategoryVo;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Repository;
 
@@ -99,6 +100,11 @@ public class CategoryDaoImpl extends BaseDaoImpl implements CategoryDao {
     @Override
     public List<Category> findByIds(Collection<Integer> collection) {
         return getSqlSession().selectList("com.pieces.dao.CategoryMapper.findByIds", new ArrayList<>(collection));
+    }
+
+    @Override
+    public List<HomeCategoryVo> findHomeCategoryByIds(Collection<Integer> collection) {
+        return getSqlSession().selectList("com.pieces.dao.CategoryMapper.findByHomeCategoryIds", new ArrayList<>(collection));
     }
 
 }
