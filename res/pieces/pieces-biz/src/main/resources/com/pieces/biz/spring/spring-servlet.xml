@@ -48,6 +48,7 @@
 	            <entry key="xml_escape" value-ref="fmXmlEscape" />
 				<entry key="baseUrl" value="${biz.base.url}"/>
 				<entry key="search_keyword" value-ref="search_keyword"/>
+				<entry key="help_foot" value-ref="help_foot"/>
 			</map>
 	    </property>
 	    <property name="freemarkerSettings">
@@ -61,7 +62,7 @@
 	</bean>
 
 	<bean id="search_keyword" class="com.pieces.biz.tag.SearchKeywordDirective"/>
-
+	<bean id="help_foot" class="com.pieces.biz.tag.HelpFootDirective"/>
 
 
 	<!-- 配置多视图协商解析器 ,ppa策略,先找parameter，再找header，最后找accept-->
