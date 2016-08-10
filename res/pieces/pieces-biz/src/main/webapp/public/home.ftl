@@ -12,7 +12,7 @@
     <div class="bd">
         <ul>
             <#list AD_BANNER as ad>
-                <li style="background-color:#0074d4;">
+                <li style="background-color:${ad.color!};">
                     <a title="${ad.title!}" style="background-image:url(${ad.pictureUrl!})" href="${ad.link!"#!"}"></a>
                 </li>
             </#list>
@@ -64,7 +64,7 @@
                             <p><span class="t-orange">热销</span></p>
                         </div>
                         <div class="img">
-                            <img src="uploads/a1.jpg" width="200" height="180">
+                            <img src="${commodity.pictureUrl!}" width="200" height="180">
                         </div>
                     </a>
                 </li>
@@ -96,14 +96,17 @@
 
                     <div class="pro">
                         <dl>
-                            <dt>
-                                <a href="#"><img src="uploads/pro-01.jpg" width="400" height="270"></a>
-                            </dt>
+                            <#if category.showcase??>
+                                <dt>
+                                    <a href="#"><img src="${category.showcase.pictureUrl!}" width="400" height="270"></a>
+                                </dt>
+                            </#if>
+
                             <#if category.breedList??>
                                 <#list category.commodityList as commodity>
                                     <dd>
-                                        <a href="#"><img src="uploads/pro-01-01.jpg" width="180" height="176"></a>
-                                        <a href="#">${commodity.name!}</a>
+                                        <a href="/commodity/${commodity.id!}"><img src="${commodity.pictureUrl!}" width="180" height="176"></a>
+                                        <a href="/commodity/${commodity.id!}">${commodity.name!}</a>
                                         <span>切制规格：${commodity.specName!}</span>
                                     </dd>
                                 </#list>
@@ -112,6 +115,15 @@
                     </div>
                 </div>
         </div><!-- end -->
+        <#if category_index%2!=0 >
+            <#assign adindex=(category_index/2-1)>
+            <#if AD_SHOWCASE_BAR[adindex]?? >
+                <div class="wide-banner">
+                    <a href="${AD_SHOWCASE_BAR[adindex].link!}"><img src="${AD_SHOWCASE_BAR[adindex].pictureUrl!}" width="1200" height="90"></a>
+                </div>
+            </#if>
+        </#if>
+
     </#list>
 
 </div>

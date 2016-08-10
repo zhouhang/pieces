@@ -115,7 +115,6 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
                 cropResult = CropResult.error("图片上传失败");
             }
         }
-
         return cropResult;
     }
 

@@ -37,8 +37,11 @@ public class AdServiceImpl extends AbsCommonService<Ad> implements AdService{
         return ad;
     }
 
+
+
     @Override
     public PageInfo<AdVo> findByParam(AdVo adVo, int pageNum, int pageSize) {
+
         PageInfo<AdVo> adVoPageInfo = adDao.findByParam(adVo,pageNum,pageSize);
         return adVoPageInfo;
     }

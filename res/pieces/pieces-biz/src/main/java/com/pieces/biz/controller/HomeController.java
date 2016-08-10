@@ -106,7 +106,9 @@ public class HomeController extends BaseController{
 
 	private void adModels(ModelMap model){
 		List<AdVo> adBannerList =adService.findByType(CodeEnum.AD_BANNER.getId());
+		List<AdVo> adBarList =adService.findByType(CodeEnum.AD_SHOWCASE_BAR.getId());
 		model.put(CodeEnum.AD_BANNER.name(),adBannerList);
+		model.put(CodeEnum.AD_SHOWCASE_BAR.name(),adBarList);
 	}
 
 }

@@ -56,7 +56,7 @@ public class HomeWeightServiceImpl extends AbsCommonService<HomeWeight> implemen
 
         for(int i=0;i<list.size();i++){
             HomeCategoryVo homeCategoryVo = list.get(i);
-
+            //获取橱窗广告
             EqualPredicate eqlPredicate = new EqualPredicate(homeCategoryVo.getName());
             Collection collection = CollectionUtils.select(adList,new BeanPredicate("title",eqlPredicate));
             if(!collection.isEmpty()){

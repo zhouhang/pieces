@@ -162,15 +162,6 @@ function bindSearch() {
 	}
 
 
-	// 可以页面其他地方引入了autocomplete.js
-	if($.isFunction($.fn.autocomplete)){ 
-		call();
-	} else {
-		loadScript('js/jquery.autocomplete.min.js');
-		timer = setInterval(function() {
-			call();
-		}, 300);
-	}
 
 	call = function() {
 		timer && clearTimeout(timer);
@@ -191,6 +182,16 @@ function bindSearch() {
 	            $searchForm.submit();
 	        }
 	    });
+	}
+
+	// 可以页面其他地方引入了autocomplete.js
+	if($.isFunction($.fn.autocomplete)){
+		call();
+	} else {
+		loadScript('js/jquery.autocomplete.min.js');
+		timer = setInterval(function() {
+			call();
+		}, 300);
 	}
 }
 

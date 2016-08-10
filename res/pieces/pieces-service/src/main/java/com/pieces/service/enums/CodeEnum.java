@@ -52,7 +52,8 @@ public enum CodeEnum {
     //广告类型
     AD_SEARCH(Type.AD,"搜索关键字",301),
     AD_BANNER(Type.AD,"首页Banner",302),
-    AD_SHOWCASE(Type.AD,"橱窗广告",303);
+    AD_SHOWCASE(Type.AD,"橱窗广告",303),
+    AD_SHOWCASE_BAR(Type.AD,"橱窗下条状广告",304);
 
 
     private Type code;
