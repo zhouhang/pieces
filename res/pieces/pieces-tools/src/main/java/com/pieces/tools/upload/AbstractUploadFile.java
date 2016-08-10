@@ -4,7 +4,7 @@ package com.pieces.tools.upload;
 import com.pieces.tools.bean.FileBo;
 import com.pieces.tools.exception.FileUploadException;
 import com.pieces.tools.utils.FileUtil;
-import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.io.InputStream;
@@ -13,6 +13,9 @@ import java.io.InputStream;
  * Created by wangbin on 2016/6/27.
  */
 public abstract class AbstractUploadFile {
+
+    @Autowired
+    IUploadConfig uploadConfig;
 
     private String basePath;
 
@@ -33,7 +36,8 @@ public abstract class AbstractUploadFile {
             //自定义文件名
             String fileName = customImageName(originalFileName);
             File file = FileUtil.save(inputStream,getBasePath(),fileName);
-            FileBo fileBo = new FileBo(file,file.getName(),fileName,ext);
+            FileBo fileBo = new FileBo(file,file.getName(),
+                    getUrl() + fileName,getBasePath()+fileName,ext);
             return fileBo;
         }
         catch (FileUploadException fe){
@@ -62,18 +66,10 @@ public abstract class AbstractUploadFile {
 
 
     public String getBasePath() {
-        return basePath;
-    }
-
-    public void setBasePath(String basePath) {
-        this.basePath = basePath;
+        return uploadConfig.getAbsolutePath();
     }
 
     public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+        return uploadConfig.getUrlPre();
     }
 }

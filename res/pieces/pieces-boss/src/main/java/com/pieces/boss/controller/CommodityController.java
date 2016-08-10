@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+
 /**
  * Author: koabs
  * 7/12/16.
@@ -73,7 +75,7 @@ public class CommodityController extends BaseController{
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     @BizLog(type = "商品信息", desc = "保存商品信息")
-    public Result save(Commodity commodity) {
+    public Result save(Commodity commodity) throws IOException {
         commodityService.saveOrUpdate(commodity);
         return new Result(true).data(null).info("商品信息保存成功!");
     }

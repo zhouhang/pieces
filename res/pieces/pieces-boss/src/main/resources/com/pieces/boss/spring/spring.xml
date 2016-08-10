@@ -20,6 +20,8 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
 	</context:component-scan>
 
+	<bean id="springUtil" class="com.pieces.tools.utils.SpringUtil"></bean>
+
 	<!-- 配置 文件上传的支持 -->  
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">  
         <property name="defaultEncoding" value="UTF-8"/>
@@ -30,10 +32,8 @@
 
 	<!--上传文件-->
 	<bean id="defaultUploadFile" class="com.pieces.tools.upload.DefaultUploadFile">
-		<property name="basePath" value="${boss.upload.path}"/>
-		<property name="url" value="${boss.upload.url}"/>
 	</bean>
-    
+
 	<!-- 下面的变量从配置文件里面拿出来,子系统可以覆盖公共的 -->
     <bean id="scPropertyPlaceholderConfigurer"   
         class="com.pieces.dao.config.PiecesPropertyPlaceholderConfigurer">
