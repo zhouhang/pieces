@@ -6,6 +6,7 @@
             <result column="title"  property="title" />
             <result column="type_id"  property="typeId" />
             <result column="picture_url"  property="pictureUrl" />
+            <result column="color"  property="color" />
             <result column="start_time"  property="startTime" />
             <result column="end_time"  property="endTime" />
             <result column="link"  property="link" />
@@ -20,6 +21,7 @@
         <result column="type_id"  property="typeId" />
         <result column="typeName"  property="typeName" />
         <result column="picture_url"  property="pictureUrl" />
+        <result column="color"  property="color" />
         <result column="start_time"  property="startTime" />
         <result column="end_time"  property="endTime" />
         <result column="link"  property="link" />
@@ -29,7 +31,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,title,type_id,picture_url,start_time,end_time,link,sort,status,create_time
+        id,title,type_id,picture_url,color,start_time,end_time,link,sort,status,create_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="AdResultMap">
@@ -52,9 +54,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Ad">
         insert into
-        ad (title,type_id,picture_url,start_time,end_time,link,sort,status,create_time)
+        ad (title,type_id,picture_url,color,start_time,end_time,link,sort,status,create_time)
         values
-        (#{title},#{typeId},#{pictureUrl},#{startTime},#{endTime},#{link},#{sort},#{status},#{createTime})
+        (#{title},#{typeId},#{pictureUrl},#{color},#{startTime},#{endTime},#{link},#{sort},#{status},#{createTime})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.Ad">
@@ -72,7 +74,11 @@
             <if test="pictureUrl != null and pictureUrl != ''">
                 picture_url = #{pictureUrl},
             </if>
-                                            
+
+            <if test="color != null and color != ''">
+                color = #{color},
+            </if>
+
             <if test="startTime != null">
                 start_time = #{startTime},
             </if>
@@ -104,7 +110,7 @@
 
     <select id="findByParam" parameterType="com.pieces.dao.vo.AdVo"  resultMap="AdResultMapVo">
         select
-        a.id,a.title,a.type_id,a.picture_url,a.start_time,a.end_time,a.link,a.sort,a.status,a.create_time,adtype.name as typeName
+        a.id,a.title,a.type_id,a.picture_url,a.color,a.start_time,a.end_time,a.link,a.sort,a.status,a.create_time,adtype.name as typeName
         from ad a
         left join code adtype ON a.type_id = adtype.id
         where 1=1
@@ -124,7 +130,7 @@
 
     <select id="findByType" parameterType="java.lang.Integer"  resultMap="AdResultMapVo">
         select
-        a.id,a.title,a.type_id,a.picture_url,a.start_time,a.end_time,a.link,a.sort,a.status
+        a.id,a.title,a.type_id,a.picture_url,a.color,a.start_time,a.end_time,a.link,a.sort,a.status
         from ad a
         where a.type_id = #{typeId}
         and status = 1
