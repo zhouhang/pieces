@@ -30,9 +30,6 @@ public class AdController extends BaseController{
     @Autowired
     private AdService adService;
 
-    @Autowired
-    private AdUploadFile adUploadFile;
-
     /**
      * 广告管理列表页
      * @param model
@@ -67,19 +64,6 @@ public class AdController extends BaseController{
     }
 
     /**
-     * 上传图片
-     * @param img
-     * @return
-     */
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    @ResponseBody
-    public Result uploadImg(@RequestParam(required = false) MultipartFile img)throws Exception{
-        Map<String,Object> data = adUploadFile.uploadImg(img.getOriginalFilename(), img.getInputStream());
-        return new Result(true).data(data);
-    }
-
-
-    /**
      * 广告详情页
      * @param id
      * @param model
@@ -91,7 +75,6 @@ public class AdController extends BaseController{
         List<CodeEnum> adTypeList = CodeEnum.findByType(CodeEnum.Type.AD);
         if(id!=null){
             Ad ad =adService.findById(id);
-            ad.setPictureUrl(Configure.getUploadUrl()+ad.getPictureUrl());
             model.put("ad",ad);
         }
         model.put("typeList",adTypeList);

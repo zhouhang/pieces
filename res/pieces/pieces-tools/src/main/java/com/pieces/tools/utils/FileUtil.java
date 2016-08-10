@@ -98,7 +98,7 @@ public class FileUtil {
      * @return
      * @throws IOException
      */
-    public static String saveFileFromTemp(String url, String direct) throws IOException {
+    public static String saveFileFromTemp(String url, String direct) {
         // 判断url中不包含temp 直接return null
         if (!url.contains("temp/")) {
             return null;
@@ -108,7 +108,11 @@ public class FileUtil {
         String dest = url.replace(urlPre + "temp/", absolutePath + direct);
         File destFile = new File(dest);
         if (srcFile.exists()) {
-            FileUtils.copyFile(srcFile, destFile);
+            try {
+                FileUtils.copyFile(srcFile, destFile);
+            } catch (IOException e) {
+                throw new RuntimeException("从临时文件去拷贝文件出错", e);
+            }
         } else {
             dest = null;
         }

@@ -231,13 +231,13 @@
             },
             upImg: function() {
                 var options = {
-                    uploadUrl:'ad/upload',
+                    uploadUrl:'/gen/upload',
                     customUploadButtonId: 'imgCrop',
                     onAfterImgUpload: function(response){
                         console.log(response)
                         cropModal.destroy();
-                        $('#imgCrop').html('<img src="' + response.data.url + '" title="点击图片看大图" /><i class="del" title="删除"></i>')
-                                .next().val(response.data.path);
+                        $('#imgCrop').html('<img src="' + response.url + '" title="点击图片看大图" /><i class="del" title="删除"></i>')
+                                .next().val(response.url);
                     },
                     onError:function(msg){
                         $.notify({
