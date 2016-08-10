@@ -21,6 +21,7 @@
 		<context:exclude-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
 	</context:component-scan>
 
+	<bean id="springUtil" class="com.pieces.tools.utils.SpringUtil"></bean>
 
 	<!-- 下面的变量从配置文件里面拿出来,子系统可以覆盖公共的 -->
     <bean id="scPropertyPlaceholderConfigurer"   
@@ -36,8 +37,6 @@
 
 	<!--上传文件-->
 	<bean id="defaultUploadFile" class="com.pieces.tools.upload.DefaultUploadFile">
-		<property name="basePath" value="${biz.upload.path}"/>
-		<property name="url" value="${biz.upload.url}"/>
 	</bean>
 	
 	<!-- 此处引入 dao项目下所有的spring配置文件管理器 -->

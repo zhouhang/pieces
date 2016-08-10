@@ -2,6 +2,7 @@ package com.pieces.service.impl;
 
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.*;
 
 import javax.imageio.ImageIO;
@@ -12,6 +13,9 @@ import com.pieces.dao.model.User;
 import com.pieces.dao.vo.CategoryVo;
 import com.pieces.service.CategoryService;
 import com.pieces.service.CommoditySearchService;
+import com.pieces.tools.upload.TempUploadFile;
+import com.pieces.tools.upload.UEditorUploadFile;
+import com.pieces.tools.utils.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +34,6 @@ import com.pieces.service.utils.ImageUtil;
 import com.pieces.service.vo.CropInfo;
 import com.pieces.service.vo.CropResult;
 import com.pieces.tools.bean.FileBo;
-import com.pieces.tools.upload.DefaultUploadFile;
 
 /**
  * Author: koabs
@@ -45,7 +48,11 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     CommodityDao commodityDao;
 
     @Autowired
-    private DefaultUploadFile defaultUploadFile;
+    private TempUploadFile tempUploadFile;
+
+    @Autowired
+    private UEditorUploadFile uEditorUploadFile;
+
     @Autowired
     private CommoditySearchService commoditySearchService;
 
@@ -62,8 +69,11 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 
     @Override
     @Transactional
-    public void saveOrUpdate(Commodity commodity) {
+    public void saveOrUpdate(Commodity commodity) throws IOException {
 //        commodity.setPictureUrl(commodity.getPictureUrl().replace(defaultUploadFile.getUrl(), ""));
+        // 把文件从临时目录保存
+        commodity.setPictureUrl(FileUtil.saveFileFromTemp(commodity.getPictureUrl(), "commodity/"));
+
         if(commodity.getId()!= null) {
             commodityDao.update(commodity);
         } else {
@@ -92,13 +102,36 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 
     @Override
     public CropResult uploadImage(MultipartFile img) {
-        if (img.getSize()/(1024*1024) >= 2) {
+        CropResult cropResult = null;
+        if(checkImgSize(img))  {
+            cropResult = CropResult.error("上传的图片大小不能超过2M");
+        } else {
+            try {
+                FileBo fileBo = tempUploadFile.uploadFile(img.getOriginalFilename(), img.getInputStream());
+                BufferedImage sourceImg = ImageIO.read(new FileInputStream(fileBo.getFile()));
+                cropResult = CropResult.success(fileBo.getUrl(),sourceImg.getWidth(),sourceImg.getHeight());
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+                cropResult = CropResult.error("图片上传失败");
+            }
+        }
+
+        return cropResult;
+    }
+
+    public boolean checkImgSize(MultipartFile img) {
+        return (img.getSize()/(1024*1024) >= 2);
+    }
+
+    @Override
+    public CropResult uploadUeditorImage(MultipartFile img) {
+        if(checkImgSize(img))  {
             return  CropResult.error("上传的图片大小不能超过2M");
         }
         try {
-            FileBo fileBo = defaultUploadFile.uploadFile(img.getOriginalFilename(), img.getInputStream());
+            FileBo fileBo = uEditorUploadFile.uploadFile(img.getOriginalFilename(), img.getInputStream());
             BufferedImage sourceImg = ImageIO.read(new FileInputStream(fileBo.getFile()));
-            return CropResult.success(fileBo.getPath(),sourceImg.getWidth(),sourceImg.getHeight());
+            return CropResult.success(fileBo.getUrl(),sourceImg.getWidth(),sourceImg.getHeight());
         } catch (Exception e) {
             logger.error(e.getMessage());
             return CropResult.error("图片上传失败");
@@ -108,8 +141,8 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 
     @Override
     public CropResult cropImg(CropInfo cropInfo) {
-        String basePath = defaultUploadFile.getBasePath();
-        String url = defaultUploadFile.getUrl();
+        String basePath = tempUploadFile.getBasePath();
+        String url = tempUploadFile.getUrl();
 
         String adder = cropInfo.getImgUrl().replace(url, basePath);
         cropInfo.setImgUrl(adder);

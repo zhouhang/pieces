@@ -18,18 +18,11 @@ import java.util.UUID;
 @Service
 public class AdUploadFile extends AbstractUploadFile{
 
-    @Value("${boss.upload.path}")
-    private String basePath;
-
-    @Value("${boss.upload.url}")
-    private String url;
-
-
 
     public Map<String,Object> uploadImg(String originalFileName, InputStream inputStream){
         FileBo fileBo =  uploadFile(originalFileName,inputStream);
         Map<String,Object> map = new HashMap<>();
-        map.put("url",url+fileBo.getPath());
+        map.put("url",getUrl()+fileBo.getPath());
         map.put("path",fileBo.getPath());
         return map;
     }
@@ -45,23 +38,4 @@ public class AdUploadFile extends AbstractUploadFile{
         return sb.toString();
     }
 
-    @Override
-    public String getBasePath() {
-        return basePath;
-    }
-
-    @Override
-    public void setBasePath(String basePath) {
-        this.basePath = basePath;
-    }
-
-    @Override
-    public String getUrl() {
-        return url;
-    }
-
-    @Override
-    public void setUrl(String url) {
-        this.url = url;
-    }
 }

@@ -6,16 +6,18 @@ import java.io.File;
  * Created by wangbin on 2016/6/27.
  */
 public class FileBo {
-   private File file;
-   private String name;
-   private String path;
-   private String ext;
+    private File file;
+    private String name;
+    private String path;
+    private String ext;
+    private String url;
 
-    public FileBo(File file, String name, String path, String ext) {
+    public FileBo(File file, String name, String url, String path, String ext) {
         this.file = file;
         this.name = name;
         this.path = path;
         this.ext = ext;
+        this.url = url;
     }
 
     public File getFile() {
@@ -48,5 +50,13 @@ public class FileBo {
 
     public void setExt(String ext) {
         this.ext = ext;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }
