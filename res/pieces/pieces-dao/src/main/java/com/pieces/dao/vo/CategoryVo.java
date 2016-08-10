@@ -1,6 +1,8 @@
 package com.pieces.dao.vo;
 
 import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Map;
 
 public class CategoryVo{
 
@@ -12,7 +14,7 @@ public class CategoryVo{
 
 	private String classifyName;
 	
-	private String parentId;
+	private Integer parentId;
 	//别名
 	private String aliases;
 	
@@ -28,6 +30,8 @@ public class CategoryVo{
 	private String levels;
 
 	private String[] pinyins;
+
+	private Map<String,List<CategoryVo>>  categoryPinyin;
 
 	public Integer getId() {
 		return id;
@@ -78,11 +82,11 @@ public class CategoryVo{
 		this.level = level;
 	}
 	
-	public String getParentId() {
+	public Integer getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(String parentId) {
+	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
 	}
 	
@@ -124,6 +128,14 @@ public class CategoryVo{
 
 	public void setPinyins(String[] pinyins) {
 		this.pinyins = pinyins;
+	}
+
+	public Map<String, List<CategoryVo>> getCategoryPinyin() {
+		return categoryPinyin;
+	}
+
+	public void setCategoryPinyin(Map<String, List<CategoryVo>> categoryPinyin) {
+		this.categoryPinyin = categoryPinyin;
 	}
 
 	@Override

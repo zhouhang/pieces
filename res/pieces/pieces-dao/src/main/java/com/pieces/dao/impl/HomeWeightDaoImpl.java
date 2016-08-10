@@ -49,4 +49,9 @@ public class HomeWeightDaoImpl extends BaseDaoImpl implements HomeWeightDao{
     public List<HomeWeight> findByParams(HomeWeight homeWeight) {
         return getSqlSession().selectList("com.pieces.dao.HomeWeightMapper.findByParams",homeWeight);
     }
+
+    @Override
+    public HomeWeight findOneByParams(HomeWeight homeWeight) {
+        return getSqlSession().selectOne("com.pieces.dao.HomeWeightMapper.findByParams",homeWeight);
+    }
 }

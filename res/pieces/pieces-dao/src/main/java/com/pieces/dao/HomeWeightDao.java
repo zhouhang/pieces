@@ -9,4 +9,6 @@ public interface HomeWeightDao extends ICommonDao<HomeWeight>{
 
     public List<HomeWeight> findByParams(HomeWeight homeWeight);
 
+    public HomeWeight findOneByParams(HomeWeight homeWeight);
+
 }

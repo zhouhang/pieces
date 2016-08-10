@@ -283,8 +283,7 @@ public class CommodityController extends BaseController {
 			ModelMap model, String keyword) {
 		pageNum = pageNum == null ? 1 : pageNum;
 		pageSize = pageSize == null ? 10 : pageSize;
-		Page<CommodityDoc> commodityDocPage = commoditySearchService.findByNameOrCategoryName(pageNum, pageSize,
-				keyword);
+		Page<CommodityDoc> commodityDocPage = commoditySearchService.findByNameOrCategoryName(pageNum, pageSize, keyword);
 		model.put("commodityDocPage", commodityDocPage);
 		model.put("keyword", keyword);
 		return "product_search_result";

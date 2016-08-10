@@ -13,7 +13,6 @@
             <result column="origins"  property="origins" />
             <result column="levels"  property="levels" />
             <result column="create_time"  property="createTime" />
-        
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -158,6 +157,9 @@
         SELECT id,name,pinyin
         FROM category
         WHERE 1=1
+        <if test="parentId != null">
+        and parent_id = #{parentId}
+        </if>
         <if test="level != null">
         and level = #{level}
         </if>
@@ -171,6 +173,17 @@
 
 
     <select id="findByIds" parameterType="java.lang.Integer" resultType="com.pieces.dao.model.Category">
+        select   <include refid="Base_Column_List" />
+        from category a
+        where id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        and status = 1
+    </select>
+
+    <!-- 返回首页分类-->
+    <select id="findByHomeCategoryIds" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.HomeCategoryVo">
         select   <include refid="Base_Column_List" />
         from category a
         where id in

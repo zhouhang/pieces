@@ -31,6 +31,9 @@
         <if test="type != null and type !=''">
         and type = #{type}
         </if>
+        <if test="relevanceId != null">
+        and  relevance_id = #{relevanceId}
+        </if>
         order by sort desc
     </select>
 
