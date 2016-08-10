@@ -7,6 +7,7 @@ import com.pieces.dao.model.Ad;
 import com.pieces.dao.vo.AdVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.AdService;
+import com.pieces.tools.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,16 +33,24 @@ public class AdServiceImpl extends AbsCommonService<Ad> implements AdService{
     @Transactional
     @Override
     public Ad createAd(Ad ad) {
+
+        ad.setPictureUrl(FileUtil.saveFileFromTemp(ad.getPictureUrl(),"ads/"));
+
         ad.setCreateTime(new Date());
         create(ad);
         return ad;
     }
 
+    @Transactional
+    @Override
+    public int update(Ad ad) {
+        ad.setPictureUrl(FileUtil.saveFileFromTemp(ad.getPictureUrl(),"ads/"));
 
+        return super.update(ad);
+    }
 
     @Override
     public PageInfo<AdVo> findByParam(AdVo adVo, int pageNum, int pageSize) {
-
         PageInfo<AdVo> adVoPageInfo = adDao.findByParam(adVo,pageNum,pageSize);
         return adVoPageInfo;
     }
