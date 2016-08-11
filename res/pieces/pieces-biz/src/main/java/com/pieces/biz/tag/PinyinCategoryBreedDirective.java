@@ -44,7 +44,7 @@ public class PinyinCategoryBreedDirective implements TemplateDirectiveModel {
                 sb.append(letterTitle(letter));
                 sb.append("<dd>");
                 for(CategoryVo categoryVo : categoryVoList){
-                    sb.append("<a href='commodity/index??breedId=").append(categoryVo.getId()).append("'>").append(categoryVo.getName()).append("</a>");
+                    sb.append("<a href='commodity/index?breedId=").append(categoryVo.getId()).append("'>").append(categoryVo.getName()).append("</a>");
                 }
                 sb.append("</dd>");
                 sb.append("</dl>");

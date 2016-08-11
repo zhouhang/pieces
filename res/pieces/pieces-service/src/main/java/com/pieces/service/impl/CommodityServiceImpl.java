@@ -229,7 +229,9 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
                 List<CommodityVo> listc = commodityDao.findByParam(commodityVO, 1,5-list.size()).getList();
                 // 整合数据
                 list.addAll(listc);
-                list = list.subList(0, 5);
+                if(list.size() >5) {
+                    list = list.subList(0, 5);
+                }
         }
 
         return list;
