@@ -85,7 +85,7 @@
                         <ul>
                             <#if category.breedList??>
                                 <#list category.breedList as breed>
-                                    <li><a href="#">${breed.name!}</a></li>
+                                    <li><a href="commodity/index?categoryId=${breed.id!}">${breed.name!}</a></li>
                                 </#list>
                             </#if>
                         </ul>
@@ -98,7 +98,7 @@
                         <dl>
                             <#if category.showcase??>
                                 <dt>
-                                    <a href="#"><img src="${category.showcase.pictureUrl!}" width="400" height="270"></a>
+                                    <a href="${category.showcase.link!}"><img src="${category.showcase.pictureUrl!}" width="400" height="270"></a>
                                 </dt>
                             </#if>
 
