@@ -25,7 +25,7 @@
 <!-- nav start -->
 <div class="nav">
     <div class="wrap">
-        <div class="cat cat-show">
+        <div class="cat <#if CURRENT_PAGE?? && CURRENT_PAGE=="home">cat-show</#if> ">
             <div class="hd">商品分类</div>
             <div class="bd" id="jcat">
                 <ul>

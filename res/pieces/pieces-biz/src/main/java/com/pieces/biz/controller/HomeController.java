@@ -62,7 +62,14 @@ public class HomeController extends BaseController{
 		model.put("commodityList",commodityVos);
 		model.put("categoryList",categoryList);
 		//广告
-		adModels(model);
+		List<AdVo> adBannerList =adService.findByType(CodeEnum.AD_BANNER.getId());
+		List<AdVo> adBarList =adService.findByType(CodeEnum.AD_SHOWCASE_BAR.getId());
+		model.put(CodeEnum.AD_BANNER.name(),adBannerList);
+		model.put(CodeEnum.AD_SHOWCASE_BAR.name(),adBarList);
+
+		//标志首页
+		model.put("CURRENT_PAGE","home");
+
         return "home";
     }
 
@@ -104,11 +111,5 @@ public class HomeController extends BaseController{
 	}
 
 
-	private void adModels(ModelMap model){
-		List<AdVo> adBannerList =adService.findByType(CodeEnum.AD_BANNER.getId());
-		List<AdVo> adBarList =adService.findByType(CodeEnum.AD_SHOWCASE_BAR.getId());
-		model.put(CodeEnum.AD_BANNER.name(),adBannerList);
-		model.put(CodeEnum.AD_SHOWCASE_BAR.name(),adBarList);
-	}
 
 }

@@ -221,7 +221,6 @@
 				<boss.upload.url>http://127.0.0.1:8080/files/</boss.upload.url>
 				<boss.upload.path>/Software/JAVAEE/apache-tomcat-8.0.23/webapps/files/</boss.upload.path>
 			</properties>
-			
 		</profile>
 		<profile>
 			<id>test</id>
