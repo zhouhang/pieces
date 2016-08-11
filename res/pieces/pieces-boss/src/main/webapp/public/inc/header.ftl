@@ -2,7 +2,7 @@
 <div class="header">
     <div class="wrap">
         <div class="logo">
-            <a href="home.html">上工之选电子商务管理系统</a>
+            <a href="/">上工之选电子商务管理系统</a>
         </div>
         <div class="user">
             <span>登录用户 ${member_session_boss.username }</span>
@@ -12,8 +12,8 @@
             <a href="logout">退出</a>
         </div>
     </div>
-</div><!-- header end -->
-
+</div>
+<!-- header end -->
 
 
 <!-- nav start -->

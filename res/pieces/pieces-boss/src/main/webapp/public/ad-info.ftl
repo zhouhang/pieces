@@ -23,7 +23,7 @@
         <div class="main">
             <form action="" id="myform">
                 <div class="title">
-                    <h3><i class="fa fa-chevron-right"></i>新增广告</h3>
+                    <h3><i class="fa fa-chevron-right"></i><#if ad??>修改"${ad.title!}"<#else>新增广告</#if></h3>
                     <div class="extra">
                         <a  class="btn btn-gray" href="ad/index">返回</a>
                         <button type="submit" class="btn btn-red">保存</button>

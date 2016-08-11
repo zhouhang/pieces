@@ -53,7 +53,6 @@ public class HomeWeightServiceImpl extends AbsCommonService<HomeWeight> implemen
 
         List<AdVo> adList = adService.findByType(CodeEnum.AD_SHOWCASE.getId());
 
-
         for(int i=0;i<list.size();i++){
             HomeCategoryVo homeCategoryVo = list.get(i);
             //获取橱窗广告
