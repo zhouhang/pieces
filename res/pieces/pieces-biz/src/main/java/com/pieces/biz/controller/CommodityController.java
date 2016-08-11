@@ -78,7 +78,7 @@ public class CommodityController extends BaseController {
 		model.put("pageNum", pageNum);
 		model.put("pageSize", pageSize);
 		model.put("pageInfo", pageInfo);
-		if(pageInfo == null){
+		if(pageInfo == null || pageInfo.getList().size() <= 0){
 			model.put("commodity", commodityVO);
 			model.put("commodityParam", commodityVO.toString());
 		}else{
@@ -132,6 +132,7 @@ public class CommodityController extends BaseController {
 		String origins = "";
 		String level = "";
 		String breedIds = "";
+		PageInfo<CommodityVo> pageInfo = null;
 		if (commodityVO.getCategoryId() != null) {
 			Category category = categoryService.findById(commodityVO.getCategoryId());
 			breedList = categoryService.findBreedByParentId(commodityVO.getCategoryId());
@@ -156,20 +157,22 @@ public class CommodityController extends BaseController {
 				breedIds = breedIds + vo.getId() + ",";
 			}
 		}
-		specs = specs.substring(0, specs.length() - 1);
-		level = level.substring(0, level.length() - 1);
-		origins = origins.substring(0, origins.length() - 1);
-		breedIds = breedIds.substring(0, breedIds.length() - 1);
+		specs = specs.length() > 1 ? specs.substring(0, specs.length() - 1) : "";
+		level = level.length() > 1 ? level.substring(0, level.length() - 1) : "";
+		origins = origins.length() > 1 ? origins.substring(0, origins.length() - 1) : "";
+		breedIds = breedIds.length() > 1 ? breedIds.substring(0, breedIds.length() - 1) : "";
 		commodityVO.setCategoryIds(breedIds);// 查询分页数据
 		Integer cid = commodityVO.getCategoryId();
 		commodityVO.setCategoryId(null);
-		PageInfo<CommodityVo> pageInfo = new PageInfo<CommodityVo>(commodityService.query(commodityVO, pageNum, pageSize).getList());
-		commodityVO.setCategoryId(cid);
-		commodityVO.setCategoryIds(null);
-		indexParameter.setSpecNameStr(specs);
-		indexParameter.setOriginOfNameStr(origins);
-		indexParameter.setLevelNameStr(level);
-		indexParameter.setBreedIds(breedIds);
+		if(!breedIds.equals("")){
+			pageInfo = new PageInfo<CommodityVo>(commodityService.query(commodityVO, pageNum, pageSize).getList());
+			commodityVO.setCategoryId(cid);
+			commodityVO.setCategoryIds(null);
+			indexParameter.setSpecNameStr(specs);
+			indexParameter.setOriginOfNameStr(origins);
+			indexParameter.setLevelNameStr(level);
+			indexParameter.setBreedIds(breedIds);
+		}
 		return pageInfo;
 	}
 	

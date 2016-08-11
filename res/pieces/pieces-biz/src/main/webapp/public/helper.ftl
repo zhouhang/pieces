@@ -28,14 +28,14 @@
             <div class="side side-helper">
             <#list articleCategorylist as articleCategory>
 
-                <dl <#if articleCategory.id == article.categoryId>class="expand"</#if>>
+                <dl <#if (articleCategory.id == article.categoryId)>class="expand"</#if>>
                     <dt>                        
                         <span>${articleCategory.name}</span>
                         <i class="fa fa-chevron-right"></i>
                     </dt>
                     <dd>
                         <#list articleCategory.articles as articles>
-                            <a <#if articles.id == article.id>class="curr"</#if> href="/help/${articles.id}">${articles.title}</a>
+                            <a <#if (articles.id == article.id)>class="curr"</#if> href="/help/${articles.id}">${articles.title}</a>
                         </#list>
                     </dd>
                 </dl>
