@@ -1,4 +1,4 @@
-package com.pieces.biz.tag;
+package com.pieces.biz.freemarker.tag;
 
 import freemarker.template.TemplateModelException;
 

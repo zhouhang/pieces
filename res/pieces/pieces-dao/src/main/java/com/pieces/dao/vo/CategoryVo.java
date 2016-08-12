@@ -4,50 +4,15 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
-public class CategoryVo{
+import com.pieces.dao.model.Category;
 
-	private Integer id;
-	
-	private String name;
-
-	private String pinyin;
+public class CategoryVo extends Category{
 
 	private String classifyName;
 	
-	private Integer parentId;
-	//别名
-	private String aliases;
-	
-	private String status;
-	
-	//类目级别 1 代表一级商品类别. 2 代表二级商品类别.
-	private Integer level;
-	
-	private String specs;
-	
-	private String origins;
-	
-	private String levels;
-
 	private String[] pinyins;
 
 	private Map<String,List<CategoryVo>>  categoryPinyin;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	public String getClassifyName() {
 		return classifyName;
@@ -55,71 +20,6 @@ public class CategoryVo{
 
 	public void setClassifyName(String classifyName) {
 		this.classifyName = classifyName;
-	}
-
-	public String getAliases() {
-		return aliases;
-	}
-
-	public void setAliases(String aliases) {
-		this.aliases = aliases;
-	}
-
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public Integer getLevel() {
-		return level;
-	}
-
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
-	
-	public Integer getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
-	}
-	
-	public String getSpecs() {
-		return specs;
-	}
-
-	public void setSpecs(String specs) {
-		this.specs = specs;
-	}
-
-	public String getOrigins() {
-		return origins;
-	}
-
-	public void setOrigins(String origins) {
-		this.origins = origins;
-	}
-
-	public String getLevels() {
-		return levels;
-	}
-
-	public void setLevels(String levels) {
-		this.levels = levels;
-	}
-
-	public String getPinyin() {
-		return pinyin;
-	}
-
-	public void setPinyin(String pinyin) {
-		this.pinyin = pinyin;
 	}
 
 	public String[] getPinyins() {

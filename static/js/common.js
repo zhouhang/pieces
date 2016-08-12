@@ -1,5 +1,3 @@
-
-
 ;(function($){
 	var defaults = {
 		clickToHide: true 	// 点击关闭
@@ -103,6 +101,7 @@ function throttle(func, wait, mustRun) {
 function loazyload() {
 	var $images = $('img[data-original]'),
 		size = $images.length,
+		defaultImg = 'images/default-img.png',
 		count = 0;
 		
 	var getEleCoord = function(element) {
@@ -130,7 +129,7 @@ function loazyload() {
 				if (coord.top <= docTop + docHeight && coord.top + coord.height >= docTop) {
 					this.onerror = function() {
 						this.onerror = null;
-						this.src = 'images/default-img.png';
+						this.src = defaultImg;
 					}
 					this.src = src;
 					this.removeAttribute('data-original');
@@ -142,7 +141,7 @@ function loazyload() {
 				this.removeAttribute('data-original');
 				$(this).removeClass('lazyload').attr({
 					'loaded': '1',
-					'src': 'images/default-img.png'
+					'src': defaultImg
 				});
 			}
 
@@ -160,7 +159,6 @@ function bindSearch() {
 	if ($searchForm.length === 0) {
 		return false;
 	}
-
 
 	// 可以页面其他地方引入了autocomplete.js
 	if($.isFunction($.fn.autocomplete)){ 
@@ -197,10 +195,10 @@ function bindSearch() {
 // 用户中心导航高亮
 function currNav() {
 	var $side = $('.side'),
-        URL = document.URL.split('#')[0].split('?')[0];
+        URL = document.URL.split('#')[0].split('?')[0].toLowerCase();
 
     $side.find('a').each(function() {
-        if (URL.toLowerCase().indexOf(this.href.toLowerCase()) !== -1) {
+        if (URL === this.href.toLowerCase()) {
             $(this).addClass("curr").closest('dl').addClass('expand');
             return false; // break
         }
@@ -286,28 +284,6 @@ function cat() {
 
 }
 
-// gotop
-function gototop() {
-	var 
-		$gotop = $('#jgotop'),
-		$win = $(window),
-		threshold = 700;
-
-	var status = function() {
-		var stop = $win.scrollTop();
-		$gotop[stop > threshold ? 'fadeIn' : 'fadeOut'](100);
-	}
-	var _status = throttle(status, 50);
-	$win.on('scroll.gotop', _status);
-	status();
-
-	$gotop.on('click', function() {
-		$('html, body').animate({
-			scrollTop: 0
-		}, 300);
-	});
-}
-
 
 function pageInit() {
 	// 开启图片懒加载
@@ -320,10 +296,9 @@ function pageInit() {
 	quoteEvent();
 	// 商品分类
 	cat();
-	// 返回顶部
-	gototop();
 }
 
 $(function() {
+	window.scrollTo(0, 0);
 	pageInit();
 })

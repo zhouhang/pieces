@@ -34,7 +34,7 @@ public class JettyServer {
 	public static Server buildNormalServer(int port, String contextPath) {
 		Server server = new Server(port);
 		WebAppContext webContext = new WebAppContext(
-				"pieces-biz/src/main/webapp", contextPath);
+				"src/main/webapp", contextPath);
 
 		webContext.setClassLoader(Thread.currentThread()
 				.getContextClassLoader());

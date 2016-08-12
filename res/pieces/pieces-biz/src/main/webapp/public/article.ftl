@@ -33,7 +33,6 @@
 
     <#include "./inc/helper.ftl"/>
 
-
     <#include "./inc/footer.ftl"/>
 </body>
 </html>

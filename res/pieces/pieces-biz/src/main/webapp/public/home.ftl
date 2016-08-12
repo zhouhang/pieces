@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-gray">
 <head>
     <#include "./inc/meta.ftl"/>
     <title>上工之选</title>
@@ -30,19 +30,17 @@
         <h3>知名厂家</h3>
         <div class="brands">
             <div class="inner">
-                <div class="wrapper">
-                    <div class="col">
-                        <a href="#"><img src="images/brand-jhjt.png" alt=""></a>
-                        <a href="#"><img src="images/brand-yonggang.png" alt=""></a>
-                        <a href="#"><img src="images/brand-jrt.png" alt=""></a>
-                        <a href="#"><img src="images/brand-wsc.png" alt=""></a>
-                    </div>
-                    <div class="col">
-                        <a href="#"><img src="images/brand-jhjt.png" alt=""></a>
-                        <a href="#"><img src="images/brand-yonggang.png" alt=""></a>
-                        <a href="#"><img src="images/brand-jrt.png" alt=""></a>
-                        <a href="#"><img src="images/brand-wsc.png" alt=""></a>
-                    </div>
+                <div class="col">
+                    <a href="#"><img src="images/brand-jhjt.png" alt=""></a>
+                    <a href="#"><img src="images/brand-yonggang.png" alt=""></a>
+                    <a href="#"><img src="images/brand-jrt.png" alt=""></a>
+                    <a href="#"><img src="images/brand-wsc.png" alt=""></a>
+                </div>
+                <div class="col">
+                    <a href="#"><img src="images/brand-jhjt.png" alt=""></a>
+                    <a href="#"><img src="images/brand-yonggang.png" alt=""></a>
+                    <a href="#"><img src="images/brand-jrt.png" alt=""></a>
+                    <a href="#"><img src="images/brand-wsc.png" alt=""></a>
                 </div>
             </div>
             <div class="ctrl">
@@ -73,7 +71,7 @@
     </div>
 </div>
 
-<div class="wrap idx-main" id="lazyDom">
+<div class="wrap idx-main">
     <#list categoryList as category>
         <!-- start -->
         <div class="idx-floor" id="floor${category_index}">
@@ -90,7 +88,7 @@
                             </#if>
                         </ul>
                         <div class="img">
-                            <img src="${category.pictureUrl!}" width="200" height="270">
+                            <img src="images/blank.gif" class="lazyload" data-original="${category.pictureUrl!}" width="200" height="270">
                         </div>
                     </div>
 
@@ -98,14 +96,14 @@
                         <dl>
                             <#if category.showcase??>
                                 <dt>
-                                    <a href="${category.showcase.link!}"><img src="${category.showcase.pictureUrl!}" width="400" height="270"></a>
+                                    <a href="${category.showcase.link!}"><img src="images/blank.gif" class="lazyload" data-original="${category.showcase.pictureUrl!}" width="400" height="270"></a>
                                 </dt>
                             </#if>
 
                             <#if category.breedList??>
                                 <#list category.commodityList as commodity>
                                     <dd>
-                                        <a href="/commodity/${commodity.id!}"><img src="${commodity.pictureUrl!}" width="180" height="176"></a>
+                                        <a href="/commodity/${commodity.id!}"><img src="images/blank.gif" class="lazyload" data-original="${commodity.pictureUrl!}" width="180" height="176"></a>
                                         <a href="/commodity/${commodity.id!}">${commodity.name!}</a>
                                         <span>切制规格：${commodity.specName!}</span>
                                     </dd>
@@ -119,7 +117,7 @@
             <#assign adindex=(category_index/2-1)>
             <#if AD_SHOWCASE_BAR[adindex]?? >
                 <div class="wide-banner">
-                    <a href="${AD_SHOWCASE_BAR[adindex].link!}"><img src="${AD_SHOWCASE_BAR[adindex].pictureUrl!}" width="1200" height="90"></a>
+                    <a href="${AD_SHOWCASE_BAR[adindex].link!}"><img src="images/blank.gif" class="lazyload" data-original="${AD_SHOWCASE_BAR[adindex].pictureUrl!}" width="1200" height="90"></a>
                 </div>
             </#if>
         </#if>
@@ -129,12 +127,11 @@
 </div>
 
 <#include "./inc/helper.ftl"/>
-<#include "./inc/footer.ftl"/>
 
 <div class="elevator" id="jelevator">
     <ul>
         <#list categoryList as category>
-            <li <#if category_index==0>class="curr"</#if>><a href="#floor${category_index}">${category.name!}</a></li>
+            <li <#if category_index==0>class="current"</#if>><a href="#floor${category_index}">${category.name!}</a></li>
         </#list>
     </ul>
 </div>
@@ -142,9 +139,10 @@
 <div class="gotop" id="jgotop">
     <a href="javascript:;">返回顶部</a>
 </div>
+<#include "./inc/footer.ftl"/>
+
 
 <script src="js/jquery.nav.js"></script>
-<script src="js/common.js"></script>
 <script src="js/index_2016.js"></script>
 </body>
 </html>

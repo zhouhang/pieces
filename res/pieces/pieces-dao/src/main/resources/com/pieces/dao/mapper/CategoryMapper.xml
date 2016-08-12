@@ -169,6 +169,7 @@
                 pinyin like #{item}"%"
             </foreach>
         </if>
+        limit 0,30
     </select>
 
 
@@ -192,6 +193,7 @@
         </foreach>
         and status = 1
     </select>
+
 
 
 </mapper>

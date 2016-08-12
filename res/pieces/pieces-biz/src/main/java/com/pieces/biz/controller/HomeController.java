@@ -111,5 +111,26 @@ public class HomeController extends BaseController{
 	}
 
 
+	/**
+	 * 全部分类
+	 * @return
+     */
+	@RequestMapping(value = "/category/all", method = RequestMethod.GET)
+	public String allCategory(ModelMap model){
+		List<CategoryVo> categoryVoList = categoryService.findByLevelAndPinyin(1,null,null);
+		model.put("categorys",categoryVoList);
+		return "allsort";
+	}
+
+
+	private void categoryPinyin(List<CategoryVo> categoryVoList){
+		for(CategoryVo categoryVo : categoryVoList){
+			categoryService.findByLevelAndPinyin(2,categoryVo.getId(),null);
+
+		}
+
+	}
+
+
 
 }

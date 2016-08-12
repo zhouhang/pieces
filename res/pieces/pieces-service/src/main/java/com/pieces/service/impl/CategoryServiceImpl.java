@@ -204,7 +204,7 @@ public class CategoryServiceImpl implements CategoryService {
 		if(StringUtils.isNotBlank(pinyin)){
 			categoryVo.setPinyins(pinyin.split(","));
 		}
-		return categoryDao.findByLevelAndPinyin(categoryVo);
+		return categoryDao.findByLevelAndPinyin(categoryVo,30);
 	}
 
 
