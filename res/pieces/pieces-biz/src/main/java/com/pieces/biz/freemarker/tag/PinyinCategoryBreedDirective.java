@@ -28,7 +28,7 @@ public class PinyinCategoryBreedDirective implements TemplateDirectiveModel {
         String[]  letterArr = new String[]{"A~E","F~J","K~O","P~T","U~Z"};
         StringBuffer sb = new StringBuffer();
 
-        List<CategoryVo> parentCategoryList = categoryService.findByLevelAndPinyin(1,null,null);
+        List<CategoryVo> parentCategoryList = categoryService.findByLevelAndPinyin(1,null,null,30);
 
         for(CategoryVo parentCategory : parentCategoryList){
 
@@ -50,7 +50,7 @@ public class PinyinCategoryBreedDirective implements TemplateDirectiveModel {
                 sb.append("</dl>");
             }
             sb.append("<div class='more'>");
-            sb.append("<a href='#' class='c-blue'>查看更多 &gt;</a>");
+            sb.append("<a href='/category/all' class='c-blue'>查看更多 &gt;</a>");
             sb.append("</div>");
             sb.append("</div>");
             sb.append("</li>");

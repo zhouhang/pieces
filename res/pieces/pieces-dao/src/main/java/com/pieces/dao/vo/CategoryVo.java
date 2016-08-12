@@ -1,6 +1,7 @@
 package com.pieces.dao.vo;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 

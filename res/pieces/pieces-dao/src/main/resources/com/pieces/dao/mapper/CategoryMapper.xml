@@ -169,7 +169,7 @@
                 pinyin like #{item}"%"
             </foreach>
         </if>
-        limit 0,30
+
     </select>
 
 

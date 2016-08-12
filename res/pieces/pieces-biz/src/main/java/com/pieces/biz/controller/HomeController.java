@@ -8,6 +8,10 @@ import com.pieces.dao.vo.*;
 import com.pieces.service.*;
 import com.pieces.service.enums.CodeEnum;
 import com.pieces.service.enums.WeightEnum;
+import com.pieces.service.utils.predicate.RegularPredicate;
+import org.apache.commons.beanutils.BeanPredicate;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.functors.EqualPredicate;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +24,8 @@ import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.utils.WebUtil;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.List;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * 处理主页业务
@@ -29,8 +34,6 @@ import java.util.List;
 @Controller
 public class HomeController extends BaseController{
 	
-	@Autowired
-	private UserService userService;
 	@Autowired
 	private CategoryService categoryService;
 	@Autowired
@@ -118,15 +121,27 @@ public class HomeController extends BaseController{
 	@RequestMapping(value = "/category/all", method = RequestMethod.GET)
 	public String allCategory(ModelMap model){
 		List<CategoryVo> categoryVoList = categoryService.findByLevelAndPinyin(1,null,null);
+		categoryPinyin(categoryVoList);
 		model.put("categorys",categoryVoList);
 		return "allsort";
 	}
 
 
 	private void categoryPinyin(List<CategoryVo> categoryVoList){
+		String[] letters =  new String[]{"A","B","C","D","E","F","G","H","I","J",
+				"K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 		for(CategoryVo categoryVo : categoryVoList){
-			categoryService.findByLevelAndPinyin(2,categoryVo.getId(),null);
+			List<CategoryVo> childCategorys = categoryService.findByLevelAndPinyin(2,categoryVo.getId(),null);
+			Map<String,List<CategoryVo>> map = new HashMap<>();
+			for(String letter: letters){
+				RegularPredicate eqlPredicate = new RegularPredicate(Pattern.compile(letter.toLowerCase()+"[a-z]*"));
+				Collection<CategoryVo> collection = CollectionUtils.select(childCategorys,new BeanPredicate("pinyin",eqlPredicate));
+				if(!collection.isEmpty()){
+					map.put(letter,new ArrayList<CategoryVo>(collection));
+				}
 
+			}
+			categoryVo.setCategoryPinyin(map);
 		}
 
 	}

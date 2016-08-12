@@ -58,10 +58,10 @@ public class HomeWeightServiceImpl extends AbsCommonService<HomeWeight> implemen
             //获取橱窗广告
             EqualPredicate eqlPredicate = new EqualPredicate(homeCategoryVo.getName());
             Collection collection = CollectionUtils.select(adList,new BeanPredicate("title",eqlPredicate));
+
             if(!collection.isEmpty()){
                 homeCategoryVo.setShowcase((Ad)collection.iterator().next());
             }
-
             if(idList.size()==list.size()){
                 homeCategoryVo.setPictureUrl(homeWeights.get(i).getPictureUrl());
             }
@@ -85,10 +85,6 @@ public class HomeWeightServiceImpl extends AbsCommonService<HomeWeight> implemen
 
 
 
-    @Override
-    public ICommonDao<HomeWeight> getDao() {
-        return this.homeWeightDao;
-    }
 
     /**
      * 根据类型查询
@@ -115,4 +111,9 @@ public class HomeWeightServiceImpl extends AbsCommonService<HomeWeight> implemen
         return homeWeightDao.findOneByParams(homeWeight);
     }
 
+
+    @Override
+    public ICommonDao<HomeWeight> getDao() {
+        return this.homeWeightDao;
+    }
 }
