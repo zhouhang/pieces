@@ -98,7 +98,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 
 /* header */
 .header{box-shadow:0 0 10px 3px rgba(0,0,0,.1);}
-  .header .logo{float:left;width:220px;height:60px;background:url(../images/logo.png) no-repeat;overflow:hidden;}
+  .header .logo{float:left;width:220px;height:60px;background:url(../images/logo.png) no-repeat 50%;overflow:hidden;}
     .header .logo a{display:block;width:100%;height:100%;text-indent:-999px;}
   .header .user{float:right;line-height:60px;font-size:12px;}
     .header .user i{margin:0 10px;color:#999;}
