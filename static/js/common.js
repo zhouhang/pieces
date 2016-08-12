@@ -195,10 +195,10 @@ function bindSearch() {
 // 用户中心导航高亮
 function currNav() {
 	var $side = $('.side'),
-        URL = document.URL.split('#')[0].split('?')[0];
+        URL = document.URL.split('#')[0].split('?')[0].toLowerCase();
 
     $side.find('a').each(function() {
-        if (URL.toLowerCase().indexOf(this.href.toLowerCase()) !== -1) {
+        if (URL === this.href.toLowerCase()) {
             $(this).addClass("curr").closest('dl').addClass('expand');
             return false; // break
         }
