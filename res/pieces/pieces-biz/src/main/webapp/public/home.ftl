@@ -88,7 +88,7 @@
                             </#if>
                         </ul>
                         <div class="img">
-                            <img src="images/blank.gif" data-original="${category.pictureUrl!}" width="200" height="270">
+                            <img src="images/blank.gif" class="lazyload" data-original="${category.pictureUrl!}" width="200" height="270">
                         </div>
                     </div>
 
@@ -96,14 +96,14 @@
                         <dl>
                             <#if category.showcase??>
                                 <dt>
-                                    <a href="${category.showcase.link!}"><img src="images/blank.gif" data-original="${category.showcase.pictureUrl!}" width="400" height="270"></a>
+                                    <a href="${category.showcase.link!}"><img src="images/blank.gif" class="lazyload" data-original="${category.showcase.pictureUrl!}" width="400" height="270"></a>
                                 </dt>
                             </#if>
 
                             <#if category.breedList??>
                                 <#list category.commodityList as commodity>
                                     <dd>
-                                        <a href="/commodity/${commodity.id!}"><img src="images/blank.gif" data-original="${commodity.pictureUrl!}" width="180" height="176"></a>
+                                        <a href="/commodity/${commodity.id!}"><img src="images/blank.gif" class="lazyload" data-original="${commodity.pictureUrl!}" width="180" height="176"></a>
                                         <a href="/commodity/${commodity.id!}">${commodity.name!}</a>
                                         <span>切制规格：${commodity.specName!}</span>
                                     </dd>
@@ -117,7 +117,7 @@
             <#assign adindex=(category_index/2-1)>
             <#if AD_SHOWCASE_BAR[adindex]?? >
                 <div class="wide-banner">
-                    <a href="${AD_SHOWCASE_BAR[adindex].link!}"><img src="images/blank.gif" data-original="${AD_SHOWCASE_BAR[adindex].pictureUrl!}" width="1200" height="90"></a>
+                    <a href="${AD_SHOWCASE_BAR[adindex].link!}"><img src="images/blank.gif" class="lazyload" data-original="${AD_SHOWCASE_BAR[adindex].pictureUrl!}" width="1200" height="90"></a>
                 </div>
             </#if>
         </#if>

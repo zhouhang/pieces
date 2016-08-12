@@ -101,6 +101,7 @@ function throttle(func, wait, mustRun) {
 function loazyload() {
 	var $images = $('img[data-original]'),
 		size = $images.length,
+		defaultImg = 'images/default-img.png',
 		count = 0;
 		
 	var getEleCoord = function(element) {
@@ -128,7 +129,7 @@ function loazyload() {
 				if (coord.top <= docTop + docHeight && coord.top + coord.height >= docTop) {
 					this.onerror = function() {
 						this.onerror = null;
-						this.src = 'images/default-img.png';
+						this.src = defaultImg;
 					}
 					this.src = src;
 					this.removeAttribute('data-original');
@@ -140,7 +141,7 @@ function loazyload() {
 				this.removeAttribute('data-original');
 				$(this).removeClass('lazyload').attr({
 					'loaded': '1',
-					'src': 'images/default-img.png'
+					'src': defaultImg
 				});
 			}
 
