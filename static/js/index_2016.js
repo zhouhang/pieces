@@ -1,121 +1,184 @@
-$(function(){
-	var $win = $(window),
-		SPEED = 300;
+// slide
+!(function($){
+	$.easing.easeInOutExpo = function (x, t, b, c, d) {
+		if (t==0) return b;
+		if (t==d) return b+c;
+		if ((t/=d/2) < 1) return c/2 * Math.pow(2, 10 * (t - 1)) + b;
+		return c/2 * (-Math.pow(2, -10 * --t) + 2) + b;
+	}
 
-	var lazyDom = function() {
-		var timer;
-		var winHeight = $win.height();
-		var space = 100;
-		var $ele = $('#lazyDom .idx-floor');
-		var getDom = function() {
-			var top = $win.scrollTop();
-			var bottom = top + winHeight + space;
-			$ele.each(function(i) {
-				var $self = $(this);
-				var offsetY = $self.offset().top;
-				if ($self.data('loaded') === '1') {
-					return;
-				}
-				if (offsetY > top - $self.outerHeight() && bottom > offsetY) {
-					$self.data('loaded', '1');
-					$self.html($self.find('textarea').val());
-					
-				}
+	var defaults = {
+		speed: 700,
+		delay: 5e3,
+		idx: 0,
+		easing: 'swing',
+		autoPlay: true
+	}
+
+	// Carousel
+	function Carousel(elem, options) {
+		this.settings = $.extend({}, defaults, options);
+		this.idx      = this.settings.idx;
+		this.$elem    = $(elem);
+		this.length   = this.$elem.find('.bd li').length;
+		this.length > 1 && this.init();
+	}
+	Carousel.prototype = {
+		init: function() {
+			this.createNav();
+			this.$slide = this.$elem.find('.bd ul');
+			this.$items = this.$slide.find('li');
+			this.$nav = this.$elem.find('.hd i');
+			this.setCss();
+			this.bindEvent();
+			this.autoPlay();
+		},
+		createNav: function() {
+			var modal = [];
+			var i = 0;
+			for (; i < this.length; i++) {
+				modal.push('<i', (this.idx === i ? ' class="current"' : '') ,'></i>');
+			}
+			if (this.$elem.find('.hd').length === 0) {
+				this.$elem.append('<div class="hd">' + modal.join('') + '</div>');
+			} else {
+				this.$elem.find('.hd').html(modal.join(''));	
+			}
+		},
+		doPlay: function() {
+			var self = this;
+			self.$nav.eq(self.idx).addClass('current').siblings().removeClass('current');
+			self.$slide.stop().animate({'left': -self.idx + '00%'}, self.settings.speed, self.settings.easing);
+		},
+		autoPlay: function() {
+			var self = this;
+			if (self.settings.autoPlay !== true) {
+				return;
+			}
+			this.timer && clearInterval(this.timer);
+			this.timer = setInterval(function() {
+				self.idx = self.idx === self.length - 1 ? 0 : self.idx + 1;
+				self.doPlay();
+			}, self.settings.delay);
+		},
+		bindEvent: function() {
+			var self = this;
+			self.$nav.on('click', function() {
+				self.idx = $(this).index();
+				self.doPlay();
+				self.autoPlay();
 			})
+		},
+		setCss: function() {
+			this.$slide.css({'width': this.length + '00%', 'position':'absolute', 'left':'0', 'top':'0'});
+			this.$items.css({'float':'left', 'width': (100 / this.length) + '%'});
 		}
-
-		var _getDom = function() {
-			timer && clearTimeout(timer);
-			timer = setTimeout(getDom, 100);
-		};
-		$win.on('scroll.lazyDom', _getDom);
-		getDom();
 	}
-	lazyDom();
-
-	// banner-slide
-	var $slide = $('#jslide'),
-		size = $slide.find('.bd li').length;
-	if (size > 1) {
-		var 
-			html  = [],
-			timer = 0,
-			speed = 5e3,
-			idx   = 0,
-			winWidth = Math.max($win.width(), 1200),
-			$lis  = $slide.find('.bd li'),
-			$ul  = $lis.parent(),
-			$ctrl;
-		$slide.css({'overflow':'hidden', '*zoom':'1'});
-		$lis.css({'float':'left', 'width': winWidth});
-		$ul.css({'width': winWidth * size, 'position':'absolute', 'left':'0', 'top':'0'});
-
-		var autoPlay = function() {
-			timer && clearInterval(timer);
-			timer = setInterval(function() {
-				idx = idx === size - 1 ? 0 : idx + 1;
-				doPlay();
-			}, speed);
-		}
-		var doPlay = function() {
-			$ctrl.eq(idx).addClass('on').siblings().removeClass('on');
-			// $lis.eq(idx).css({zIndex:1}).hide().fadeIn().siblings().css({zIndex:0}).hide();
-			$ul.animate({'left': -winWidth * idx}, SPEED);
-		}
-		var resize = function() {
-			winWidth = Math.max($win.width(), 1200);
-			$lis.css({width: winWidth});
-			$ul.stop().css({'width': winWidth * size, 'left': -winWidth * idx});
-		}
-		for (var i = 0; i < size; i++) {
-			html.push('<span', (i === 0 ? ' class="on"' : ''),'></span>');
-		}
-		$slide.find('.hd').append(html.join(''));
-		$slide.on('click', 'span', function() {
-			idx = $(this).index();
-			doPlay();
-			autoPlay();		
-		})
- 		$ctrl = $slide.find('.hd span');
- 		autoPlay();
- 		var _resize = throttle(resize, 50);
- 		$win.on('resize', _resize);
+	$.fn.carousel = function(options) {
+		return this.each(function() {
+			new Carousel(this, options);
+		});
 	}
 
-	// brands
-	if ($('.brands').find('.col').length > 1 ) {
-		var $ele = $(this),
-			$slide = $ele.find('.wrapper'),
-			count = $ele.find('.col').length,
-			idx = 0;
+	// Slide
+	function Slide(elem, options) {
+		this.settings = $.extend({}, defaults, options);
+		this.idx      = this.settings.idx;
+		this.$elem    = $(elem);
+		this.width    = this.$elem.width();
+		this.length   = this.$elem.find('.col').length;
+		this.init();
+	}
+	Slide.prototype = {
+		init: function() {
+			this.$items = this.$elem.find('.col');
+			this.$prev = this.$elem.find('.prev');
+			this.$next = this.$elem.find('.next');
+			this.setCss();
+			if (this.length < 2) {
+				this.$prev.addClass('disabled');
+				this.$next.addClass('disabled');
+			} else {
+				this.bindEvent();
+				this.autoPlay();
+			}
+		},
+		doPlay: function(step) {
+			var self = this;
+			self.$items.eq(self.idx).stop().animate({'left': -1 * step * self.width}, self.settings.speed, function(){
+				$(this).removeClass('current');
+			});
 
-		$ele.on('click', '.prev', function() {
-			if (idx === 0) {
+			if (step === -1) {
+				self.idx = self.idx === 0 ? self.length - 1 : self.idx - 1;
+			} else {
+				self.idx = self.idx === self.length - 1 ? 0 : self.idx + 1;
+			}
+
+			self.$items.eq(self.idx).stop().addClass('current').css({'left':step * self.width}).animate({'left':0}, self.settings.speed);
+			self.autoPlay();
+		},
+		autoPlay: function() {
+			var self = this;
+			if (self.settings.autoPlay !== true) {
 				return;
 			}
-			idx -= 1;
-			$slide.animate({left: -idx * 186}, SPEED);
-		})
-
-		$ele.on('click', '.next', function() {
-			if (idx === count - 1) {
-				return;
-			}
-			idx += 1;
-			$slide.animate({left: -idx * 186}, SPEED);
-		})
+			this.timer && clearInterval(this.timer);
+			this.timer = setInterval(function() {
+				self.$next.trigger('click');
+			}, self.settings.delay);
+		},
+		bindEvent: function() {
+			var self = this;
+			self.$prev.on('click', function() {
+				self.doPlay(-1);
+			})
+			self.$next.on('click', function() {
+				self.doPlay(1);
+			})
+		},
+		setCss: function() {
+			this.$items.eq(0).addClass('current');
+		}
+	}
+	$.fn.slide = function(options) {
+		return this.each(function() {
+			new Slide(this, options);
+		});
 	}
 
+})(jQuery);
+
+$(function(){
+	var EASING = 'easeInOutExpo';
+	$('#jslide').carousel({
+		easing: EASING
+	});
+	$('#jbrands').slide({
+		// autoPlay: false,
+		speed: 300
+	});
 
 	// 楼层导航
-	$elevator = $('#jelevator');
-	var threshold = $('.idx-main').offset().top;
-	var elevator = function() {
-		var stop = $win.scrollTop();
-		$elevator[stop > threshold ? 'fadeIn' : 'fadeOut'](100);
-	}
-	// elevator();
-	var _elevator = throttle(elevator, 50);
+	var 
+		$win      = $(window),
+		$gotop 	  = $('#jgotop'),
+		$elevator = $('#jelevator'),
+		threshold = $('.idx-main').offset().top,
+		elevator  = function() {
+			var stop  = $win.scrollTop();
+			$elevator[stop < threshold ? 'fadeOut' : 'fadeIn'](100);
+			$gotop[stop < threshold ? 'fadeOut' : 'fadeIn'](100);
+		},
+		_elevator = throttle(elevator, 50, 150);
+
+	elevator();
 	$win.on('scroll.elevator', _elevator);
-	$elevator.onePageNav({scrollSpeed: SPEED});
+	$elevator.onePageNav();
+	$gotop.on('click', function() {
+		$('html, body').animate({
+			scrollTop: 0
+		}, 700, EASING);
+	});
+
 });

@@ -53,7 +53,7 @@
                                     <div class="dd">${commodity.specName}</div>
                                 </li>
                                 <li>
-                                    <div class="dt">等级</div>
+                                    <div class="dt">等&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 级</div>
                                     <div class="dd">${commodity.levelName}</div>
                                 </li>
                                 <li>

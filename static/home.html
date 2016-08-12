@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>上工之选</title>
     <meta name="renderer" content="webkit" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
 
@@ -31,8 +32,9 @@
             </div>
             <div class="search">
                 <div class="form">
-                    <input class="ipt" name="" id="" placeholder="输入关键字" value="" type="text">
-                    <button class="btn" type="button">搜索</button>
+                <form action="" id="_search_form">
+                    <input class="ipt" name="" id="_search_ipt" placeholder="输入关键字" value="" type="text">
+                    <button class="btn" type="button">搜索</button></form>
                 </div>
                 <div class="hotwords">
                     <a class="hot" href="#!">金樱子肉</a>
@@ -64,25 +66,8 @@
                             <div class="cat-list">
                                 <dl>
                                     <dt><b>A</b>~<b>E</b> &gt;</dt>
-                                    <dd>                            
-                                        <a href="#">南天竹叶</a>
-                                        <a href="#">密蒙花</a>
-                                        <a href="#">野菊花</a>
-                                        <a href="#">功劳木</a>
-                                        <a href="#">夏枯草</a>
-                                        <a href="#">鸡蛋花</a>
-                                        <a href="#">淡竹叶</a>
-                                        <a href="#">栀子</a>                
-                                        <a href="#">苦瓜</a>
-                                        <a href="#">青葙子</a>
-                                        <a href="#">决明子</a>
-                                        <a href="#">西瓜皮</a>
-                                        <a href="#">木槿花</a>
-                                        <a href="#">黄芩</a>
-                                        <a href="#">知母</a>
-                                        <a href="#">芦根</a>
-                                        <a href="#">龙胆</a>
-                                        <a href="#">天花粉</a>
+                                    <dd>
+                                        <a href="commodity/index?breedId=74">白及</a><a href="commodity/index?breedId=77">白蔹</a><a href="commodity/index?breedId=79">白前</a><a href="commodity/index?breedId=83">白芍</a><a href="commodity/index?breedId=85">白术</a><a href="commodity/index?breedId=90">白薇</a><a href="commodity/index?breedId=93">白芷</a><a href="commodity/index?breedId=95">百部</a><a href="commodity/index?breedId=99">百合</a><a href="commodity/index?breedId=117">苍术</a><a href="commodity/index?breedId=124">柴胡</a><a href="commodity/index?breedId=129">常山</a><a href="commodity/index?breedId=131">赤芍</a><a href="commodity/index?breedId=136">川芎</a><a href="commodity/index?breedId=139">大黄</a><a href="commodity/index?breedId=142">丹参</a><a href="commodity/index?breedId=146">当归</a><a href="commodity/index?breedId=149">党参</a><a href="commodity/index?breedId=153">地榆</a><a href="commodity/index?breedId=158">莪术</a><a href="commodity/index?breedId=185">菝葜</a><a href="commodity/index?breedId=295">独活</a><a href="commodity/index?breedId=319">地黄</a><a href="commodity/index?breedId=388">脆蛇</a><a href="commodity/index?breedId=400">巴戟</a><a href="commodity/index?breedId=403">地蚕</a><a href="commodity/index?breedId=405">八角莲</a><a href="commodity/index?breedId=407">巴戟天</a><a href="commodity/index?breedId=409">白茅根</a><a href="commodity/index?breedId=410">白头翁</a><a href="commodity/index?breedId=412">板蓝根</a><a href="commodity/index?breedId=415">北沙参</a><a href="commodity/index?breedId=419">川木香</a><a href="commodity/index?breedId=421">川牛膝</a><a href="commodity/index?breedId=423">川贝母</a><a href="commodity/index?breedId=425">穿破石</a><a href="commodity/index?breedId=427">穿山龙</a><a href="commodity/index?breedId=429">刺五加</a><a href="commodity/index?breedId=431">大罗伞</a><a href="commodity/index?breedId=439">川射干</a><a href="commodity/index?breedId=518">北豆根</a><a href="commodity/index?breedId=595">川明参</a><a href="commodity/index?breedId=619">白背根</a><a href="commodity/index?breedId=622">半枫荷</a><a href="commodity/index?breedId=702">茶树根</a><a href="commodity/index?breedId=708">丢了棒</a><a href="commodity/index?breedId=732">当归藤</a><a href="commodity/index?breedId=742">刺梨根</a><a href="commodity/index?breedId=751">大蓟根</a><a href="commodity/index?breedId=755">地骷髅</a><a href="commodity/index?breedId=799">虫草参</a><a href="commodity/index?breedId=809">川紫菀</a><a href="commodity/index?breedId=811">地锦苗</a><a href="commodity/index?breedId=813">白首乌</a><a href="commodity/index?breedId=839">白药子</a><a href="commodity/index?breedId=857">独定子</a><a href="commodity/index?breedId=861">八角枫根</a><a href="commodity/index?breedId=863">滇白药子</a><a href="commodity/index?breedId=884">白土茯苓</a><a href="commodity/index?breedId=894">臭牡丹根</a><a href="commodity/index?breedId=896">大火草根</a><a href="commodity/index?breedId=901">八爪金龙</a><a href="commodity/index?breedId=908">白背叶根</a><a href="commodity/index?breedId=941">大叶蛇泡簕</a>
                                     </dd>
                                 </dl>
                                 <dl>
@@ -188,7 +173,7 @@
                                 </dl>
 
                                 <div class="more">
-                                    <a href="#" class="c-blue">查看更多 &gt;</a>
+                                    <a href="allsort.html" class="c-blue">查看更多 &gt;</a>
                                 </div>
                             </div>
                         </li>
@@ -443,21 +428,19 @@
             </ul>
 
             <h3>知名厂家</h3>
-            <div class="brands">
+            <div class="brands" id="jbrands">
                 <div class="inner">
-                    <div class="wrapper">
-                        <div class="col">
-                            <a href="#"><img src="images/brand-jhjt.png" alt=""></a>
-                            <a href="#"><img src="images/brand-yonggang.png" alt=""></a>
-                            <a href="#"><img src="images/brand-jrt.png" alt=""></a>
-                            <a href="#"><img src="images/brand-wsc.png" alt=""></a>
-                        </div>
-                        <div class="col">
-                            <a href="#"><img src="images/brand-jhjt.png" alt=""></a>
-                            <a href="#"><img src="images/brand-yonggang.png" alt=""></a>
-                            <a href="#"><img src="images/brand-jrt.png" alt=""></a>
-                            <a href="#"><img src="images/brand-wsc.png" alt=""></a>
-                        </div>
+                    <div class="col" index="0">
+                        <a href="#"><img src="images/brand-jhjt.png" alt=""></a>
+                        <a href="#"><img src="images/brand-yonggang.png" alt=""></a>
+                        <a href="#"><img src="images/brand-jrt.png" alt=""></a>
+                        <a href="#"><img src="images/brand-wsc.png" alt=""></a>
+                    </div>
+                    <div class="col" index="1">
+                        <a href="#"><img src="images/brand-jhjt.png" alt=""></a>
+                        <a href="#"><img src="images/brand-yonggang.png" alt=""></a>
+                        <a href="#"><img src="images/brand-jrt.png" alt=""></a>
+                        <a href="#"><img src="images/brand-wsc.png" alt=""></a>
                     </div>
                 </div>
                 <div class="ctrl">
@@ -478,7 +461,7 @@
                             <p><span class="t-orange">热销</span></p>
                         </div>
                         <div class="img">
-                            <img src="uploads/a1.jpg" width="200" height="180">
+                            <img src="images/blank.gif" class="lazyload" data-original="uploads/a1.jpg" width="200" height="180">
                         </div>
                     </a>
                 </li>
@@ -490,7 +473,7 @@
                             <p><span class="t-blue">热销</span></p>
                         </div>
                         <div class="img">
-                            <img src="uploads/a2.jpg" width="200" height="180">
+                            <img src="images/blank.gif" class="lazyload" data-original="uploads/a2.jpg" width="200" height="180">
                         </div>
                     </a>
                 </li>
@@ -502,7 +485,7 @@
                             <p><span class="t-pink">热销</span></p>
                         </div>
                         <div class="img">
-                            <img src="uploads/a3.jpg" width="200" height="180">
+                            <img src="images/blank.gif" class="lazyload" data-original="uploads/a3.jpg" width="200" height="180">
                         </div>
                     </a>
                 </li>
@@ -514,7 +497,7 @@
                             <p><span class="t-green">热销</span></p>
                         </div>
                         <div class="img">
-                            <img src="uploads/a4.jpg" width="200" height="180">
+                            <img src="images/blank.gif" class="lazyload" data-original="uploads/a4.jpg" width="200" height="180">
                         </div>
                     </a>
                 </li>
@@ -525,7 +508,6 @@
     <div class="wrap idx-main" id="lazyDom">
         <!-- start -->
         <div class="idx-floor" id="floor0">
-            <textarea style="display:none;" autocomplete="off">
                 <div class="idx-hd">
                     <h2>根茎类</h2>
                 </div>
@@ -546,64 +528,62 @@
                             <li><a href="#">菝葜</a></li>
                         </ul>
                         <div class="img">
-                            <img src="uploads/cat-1.jpg" width="200" height="270">
+                            <img src="images/blank.gif" class="lazyload" data-original="uploads/cat-1.jpg" width="200" height="270">
                         </div>
                     </div>
 
                     <div class="pro">
                         <dl>
                             <dt>
-                                <a href="#"><img src="uploads/pro-01.jpg" width="400" height="270"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01.jpg" width="400" height="270"></a>
                             </dt>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-01.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-01.jpg" width="180" height="176"></a>
                                 <a href="#">白芍</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-02.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-02.jpg" width="180" height="176"></a>
                                 <a href="#">炙黄芪</a>
                                 <span>切制规格：斜薄片</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-03.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-03.jpg" width="180" height="176"></a>
                                 <a href="#">炒莲子(白)</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-04.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-04.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-05.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-05.jpg" width="180" height="176"></a>
                                 <a href="#">藏红花</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-06.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-06.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-07.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-07.jpg" width="180" height="176"></a>
                                 <a href="#">烫白及</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-08.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-08.jpg" width="180" height="176"></a>
                                 <a href="#">盐巴戟天</a>
                                 <span>切制规格：段</span>
                             </dd>
                         </dl>
                     </div>
                 </div>
-            </textarea>
         </div><!-- end -->
 
         <!-- start -->
         <div class="idx-floor" id="floor1">
-            <textarea style="display:none;" autocomplete="off">
                 <div class="idx-hd">
                     <h2>果实籽仁类</h2>
                 </div>
@@ -624,68 +604,66 @@
                             <li><a href="#">菝葜</a></li>
                         </ul>
                         <div class="img">
-                            <img src="uploads/cat-1.jpg" width="200" height="270">
+                            <img src="images/blank.gif" class="lazyload" data-original="uploads/cat-1.jpg" width="200" height="270">
                         </div>
                     </div>
 
                     <div class="pro">
                         <dl>
                             <dt>
-                                <a href="#"><img src="uploads/pro-02.jpg" width="400" height="270"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-02.jpg" width="400" height="270"></a>
                             </dt>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-01.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-01.jpg" width="180" height="176"></a>
                                 <a href="#">白芍</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-02.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-02.jpg" width="180" height="176"></a>
                                 <a href="#">炙黄芪</a>
                                 <span>切制规格：斜薄片</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-03.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-03.jpg" width="180" height="176"></a>
                                 <a href="#">炒莲子(白)</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-04.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-04.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-05.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-05.jpg" width="180" height="176"></a>
                                 <a href="#">藏红花</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-06.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-06.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-07.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-07.jpg" width="180" height="176"></a>
                                 <a href="#">烫白及</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-08.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-08.jpg" width="180" height="176"></a>
                                 <a href="#">盐巴戟天</a>
                                 <span>切制规格：段</span>
                             </dd>
                         </dl>
                     </div>
                 </div>
-            </textarea>
         </div><!-- end -->
 
         <div class="wide-banner">
-            <a href="#"><img src="images/blank.gif" width="1200" height="90" data-original="uploads/banner-1200.jpg"></a>
+            <a href="#"><img src="images/blank.gif" width="1200" height="90" class="lazyload" data-original="uploads/banner-1200.jpg"></a>
         </div>
         
         <!-- start -->
         <div class="idx-floor" id="floor2">
-            <textarea style="display:none;" autocomplete="off">
                 <div class="idx-hd">
                     <h2>全草类</h2>
                 </div>
@@ -706,64 +684,62 @@
                             <li><a href="#">菝葜</a></li>
                         </ul>
                         <div class="img">
-                            <img src="uploads/cat-1.jpg" width="200" height="270">
+                            <img src="images/blank.gif" class="lazyload" data-original="uploads/cat-1.jpg" width="200" height="270">
                         </div>
                     </div>
 
                     <div class="pro">
                         <dl>
                             <dt>
-                                <a href="#"><img src="uploads/pro-03.jpg" width="400" height="270"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-03.jpg" width="400" height="270"></a>
                             </dt>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-01.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-01.jpg" width="180" height="176"></a>
                                 <a href="#">白芍</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-02.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-02.jpg" width="180" height="176"></a>
                                 <a href="#">炙黄芪</a>
                                 <span>切制规格：斜薄片</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-03.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-03.jpg" width="180" height="176"></a>
                                 <a href="#">炒莲子(白)</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-04.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-04.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-05.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-05.jpg" width="180" height="176"></a>
                                 <a href="#">藏红花</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-06.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-06.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-07.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-07.jpg" width="180" height="176"></a>
                                 <a href="#">烫白及</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-08.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-08.jpg" width="180" height="176"></a>
                                 <a href="#">盐巴戟天</a>
                                 <span>切制规格：段</span>
                             </dd>
                         </dl>
                     </div>
                 </div>
-            </textarea>
         </div><!-- end -->
 
         <!-- start -->
         <div class="idx-floor" id="floor3">
-            <textarea style="display:none;" autocomplete="off">
                 <div class="idx-hd">
                     <h2>花/叶类</h2>
                 </div>
@@ -784,68 +760,66 @@
                             <li><a href="#">菝葜</a></li>
                         </ul>
                         <div class="img">
-                            <img src="uploads/cat-1.jpg" width="200" height="270">
+                            <img src="images/blank.gif" class="lazyload" data-original="uploads/cat-1.jpg" width="200" height="270">
                         </div>
                     </div>
 
                     <div class="pro">
                         <dl>
                             <dt>
-                                <a href="#"><img src="uploads/pro-04.jpg" width="400" height="270"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-04.jpg" width="400" height="270"></a>
                             </dt>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-01.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-01.jpg" width="180" height="176"></a>
                                 <a href="#">白芍</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-02.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-02.jpg" width="180" height="176"></a>
                                 <a href="#">炙黄芪</a>
                                 <span>切制规格：斜薄片</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-03.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-03.jpg" width="180" height="176"></a>
                                 <a href="#">炒莲子(白)</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-04.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-04.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-05.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-05.jpg" width="180" height="176"></a>
                                 <a href="#">藏红花</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-06.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-06.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-07.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-07.jpg" width="180" height="176"></a>
                                 <a href="#">烫白及</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-08.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-08.jpg" width="180" height="176"></a>
                                 <a href="#">盐巴戟天</a>
                                 <span>切制规格：段</span>
                             </dd>
                         </dl>
                     </div>
                 </div>
-            </textarea>
         </div><!-- end -->
 
         <div class="wide-banner">
-            <a href="#"><img src="images/blank.gif" width="1200" height="90" data-original="uploads/banner-1200.jpg"></a>
+            <a href="#"><img src="images/blank.gif" width="1200" height="90" class="lazyload" data-original="uploads/banner-1200.jpg"></a>
         </div>
         
         <!-- start -->
         <div class="idx-floor" id="floor4">
-            <textarea style="display:none;" autocomplete="off">
                 <div class="idx-hd">
                     <h2>树皮类</h2>
                 </div>
@@ -866,64 +840,62 @@
                             <li><a href="#">菝葜</a></li>
                         </ul>
                         <div class="img">
-                            <img src="uploads/cat-1.jpg" width="200" height="270">
+                            <img src="images/blank.gif" class="lazyload" data-original="uploads/cat-1.jpg" width="200" height="270">
                         </div>
                     </div>
 
                     <div class="pro">
                         <dl>
                             <dt>
-                                <a href="#"><img src="uploads/pro-01.jpg" width="400" height="270"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01.jpg" width="400" height="270"></a>
                             </dt>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-01.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-01.jpg" width="180" height="176"></a>
                                 <a href="#">白芍</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-02.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-02.jpg" width="180" height="176"></a>
                                 <a href="#">炙黄芪</a>
                                 <span>切制规格：斜薄片</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-03.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-03.jpg" width="180" height="176"></a>
                                 <a href="#">炒莲子(白)</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-04.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-04.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-05.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-05.jpg" width="180" height="176"></a>
                                 <a href="#">藏红花</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-06.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-06.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-07.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-07.jpg" width="180" height="176"></a>
                                 <a href="#">烫白及</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-08.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-08.jpg" width="180" height="176"></a>
                                 <a href="#">盐巴戟天</a>
                                 <span>切制规格：段</span>
                             </dd>
                         </dl>
                     </div>
                 </div>
-            </textarea>
         </div><!-- end -->
 
         <!-- start -->
         <div class="idx-floor" id="floor5">
-            <textarea style="display:none;" autocomplete="off">
                 <div class="idx-hd">
                     <h2>藤木类</h2>
                 </div>
@@ -944,68 +916,66 @@
                             <li><a href="#">菝葜</a></li>
                         </ul>
                         <div class="img">
-                            <img src="uploads/cat-1.jpg" width="200" height="270">
+                            <img src="images/blank.gif" class="lazyload" data-original="uploads/cat-1.jpg" width="200" height="270">
                         </div>
                     </div>
 
                     <div class="pro">
                         <dl>
                             <dt>
-                                <a href="#"><img src="uploads/pro-05.jpg" width="400" height="270"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-05.jpg" width="400" height="270"></a>
                             </dt>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-01.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-01.jpg" width="180" height="176"></a>
                                 <a href="#">白芍</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-02.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-02.jpg" width="180" height="176"></a>
                                 <a href="#">炙黄芪</a>
                                 <span>切制规格：斜薄片</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-03.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-03.jpg" width="180" height="176"></a>
                                 <a href="#">炒莲子(白)</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-04.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-04.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-05.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-05.jpg" width="180" height="176"></a>
                                 <a href="#">藏红花</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-06.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-06.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-07.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-07.jpg" width="180" height="176"></a>
                                 <a href="#">烫白及</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-08.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-08.jpg" width="180" height="176"></a>
                                 <a href="#">盐巴戟天</a>
                                 <span>切制规格：段</span>
                             </dd>
                         </dl>
                     </div>
                 </div>
-            </textarea>
         </div><!-- end -->
 
         <div class="wide-banner">
-            <a href="#"><img src="images/blank.gif" width="1200" height="90" data-original="uploads/banner-1200.jpg"></a>
+            <a href="#"><img src="images/blank.gif" width="1200" height="90" class="lazyload" data-original="uploads/banner-1200.jpg"></a>
         </div>
         
         <!-- start -->
         <div class="idx-floor" id="floor6">
-            <textarea style="display:none;" autocomplete="off">
                 <div class="idx-hd">
                     <h2>矿物菌脂类</h2>
                 </div>
@@ -1026,64 +996,62 @@
                             <li><a href="#">菝葜</a></li>
                         </ul>
                         <div class="img">
-                            <img src="uploads/cat-1.jpg" width="200" height="270">
+                            <img src="images/blank.gif" class="lazyload" data-original="uploads/cat-1.jpg" width="200" height="270">
                         </div>
                     </div>
 
                     <div class="pro">
                         <dl>
                             <dt>
-                                <a href="#"><img src="uploads/pro-06.jpg" width="400" height="270"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-06.jpg" width="400" height="270"></a>
                             </dt>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-01.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-01.jpg" width="180" height="176"></a>
                                 <a href="#">白芍</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-02.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-02.jpg" width="180" height="176"></a>
                                 <a href="#">炙黄芪</a>
                                 <span>切制规格：斜薄片</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-03.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-03.jpg" width="180" height="176"></a>
                                 <a href="#">炒莲子(白)</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-04.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-04.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-05.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-05.jpg" width="180" height="176"></a>
                                 <a href="#">藏红花</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-06.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-06.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-07.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-07.jpg" width="180" height="176"></a>
                                 <a href="#">烫白及</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-08.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-08.jpg" width="180" height="176"></a>
                                 <a href="#">盐巴戟天</a>
                                 <span>切制规格：段</span>
                             </dd>
                         </dl>
                     </div>
                 </div>
-            </textarea>
         </div><!-- end -->
 
         <!-- start -->
         <div class="idx-floor" id="floor7">
-            <textarea style="display:none;" autocomplete="off">
                 <div class="idx-hd">
                     <h2>动物类</h2>
                 </div>
@@ -1104,59 +1072,58 @@
                             <li><a href="#">菝葜</a></li>
                         </ul>
                         <div class="img">
-                            <img src="uploads/cat-1.jpg" width="200" height="270">
+                            <img src="images/blank.gif" class="lazyload" data-original="uploads/cat-1.jpg" width="200" height="270">
                         </div>
                     </div>
 
                     <div class="pro">
                         <dl>
                             <dt>
-                                <a href="#"><img src="uploads/pro-02.jpg" width="400" height="270"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-02.jpg" width="400" height="270"></a>
                             </dt>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-01.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-01.jpg" width="180" height="176"></a>
                                 <a href="#">白芍</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-02.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-02.jpg" width="180" height="176"></a>
                                 <a href="#">炙黄芪</a>
                                 <span>切制规格：斜薄片</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-03.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-03.jpg" width="180" height="176"></a>
                                 <a href="#">炒莲子(白)</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-04.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-04.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-05.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-05.jpg" width="180" height="176"></a>
                                 <a href="#">藏红花</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-06.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-06.jpg" width="180" height="176"></a>
                                 <a href="#">西洋参</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-07.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-07.jpg" width="180" height="176"></a>
                                 <a href="#">烫白及</a>
                                 <span>切制规格：段</span>
                             </dd>
                             <dd>
-                                <a href="#"><img src="uploads/pro-01-08.jpg" width="180" height="176"></a>
+                                <a href="#"><img src="images/blank.gif" class="lazyload" data-original="uploads/pro-01-08.jpg" width="180" height="176"></a>
                                 <a href="#">盐巴戟天</a>
                                 <span>切制规格：段</span>
                             </dd>
                         </dl>
                     </div>
                 </div>
-            </textarea>
         </div><!-- end -->
     </div>              
 
@@ -1220,7 +1187,7 @@
 
     <div class="elevator" id="jelevator">
         <ul>
-            <li class="curr"><a href="#floor0">根茎类</a></li>
+            <li><a href="#floor0">根茎类</a></li>
             <li><a href="#floor1">果实籽仁类</a></li>
             <li><a href="#floor2">全草类</a></li>
             <li><a href="#floor3">花/叶类</a></li>
