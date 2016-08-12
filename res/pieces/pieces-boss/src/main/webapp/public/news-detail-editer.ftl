@@ -115,6 +115,23 @@
         fn: {
             init: function () {
                 this.formValidate();
+                $("#delete").click(function() {
+                    $.post("cms/article/delete/${article.id}", function (data) {
+                        if (data.status == "y") {
+                            $.notify({
+                                type: 'success',
+                                title: '删除成功',
+                                text: '3秒后自动跳转到文章列表',
+                                delay: 3e3,
+                                call: function () {
+                                    setTimeout(function () {
+                                        location.href = 'cms/article/index?model=${article.model}';
+                                    }, 3e3);
+                                }
+                            });
+                        }
+                    }, "json")
+                });
             },
             formValidate: function () {
                 $('#form').validator({
