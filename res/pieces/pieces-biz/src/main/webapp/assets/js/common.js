@@ -1,5 +1,3 @@
-
-
 ;(function($){
 	var defaults = {
 		clickToHide: true 	// 点击关闭
@@ -161,7 +159,15 @@ function bindSearch() {
 		return false;
 	}
 
-
+	// 可以页面其他地方引入了autocomplete.js
+	if($.isFunction($.fn.autocomplete)){ 
+		call();
+	} else {
+		loadScript('js/jquery.autocomplete.min.js');
+		timer = setInterval(function() {
+			call();
+		}, 300);
+	}
 
 	call = function() {
 		timer && clearTimeout(timer);
@@ -182,16 +188,6 @@ function bindSearch() {
 	            $searchForm.submit();
 	        }
 	    });
-	}
-
-	// 可以页面其他地方引入了autocomplete.js
-	if($.isFunction($.fn.autocomplete)){
-		call();
-	} else {
-		loadScript('js/jquery.autocomplete.min.js');
-		timer = setInterval(function() {
-			call();
-		}, 300);
 	}
 }
 
@@ -287,28 +283,6 @@ function cat() {
 
 }
 
-// gotop
-function gototop() {
-	var 
-		$gotop = $('#jgotop'),
-		$win = $(window),
-		threshold = 700;
-
-	var status = function() {
-		var stop = $win.scrollTop();
-		$gotop[stop > threshold ? 'fadeIn' : 'fadeOut'](100);
-	}
-	var _status = throttle(status, 50);
-	$win.on('scroll.gotop', _status);
-	status();
-
-	$gotop.on('click', function() {
-		$('html, body').animate({
-			scrollTop: 0
-		}, 300);
-	});
-}
-
 
 function pageInit() {
 	// 开启图片懒加载
@@ -321,10 +295,9 @@ function pageInit() {
 	quoteEvent();
 	// 商品分类
 	cat();
-	// 返回顶部
-	gototop();
 }
 
 $(function() {
+	window.scrollTo(0, 0);
 	pageInit();
 })
