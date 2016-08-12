@@ -240,7 +240,7 @@
                         spec: "required(not, -1)",
                         level: "required(not, -1)",
                         originOf: "required(not, -1)",
-                        executiveStandard: "required;length[2~20]",
+                        executiveStandard: "required;length[1~20]",
                         exterior: "required;length[2~50]",
                         factory: "required;length[2~20]",
                         imgUrl: "required",
