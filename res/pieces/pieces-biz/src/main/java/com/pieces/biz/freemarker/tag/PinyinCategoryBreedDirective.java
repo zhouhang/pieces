@@ -1,4 +1,4 @@
-package com.pieces.biz.tag;
+package com.pieces.biz.freemarker.tag;
 
 import com.pieces.dao.vo.CategoryVo;
 import com.pieces.service.CategoryService;
@@ -44,7 +44,7 @@ public class PinyinCategoryBreedDirective implements TemplateDirectiveModel {
                 sb.append(letterTitle(letter));
                 sb.append("<dd>");
                 for(CategoryVo categoryVo : categoryVoList){
-                    sb.append("<a href='commodity/index?breedId=").append(categoryVo.getId()).append("'>").append(categoryVo.getName()).append("</a>");
+                    sb.append("<a href='commodity/index?breedId=").append(categoryVo.getId()).append("'>").append(categoryVo.getName()).append("</a>").append("\n\r");
                 }
                 sb.append("</dd>");
                 sb.append("</dl>");

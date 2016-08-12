@@ -59,7 +59,7 @@ public class CategoryController {
 		pageSize = pageSize==null?10:pageSize;
 		CategoryVo t = new CategoryVo();
 		t.setName(name);
-		t.setStatus(CategoryEnum.STATUS_VALID.getValue().toString());
+		t.setStatus(CategoryEnum.STATUS_VALID.getValue());
 		PageInfo<Category> categoryPage = categoryService.findClassify(t, pageNum, pageSize);
 		model.put("categoryPage", categoryPage);
 		model.put("categoryParams", t.toString());
@@ -80,7 +80,7 @@ public class CategoryController {
 							  ModelMap model){
 		
 		CategoryVo t = new CategoryVo();
-		t.setStatus(CategoryEnum.STATUS_VALID.getValue().toString());
+		t.setStatus(CategoryEnum.STATUS_VALID.getValue());
 		List<Category> categorys = categoryService.findClassify(t);
         String result = GsonUtil.toJsonInclude(categorys, "id", "name");
         WebUtil.printJson(response, result);
@@ -191,7 +191,7 @@ public class CategoryController {
 		
 		pageNum = pageNum==null?1:pageNum;
 		pageSize = pageSize==null?10:pageSize;
-		vo.setStatus(CategoryEnum.STATUS_VALID.getValue().toString());
+		vo.setStatus(CategoryEnum.STATUS_VALID.getValue());
 		PageInfo<CategoryVo> categoryPage = categoryService.findBreed(vo, pageNum, pageSize);
 		model.put("categoryPage", categoryPage);
 		model.put("categoryParams", vo.toString());

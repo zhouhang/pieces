@@ -1,4 +1,4 @@
-package com.pieces.biz.tag;
+package com.pieces.biz.freemarker.tag;
 
 import com.pieces.service.ArticleService;
 import com.pieces.service.enums.ModelEnum;

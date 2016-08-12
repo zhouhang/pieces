@@ -14,8 +14,10 @@
 
 	<mvc:annotation-driven/>
 
-	<!--Spring3.1开始的注解 HandlerMapping ,支持 product consume annotation-->  
-	<bean   class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>   
+	<!--Spring3.1开始的注解 HandlerMapping ,支持 product consume annotation-->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+	</bean>
+
 	<!--Spring3.1开始的注解 HandlerAdapter -->  
 	<bean   class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>   
 	
@@ -34,6 +36,9 @@
 			</list>
 		</property>
 	</bean>
+
+
+
 
 
 	<!-- 配置freeMarker的模板路径 -->
@@ -61,10 +66,9 @@
 	    </property>
 	</bean>
 
-	<bean id="search_keyword" class="com.pieces.biz.tag.SearchKeywordDirective"/>
-	<bean id="pinyin_category" class="com.pieces.biz.tag.PinyinCategoryBreedDirective"/>
-
-	<bean id="help_foot" class="com.pieces.biz.tag.HelpFootDirective"/>
+	<bean id="search_keyword" class="com.pieces.biz.freemarker.tag.SearchKeywordDirective"/>
+	<bean id="pinyin_category" class="com.pieces.biz.freemarker.tag.PinyinCategoryBreedDirective"/>
+	<bean id="help_foot" class="com.pieces.biz.freemarker.tag.HelpFootDirective"/>
 
 
 	<!-- 配置多视图协商解析器 ,ppa策略,先找parameter，再找header，最后找accept-->
@@ -103,7 +107,6 @@
 	    <property name="exposeSpringMacroHelpers" value="true"></property>
 	    <property name="exposeRequestAttributes" value="true"></property>
 	</bean>
-
 
 
 
