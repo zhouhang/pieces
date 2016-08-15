@@ -27,7 +27,6 @@
 		<jackson.version>1.8.4</jackson.version>
 		<apache.lang.version>2.1.0</apache.lang.version>
 		<mybatis.version>3.2.3</mybatis.version>
-		<mybatis.string.version>1.2.1</mybatis.string.version>
 		<freemarker.version>2.3.20</freemarker.version>
 		<log4j.version>1.2.17</log4j.version>
 		<shiro.version>1.2.3</shiro.version>
@@ -58,6 +57,7 @@
 		<google.guava>18.0</google.guava>
 		<jpinyin>1.1.6</jpinyin>
 		<commons-configuration>1.6</commons-configuration>
+		<mybatis-spring.version>1.2.3</mybatis-spring.version>
 	</properties>
 
 	<dependencyManagement>
@@ -160,11 +160,6 @@
 				<groupId>org.mybatis</groupId>
 				<artifactId>mybatis</artifactId>
 				<version>${mybatis.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.mybatis</groupId>
-				<artifactId>mybatis-spring</artifactId>
-				<version>${mybatis.string.version}</version>
 			</dependency>
 			<!--分页插件 -->
 			<dependency>
@@ -360,6 +355,11 @@
 				<groupId>commons-configuration</groupId>
 				<artifactId>commons-configuration</artifactId>
 				<version>${commons-configuration}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+				<version>${mybatis-spring.version}</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>

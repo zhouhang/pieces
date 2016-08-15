@@ -81,5 +81,11 @@
 	<!-- 启用 annotation事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
+	<!-- scan for mappers and let them be autowired -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+		<property name="basePackage" value="com.pieces.dao" />
+		<property name="annotationClass" value="com.pieces.dao.annotation.AutoMapper" />
+	</bean>
 
 </beans>
