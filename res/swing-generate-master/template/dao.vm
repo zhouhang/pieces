@@ -1,8 +1,12 @@
 package ${table.packageName}.dao;
 
 import ${table.packageName}.dao.model.${table.className};
+import ${table.packageName}.dao.vo.${table.className}Vo;
+
+import java.util.List;
 
 public interface ${table.className}Dao extends ICommonDao<${table.className}>{
 
-	
+    public List<${table.className}Vo> findByParams(${table.className}Vo ${table.classNameFirstLower}Vo);
+
 }

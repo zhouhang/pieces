@@ -1,0 +1,7 @@
+package ${table.packageName}.dao.vo;
+
+import com.pieces.dao.model.${table.className};
+
+public class ${table.className}Vo extends ${table.className}{
+
+}
