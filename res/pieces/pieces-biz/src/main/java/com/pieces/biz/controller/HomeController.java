@@ -11,7 +11,6 @@ import com.pieces.service.enums.WeightEnum;
 import com.pieces.service.utils.predicate.RegularPredicate;
 import org.apache.commons.beanutils.BeanPredicate;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.functors.EqualPredicate;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.utils.WebUtil;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.*;
 import java.util.regex.Pattern;
@@ -111,6 +109,11 @@ public class HomeController extends BaseController{
 	public String toLogin(ModelMap model,String url, HttpServletRequest request) {
 		model.put("url", url);
 		return "login_mini";
+	}
+
+	@RequestMapping(value = "/cusinc")
+	public String inc(){
+		return "cusinc";
 	}
 
 

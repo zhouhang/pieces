@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.ShippingAddressDao">
+    <resultMap id="ShippingAddressResultMap" type="com.pieces.dao.model.ShippingAddress">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="is_default"  property="isDefault" />
+            <result column="consignee"  property="consignee" />
+            <result column="tel"  property="tel" />
+            <result column="area"  property="area" />
+            <result column="detail"  property="detail" />
+            <result column="create_time"  property="createTime" />
+            <result column="aliases"  property="aliases" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,is_default,consignee,tel,area,detail,create_time,aliases
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="ShippingAddressResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from shipping_address
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="ShippingAddressResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from shipping_address
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from shipping_address
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.ShippingAddress">
+        insert into
+        shipping_address (user_id,is_default,consignee,tel,area,detail,create_time,aliases)
+        values
+        (#{userId},#{isDefault},#{consignee},#{tel},#{area},#{detail},#{createTime},#{aliases})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.ShippingAddress">
+        update shipping_address
+        <set>
+                                                        
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+                                            
+            <if test="isDefault != null">
+                is_default = #{isDefault},
+            </if>
+                                            
+            <if test="consignee != null">
+                consignee = #{consignee},
+            </if>
+                                            
+            <if test="tel != null">
+                tel = #{tel},
+            </if>
+                                            
+            <if test="area != null">
+                area = #{area},
+            </if>
+                                            
+            <if test="detail != null">
+                detail = #{detail},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="aliases != null">
+                aliases = #{aliases},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

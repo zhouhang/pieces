@@ -15,7 +15,15 @@
 	<mvc:annotation-driven/>
 
 	<!--Spring3.1开始的注解 HandlerMapping ,支持 product consume annotation-->
+	<bean id="includePageInterceptor" class="com.pieces.biz.freemarker.interceptor.IncludePageInterceptor"/>
+
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+		<property name="order" value="1" />
+		<property name="interceptors">
+			<list>
+				<ref bean="includePageInterceptor"/>
+			</list>
+		</property>
 	</bean>
 
 	<!--Spring3.1开始的注解 HandlerAdapter -->  
@@ -28,8 +36,7 @@
 	
 	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
 
-	<bean id="jsonHttpMessageConverter"
-		  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+	<bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 		<property name="supportedMediaTypes">
 			<list>
 				<value>application/json</value>

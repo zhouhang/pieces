@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.OrderRemarkDao">
+    <resultMap id="OrderRemarkResultMap" type="com.pieces.dao.model.OrderRemark">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="content"  property="content" />
+            <result column="order_id"  property="orderId" />
+            <result column="creater_time"  property="createrTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,content,order_id,creater_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="OrderRemarkResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from order_remark
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="OrderRemarkResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from order_remark
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from order_remark
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.OrderRemark">
+        insert into
+        order_remark (user_id,content,order_id,creater_time)
+        values
+        (#{userId},#{content},#{orderId},#{createrTime})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.OrderRemark">
+        update order_remark
+        <set>
+                                                        
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+                                            
+            <if test="content != null">
+                content = #{content},
+            </if>
+                                            
+            <if test="orderId != null">
+                order_id = #{orderId},
+            </if>
+                                            
+            <if test="createrTime != null">
+                creater_time = #{createrTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

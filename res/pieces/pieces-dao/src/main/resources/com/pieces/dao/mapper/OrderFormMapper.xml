@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.OrderFormDao">
+    <resultMap id="OrderFormResultMap" type="com.pieces.dao.model.OrderForm">
+            <id column="id"  property="id" />
+            <result column="Code"  property="code" />
+            <result column="shipping_costs"  property="shippingCosts" />
+            <result column="addr_history_id"  property="addrHistoryId" />
+            <result column="user_id"  property="userId" />
+            <result column="remark"  property="remark" />
+            <result column="amounts_payable"  property="amountsPayable" />
+            <result column="sum"  property="sum" />
+            <result column="invoice_id"  property="invoiceId" />
+            <result column="status"  property="status" />
+            <result column="creater_time"  property="createrTime" />
+            <result column="payment_date"  property="paymentDate" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,Code,shipping_costs,addr_history_id,user_id,remark,amounts_payable,sum,invoice_id,status,creater_time,payment_date
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="OrderFormResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from order_form
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="OrderFormResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from order_form
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from order_form
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.OrderForm">
+        insert into
+        order_form (Code,shipping_costs,addr_history_id,user_id,remark,amounts_payable,sum,invoice_id,status,creater_time,payment_date)
+        values
+        (#{code},#{shippingCosts},#{addrHistoryId},#{userId},#{remark},#{amountsPayable},#{sum},#{invoiceId},#{status},#{createrTime},#{paymentDate})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.OrderForm">
+        update order_form
+        <set>
+                                                        
+            <if test="code != null">
+                Code = #{code},
+            </if>
+                                            
+            <if test="shippingCosts != null">
+                shipping_costs = #{shippingCosts},
+            </if>
+                                            
+            <if test="addrHistoryId != null">
+                addr_history_id = #{addrHistoryId},
+            </if>
+                                            
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+                                            
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+                                            
+            <if test="amountsPayable != null">
+                amounts_payable = #{amountsPayable},
+            </if>
+                                            
+            <if test="sum != null">
+                sum = #{sum},
+            </if>
+                                            
+            <if test="invoiceId != null">
+                invoice_id = #{invoiceId},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                                            
+            <if test="createrTime != null">
+                creater_time = #{createrTime},
+            </if>
+                                            
+            <if test="paymentDate != null">
+                payment_date = #{paymentDate},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

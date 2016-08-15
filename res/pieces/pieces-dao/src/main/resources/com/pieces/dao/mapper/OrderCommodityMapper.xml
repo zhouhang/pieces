@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.OrderCommodityDao">
+    <resultMap id="OrderCommodityResultMap" type="com.pieces.dao.model.OrderCommodity">
+            <id column="id"  property="id" />
+            <result column="name"  property="name" />
+            <result column="spec"  property="spec" />
+            <result column="level"  property="level" />
+            <result column="originOf"  property="originOf" />
+            <result column="expectDate"  property="expectDate" />
+            <result column="amount"  property="amount" />
+            <result column="price"  property="price" />
+            <result column="subtotal"  property="subtotal" />
+            <result column="enquiry_commodity_id"  property="enquiryCommodityId" />
+            <result column="order_id"  property="orderId" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,spec,level,originOf,expectDate,amount,price,subtotal,enquiry_commodity_id,order_id
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="OrderCommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from order_commodity
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="OrderCommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from order_commodity
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from order_commodity
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.OrderCommodity">
+        insert into
+        order_commodity (name,spec,level,originOf,expectDate,amount,price,subtotal,enquiry_commodity_id,order_id)
+        values
+        (#{name},#{spec},#{level},#{originOf},#{expectDate},#{amount},#{price},#{subtotal},#{enquiryCommodityId},#{orderId})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.OrderCommodity">
+        update order_commodity
+        <set>
+                                                        
+            <if test="name != null">
+                name = #{name},
+            </if>
+                                            
+            <if test="spec != null">
+                spec = #{spec},
+            </if>
+                                            
+            <if test="level != null">
+                level = #{level},
+            </if>
+                                            
+            <if test="originOf != null">
+                originOf = #{originOf},
+            </if>
+                                            
+            <if test="expectDate != null">
+                expectDate = #{expectDate},
+            </if>
+                                            
+            <if test="amount != null">
+                amount = #{amount},
+            </if>
+                                            
+            <if test="price != null">
+                price = #{price},
+            </if>
+                                            
+            <if test="subtotal != null">
+                subtotal = #{subtotal},
+            </if>
+                                            
+            <if test="enquiryCommodityId != null">
+                enquiry_commodity_id = #{enquiryCommodityId},
+            </if>
+                                            
+            <if test="orderId != null">
+                order_id = #{orderId},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
