@@ -74,9 +74,6 @@ public class HomeController extends BaseController{
         return "home";
     }
 
-
-
-
     
 	/**
 	 * 是否弹框登录
@@ -109,11 +106,6 @@ public class HomeController extends BaseController{
 	public String toLogin(ModelMap model,String url, HttpServletRequest request) {
 		model.put("url", url);
 		return "login_mini";
-	}
-
-	@RequestMapping(value = "/cusinc")
-	public String inc(){
-		return "cusinc";
 	}
 
 

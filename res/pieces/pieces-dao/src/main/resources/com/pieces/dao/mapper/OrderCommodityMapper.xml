@@ -16,6 +16,21 @@
         
     </resultMap>
 
+    <resultMap id="OrderCommodityResultMapVo" type="com.pieces.dao.vo.OrderCommodityVo">
+            <id column="id"  property="id" />
+            <result column="name"  property="name" />
+            <result column="spec"  property="spec" />
+            <result column="level"  property="level" />
+            <result column="originOf"  property="originOf" />
+            <result column="expectDate"  property="expectDate" />
+            <result column="amount"  property="amount" />
+            <result column="price"  property="price" />
+            <result column="subtotal"  property="subtotal" />
+            <result column="enquiry_commodity_id"  property="enquiryCommodityId" />
+            <result column="order_id"  property="orderId" />
+        
+    </resultMap>
+
     <sql id="Base_Column_List">
         id,name,spec,level,originOf,expectDate,amount,price,subtotal,enquiry_commodity_id,order_id
     </sql>
@@ -31,6 +46,17 @@
         select
         <include refid="Base_Column_List" />
         from order_commodity
+    </select>
+
+    <select id="findByParams" resultMap="OrderCommodityResultMapVo" parameterType="com.pieces.dao.vo.OrderCommodityVo">
+        select
+        <include refid="Base_Column_List" />
+        from order_commodity
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">

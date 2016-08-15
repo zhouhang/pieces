@@ -1,10 +1,12 @@
 package com.pieces.dao;
 
-import com.pieces.dao.annotation.AutoMapper;
 import com.pieces.dao.model.ShippingAddress;
+import com.pieces.dao.vo.ShippingAddressVo;
 
-@AutoMapper
+import java.util.List;
+
 public interface ShippingAddressDao extends ICommonDao<ShippingAddress>{
 
-	
+    public List<ShippingAddressVo> findByParams(ShippingAddressVo shippingAddressVo);
+
 }

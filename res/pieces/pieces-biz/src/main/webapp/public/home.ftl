@@ -124,11 +124,7 @@
         </#if>
 
     </#list>
-
 </div>
-
-<@include_page path="${base}/catalogues/nieuw"  inherit_params=true />
-
 
 <#include "./inc/helper.ftl"/>
 

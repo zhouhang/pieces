@@ -27,7 +27,7 @@
 	</bean>
 
 	<!--Spring3.1开始的注解 HandlerAdapter -->  
-	<bean   class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>   
+	<bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
 	
 	<!-- 设置freeMarker的配置文件路径 -->  
 	<bean id="freemarkerConfiguration" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
@@ -43,9 +43,6 @@
 			</list>
 		</property>
 	</bean>
-
-
-
 
 
 	<!-- 配置freeMarker的模板路径 -->

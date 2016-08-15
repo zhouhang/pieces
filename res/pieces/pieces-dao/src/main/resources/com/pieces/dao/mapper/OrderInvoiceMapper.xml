@@ -14,6 +14,19 @@
         
     </resultMap>
 
+    <resultMap id="OrderInvoiceResultMapVo" type="com.pieces.dao.vo.OrderInvoiceVo">
+            <id column="id"  property="id" />
+            <result column="name"  property="name" />
+            <result column="type"  property="type" />
+            <result column="content"  property="content" />
+            <result column="identifier"  property="identifier" />
+            <result column="registered_address"  property="registeredAddress" />
+            <result column="registered_tel"  property="registeredTel" />
+            <result column="bank_name"  property="bankName" />
+            <result column="bank_account"  property="bankAccount" />
+        
+    </resultMap>
+
     <sql id="Base_Column_List">
         id,name,type,content,identifier,registered_address,registered_tel,bank_name,bank_account
     </sql>
@@ -29,6 +42,17 @@
         select
         <include refid="Base_Column_List" />
         from order_invoice
+    </select>
+
+    <select id="findByParams" resultMap="OrderInvoiceResultMapVo" parameterType="com.pieces.dao.vo.OrderInvoiceVo">
+        select
+        <include refid="Base_Column_List" />
+        from order_invoice
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">

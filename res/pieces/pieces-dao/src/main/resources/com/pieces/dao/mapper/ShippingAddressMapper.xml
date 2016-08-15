@@ -11,7 +11,18 @@
             <result column="detail"  property="detail" />
             <result column="create_time"  property="createTime" />
             <result column="aliases"  property="aliases" />
-        
+    </resultMap>
+
+    <resultMap id="ShippingAddressResultMapVo" type="com.pieces.dao.vo.ShippingAddressVo">
+        <id column="id"  property="id" />
+        <result column="user_id"  property="userId" />
+        <result column="is_default"  property="isDefault" />
+        <result column="consignee"  property="consignee" />
+        <result column="tel"  property="tel" />
+        <result column="area"  property="area" />
+        <result column="detail"  property="detail" />
+        <result column="create_time"  property="createTime" />
+        <result column="aliases"  property="aliases" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -42,6 +53,17 @@
         values
         (#{userId},#{isDefault},#{consignee},#{tel},#{area},#{detail},#{createTime},#{aliases})
     </insert>
+
+    <select id="findByParams" resultMap="ShippingAddressResultMapVo" parameterType="com.pieces.dao.vo.ShippingAddressVo">
+        select
+        <include refid="Base_Column_List" />
+        from shipping_address
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
 
     <update id="update" parameterType="com.pieces.dao.model.ShippingAddress">
         update shipping_address

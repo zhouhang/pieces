@@ -2,6 +2,8 @@ package com.pieces.service;
 
 import java.util.List;
 
+import com.github.pagehelper.PageHelper;
+import com.pieces.dao.model.ShippingAddress;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageInfo;
@@ -19,7 +21,10 @@ public abstract class AbsCommonService<T> implements ICommonService<T>{
        return getDao().findAll();
     }
     public PageInfo<T> find(int pageNum, int pageSize){
-        return getDao().find(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
+        List<T> list = getDao().findAll();
+        PageInfo page = new PageInfo(list);
+        return page;
     }
     public T findById(int id){
         return getDao().findById(id);

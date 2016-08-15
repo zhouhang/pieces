@@ -2,7 +2,9 @@ package com.pieces.service.impl;
 
 import java.util.*;
 
+import com.pieces.dao.ICommonDao;
 import com.pieces.dao.vo.HomeCategoryVo;
+import com.pieces.service.AbsCommonService;
 import com.pieces.service.enums.CategoryEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -22,13 +24,15 @@ import com.pieces.service.CategoryService;
 import com.pieces.service.enums.CodeEnum;
 
 @Service
-public class CategoryServiceImpl implements CategoryService {
+public class CategoryServiceImpl extends AbsCommonService<Category> implements CategoryService {
 
 	@Autowired
 	private CategoryDao categoryDao;
 	
 	@Autowired
 	private CodeDao codeDao;
+
+
 
 	@Override
 	public List<Category> findAll() {
@@ -273,6 +277,11 @@ public class CategoryServiceImpl implements CategoryService {
 			return result.toLowerCase();
 		}
 		return result;
+	}
+
+	@Override
+	public ICommonDao<Category> getDao() {
+		return categoryDao;
 	}
 
 }

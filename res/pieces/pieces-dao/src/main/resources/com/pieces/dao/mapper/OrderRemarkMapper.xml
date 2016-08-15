@@ -10,6 +10,15 @@
         
     </resultMap>
 
+    <resultMap id="OrderRemarkResultMapVo" type="com.pieces.dao.vo.OrderRemarkVo">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="content"  property="content" />
+            <result column="order_id"  property="orderId" />
+            <result column="creater_time"  property="createrTime" />
+        
+    </resultMap>
+
     <sql id="Base_Column_List">
         id,user_id,content,order_id,creater_time
     </sql>
@@ -25,6 +34,17 @@
         select
         <include refid="Base_Column_List" />
         from order_remark
+    </select>
+
+    <select id="findByParams" resultMap="OrderRemarkResultMapVo" parameterType="com.pieces.dao.vo.OrderRemarkVo">
+        select
+        <include refid="Base_Column_List" />
+        from order_remark
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">

@@ -1,5 +1,6 @@
 package com.pieces.service;
 
+import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.OrderForm;
 import com.pieces.dao.vo.OrderFormVo;
 
@@ -8,6 +9,8 @@ import com.pieces.dao.vo.OrderFormVo;
  * 8/15/16.
  */
 public interface OrderFormService extends ICommonService<OrderForm>{
+
+    public PageInfo<OrderFormVo> findByParams(OrderFormVo orderFormVo,Integer pageNum,Integer pageSize);
 
     /**
      * 保存订单

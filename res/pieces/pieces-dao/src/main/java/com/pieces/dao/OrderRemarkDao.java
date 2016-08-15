@@ -1,10 +1,12 @@
 package com.pieces.dao;
 
-import com.pieces.dao.annotation.AutoMapper;
 import com.pieces.dao.model.OrderRemark;
+import com.pieces.dao.vo.OrderRemarkVo;
 
-@AutoMapper
+import java.util.List;
+
 public interface OrderRemarkDao extends ICommonDao<OrderRemark>{
 
-	
+    public List<OrderRemarkVo> findByParams(OrderRemarkVo orderRemarkVo);
+
 }

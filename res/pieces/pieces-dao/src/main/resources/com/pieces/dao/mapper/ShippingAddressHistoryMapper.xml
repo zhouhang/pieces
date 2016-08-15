@@ -13,6 +13,18 @@
         
     </resultMap>
 
+    <resultMap id="ShippingAddressHistoryResultMapVo" type="com.pieces.dao.vo.ShippingAddressHistoryVo">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="consignee"  property="consignee" />
+            <result column="tel"  property="tel" />
+            <result column="area"  property="area" />
+            <result column="detail"  property="detail" />
+            <result column="create_time"  property="createTime" />
+            <result column="aliases"  property="aliases" />
+        
+    </resultMap>
+
     <sql id="Base_Column_List">
         id,user_id,consignee,tel,area,detail,create_time,aliases
     </sql>
@@ -28,6 +40,17 @@
         select
         <include refid="Base_Column_List" />
         from shipping_address_history
+    </select>
+
+    <select id="findByParams" resultMap="ShippingAddressHistoryResultMapVo" parameterType="com.pieces.dao.vo.ShippingAddressHistoryVo">
+        select
+        <include refid="Base_Column_List" />
+        from shipping_address_history
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
