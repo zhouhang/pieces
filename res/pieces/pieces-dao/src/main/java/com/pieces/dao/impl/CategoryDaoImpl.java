@@ -93,8 +93,15 @@ public class CategoryDaoImpl extends BaseDaoImpl implements CategoryDao {
     }
 
     @Override
+    public List<CategoryVo> findByLevelAndPinyin(CategoryVo categoryVo,Integer pageSize) {
+        List<CategoryVo> categoryVoList = getSqlSession().selectList("com.pieces.dao.CategoryMapper.findByLevelAndPinyin", categoryVo,new RowBounds(1, pageSize));
+        return categoryVoList;
+    }
+
+    @Override
     public List<CategoryVo> findByLevelAndPinyin(CategoryVo categoryVo) {
-        return getSqlSession().selectList("com.pieces.dao.CategoryMapper.findByLevelAndPinyin", categoryVo);
+        List<CategoryVo> categoryVoList = getSqlSession().selectList("com.pieces.dao.CategoryMapper.findByLevelAndPinyin", categoryVo);
+        return categoryVoList;
     }
 
     @Override

@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 public abstract class SendMessage {
-	private static final String SMS_PREFIX = "【药优优】您的验证码是";
+	private static final String SMS_PREFIX = "【上工之选】您的验证码是";
 	private static final String SMS_INTERVAL_COUNT = "3";
 	private static final String SMS_INTERVAL_TIME = "3600";
 	

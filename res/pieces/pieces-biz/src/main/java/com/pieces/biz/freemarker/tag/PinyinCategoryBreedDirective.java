@@ -1,4 +1,4 @@
-package com.pieces.biz.tag;
+package com.pieces.biz.freemarker.tag;
 
 import com.pieces.dao.vo.CategoryVo;
 import com.pieces.service.CategoryService;
@@ -28,7 +28,7 @@ public class PinyinCategoryBreedDirective implements TemplateDirectiveModel {
         String[]  letterArr = new String[]{"A~E","F~J","K~O","P~T","U~Z"};
         StringBuffer sb = new StringBuffer();
 
-        List<CategoryVo> parentCategoryList = categoryService.findByLevelAndPinyin(1,null,null);
+        List<CategoryVo> parentCategoryList = categoryService.findByLevelAndPinyin(1,null,null,30);
 
         for(CategoryVo parentCategory : parentCategoryList){
 
@@ -44,13 +44,13 @@ public class PinyinCategoryBreedDirective implements TemplateDirectiveModel {
                 sb.append(letterTitle(letter));
                 sb.append("<dd>");
                 for(CategoryVo categoryVo : categoryVoList){
-                    sb.append("<a href='commodity/index?breedId=").append(categoryVo.getId()).append("'>").append(categoryVo.getName()).append("</a>");
+                    sb.append("<a href='commodity/index?breedId=").append(categoryVo.getId()).append("'>").append(categoryVo.getName()).append("</a>").append("\n\r");
                 }
                 sb.append("</dd>");
                 sb.append("</dl>");
             }
             sb.append("<div class='more'>");
-            sb.append("<a href='#' class='c-blue'>查看更多 &gt;</a>");
+            sb.append("<a href='/category/all' class='c-blue'>查看更多 &gt;</a>");
             sb.append("</div>");
             sb.append("</div>");
             sb.append("</li>");

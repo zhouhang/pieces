@@ -7,6 +7,7 @@
 
 <#include "./inc/header.ftl"/>
 
+
 <!-- banner start -->
 <div class="banner-slider" id="jslide">
     <div class="bd">
@@ -125,6 +126,9 @@
     </#list>
 
 </div>
+
+<@include_page path="${base}/catalogues/nieuw"  inherit_params=true />
+
 
 <#include "./inc/helper.ftl"/>
 

@@ -24,6 +24,8 @@ public interface CategoryDao extends ICommonDao<Category>{
 
 	public List<CategoryVo> findBreedNoPage(CategoryVo categoryVo);
 
+	public List<CategoryVo> findByLevelAndPinyin(CategoryVo categoryVo,Integer pageSize);
+
 	public List<CategoryVo> findByLevelAndPinyin(CategoryVo categoryVo);
 
 	public List<Category>  findByIds(Collection<Integer> collection);

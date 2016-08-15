@@ -197,14 +197,19 @@ public class CategoryServiceImpl implements CategoryService {
 
 
 	@Override
-	public List<CategoryVo> findByLevelAndPinyin(Integer level, Integer parentId, String pinyin) {
+	public List<CategoryVo> findByLevelAndPinyin(Integer level, Integer parentId, String pinyin,Integer pageSize) {
 		CategoryVo categoryVo = new CategoryVo();
 		categoryVo.setLevel(level);
 		categoryVo.setParentId(parentId);
 		if(StringUtils.isNotBlank(pinyin)){
 			categoryVo.setPinyins(pinyin.split(","));
 		}
-		return categoryDao.findByLevelAndPinyin(categoryVo);
+		return pageSize==null?categoryDao.findByLevelAndPinyin(categoryVo):categoryDao.findByLevelAndPinyin(categoryVo,pageSize);
+	}
+
+	@Override
+	public List<CategoryVo> findByLevelAndPinyin(Integer level, Integer parentId, String pinyin) {
+		return findByLevelAndPinyin( level,parentId,pinyin,null);
 	}
 
 
@@ -245,7 +250,7 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public List<CategoryVo> menuCategoryBreed(Integer parentId, String letter) {
 		String pinyin = letterShift(letter,false);
-		List<CategoryVo> breedList=	findByLevelAndPinyin(2,parentId,pinyin);
+		List<CategoryVo> breedList=	findByLevelAndPinyin(2,parentId,pinyin,30);
 		return breedList;
 	}
 

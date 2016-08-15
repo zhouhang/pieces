@@ -105,10 +105,11 @@ public class CMSController extends BaseController{
      * @param id
      * @return
      */
-    @RequestMapping(value = "article/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "article/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public String delete (@PathVariable("id") Integer id){
-        return "help-detail";
+    public Result delete (@PathVariable("id") Integer id){
+        articleService.deleteArticleById(id);
+        return new Result(true).info("删除成功!");
     }
 
     /**
@@ -155,7 +156,8 @@ public class CMSController extends BaseController{
         return ModelEnum.getUrl("category-add", model);
     }
 
-    /**
+
+   /**
      * 保存类别信息
      * @param category
      * @return
@@ -177,6 +179,18 @@ public class CMSController extends BaseController{
         ArticleCategory category = articleService.getCategoryById(id);
         modelMap.put("category", category);
         return  ModelEnum.getUrl("category-editer", category.getModel());
+    }
+
+    /**
+     * 删除类别
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "category/delete/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public Result deleteCategory (@PathVariable("id") Integer id){
+        articleService.deleteCategory(id);
+        return new Result(true).info("删除成功!");
     }
 
 }

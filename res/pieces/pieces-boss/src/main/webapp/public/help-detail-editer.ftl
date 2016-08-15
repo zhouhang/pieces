@@ -24,6 +24,7 @@
                     <h3><i class="fa fa-chevron-right"></i>修改单页面</h3>
                     <div class="extra">
                         <a class="btn btn-gray" href="cms/article/index?model=1">返回</a>
+                        <button type="button" id="delete" class="btn btn-gray">删除</button>
                         <button type="submit" id="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
@@ -113,6 +114,23 @@
         fn: {
             init: function () {
                 this.formValidate();
+                $("#delete").click(function() {
+                    $.post("cms/article/delete/${article.id}", function (data) {
+                        if (data.status == "y") {
+                            $.notify({
+                                type: 'success',
+                                title: '删除成功',
+                                text: '3秒后自动跳转到单页面列表',
+                                delay: 3e3,
+                                call: function () {
+                                    setTimeout(function () {
+                                        location.href = 'cms/article/index?model=1';
+                                    }, 3e3);
+                                }
+                            });
+                        }
+                    }, "json")
+                });
             },
             formValidate: function () {
                 $('#form').validator({

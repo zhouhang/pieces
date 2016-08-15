@@ -1,4 +1,4 @@
-package com.pieces.biz.tag;
+package com.pieces.biz.freemarker.tag;
 
 import freemarker.core.Environment;
 import freemarker.template.*;
