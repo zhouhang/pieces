@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>订单-饮片B2B</title>
+    <meta name="renderer" content="webkit" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/order.css" />
+</head>
+
+<body>
+	
+    <!-- site-nav end -->
+    <div class="site-nav">
+        <div class="wrap">
+            <p class="fl">欢迎光临上工之选饮片采购平台！</p>
+            <ul class="fr">
+                <li>ht****@163.com  <a href="logout.html">退出</a></li>
+                <li>|</li>
+                <li><a href="logout.html">我的供应链</a></li>
+                <li>|</li>
+                <li><a href="helper.html">帮助中心</a></li>
+                <li>|</li>
+                <li><a href="sitemap.html">网站导航 <i class="fa fa-chevron-down"></i></a></li>
+            </ul>
+        </div>
+    </div><!-- site-nav end -->
+
+
+    <!-- header start -->
+    <div class="header header-red">
+        <div class="wrap">
+            <div class="logo">
+                <a href="home.html">饮片B2B首页</a>
+            </div>
+            <div class="title">
+                <h1>我的供应链</h1>
+            </div>
+            <div class="plus">
+                <a class="back" href="home.html"><i class="fa fa-chevron-left"></i> 返回商城首页</a>
+            </div>
+        </div>
+    </div><!-- header end -->
+
+    <!-- order-success start -->
+    <div class="wrap">
+        <div class="order-wrap">
+            <div class="title">
+                <h2>订购商品</h2>
+            </div>
+
+            <div class="main">
+                <div class="hd">
+                    <h3>您的订单已提交成功！</h3>
+                    <p class="cf">
+                        <a class="fr c-blue" href="user_order_detail.html">查看该订单</a>
+                        <span>订单号：201608101125001</span>
+                        <span>订单金额：<em>&yen;2203000.00</em></span>
+                        <span>请在<em>10</em>个工作日内完成付款。</span>
+                    </p>
+                </div>
+                <div class="bd">
+                    <h3>付款说明</h3>
+                    <p>您需要将货款支付到我们提供的其中一个账户上，支付完成后在  <a href="#">我的供应链</a> > <a href="#" class="c-blue">对账单</a>  中上传您的支付凭证。</p>
+                    <p>平台以您上传支付凭证的时间为付款时间。</p>
+
+                    <dl>
+                        <dt>账户一</dt>
+                        <dd>开户行：中国工商银行</dd>
+                        <dd>开户人：金亮</dd>
+                        <dd>账&#12288;号：6222 0210 0107 0070 872</dd>
+                    </dl>
+                    <dl>
+                        <dt>账户二</dt>
+                        <dd>开户行：中国工商银行</dd>
+                        <dd>开户人：金亮</dd>
+                        <dd>账&#12288;号：6222 0210 0107 0070 872</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div><!-- order-success end -->
+
+
+    <!-- footer start -->
+    <div class="footer">
+        <div class="wrap">
+            <div class="links">
+                <a href="#">关于上工之选</a>
+                <i>|</i>
+                <a href="#">联系我们</a>
+                <i>|</i>
+                <a href="#">法律申明</a>
+                <i>|</i>
+                <a href="#">建议与投诉</a>
+                <i>|</i>
+                <a href="#">友情链接</a>
+                <i>|</i>
+                <a href="#">站长统计</a>
+            </div>
+            <div class="copyright">
+                <p> 电信与信息服务业务经营许可证号：皖B20140001  备案号：皖ICP备13006003号  互联网药品交易服务资格证：皖B20130001  互联网药品信息服务资格证：（皖）-经营性-2016-0001</p>
+                <p>网站商务合作邮箱：bd@copy;yaoyy.com  客户服务企业邮箱：service@copy;yaoyy.com  Copyright &copy; 2015 – 2020 上工之选 All Rights Reserved</p>
+            </div>
+        </div>
+    </div><!-- footer end -->
+	
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/laydate/laydate.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+    	var page = {
+    		v: {
+    		},
+    		fn: {
+    			init: function() {
+                    this.remove();
+                    this.navLight();
+    			},
+                // 取消订单
+                remove: function() {
+                    $('.order-list').on('click', '.jremove', function() {
+                        // 弹层确认删除
+                        layer.confirm('要删除此订单？', {icon: 3, title:'提示'}, function(index){
+                            layer.close(index);
+                        });       
+                    })
+                },
+                // 导航高亮
+                navLight: function() {
+                    $('.side dl:eq(1)').addClass('expand').find('a').addClass('curr');
+                }
+    		}
+    	}
+    	$(function() {
+    		page.fn.init();
+    	})
+    </script>
+</body>
+</html>

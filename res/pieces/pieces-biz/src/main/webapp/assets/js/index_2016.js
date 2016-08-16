@@ -150,6 +150,9 @@
 })(jQuery);
 
 $(function(){
+	// 返回页面顶部
+	window.scrollTo(0, 0);
+
 	var EASING = 'easeInOutExpo';
 	$('#jslide').carousel({
 		easing: EASING
@@ -180,5 +183,4 @@ $(function(){
 			scrollTop: 0
 		}, 700, EASING);
 	});
-
 });

@@ -1,0 +1,74 @@
+/* 订单 */
+.order-wrap{margin-top:20px;border:1px solid #e7e7e7;}
+.order-wrap .title{line-height:50px;padding:0 30px;border-bottom:1px solid #e7e7e7;background:#f0eff5;} 
+.order-wrap .main{line-height:1;padding:30px;font-size:12px;}
+.order-wrap .main h3{margin-bottom:18px;font-size:14px;font-weight:700;}
+.order-wrap .main .hd{padding-bottom:28px;border-bottom:1px solid #e7e7e7;}
+.order-wrap .main .hd h3{font-size:24px;}
+.order-wrap .main .hd p{font-size:12px;color:#666;}
+.order-wrap .main .hd p span{margin-right:10px;}
+.order-wrap .main .hd p em{color:#c3272b;font-weight:700;}
+.order-wrap .main .bd{font-size:12px;}
+.order-wrap .main .bd h3{padding:30px 0 0;}
+.order-wrap .main .bd dt{padding:15px 0 5px;font-weight:700;}
+.order-wrap .main .bd dd{color:#666;line-height:24px;}
+.order-wrap .main .bd p{line-height:24px;}
+.order-wrap .main .address .btn{padding:2px 10px;font-size:12px;}
+.order-wrap .main .address li{position:relative;padding-bottom:30px;border-bottom:1px solid #e7e7e7;}
+.order-wrap .main .address h3{margin-bottom:18px;}
+.order-wrap .main .address p{margin-top:12px;color:#999;}
+.order-wrap .main .address em{color:#333;}
+.order-wrap .main .address .extra{position:absolute;bottom:30px;right:0;text-align:right;}
+.order-wrap .main .address .extra .btn{display:block;margin-top:20px;}
+
+.order{padding:0 30px;overflow:hidden;}
+.order span{color:#999;}
+.order .group{padding:30px 0;font-size:12px;border-bottom:1px solid #e7e7e7;}
+.order .group .hd{line-height:14px;margin-bottom:20px;overflow:hidden;*zoom:1;}
+.order .group .hd h3{font-weight:700;font-size:14px;}
+.order .group .consignee{margin:-7px 0;}
+.order .group .btn{padding:2px 10px;font-size:12px;}
+.order .group .fa-chart td{padding:10px 0;background:#fff;}
+.order .group .fa-chart .ipt{width:160px;padding:10px 0;font-size:12px;text-align:center;border:1px solid #ccc;}
+.order .group .mul{width:580px;height:60px;padding:9px;font-size:12px;}
+.order .summary{line-height:30px;margin:30px -30px;padding:22px 30px;font-size:14px;background:#f5f5f5;text-align:right;}
+.order .summary span{display:inline-block;vertical-align:middle;}
+.order .summary em{display:inline-block;width:150px;vertical-align:middle;}
+.order .summary .price{font-size:18px;font-weight:700;color:#c3272b;}
+.order .submit{padding-bottom:50px;text-align:right;}
+.order .submit .btn{padding:10px 60px;font-size:16px;}
+
+/* 新增发票 */
+.fa-form{line-height:34px;padding-right:30px;font-size:12px;display:none;}
+.fa-form .group{padding:0 0 0 100px;height:60px;}
+.fa-form .ah{height:auto;}
+.fa-form .txt{width:90px;line-height:34px;color:#999;}
+.fa-form .cnt{position:relative;height:auto;}
+.fa-form .cnt .ipt{width:455px;padding:6px;}
+.fa-form .cnt .ipt-short{width:136px;}
+.fa-form .cnt select{width:150px;height:34px;line-height:34px;margin-right:7px;}
+.fa-form .cnt .msg-box{margin-top:0;}
+.fa-form .button{padding:10px 0 0 100px;}
+.fa-form .button .btn{padding:0;height:34px;}
+.fa-form .button .submit{width:150px;margin-right:16px;}
+.fa-form .button .cancel{width:100px;}
+.fa-form label{margin-right:16px;}
+
+/* 收货地址 */
+.consignee li{position:relative;line-height:24px;padding:0 110px 0 0;}
+.consignee span{color:#999;}
+.consignee .empty{padding:60px 0;text-align:center;}
+.consignee .extra{position:absolute;bottom:0;right:0;text-align:right;}
+.consignee .extra .btn{display:block;margin-top:12px;}
+.consignee-list{display:none;padding:10px 30px 30px;font-size:12px;}
+.consignee-list ul{height:248px;overflow:hidden;overflow-y:auto;}
+.consignee-list li{margin-top:20px;padding:15px 21px;border:1px solid #ccc;}
+.consignee-list li.current{padding:14px 20px;border:2px solid #c3272b;background:url(../images/default.png) no-repeat 100% 100%;}
+.consignee-list .default{position:absolute;top:20px;right:20px;}
+.consignee-list .default .set-default{cursor:pointer;display:none;}
+.consignee-list li:hover{padding:14px 20px;border:2px solid #c3272b;}
+.consignee-list li:hover .set-default{display:block;}
+.consignee-list .button{padding-top:30px;}
+.consignee-list .button .btn{padding:0;height:34px;}
+.consignee-list .button .submit{width:150px;margin-right:16px;}
+.consignee-list .button .cancel{width:100px;}
