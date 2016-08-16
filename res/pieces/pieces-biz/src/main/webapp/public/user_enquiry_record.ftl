@@ -29,9 +29,7 @@
                             <label><span>询价日期：</span><input class="ipt date" name="startDate" type="text" id="start"  value="${enquiryRecordVo.startDate!}"><em>-</em><input class="ipt date" name="endDate" type="text" id="end"  value="${enquiryRecordVo.endDate!}"></label>
                         </form>     
                 	</div>
-
                 	<div class="fa-chart-d">
-
                             <div class="group">
                                 <div class="tr th">
                                     <div class="td w1">商品名称</div>
@@ -54,9 +52,11 @@
                                         <span>询价单号：${bill.code!}</span>
                                         <span>询价日期：${bill.createTime?string("yyyy-MM-dd")}</span>
                                     </div>
+
                                     <#list bill.enquiryCommoditys as commodity>
+
                                         <div class="tr">
-                                            <div class="td w1"><label>  <#if commodity.myPrice??><input class="cbx" type="checkbox"> </#if>${commodity.commodityName!}</label></div>
+                                            <div class="td w1"><label>  <#if commodity.myPrice??&&commodity.expireDate??&&(commodity.expireDate?date>.now?date)>  <input class="cbx" type="checkbox"> </#if>${commodity.commodityName!}</label></div>
                                             <div class="td w2">${commodity.specs!}</div>
                                             <div class="td w3">${commodity.level!}</div>
                                             <div class="td w4">${commodity.origin!}</div>
@@ -74,7 +74,7 @@
                                             </#if>
                                             </div>
                                             <div class="td w10">
-                                                <#if commodity.myPrice??>
+                                                <#if commodity.myPrice??&&commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
                                                     <a href="#">订购</a>
                                                 </#if>
                                             </div>
@@ -241,7 +241,7 @@
                         modal.push('<div class="tr">');
                         var checkBox = "";
                         var order = "";
-                        if(item.myPrice!=null){
+                        if(item.myPrice!=null&&item.expireDate!=null&&new Date(item.expireDate)>new Date()){
                             checkBox = '<label><input class="cbx" type="checkbox">';
                             order = '<a href="#">订购</a>';
                             flag = true;

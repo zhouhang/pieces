@@ -10,6 +10,9 @@ import com.pieces.service.AbsCommonService;
 import com.pieces.service.ShippingAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -21,10 +24,30 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 
 	@Override
 	public PageInfo<ShippingAddressVo> findByParams(ShippingAddressVo shippingAddressVo,Integer pageNum,Integer pageSize) {
-    PageHelper.startPage(pageNum, pageSize);
+    	PageHelper.startPage(pageNum, pageSize);
     	List<ShippingAddressVo>  list = shippingAddressDao.findByParams(shippingAddressVo);
         PageInfo page = new PageInfo(list);
         return page;
+	}
+
+
+	@Override
+	public List<ShippingAddressVo> findByParams(ShippingAddressVo shippingAddressVo) {
+		List<ShippingAddressVo>  list = shippingAddressDao.findByParams(shippingAddressVo);
+		return list;
+	}
+
+	@Override
+	public List<ShippingAddressVo> findByUser(Integer userId) {
+		ShippingAddressVo shippingAddressVo = new ShippingAddressVo();
+		shippingAddressVo.setUserId(userId);
+		return findByParams(shippingAddressVo);
+	}
+
+	@Override
+	@Transactional
+	public void delete(int userId, int id) {
+		shippingAddressDao.deleteByUserIdAndId(userId,id);
 	}
 
 

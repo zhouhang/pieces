@@ -57,14 +57,18 @@ public class HomeWeightServiceImpl extends AbsCommonService<HomeWeight> implemen
             HomeCategoryVo homeCategoryVo = list.get(i);
             //获取橱窗广告
             EqualPredicate eqlPredicate = new EqualPredicate(homeCategoryVo.getName());
-            Collection collection = CollectionUtils.select(adList,new BeanPredicate("title",eqlPredicate));
+            Collection showcaseCollection = CollectionUtils.select(adList,new BeanPredicate("title",eqlPredicate));
+            if(!showcaseCollection.isEmpty()){
+                homeCategoryVo.setShowcase((Ad)showcaseCollection.iterator().next());
+            }
 
-            if(!collection.isEmpty()){
-                homeCategoryVo.setShowcase((Ad)collection.iterator().next());
+            //获取每一个分类的图片
+            EqualPredicate idEqlPredicate = new EqualPredicate(homeCategoryVo.getId().toString());
+            Collection categoryCollection = CollectionUtils.select(homeWeights,new BeanPredicate("value",idEqlPredicate));
+            if(!categoryCollection.isEmpty()){
+                homeCategoryVo.setPictureUrl(((HomeWeight)(categoryCollection.iterator().next())).getPictureUrl());
             }
-            if(idList.size()==list.size()){
-                homeCategoryVo.setPictureUrl(homeWeights.get(i).getPictureUrl());
-            }
+
             Integer categoryId =  homeCategoryVo.getId();
             HomeWeight breedHomeWeight =  findByTypeAndRelevance(WeightEnum.BREED.name(),categoryId);
             HomeWeight cateCommodityHomeWeight =  findByTypeAndRelevance(WeightEnum.CATE_COMMODITY.name(),categoryId);

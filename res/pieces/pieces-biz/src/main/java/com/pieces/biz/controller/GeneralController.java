@@ -12,10 +12,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.pieces.service.impl.CreateHtmlService;
+import com.pieces.tools.utils.SpringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.github.bingoohuang.patchca.color.SingleColorFactory;
@@ -33,6 +36,8 @@ import com.pieces.service.utils.SendMessage;
 import com.pieces.tools.upload.DefaultUploadFile;
 import com.pieces.tools.utils.GsonUtil;
 import com.pieces.tools.utils.WebUtil;
+import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 /**
  * 公共URL访问
@@ -44,6 +49,8 @@ public class GeneralController extends BaseController {
 
     @Autowired
     private SmsService smsService;
+    @Autowired
+    private CreateHtmlService createHtmlService;
 
 
     public static ConfigurableCaptchaService captchaService = new ConfigurableCaptchaService();
@@ -151,6 +158,15 @@ public class GeneralController extends BaseController {
 		result.put("ok", code);
         WebUtil.print(response,result);
 	}
+
+
+    @RequestMapping(value="/home/create")
+    public void createHtml(HttpServletRequest request){
+        WebApplicationContext webApplicationContext = RequestContextUtils.findWebApplicationContext(request);
+        FreeMarkerConfigurer freeMarkerConfigurer =  (FreeMarkerConfigurer) webApplicationContext.getBean("freemarkerConfig");
+        System.out.println(freeMarkerConfigurer);
+        createHtmlService.createHomePage(freeMarkerConfigurer);
+    }
 
 
 
