@@ -58,6 +58,12 @@
         id,code,shipping_costs,addr_history_id,user_id,remark,amounts_payable,sum,invoice_id,status,creater_time,payment_date
     </sql>
 
+    <sql id="Base_Column_List_Aliases">
+        o.id as id,o.code as code,o.shipping_costs as shipping_costs,o.addr_history_id as addr_history_id,o.user_id as user_id,o.remark as remark,
+        o.amounts_payable as amounts_payable,o.sum as sum,o.invoice_id as invoice_id,o.status as status,o.creater_time as creater_time,
+        o.payment_date as payment_date
+    </sql>
+
     <select id="findById" parameterType="java.lang.Integer" resultMap="OrderFormResultMap">
         select
         <include refid="Base_Column_List" />
@@ -73,11 +79,16 @@
 
     <select id="findByParams" resultMap="OrderFormResultMapVo" parameterType="com.pieces.dao.vo.OrderFormVo">
         select
-        <include refid="Base_Column_List" />
-        from order_form
+        <include refid="Base_Column_List_Aliases" />,
+        c.name
+        from order_form o
+        left join order_commodity c on o.id = c.order_id
         <where>
             <if test="id != null">
                 id = #{id}
+            </if>
+            <if test="userId != null">
+                o.user_id = #{userId}
             </if>
         </where>
     </select>
@@ -148,7 +159,7 @@
 
     <select id="findVoById" parameterType="java.lang.Integer" resultMap="OrderFormResultMap">
         select
-        <include refid="Base_Column_List" />,
+        <include refid="Base_Column_List_Aliases" />,
         a.id as a_id,a.user_id as a_user_id,a.consignee as a_consignee,a.tel as a_tel,
         a.area as a_area,a.detail as a_detail,a.create_time as a_create_time,a.aliases as a_aliases,
         i.id as i_id,i.name as i_name,i.type as i_type,i.content as i_content,
