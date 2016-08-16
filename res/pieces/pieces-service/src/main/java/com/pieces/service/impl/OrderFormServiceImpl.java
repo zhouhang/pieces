@@ -71,4 +71,11 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
     public OrderFormVo findById(Integer id) {
         return orderFormDao.findVoById(id);
     }
+
+    @Override
+    public PageInfo<OrderFormVo> findOrderByUserId(Integer userId, Integer pageNum, Integer pageSize) {
+        OrderFormVo vo = new OrderFormVo();
+        vo.setUserId(userId);
+        return findByParams(vo,pageNum,pageSize);
+    }
 }

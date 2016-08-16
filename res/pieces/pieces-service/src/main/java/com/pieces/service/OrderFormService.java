@@ -33,4 +33,14 @@ public interface OrderFormService extends ICommonService<OrderForm>{
      * @return
      */
     public OrderFormVo findById(Integer id);
+
+
+    /**
+     *根据用户的id 获取用的订单列表
+     * @param userId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public PageInfo<OrderFormVo> findOrderByUserId(Integer userId,Integer pageNum,Integer pageSize);
 }
