@@ -16,6 +16,7 @@ import java.util.List;
  * Author: koabs
  * 8/15/16.
  */
+@Service
 public class OrderCommodityServiceImpl extends AbsCommonService<OrderCommodity> implements OrderCommodityService {
 
     @Autowired

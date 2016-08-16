@@ -10,9 +10,11 @@ import com.pieces.dao.OrderInvoiceDao;
 import com.pieces.dao.model.OrderInvoice;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.OrderInvoiceService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class OrderInvoiceServiceImpl extends AbsCommonService<OrderInvoice> implements OrderInvoiceService {
 		
 	@Autowired
