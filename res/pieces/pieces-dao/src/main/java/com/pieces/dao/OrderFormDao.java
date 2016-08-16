@@ -10,4 +10,11 @@ public interface OrderFormDao extends ICommonDao<OrderForm>{
 
     public List<OrderFormVo> findByParams(OrderFormVo orderFormVo);
 
+    /**
+     * 根据id 查询订单信息
+     * @param id
+     * @return
+     */
+    public OrderFormVo findVoById(Integer id);
+
 }

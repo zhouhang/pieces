@@ -17,20 +17,41 @@
         
     </resultMap>
 
-    <resultMap id="OrderFormResultMapVo" type="com.pieces.dao.vo.OrderFormVo">
-            <id column="id"  property="id" />
-            <result column="code"  property="code" />
-            <result column="shipping_costs"  property="shippingCosts" />
-            <result column="addr_history_id"  property="addrHistoryId" />
-            <result column="user_id"  property="userId" />
-            <result column="remark"  property="remark" />
-            <result column="amounts_payable"  property="amountsPayable" />
-            <result column="sum"  property="sum" />
-            <result column="invoice_id"  property="invoiceId" />
-            <result column="status"  property="status" />
-            <result column="creater_time"  property="createrTime" />
-            <result column="payment_date"  property="paymentDate" />
-        
+    <resultMap id="OrderFormResultMapVo" type="com.pieces.dao.vo.OrderFormVo" extends="OrderFormResultMap">
+        <association property="address" javaType="com.pieces.dao.model.ShippingAddressHistory">
+            <id column="a_id"  property="id" />
+            <result column="a_user_id"  property="userId" />
+            <result column="a_consignee"  property="consignee" />
+            <result column="a_tel"  property="tel" />
+            <result column="a_area"  property="area" />
+            <result column="a_detail"  property="detail" />
+            <result column="a_create_time"  property="createTime" />
+            <result column="a_aliases"  property="aliases" />
+        </association>
+        <association property="invoice" javaType="com.pieces.dao.model.OrderInvoice">
+            <id column="i_id"  property="id" />
+            <result column="i_name"  property="name" />
+            <result column="i_type"  property="type" />
+            <result column="i_content"  property="content" />
+            <result column="i_identifier"  property="identifier" />
+            <result column="i_registered_address"  property="registeredAddress" />
+            <result column="i_registered_tel"  property="registeredTel" />
+            <result column="i_bank_name"  property="bankName" />
+            <result column="i_bank_account"  property="bankAccount" />
+        </association>
+        <collection property="commodities" ofType="com.pieces.dao.model.OrderCommodity">
+            <id column="c_id"  property="id" />
+            <result column="c_name"  property="name" />
+            <result column="c_spec"  property="spec" />
+            <result column="c_level"  property="level" />
+            <result column="c_originOf"  property="originOf" />
+            <result column="c_expectDate"  property="expectDate" />
+            <result column="c_amount"  property="amount" />
+            <result column="c_price"  property="price" />
+            <result column="c_subtotal"  property="subtotal" />
+            <result column="c_enquiry_commodity_id"  property="enquiryCommodityId" />
+            <result column="c_order_id"  property="orderId" />
+        </collection>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -124,4 +145,23 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="findVoById" parameterType="java.lang.Integer" resultMap="OrderFormResultMap">
+        select
+        <include refid="Base_Column_List" />,
+        a.id as a_id,a.user_id as a_user_id,a.consignee as a_consignee,a.tel as a_tel,
+        a.area as a_area,a.detail as a_detail,a.create_time as a_create_time,a.aliases as a_aliases,
+        i.id as i_id,i.name as i_name,i.type as i_type,i.content as i_content,
+        i.identifier as i_identifier,i.registered_address as i_registered_address,
+        i.registered_tel as i_registered_tel,i.bank_name as i_bank_name,i.bank_account as i_bank_account,
+        c.id as c_id,c.name as c_name,c.spec as c_spec,c.level as c_level,c.originOf as c_originOf,
+        c.expectDate as c_expectDate,c.amount as c_amount,c.price as c_price,c.subtotal as c_subtotal,
+        c.enquiry_commodity_id as c_enquiry_commodity_id,c.order_id as c_order_id
+        from order_form o
+        left join shipping_address_history a on o.addr_history_id = a.id
+        left join order_commodity c on o.id = c.order_id
+        left join order_invoice i on o.invoice_id = i.id
+        where id = #{id}
+    </select>
+
 </mapper>

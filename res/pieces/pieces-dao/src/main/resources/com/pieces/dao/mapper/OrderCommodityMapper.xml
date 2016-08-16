@@ -71,6 +71,15 @@
         (#{name},#{spec},#{level},#{originOf},#{expectDate},#{amount},#{price},#{subtotal},#{enquiryCommodityId},#{orderId})
     </insert>
 
+    <insert id="batchCreate" useGeneratedKeys="true"  parameterType="com.pieces.dao.model.OrderCommodity">
+        insert into
+        order_commodity (name,spec,level,originOf,expectDate,amount,price,subtotal,enquiry_commodity_id,order_id)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{name},#{spec},#{level},#{originOf},#{expectDate},#{amount},#{price},#{subtotal},#{enquiryCommodityId},#{orderId})
+        </foreach>
+    </insert>
+
     <update id="update" parameterType="com.pieces.dao.model.OrderCommodity">
         update order_commodity
         <set>

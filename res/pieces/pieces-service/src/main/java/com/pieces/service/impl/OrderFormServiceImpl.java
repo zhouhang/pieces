@@ -4,10 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.OrderFormDao;
+import com.pieces.dao.model.OrderCommodity;
 import com.pieces.dao.model.OrderForm;
+import com.pieces.dao.model.ShippingAddressHistory;
+import com.pieces.dao.model.User;
 import com.pieces.dao.vo.OrderFormVo;
-import com.pieces.service.AbsCommonService;
-import com.pieces.service.OrderFormService;
+import com.pieces.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -22,10 +24,20 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
     @Autowired
     private OrderFormDao orderFormDao;
 
+    @Autowired
+    private OrderCommodityService orderCommodityService;
+
+    @Autowired
+    private ShippingAddressHistoryService shippingAddressHistory;
+
+
+    @Autowired
+    private OrderInvoiceService orderInvoiceService;
+
 
     @Override
     public ICommonDao<OrderForm> getDao() {
-        return null;
+        return orderFormDao;
     }
 
 
@@ -40,12 +52,23 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
 
 
     @Override
-    public void save(OrderFormVo orderFormVo) {
+    public void save(OrderFormVo orderFormVo, User user) {
+        // 1. 保存订单信息
+        // 2. 订单地址
+        // 3. 订单商品
+        // 4. 发票信息
+        orderFormVo.setUserId(user.getId());
+        shippingAddressHistory.create(orderFormVo.getAddress());
+        orderInvoiceService.create(orderFormVo.getInvoice());
 
+        orderFormVo.setInvoiceId(orderFormVo.getInvoice().getId());
+        orderFormVo.setAddrHistoryId(orderFormVo.getAddress().getId());
+        orderFormDao.create(orderFormVo);
+        orderCommodityService.save(orderFormVo.getCommodities());
     }
 
     @Override
-    public OrderForm findById(Integer id) {
-        return null;
+    public OrderFormVo findById(Integer id) {
+        return orderFormDao.findVoById(id);
     }
 }

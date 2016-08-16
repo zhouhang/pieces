@@ -2,6 +2,8 @@ package com.pieces.dao.vo;
 
 import com.pieces.dao.model.OrderCommodity;
 import com.pieces.dao.model.OrderForm;
+import com.pieces.dao.model.OrderInvoice;
+import com.pieces.dao.model.ShippingAddressHistory;
 
 import java.util.List;
 
@@ -12,7 +14,13 @@ import java.util.List;
 public class OrderFormVo extends OrderForm {
 
     // 商品列表
-    public List<OrderCommodity> commodities;
+    private List<OrderCommodity> commodities;
+
+    // 邮寄地址
+    private ShippingAddressHistory address;
+
+    // 发票信息
+    private OrderInvoice invoice;
 
 
     public List<OrderCommodity> getCommodities() {
@@ -21,5 +29,21 @@ public class OrderFormVo extends OrderForm {
 
     public void setCommodities(List<OrderCommodity> commodities) {
         this.commodities = commodities;
+    }
+
+    public ShippingAddressHistory getAddress() {
+        return address;
+    }
+
+    public void setAddress(ShippingAddressHistory address) {
+        this.address = address;
+    }
+
+    public OrderInvoice getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(OrderInvoice invoice) {
+        this.invoice = invoice;
     }
 }

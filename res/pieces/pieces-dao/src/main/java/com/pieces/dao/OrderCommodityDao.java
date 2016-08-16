@@ -10,4 +10,7 @@ public interface OrderCommodityDao extends ICommonDao<OrderCommodity>{
 
     public List<OrderCommodityVo> findByParams(OrderCommodityVo orderCommodityVo);
 
+
+    public void batchCreate(List<OrderCommodity> list);
+
 }

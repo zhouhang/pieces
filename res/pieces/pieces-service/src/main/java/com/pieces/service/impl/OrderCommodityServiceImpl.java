@@ -34,16 +34,11 @@ public class OrderCommodityServiceImpl extends AbsCommonService<OrderCommodity> 
 
     @Override
     public void save(List<OrderCommodity> list) {
-
-    }
-
-    @Override
-    public void getCommodityByOrderId(Integer orderId) {
-
+        orderCommodityDao.batchCreate(list);
     }
 
     @Override
     public ICommonDao<OrderCommodity> getDao() {
-        return null;
+        return orderCommodityDao;
     }
 }
