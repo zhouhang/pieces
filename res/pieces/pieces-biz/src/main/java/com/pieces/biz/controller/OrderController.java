@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import com.pieces.dao.model.User;
 import com.pieces.service.enums.RedisEnum;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.OrderCommodity;
 import com.pieces.dao.vo.CategoryVo;
 import com.pieces.dao.vo.CommodityVo;
+import com.pieces.dao.vo.ShippingAddressVo;
 import com.pieces.service.CategoryService;
 import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
@@ -33,6 +35,7 @@ import com.pieces.service.EnquiryBillsService;
 import com.pieces.service.EnquiryCommoditysService;
 import com.pieces.service.OrderCommodityService;
 import com.pieces.service.OrderFormService;
+import com.pieces.service.ShippingAddressService;
 import com.pieces.service.utils.ValidUtils;
 import com.pieces.tools.utils.WebUtil;
 
@@ -53,18 +56,23 @@ public class OrderController extends BaseController {
     private EnquiryBillsService enquiryBillsService;
     @Autowired
     private EnquiryCommoditysService enquiryCommoditysService;
+    @Autowired
+    private ShippingAddressService shippingAddressService;
 
 	@RequestMapping(value = "/create")
-	public void orderSave(HttpServletRequest request,
+	public String orderSave(HttpServletRequest request,
             HttpServletResponse response,
             ModelMap modelMap,
             String commodity){
-		if(commodity.contains(",")){
-			
-		}else{
-			EnquiryCommoditys enquiryCommoditys = enquiryCommoditysService.findById(Integer.parseInt(commodity));
-			//enquiryCommoditys.getUserId()
-		}
+		List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysService.findByIds(commodity);
+		
+		//获取收货地址
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        List<ShippingAddressVo>  shippingAddressList = shippingAddressService.findByUser(user.getId());
+        
+        modelMap.put("enquiryCommoditysList", enquiryCommoditysList);
+        modelMap.put("shippingAddressList", shippingAddressList);
+        return "order";
 	}
 
 }

@@ -93,4 +93,10 @@ public class EnquiryCommoditysDaoImpl extends BaseDaoImpl implements EnquiryComm
     public List<EnquiryCommoditys> findCommoditysByUser(String userId) {
         return getSqlSession().selectList("com.pieces.dao.EnquiryCommoditysMapper.findCommoditysByUser",userId);
     }
+
+
+	@Override
+	public List<EnquiryCommoditys> findByIds(String ids) {
+		return getSqlSession().selectList("com.pieces.dao.EnquiryCommoditysMapper.findByIds",ids);
+	}
 }

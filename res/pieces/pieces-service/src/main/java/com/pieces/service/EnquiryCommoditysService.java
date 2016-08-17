@@ -13,7 +13,7 @@ public interface EnquiryCommoditysService extends ICommonService<EnquiryCommodit
 
     public List<EnquiryCommoditys> findByBillId(Integer userId,Integer billId, Integer pageSize);
 
-
+    public List<EnquiryCommoditys> findByIds(String ids);
     public void create(List<EnquiryCommoditys> enquiryCommoditysList);
 
     /**

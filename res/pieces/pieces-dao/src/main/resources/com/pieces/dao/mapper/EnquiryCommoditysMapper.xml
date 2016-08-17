@@ -29,6 +29,13 @@
         from enquiry_commoditys
         where id = #{id}
     </select>
+    
+    <select id="findByIds" parameterType="java.lang.String" resultMap="EnquiryCommoditysResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from enquiry_commoditys
+        where id in (${value})
+    </select>
 
     <select id="findAll"  resultMap="EnquiryCommoditysResultMap">
         select

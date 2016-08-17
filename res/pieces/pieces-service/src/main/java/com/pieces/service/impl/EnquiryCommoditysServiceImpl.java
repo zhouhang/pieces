@@ -90,4 +90,9 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
             }
         }
     }
+
+	@Override
+	public List<EnquiryCommoditys> findByIds(String ids) {
+		return enquiryCommoditysDao.findByIds(ids);
+	}
 }
