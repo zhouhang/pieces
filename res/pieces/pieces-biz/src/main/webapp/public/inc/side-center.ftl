@@ -16,6 +16,9 @@
             <span>订单</span>
             <i class="fa fa-chevron-right"></i>
         </dt>
+        <dd>
+            <a href="center/order/list">我的订单</a>
+        </dd>
     </dl>
     <dl>
         <dt>
