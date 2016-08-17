@@ -9,7 +9,6 @@
             <result column="type"  property="type" />
             <result column="permission"  property="permission" />
             <result column="create_date"  property="createDate" />
-        
     </resultMap>
 
     <sql id="Base_Column_List">

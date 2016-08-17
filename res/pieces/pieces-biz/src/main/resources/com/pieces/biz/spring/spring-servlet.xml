@@ -129,4 +129,5 @@
 	<mvc:resources mapping="/fonts/**" location="/assets/fonts/" />
 	<mvc:resources mapping="/images/**" location="/assets/images/" />
 	<mvc:resources mapping="/error/**" location="/assets/error/" />
+	<mvc:resources mapping="/favicon.ico" location="/assets/images/favicon.ico" />
 </beans>

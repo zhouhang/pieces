@@ -7,7 +7,7 @@
             <result column="is_default"  property="isDefault" />
             <result column="consignee"  property="consignee" />
             <result column="tel"  property="tel" />
-            <result column="area"  property="area" />
+            <result column="area_id"  property="areaId" />
             <result column="detail"  property="detail" />
             <result column="create_time"  property="createTime" />
             <result column="aliases"  property="aliases" />
@@ -19,14 +19,14 @@
         <result column="is_default"  property="isDefault" />
         <result column="consignee"  property="consignee" />
         <result column="tel"  property="tel" />
-        <result column="area"  property="area" />
+        <result column="area_id"  property="areaId" />
         <result column="detail"  property="detail" />
         <result column="create_time"  property="createTime" />
         <result column="aliases"  property="aliases" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,is_default,consignee,tel,area,detail,create_time,aliases
+        id,user_id,is_default,consignee,tel,area_id,detail,create_time,aliases
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="ShippingAddressResultMap">
@@ -54,9 +54,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.ShippingAddress">
         insert into
-        shipping_address (user_id,is_default,consignee,tel,area,detail,create_time,aliases)
+        shipping_address (user_id,is_default,consignee,tel,area_id,detail,create_time,aliases)
         values
-        (#{userId},#{isDefault},#{consignee},#{tel},#{area},#{detail},#{createTime},#{aliases})
+        (#{userId},#{isDefault},#{consignee},#{tel},#{areaId},#{detail},#{createTime},#{aliases})
     </insert>
 
     <select id="findByParams" resultMap="ShippingAddressResultMapVo" parameterType="com.pieces.dao.vo.ShippingAddressVo">
@@ -94,8 +94,8 @@
                 tel = #{tel},
             </if>
                                             
-            <if test="area != null">
-                area = #{area},
+            <if test="areaId != null">
+                area_id = #{areaId},
             </if>
                                             
             <if test="detail != null">
