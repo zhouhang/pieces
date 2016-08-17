@@ -42,9 +42,14 @@
         from shipping_address
     </select>
 
-    <delete id="deleteById" parameterType="java.lang.Integer">
+    <delete id="deleteById" >
         delete from shipping_address
         where id = #{id}
+    </delete>
+
+    <delete id="deleteByUserIdAndId" parameterType="java.lang.Integer" >
+        delete from shipping_address
+        where id = #{id} and user_id = #{userId}
     </delete>
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.ShippingAddress">
@@ -62,7 +67,11 @@
             <if test="id != null">
                 id = #{id}
             </if>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
         </where>
+        order by is_default desc
     </select>
 
     <update id="update" parameterType="com.pieces.dao.model.ShippingAddress">

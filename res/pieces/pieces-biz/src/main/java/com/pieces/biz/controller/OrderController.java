@@ -63,7 +63,7 @@ public class OrderController extends BaseController {
 			
 		}else{
 			EnquiryCommoditys enquiryCommoditys = enquiryCommoditysService.findById(Integer.parseInt(commodity));
-			enquiryCommoditys.getUserId()
+			//enquiryCommoditys.getUserId()
 		}
 	}
 
