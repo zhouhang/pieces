@@ -22,7 +22,7 @@ public class ShippingAddress  implements Serializable {
 	private String tel;
 	
 	//所在区域
-	private String area;
+	private Integer areaId;
 	
 	//详细地址
 	private String detail;
@@ -73,15 +73,15 @@ public class ShippingAddress  implements Serializable {
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
-	
-	public String getArea() {
-		return area;
+
+	public Integer getAreaId() {
+		return areaId;
 	}
 
-	public void setArea(String area) {
-		this.area = area;
+	public void setAreaId(Integer areaId) {
+		this.areaId = areaId;
 	}
-	
+
 	public String getDetail() {
 		return detail;
 	}
