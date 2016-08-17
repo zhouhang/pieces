@@ -80,7 +80,7 @@
     <select id="findByParams" resultMap="OrderFormResultMapVo" parameterType="com.pieces.dao.vo.OrderFormVo">
         select
         <include refid="Base_Column_List_Aliases" />,
-        c.name
+        c.name as c_name
         from order_form o
         left join order_commodity c on o.id = c.order_id
         <where>

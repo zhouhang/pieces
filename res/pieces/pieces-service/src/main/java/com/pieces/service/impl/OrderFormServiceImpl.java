@@ -44,6 +44,9 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
 
     @Override
     public PageInfo<OrderFormVo> findByParams(OrderFormVo orderFormVo,Integer pageNum,Integer pageSize) {
+        pageNum = pageNum == null ? 1 : pageNum;
+        pageSize = pageSize == null ? 10 : pageSize;
+
         PageHelper.startPage(pageNum, pageSize);
         List<OrderFormVo>  list = orderFormDao.findByParams(orderFormVo);
         PageInfo page = new PageInfo(list);
