@@ -186,7 +186,7 @@
 	            </div>
 			</#if>
 			
-			<#if pageInfo??>
+			<#if pageInfo?? && pageInfo.total &gt; 0>
             	<@p.pager inPageNo=pageInfo.pageNum-1 pageSize=pageInfo.pageSize recordCount=pageInfo.total toURL="/commodity/index?${commodityParam}"/>
         	</#if>
         </div>
