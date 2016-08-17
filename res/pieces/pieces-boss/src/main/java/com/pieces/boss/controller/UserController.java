@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.pieces.dao.vo.UserVo;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.impl.SmsService;
+import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.SeqNoUtil;
 import com.pieces.tools.utils.WebUtil;
 import org.apache.commons.lang.StringUtils;
@@ -59,7 +60,7 @@ public class UserController extends  BaseController{
 		pageSize=pageSize==null?10:pageSize;
 		PageInfo<User> userPage = userService.findByCondition(userVo,pageNum,pageSize);
 		model.put("userPage",userPage);
-		model.put("userParams",userVo.toString());
+		model.put("userParams", Reflection.serialize(userVo));
 		model.put("advices",advices);
 		return "customers";
 	}

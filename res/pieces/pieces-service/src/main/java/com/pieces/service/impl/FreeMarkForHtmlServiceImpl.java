@@ -10,43 +10,11 @@ import java.io.*;
 import java.util.Map;
 
 /**
- *
+ * Created by wangbin on 2016/8/16.
  */
 @Service
 public class FreeMarkForHtmlServiceImpl implements FreeMarkForHtmlService {
 
-
-    @Override
-    public void geneHtmlFile(String templateFileName,
-                             String htmlFilePath,
-                             String htmlFileName,
-                             Map propMap)throws Exception{
-
-        FreeMarkerConfigurer freeMarkerConfigurer =  (FreeMarkerConfigurer) SpringUtil.getBean("freemarkerConfig");
-        Writer out = null;
-        try {
-            Template   t= freeMarkerConfigurer.getConfiguration().getTemplate(templateFileName);
-
-            // 如果根路径存在,则递归创建子目录
-            this.creatDirs(htmlFilePath);
-
-            String htmlFile=htmlFilePath + "/" + htmlFileName;
-            if(htmlFileName.startsWith("/")){
-            	htmlFile=htmlFilePath + htmlFileName;
-            }
-            
-            File afile = new File(htmlFile);
-
-            out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(afile),"UTF-8"));
-            t.process(propMap, out);
-            out.flush();
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }finally {
-            out.close();
-        }
-    }
 
 
     @Override
@@ -59,16 +27,13 @@ public class FreeMarkForHtmlServiceImpl implements FreeMarkForHtmlService {
         Writer out = null;
         try {
             Template t= freeMarkerConfigurer.getConfiguration().getTemplate(templatePathName+templateFileName);
-
             // 如果根路径存在,则递归创建子目录
             this.creatDirs(htmlFilePath);
-
             String htmlFile=htmlFilePath + "/" + htmlFileName;
             if(htmlFileName.startsWith("/")){
                 htmlFile=htmlFilePath + htmlFileName;
             }
             File afile = new File(htmlFile);
-
             out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(afile),"UTF-8"));
             t.process(propMap, out);
             out.flush();

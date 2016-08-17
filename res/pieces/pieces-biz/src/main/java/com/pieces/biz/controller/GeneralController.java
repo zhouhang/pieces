@@ -31,8 +31,6 @@ import com.pieces.service.AreaService;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.impl.SmsService;
-import com.pieces.service.utils.SMSMessage;
-import com.pieces.service.utils.SendMessage;
 import com.pieces.tools.upload.DefaultUploadFile;
 import com.pieces.tools.utils.GsonUtil;
 import com.pieces.tools.utils.WebUtil;

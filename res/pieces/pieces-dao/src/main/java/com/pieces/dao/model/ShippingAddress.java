@@ -23,7 +23,9 @@ public class ShippingAddress  implements Serializable {
 	
 	//所在区域
 	private Integer areaId;
-	
+
+	private String postcode;
+
 	//详细地址
 	private String detail;
 	
@@ -105,5 +107,12 @@ public class ShippingAddress  implements Serializable {
 	public void setAliases(String aliases) {
 		this.aliases = aliases;
 	}
-	
+
+	public String getPostcode() {
+		return postcode;
+	}
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
 }

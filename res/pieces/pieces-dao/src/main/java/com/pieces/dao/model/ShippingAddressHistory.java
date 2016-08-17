@@ -20,7 +20,9 @@ public class ShippingAddressHistory  implements Serializable {
 	
 	//所在区域
 	private String area;
-	
+
+	private String postcode;
+
 	//详细地址
 	private String detail;
 	
@@ -94,5 +96,12 @@ public class ShippingAddressHistory  implements Serializable {
 	public void setAliases(String aliases) {
 		this.aliases = aliases;
 	}
-	
+
+	public String getPostcode() {
+		return postcode;
+	}
+
+	public void setPostcode(String postcode) {
+		this.postcode = postcode;
+	}
 }

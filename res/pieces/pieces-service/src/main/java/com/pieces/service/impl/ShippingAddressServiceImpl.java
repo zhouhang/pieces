@@ -31,6 +31,8 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 	}
 
 
+
+
 	@Override
 	public List<ShippingAddressVo> findByParams(ShippingAddressVo shippingAddressVo) {
 		List<ShippingAddressVo>  list = shippingAddressDao.findByParams(shippingAddressVo);
@@ -50,6 +52,15 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 	@Transactional
 	public void delete(int userId, int id) {
 		shippingAddressDao.deleteByUserIdAndId(userId,id);
+	}
+
+	@Override
+	@Transactional
+	public void settingDefaultAddress(Integer addressId,Integer userId) {
+		shippingAddressDao.updateAllNotDefault(userId);
+		ShippingAddress shippingAddress =	findById(addressId);
+		shippingAddress.setIsDefault(true);
+		this.update(shippingAddress);
 	}
 
 

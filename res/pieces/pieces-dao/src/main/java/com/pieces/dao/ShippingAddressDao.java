@@ -12,4 +12,6 @@ public interface ShippingAddressDao extends ICommonDao<ShippingAddress>{
     public List<ShippingAddressVo> findByParams(ShippingAddressVo shippingAddressVo);
 
     public void deleteByUserIdAndId(@Param("userId")Integer userId, @Param("id") Integer addressId);
+
+    public void updateAllNotDefault(Integer userId);
 }
