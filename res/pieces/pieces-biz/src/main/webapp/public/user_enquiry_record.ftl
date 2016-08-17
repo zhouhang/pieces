@@ -56,7 +56,7 @@
                                     </div>
                                     <#list bill.enquiryCommoditys as commodity>
                                         <div class="tr">
-                                            <div class="td w1"><label>  <#if commodity.myPrice??><input class="cbx" type="checkbox"> </#if>${commodity.commodityName!}</label></div>
+                                            <div class="td w1"><label>  <#if commodity.myPrice??><input class="cbx" type="checkbox" name="commodity" value="${commodity.id!}"> </#if>${commodity.commodityName!}</label></div>
                                             <div class="td w2">${commodity.specs!}</div>
                                             <div class="td w3">${commodity.level!}</div>
                                             <div class="td w4">${commodity.origin!}</div>
@@ -75,7 +75,7 @@
                                             </div>
                                             <div class="td w10">
                                                 <#if commodity.myPrice??>
-                                                    <a href="#">订购</a>
+                                                    <a href="/center/order/create?commodity="+${commodity.id!}>订购</a>
                                                 </#if>
                                             </div>
                                         </div>

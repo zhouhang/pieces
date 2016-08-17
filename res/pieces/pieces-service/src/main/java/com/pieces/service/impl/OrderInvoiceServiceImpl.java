@@ -37,7 +37,7 @@ public class OrderInvoiceServiceImpl extends AbsCommonService<OrderInvoice> impl
 	}
 	
 	@Override
-	public OrderInvoice getInvoicebyOrderId(Integer orderId){
+	public OrderInvoice getInvoicebyOrderId(Integer orderId){  
 		//获取订单
 		//通过发票id获取发票
 		return null;
