@@ -26,6 +26,9 @@
                     <h3><i class="fa fa-chevron-right"></i><#if ad??>修改"${ad.title!}"<#else>新增广告</#if></h3>
                     <div class="extra">
                         <a  class="btn btn-gray" href="ad/index">返回</a>
+                        <#if ad??>
+                        <button id="delete" type="button" class="btn btn-gray">删除</button>
+                        </#if>
                         <button type="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
@@ -75,11 +78,11 @@
 
                         <div class="group">
                             <div class="txt">
-                                <i>*</i>图片：
+                                图片：
                             </div>
                             <div class="cnt cnt-mul">
                                 <div class="goods-img" id="imgCrop">
-                                    <#if ad??&&ad.pictureUrl??>
+                                    <#if ad??&&ad.pictureUrl??&&ad.pictureUrl!="">
                                      <img src="${ad.pictureUrl}"><i class="del"></i>
                                     </#if>
                                 </div>
@@ -108,7 +111,7 @@
 
                         <div class="group">
                             <div class="txt">
-                                <i>*</i>排序：
+                                排序：
                             </div>
                             <div class="cnt">
                                 <input type="text" class="ipt" name="sort" value="<#if ad??>${ad.sort!}</#if>" autocomplete="off" placeholder="">
@@ -151,6 +154,40 @@
                 this.dateInit();
                 this.formValidate();
                 this.goodsImg();
+                $('#delete').on('click', function() {
+                    var $self = $(this);
+                    layer.confirm('确认删除该广告？', {
+                        btn: ['确认','取消'] //按钮
+                    }, function(index){
+                        layer.close(index);
+                        $.ajax({
+                            url: "/ad/delete?id=" + $("#adId").val(),
+                            type: "POST",
+                            success: function(data){
+                                if(data.status == "y"){
+                                    $.notify({
+                                        type: 'success',
+                                        title: data.info,
+                                        text: '3秒后自动跳转到广告列表页',
+                                        delay: 3e3,
+                                        call: function() {
+                                            setTimeout(function() {
+                                                location.href = '/ad/index';
+                                            }, 3e3);
+                                        }
+                                    });
+                                }else{
+                                    $.notify({
+                                        type: 'error',
+                                        title: data.info,
+                                        delay: 3e3
+                                    });
+                                }
+                            }
+                        });
+                    });
+                    return false;
+                });
             },
             //日期选择
             dateInit: function () {
@@ -177,13 +214,15 @@
                 };
                 laydate(start);
                 laydate(end);
+
             },
             formValidate: function() {
                 $('#myform').validator({
                     fields: {
-                        category: 'required',
                         title: 'required',
-                        status: 'required'
+                        status: 'required',
+                        startTime: 'required',
+                        endTime: 'required',
                     },
                     valid: function(form) {
                         if ( $(form).isValid() ) {
@@ -224,7 +263,7 @@
                     layer.confirm('确认删除图片？', {
                         btn: ['确认','取消'] //按钮
                     }, function(index){
-                        $self.parent().empty().next().val('');
+                        $self.parent().empty().next().val('none');
                         layer.close(index);
                         self.upImg();
                     });
@@ -243,7 +282,6 @@
                     uploadUrl:'/gen/upload',
                     customUploadButtonId: 'imgCrop',
                     onAfterImgUpload: function(response){
-                        console.log(response)
                         cropModal.destroy();
                         $('#imgCrop').html('<img src="' + response.url + '" title="点击图片看大图" /><i class="del" title="删除"></i>')
                                 .next().val(response.url);

@@ -62,23 +62,19 @@
     <update id="update" parameterType="com.pieces.dao.model.Ad">
         update ad
         <set>
-                                                        
+
             <if test="title != null ">
                 title = #{title},
             </if>
-                                            
+
             <if test="typeId != null">
                 type_id = #{typeId},
             </if>
-                                            
-            <if test="pictureUrl != null and pictureUrl != ''">
+
+            <if test="pictureUrl != null">
                 picture_url = #{pictureUrl},
             </if>
-
-            <if test="color != null and color != ''">
                 color = #{color},
-            </if>
-
             <if test="startTime != null">
                 start_time = #{startTime},
             </if>
@@ -86,15 +82,8 @@
             <if test="endTime != null">
                 end_time = #{endTime},
             </if>
-                                            
-            <if test="link != null">
                 link = #{link},
-            </if>
-                                            
-            <if test="sort != null">
                 sort = #{sort},
-            </if>
-                                            
             <if test="status != null">
                 status = #{status},
             </if>

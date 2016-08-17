@@ -12,9 +12,7 @@ public class CustomStringEditor  extends PropertyEditorSupport {
 
     @Override
     public void setAsText(String text) {
-        if (StringUtils.isEmpty(text)) {
-            setValue(null);
-        } else {
+        if (StringUtils.isNotEmpty(text)) {
             String value = text;
             value = value.replace("<","&lt").replace(">","&gt");
             setValue(value);

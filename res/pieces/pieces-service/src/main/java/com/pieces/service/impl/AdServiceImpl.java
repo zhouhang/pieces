@@ -8,6 +8,7 @@ import com.pieces.dao.vo.AdVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.AdService;
 import com.pieces.tools.utils.FileUtil;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,9 +34,9 @@ public class AdServiceImpl extends AbsCommonService<Ad> implements AdService{
     @Transactional
     @Override
     public Ad createAd(Ad ad) {
-
-        ad.setPictureUrl(FileUtil.saveFileFromTemp(ad.getPictureUrl(),"ads/"));
-
+        if(StringUtils.isNotBlank(ad.getPictureUrl())){
+            ad.setPictureUrl(FileUtil.saveFileFromTemp(ad.getPictureUrl(),"ads/"));
+        }
         ad.setCreateTime(new Date());
         create(ad);
         return ad;
@@ -44,8 +45,12 @@ public class AdServiceImpl extends AbsCommonService<Ad> implements AdService{
     @Transactional
     @Override
     public int update(Ad ad) {
-        ad.setPictureUrl(FileUtil.saveFileFromTemp(ad.getPictureUrl(),"ads/"));
-
+        if("none".equals(ad.getPictureUrl())){
+            ad.setPictureUrl("");
+        }
+        if(StringUtils.isNotBlank(ad.getPictureUrl())){
+            ad.setPictureUrl(FileUtil.saveFileFromTemp(ad.getPictureUrl(),"ads/"));
+        }
         return super.update(ad);
     }
 
