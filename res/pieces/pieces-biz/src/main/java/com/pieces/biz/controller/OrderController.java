@@ -137,8 +137,9 @@ public class OrderController extends BaseController {
      * @return
      */
     @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
-    public String detail(@PathVariable("id")Integer id) {
-
+    public String detail(@PathVariable("id")Integer id, ModelMap modelMap) {
+        OrderFormVo vo =  orderFormService.findVoById(id);
+        modelMap.put("orderForm", vo);
         return "order_detail";
     }
 

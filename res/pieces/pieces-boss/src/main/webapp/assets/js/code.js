@@ -9,9 +9,11 @@
         $.getJSON(url,{beedId:options.beedId, typeId:options.typeId}, function (data){
             if (data.status === "y") {
                 var html = "<option value='-1'>请选择</option>";
-                $.each(data.data, function(k, v){
-                   html += "<option value='"+v.id+"'>"+ v.name+"</option>";
-                });
+                if (data.data != null) {
+                    $.each(data.data, function(k, v){
+                        html += "<option value='"+v.id+"'>"+ v.name+"</option>";
+                    });
+                }
                 $this.html(html);
             }
         })
