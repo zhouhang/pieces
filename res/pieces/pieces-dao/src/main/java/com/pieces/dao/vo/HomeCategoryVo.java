@@ -13,6 +13,8 @@ public class HomeCategoryVo extends Category{
 
     private String pictureUrl;
 
+    private String title;
+
     //橱窗广告
     private Ad showcase;
 
@@ -51,5 +53,13 @@ public class HomeCategoryVo extends Category{
 
     public void setShowcase(Ad showcase) {
         this.showcase = showcase;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

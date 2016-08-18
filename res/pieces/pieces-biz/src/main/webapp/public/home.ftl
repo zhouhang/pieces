@@ -83,7 +83,7 @@
         <!-- start -->
         <div class="idx-floor" id="floor${category_index}">
                 <div class="idx-hd">
-                    <h2>${category.name!}</h2>
+                    <h2>${category.title!}</h2>
                 </div>
                 <div class="idx-bd">
                     <div class="cat">
@@ -136,7 +136,7 @@
 <div class="elevator" id="jelevator">
     <ul>
         <#list categoryList as category>
-            <li <#if category_index==0>class="current"</#if>><a href="#floor${category_index}">${category.name!}</a></li>
+            <li <#if category_index==0>class="current"</#if>><a href="#floor${category_index}">${category.title!}</a></li>
         </#list>
     </ul>
 </div>
