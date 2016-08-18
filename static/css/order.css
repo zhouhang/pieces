@@ -40,21 +40,6 @@
 .order .submit{padding-bottom:50px;text-align:right;}
 .order .submit .btn{padding:10px 60px;font-size:16px;}
 
-/* 新增发票 */
-.fa-form{line-height:34px;padding-right:30px;font-size:12px;display:none;}
-.fa-form .group{padding:0 0 0 100px;height:60px;}
-.fa-form .ah{height:auto;}
-.fa-form .txt{width:90px;line-height:34px;color:#999;}
-.fa-form .cnt{position:relative;height:auto;}
-.fa-form .cnt .ipt{width:455px;padding:6px;}
-.fa-form .cnt .ipt-short{width:136px;}
-.fa-form .cnt select{width:150px;height:34px;line-height:34px;margin-right:7px;}
-.fa-form .cnt .msg-box{margin-top:0;}
-.fa-form .button{padding:10px 0 0 100px;}
-.fa-form .button .btn{padding:0;height:34px;}
-.fa-form .button .submit{width:150px;margin-right:16px;}
-.fa-form .button .cancel{width:100px;}
-.fa-form label{margin-right:16px;}
 
 /* 收货地址 */
 .consignee li{position:relative;line-height:24px;padding:0 110px 0 0;}
