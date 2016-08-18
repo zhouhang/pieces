@@ -49,6 +49,7 @@ public class ShippingAddressHistoryServiceImpl  extends AbsCommonService<Shippin
 		Area area = areaService.findParentsById(shippingAddress.getAreaId());
 		String fullAddress = area.getProvince()+area.getCity()+area.getAreaname();
 		shippingAddressHistory.setArea(fullAddress);
+		shippingAddressHistory.setPostcode(shippingAddress.getPostcode());
 		shippingAddressHistory.setTel(shippingAddress.getTel());
 		shippingAddressHistory.setDetail(shippingAddress.getDetail());
 		shippingAddressHistory.setCreateTime(new Date());

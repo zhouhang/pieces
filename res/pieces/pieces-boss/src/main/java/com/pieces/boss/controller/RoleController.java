@@ -10,6 +10,7 @@ import com.pieces.dao.vo.MemberVo;
 import com.pieces.dao.vo.RoleVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.WebUtil;
 import com.pieces.tools.utils.gson.GsonExclusion;
 import org.apache.shiro.authz.annotation.Logical;
@@ -71,7 +72,7 @@ public class RoleController extends BaseController{
         pageSize=pageSize==null?10:pageSize;
         PageInfo<Role> roleVoPage =   roleService.findByCondition(roleVo,pageNum,pageSize);
         model.put("rolePage",roleVoPage);
-        model.put("roleParams",roleVo.toString());
+        model.put("roleParams", Reflection.serialize(roleVo));
         model.put("advices",advices);
         return "role";
     }

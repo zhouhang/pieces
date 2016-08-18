@@ -15,4 +15,7 @@ public interface ShippingAddressService extends ICommonService<ShippingAddress>{
     public List<ShippingAddressVo> findByUser(Integer userId);
 
     public void delete(int userId,int id);
+
+    public void settingDefaultAddress(Integer addressId,Integer userId);
+
 }

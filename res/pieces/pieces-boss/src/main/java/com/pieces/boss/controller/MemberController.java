@@ -10,6 +10,7 @@ import com.pieces.service.MemberService;
 import com.pieces.service.RoleMemberService;
 import com.pieces.service.RoleService;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.WebUtil;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -59,7 +60,7 @@ public class MemberController extends BaseController{
         pageSize=pageSize==null?10:pageSize;
         PageInfo<Member> memberPage =memberService.findByCondition(memberVo, pageNum, pageSize);
         model.put("memberPage",memberPage);
-        model.put("memberParams",memberVo.toString());
+        model.put("memberParams", Reflection.serialize(memberVo));
         model.put("advices",advices);
         return "member";
     }

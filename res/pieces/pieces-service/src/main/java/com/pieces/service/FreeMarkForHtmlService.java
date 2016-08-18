@@ -12,11 +12,6 @@ public interface FreeMarkForHtmlService {
 
 
 
-    void geneHtmlFile(String templateFileName,
-                      String htmlFilePath,
-                      String htmlFileName,
-                      Map propMap)throws Exception;
-
     /**
      *
      * @param templatePathName 模板路径

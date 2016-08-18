@@ -5,7 +5,10 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.github.pagehelper.PageInfo;
+import com.pieces.dao.vo.OrderFormVo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +37,9 @@ import com.pieces.service.utils.ValidUtils;
 @Controller
 @RequestMapping("/center/order")
 public class OrderController extends BaseController {
+
+    @Autowired
+    private HttpSession httpSession;
 
 	@Autowired
 	private OrderCommodityService orderCommodityService;
@@ -118,7 +124,10 @@ public class OrderController extends BaseController {
      * @return
      */
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    public String list() {
+    public String list(Integer pageNum, Integer pageSize, ModelMap modelMap) {
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        PageInfo<OrderFormVo> pageInfo = orderFormService.findOrderByUserId(user.getId(),pageNum, pageSize);
+        modelMap.put("pageInfo", pageInfo);
         return "order_list";
     }
 

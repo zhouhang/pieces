@@ -1,8 +1,10 @@
 package com.pieces.biz.controller;
 
 import com.pieces.dao.model.ShippingAddress;
+import com.pieces.dao.model.ShippingAddressHistory;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.ShippingAddressVo;
+import com.pieces.service.ShippingAddressHistoryService;
 import com.pieces.service.ShippingAddressService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
@@ -25,6 +27,8 @@ public class AddressController extends BaseController{
 
     @Autowired
     private ShippingAddressService shippingAddressService;
+    @Autowired
+    private ShippingAddressHistoryService shippingAddressHistoryService;
 
 
     @RequestMapping("/user")
@@ -64,6 +68,14 @@ public class AddressController extends BaseController{
         shippingAddressService.delete(user.getId(),id);
         return new Result(true).info("删除地址成功!");
     }
+
+    @RequestMapping("/save/history")
+    @ResponseBody
+    public Result address(Integer id){
+        ShippingAddressHistory shippingAddressHistory = shippingAddressHistoryService.createByAddress(id);
+        return new Result(true).data(shippingAddressHistory);
+    }
+
 
 
 }

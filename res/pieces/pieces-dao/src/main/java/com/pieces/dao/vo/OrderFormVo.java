@@ -4,6 +4,8 @@ import com.pieces.dao.model.OrderCommodity;
 import com.pieces.dao.model.OrderForm;
 import com.pieces.dao.model.OrderInvoice;
 import com.pieces.dao.model.ShippingAddressHistory;
+import com.pieces.tools.utils.httpclient.common.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
@@ -21,6 +23,9 @@ public class OrderFormVo extends OrderForm {
 
     // 发票信息
     private OrderInvoice invoice;
+
+    // 商品信息摘要
+    private String commodityOverview;
 
 
     public List<OrderCommodity> getCommodities() {
@@ -45,5 +50,21 @@ public class OrderFormVo extends OrderForm {
 
     public void setInvoice(OrderInvoice invoice) {
         this.invoice = invoice;
+    }
+
+
+    public String getCommodityOverview() {
+        if (commodities != null) {
+            commodityOverview = "";
+            int lenght = commodities.size() >= 3 ? 3 : commodities.size();
+            String[] names = new String[3];
+            for (int i = 0; i < lenght; i++) {
+                names[i] = commodities.get(i).getName();
+            }
+            commodityOverview = StringUtils.join(names,",");
+            commodityOverview += "...";
+        }
+
+        return commodityOverview;
     }
 }

@@ -33,4 +33,5 @@ public class OrderRemarkServiceImpl  extends AbsCommonService<OrderRemark> imple
 		return orderRemarkDao;
 	}
 
+
 }
