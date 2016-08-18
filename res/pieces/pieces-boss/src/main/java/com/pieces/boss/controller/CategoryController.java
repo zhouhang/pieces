@@ -245,7 +245,7 @@ public class CategoryController {
 		List<Code> spaces = categoryService.findCode(CodeEnum.Type.SPEC.name());
 		List<Code> origins = categoryService.findCode(CodeEnum.Type.ORIGIN.name());
 		List<Code> levels = categoryService.findCode(CodeEnum.Type.LEVEL.name());
-		setCodeCheck(spaces,breed.getSpeces());
+		setCodeCheck(spaces,breed.getSpecs());
 		setCodeCheck(origins,breed.getOrigins());
 		setCodeCheck(levels,breed.getLevels());
 		breed.setSpecelist(spaces);

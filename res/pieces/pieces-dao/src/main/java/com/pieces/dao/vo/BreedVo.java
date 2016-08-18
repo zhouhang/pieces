@@ -14,7 +14,7 @@ public class BreedVo {
 	private String name;
 	//别名
 	private String aliases;
-	private String speces;
+	private String specs;
 	
 	private String origins;
 	
@@ -66,12 +66,12 @@ public class BreedVo {
 		this.aliases = aliases;
 	}
 
-	public String getSpeces() {
-		return speces;
+	public String getSpecs() {
+		return specs;
 	}
 
-	public void setSpeces(String speces) {
-		this.speces = speces;
+	public void setSpecs(String specs) {
+		this.specs = specs;
 	}
 
 	public String getOrigins() {

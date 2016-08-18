@@ -71,7 +71,7 @@
                                 </div>
                                 <div class="cnt cnt-mul">
                                     <#list breed.specelist as specifications>
-                                           <label><input type="checkbox" name="spece"  class="cbx" value="${specifications.id }" <#if specifications.checked>checked="checked"</#if>>${specifications.name }</label>
+                                           <label><input type="checkbox" name="specs"  class="cbx" value="${specifications.id }" <#if specifications.checked>checked="checked"</#if>>${specifications.name }</label>
                                     </#list>
                                 </div>
                             </div>

@@ -24,22 +24,24 @@
                         <h3>收货信息</h3>
                     </div>
                     <div class="consignee">
-                       <!-- 没有数据时显示这个  
-                        <div class="empty">
-                            <button class="btn btn-lgray jaddConsignee">新建收货地址</button>
-                        </div> 
-                        -->
+                        <#if shippingAddressCurrent??>
                         <ul>
                             <li>
-                                <p><span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>何欢</p>
-                                <p><span>联系方式：</span>18900557973</p>
-                                <p><span>收货地址：</span>湖北省武汉市汉阳区武汉市汉阳区知音西村56号303</p>
+                            	<input type="hidden" id="orderAddId" value="${shippingAddressCurrent.id}">
+                                <p><span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>${shippingAddressCurrent.consignee}</p>
+                                <p><span>联系方式：</span>${shippingAddressCurrent.tel}</p>
+                                <p><span>收货地址：</span>${shippingAddressCurrent.fullAdd}</p>
                                 <div class="extra">
                                     <a href="javascript:;" class="c-blue" id="jchooseConsignee">切换地址</a>
                                     <button class="btn btn-lgray jaddConsignee">新增收货地址</button>
                                 </div>
                             </li>
                         </ul>
+                        <#else>
+                        <div class="empty">
+                            <button class="btn btn-lgray jaddConsignee">新建收货地址</button>
+                        </div> 
+                        </#if>
                     </div>
                 </div><!-- end 收货信息 -->
 
@@ -67,27 +69,21 @@
                             </thead>
                             <tfoot></tfoot>
                             <tbody>
+                            <#list enquiryCommoditysList as enquiryCommoditys>	
                                 <tr>
-                                    <td>巴戟肉</td>
-                                    <td>薄片</td>
-                                    <td>1</td>
-                                    <td>安徽省</td>
-                                    <td>2016-08-20</td>
-                                    <td>6000</td>
-                                    <td>¥20.00</td>
-                                    <td>¥120000.00</td>
-                                    <td rowspan="2"><input class="ipt" id="freightPrice" type="text" placeholder="请填写询价时协商好的运费"></td>
+                                    <td>${enquiryCommoditys.commodityName}</td>
+                                    <td>${enquiryCommoditys.specs}</td>
+                                    <td>${enquiryCommoditys.level}</td>
+                                    <td>${enquiryCommoditys.origin}</td>
+                                    <td>${enquiryCommoditys.expectDate?date}</td>
+                                    <td>${enquiryCommoditys.amount}</td>
+                                    <td>${enquiryCommoditys.myPrice}</td>
+                                    <td>${enquiryCommoditys.amount * enquiryCommoditys.myPrice}</td>
+                                    <#if enquiryCommoditys_index == 0>
+                                    	<td rowspan="${enquiryCommoditysList?size}"><input class="ipt" id="freightPrice" type="text" placeholder="请填写询价时协商好的运费"></td>
+                                    </#if>
                                 </tr>
-                                <tr>
-                                    <td>艾绒</td>
-                                    <td>个</td>
-                                    <td>2</td>
-                                    <td>湖北省</td>
-                                    <td>2016-08-20</td>
-                                    <td>6000</td>
-                                    <td>¥20.00</td>
-                                    <td>¥120000.00</td>
-                                </tr>
+                            </#list>
                             </tbody>
                         </table>
                     </div>
@@ -188,13 +184,14 @@
 
     <!-- start 新增收货地址 -->
     <div class="fa-form" id="jconsigneeBox">
-        <form action="" id="consigneeForm">
+        <form action="/center/order/addAdd" id="consigneeForm">
+        <input type="hidden" name="commodity" value="${commodity}">
             <div class="group fl">
                 <div class="txt">
                     <span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>
                 </div>
                 <div class="cnt">
-                    <input type="text" name="consigneeName" id="consigneeName" class="ipt ipt-short" autocomplete="off" placeholder="" data-msg-nickName="只能输入中文、英文，长度2-50" maxlength="50">
+                    <input type="text" name="consignee" id="consigneeName" class="ipt ipt-short" autocomplete="off" placeholder="" data-msg-nickName="只能输入中文、英文，长度2-50" maxlength="50">
                 </div>
             </div>
 
@@ -203,7 +200,7 @@
                     <span>手机号码：</span>
                 </div>
                 <div class="cnt">
-                    <input type="text" name="consigneeMobile" id="consigneeMobile" class="ipt ipt-short" autocomplete="off" placeholder="">
+                    <input type="text" name="tel" id="consigneeMobile" class="ipt ipt-short" autocomplete="off" placeholder="">
                     <span class="error"></span>
                 </div>
             </div>
@@ -224,7 +221,6 @@
                     <select name="areaId" id="area" data-msg-required="请选择至最后一级">
                         <option value="">-区/县-</option>
                     </select>
-                    <input type="hidden" id="areaFull" name="areaFull" value="">
                     <span class="error"></span>
                 </div>
             </div>
@@ -234,14 +230,14 @@
                     <span>详细地址：</span>
                 </div>
                 <div class="cnt">
-                    <input type="text" name="consigneeAddress" id="consigneeAddress" class="ipt ipt-wide" autocomplete="off">
+                    <input type="text" name="detail" id="consigneeAddress" class="ipt ipt-wide" autocomplete="off">
                     <span class="error"></span>
                 </div>
             </div>
 
             <div class="group ah">
                 <div class="cnt">
-                    <label><input type="checkbox" class="cbx" name="default" checked>设为默认地址</label>                            
+                    <label><input type="checkbox" class="cbx" name="isDefault" checked>设为默认地址</label>                            
                 </div>
             </div>
 
@@ -254,30 +250,19 @@
 
     <div class="consignee consignee-list" id="jconsigneeList">
         <ul>
-            <li class="current">
-                <p><span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>何欢</p>
-                <p><span>联系方式：</span>18900557973</p>
-                <p><span>收货地址：</span>湖北省武汉市汉阳区武汉市汉阳区知音西村56号303</p>
-                <div class="default">
-                    <span class="c-red">默认地址</span>
-                </div>
+        	<#list shippingAddressList as shippingAddress>
+            <li <#if shippingAddress.id=shippingAddressCurrent.id>class="current"</#if>>
+            	<input type="hidden" name="shippingAddressId" value="${shippingAddress.id}">
+                <p><span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>${shippingAddress.consignee}</p>
+                <p><span>联系方式：</span>${shippingAddress.tel}</p>
+                <p><span>收货地址：</span>${shippingAddress.fullAdd}</p>
+                <#if shippingAddress.isDefault>
+	                <div class="default">
+	                    <span class="c-red">默认地址</span>
+	                </div>
+                </#if>
             </li>
-            <li>
-                <p><span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>何欢</p>
-                <p><span>联系方式：</span>18900557973</p>
-                <p><span>收货地址：</span>湖北省武汉市汉阳区武汉市汉阳区知音西村56号303</p>
-                <div class="default">
-                    <span class="c-red">默认地址</span>
-                </div>
-            </li>
-            <li>
-                <p><span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>何欢</p>
-                <p><span>联系方式：</span>18900557973</p>
-                <p><span>收货地址：</span>湖北省武汉市汉阳区武汉市汉阳区知音西村56号303</p>
-                <div class="default">
-                    <span class="c-red">默认地址</span>
-                </div>
-            </li>
+            </#list>
         </ul>
 
         <div class="button">
@@ -412,15 +397,16 @@
 
                     $('#consigneeForm').validator({
                         fields : {
-                            consigneeName : '收货人: required; nickName',
-                            consigneeMobile : '手机号码: required; mobile',
+                            consignee : '收货人: required; nickName',
+                            tel : '手机号码: required; mobile',
                             areaId : '所在地区: required',
-                            consigneeAddress : '详细地址: required'
+                            detail : '详细地址: required'
                         },
                         valid: function(form) {
                             var myfromValid = this;
                             if ( $(form).isValid() ) {
-                                $("#areaFull").val($('#province option:selected').text() + $('#city option:selected').text() + $('#area option:selected').text());
+                            	form.submit();
+                            	layer.closeAll();
                             } 
                         }
                     });
@@ -446,6 +432,14 @@
 
                     $consigneeList.on('click', 'li', function() {
                         $(this).addClass('current').siblings().removeClass('current');
+                    })
+                    
+                    // 关闭弹层
+                    $consigneeList.on('click', 'button', function() {
+                    	var currentid = $consigneeList.find(".current").find("input[name='shippingAddressId']").val();
+                    	var commodity = $("input[name='commodity']").val();
+                    	window.location.href = "/center/order/create?commodity=" + commodity + "&currentid=" + currentid;
+                        layer.closeAll();
                     })
 
                 },

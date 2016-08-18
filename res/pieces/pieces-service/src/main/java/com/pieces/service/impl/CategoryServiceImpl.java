@@ -50,6 +50,7 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 	}
 
 	@Override
+	@Transactional
 	public int deleteById(int id) {
 		return categoryDao.deleteById(id);
 	}
@@ -120,7 +121,7 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 		ca.setStatus(CategoryEnum.STATUS_VALID.getValue());
 		ca.setLevel(CategoryEnum.LEVEL_BREED.getValue());
 		ca.setCreateTime(new Date());
-		ca.setSpecs(bvo.getSpeces());
+		ca.setSpecs(bvo.getSpecs());
 		ca.setOrigins(bvo.getOrigins());
 		ca.setLevels(bvo.getLevels());
 		categoryDao.create(ca);
