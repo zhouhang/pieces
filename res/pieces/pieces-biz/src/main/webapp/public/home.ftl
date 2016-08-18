@@ -30,20 +30,25 @@
         </ul>
 
         <h3>知名厂家</h3>
-        <div class="brands">
+        <div class="brands" id="jbrands">
             <div class="inner">
-                <div class="col">
-                    <a href="#"><img src="images/brand-jhjt.png" alt=""></a>
-                    <a href="#"><img src="images/brand-yonggang.png" alt=""></a>
-                    <a href="#"><img src="images/brand-jrt.png" alt=""></a>
-                    <a href="#"><img src="images/brand-wsc.png" alt=""></a>
+                <div class="col" index="0">
+                    <#list AD_MANUFACTURERS as ad>
+                        <#if ad_index<4>
+                        <a href="${ad.link!"#!"}"><img src="${ad.pictureUrl!}" alt=""></a>
+                        </#if>
+                    </#list>
                 </div>
-                <div class="col">
-                    <a href="#"><img src="images/brand-jhjt.png" alt=""></a>
-                    <a href="#"><img src="images/brand-yonggang.png" alt=""></a>
-                    <a href="#"><img src="images/brand-jrt.png" alt=""></a>
-                    <a href="#"><img src="images/brand-wsc.png" alt=""></a>
-                </div>
+                <#if (AD_MANUFACTURERS?size>4)>
+                    <div class="col" index="1">
+                        <#list AD_MANUFACTURERS as ad>
+                            <#if (ad_index>3)&&ad_index<8>
+                                <a href="${ad.link!"#!"}"><img src="${ad.pictureUrl!}" alt=""></a>
+                            </#if>
+                        </#list>
+                    </div>
+                </#if>
+
             </div>
             <div class="ctrl">
                 <i class="prev">&lt;</i><i class="next">&gt;</i>

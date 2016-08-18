@@ -65,8 +65,10 @@ public class HomeController extends BaseController{
 		//广告
 		List<AdVo> adBannerList =adService.findByType(CodeEnum.AD_BANNER.getId());
 		List<AdVo> adBarList =adService.findByType(CodeEnum.AD_SHOWCASE_BAR.getId());
+		List<AdVo> adManufacturersList =adService.findByType(CodeEnum.AD_MANUFACTURERS.getId());
 		model.put(CodeEnum.AD_BANNER.name(),adBannerList);
 		model.put(CodeEnum.AD_SHOWCASE_BAR.name(),adBarList);
+		model.put(CodeEnum.AD_MANUFACTURERS.name(),adManufacturersList);
 
 		//标志首页
 		model.put("CURRENT_PAGE","home");

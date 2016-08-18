@@ -108,12 +108,12 @@
                 eventInit: function () {
                     // 清空输入数据
                     $("#reset").click(function(){
-                        window.location.href="enquiry/index";
+                        window.location.href="/enquiry/index";
                         $('.chart .ipt, .chart select').val("")
                     })
 
                     var $ipts = $('.chart .ipt, .chart select');
-                    var url="enquiry/index?";
+                    var url="/enquiry/index?";
                     $('#search').on('click', function() {
                         var params = [];
                         $ipts.each(function() {
