@@ -96,11 +96,11 @@
 
                     <div class="pro">
                         <dl>
-                            <#if category.showcase??>
-                                <dt>
+                            <dt>
+                                <#if category.showcase??>
                                     <a href="${category.showcase.link!}"><img src="images/blank.gif" class="lazyload" data-original="${category.showcase.pictureUrl!}" width="400" height="270"></a>
-                                </dt>
-                            </#if>
+                                </#if>
+                            </dt>
 
                             <#if category.breedList??>
                                 <#list category.commodityList as commodity>
