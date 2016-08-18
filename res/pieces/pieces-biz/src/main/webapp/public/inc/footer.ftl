@@ -4,15 +4,15 @@
 <div class="footer">
     <div class="wrap">
         <div class="links">
-            <a href="#">关于上工之选</a>
+            <a href="/help/11">关于上工之选</a>
             <i>|</i>
-            <a href="#">联系我们</a>
+            <a href="/help/8">联系我们</a>
             <i>|</i>
-            <a href="#">法律申明</a>
+            <a href="/help/29">法律申明</a>
             <i>|</i>
             <a href="#">建议与投诉</a>
             <i>|</i>
-            <a href="#">友情链接</a>
+            <a href="/help/33">友情链接</a>
             <i>|</i>
             <a href="#">站长统计</a>
         </div>
@@ -32,4 +32,3 @@
 
 <script src="/js/jquery.min.js"></script>
 <script src="js/common.js"></script>
-
