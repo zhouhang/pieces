@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="bg-gray">
+<html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
     <title>上工之选</title>
 </head>
+<body  class="bg-gray">
 
 <#include "./inc/header.ftl"/>
 

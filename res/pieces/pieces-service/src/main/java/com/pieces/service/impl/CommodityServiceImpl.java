@@ -13,6 +13,7 @@ import com.pieces.dao.model.User;
 import com.pieces.dao.vo.CategoryVo;
 import com.pieces.service.CategoryService;
 import com.pieces.service.CommoditySearchService;
+import com.pieces.service.enums.PathEnum;
 import com.pieces.tools.upload.TempUploadFile;
 import com.pieces.tools.upload.UEditorUploadFile;
 import com.pieces.tools.utils.FileUtil;
@@ -72,7 +73,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     public void saveOrUpdate(Commodity commodity) throws IOException {
 //        commodity.setPictureUrl(commodity.getPictureUrl().replace(defaultUploadFile.getUrl(), ""));
         // 把文件从临时目录保存
-        commodity.setPictureUrl(FileUtil.saveFileFromTemp(commodity.getPictureUrl(), "commodity/"));
+        commodity.setPictureUrl(FileUtil.saveFileFromTemp(commodity.getPictureUrl(), PathEnum.COMMODITY.getValue()));
 
         if(commodity.getId()!= null) {
             commodityDao.update(commodity);

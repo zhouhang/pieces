@@ -7,6 +7,7 @@ import com.pieces.dao.model.Ad;
 import com.pieces.dao.vo.AdVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.AdService;
+import com.pieces.service.enums.PathEnum;
 import com.pieces.tools.utils.FileUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class AdServiceImpl extends AbsCommonService<Ad> implements AdService{
     @Override
     public Ad createAd(Ad ad) {
         if(StringUtils.isNotBlank(ad.getPictureUrl())){
-            ad.setPictureUrl(FileUtil.saveFileFromTemp(ad.getPictureUrl(),"ads/"));
+            ad.setPictureUrl(FileUtil.saveFileFromTemp(ad.getPictureUrl(),PathEnum.WOOL.getValue()));
         }
         ad.setCreateTime(new Date());
         create(ad);
@@ -49,7 +50,7 @@ public class AdServiceImpl extends AbsCommonService<Ad> implements AdService{
             ad.setPictureUrl("");
         }
         if(StringUtils.isNotBlank(ad.getPictureUrl())){
-            ad.setPictureUrl(FileUtil.saveFileFromTemp(ad.getPictureUrl(),"ads/"));
+            ad.setPictureUrl(FileUtil.saveFileFromTemp(ad.getPictureUrl(), PathEnum.WOOL.getValue()));
         }
         return super.update(ad);
     }
