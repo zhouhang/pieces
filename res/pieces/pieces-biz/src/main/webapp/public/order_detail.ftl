@@ -24,25 +24,34 @@
                     <tbody>
                     <tr>
                         <th colspan="3" class="tl">
-                            <span>订单单号：201607111621001</span>
-                            <span>下单时间：2016-08-10 15:22:54</span>
+                            <span>订单单号：${orderForm.code}</span>
+                            <span>下单时间：${orderForm.createrTime?datetime}</span>
                         </th>
                     </tr>
                     <tr>
                         <td class="tl nr">
-                            <span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：<em>何欢</em></span>
-                            <span>联系方式：<em>18900557973</em></span>
-                            <span>收货地址：<em>湖北省武汉市汉阳区武汉市汉阳区知音西村56号303</em></span>
+                            <span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：<em>${orderForm.address.consignee}</em></span>
+                            <span>联系方式：<em>${orderForm.address.tel}</em></span>
+                            <span>收货地址：<em>${orderForm.address.area}${orderForm.address.detail}</em></span>
                         </td>
                         <td class="tl nl nr">
-                            <span>商品合计：<em class="price">¥2203000.00</em></span>
-                            <span>运　　费：<em class="price">¥150.00</em></span>
+                            <span>商品合计：<em class="price">¥${orderForm.amountsPayable}</em></span>
+                            <span>运　　费：<em class="price">¥${orderForm.shippingCosts}</em></span>
                         </td>
                         <td class="nl">
+                        <#if (orderForm.status == 1)>
                             <a href="#" class="btn btn-red">付款</a>
-                            <span>剩余付款时间</span>
-                            <span>9天23时40分</span>
-                            <a href="#" class="c-blue jremove">取消订单</a>
+                        </#if>
+                        <#if (orderForm.status == 4)>
+                            <a href="#" class="btn btn-red">确认收货</a>
+                        </#if>
+                            <#if (orderForm.status == 1)>
+                                <span>剩余付款时间</span>
+                                <span>9天23时40分</span>
+                            </#if>
+                        <#if (orderForm.status &lt;= 2)>
+                            <span><a href="#" class="c-blue jremove">取消订单</a></span>
+                        </#if>
                         </td>
                     </tr>
                     </tbody>
@@ -67,27 +76,21 @@
                         </thead>
                         <tfoot></tfoot>
                         <tbody>
+                        <#list orderForm.commodities as commodity>
                         <tr>
-                            <td>巴戟肉</td>
-                            <td>薄片</td>
-                            <td>1</td>
-                            <td>安徽省</td>
-                            <td>2016-08-20</td>
-                            <td>6000</td>
-                            <td>¥20.00</td>
-                            <td>¥120000.00</td>
-                            <td rowspan="2"><span class="c-red">待付款</span></td>
+                            <td>${commodity.name}</td>
+                            <td>${commodity.spec}</td>
+                            <td>${commodity.level}</td>
+                            <td>${commodity.originOf}</td>
+                            <td><#if commodity.expectDate??>${commodity.expectDate?date}</#if></td>
+                            <td>${commodity.amount}</td>
+                            <td><#if commodity.price??>¥${commodity.price}</#if></td>
+                            <td><#if commodity.subtotal??>¥${commodity.subtotal}</#if></td>
+                            <#if commodity_index == 0>
+                                <td rowspan="${commodity?size}"><span class="c-red">待付款</span></td>
+                            </#if>
                         </tr>
-                        <tr>
-                            <td>艾绒</td>
-                            <td>个</td>
-                            <td>2</td>
-                            <td>湖北省</td>
-                            <td>2016-08-20</td>
-                            <td>6000</td>
-                            <td>¥20.00</td>
-                            <td>¥120000.00</td>
-                        </tr>
+                        </#list>
                         </tbody>
                     </table>
                 </div>

@@ -1,4 +1,4 @@
-package com.pieces.service.enums;
+package com.pieces.dao.enums;
 
 /**
  * Author: koabs
@@ -38,6 +38,20 @@ public enum OrderEnum {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    /**
+     * 通过ID来查询属性名称
+     * @param id
+     * @return
+     */
+    public static String findByValue(Integer id){
+        for(OrderEnum orderEnum :OrderEnum.values() ){
+            if(orderEnum.getValue().equals(id)){
+                return orderEnum.getText();
+            }
+        }
+        return null;
     }
 
 }

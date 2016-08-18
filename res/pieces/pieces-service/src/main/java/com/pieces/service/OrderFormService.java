@@ -32,7 +32,7 @@ public interface OrderFormService extends ICommonService<OrderForm>{
      * @param id
      * @return
      */
-    public OrderFormVo findById(Integer id);
+    public OrderFormVo findVoById(Integer id);
 
 
     /**
