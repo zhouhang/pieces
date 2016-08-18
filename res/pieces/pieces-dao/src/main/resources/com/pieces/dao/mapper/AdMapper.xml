@@ -123,8 +123,8 @@
         from ad a
         where a.type_id = #{typeId}
         and status = 1
-        and DATE_FORMAT(now(), '%Y-%m-%d %h:%i:%s') >= DATE_FORMAT(a.start_time,'%Y-%m-%d %h:%i:%s')
-        and DATE_FORMAT(now(), '%Y-%m-%d %h:%i:%s') <![CDATA[<=]]> DATE_FORMAT(a.end_time,'%Y-%m-%d %h:%i:%s')
+        and DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s') >= DATE_FORMAT(a.start_time,'%Y-%m-%d %H:%i:%s')
+        and DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s') <![CDATA[<=]]> DATE_FORMAT(a.end_time,'%Y-%m-%d %H:%i:%s')
         order by a.sort desc
     </select>
 

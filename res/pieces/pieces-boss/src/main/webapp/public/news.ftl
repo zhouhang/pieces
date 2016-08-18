@@ -101,7 +101,7 @@
                 },
                 // 筛选
                 filter: function () {
-                    var url = "cms/article/index?model=2";
+                    var url = "/cms/article/index?model=2";
                     $("#reset").on("click", function(){
                         window.location.href=url;
                     })

@@ -119,7 +119,7 @@
                 // 筛选
                 filter: function() {
                     var $ipts = $('.chart .ipt, .chart select');
-                    var url="role/list/${role.id}?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
+                    var url="/role/list/${role.id}?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
 
                     $('#search_btn').on('click', function() {
                         var params = [];
