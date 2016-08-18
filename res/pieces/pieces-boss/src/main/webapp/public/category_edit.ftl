@@ -17,7 +17,7 @@
                 <dl>
                     <dt>分类信息</dt>
                     <dd>
-                        <a class="curr">基本信息</a>
+                        <a class="curr" href="/category/list">基本信息</a>
                     </dd>
                 </dl>
             </div>
