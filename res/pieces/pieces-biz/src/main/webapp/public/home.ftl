@@ -120,10 +120,10 @@
                 </div>
         </div><!-- end -->
         <#if category_index%2!=0 >
-            <#assign adindex=(category_index/2-1)>
+            <#assign adindex=(category_index/2)>
             <#if AD_SHOWCASE_BAR[adindex]?? >
                 <div class="wide-banner">
-                    <a href="${AD_SHOWCASE_BAR[adindex].link!}"><img src="images/blank.gif" class="lazyload" data-original="${AD_SHOWCASE_BAR[adindex].pictureUrl!}" width="1200" height="90"></a>
+                    <a href="${AD_SHOWCASE_BAR[adindex?int].link!}"><img src="images/blank.gif" class="lazyload" data-original="${AD_SHOWCASE_BAR[adindex?int].pictureUrl!}" width="1200" height="90"></a>
                 </div>
             </#if>
         </#if>

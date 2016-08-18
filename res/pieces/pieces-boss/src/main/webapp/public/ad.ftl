@@ -42,7 +42,7 @@
                                 <select id="" name="typeId">
                                     <option value=""></option>
                                     <#list typeList as type>
-                                        <option <#if type.id==adVo.typeId></#if> value="${type.id!}">${type.title!}</option>
+                                        <option <#if type.id==adVo.typeId>selected</#if> value="${type.id!}">${type.title!}</option>
                                     </#list>
                                 </select>
                             </td>
