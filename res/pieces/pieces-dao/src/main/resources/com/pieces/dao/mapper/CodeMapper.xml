@@ -76,7 +76,7 @@
         select
         <include refid="Base_Column_List" />
         from code
-        and id in (${idStr})
+        where id in (${idStr})
         order by create_time desc
     </select>
 </mapper>

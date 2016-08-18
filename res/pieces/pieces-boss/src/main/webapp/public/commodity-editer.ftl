@@ -156,7 +156,9 @@
     </div><!-- fa-floor end -->
 </div>
 
-
+<div id="umeditorContent" style="display: none;">
+${commodity.details}
+</div>
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
@@ -227,7 +229,9 @@
 
                 // 初始化 切制规格,等级,原药产地,详细信息
                 var um = UM.getEditor('details');
-                um.setContent('${commodity.details}');
+                um.ready(function(){
+                    um.setContent($("#umeditorContent").html());
+                })
 
                 commodityAddPage.fn.initCode(${commodity.categoryId})
                 setTimeout(function(){
