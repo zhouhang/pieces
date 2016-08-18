@@ -171,6 +171,9 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 
 	@Override
 	public List<Code> findCodeByString(String str) {
+		if(StringUtils.isBlank(str)){
+			return null;
+		}
 		return codeDao.findByString(str);
 	}
 
