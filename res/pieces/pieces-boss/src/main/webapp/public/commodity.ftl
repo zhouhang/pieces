@@ -108,7 +108,7 @@
                 // 筛选
                 filter: function() {
                     var $ipts = $('.chart .ipt, .chart select');
-                    var url="commodity/index?";
+                    var url="/commodity/index?";
 
                     $('#search_btn').on('click', function() {
                         var params = [];

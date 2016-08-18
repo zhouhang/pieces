@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pieces.service.enums.CategoryEnum;
+import com.pieces.tools.utils.Reflection;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -62,7 +63,7 @@ public class CategoryController {
 		t.setStatus(CategoryEnum.STATUS_VALID.getValue());
 		PageInfo<Category> categoryPage = categoryService.findClassify(t, pageNum, pageSize);
 		model.put("categoryPage", categoryPage);
-		model.put("categoryParams", t.toString());
+		model.put("categoryParams", Reflection.serialize(t));
 		model.put("category", t);
 		return "category";
 	}
@@ -194,7 +195,7 @@ public class CategoryController {
 		vo.setStatus(CategoryEnum.STATUS_VALID.getValue());
 		PageInfo<CategoryVo> categoryPage = categoryService.findBreed(vo, pageNum, pageSize);
 		model.put("categoryPage", categoryPage);
-		model.put("categoryParams", vo.toString());
+		model.put("categoryParams", Reflection.serialize(vo));
 		model.put("category", vo);
 		return "breed";
 		
@@ -347,5 +348,7 @@ public class CategoryController {
 		categoryService.allCategory2Pinyin();
 		return new Result(true).info("拼音生成完成!");
 	}
+
+
 
 }

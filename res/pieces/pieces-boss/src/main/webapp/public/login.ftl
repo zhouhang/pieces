@@ -120,7 +120,7 @@
                     dataType: "json",
                     success: function (result) {
                         if(result.status=="y"){
-                            location.href="user/index"
+                            location.href="/user/index"
                         }else{
                             loginPage.fn.showMsg(result.info)
                         }

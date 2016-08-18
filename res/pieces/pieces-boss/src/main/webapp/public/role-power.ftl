@@ -37,7 +37,7 @@
                             <a class="btn btn-gray" href="role/index">返回</a>
                             <#if role??>
                             <#--//location.href='role/delete?roleId=${role.id}'-->
-                                <button type="button" class="btn btn-gray" onclick="javascript:if(confirm('你确定删除吗？')){location.href='role/delete?roleId=${role.id}'}" >删除</button>
+                                <button type="button" class="btn btn-gray" onclick="javascript:if(confirm('你确定删除吗？')){location.href='/role/delete?roleId=${role.id}'}" >删除</button>
                             </#if>
                             <button id="submit" type="button" class="btn btn-red">保存</button>
                         </div>

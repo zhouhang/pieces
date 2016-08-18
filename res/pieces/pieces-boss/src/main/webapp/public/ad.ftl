@@ -42,7 +42,7 @@
                                 <select id="" name="typeId">
                                     <option value=""></option>
                                     <#list typeList as type>
-                                        <option <#if type.id==adVo.typeId></#if> value="${type.id!}">${type.title!}</option>
+                                        <option <#if type.id==adVo.typeId>selected</#if> value="${type.id!}">${type.title!}</option>
                                     </#list>
                                 </select>
                             </td>
@@ -105,7 +105,7 @@
                 // 筛选
                 filter: function() {
                     var $ipts = $('.chart .ipt, .chart select');
-                    var url="ad/index?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
+                    var url="/ad/index?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
 
                     $('#search_btn').on('click', function() {
                         var params = [];

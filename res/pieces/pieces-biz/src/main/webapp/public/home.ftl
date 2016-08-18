@@ -30,20 +30,25 @@
         </ul>
 
         <h3>知名厂家</h3>
-        <div class="brands">
+        <div class="brands" id="jbrands">
             <div class="inner">
-                <div class="col">
-                    <a href="#"><img src="images/brand-jhjt.png" alt=""></a>
-                    <a href="#"><img src="images/brand-yonggang.png" alt=""></a>
-                    <a href="#"><img src="images/brand-jrt.png" alt=""></a>
-                    <a href="#"><img src="images/brand-wsc.png" alt=""></a>
+                <div class="col" index="0">
+                    <#list AD_MANUFACTURERS as ad>
+                        <#if ad_index<4>
+                        <a href="${ad.link!"#!"}"><img src="${ad.pictureUrl!}" alt=""></a>
+                        </#if>
+                    </#list>
                 </div>
-                <div class="col">
-                    <a href="#"><img src="images/brand-jhjt.png" alt=""></a>
-                    <a href="#"><img src="images/brand-yonggang.png" alt=""></a>
-                    <a href="#"><img src="images/brand-jrt.png" alt=""></a>
-                    <a href="#"><img src="images/brand-wsc.png" alt=""></a>
-                </div>
+                <#if (AD_MANUFACTURERS?size>4)>
+                    <div class="col" index="1">
+                        <#list AD_MANUFACTURERS as ad>
+                            <#if (ad_index>3)&&ad_index<8>
+                                <a href="${ad.link!"#!"}"><img src="${ad.pictureUrl!}" alt=""></a>
+                            </#if>
+                        </#list>
+                    </div>
+                </#if>
+
             </div>
             <div class="ctrl">
                 <i class="prev">&lt;</i><i class="next">&gt;</i>
@@ -96,12 +101,11 @@
 
                     <div class="pro">
                         <dl>
-                            <#if category.showcase??>
-                                <dt>
+                            <dt>
+                                <#if category.showcase??>
                                     <a href="${category.showcase.link!}"><img src="images/blank.gif" class="lazyload" data-original="${category.showcase.pictureUrl!}" width="400" height="270"></a>
-                                </dt>
-                            </#if>
-
+                                </#if>
+                            </dt>
                             <#if category.breedList??>
                                 <#list category.commodityList as commodity>
                                     <dd>
@@ -116,10 +120,10 @@
                 </div>
         </div><!-- end -->
         <#if category_index%2!=0 >
-            <#assign adindex=(category_index/2-1)>
+            <#assign adindex=(category_index/2)>
             <#if AD_SHOWCASE_BAR[adindex]?? >
                 <div class="wide-banner">
-                    <a href="${AD_SHOWCASE_BAR[adindex].link!}"><img src="images/blank.gif" class="lazyload" data-original="${AD_SHOWCASE_BAR[adindex].pictureUrl!}" width="1200" height="90"></a>
+                    <a href="${AD_SHOWCASE_BAR[adindex?int].link!}"><img src="images/blank.gif" class="lazyload" data-original="${AD_SHOWCASE_BAR[adindex?int].pictureUrl!}" width="1200" height="90"></a>
                 </div>
             </#if>
         </#if>
@@ -141,7 +145,6 @@
     <a href="javascript:;">返回顶部</a>
 </div>
 <#include "./inc/footer.ftl"/>
-
 
 <script src="js/jquery.nav.js"></script>
 <script src="js/index_2016.js"></script>
