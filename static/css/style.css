@@ -35,7 +35,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .lazyload{background:url(../images/loader.gif) no-repeat 50%;}
 
 .site-nav, .nav, .header, .footer, .wrap, .banner-slider{min-width:1200px;}
-.wide-banner{width:1200px;margin:30px auto 0;background:#f5f5f5;}        
+.wide-banner{width:1200px;margin:30px auto 0;background:#fff;}        
 
 
 /* button */
