@@ -101,7 +101,6 @@
                                     <a href="${category.showcase.link!}"><img src="images/blank.gif" class="lazyload" data-original="${category.showcase.pictureUrl!}" width="400" height="270"></a>
                                 </#if>
                             </dt>
-
                             <#if category.breedList??>
                                 <#list category.commodityList as commodity>
                                     <dd>
@@ -141,7 +140,6 @@
     <a href="javascript:;">返回顶部</a>
 </div>
 <#include "./inc/footer.ftl"/>
-
 
 <script src="js/jquery.nav.js"></script>
 <script src="js/index_2016.js"></script>
