@@ -28,6 +28,7 @@
                     <@shiro.hasPermission name="enquiry:index">
                     <a href="/enquiry/index">询价管理</a>
                     </@shiro.hasPermission>
+                    <a href="/order/index">订单管理</a>
                     </div>
                 </li>
             </@shiro.hasPermission>

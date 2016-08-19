@@ -25,7 +25,7 @@
                     <tr>
                         <th colspan="3" class="tl">
                             <span>订单单号：${orderForm.code}</span>
-                            <span>下单时间：${orderForm.createrTime?datetime}</span>
+                            <span>下单时间：<#if orderForm.createrTime??>${orderForm.createrTime?datetime}</#if></span>
                         </th>
                     </tr>
                     <tr>
