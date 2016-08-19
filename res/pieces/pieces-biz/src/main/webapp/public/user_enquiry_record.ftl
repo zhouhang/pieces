@@ -166,7 +166,7 @@
                     laydate(end);
                 },filter: function() {
                     var $ipts = $('.filter .ipt');
-                    var url="center/enquiry/record?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
+                    var url="/center/enquiry/record?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
 
                     $('#search_btn').on('click', function() {
                         var params = [];

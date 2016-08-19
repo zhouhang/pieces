@@ -94,7 +94,9 @@
         </div>
     </div><!-- fa-floor end -->
 </div>
-
+<div id="umeditorContent" style="display: none;">
+${article.content}
+</div>
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
 <link type="text/css" rel="stylesheet" href="/js/validator/jquery.validator.css"/>
@@ -169,7 +171,10 @@
     }
     $(function () {
         roleAddPage.fn.init();
-        var um = UM.getEditor('content').setContent('${article.content}');
+        var um = UM.getEditor('content');
+        um.ready(function(){
+            um.setContent($("#umeditorContent").html());
+        })
         $("#status").val('${article.status}');
         $("#categoryId").val('${article.categoryId}');
     })

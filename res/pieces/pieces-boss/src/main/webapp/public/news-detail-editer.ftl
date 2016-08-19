@@ -23,7 +23,7 @@
                 <div class="title">
                     <h3><i class="fa fa-chevron-right"></i>修改文章</h3>
                     <div class="extra">
-                        <a class="btn btn-gray" href="cms/article/index?model=${model}">返回</a>
+                        <a class="btn btn-gray" href="cms/article/index?model=${article.model}">返回</a>
                         <button type="submit" id="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
@@ -94,6 +94,9 @@
     </div><!-- fa-floor end -->
 </div>
 
+<div id="umeditorContent" style="display: none;">
+${article.content}
+</div>
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
 <script src="js/laydate/laydate.js"></script>
@@ -170,7 +173,10 @@
     }
     $(function () {
         roleAddPage.fn.init();
-        var um = UM.getEditor('content').setContent('${article.content}');
+        var um = UM.getEditor('content');
+        um.ready(function(){
+            um.setContent($("#umeditorContent").html());
+        })
         $("#status").val('${article.status}');
         $("#categoryId").val('${article.categoryId}');
     })

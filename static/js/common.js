@@ -127,10 +127,6 @@ function loazyload() {
 				var docTop  = document.documentElement.scrollTop || document.body.scrollTop;
 				var coord  = getEleCoord(this);
 				if (coord.top <= docTop + docHeight && coord.top + coord.height >= docTop) {
-					this.onerror = function() {
-						this.onerror = null;
-						this.src = defaultImg;
-					}
 					this.src = src;
 					this.removeAttribute('data-original');
 				 	count ++;

@@ -80,7 +80,7 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
     }
 
     @Override
-    public OrderFormVo findById(Integer id) {
+    public OrderFormVo findVoById(Integer id) {
         return orderFormDao.findVoById(id);
     }
 

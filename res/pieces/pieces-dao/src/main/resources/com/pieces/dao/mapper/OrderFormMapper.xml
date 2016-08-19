@@ -79,16 +79,11 @@
 
     <select id="findByParams" resultMap="OrderFormResultMapVo" parameterType="com.pieces.dao.vo.OrderFormVo">
         select
-        <include refid="Base_Column_List_Aliases" />,
-        c.name as c_name
+        <include refid="Base_Column_List_Aliases" />
         from order_form o
-        left join order_commodity c on o.id = c.order_id
         <where>
             <if test="id != null">
                 id = #{id}
-            </if>
-            <if test="userId != null">
-                o.user_id = #{userId}
             </if>
         </where>
     </select>
@@ -157,7 +152,7 @@
         where id = #{id}
     </update>
 
-    <select id="findVoById" parameterType="java.lang.Integer" resultMap="OrderFormResultMap">
+    <select id="findVoById" parameterType="java.lang.Integer" resultMap="OrderFormResultMapVo">
         select
         <include refid="Base_Column_List_Aliases" />,
         a.id as a_id,a.user_id as a_user_id,a.consignee as a_consignee,a.tel as a_tel,
@@ -172,7 +167,7 @@
         left join shipping_address_history a on o.addr_history_id = a.id
         left join order_commodity c on o.id = c.order_id
         left join order_invoice i on o.invoice_id = i.id
-        where id = #{id}
+        where o.id = #{id}
     </select>
 
 </mapper>

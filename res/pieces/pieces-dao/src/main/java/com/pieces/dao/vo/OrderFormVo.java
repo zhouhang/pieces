@@ -1,5 +1,6 @@
 package com.pieces.dao.vo;
 
+import com.pieces.dao.enums.OrderEnum;
 import com.pieces.dao.model.OrderCommodity;
 import com.pieces.dao.model.OrderForm;
 import com.pieces.dao.model.OrderInvoice;
@@ -30,6 +31,7 @@ public class OrderFormVo extends OrderForm {
     // 订单商品ids
     private String commodityIds;
 
+    private String statusText;
 
     public List<OrderCommodity> getCommodities() {
         return commodities;
@@ -67,14 +69,18 @@ public class OrderFormVo extends OrderForm {
         if (commodities != null) {
             commodityOverview = "";
             int lenght = commodities.size() >= 3 ? 3 : commodities.size();
-            String[] names = new String[3];
+            String[] names = new String[lenght];
             for (int i = 0; i < lenght; i++) {
                 names[i] = commodities.get(i).getName();
             }
-            commodityOverview = StringUtils.join(names,",");
+            commodityOverview = StringUtils.join(names, ",");
             commodityOverview += "...";
         }
 
-        return commodityOverview;
+        return "...";
+    }
+
+    public String getStatusText() {
+        return OrderEnum.findByValue(getStatus());
     }
 }

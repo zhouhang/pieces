@@ -67,6 +67,7 @@ public class HomeWeightServiceImpl extends AbsCommonService<HomeWeight> implemen
             Collection categoryCollection = CollectionUtils.select(homeWeights,new BeanPredicate("value",idEqlPredicate));
             if(!categoryCollection.isEmpty()){
                 homeCategoryVo.setPictureUrl(((HomeWeight)(categoryCollection.iterator().next())).getPictureUrl());
+                homeCategoryVo.setTitle(((HomeWeight)(categoryCollection.iterator().next())).getName());
             }
 
             Integer categoryId =  homeCategoryVo.getId();

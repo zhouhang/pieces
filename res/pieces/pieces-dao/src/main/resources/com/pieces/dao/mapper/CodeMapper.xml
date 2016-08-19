@@ -76,10 +76,7 @@
         select
         <include refid="Base_Column_List" />
         from code
-        where 1=1
-        <if test="idStr != null and idStr != ''">
-        	and id in (${idStr})
-        </if>
+        where id in (${idStr})
         order by create_time desc
     </select>
 </mapper>
