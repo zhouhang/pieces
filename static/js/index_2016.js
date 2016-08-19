@@ -175,6 +175,10 @@ $(function(){
 		},
 		_elevator = throttle(elevator, 50, 150);
 
+	$elevator.find('a').each(function() {
+		$(this).html().length > 3 && $(this).addClass('mul');
+	})
+
 	elevator();
 	$win.on('scroll.elevator', _elevator);
 	$elevator.onePageNav();
