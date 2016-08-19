@@ -26,6 +26,9 @@ public class OrderFormVo extends OrderForm {
 
     // 商品信息摘要
     private String commodityOverview;
+    
+    // 订单商品ids
+    private String commodityIds;
 
 
     public List<OrderCommodity> getCommodities() {
@@ -51,9 +54,16 @@ public class OrderFormVo extends OrderForm {
     public void setInvoice(OrderInvoice invoice) {
         this.invoice = invoice;
     }
+    
+    public String getCommodityIds() {
+		return commodityIds;
+	}
 
+	public void setCommodityIds(String commodityIds) {
+		this.commodityIds = commodityIds;
+	}
 
-    public String getCommodityOverview() {
+	public String getCommodityOverview() {
         if (commodities != null) {
             commodityOverview = "";
             int lenght = commodities.size() >= 3 ? 3 : commodities.size();

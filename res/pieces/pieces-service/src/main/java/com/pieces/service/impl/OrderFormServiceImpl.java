@@ -12,6 +12,8 @@ import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 /**
@@ -55,6 +57,7 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
 
 
     @Override
+    @Transactional
     public void save(OrderFormVo orderFormVo, User user) {
         // 1. 保存订单信息
         // 2. 订单地址
@@ -66,8 +69,14 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
 
         orderFormVo.setInvoiceId(orderFormVo.getInvoice().getId());
         orderFormVo.setAddrHistoryId(orderFormVo.getAddress().getId());
+        orderFormVo.setCode("a111111111111");
         orderFormDao.create(orderFormVo);
-        orderCommodityService.save(orderFormVo.getCommodities());
+        
+        List<OrderCommodity> list = orderFormVo.getCommodities();
+        for(OrderCommodity oc : list){
+        	oc.setOrderId(orderFormVo.getId());
+        }
+        orderCommodityService.save(list);
     }
 
     @Override
