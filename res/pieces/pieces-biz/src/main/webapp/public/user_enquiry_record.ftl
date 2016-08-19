@@ -237,6 +237,7 @@
                         	
                         	var commodityIds = commodityStr.join(',');
                         	
+                   
                         	window.location.href = "/center/order/create?commodityIds=" + commodityIds;
                         })
                     });

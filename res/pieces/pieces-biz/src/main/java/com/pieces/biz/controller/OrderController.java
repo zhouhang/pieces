@@ -43,26 +43,22 @@ import com.pieces.service.utils.ValidUtils;
 @Controller
 @RequestMapping("/center/order")
 public class OrderController extends BaseController {
-
-    @Autowired
+    
+	@Autowired
     private HttpSession httpSession;
-
-	@Autowired
-	private OrderCommodityService orderCommodityService;
-
-	@Autowired
-	private OrderFormService orderFormService;
 	
     @Autowired
-    private EnquiryBillsService enquiryBillsService;
+	private OrderFormService orderFormService;
+    
     @Autowired
     private EnquiryCommoditysService enquiryCommoditysService;
+    
     @Autowired
     private ShippingAddressService shippingAddressService;
+    
     @Autowired
     private AreaService areaService;
-    @Autowired
-    private OrderInvoiceService orderInvoiceService;
+
 
 	@RequestMapping(value = "/create")
 	public String orderCreate(HttpServletRequest request,
