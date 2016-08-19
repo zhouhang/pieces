@@ -29,6 +29,8 @@ public interface HomeWeightService extends ICommonService<HomeWeight>{
      */
     public List<HomeCategoryVo> getHomeCategorys(String type);
 
+    public List<HomeCategoryVo> getHomeCategorys();
+
 
 
 }

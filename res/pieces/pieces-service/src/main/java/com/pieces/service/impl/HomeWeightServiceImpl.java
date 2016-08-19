@@ -53,24 +53,59 @@ public class HomeWeightServiceImpl extends AbsCommonService<HomeWeight> implemen
 
         List<AdVo> adList = adService.findByType(CodeEnum.AD_SHOWCASE.getId());
 
-        for(int i=0;i<list.size();i++){
-            HomeCategoryVo homeCategoryVo = list.get(i);
+//        for(int i=0;i<list.size();i++){
+//            HomeCategoryVo homeCategoryVo = list.get(i);
+//            //获取橱窗广告
+//            EqualPredicate eqlPredicate = new EqualPredicate(homeCategoryVo.getName());
+//            Collection showcaseCollection = CollectionUtils.select(adList,new BeanPredicate("title",eqlPredicate));
+//            if(!showcaseCollection.isEmpty()){
+//                homeCategoryVo.setShowcase((Ad)showcaseCollection.iterator().next());
+//            }
+//
+//            //获取每一个分类的图片
+//            EqualPredicate idEqlPredicate = new EqualPredicate(homeCategoryVo.getId().toString());
+//            Collection categoryCollection = CollectionUtils.select(homeWeights,new BeanPredicate("value",idEqlPredicate));
+//            if(!categoryCollection.isEmpty()){
+//                homeCategoryVo.setPictureUrl(((HomeWeight)(categoryCollection.iterator().next())).getPictureUrl());
+//                homeCategoryVo.setTitle(((HomeWeight)(categoryCollection.iterator().next())).getName());
+//            }
+//
+//            Integer categoryId =  homeCategoryVo.getId();
+//            HomeWeight breedHomeWeight =  findByTypeAndRelevance(WeightEnum.BREED.name(),categoryId);
+//            HomeWeight cateCommodityHomeWeight =  findByTypeAndRelevance(WeightEnum.CATE_COMMODITY.name(),categoryId);
+//            //分类下的品种
+//            if(breedHomeWeight!=null){
+//                List<Category> breedList =  categoryService.findByIds(breedHomeWeight.getValue());
+//                homeCategoryVo.setBreedList(breedList);
+//            }
+//            //分类下的商品
+//            if(cateCommodityHomeWeight!=null){
+//                List<CommodityVo> commodityList =  commodityService.findVoByIds(cateCommodityHomeWeight.getValue());
+//                homeCategoryVo.setCommodityList(commodityList);
+//            }
+//        }
+        return list;
+    }
+
+    public List<HomeCategoryVo> getHomeCategorys(){
+        List<HomeWeight>  homeWeights = findByType(WeightEnum.CATEGORY.name());
+        //橱窗广告
+        List<AdVo> adList = adService.findByType(CodeEnum.AD_SHOWCASE.getId());
+        //首页分类橱窗
+        List<HomeCategoryVo> list  = new ArrayList<>();
+        for(HomeWeight homeWeight : homeWeights){
+            HomeCategoryVo homeCategoryVo = new HomeCategoryVo();
+            homeCategoryVo.setTitle(homeWeight.getName());
+            homeCategoryVo.setPictureUrl(homeWeight.getPictureUrl());
+
             //获取橱窗广告
-            EqualPredicate eqlPredicate = new EqualPredicate(homeCategoryVo.getName());
+            EqualPredicate eqlPredicate = new EqualPredicate(homeWeight.getName());
             Collection showcaseCollection = CollectionUtils.select(adList,new BeanPredicate("title",eqlPredicate));
             if(!showcaseCollection.isEmpty()){
                 homeCategoryVo.setShowcase((Ad)showcaseCollection.iterator().next());
             }
 
-            //获取每一个分类的图片
-            EqualPredicate idEqlPredicate = new EqualPredicate(homeCategoryVo.getId().toString());
-            Collection categoryCollection = CollectionUtils.select(homeWeights,new BeanPredicate("value",idEqlPredicate));
-            if(!categoryCollection.isEmpty()){
-                homeCategoryVo.setPictureUrl(((HomeWeight)(categoryCollection.iterator().next())).getPictureUrl());
-                homeCategoryVo.setTitle(((HomeWeight)(categoryCollection.iterator().next())).getName());
-            }
-
-            Integer categoryId =  homeCategoryVo.getId();
+            Integer categoryId =  homeWeight.getId();
             HomeWeight breedHomeWeight =  findByTypeAndRelevance(WeightEnum.BREED.name(),categoryId);
             HomeWeight cateCommodityHomeWeight =  findByTypeAndRelevance(WeightEnum.CATE_COMMODITY.name(),categoryId);
             //分类下的品种
@@ -83,10 +118,12 @@ public class HomeWeightServiceImpl extends AbsCommonService<HomeWeight> implemen
                 List<CommodityVo> commodityList =  commodityService.findVoByIds(cateCommodityHomeWeight.getValue());
                 homeCategoryVo.setCommodityList(commodityList);
             }
+
+            list.add(homeCategoryVo);
         }
+
         return list;
     }
-
 
 
 

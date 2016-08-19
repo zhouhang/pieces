@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by wangbin on 2016/8/10.
  */
-public class HomeCategoryVo extends Category{
+public class HomeCategoryVo{
 
     private String pictureUrl;
 
