@@ -31,8 +31,10 @@
                                     </#list>
                                 </dd>
                             </dl>
+                            <#if key_index%2==1>
+                                <div class="space"></div>
+                            </#if>
                         </#list>
-                        <div class="space"></div>
                     </div>
                 </#list>
 

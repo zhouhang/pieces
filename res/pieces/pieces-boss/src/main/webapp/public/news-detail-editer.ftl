@@ -61,7 +61,7 @@
                                 <i>*</i>发布时间:
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="<#if article.publishedDate?exists>${article.publishedDate?date}</#if>" name="publishedDate" autocomplete="off" placeholder="" onclick="laydate()">
+                                <input type="text" class="ipt" name="publishedDate" id="start" value="<#if article.publishedDate?exists>${article.publishedDate?date}</#if>" autocomplete="off" placeholder="">
                             </div>
                         </div>
 
@@ -118,6 +118,7 @@ ${article.content}
         fn: {
             init: function () {
                 this.formValidate();
+                this.dateInit();
                 $("#delete").click(function() {
                     $.post("cms/article/delete/${article.id}", function (data) {
                         if (data.status == "y") {
@@ -135,6 +136,19 @@ ${article.content}
                         }
                     }, "json")
                 });
+            },
+            dateInit: function () {
+                var start = {
+                    elem: '#start',
+                    format: 'YYYY-MM-DD',
+                    min: laydate.now(), //设定最小日期为当前日期
+                    max: '2099-06-16', //最大日期
+                    istime: true,
+                    choose: function(datas){
+                        $('#start').removeClass('n-invalid').next().html('');
+                    }
+                };
+                laydate(start);
             },
             formValidate: function () {
                 $('#form').validator({

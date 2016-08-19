@@ -69,7 +69,7 @@
                             <p><span class="t-orange">热销</span></p>
                         </div>
                         <div class="img">
-                            <img src="${commodity.pictureUrl!}" width="200" height="180">
+                            <img src="${commodity.pictureUrl!}" width="180" height="180">
                         </div>
                     </a>
                 </li>
@@ -109,7 +109,7 @@
                             <#if category.breedList??>
                                 <#list category.commodityList as commodity>
                                     <dd>
-                                        <a href="/commodity/${commodity.id!}"><img src="images/blank.gif" class="lazyload" data-original="${commodity.pictureUrl!}" width="180" height="176"></a>
+                                        <a href="/commodity/${commodity.id!}"><img src="images/blank.gif" class="lazyload" data-original="${commodity.pictureUrl!}" width="180" height="180"></a>
                                         <a href="/commodity/${commodity.id!}">${commodity.name!}</a>
                                         <span>切制规格：${commodity.specName!}</span>
                                     </dd>

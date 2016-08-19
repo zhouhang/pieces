@@ -22,13 +22,11 @@ public interface HomeWeightService extends ICommonService<HomeWeight>{
     public List<CommodityVo> getHomeCommoditys(String type);
 
 
+
     /**
      * 获取首页权重类别
-     * @param type
      * @return
      */
-    public List<HomeCategoryVo> getHomeCategorys(String type);
-
     public List<HomeCategoryVo> getHomeCategorys();
 
 

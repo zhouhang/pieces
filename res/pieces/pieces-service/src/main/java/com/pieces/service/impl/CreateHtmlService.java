@@ -43,7 +43,7 @@ public class CreateHtmlService {
         model.put("articles",page.getList());
         //商品和分类
         List<CommodityVo> commodityVos = homeWeightService.getHomeCommoditys(WeightEnum.COMMODITY.name());
-        List<HomeCategoryVo> categoryList = homeWeightService.getHomeCategorys(WeightEnum.CATEGORY.name());
+        List<HomeCategoryVo> categoryList = homeWeightService.getHomeCategorys();
 
         model.put("commodityList",commodityVos);
         model.put("categoryList",categoryList);
