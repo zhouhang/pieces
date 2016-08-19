@@ -175,13 +175,17 @@ $(function(){
 		},
 		_elevator = throttle(elevator, 50, 150);
 
-	$elevator.find('a').each(function() {
-		$(this).html().length > 3 && $(this).addClass('mul');
-	})
+	var html = ['<ul>'];
+	$('.idx-floor').each(function() {
+		var text = $(this).find('.idx-hd h2').html().replace('类', '');
+		var className = text.length > 3 ? ' class="mul"' : '';
+		html.push('<li><a href="#', this.id, '"', className, '>', text, '</a></li>');
+	});
+	html.push('</ul>');
 
 	elevator();
 	$win.on('scroll.elevator', _elevator);
-	$elevator.onePageNav();
+	$elevator.html(html.join('')).onePageNav();
 	$gotop.on('click', function() {
 		$('html, body').animate({
 			scrollTop: 0
