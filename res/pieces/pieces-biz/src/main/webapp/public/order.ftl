@@ -111,12 +111,11 @@
                     <div class="invoice">
                         <!-- <span class="tips">您当前的发票信息如下：</span>
                         <em>普通发票</em><em>速采科技</em><em>药材</em><a href="javascript:;" class="c-blue jinvoiceEdit">修改</a> -->
-                        <input type="hidden" id="invoiceType" name="type" value="">
-                        <input type="hidden" id="invoiceName" name="name" value="">
-                        <input type="hidden" id="invoiceContent" name="content" value="">
                         <div class="btn btn-lgray jinvoiceAdd">新增发票</div>
                     </div>
-                    
+                    <input type="hidden" id="invoiceType" name="type" value="">
+                    <input type="hidden" id="invoiceName" name="name" value="">
+                    <input type="hidden" id="invoiceContent" name="content" value="">
                 </div><!-- end 发票信息 -->
                 </form>
                 <!-- start 小计 -->

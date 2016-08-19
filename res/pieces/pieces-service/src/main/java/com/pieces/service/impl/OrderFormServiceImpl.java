@@ -10,6 +10,8 @@ import com.pieces.dao.model.ShippingAddressHistory;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.*;
+import com.pieces.tools.utils.SeqNoUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,7 +71,7 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
 
         orderFormVo.setInvoiceId(orderFormVo.getInvoice().getId());
         orderFormVo.setAddrHistoryId(orderFormVo.getAddress().getId());
-        orderFormVo.setCode("a111111111111");
+        orderFormVo.setCode(SeqNoUtil.get("", orderFormVo.getId(), 5));
         orderFormDao.create(orderFormVo);
         
         List<OrderCommodity> list = orderFormVo.getCommodities();

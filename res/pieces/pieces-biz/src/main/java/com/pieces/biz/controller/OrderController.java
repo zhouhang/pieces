@@ -127,6 +127,7 @@ public class OrderController extends BaseController {
 		orderFormVo.setAddress(sah);
 		List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysService.findByIds(orderFormVo.getCommodityIds());
 		List<OrderCommodity> orderCommoditysList = new ArrayList<OrderCommodity>();
+		float total = 0.0f;
 		for(EnquiryCommoditys ec : enquiryCommoditysList){
 			OrderCommodity oc = new OrderCommodity();
 			oc.setName(ec.getCommodityName());
@@ -140,9 +141,13 @@ public class OrderController extends BaseController {
 			oc.setEnquiryCommodityId(ec.getId());
 			oc.setOrderId(null);
 			orderCommoditysList.add(oc);
+			total = total + oc.getSubtotal();
 		}
+		total = total + orderFormVo.getShippingCosts();
 		orderFormVo.setCommodities(orderCommoditysList);
 		orderFormService.save(orderFormVo, user);
+		modelMap.put("total", total);
+		modelMap.put("orderId", orderFormVo.getCode());
         return "order_success";
 	}
 	

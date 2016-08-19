@@ -214,19 +214,31 @@
 
                     // 询价操作
                     $('.fa-chart-d').find('.group:gt(0)').each(function() {
-                        var status = $(this).find('.hd .c-blue').data("status");
+                    	var $btnBuy = $(this).find('.hd .c-blue');
+                        var status = $btnBuy.data("status");
                         var $AgaleTag  = $(this).find('.hd .c-blue');
-                        if ($(this).find('.cbx').length === 0) {
+                        var $cbs = $(this).find('.cbx');
+                        
+                        if ($cbs.length === 0) {
                             if(status=='0'){
-                                $AgaleTag.attr("href","/center/enquiry/index?billId="+$AgaleTag.data("billid"))
-                                $AgaleTag.html('重新询价');
+                                $btnBuy.attr("href","/center/enquiry/index?billId="+$btnBuy.data("billid")).html('重新询价');
                             }else{
-                                $(this).find('.hd .c-blue').remove();
+                                $btnBuy.remove();
                             }
                         } else {
-                            $AgaleTag.html('订购已选商品');
-                            $AgaleTag.attr("href","#");
+                            $btnBuy.attr('href', 'javascript:;').html('订购已选商品');
                         }
+                        
+                        $btnBuy.on("click",function(){
+                        	var commodityStr = [];
+                        	$cbs.each(function(){
+                        		this.checked && commodityStr.push(this.value);
+                        	})
+                        	
+                        	var commodityIds = commodityStr.join(',');
+                        	
+                        	window.location.href = "/center/order/create?commodityIds=" + commodityIds;
+                        })
                     });
                 },
                 // 插入html
