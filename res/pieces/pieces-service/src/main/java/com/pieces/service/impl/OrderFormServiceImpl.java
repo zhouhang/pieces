@@ -4,8 +4,10 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.OrderFormDao;
+import com.pieces.dao.enums.OrderEnum;
 import com.pieces.dao.model.OrderCommodity;
 import com.pieces.dao.model.OrderForm;
+import com.pieces.dao.model.OrderInvoice;
 import com.pieces.dao.model.ShippingAddressHistory;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.OrderFormVo;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -67,11 +70,17 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
         // 4. 发票信息
         orderFormVo.setUserId(user.getId());
         shippingAddressHistory.create(orderFormVo.getAddress());
-        orderInvoiceService.create(orderFormVo.getInvoice());
+        
+        OrderInvoice orderInvoice = orderFormVo.getInvoice();
+        if(!orderInvoice.getName().equals("")){
+        	orderInvoiceService.create(orderInvoice);
+        }
 
         orderFormVo.setInvoiceId(orderFormVo.getInvoice().getId());
         orderFormVo.setAddrHistoryId(orderFormVo.getAddress().getId());
-        orderFormVo.setCode(SeqNoUtil.get("", orderFormVo.getId(), 5));
+        orderFormVo.setCode(SeqNoUtil.get("", Integer.valueOf(SeqNoUtil.getRandomNum(5)), 6));
+        orderFormVo.setCreaterTime(new Date());
+        orderFormVo.setStatus(OrderEnum.UNPAID.getValue());
         orderFormDao.create(orderFormVo);
         
         List<OrderCommodity> list = orderFormVo.getCommodities();

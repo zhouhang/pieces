@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.github.pagehelper.PageInfo;
-import com.pieces.dao.vo.OrderFormVo;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +17,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Area;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.OrderCommodity;
-import com.pieces.dao.model.OrderForm;
 import com.pieces.dao.model.OrderInvoice;
 import com.pieces.dao.model.ShippingAddress;
 import com.pieces.dao.model.ShippingAddressHistory;
 import com.pieces.dao.model.User;
+import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.dao.vo.ShippingAddressVo;
 import com.pieces.service.AreaService;
 import com.pieces.service.EnquiryBillsService;
@@ -127,7 +126,7 @@ public class OrderController extends BaseController {
 		orderFormVo.setAddress(sah);
 		List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysService.findByIds(orderFormVo.getCommodityIds());
 		List<OrderCommodity> orderCommoditysList = new ArrayList<OrderCommodity>();
-		float total = 0.0f;
+		Double total = 0.0d;
 		for(EnquiryCommoditys ec : enquiryCommoditysList){
 			OrderCommodity oc = new OrderCommodity();
 			oc.setName(ec.getCommodityName());
@@ -143,7 +142,9 @@ public class OrderController extends BaseController {
 			orderCommoditysList.add(oc);
 			total = total + oc.getSubtotal();
 		}
+		orderFormVo.setSum(total);
 		total = total + orderFormVo.getShippingCosts();
+		orderFormVo.setAmountsPayable(total);
 		orderFormVo.setCommodities(orderCommoditysList);
 		orderFormService.save(orderFormVo, user);
 		modelMap.put("total", total);

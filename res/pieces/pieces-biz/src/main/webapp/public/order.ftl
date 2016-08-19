@@ -382,7 +382,7 @@
 
                     $invoiceBox.on('click', '.jinvoiceDel', function() {
                         closeLayer();
-                        $invoice.html('<button class="btn btn-lgray jinvoiceAdd">新增发票</button>');
+                        $invoice.html('<div class="btn btn-lgray jinvoiceAdd">新增发票</div>');
                         $invoiceBox.find('.submit').attr('type', 'submit').removeClass('jinvoiceDel');
                         return false;
                     })
@@ -475,9 +475,11 @@
                     	var addrHistoryId = $("#addrHistoryId").val();
                     	var freightPrice = $("#freightPrice").val();
                     	if(addrHistoryId=='undefind'||addrHistoryId==""){
+                    		alert("请填写收货地址！");
                     		return false;
                     	}
                     	if(freightPrice==''){
+                    		alert("请填写运费！");
                     		return false;
                     	}
                     	$("#orderSave").submit();
