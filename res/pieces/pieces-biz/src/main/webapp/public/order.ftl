@@ -36,13 +36,13 @@
                                 <p><span>收货地址：</span>${shippingAddressCurrent.fullAdd}</p>
                                 <div class="extra">
                                     <a href="javascript:;" class="c-blue" id="jchooseConsignee">切换地址</a>
-                                    <button class="btn btn-lgray jaddConsignee">新增收货地址</button>
+                                    <div class="btn btn-lgray jaddConsignee">新增收货地址</div>
                                 </div>
                             </li>
                         </ul>
                         <#else>
                         <div class="empty">
-                            <button class="btn btn-lgray jaddConsignee">新建收货地址</button>
+                            <div class="btn btn-lgray jaddConsignee">新建收货地址</div>
                         </div> 
                         </#if>
                     </div>
@@ -146,7 +146,7 @@
     <#include "./inc/footer.ftl"/>
     
     <!-- start 新增发票 -->
-    <div class="fa-form" id="jinvoiceBox">
+    <div class="fa-form fa-form-layer" id="jinvoiceBox">
         <form action="" id="invoiceForm">
             <div class="group">
                 <div class="txt">
@@ -188,7 +188,7 @@
     
 
     <!-- start 新增收货地址 -->
-    <div class="fa-form" id="jconsigneeBox">
+    <div class="fa-form fa-form-layer" id="jconsigneeBox">
         <form action="/center/order/addAdd" id="consigneeForm">
         <input type="hidden" name="commodityIds" value="${commodityIds}">
             <div class="group fl">
@@ -446,7 +446,7 @@
                     })
                     
                     // 关闭弹层
-                    $consigneeList.on('click', 'button', function() {
+                    $consigneeList.on('click', '.submit', function() {
                     	var currentid = $consigneeList.find(".current").find("input[name='shippingAddressId']").val();
                     	var commodityIds = $("input[name='commodityIds']").val();
                     	window.location.href = "/center/order/create?commodityIds=" + commodityIds + "&currentid=" + currentid;
