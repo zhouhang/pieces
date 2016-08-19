@@ -141,6 +141,7 @@ vertical-align:middle;
 .fa-floor .title{overflow:hidden;*zoom:1;} 
 .fa-floor .title h3{float:left;line-height:40px;font-size:16px;font-weight:700;} 
 .fa-floor .title .extra{float:right;} 
+.fa-floor .title .extra .btn{min-width:60px;} 
 .fa-floor .side{float:left;width:180px;text-align:center;border:1px solid #e7e7e7;}
 .fa-floor .side dt{line-height:50px;font-weight:700;background:#f0eff5;}
 .fa-floor .side dd{line-height:50px;padding:20px 0;}
@@ -353,9 +354,9 @@ vertical-align:middle;
 .create-order .side .item .hd span{font-size:14px;font-weight:700;}
 .create-order .side .item .hd .btn{float:right;width:40px;height:20px;line-height:20px;} 
 .create-order .side .item .bd{line-height:1;padding:0 20px 0;font-size:12px;color:#999;}
-.create-order .side .item .bd ul{padding:16px 0 16px;}
-.create-order .side .item .bd ul:nth-child(n+3){border-top:1px solid #e7e7e7;}
-.create-order .side .item .bd li{line-height:15px;margin-top:10px;overflow:hidden;*zoom:1;}
+.create-order .side .item .bd dl{padding:16px 0 16px;}
+.create-order .side .item .bd dl:nth-child(n+3){border-top:1px solid #e7e7e7;}
+.create-order .side .item .bd dd{line-height:15px;margin-top:10px;overflow:hidden;*zoom:1;}
 .create-order .side .item .bd span{float:left;}
 .create-order .side .item .bd label{vertical-align:-1px;}
 .create-order .side .item .bd .th{padding-top:20px;font-size:14px;color:#333;overflow:hidden;*zoom:1;}
