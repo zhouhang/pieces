@@ -75,7 +75,7 @@
                                             </div>
                                             <div class="td w10">
                                                 <#if commodity.myPrice??&&commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
-                                                    <a href="/center/order/create?commodity=${commodity.id!}">订购</a>
+                                                    <a href="/center/order/create?commodityIds=${commodity.id!}">订购</a>
                                                 </#if>
                                             </div>
                                         </div>

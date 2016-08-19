@@ -19,15 +19,18 @@
 
             <div class="order">
                 <!-- start 收货信息 -->
+                <form id="orderSave" action="/center/order/save" method="post">
                 <div class="group">
                     <div class="hd">
                         <h3>收货信息</h3>
                     </div>
+                    
                     <div class="consignee">
                         <#if shippingAddressCurrent??>
                         <ul>
                             <li>
-                            	<input type="hidden" id="orderAddId" value="${shippingAddressCurrent.id}">
+                            	<input type="hidden" name="addrHistoryId" id="addrHistoryId" value="${shippingAddressCurrent.id}">
+                            	<input type="hidden" name="commodityIds" value="${commodityIds}">
                                 <p><span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>${shippingAddressCurrent.consignee}</p>
                                 <p><span>联系方式：</span>${shippingAddressCurrent.tel}</p>
                                 <p><span>收货地址：</span>${shippingAddressCurrent.fullAdd}</p>
@@ -78,9 +81,9 @@
                                     <td>${enquiryCommoditys.expectDate?date}</td>
                                     <td>${enquiryCommoditys.amount}</td>
                                     <td>${enquiryCommoditys.myPrice}</td>
-                                    <td>${enquiryCommoditys.amount * enquiryCommoditys.myPrice}</td>
+                                    <td name="commoditysPrice">${enquiryCommoditys.amount * enquiryCommoditys.myPrice}</td>
                                     <#if enquiryCommoditys_index == 0>
-                                    	<td rowspan="${enquiryCommoditysList?size}"><input class="ipt" id="freightPrice" type="text" placeholder="请填写询价时协商好的运费"></td>
+                                    	<td rowspan="${enquiryCommoditysList?size}"><input class="ipt" name="shippingCosts" id="freightPrice" type="text" placeholder="请填写询价时协商好的运费"></td>
                                     </#if>
                                 </tr>
                             </#list>
@@ -96,7 +99,7 @@
                         <h3>订单备注</h3>
                     </div>
                     <div>
-                        <textarea name="" id="" cols="30" rows="10" class="mul" placeholder="请填写本次采购另外需要注意的事项。"></textarea>
+                        <textarea name="remark" id="remark" cols="30" rows="10" class="mul" placeholder="请填写本次采购另外需要注意的事项。"></textarea>
                     </div>
                 </div><!-- end 订单备注 -->
 
@@ -108,30 +111,33 @@
                     <div class="invoice">
                         <!-- <span class="tips">您当前的发票信息如下：</span>
                         <em>普通发票</em><em>速采科技</em><em>药材</em><a href="javascript:;" class="c-blue jinvoiceEdit">修改</a> -->
-                        <button class="btn btn-lgray jinvoiceAdd">新增发票</button>
+                        <input type="hidden" id="invoiceType" name="type" value="">
+                        <input type="hidden" id="invoiceName" name="name" value="">
+                        <input type="hidden" id="invoiceContent" name="content" value="">
+                        <div class="btn btn-lgray jinvoiceAdd">新增发票</div>
                     </div>
                     
                 </div><!-- end 发票信息 -->
-                
+                </form>
                 <!-- start 小计 -->
                 <div class="summary">
                     <div class="item">
                         <span>商品合计：</span>
-                        <em>￥2200000.00</em>
+                        <em id="totalPriceDisplay">￥${totalPrice}</em>
                     </div>
                     <div class="item">
                         <span>运&#12288;&#12288;费：</span>
-                        <em>￥3000.0</em>
+                        <em id="freightPriceDisplay">￥0.0</em>
                     </div>
                     <div class="item">
                         <span>实际应付：</span>
-                        <em class="price">￥2203000.00</em>
+                        <em id="priceDisplay" class="price">￥${totalPrice}</em>
                     </div>
                 </div><!-- end 小计 -->
                 
                 <!-- start 提交 -->
                 <div class="submit">
-                    <button type="button" class="btn btn-red">确认订购</button>
+                    <button id="orderSubmit" type="button" class="btn btn-red">确认订购</button>
                 </div><!-- end 提交 -->
             </div>
         </div>
@@ -185,7 +191,7 @@
     <!-- start 新增收货地址 -->
     <div class="fa-form" id="jconsigneeBox">
         <form action="/center/order/addAdd" id="consigneeForm">
-        <input type="hidden" name="commodity" value="${commodity}">
+        <input type="hidden" name="commodityIds" value="${commodityIds}">
             <div class="group fl">
                 <div class="txt">
                     <span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>
@@ -279,6 +285,7 @@
     <script>
     	var _global = {
     		v: {
+    			totalPrice : ${totalPrice}
     		},
     		fn: {
     			init: function() {
@@ -286,6 +293,7 @@
                     this.addConsignee();
                     this.chooseConsignee();
                     this.freightPrice();
+                    this.orderSubmit();
     			},
                 // 新增发票
                 addInvoice: function() {
@@ -350,7 +358,11 @@
                                 html.push('<em>', $invoiceBox.find('input[name="invoiceDetail"]').val(), '</em>');
                                 html.push('<a href="javascript:;" class="c-blue jinvoiceEdit">修改</a>');
                                 $invoice.html(html.join(''));
-
+								
+								$("#invoiceType").val($invoiceBox.find('input[name="invoice"]:checked').val());
+								$("#invoiceName").val($invoiceBox.find('input[name="companyName"]').val());
+								$("#invoiceContent").val($invoiceBox.find('input[name="invoiceDetail"]').val());
+								
                                 closeLayer();
                             } 
                         }
@@ -412,7 +424,7 @@
                     });
                 },
                 // 切换地址
-                chooseConsignee: function() {                    
+                chooseConsignee: function() {
                     var $consigneeList = $('#jconsigneeList');
                     $('#jchooseConsignee').on('click', function() {
                         layer.open({
@@ -437,8 +449,8 @@
                     // 关闭弹层
                     $consigneeList.on('click', 'button', function() {
                     	var currentid = $consigneeList.find(".current").find("input[name='shippingAddressId']").val();
-                    	var commodity = $("input[name='commodity']").val();
-                    	window.location.href = "/center/order/create?commodity=" + commodity + "&currentid=" + currentid;
+                    	var commodityIds = $("input[name='commodityIds']").val();
+                    	window.location.href = "/center/order/create?commodityIds=" + commodityIds + "&currentid=" + currentid;
                         layer.closeAll();
                     })
 
@@ -452,7 +464,25 @@
                             val = Math.abs(parseFloat(val));
                             this.value = isNaN(val) ? '' : val;
                         }
+                    }).on('blur', function(){
+                    	var price = this.value == '' ? 0 : this.value;
+                        $('#freightPriceDisplay').html("&yen;" +price);
+                        $('#priceDisplay').html("&yen;" + (parseFloat(price) + parseFloat(_global.v.totalPrice)));
                     });
+                },
+                //提交
+                orderSubmit: function() {
+                    $('#orderSubmit').on('click', function(e) {
+                    	var addrHistoryId = $("#addrHistoryId").val();
+                    	var freightPrice = $("#freightPrice").val();
+                    	if(addrHistoryId=='undefind'||addrHistoryId==""){
+                    		return false;
+                    	}
+                    	if(freightPrice==''){
+                    		return false;
+                    	}
+                    	$("#orderSave").submit();
+                    })
                 }
     		}
     	}

@@ -76,7 +76,7 @@
         order_commodity (name,spec,level,originOf,expectDate,amount,price,subtotal,enquiry_commodity_id,order_id)
         values
         <foreach collection="list" item="item" index="index" separator="," >
-            (#{name},#{spec},#{level},#{originOf},#{expectDate},#{amount},#{price},#{subtotal},#{enquiryCommodityId},#{orderId})
+            (#{item.name},#{item.spec},#{item.level},#{item.originOf},#{item.expectDate},#{item.amount},#{item.price},#{item.subtotal},#{item.enquiryCommodityId},#{item.orderId})
         </foreach>
     </insert>
 
