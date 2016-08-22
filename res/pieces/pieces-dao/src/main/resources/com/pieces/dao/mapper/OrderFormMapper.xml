@@ -95,17 +95,20 @@
             <if test="id != null">
                 o.id = #{id}
             </if>
-            <if test="user.companyFullName != null">
-                and u.company_full_name = #{user.companyFullName}
+            <if test="user != null">
+                <if test="user.companyFullName != null">
+                    and u.company_full_name = #{user.companyFullName}
+                </if>
+                <if test="user.userName != null">
+                    and u.user_name = #{user.userName}
+                </if>
             </if>
-            <if test="user.userName != null">
-                and u.user_name = #{user.userName}
-            </if>
+
             <if test="code != null">
-                id = #{id}
+                o.code = #{code}
             </if>
-            <if test="payment_date != null">
-                id = #{id}
+            <if test="paymentDate != null">
+                o.payment_date = #{paymentDate}
             </if>
             <if test="startTime != null">
                 and o.create_time <![CDATA[ >= ]]> #{startTime}
