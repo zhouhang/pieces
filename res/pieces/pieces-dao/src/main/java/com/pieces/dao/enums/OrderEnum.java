@@ -14,8 +14,8 @@ public enum OrderEnum {
     SHIPPED(5, "已发货"),
     COMPLETE(6, "已完成"),
     CANCEL(7, "已取消"),
-    DELETED(8, "已删除");
-
+    DELETED(8, "已删除"),
+    DELIVERY_Fail(9, "配送失败");
     private OrderEnum(Integer value, String text) {
         this.value = value;
         this.text = text;
