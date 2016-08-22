@@ -67,13 +67,22 @@
 	    </property>
 	</bean>
 
-	<!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">-->
-		<!--<property name="messageConverters">-->
-			<!--<list>-->
-				<!--<bean class="org.springframework.http.converter.json.GsonHttpMessageConverter"/>-->
-			<!--</list>-->
-		<!--</property>-->
-	<!--</bean>-->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.json.GsonHttpMessageConverter">
+					<property name="gson">
+						<!-- 获取方法返回值：调用valueGenerator的getValue方法 -->
+						<bean
+								class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+							<property name="targetClass" value="com.pieces.dao.utils.GsonFactory"/>
+							<property name="targetMethod" value="getInstance"/>
+						</bean>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	 <!-- 配置多视图协商解析器 ,ppa策略,先找parameter，再找header，最后找accept-->
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
