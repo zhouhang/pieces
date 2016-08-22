@@ -17,6 +17,7 @@ out/
 *.ipr
 *.iml
 *.iws
+*rebel*.xml*
 
 # temp ignore
 *.log

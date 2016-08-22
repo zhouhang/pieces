@@ -109,7 +109,7 @@ public class OrderFormVo extends OrderForm {
             commodityOverview += "...";
         }
 
-        return "...";
+        return commodityOverview;
     }
 
     public String getStatusText() {

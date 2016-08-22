@@ -51,4 +51,9 @@ public class OrderCommodityServiceImpl extends AbsCommonService<OrderCommodity> 
     public ICommonDao<OrderCommodity> getDao() {
         return orderCommodityDao;
     }
+
+    @Override
+    public List<OrderCommodity> getCommodityByOrderId(Integer orderId) {
+        return orderCommodityDao.findCommodityByOrderId(orderId);
+    }
 }
