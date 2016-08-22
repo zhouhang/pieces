@@ -8,6 +8,7 @@ import com.pieces.dao.model.OrderRemark;
 import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.OrderFormService;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.tools.utils.Reflection;
 import org.apache.commons.io.ByteOrderMark;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -41,7 +42,11 @@ public class OrderController extends BaseController{
     @RequestMapping("index")
     public String index(OrderFormVo vo, Integer pageSize, Integer pageNum, ModelMap modelMap){
         PageInfo<OrderFormVo> pageInfo = orderFormService.findByParams(vo,pageNum,pageSize);
+
         modelMap.put("pageInfo",pageInfo);
+        modelMap.put("vo",vo);
+        modelMap.put("param", Reflection.serialize(vo));
+
         return  "order";
     }
 

@@ -19,20 +19,7 @@
                     <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                     <button class="btn btn-blue" type="button" id="submit"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
-                <div class="skip">
-                    <span>第</span>
-                    <a class="fa fa-chevron-left btn btn-gray"></a><input type="text" class="ipt" value="1"><a class="fa fa-chevron-right btn btn-gray"></a>
-                    <span>页，共</span><em>6</em><span>页</span>
-                    <i>|</i>
-                    <span>每页</span>
-                    <select name="" id="">
-                        <option value="">10</option>
-                        <option value="">20</option>
-                        <option value="">30</option>
-                        <option value="">40</option>
-                    </select>
-                    <span>个记录，共有 2 个记录</span>
-                </div>
+            <@p.pager pageInfo=pageInfo  pageUrl="order/index"  params=param />
             </div>
             <div class="chart">
                 <table class="tc">
@@ -71,106 +58,18 @@
                     </thead>
                     <tfoot></tfoot>
                     <tbody>
+                    <#list pageInfo.list as order>
                     <tr>
-                        <td>01</td>
-                        <td>201607111546001</td>
-                        <td>jinliang</td>
-                        <td>速采（武汉）科技有限公司</td>
-                        <td>¥ 2100.00</td>
-                        <td>2016-06-20 17:10:24</td>
-                        <td>未付款</td>
+                        <td>${order.id}</td>
+                        <td>${order.code}</td>
+                        <td>${order.user.contactName}</td>
+                        <td>${order.user.companyFullName}</td>
+                        <td>¥${order.amountsPayable}</td>
+                        <td><#if order.createrTime?exists>${order.createrTime?datetime}</#if></td>
+                        <td>${order.statusText}</td>
                         <td><a href="order_detail.html">查看</a></td>
                     </tr>
-                    <tr>
-                        <td>02</td>
-                        <td>E20160620170402</td>
-                        <td>jinliang</td>
-                        <td>速采（武汉）科技有限公司</td>
-                        <td>¥ 2100.00</td>
-                        <td>2016-06-20 17:10:24</td>
-                        <td>等待发货</td>
-                        <td><a href="enquiry_detail_1.html">查看</a></td>
-                    </tr>
-                    <tr>
-                        <td>03</td>
-                        <td>E20160620170402</td>
-                        <td>jinliang</td>
-                        <td>速采（武汉）科技有限公司</td>
-                        <td>¥ 2100.00</td>
-                        <td>2016-06-20 17:10:24</td>
-                        <td>已发货</td>
-                        <td><a href="enquiry_detail.html">查看</a></td>
-                    </tr>
-                    <tr>
-                        <td>04</td>
-                        <td>E20160620170402</td>
-                        <td>jinliang</td>
-                        <td>速采（武汉）科技有限公司</td>
-                        <td>¥ 2100.00</td>
-                        <td>2016-06-20 17:10:24</td>
-                        <td>已完成</td>
-                        <td><a href="enquiry_detail_1.html">查看</a></td>
-                    </tr>
-                    <tr>
-                        <td>05</td>
-                        <td>E20160620170402</td>
-                        <td>jinliang</td>
-                        <td>速采（武汉）科技有限公司</td>
-                        <td>¥ 2100.00</td>
-                        <td>2016-06-20 17:10:24</td>
-                        <td>已取消</td>
-                        <td><a href="enquiry_detail.html">查看</a></td>
-                    </tr>
-                    <tr>
-                        <td>06</td>
-                        <td>E20160620170402</td>
-                        <td>jinliang</td>
-                        <td>速采（武汉）科技有限公司</td>
-                        <td>¥ 2100.00</td>
-                        <td>2016-06-20 17:10:24</td>
-                        <td>已删除</td>
-                        <td><a href="enquiry_detail_1.html">查看</a></td>
-                    </tr>
-                    <tr>
-                        <td>07</td>
-                        <td>E20160620170402</td>
-                        <td>jinliang</td>
-                        <td>速采（武汉）科技有限公司</td>
-                        <td>¥ 2100.00</td>
-                        <td>2016-06-20 17:10:24</td>
-                        <td>配送失败</td>
-                        <td><a href="enquiry_detail.html">查看</a></td>
-                    </tr>
-                    <tr>
-                        <td>08</td>
-                        <td>E20160620170402</td>
-                        <td>jinliang</td>
-                        <td>速采（武汉）科技有限公司</td>
-                        <td>¥ 2100.00</td>
-                        <td>2016-06-20 17:10:24</td>
-                        <td>已完成</td>
-                        <td><a href="enquiry_detail_1.html">查看</a></td>
-                    </tr>
-                    <tr>
-                        <td>09</td>
-                        <td>E20160620170402</td>
-                        <td>jinliang</td>
-                        <td>速采（武汉）科技有限公司</td>
-                        <td>¥ 2100.00</td>
-                        <td>2016-06-20 17:10:24</td>
-                        <td>未报价</td>
-                        <td><a href="enquiry_detail.html">查看</a></td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td>E20160620170402</td>
-                        <td>jinliang</td>
-                        <td>速采（武汉）科技有限公司</td>
-                        <td>¥ 2100.00</td>
-                        <td>2016-06-20 17:10:24</td>
-                        <td>已完成</td>
-                        <td><a href="enquiry_detail_1.html">查看</a></td>
-                    </tr>
+                    </#list>
                     </tbody>
                 </table>
             </div>
