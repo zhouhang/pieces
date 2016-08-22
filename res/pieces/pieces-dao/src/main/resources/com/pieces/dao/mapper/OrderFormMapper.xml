@@ -88,7 +88,7 @@
     <select id="findByParams" resultMap="OrderFormResultMapVo" parameterType="com.pieces.dao.vo.OrderFormVo">
         select
         <include refid="Base_Column_List_Aliases"/>,
-        u.user_name as u_user_name, u.company_full_name as u_company_full_name
+        u.contact_name as u_contact_name, u.company_full_name as u_company_full_name
         from order_form o
         left join user u on u.id = o.user_id
         <where>
@@ -105,13 +105,13 @@
             </if>
 
             <if test="code != null">
-                o.code = #{code}
+                and o.code = #{code}
             </if>
             <if test="paymentDate != null">
-                o.payment_date = #{paymentDate}
+                and o.payment_date = #{paymentDate}
             </if>
             <if test="startTime != null">
-                and o.create_time <![CDATA[ >= ]]> #{startTime}
+                and o.creater_time <![CDATA[ >= ]]> #{startTime}
             </if>
 
             <if test="endTime != null">
@@ -119,7 +119,7 @@
             </if>
 
             <if test="status != null">
-                o.status = #{status}
+                and o.status = #{status}
             </if>
         </where>
     </select>
@@ -198,11 +198,13 @@
         i.registered_tel as i_registered_tel,i.bank_name as i_bank_name,i.bank_account as i_bank_account,
         c.id as c_id,c.name as c_name,c.spec as c_spec,c.level as c_level,c.originOf as c_originOf,
         c.expectDate as c_expectDate,c.amount as c_amount,c.price as c_price,c.subtotal as c_subtotal,
-        c.enquiry_commodity_id as c_enquiry_commodity_id,c.order_id as c_order_id
+        c.enquiry_commodity_id as c_enquiry_commodity_id,c.order_id as c_order_id,
+        u.contact_name as u_contact_name, u.company_full_name as u_company_full_name,u.contact_mobile as u_contact_mobile
         from order_form o
         left join shipping_address_history a on o.addr_history_id = a.id
         left join order_commodity c on o.id = c.order_id
         left join order_invoice i on o.invoice_id = i.id
+        left join user u on u.id = o.user_id
         where o.id = #{id}
     </select>
 

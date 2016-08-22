@@ -14,13 +14,13 @@
                 <dl>
                     <dt>订单信息</dt>
                     <dd>
-                        <a class="curr" href="enquiry.html">订单信息</a>
+                        <a class="curr" href="/order/index">订单信息</a>
                     </dd>
                 </dl>
             </div>
             <div class="main">
                 <div class="title">
-                    <h3><i class="fa fa-chevron-right"></i>订单 201608111514001 | 2016-08-11 15:14:13</h3>
+                    <h3><i class="fa fa-chevron-right"></i>订单 ${vo.code} | <#if vo.createrTime?exists>${vo.createrTime?datetime}</#if></h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                         <button type="button" class="btn btn-gray">修改</button>
@@ -33,10 +33,10 @@
                 <div class="groups">
                     <div class="group">
                         <dl>
-                            <dt>订单号：201608111514001</dt>
+                            <dt>订单号：${vo.code}</dt>
                             <dd>
-                                <p>下单日期：2016-08-11 15:14:13</p>
-                                <p>订单状态：等待发货</p>
+                                <p>下单日期：<#if vo.createrTime?exists>${vo.createrTime?datetime}</#if></p>
+                                <p>订单状态：${vo.statusText}</p>
                             </dd>
                         </dl>
                     </div>
@@ -44,9 +44,9 @@
                         <dl>
                             <dt>客户信息</dt>
                             <dd>
-                                <p>用药单位：速采科技</p>
-                                <p>联&nbsp;&nbsp;系&nbsp;&nbsp;人：何欢</p>
-                                <p>联系电话：18971437973</p>
+                                <p>用药单位：${vo.user.companyFullName}</p>
+                                <p>联&nbsp;&nbsp;系&nbsp;&nbsp;人：${vo.user.contactName}</p>
+                                <p>联系电话：${vo.user.contactMobile}</p>
                             </dd>
                         </dl>
                     </div>
@@ -54,9 +54,9 @@
                         <dl>
                             <dt>配送信息</dt>
                             <dd>
-                                <p>收&nbsp;&nbsp;货&nbsp;&nbsp;人：何欢</p>
-                                <p>联系电话：18971437973</p>
-                                <p>收货地址：湖北省武汉市洪山区鲁磨路光谷银座15楼</p>
+                                <p>收&nbsp;&nbsp;货&nbsp;&nbsp;人：${vo.address.consignee}</p>
+                                <p>联系电话：${vo.address.tel}</p>
+                                <p>收货地址：${vo.address.area}${vo.address.detail}</p>
                             </dd>
                         </dl>
                     </div>
@@ -84,61 +84,33 @@
                                     <div class="summary">
                                         <div class="item">
                                             <span>商品合计：</span>
-                                            <em>￥2200000.00</em>
+                                            <em>￥${vo.sum}</em>
                                         </div>
                                         <div class="item">
                                             <span>运&#12288;&#12288;费：</span>
-                                            <em>￥3000.0</em>
+                                            <em>￥${vo.shippingCosts}</em>
                                         </div>
                                         <div class="item">
                                             <span>实际应付：</span>
-                                            <em class="price">￥2203000.00</em>
+                                            <em class="price">￥${vo.amountsPayable}</em>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
                             </tfoot>
                             <tbody>
+                            <#list vo.commodities as commoditie>
                             <tr>
-                                <td>艾绒</td>
-                                <td>个</td>
-                                <td>1</td>
-                                <td>安徽省</td>
-                                <td>2016-06-20</td>
-                                <td>60</td>
-                                <td>20</td>
-                                <td>&yen; 12000</td>
+                                <td>${commoditie.name}</td>
+                                <td>${commoditie.spec}</td>
+                                <td>${commoditie.level}</td>
+                                <td>${commoditie.originOf}</td>
+                                <td>${commoditie.expectDate?date}</td>
+                                <td>${commoditie.amount}</td>
+                                <td>${commoditie.price}</td>
+                                <td>&yen;${commoditie.subtotal}</td>
                             </tr>
-                            <tr>
-                                <td>天南星</td>
-                                <td>个</td>
-                                <td>2</td>
-                                <td>安徽省</td>
-                                <td>2016-06-20</td>
-                                <td>60</td>
-                                <td>20</td>
-                                <td>&yen; 12000</td>
-                            </tr>
-                            <tr>
-                                <td>艾绒</td>
-                                <td>个</td>
-                                <td>1</td>
-                                <td>安徽省</td>
-                                <td>2016-06-20</td>
-                                <td>60</td>
-                                <td>20</td>
-                                <td>&yen; 12000</td>
-                            </tr>
-                            <tr>
-                                <td>天南星</td>
-                                <td>个</td>
-                                <td>2</td>
-                                <td>安徽省</td>
-                                <td>2016-06-20</td>
-                                <td>60</td>
-                                <td>20</td>
-                                <td>&yen; 12000</td>
-                            </tr>
+                            </#list>
                             </tbody>
                         </table>
                     </div>
@@ -148,28 +120,27 @@
                     <h3>备注历史</h3>
                     <form action="" class="note-form">
                         <div class="txt">订单备注：</div>
-                        <div class="cnt"><textarea class="ipt" name="" id="" cols="30" rows="10" placeholder="请填写本次采购另外需要注意的事项。"></textarea></div>
+                        <div class="cnt"><textarea class="ipt" name="content" id="content" cols="30" rows="10" placeholder="请填写本次采购另外需要注意的事项。"></textarea></div>
                         <div class="button">
-                            <button class="btn btn-gray">提交备注</button>
+                            <button class="btn btn-gray" type="button" id="summit_comment">提交备注</button>
                         </div>
 
                         <div class="history">
-                            <ul>
+                            <ul id="remarklist">
+                                <#if vo.remark?exists>
+                                    <li>
+                                        <span> <#if vo.createrTime?exists>${vo.createrTime?date}</#if></span>
+                                        <span>客户备注</span>
+                                        <span>${vo.remark}</span>
+                                    </li>
+                                </#if>
+                                <#list remarks as remark>
                                 <li>
-                                    <span>2016-08-11</span>
-                                    <span>客户备注</span>
-                                    <span>蒸后切顶头片、薄片1-2mm、过2#、焦黑色。</span>
+                                    <span>${remark.createrTime?date}</span>
+                                    <span>客服备注</span>
+                                    <span>${remark.content}</span>
                                 </li>
-                                <li>
-                                    <span>2016-08-11</span>
-                                    <span>客户备注</span>
-                                    <span>这是一条新备注。</span>
-                                </li>
-                                <li>
-                                    <span>2016-08-11</span>
-                                    <span>客户备注</span>
-                                    <span>这是一条新备注。</span>
-                                </li>
+                                </#list>
                             </ul>
                         </div>
                     </form>
@@ -182,37 +153,29 @@
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
 <!-- footer end -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/laydate/laydate.js"></script>
+    <script src="/js/common.js"></script>
 <script>
     var enquiryPage = {
         v: {},
         fn: {
-            init: function() {
-                this.pirceInput();
-                this.dateInit();
-            },
-            // 裸价
-            pirceInput: function() {
-                $('#myform').on('keyup', '.ipt-price', function(e) {
-                    var val = this.value;
-                    if (!/^\d+\.?\d*$/.test(val)) {
-                        val = Math.abs(parseFloat(val));
-                        this.value = isNaN(val) ? '' : val;
-                    }
-                });
-            },
-            //日期选择
-            dateInit: function () {
-                // 重新定位
-                $('.ipt-date').on('click', function() {
-                    var
-                            posX = $(this).offset().left,
-                            w = this.offsetWidth,
-                            obj = document.getElementById('laydate_box');
-                    obj.style.left = posX + w - obj.offsetWidth + 'px';
+            init: function () {
+                $("#summit_comment").on("click", function () {
+                    var content = $("#content").val();
+                    $.post("/order/addComment",{content:content,orderId:${vo.id}}, function (data) {
+                        if (data.status == "y") {
+                            $.notify({
+                                type: 'success',
+                                title: '添加评论成功。',
+                                delay: 3e3
+                            });
+
+                            var html = "<li><span>" + data.data.createrTime+"</span>" +
+                                "<span>客服备注</span><span>"+data.data.content+"</span></li>";
+                            $("#remarklist").append(html);
+                        }
+                    })
                 })
-            },
+            }
         }
     }
     $(function() {
