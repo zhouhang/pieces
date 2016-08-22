@@ -39,6 +39,14 @@
             <result column="i_bank_name"  property="bankName" />
             <result column="i_bank_account"  property="bankAccount" />
         </association>
+        <association property="user" javaType="com.pieces.dao.model.User">
+            <id column="u_id"  property="id" />
+            <result column="u_user_name"  property="userName" />
+            <result column="u_company_full_name"  property="companyFullName" />
+            <result column="u_contact_name"  property="contactName" />
+            <result column="u_contact_mobile"  property="contactMobile" />
+            <result column="u_area_full"  property="areaFull" />
+        </association>
         <collection property="commodities" ofType="com.pieces.dao.model.OrderCommodity">
             <id column="c_id"  property="id" />
             <result column="c_name"  property="name" />
@@ -79,11 +87,36 @@
 
     <select id="findByParams" resultMap="OrderFormResultMapVo" parameterType="com.pieces.dao.vo.OrderFormVo">
         select
-        <include refid="Base_Column_List_Aliases" />
+        <include refid="Base_Column_List_Aliases"/>,
+        u.user_name as u_user_name, u.company_full_name as u_company_full_name
         from order_form o
+        left join user u on u.id = o.user_id
         <where>
             <if test="id != null">
+                o.id = #{id}
+            </if>
+            <if test="user.companyFullName != null">
+                and u.company_full_name = #{user.companyFullName}
+            </if>
+            <if test="user.userName != null">
+                and u.user_name = #{user.userName}
+            </if>
+            <if test="code != null">
                 id = #{id}
+            </if>
+            <if test="payment_date != null">
+                id = #{id}
+            </if>
+            <if test="startTime != null">
+                and o.create_time <![CDATA[ >= ]]> #{startTime}
+            </if>
+
+            <if test="endTime != null">
+                and o.creater_time <![CDATA[ <= ]]> #{endTime}
+            </if>
+
+            <if test="status != null">
+                o.status = #{status}
             </if>
         </where>
     </select>
