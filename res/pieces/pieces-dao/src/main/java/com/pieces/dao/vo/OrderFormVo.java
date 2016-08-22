@@ -17,6 +17,8 @@ public class OrderFormVo extends OrderForm {
     // 商品列表
     private List<OrderCommodity> commodities;
 
+    private List<OrderCommodityVo> commodityVos;
+
     // 邮寄地址
     private ShippingAddressHistory address;
 
@@ -112,5 +114,13 @@ public class OrderFormVo extends OrderForm {
 
     public String getStatusText() {
         return OrderEnum.findByValue(getStatus());
+    }
+
+    public List<OrderCommodityVo> getCommodityVos() {
+        return commodityVos;
+    }
+
+    public void setCommodityVos(List<OrderCommodityVo> commodityVos) {
+        this.commodityVos = commodityVos;
     }
 }

@@ -22,4 +22,7 @@ public interface OrderCommodityService extends ICommonService<OrderCommodity> {
      */
     public void save(List<OrderCommodity> list);
 
+
+    public List<OrderCommodityVo> findByOrderId(Integer orderId);
+
 }
