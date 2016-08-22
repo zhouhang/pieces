@@ -10,6 +10,8 @@ public class EnquiryRecordVo {
 
     private Integer userId;
 
+    private Integer status;
+
     private String commodityName;
 
     private String startDate;
@@ -48,6 +50,14 @@ public class EnquiryRecordVo {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     @Override

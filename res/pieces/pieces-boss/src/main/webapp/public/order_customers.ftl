@@ -17,7 +17,7 @@
             </div>
             <div class="pagin">
                 <div class="extra"> 
-                    <button class="btn btn-gray" type="button" id="reset">重置条件</button>
+                    <button class="btn btn-gray" type="button" onclick="" id="reset">重置条件</button>
                     <button class="btn btn-blue" type="button" id="submit"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
                 <@p.pager pageInfo=customerPage  pageUrl="order/customer"  params=customerParams/>
@@ -37,16 +37,22 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                            <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                            <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                            <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                            <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                            <td><input type="text" class="ipt date" value="" id="start"> - <input type="text" class="ipt date" value="" id="end"></td>
+                            <td><div class="ipt-wrap"><input type="text"  name="userName" class="ipt" value="${userVo.userName!}"></div></td>
+                            <td><div class="ipt-wrap"><input type="text" name="companyFullName" class="ipt" value="${userVo.companyFullName!}"></div></td>
+                            <td><div class="ipt-wrap"><input type="text" class="ipt" name="areaFull" value="${userVo.areaFull!}"></div></td>
+                            <td><div class="ipt-wrap"><input type="text" class="ipt" name="contactName" value="${userVo.contactName!}"></div></td>
+                            <td><div class="ipt-wrap"><input type="text" class="ipt" name="contactMobile" value="${userVo.contactMobile!}"></div></td>
+                            <td><input type="text" class="ipt date" name="startDate" value="${userVo.startDate!}" id="start"> - <input type="text" name="endDate"  value="${userVo.endDate!}"class="ipt date"  id="end"></td>
                             <td>
-                                <select name="" id="">
-                                    <option value="">是</option>
-                                    <option value="">否</option>
+                                <select name="bindErp" id="bindErp">
+                                    <option <#if (!userVo.bindErp??)>selected</#if>
+                                            value=""></option>
+                                    <option <#if
+                                            (userVo.bindErp??&&!userVo.bindErp)>selected</#if>
+                                            value="false">否</option>
+                                    <option <#if
+                                            (userVo.bindErp??&&userVo.bindErp)>selected</#if>
+                                            value="true">是</option>
                                 </select>
                             </td>
                         </tr>
@@ -93,13 +99,20 @@
                 init: function () {
                     page.fn.dateInit();
                     page.fn.filter();
+
+                    page.fn.createOrder();
+
+
+                    $("#reset").click(function(){
+                        $('.chart .ipt, .chart select').val("")
+                    })
                 },
                 //日期选择
                 dateInit: function () {
                     var start = {
                         elem: '#start',
                         format: 'YYYY/MM/DD hh:mm:ss',
-                        min: laydate.now(), //设定最小日期为当前日期
+                        min: '2000-06-16 23:59:59', //设定最小日期为当前日期
                         max: '2099-06-16 23:59:59', //最大日期
                         istime: true,
                         istoday: false,
@@ -112,7 +125,7 @@
                     var end = {
                         elem: '#end',
                         format: 'YYYY/MM/DD hh:mm:ss',
-                        min: laydate.now(),
+                        min: '2000-06-16 23:59:59',
                         max: '2099-06-16 23:59:59',
                         istime: true,
                         istoday: false,
@@ -127,15 +140,23 @@
                 // 筛选
                 filter: function() {
                     var $ipts = $('.chart .ipt, .chart select');
-
+                    var url="/order/customer?"
                     $('#submit').on('click', function() {
                         var params = [];
                         $ipts.each(function() {
                             var val = $.trim(this.value);
                             val && params.push($(this).attr('name') + '=' + val);
                         })
-                        console.log(params.join('&'))
+                        location.href=url+"&"+params.join('&');
                     })
+                },
+                createOrder:function(){
+                    $(".tc>tbody>tr").click(function(){
+                        var customerId = $(this).find("td:first").text();
+
+                        location.href="/order/create/"+customerId
+                    })
+
                 }
             }
         }

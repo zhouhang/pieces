@@ -38,7 +38,6 @@ public class EnquiryController extends BaseController{
     @RequiresPermissions(value = "enquiry:index")
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(EnquiryBillsVo enquiryBillsVO, Integer pageNum, Integer pageSize, ModelMap modelMap) {
-
         PageInfo<EnquiryBillsVo> pageInfo = enquiryBillsService.findByParam(enquiryBillsVO,pageNum,pageSize);
         modelMap.put("pageInfo", pageInfo);
         modelMap.put("param", enquiryBillsVO);

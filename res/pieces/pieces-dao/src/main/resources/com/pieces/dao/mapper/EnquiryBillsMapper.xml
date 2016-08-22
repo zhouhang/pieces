@@ -172,17 +172,28 @@
         from
             enquiry_bills b
         left outer join enquiry_commoditys c on b.id = c.bills_id
-        where b.user_id=#{userId}
-        <if test="commodityName != null">
-            and c.commodity_name like "%"#{commodityName}"%"
-        </if>
-        <if test="startDate != null ">
-            and DATE_FORMAT(b.create_time, '%Y-%m-%d') >= DATE_FORMAT(#{startDate},'%Y-%m-%d')
-        </if>
-        <if test="endDate != null ">
-            and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<]]> DATE_FORMAT(DATE_ADD(#{endDate},INTERVAL 1 DAY),'%Y-%m-%d')
-        </if>
+        <where>
+            <if test="userId!=null">
+                b.user_id=#{userId}
+            </if>
+            <if test="status != null">
+                and b.status = #{status}
+            </if>
+            <if test="commodityName != null">
+                and c.commodity_name like "%"#{commodityName}"%"
+            </if>
+            <if test="startDate != null ">
+                and DATE_FORMAT(b.create_time, '%Y-%m-%d') >= DATE_FORMAT(#{startDate},'%Y-%m-%d')
+            </if>
+            <if test="endDate != null ">
+                and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<]]> DATE_FORMAT(DATE_ADD(#{endDate},INTERVAL 1 DAY),'%Y-%m-%d')
+            </if>
+        </where>
+
         order by  b.create_time DESC
     </select>
+
+
+
 
 </mapper>
