@@ -42,6 +42,14 @@
         where id = #{id}
     </select>
 
+    <select id="findCommodityByOrderId" parameterType="java.lang.Integer" resultMap="OrderCommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from order_commodity
+        where order_id = #{orderId}
+    </select>
+
+
     <select id="findAll"  resultMap="OrderCommodityResultMap">
         select
         <include refid="Base_Column_List" />
@@ -55,6 +63,9 @@
         <where>
             <if test="id != null">
                 id = #{id}
+            </if>
+            <if test="orderId != null">
+                and order_id = #{orderId}
             </if>
         </where>
     </select>

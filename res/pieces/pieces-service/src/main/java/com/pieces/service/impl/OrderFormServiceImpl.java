@@ -10,6 +10,7 @@ import com.pieces.dao.model.OrderForm;
 import com.pieces.dao.model.OrderInvoice;
 import com.pieces.dao.model.ShippingAddressHistory;
 import com.pieces.dao.model.User;
+import com.pieces.dao.vo.OrderCommodityVo;
 import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.*;
 import com.pieces.tools.utils.SeqNoUtil;
@@ -99,6 +100,12 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
     public PageInfo<OrderFormVo> findOrderByUserId(Integer userId, Integer pageNum, Integer pageSize) {
         OrderFormVo vo = new OrderFormVo();
         vo.setUserId(userId);
-        return findByParams(vo,pageNum,pageSize);
+        PageInfo<OrderFormVo> page = findByParams(vo,pageNum,pageSize);
+        // 根据查询出来的订单查询订单商品信息
+        for (OrderFormVo form : page.getList()) {
+            List<OrderCommodity> commodityVos = orderCommodityService.getCommodityByOrderId(form.getId());
+            form.setCommodities(commodityVos);
+        }
+        return page;
     }
 }

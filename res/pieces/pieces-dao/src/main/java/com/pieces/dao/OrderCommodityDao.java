@@ -13,4 +13,7 @@ public interface OrderCommodityDao extends ICommonDao<OrderCommodity>{
 
     public void batchCreate(List<OrderCommodity> list);
 
+
+    public List<OrderCommodity> findCommodityByOrderId(Integer orderId);
+
 }
