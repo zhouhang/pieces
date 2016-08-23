@@ -16,8 +16,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.enums.SessionEnum;
 import com.pieces.dao.model.Area;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.OrderCommodity;
@@ -28,20 +30,19 @@ import com.pieces.dao.model.User;
 import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.dao.vo.ShippingAddressVo;
 import com.pieces.service.AreaService;
-import com.pieces.service.EnquiryBillsService;
 import com.pieces.service.EnquiryCommoditysService;
-import com.pieces.service.OrderCommodityService;
 import com.pieces.service.OrderFormService;
-import com.pieces.service.OrderInvoiceService;
 import com.pieces.service.ShippingAddressService;
+import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.utils.ValidUtils;
+import com.pieces.tools.utils.SeqNoUtil;
 
 /**
  * Author: ff 7/19/16. 商品信息
  */
 @Controller
-@RequestMapping("/center/order")
+@RequestMapping("/center")
 public class OrderController extends BaseController {
     
 	@Autowired
@@ -60,7 +61,7 @@ public class OrderController extends BaseController {
     private AreaService areaService;
 
 
-	@RequestMapping(value = "/create")
+	@RequestMapping(value = "/order/create")
 	public String orderCreate(HttpServletRequest request,
             HttpServletResponse response,
             ModelMap modelMap,
@@ -84,34 +85,56 @@ public class OrderController extends BaseController {
         	shippingAddress = ValidUtils.listNotBlank(shippingAddressList) ? shippingAddressList.get(0) : null;
         }
         
+        //防止重复提交订单
+        String token = SeqNoUtil.getRandomNum(5);
+        request.getSession().setAttribute(SessionEnum.ORDER_TOKEN.getKey(), token);
+        
         modelMap.put("enquiryCommoditysList", enquiryCommoditysList);
         modelMap.put("shippingAddressCurrent", shippingAddress);
         modelMap.put("shippingAddressList", shippingAddressList);
         modelMap.put("commodityIds", commodityIds);
         modelMap.put("totalPrice", totalPrice);
+        modelMap.put("token", token);
         return "order";
 	}
 	
-	@RequestMapping(value = "/addAdd")
-	public String addAdd(HttpServletRequest request,
+	@RequestMapping(value = "/address/add")
+	@ResponseBody
+	public Result addressAdd(HttpServletRequest request,
             HttpServletResponse response,
             ModelMap modelMap,
-            ShippingAddress shippingAddress,
-            String commodityIds){
+            ShippingAddress shippingAddress){
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		shippingAddress.setUserId(user.getId());
 		shippingAddress.setCreateTime(new Date());
+		//修改默认地址
+		if(shippingAddress.getIsDefault()){
+			List<ShippingAddressVo>  shippingAddressList = shippingAddressService.findByUser(user.getId());
+			for(ShippingAddressVo sav : shippingAddressList){
+				if(sav.getIsDefault()!=null && sav.getIsDefault()){
+					ShippingAddress sa = new ShippingAddress();
+					sa.setId(sav.getId());
+					sa.setIsDefault(false);
+					shippingAddressService.update(sa);
+				}
+			}
+		}
+		//创建新地址
 		shippingAddressService.create(shippingAddress);
-        return "redirect:/center/order/create?commodityIds="+commodityIds;
+        return new Result(true).info(shippingAddress.getId()+"");
 	}
 	
 	
-	@RequestMapping(value = "/save")
+	@RequestMapping(value = "/order/save")
 	public String orderSave(HttpServletRequest request,
             HttpServletResponse response,
             ModelMap modelMap,
             OrderInvoice orderInvoice,
-            OrderFormVo orderFormVo){
+            OrderFormVo orderFormVo,
+            String token){
+		if(request.getSession().getAttribute(SessionEnum.ORDER_TOKEN.getKey()) == null){
+			return "redirect:/center/enquiry/record";
+		}
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		orderFormVo.setInvoice(orderInvoice);
 		ShippingAddress sa = shippingAddressService.findById(orderFormVo.getAddrHistoryId());
@@ -143,6 +166,7 @@ public class OrderController extends BaseController {
 		orderFormVo.setAmountsPayable(total);
 		orderFormVo.setCommodities(orderCommoditysList);
 		orderFormService.save(orderFormVo, user);
+		request.getSession().removeAttribute(SessionEnum.ORDER_TOKEN.getKey());
 		modelMap.put("total", total);
 		modelMap.put("orderId", orderFormVo.getCode());
         return "order_success";
@@ -181,7 +205,7 @@ public class OrderController extends BaseController {
      * 用户订单页面
      * @return
      */
-    @RequestMapping(value = "list", method = RequestMethod.GET)
+    @RequestMapping(value = "/order/list", method = RequestMethod.GET)
     public String list(Integer pageNum, Integer pageSize, ModelMap modelMap) {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         PageInfo<OrderFormVo> pageInfo = orderFormService.findOrderByUserId(user.getId(),pageNum, pageSize);
@@ -194,7 +218,7 @@ public class OrderController extends BaseController {
      * 用户订单详情
      * @return
      */
-    @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/order/detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable("id")Integer id, ModelMap modelMap) {
         OrderFormVo vo =  orderFormService.findVoById(id);
         modelMap.put("orderForm", vo);
@@ -205,7 +229,7 @@ public class OrderController extends BaseController {
      * 订单提交成功
      * @return
      */
-    @RequestMapping(value = "success/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/order/success/{id}", method = RequestMethod.GET)
     public String success(@PathVariable("id")Integer id) {
         return "order_success";
     }

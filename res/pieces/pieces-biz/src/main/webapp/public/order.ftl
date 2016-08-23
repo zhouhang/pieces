@@ -28,9 +28,9 @@
                     <div class="consignee">
                         <#if shippingAddressCurrent??>
                         <ul>
-                            <li>
+                            <li id= "shippingAddressCurrent">
                             	<input type="hidden" name="addrHistoryId" id="addrHistoryId" value="${shippingAddressCurrent.id}">
-                            	<input type="hidden" name="commodityIds" value="${commodityIds}">
+                            	
                                 <p><span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>${shippingAddressCurrent.consignee}</p>
                                 <p><span>联系方式：</span>${shippingAddressCurrent.tel}</p>
                                 <p><span>收货地址：</span>${shippingAddressCurrent.fullAdd}</p>
@@ -117,6 +117,8 @@
                     <input type="hidden" id="invoiceName" name="name" value="">
                     <input type="hidden" id="invoiceContent" name="content" value="">
                 </div><!-- end 发票信息 -->
+                <input type="hidden" name="token" id="token" value="${token}">
+                <input type="hidden" name="commodityIds" value="${commodityIds}">
                 </form>
                 <!-- start 小计 -->
                 <div class="summary">
@@ -189,7 +191,7 @@
 
     <!-- start 新增收货地址 -->
     <div class="fa-form fa-form-layer" id="jconsigneeBox">
-        <form action="/center/order/addAdd" id="consigneeForm">
+        <form action="/center/address/add" id="consigneeForm">
         <input type="hidden" name="commodityIds" value="${commodityIds}">
             <div class="group fl">
                 <div class="txt">
@@ -242,7 +244,7 @@
 
             <div class="group ah">
                 <div class="cnt">
-                    <label><input type="checkbox" class="cbx" name="isDefault" checked>设为默认地址</label>                            
+                    <label><input type="checkbox" class="cbx" name="isDefault" id="isDefault" checked>设为默认地址</label>                            
                 </div>
             </div>
 
@@ -280,6 +282,7 @@
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
     <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
+    <script src="/js/jquery.form.js"></script>
     <script src="js/area.js"></script>
     <script>
     	var _global = {
@@ -416,7 +419,50 @@
                         valid: function(form) {
                             var myfromValid = this;
                             if ( $(form).isValid() ) {
-                            	form.submit();
+                            	//form.submit();
+                            $.ajax({
+                                url: '/center/address/add',
+                                dataType: 'json',
+                                data: $(form).formSerialize(),
+                                success: function(result) {
+                                    if (result.status=="y") {
+                                    
+                                    var consigneeName = $("#consigneeName").val();
+                                    var consigneeMobile = $("#consigneeMobile").val();
+                                    var add = $("#province").find("option:selected").text() + 
+                                    			$("#city").find("option:selected").text()+
+                                    			$("#area").find("option:selected").text()+
+                                    			$("#consigneeAddress").val();
+                                    var isDefault = $("#isDefault").is(':checked')
+                                    var html = '<li class="current">'+
+									            	'<input type="hidden" name="shippingAddressId" value="'+result.info+'">'+
+									                '<p><span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>'+consigneeName+'</p>'+
+									                '<p><span>联系方式：</span>'+consigneeMobile+'</p>'+
+									                '<p><span>收货地址：</span>'+add+'</p>';
+									if(isDefault){
+										html = html + '<div class="default">'+
+										              '<span class="c-red">默认地址</span>'+
+										              '</div>';
+									}       
+										            
+									    html = html +  '</li>';
+									    $("#jconsigneeList").find("ul li").removeClass("current");
+                                        $("#jconsigneeList").find("ul").append(html);
+                                         
+		                            	html = '<input type="hidden" name="addrHistoryId" id="addrHistoryId" value="'+result.info+'">'+
+		                                '<p><span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>'+consigneeName+'</p>'+
+		                                '<p><span>联系方式：</span>'+consigneeMobile+'</p>'+
+		                                '<p><span>收货地址：</span>'+add+'</p>'+
+		                                '<div class="extra">'+
+		                                    '<a href="javascript:;" class="c-blue" id="jchooseConsignee">切换地址</a>'+
+		                                    '<div class="btn btn-lgray jaddConsignee">新增收货地址</div>'+
+		                                '</div>';
+			                            $("#shippingAddressCurrent").html(html);
+			                            _global.fn.addConsignee();
+			                            _global.fn.chooseConsignee();
+                                    }
+                                }
+                            })
                             	layer.closeAll();
                             } 
                         }
@@ -448,8 +494,19 @@
                     // 关闭弹层
                     $consigneeList.on('click', '.submit', function() {
                     	var currentid = $consigneeList.find(".current").find("input[name='shippingAddressId']").val();
-                    	var commodityIds = $("input[name='commodityIds']").val();
-                    	window.location.href = "/center/order/create?commodityIds=" + commodityIds + "&currentid=" + currentid;
+                    	var $p = $consigneeList.find(".current").find("p")
+                    	
+                    	var html = '<input type="hidden" name="addrHistoryId" id="addrHistoryId" value="'+currentid+'">'+
+                        '<p>'+$($p[0]).html()+'</p>'+
+                        '<p>'+$($p[1]).html()+'</p>'+
+                        '<p>'+$($p[2]).html()+'</p>'+
+                        '<div class="extra">'+
+                        '<a href="javascript:;" class="c-blue" id="jchooseConsignee">切换地址</a>'+
+                        '<div class="btn btn-lgray jaddConsignee">新增收货地址</div>'+
+                        '</div>';
+                        $("#shippingAddressCurrent").html(html);
+                        _global.fn.addConsignee();
+			            _global.fn.chooseConsignee();
                         layer.closeAll();
                     })
 
@@ -466,7 +523,7 @@
                     }).on('blur', function(){
                     	var price = this.value == '' ? 0 : this.value;
                         $('#freightPriceDisplay').html("&yen;" +price);
-                        $('#priceDisplay').html("&yen;" + (parseFloat(price) + parseFloat(_global.v.totalPrice)));
+                        $('#priceDisplay').html("&yen;" + (parseFloat(price) + parseFloat(_global.v.totalPrice)).toFixed(2));
                     });
                 },
                 //提交

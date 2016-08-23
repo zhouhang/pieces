@@ -78,10 +78,14 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
 
         orderFormVo.setInvoiceId(orderFormVo.getInvoice().getId());
         orderFormVo.setAddrHistoryId(orderFormVo.getAddress().getId());
-        orderFormVo.setCode(SeqNoUtil.get("", Integer.valueOf(SeqNoUtil.getRandomNum(5)), 6));
         orderFormVo.setCreaterTime(new Date());
         orderFormVo.setStatus(OrderEnum.UNPAID.getValue());
         orderFormDao.create(orderFormVo);
+        OrderForm of = new OrderForm();
+        of.setId(orderFormVo.getId());
+        of.setCode(SeqNoUtil.get("", orderFormVo.getId(), 6));
+        orderFormVo.setCode(of.getCode());
+        orderFormDao.update(of);
         
         List<OrderCommodity> list = orderFormVo.getCommodities();
         for(OrderCommodity oc : list){

@@ -75,7 +75,7 @@
                                             </div>
                                             <div class="td w10">
                                                 <#if commodity.myPrice??&&commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
-                                                    <a href="/center/order/create?commodityIds=${commodity.id!}">订购</a>
+                                                    <a href="javascript:void(0);" onclick="page.fn.orderCommodity(${commodity.id!})">订购</a>
                                                 </#if>
                                             </div>
                                         </div>
@@ -100,7 +100,11 @@
             </div>
         </div>
     </div><!-- member-box end -->
-
+	
+	<form action="/center/order/create" method="post" id="orderForm">
+		<input type="hidden" name="commodityIds" id="commodityIds" value="">
+	</form>
+	
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
@@ -236,9 +240,10 @@
                         	})
                         	
                         	var commodityIds = commodityStr.join(',');
-                        	
-                   
-                        	window.location.href = "/center/order/create?commodityIds=" + commodityIds;
+                        	if(commodityIds != ""){
+                        		$("#commodityIds").val(commodityIds);
+                        		$("#orderForm").submit();
+                        	}
                         })
                     });
                 },
@@ -277,6 +282,12 @@
                 },
                 formatDate: function(date) {
                     return date ? date.split(' ')[0] : '';
+                },
+                orderCommodity: function(commodityId){
+                	if(commodityId != ""){
+                		$("#commodityIds").val(commodityId);
+                		$("#orderForm").submit();
+                	}
                 }
             }
         }
