@@ -2,14 +2,20 @@ package com.pieces.biz.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.pieces.dao.model.ShippingAddress;
+import com.pieces.dao.vo.ShippingAddressVo;
+import com.pieces.service.ShippingAddressService;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpRequest;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -19,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -31,6 +38,7 @@ import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.redis.RedisManager;
 import com.pieces.service.utils.CommonUtils;
 import com.pieces.tools.utils.WebUtil;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 用户控制器 包括用户注册，用户登录和用户中心
@@ -49,6 +57,12 @@ public class UserController extends BaseController {
 	
 	@Autowired
 	private RedisManager redisManager;
+
+	@Autowired
+	private ShippingAddressService shippingAddressService;
+
+	@Autowired
+	HttpSession httpSession;
 
 	/**
 	 * 进入注册页面
@@ -412,6 +426,63 @@ public class UserController extends BaseController {
 		WebUtil.print(response, result);
 		return;
 	}
-	
-	
+
+	/**
+	 * 用户收货地址管理
+	 * @return
+     */
+	@RequestMapping(value = "/shippingaddress/index", method = RequestMethod.GET)
+	public String shippingAddress(ModelMap modelMap){
+
+		User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+		List<ShippingAddressVo> adds = shippingAddressService.findByUser(user.getId());
+		modelMap.put("adds", adds);
+		return "user_shippingaddress";
+	}
+
+	/**
+	 * 用户收货地址管理
+	 * @return
+	 */
+	@RequestMapping(value = "/shippingaddress/detail/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public Result shippingAddressDetail(@PathVariable("id")Integer id){
+		ShippingAddress shippingAddress = shippingAddressService.findVoById(id);
+		return new Result(true).data(shippingAddress);
+	}
+
+	/**
+	 * 保存或者添加用户收货地址
+	 * @return
+	 */
+	@RequestMapping(value = "/shippingaddress/save", method = RequestMethod.POST)
+	@ResponseBody
+	public Result saveShippingAddress(ShippingAddress address){
+		User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+		shippingAddressService.saveOrUpdate(address, user);
+		return new Result(true).info("保存成功!");
+	}
+
+	/**
+	 * 删除收货地址
+	 * @return
+	 */
+	@RequestMapping(value = "/shippingaddress/delete/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public Result deleteShippingAddress(@PathVariable("id")Integer id){
+		shippingAddressService.deleteById(id);
+		return new Result(true).info("删除成功!");
+	}
+
+	/**
+	 * 设置用户的默认收货地址
+	 * @return
+	 */
+	@RequestMapping(value = "/shippingaddress/default/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public Result defaultShippingAddress(@PathVariable("id")Integer id){
+		User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+		shippingAddressService.settingDefaultAddress(id, user.getId());
+		return new Result(true).info("默认地址设置成功!");
+	}
 }
