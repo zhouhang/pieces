@@ -57,6 +57,7 @@
         <dd>
             <a href="user/info">注册资料</a>
             <a href="user/pwd/update">修改密码</a>
+            <a href="user/shippingaddress/index">收货地址</a>
         </dd>
     </dl>
 </div>
