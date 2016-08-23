@@ -83,7 +83,14 @@ public class OrderFormVo extends OrderForm {
         this.endTime = endTime;
     }
 
+    /**
+     * 用户不存在new 一个User 对象避免前台获取用户数据是出错
+     * @return
+     */
     public User getUser() {
+        if (user == null) {
+            user = new User();
+        }
         return user;
     }
 

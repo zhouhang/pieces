@@ -34,7 +34,7 @@
                         <tr>
                             <td class="tl nr">
                                 <span class="name"><a
-                                        href="user_order_detail.html">${orderForm.commodityOverview}</a></span>
+                                        href="/center/order/detail/${orderForm.id}">${orderForm.commodityOverview}</a></span>
                                 <span>共${orderForm.commodities?size}个商品</span>
                             </td>
                             <td class="nl" width="145">
