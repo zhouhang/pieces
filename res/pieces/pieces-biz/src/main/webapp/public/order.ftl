@@ -532,11 +532,11 @@
                     	var addrHistoryId = $("#addrHistoryId").val();
                     	var freightPrice = $("#freightPrice").val();
                     	if(addrHistoryId=='undefind'||addrHistoryId==""){
-                    		alert("请填写收货地址！");
+                    		layer.msg('请填写收货地址！', {icon: 5});
                     		return false;
                     	}
                     	if(freightPrice==''){
-                    		alert("请填写运费！");
+                    		layer.msg('请填写运费！', {icon: 5});
                     		return false;
                     	}
                     	$("#orderSave").submit();
