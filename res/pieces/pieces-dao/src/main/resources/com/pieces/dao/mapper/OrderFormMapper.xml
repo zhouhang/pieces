@@ -14,7 +14,6 @@
             <result column="status"  property="status" />
             <result column="creater_time"  property="createrTime" />
             <result column="payment_date"  property="paymentDate" />
-        
     </resultMap>
 
     <resultMap id="OrderFormResultMapVo" type="com.pieces.dao.vo.OrderFormVo" extends="OrderFormResultMap">
@@ -103,7 +102,9 @@
                     and u.user_name = #{user.userName}
                 </if>
             </if>
-
+            <if test="userId != null">
+                and o.user_id = #{userId}
+            </if>
             <if test="code != null">
                 and o.code = #{code}
             </if>
@@ -207,5 +208,6 @@
         left join user u on u.id = o.user_id
         where o.id = #{id}
     </select>
+
 
 </mapper>

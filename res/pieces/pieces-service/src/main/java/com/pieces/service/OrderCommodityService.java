@@ -22,6 +22,9 @@ public interface OrderCommodityService extends ICommonService<OrderCommodity> {
      */
     public void save(List<OrderCommodity> list);
 
+
+    public List<OrderCommodityVo> findByOrderId(Integer orderId);
+
     /**
      * 根据订单信息获取订单商品
      * @param orderId

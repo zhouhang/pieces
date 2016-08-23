@@ -65,7 +65,7 @@
                 id = #{id}
             </if>
             <if test="orderId != null">
-                and order_id = #{orderId}
+                order_id = #{orderId}
             </if>
         </where>
     </select>
@@ -90,6 +90,8 @@
             (#{item.name},#{item.spec},#{item.level},#{item.originOf},#{item.expectDate},#{item.amount},#{item.price},#{item.subtotal},#{item.enquiryCommodityId},#{item.orderId})
         </foreach>
     </insert>
+
+
 
     <update id="update" parameterType="com.pieces.dao.model.OrderCommodity">
         update order_commodity
