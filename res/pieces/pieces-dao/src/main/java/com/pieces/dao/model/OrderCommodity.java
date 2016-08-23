@@ -22,9 +22,9 @@ public class OrderCommodity  implements Serializable {
 	
 	private Integer amount;
 	
-	private Float price;
+	private Double price;
 	
-	private Float subtotal;
+	private Double subtotal;
 	
 	private Integer enquiryCommodityId;
 	
@@ -88,19 +88,19 @@ public class OrderCommodity  implements Serializable {
 		this.amount = amount;
 	}
 	
-	public Float getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	public void setPrice(Float price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 	
-	public Float getSubtotal() {
+	public Double getSubtotal() {
 		return subtotal;
 	}
 
-	public void setSubtotal(Float subtotal) {
+	public void setSubtotal(Double subtotal) {
 		this.subtotal = subtotal;
 	}
 	

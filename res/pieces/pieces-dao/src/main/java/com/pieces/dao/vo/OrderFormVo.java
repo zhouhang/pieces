@@ -22,11 +22,23 @@ public class OrderFormVo extends OrderForm {
     // 邮寄地址
     private ShippingAddressHistory address;
 
+    private ShippingAddress shippingAddress;
+
+    public ShippingAddress getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(ShippingAddress shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
     // 发票信息
     private OrderInvoice invoice;
 
     //客户信息
     private User user;
+
+    private Integer userId;
 
     // 商品信息摘要
     private String commodityOverview;
@@ -129,5 +141,15 @@ public class OrderFormVo extends OrderForm {
 
     public void setCommodityVos(List<OrderCommodityVo> commodityVos) {
         this.commodityVos = commodityVos;
+    }
+
+    @Override
+    public Integer getUserId() {
+        return userId;
+    }
+
+    @Override
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 }

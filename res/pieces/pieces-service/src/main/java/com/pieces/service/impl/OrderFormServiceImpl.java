@@ -10,7 +10,6 @@ import com.pieces.dao.model.OrderForm;
 import com.pieces.dao.model.OrderInvoice;
 import com.pieces.dao.model.ShippingAddressHistory;
 import com.pieces.dao.model.User;
-import com.pieces.dao.vo.OrderCommodityVo;
 import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.*;
 import com.pieces.tools.utils.SeqNoUtil;
@@ -19,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +36,7 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
     private OrderCommodityService orderCommodityService;
 
     @Autowired
-    private ShippingAddressHistoryService shippingAddressHistory;
+    private ShippingAddressHistoryService shippingAddressHistoryService;
 
 
     @Autowired
@@ -70,7 +70,7 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
         // 3. 订单商品
         // 4. 发票信息
         orderFormVo.setUserId(user.getId());
-        shippingAddressHistory.create(orderFormVo.getAddress());
+        shippingAddressHistoryService.create(orderFormVo.getAddress());
         
         OrderInvoice orderInvoice = orderFormVo.getInvoice();
         if(!orderInvoice.getName().equals("")){
@@ -111,5 +111,37 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
             form.setCommodities(commodityVos);
         }
         return page;
+    }
+
+    /**
+     *
+     * @param orderFormVo
+     * @return
+     */
+    @Override
+    @Transactional
+    public OrderFormVo create(OrderFormVo orderFormVo) {
+        //保存订单收货地址
+        ShippingAddressHistory shippingAddressHistory =  shippingAddressHistoryService.createByAddress(orderFormVo.getShippingAddress());
+
+        //保存订单
+        orderFormVo.setCreaterTime(new Date());
+        orderFormVo.setStatus(OrderEnum.UNPAID.getValue());
+        orderFormVo.setAddrHistoryId(shippingAddressHistory.getId());
+        orderFormDao.create(orderFormVo);
+
+        orderFormVo.setCode(SeqNoUtil.get("", orderFormVo.getId(), 6));
+        orderFormDao.update(orderFormVo);
+
+        //保存商品
+        List<OrderCommodity> list = orderFormVo.getCommodities();
+        for(OrderCommodity commodity : list){
+            BigDecimal total= new BigDecimal(commodity.getAmount()).multiply(new BigDecimal(commodity.getPrice()));
+            commodity.setSubtotal(total.doubleValue());
+            commodity.setOrderId(orderFormVo.getId());
+        }
+        orderCommodityService.save(list);
+
+        return orderFormVo;
     }
 }

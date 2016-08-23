@@ -4,9 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.ShippingAddressDao;
+import com.pieces.dao.model.Area;
 import com.pieces.dao.model.ShippingAddress;
 import com.pieces.dao.vo.ShippingAddressVo;
 import com.pieces.service.AbsCommonService;
+import com.pieces.service.AreaService;
 import com.pieces.service.ShippingAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,8 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 
 	@Autowired
 	private ShippingAddressDao shippingAddressDao;
-
+	@Autowired
+	private AreaService areaService;
 
 	@Override
 	public PageInfo<ShippingAddressVo> findByParams(ShippingAddressVo shippingAddressVo,Integer pageNum,Integer pageSize) {
@@ -43,7 +46,13 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 	public List<ShippingAddressVo> findByUser(Integer userId) {
 		ShippingAddressVo shippingAddressVo = new ShippingAddressVo();
 		shippingAddressVo.setUserId(userId);
-		return findByParams(shippingAddressVo);
+		List<ShippingAddressVo> list = findByParams(shippingAddressVo);
+		for(ShippingAddressVo shippingAddress : list){
+			Area area =areaService.findParentsById(shippingAddress.getAreaId());
+			shippingAddress.setFullAdd(area.getProvince()+area.getCity()+area.getAreaname());
+			shippingAddress.setArea(area);
+		}
+		return list;
 	}
 
 
