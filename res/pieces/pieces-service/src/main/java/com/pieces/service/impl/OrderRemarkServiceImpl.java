@@ -34,4 +34,11 @@ public class OrderRemarkServiceImpl  extends AbsCommonService<OrderRemark> imple
 	}
 
 
+	@Override
+	public List<OrderRemarkVo> findByOrderId(Integer orderId) {
+		OrderRemarkVo vo = new OrderRemarkVo();
+		vo.setOrderId(orderId);
+		List<OrderRemarkVo>  list = orderRemarkDao.findByParams(vo);
+		return list;
+	}
 }

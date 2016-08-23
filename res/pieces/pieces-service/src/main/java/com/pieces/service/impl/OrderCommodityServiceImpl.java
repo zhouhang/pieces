@@ -32,13 +32,28 @@ public class OrderCommodityServiceImpl extends AbsCommonService<OrderCommodity> 
         return page;
     }
 
+
+
     @Override
     public void save(List<OrderCommodity> list) {
         orderCommodityDao.batchCreate(list);
     }
 
     @Override
+    public List<OrderCommodityVo> findByOrderId(Integer orderId) {
+        OrderCommodityVo orderCommodityVo = new OrderCommodityVo();
+        orderCommodityVo.setOrderId(orderId);
+        List<OrderCommodityVo>  list = orderCommodityDao.findByParams(orderCommodityVo);
+        return list;
+    }
+
+    @Override
     public ICommonDao<OrderCommodity> getDao() {
         return orderCommodityDao;
+    }
+
+    @Override
+    public List<OrderCommodity> getCommodityByOrderId(Integer orderId) {
+        return orderCommodityDao.findCommodityByOrderId(orderId);
     }
 }

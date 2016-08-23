@@ -141,8 +141,9 @@
     </ul>
 </div>
 
+
 <div class="gotop" id="jgotop">
-    <a href="javascript:;">返回顶部</a>
+    <a href="javascript:;"><b class="fa fa-chevron-up"></b><em>返回顶部</em></a>
 </div>
 <#include "./inc/footer.ftl"/>
 

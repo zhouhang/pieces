@@ -1,13 +1,11 @@
 package com.pieces.dao.vo;
 
 import com.pieces.dao.enums.OrderEnum;
-import com.pieces.dao.model.OrderCommodity;
-import com.pieces.dao.model.OrderForm;
-import com.pieces.dao.model.OrderInvoice;
-import com.pieces.dao.model.ShippingAddressHistory;
+import com.pieces.dao.model.*;
 import com.pieces.tools.utils.httpclient.common.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,11 +17,16 @@ public class OrderFormVo extends OrderForm {
     // 商品列表
     private List<OrderCommodity> commodities;
 
+    private List<OrderCommodityVo> commodityVos;
+
     // 邮寄地址
     private ShippingAddressHistory address;
 
     // 发票信息
     private OrderInvoice invoice;
+
+    //客户信息
+    private User user;
 
     // 商品信息摘要
     private String commodityOverview;
@@ -32,6 +35,11 @@ public class OrderFormVo extends OrderForm {
     private String commodityIds;
 
     private String statusText;
+
+    //订单开始时间
+    private Date startTime;
+    //订单结束时间
+    private Date endTime;
 
     public List<OrderCommodity> getCommodities() {
         return commodities;
@@ -61,7 +69,38 @@ public class OrderFormVo extends OrderForm {
 		return commodityIds;
 	}
 
-	public void setCommodityIds(String commodityIds) {
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
+
+    /**
+     * 用户不存在new 一个User 对象避免前台获取用户数据是出错
+     * @return
+     */
+    public User getUser() {
+        if (user == null) {
+            user = new User();
+        }
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setCommodityIds(String commodityIds) {
 		this.commodityIds = commodityIds;
 	}
 
@@ -77,10 +116,18 @@ public class OrderFormVo extends OrderForm {
             commodityOverview += "...";
         }
 
-        return "...";
+        return commodityOverview;
     }
 
     public String getStatusText() {
         return OrderEnum.findByValue(getStatus());
+    }
+
+    public List<OrderCommodityVo> getCommodityVos() {
+        return commodityVos;
+    }
+
+    public void setCommodityVos(List<OrderCommodityVo> commodityVos) {
+        this.commodityVos = commodityVos;
     }
 }

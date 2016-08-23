@@ -14,7 +14,6 @@
             <result column="status"  property="status" />
             <result column="creater_time"  property="createrTime" />
             <result column="payment_date"  property="paymentDate" />
-        
     </resultMap>
 
     <resultMap id="OrderFormResultMapVo" type="com.pieces.dao.vo.OrderFormVo" extends="OrderFormResultMap">
@@ -38,6 +37,14 @@
             <result column="i_registered_tel"  property="registeredTel" />
             <result column="i_bank_name"  property="bankName" />
             <result column="i_bank_account"  property="bankAccount" />
+        </association>
+        <association property="user" javaType="com.pieces.dao.model.User">
+            <id column="u_id"  property="id" />
+            <result column="u_user_name"  property="userName" />
+            <result column="u_company_full_name"  property="companyFullName" />
+            <result column="u_contact_name"  property="contactName" />
+            <result column="u_contact_mobile"  property="contactMobile" />
+            <result column="u_area_full"  property="areaFull" />
         </association>
         <collection property="commodities" ofType="com.pieces.dao.model.OrderCommodity">
             <id column="c_id"  property="id" />
@@ -79,11 +86,41 @@
 
     <select id="findByParams" resultMap="OrderFormResultMapVo" parameterType="com.pieces.dao.vo.OrderFormVo">
         select
-        <include refid="Base_Column_List_Aliases" />
+        <include refid="Base_Column_List_Aliases"/>,
+        u.contact_name as u_contact_name, u.company_full_name as u_company_full_name
         from order_form o
+        left join user u on u.id = o.user_id
         <where>
             <if test="id != null">
-                id = #{id}
+                o.id = #{id}
+            </if>
+            <if test="user != null">
+                <if test="user.companyFullName != null">
+                    and u.company_full_name = #{user.companyFullName}
+                </if>
+                <if test="user.userName != null">
+                    and u.user_name = #{user.userName}
+                </if>
+            </if>
+            <if test="userId != null">
+                and o.user_id = #{userId}
+            </if>
+            <if test="code != null">
+                and o.code = #{code}
+            </if>
+            <if test="paymentDate != null">
+                and o.payment_date = #{paymentDate}
+            </if>
+            <if test="startTime != null">
+                and o.creater_time <![CDATA[ >= ]]> #{startTime}
+            </if>
+
+            <if test="endTime != null">
+                and o.creater_time <![CDATA[ <= ]]> #{endTime}
+            </if>
+
+            <if test="status != null">
+                and o.status = #{status}
             </if>
         </where>
     </select>
@@ -162,12 +199,15 @@
         i.registered_tel as i_registered_tel,i.bank_name as i_bank_name,i.bank_account as i_bank_account,
         c.id as c_id,c.name as c_name,c.spec as c_spec,c.level as c_level,c.originOf as c_originOf,
         c.expectDate as c_expectDate,c.amount as c_amount,c.price as c_price,c.subtotal as c_subtotal,
-        c.enquiry_commodity_id as c_enquiry_commodity_id,c.order_id as c_order_id
+        c.enquiry_commodity_id as c_enquiry_commodity_id,c.order_id as c_order_id,
+        u.contact_name as u_contact_name, u.company_full_name as u_company_full_name,u.contact_mobile as u_contact_mobile
         from order_form o
         left join shipping_address_history a on o.addr_history_id = a.id
         left join order_commodity c on o.id = c.order_id
         left join order_invoice i on o.invoice_id = i.id
+        left join user u on u.id = o.user_id
         where o.id = #{id}
     </select>
+
 
 </mapper>
