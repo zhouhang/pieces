@@ -12,6 +12,7 @@ import com.pieces.dao.model.ShippingAddressHistory;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.*;
+import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.utils.SeqNoUtil;
 
 import org.apache.commons.lang.StringUtils;
@@ -105,6 +106,7 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
     public PageInfo<OrderFormVo> findOrderByUserId(Integer userId, Integer pageNum, Integer pageSize) {
         OrderFormVo vo = new OrderFormVo();
         vo.setUserId(userId);
+        vo.setIsUserSearch(1); // 用来过滤已删除的订单 使其不在前台显示.
         PageInfo<OrderFormVo> page = findByParams(vo,pageNum,pageSize);
         // 根据查询出来的订单查询订单商品信息
         for (OrderFormVo form : page.getList()) {
@@ -168,5 +170,15 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
             orderFormVo.setCode(code[0]+"-"+time);
         }
         return create(orderFormVo);
+    }
+
+    @Override
+    @Transactional
+    public Result changeOrderStatus(Integer orderId, Integer status) {
+        OrderForm form = new OrderForm();
+        form.setId(orderId);
+        form.setStatus(status);
+        orderFormDao.update(form);
+        return new Result(true).info("");
     }
 }

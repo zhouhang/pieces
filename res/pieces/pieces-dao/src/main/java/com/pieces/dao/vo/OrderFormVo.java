@@ -59,6 +59,9 @@ public class OrderFormVo extends OrderForm {
     // 订单剩余支付时间
     private String orderValidityPeriod;
 
+    // 1 用户前台搜索 不显示已删除的订单.
+    private Integer isUserSearch;
+
     public List<OrderCommodity> getCommodities() {
         return commodities;
     }
@@ -167,6 +170,13 @@ public class OrderFormVo extends OrderForm {
         this.orderId = orderId;
     }
 
+    public Integer getIsUserSearch() {
+        return isUserSearch;
+    }
+
+    public void setIsUserSearch(Integer isUserSearch) {
+        this.isUserSearch = isUserSearch;
+    }
 
     public String getOrderValidityPeriod() {
         if (this.getCreaterTime() != null) {

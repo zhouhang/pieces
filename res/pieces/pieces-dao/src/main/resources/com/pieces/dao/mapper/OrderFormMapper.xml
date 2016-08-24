@@ -120,6 +120,9 @@
             <if test="status != null">
                 and o.status = #{status}
             </if>
+            <if test="isUserSearch == 1">
+                and o.status != 7
+            </if>
         </where>
     </select>
 

@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.OrderForm;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.OrderFormVo;
+import com.pieces.service.constant.bean.Result;
 
 /**
  * Author: koabs
@@ -49,5 +50,13 @@ public interface OrderFormService extends ICommonService<OrderForm>{
 
 
     public OrderFormVo create(OrderFormVo orderFormVo,Integer origOrderId);
+
+    /**
+     * 修改订单状态
+     * @param orderId
+     * @param status
+     * @return
+     */
+    public Result changeOrderStatus(Integer orderId, Integer status);
 
 }
