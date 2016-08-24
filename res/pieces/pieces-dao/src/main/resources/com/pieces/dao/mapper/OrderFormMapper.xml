@@ -94,13 +94,11 @@
             <if test="id != null">
                 o.id = #{id}
             </if>
-            <if test="user != null">
-                <if test="user.companyFullName != null">
-                    and u.company_full_name = #{user.companyFullName}
-                </if>
-                <if test="user.userName != null">
-                    and u.user_name = #{user.userName}
-                </if>
+            <if test="user != null and user.companyFullName != null">
+                and u.company_full_name = #{user.companyFullName}
+            </if>
+            <if test="user != null and user.contactName != null">
+                and u.contact_name = #{user.contactName}
             </if>
             <if test="userId != null">
                 and o.user_id = #{userId}

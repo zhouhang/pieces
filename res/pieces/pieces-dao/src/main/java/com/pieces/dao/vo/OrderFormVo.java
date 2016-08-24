@@ -162,4 +162,27 @@ public class OrderFormVo extends OrderForm {
     public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
+
+
+    /**
+     * 将对象序列化为url参数.
+     * @return
+     */
+    public String serialize(){
+        String param = "";
+        User userL = this.user;
+        this.user = null;
+        param = Reflection.serialize(this);
+
+        if (userL.getContactName() != null){
+            param += "&" + "user.contactName="+ userL.getContactName();
+        }
+
+        if (userL.getCompanyFullName() != null) {
+            param += "&" + "user.companyFullName="+ userL.getCompanyFullName();
+        }
+
+        this.user = userL;
+        return param;
+    }
 }
