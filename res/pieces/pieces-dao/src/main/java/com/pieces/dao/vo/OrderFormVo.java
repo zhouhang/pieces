@@ -2,6 +2,7 @@ package com.pieces.dao.vo;
 
 import com.pieces.dao.enums.OrderEnum;
 import com.pieces.dao.model.*;
+import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.httpclient.common.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 
