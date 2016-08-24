@@ -53,6 +53,7 @@ public class OrderController extends BaseController{
         PageInfo<OrderFormVo> pageInfo = orderFormService.findByParams(vo,pageNum,pageSize);
         modelMap.put("pageInfo",pageInfo);
         modelMap.put("vo",vo);
+        vo.setUser(null);
         modelMap.put("param", Reflection.serialize(vo));
 
         return  "order";
