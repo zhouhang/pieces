@@ -2,6 +2,7 @@ package com.pieces.dao.vo;
 
 import com.pieces.dao.enums.OrderEnum;
 import com.pieces.dao.model.*;
+import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.httpclient.common.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 
@@ -151,5 +152,28 @@ public class OrderFormVo extends OrderForm {
     @Override
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+
+    /**
+     * 将对象序列化为url参数.
+     * @return
+     */
+    public String serialize(){
+        String param = "";
+        User userL = this.user;
+        this.user = null;
+        param = Reflection.serialize(this);
+
+        if (userL.getContactName() != null){
+            param += "&" + "user.contactName="+ userL.getContactName();
+        }
+
+        if (userL.getCompanyFullName() != null) {
+            param += "&" + "user.companyFullName="+ userL.getCompanyFullName();
+        }
+
+        this.user = userL;
+        return param;
     }
 }
