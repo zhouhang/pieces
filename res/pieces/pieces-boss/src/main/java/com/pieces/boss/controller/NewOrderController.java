@@ -2,10 +2,7 @@ package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.elasticsearch.document.CommodityDoc;
-import com.pieces.dao.model.EnquiryBills;
-import com.pieces.dao.model.OrderCommodity;
-import com.pieces.dao.model.ShippingAddress;
-import com.pieces.dao.model.User;
+import com.pieces.dao.model.*;
 import com.pieces.dao.vo.*;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
@@ -42,7 +39,11 @@ public class NewOrderController extends BaseController{
     @Autowired
     private ShippingAddressService shippingAddressService;
     @Autowired
+    private ShippingAddressHistoryService shippingAddressHistoryService;
+    @Autowired
     private CommoditySearchService commoditySearchService;
+    @Autowired
+    private AreaService areaService;
     /**
      * 新建订单客户列表
      * @param pageNum
@@ -64,6 +65,36 @@ public class NewOrderController extends BaseController{
         return "order_customers";
     }
 
+
+    /**
+     * 重新下单
+     * @param orderId
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "anew/{orderId}")
+    public String anewOrder(@PathVariable("orderId") Integer orderId,
+                            ModelMap model){
+        orderModel(null,orderId,model);
+        model.put("order_type","重新下单");
+        return "order_create";
+    }
+
+    /**
+     * 修改订单
+     * @param orderId
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "edit/{orderId}")
+    public String updateOrder(@PathVariable("orderId") Integer orderId,
+                              ModelMap model){
+        orderModel(null,orderId,model);
+        model.put("order_type","修改订单");
+        return "order_create";
+    }
+
+
     /**
      * 创建订单页面
      * @param customerId
@@ -72,30 +103,9 @@ public class NewOrderController extends BaseController{
     @RequestMapping(value = "create/{customerId}")
     public String createOrder(@PathVariable("customerId") Integer customerId,
                               ModelMap model){
-        User user = userService.findById(customerId);
-        //查询用户最近5条询价记录
-        EnquiryRecordVo  enquiryRecordVo = new EnquiryRecordVo();
-        enquiryRecordVo.setUserId(user.getId());
-        enquiryRecordVo.setStatus(1);
-        PageInfo<EnquiryBills> billsPageInfo =  enquiryBillsService.findByPage(1,5,enquiryRecordVo);
+        orderModel(customerId,null,model);
 
-        //订单form
-        PageInfo<OrderFormVo>  orderFormVoPageInfo = orderFormService.findOrderByUserId(customerId,1,1);
-        List<OrderFormVo> orderList = orderFormVoPageInfo.getList();
-        if(!orderList.isEmpty()){
-            OrderFormVo orderFormVo = orderList.get(0);
-            List<OrderCommodityVo> orderCommodityList =  orderCommodityService.findByOrderId(orderFormVo.getId());
-            orderFormVo.setCommodityVos(orderCommodityList);
-            model.put("orderFormVo", orderFormVo);
-        }
-        //收货地址
-        List<ShippingAddressVo> shippingAddressList =  shippingAddressService.findByUser(user.getId());
-        if(!shippingAddressList.isEmpty()){
-            model.put("shippingAddressList", shippingAddressList);
-        }
-
-        model.put("billsPage",billsPageInfo);
-        model.put("user",user);
+        model.put("order_type","创建新订单");
         return "order_create";
     }
 
@@ -132,9 +142,63 @@ public class NewOrderController extends BaseController{
         BigDecimal payable = new BigDecimal(orderFormVo.getShippingCosts()).add(sum);
         orderFormVo.setAmountsPayable(payable.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
 
-        orderFormService.create(orderFormVo);
+        if(orderFormVo.getOrderId()==null){
+            orderFormService.create(orderFormVo);
+        }else{
+            orderFormService.create(orderFormVo,orderFormVo.getOrderId());
+        }
 
         return new Result(true).data(orderFormVo);
+    }
+
+
+    private void orderModel(Integer customerId,Integer orderId,ModelMap model){
+
+        if(orderId!=null){
+            //查询订单详情
+            OrderForm orderForm =  orderFormService.findById(orderId);
+
+            customerId = orderForm.getUserId();
+
+            model.put("origOrderForm",orderForm);
+
+            //该订单填写的收货地址
+            ShippingAddressHistory shippingAddressHistory = shippingAddressHistoryService.findById(orderForm.getAddrHistoryId());
+            Area area = areaService.findParentsById(shippingAddressHistory.getAreaId());
+            shippingAddressHistory.setAreaObj(area);
+            model.put("shippingAddressHistory",shippingAddressHistory);
+
+            //改订单商品列表
+            List<OrderCommodityVo>  commodityVos= orderCommodityService.findByOrderId(orderId);
+            model.put("commodityVos",commodityVos);
+        }
+
+
+        User user = userService.findById(customerId);
+        //查询用户最近5条询价记录
+        EnquiryRecordVo  enquiryRecordVo = new EnquiryRecordVo();
+        enquiryRecordVo.setUserId(user.getId());
+        enquiryRecordVo.setStatus(1);
+        PageInfo<EnquiryBills> billsPageInfo =  enquiryBillsService.findByPage(1,5,enquiryRecordVo);
+
+        //订单form
+        PageInfo<OrderFormVo>  orderFormVoPageInfo = orderFormService.findOrderByUserId(customerId,1,1);
+        List<OrderFormVo> orderList = orderFormVoPageInfo.getList();
+        if(!orderList.isEmpty()){
+            OrderFormVo orderFormVo = orderList.get(0);
+            List<OrderCommodityVo> orderCommodityList =  orderCommodityService.findByOrderId(orderFormVo.getId());
+            orderFormVo.setCommodityVos(orderCommodityList);
+            model.put("orderFormVo", orderFormVo);
+        }
+        //收货地址
+        List<ShippingAddressVo> shippingAddressList =  shippingAddressService.findByUser(user.getId());
+        if(!shippingAddressList.isEmpty()){
+            model.put("shippingAddressList", shippingAddressList);
+        }
+
+        model.put("billsPage",billsPageInfo);
+        model.put("user",user);
+
     }
 
 }

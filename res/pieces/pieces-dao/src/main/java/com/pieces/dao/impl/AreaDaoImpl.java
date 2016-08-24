@@ -16,7 +16,7 @@ public class AreaDaoImpl extends BaseDaoImpl implements AreaDao{
 
     @Override
     public List<Area> findByParent(Integer parentId) {
-        return getSqlSession().selectList("com.pieces.dao.AreaMapper.selectByParent", parentId,new RowBounds(1, 10));
+        return getSqlSession().selectList("com.pieces.dao.AreaMapper.selectByParent", parentId);
     }
 
     @Override

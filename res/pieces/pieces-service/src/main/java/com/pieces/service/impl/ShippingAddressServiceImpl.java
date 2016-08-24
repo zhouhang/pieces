@@ -4,10 +4,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.ShippingAddressDao;
+import com.pieces.dao.model.Area;
 import com.pieces.dao.model.ShippingAddress;
+import com.pieces.dao.model.User;
 import com.pieces.dao.vo.ShippingAddressVo;
 import com.pieces.service.AbsCommonService;
+import com.pieces.service.AreaService;
 import com.pieces.service.ShippingAddressService;
+import com.pieces.tools.utils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,6 +69,7 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 	}
 
 
+
 	@Override
 	public ICommonDao<ShippingAddress> getDao() {
 		return shippingAddressDao;
@@ -103,7 +108,7 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 	 */
 	private List<ShippingAddressVo> setFullAdd(List<ShippingAddressVo>  shippingAddressList){
 		for(ShippingAddressVo svo : shippingAddressList){
-			svo.setFullAdd(getFullAdd(svo.getAreaId()) + svo.getDetail());
+			getFullAdd(svo);
 		}
 		return shippingAddressList;
 	}
@@ -111,8 +116,9 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 	/**
 	 * 获取地址全称
 	 */
-	private String getFullAdd(Integer areaId){
-		Area area = areaService.findParentsById(areaId);
-		return area.getProvince() + area.getCity() + area.getAreaname();
+	private void getFullAdd(ShippingAddressVo shippingAddressVo){
+		Area area = areaService.findParentsById(shippingAddressVo.getAreaId());
+		shippingAddressVo.setArea(area);
+		shippingAddressVo.setFullAdd( area.getProvince() + area.getCity() + area.getAreaname());
 	}
 }

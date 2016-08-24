@@ -47,4 +47,7 @@ public interface OrderFormService extends ICommonService<OrderForm>{
 
     public OrderFormVo create(OrderFormVo orderFormVo);
 
+
+    public OrderFormVo create(OrderFormVo orderFormVo,Integer origOrderId);
+
 }
