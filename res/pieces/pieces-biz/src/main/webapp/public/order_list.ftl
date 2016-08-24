@@ -45,7 +45,7 @@
                                 <span class="c-red">${orderForm.statusText}</span>
                                 <#if (orderForm.status == 1)>
                                     <span>剩余付款时间</span>
-                                    <span>9天23时40分</span>
+                                    <span>${orderForm.orderValidityPeriod}</span>
                                 </#if>
                             </td>
                             <td width="140">
