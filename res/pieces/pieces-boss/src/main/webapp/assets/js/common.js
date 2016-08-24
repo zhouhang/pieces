@@ -1,10 +1,13 @@
 // 用户中心导航高亮
 function currNav() {
 	var $side = $('.wrap'),
-		URL = document.URL.split('#')[0].split('?')[0];
-
+		URL = document.URL.split('#')[0].split('?')[0],
+		base = $('base').attr('href')+"/";
+		
 	$side.find('a').each(function() {
-		if (URL.toLowerCase().indexOf(this.href.toLowerCase()) !== -1) {
+		var str = this.href.toLowerCase();
+		str = str.replace(base,"");
+		if (str !== "" && URL.toLowerCase().indexOf(str) !== -1) {
 			$(this).addClass("on").parent().prev("a").addClass('curr');
 			return false; // break
 		}
