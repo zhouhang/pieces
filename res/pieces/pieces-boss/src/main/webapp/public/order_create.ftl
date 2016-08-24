@@ -15,7 +15,7 @@
             <h3><i class="fa fa-chevron-right"></i>为${user.userName!}${order_type!}</h3>
             <div class="extra">
                 <a class="btn btn-gray" href="create_order.html">取消</a>
-                <a class="btn btn-red" href="create_order.html">提交订单</a>
+                <a class="btn btn-red" id="submitOrder2" href="javascript:;">提交订单</a>
             </div>
         </div>
 
@@ -87,10 +87,11 @@
         </div>
 
         <div class="main">
+            <form action="" id="myform">
+
             <div class="chart-info">
                 <h3>订购商品</h3>
                 <div class="chart">
-                    <form action="" id="myform">
                         <table class="tc">
                             <thead>
                             <tr>
@@ -139,7 +140,7 @@
                                         <td><div class="ipt-wrap"><input type="text"  class="ipt" name="originOf"></div><span class="error"></span></td>
                                         <td><input type="text" class="ipt" name="expectDate"  onclick="laydate({min:laydate.now()})"><span class="error"></span></td>
                                         <td><input type="text" class="ipt amount" name="amount" ><span class="error"></span></td>
-                                        <td><input type="text" class="ipt price" name="price" >><span class="error"></span></td>
+                                        <td><input type="text" class="ipt price" name="price" ><span class="error"></span></td>
                                         <td class="jtotal"></td>
                                         <td>
                                             <a href="javascript:;" class="add">添加</a>
@@ -149,7 +150,6 @@
 
                             </tbody>
                         </table>
-                    </form>
                 </div>
             </div>
 
@@ -227,7 +227,7 @@
                     </div>
                     <div class="item">
                         <span>运&#12288;&#12288;费：</span>
-                        <em><input value="<#if origOrderForm??>${origOrderForm.shippingCosts!}</#if>" type="text" class="ipt" id="jfreightPrice"></em>
+                        <em><input value="<#if origOrderForm??>${origOrderForm.shippingCosts!}</#if>" type="text" class="ipt" name="jfreightPrice" id="jfreightPrice"></em>
                     </div>
                     <div class="item">
                         <span>实际应付：</span>
@@ -239,6 +239,8 @@
             <div class="submit">
                 <button class="btn btn-red" id="submitOrder" type="button">提交订单</button>
             </div>
+
+            </form>
 
         </div>
     </div><!-- fa-floor end -->
@@ -277,6 +279,7 @@
         </tr>
     </script>
 
+<script src="/js/validator/jquery.validator.js?local=zh-CN"></script>
 <script src="js/laydate/laydate.js"></script>
 <script src="js/layer/layer.js"></script>
 <script src="js/area.js"></script>
@@ -287,7 +290,6 @@
             init: function() {
                 this.myformEvent();
                 this.addGoodsToOrder();
-                this.insertArea();
 
                 $("#order_address").change(function(){
                    var id =  $(this).val()
@@ -322,6 +324,18 @@
                        })
                    }
                 })
+
+
+                $('#myform').validator({
+                    fields : {
+                        consignee : '收货人: required',
+                        tel : '手机号: required; ',
+                        area : '所在地区: required;',
+                        detail : '详细地址: required;',
+                        jfreightPrice : '运费: required;',
+                    }
+                });
+
             },
             myformEvent: function() {
                 var $body        = $('body');
@@ -540,14 +554,25 @@
             },
             addGoodsToOrder: function() {
                 var self     = this;
-                var isSubmit = false;
 
                 $('#submitOrder').on('click', function() {
-                    if (isSubmit) {
-                        return false;
-                    }
-                    var result = {};
-                    result.pass = true;
+                    self.submitOrder();
+                })
+
+                $('#submitOrder2').on('click',function(){
+                    self.submitOrder();
+                })
+
+            },
+            submitOrder:function () {
+
+                var self     = this;
+                var isSubmit = false;
+
+                if (!isSubmit&&$("#myform").isValid()) {
+
+                    var result = self.checkForm();
+
                     if (result.pass) {
                         isSubmit = true;
 
@@ -587,7 +612,7 @@
                             dataType : 'json',
                             success : function(result) {
                                 isSubmit = false;
-                                self.response(result);
+                                location.href="/order/index";
                             },
                             complete: function() {
                                 isSubmit = false;
@@ -597,10 +622,98 @@
                         isSubmit = false;
                     }
                     return false;
-                })
-            },
-            insertArea: function() {
 
+                }
+
+            },
+            checkForm: function() {
+                var result = {
+                    pass: true,
+                    serialize: []
+                };
+
+                $("#myform").find('tbody').find('tr').each(function() {
+                    var
+                            $name     = $(this).find('.ipt[name="name"]'),
+                            name      = $.trim($name.val()),
+                            $standard = $(this).find('.ipt[name="spec"]'),
+                            standard  = $.trim($standard.val()),
+                            $level    = $(this).find('.ipt[name="level"]'),
+                            level     = $.trim($level.val()),
+                            $origin   = $(this).find('.ipt[name="originOf"]'),
+                            origin    = $.trim($origin.val()),
+                            $amount   = $(this).find('.ipt[name="amount"]'),
+                            amount    = $.trim($amount.val()),
+                            $price    = $(this).find('.ipt[name="price"]'),
+                            price     = $.trim($price.val()),
+                            $date     = $(this).find('.ipt[name="expectDate"]'),
+                            date      = $.trim($date.val());
+
+                    if (name) {
+                        $name.nextAll('.error').html('').hide();
+                    } else {
+                        $name.nextAll('.error').html('此处不可空白').show();
+                        result.pass = false;
+                    }
+
+                    if (standard) {
+                        $standard.nextAll('.error').css('display','none').html('');
+                    } else {
+                        $standard.nextAll('.error').css('display','block').html('此处不可空白');
+                        result.pass = false;
+                    }
+
+                    if (level) {
+                        $level.nextAll('.error').css('display','none').html('');
+                    } else {
+                        $level.nextAll('.error').css('display','block').html('此处不可空白');
+                        result.pass = false;
+                    }
+
+                    if (origin) {
+                        $origin.nextAll('.error').css('display','none').html('');
+                    } else {
+                        $origin.nextAll('.error').css('display','block').html('此处不可空白');
+                        result.pass = false;
+                    }
+
+                    if (price) {
+                        $price.nextAll('.error').css('display','none').html('');
+                    } else {
+                        $price.nextAll('.error').css('display','block').html('此处不可空白');
+                        result.pass = false;
+                    }
+
+
+                    if (amount) {
+                        $amount.nextAll('.error').css('display','none').html('');
+                    } else {
+                        $amount.nextAll('.error').css('display','block').html('此处不可空白');
+                        result.pass = false;
+                    }
+
+                    if (date) {
+                        $date.nextAll('.error').css('display','none').html('');
+                    } else {
+                        $date.nextAll('.error').css('display','block').html('此处不可空白');
+                        result.pass = false;
+                    }
+
+                    if (result.pass) {
+                        result.serialize.push({
+                            name: name,
+                            spec: standard,
+                            level: level,
+                            originOf: origin,
+                            amount: amount,
+                            price: price,
+                            expectDate: date
+                        })
+                    } else {
+                        return false;
+                    }
+                })
+                return result;
             }
         }
     }
