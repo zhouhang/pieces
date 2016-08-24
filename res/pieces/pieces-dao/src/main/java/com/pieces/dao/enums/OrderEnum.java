@@ -7,15 +7,14 @@ package com.pieces.dao.enums;
  */
 public enum OrderEnum {
     // 待确认、待付款、付款审核中、等待发货、已发货、已完成、已取消、已删除
-    UNPAID(1, "未付款"),
-    PENDING_PAYMENT(2, "待付款"),
-    VERIFY(3, "付款审核中"),
-    WAIT_DELIVERY(4, "等待发货"),
-    SHIPPED(5, "已发货"),
-    COMPLETE(6, "已完成"),
-    CANCEL(7, "已取消"),
-    DELETED(8, "已删除"),
-    DELIVERY_Fail(9, "配送失败");
+    UNPAID(1, "待付款"),
+    VERIFY(2, "付款待确认"),
+    WAIT_DELIVERY(3, "等待发货"),
+    SHIPPED(4, "已发货"),
+    COMPLETE(5, "已完成"),
+    CANCEL(6, "已取消"),
+    DELETED(7, "已删除");
+
     private OrderEnum(Integer value, String text) {
         this.value = value;
         this.text = text;
