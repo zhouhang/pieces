@@ -15,7 +15,6 @@
             </div>
             <div class="pagin">
                 <div class="extra">
-                    <a class="btn btn-gray" href="#"><i class="fa fa-export"></i>导出</a>
                     <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                     <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>

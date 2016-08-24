@@ -1,4 +1,4 @@
-package com.pieces.biz.config;
+package com.pieces.dao.config;
 
 /**
  * Author: koabs
@@ -8,7 +8,7 @@ package com.pieces.biz.config;
 public class SystemConfig {
 
     // 订单有效付款时间
-    public Integer orderValidityPeriod =10;
+    public static Integer orderValidityPeriod =10;
 
 
 }

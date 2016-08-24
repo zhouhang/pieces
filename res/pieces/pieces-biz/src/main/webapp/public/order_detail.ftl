@@ -47,7 +47,7 @@
                         </#if>
                             <#if (orderForm.status == 1)>
                                 <span>剩余付款时间</span>
-                                <span>9天23时40分</span>
+                                <span>${orderForm.orderValidityPeriod}</span>
                             </#if>
                         <#if (orderForm.status &lt;= 2)>
                             <span><a href="#" class="c-blue jremove">取消订单</a></span>

@@ -1,13 +1,13 @@
 package com.pieces.dao.vo;
 
+import com.pieces.dao.config.SystemConfig;
 import com.pieces.dao.enums.OrderEnum;
 import com.pieces.dao.model.*;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.httpclient.common.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Author: koabs
@@ -53,6 +53,9 @@ public class OrderFormVo extends OrderForm {
     private Date startTime;
     //订单结束时间
     private Date endTime;
+
+    // 订单剩余支付时间
+    private String orderValidityPeriod;
 
     public List<OrderCommodity> getCommodities() {
         return commodities;
@@ -154,6 +157,32 @@ public class OrderFormVo extends OrderForm {
         this.userId = userId;
     }
 
+
+    public String getOrderValidityPeriod() {
+        if (this.getCreaterTime() != null) {
+            // 10天的间隔 转换成毫秒
+            Long intervals = Long.valueOf(SystemConfig.orderValidityPeriod * 24 * 60 * 60 * 1000);
+            Long day = 24 * 60 * 60 * 1000L;
+            Long hour = 60 * 60 * 1000L;
+            Long minute = 60 * 1000L;
+
+            Long createTime = this.getCreaterTime().getTime() + intervals;
+
+            Long currentTime = new Date().getTime();
+            if (createTime <= currentTime) {
+                orderValidityPeriod = "付款期限已过";
+            } else {
+                Long difference = createTime - currentTime;
+                Long dayS = difference / day;
+                Long hourS = (difference % day) / hour;
+                Long minuteS = ((difference % day) % hour) / minute;
+
+                orderValidityPeriod = dayS.intValue() + "天" + hourS.intValue() + "时" + minuteS.intValue() + "分";
+            }
+        }
+
+        return orderValidityPeriod;
+    }
 
     /**
      * 将对象序列化为url参数.
