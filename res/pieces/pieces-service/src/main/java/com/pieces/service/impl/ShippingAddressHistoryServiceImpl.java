@@ -53,6 +53,7 @@ public class ShippingAddressHistoryServiceImpl  extends AbsCommonService<Shippin
 		shippingAddressHistory.setTel(shippingAddress.getTel());
 		shippingAddressHistory.setDetail(shippingAddress.getDetail());
 		shippingAddressHistory.setCreateTime(new Date());
+		shippingAddressHistory.setAreaId(shippingAddress.getAreaId());
 		shippingAddressHistoryDao.create(shippingAddressHistory);
 		return shippingAddressHistory;
 	}

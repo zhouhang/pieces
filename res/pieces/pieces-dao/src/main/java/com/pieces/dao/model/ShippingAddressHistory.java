@@ -18,6 +18,7 @@ public class ShippingAddressHistory  implements Serializable {
 	//手机号码
 	private String tel;
 	
+	private Integer areaId;
 	//所在区域
 	private String area;
 
@@ -104,4 +105,13 @@ public class ShippingAddressHistory  implements Serializable {
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
 	}
+
+	public Integer getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(Integer areaId) {
+		this.areaId = areaId;
+	}
+	
 }

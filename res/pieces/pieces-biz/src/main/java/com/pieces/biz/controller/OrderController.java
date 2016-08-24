@@ -142,6 +142,7 @@ public class OrderController extends BaseController {
 		BeanUtils.copyProperties(sa, sah);
 		sah.setId(null);
 		sah.setArea(getFullAdd(sa.getAreaId()));
+		sah.setAreaId(sa.getAreaId());
 		orderFormVo.setAddress(sah);
 		List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysService.findByIds(orderFormVo.getCommodityIds());
 		List<OrderCommodity> orderCommoditysList = new ArrayList<OrderCommodity>();
