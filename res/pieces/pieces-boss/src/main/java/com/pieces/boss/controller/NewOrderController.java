@@ -1,19 +1,27 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.OrderCommodity;
+import com.pieces.dao.model.ShippingAddress;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.*;
 import com.pieces.service.*;
+import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.utils.Reflection;
+import com.pieces.tools.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -26,14 +34,15 @@ public class NewOrderController extends BaseController{
     @Autowired
     private UserService userService;
     @Autowired
-    private ShippingAddressService shippingAddressService;
-    @Autowired
     private EnquiryBillsService enquiryBillsService;
     @Autowired
     private OrderFormService orderFormService;
     @Autowired
     private OrderCommodityService orderCommodityService;
-
+    @Autowired
+    private ShippingAddressService shippingAddressService;
+    @Autowired
+    private CommoditySearchService commoditySearchService;
     /**
      * 新建订单客户列表
      * @param pageNum
@@ -79,23 +88,53 @@ public class NewOrderController extends BaseController{
             orderFormVo.setCommodityVos(orderCommodityList);
             model.put("orderFormVo", orderFormVo);
         }
+        //收货地址
+        List<ShippingAddressVo> shippingAddressList =  shippingAddressService.findByUser(user.getId());
+        if(!shippingAddressList.isEmpty()){
+            model.put("shippingAddressList", shippingAddressList);
+        }
+
         model.put("billsPage",billsPageInfo);
         model.put("user",user);
         return "order_create";
     }
 
-
-    @RequestMapping(value = "member/address")
-    @ResponseBody
-    public List<ShippingAddressVo> memberAddress(Integer memberId){
-        List<ShippingAddressVo> shippingAddressVos = shippingAddressService.findByUser(memberId);
-        return shippingAddressVos;
+    /**
+     * 自动联想
+     * @param request
+     * @param response
+     * @param commodityName
+     */
+    @RequestMapping(value = "auto")
+    public void inputAuto(HttpServletRequest request,
+                          HttpServletResponse response,
+                          String commodityName){
+        List<CommodityDoc> commodityDocList = commoditySearchService.findByCommodityName(commodityName);
+        WebUtil.print(response,new Result(true).data(commodityDocList));
     }
 
+    /**
+     * 提交订单
+     */
+    @RequestMapping(value = "submit")
+    @ResponseBody
+    public Result save(@RequestBody OrderFormVo orderFormVo){
+        List<OrderCommodity> commodities = orderFormVo.getCommodities();
+        //计算商品金额
+        BigDecimal sum = new BigDecimal(0);
+        for(OrderCommodity commodity : commodities ){
+            BigDecimal total= new BigDecimal(commodity.getAmount()).multiply(new BigDecimal(commodity.getPrice()));
+            sum = sum.add(total);
+        }
+        orderFormVo.setSum(sum.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
 
+        //计算应付总额
+        BigDecimal payable = new BigDecimal(orderFormVo.getShippingCosts()).add(sum);
+        orderFormVo.setAmountsPayable(payable.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
 
+        orderFormService.create(orderFormVo);
 
-
-
+        return new Result(true).data(orderFormVo);
+    }
 
 }

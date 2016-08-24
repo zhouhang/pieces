@@ -45,5 +45,6 @@ public interface OrderFormService extends ICommonService<OrderForm>{
     public PageInfo<OrderFormVo> findOrderByUserId(Integer userId,Integer pageNum,Integer pageSize);
 
 
+    public OrderFormVo create(OrderFormVo orderFormVo);
 
 }

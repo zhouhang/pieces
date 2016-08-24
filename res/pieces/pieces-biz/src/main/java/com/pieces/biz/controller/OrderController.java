@@ -76,8 +76,6 @@ public class OrderController extends BaseController {
 		//获取收货地址
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         List<ShippingAddressVo>  shippingAddressList = shippingAddressService.findByUser(user.getId());
-        //获取详细地址
-        shippingAddressList = setFullAdd(shippingAddressList);
         ShippingAddressVo shippingAddress = null;
         if(currentid != null){
         	shippingAddress = getCurrentAdd(shippingAddressList,currentid);
@@ -155,7 +153,7 @@ public class OrderController extends BaseController {
 			oc.setOriginOf(ec.getOrigin());
 			oc.setExpectDate(ec.getExpectDate());
 			oc.setAmount(ec.getAmount());
-			oc.setPrice(ec.getMyPrice().floatValue());
+			oc.setPrice(ec.getMyPrice());
 			oc.setSubtotal(oc.getAmount()*oc.getPrice());
 			oc.setEnquiryCommodityId(ec.getId());
 			oc.setOrderId(null);
@@ -184,7 +182,7 @@ public class OrderController extends BaseController {
         }
 		return null;
 	}
-	
+
 	/**
 	 * 设置地址全称
 	 */
@@ -194,7 +192,7 @@ public class OrderController extends BaseController {
         }
 		return shippingAddressList;
 	}
-	
+
 	/**
 	 * 获取地址全称
 	 */

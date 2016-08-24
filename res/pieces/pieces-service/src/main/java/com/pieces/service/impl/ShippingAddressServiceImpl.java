@@ -4,10 +4,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.ShippingAddressDao;
+import com.pieces.dao.model.Area;
 import com.pieces.dao.model.ShippingAddress;
+import com.pieces.dao.model.User;
 import com.pieces.dao.vo.ShippingAddressVo;
 import com.pieces.service.AbsCommonService;
+import com.pieces.service.AreaService;
 import com.pieces.service.ShippingAddressService;
+import com.pieces.tools.utils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +24,8 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 
 	@Autowired
 	private ShippingAddressDao shippingAddressDao;
-
+	@Autowired
+	private AreaService areaService;
 
 	@Override
 	public PageInfo<ShippingAddressVo> findByParams(ShippingAddressVo shippingAddressVo,Integer pageNum,Integer pageSize) {
@@ -43,7 +48,7 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 	public List<ShippingAddressVo> findByUser(Integer userId) {
 		ShippingAddressVo shippingAddressVo = new ShippingAddressVo();
 		shippingAddressVo.setUserId(userId);
-		return findByParams(shippingAddressVo);
+		return setFullAdd(findByParams(shippingAddressVo));
 	}
 
 
@@ -69,4 +74,49 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 		return shippingAddressDao;
 	}
 
+	@Override
+	@Transactional
+	public void saveOrUpdate(ShippingAddress address, User user) {
+
+		if (address.getId() == null) {
+			address.setCreateTime(new Date());
+			address.setUserId(user.getId());
+			shippingAddressDao.create(address);
+		} else {
+			shippingAddressDao.update(address);
+		}
+		if (address.getIsDefault()) {
+			// 如果更新时设置为默认地址
+			settingDefaultAddress(address.getId(), address.getUserId());
+		}
+	}
+
+	@Override
+	public ShippingAddressVo findVoById(Integer id) {
+		ShippingAddress shippingAddress = findById(id);
+		ShippingAddressVo vo = new ShippingAddressVo();
+		BeanUtils.copy(shippingAddress, vo);
+		Area area = areaService.findParentsById(vo.getAreaId());
+		vo.setProvinceId(area.getProvinceId());
+		vo.setCityId(area.getCityId());
+		return vo;
+	}
+
+	/**
+	 * 设置地址全称
+	 */
+	private List<ShippingAddressVo> setFullAdd(List<ShippingAddressVo>  shippingAddressList){
+		for(ShippingAddressVo svo : shippingAddressList){
+			svo.setFullAdd(getFullAdd(svo.getAreaId()) + svo.getDetail());
+		}
+		return shippingAddressList;
+	}
+
+	/**
+	 * 获取地址全称
+	 */
+	private String getFullAdd(Integer areaId){
+		Area area = areaService.findParentsById(areaId);
+		return area.getProvince() + area.getCity() + area.getAreaname();
+	}
 }

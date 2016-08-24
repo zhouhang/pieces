@@ -613,7 +613,7 @@ vertical-align:middle;
 .allsort .tab li{float:left;padding:0 20px;color:#666;cursor:pointer;}
 .allsort .tab li.current{color:#c3272b;background:#fff;}
 .allsort .tabcont{padding:40px 20px 10px;}
-.allsort .tabcont .group{display:none;}
+.allsort .tabcont .group{display:none;overflow:hidden;*zoom:1;}
 .allsort .tabcont dl{float:left;width:50%;}
 .allsort .tabcont dt{line-height:1;margin-bottom:10px;font-size:18px;font-weight:700;}
 .allsort .tabcont dd{line-height:24px;font-size:12px;}
