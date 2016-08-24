@@ -17,8 +17,11 @@ public class ShippingAddressHistory  implements Serializable {
 	
 	//手机号码
 	private String tel;
-	
+
 	private Integer areaId;
+
+	private Area areaObj;
+
 	//所在区域
 	private String area;
 
@@ -113,5 +116,12 @@ public class ShippingAddressHistory  implements Serializable {
 	public void setAreaId(Integer areaId) {
 		this.areaId = areaId;
 	}
-	
+
+	public Area getAreaObj() {
+		return areaObj;
+	}
+
+	public void setAreaObj(Area areaObj) {
+		this.areaObj = areaObj;
+	}
 }

@@ -12,7 +12,7 @@
 <div class="create-order">
     <div class="wrap">
         <div class="title">
-            <h3><i class="fa fa-chevron-right"></i>为${user.username!}创建新订单</h3>
+            <h3><i class="fa fa-chevron-right"></i>为${user.userName!}${order_type!}</h3>
             <div class="extra">
                 <a class="btn btn-gray" href="create_order.html">取消</a>
                 <a class="btn btn-red" href="create_order.html">提交订单</a>
@@ -24,7 +24,7 @@
             <div class="item">
                 <div class="hd">
                     <button class="btn">添加</button>
-                    <span>hehuan的询价单</span>
+                    <span>${user.userName!}的询价单</span>
                 </div>
                     <div class="bd">
                         <div class="th">
@@ -107,24 +107,46 @@
                             </thead>
                             <tfoot>
                             <tr>
-                                <td colspan="7" class="tl">共 2 件商品</td>
+                                <td colspan="7" class="tl">共 <#if commodityVos??&&commodityVos?has_content>${commodityVos?size}<#else>0</#if> 件商品</td>
                                 <td colspan="2" class="tl">总计：<b class="jsum"></b></td>
                             </tr>
                             </tfoot>
                             <tbody>
-                            <tr>
-                                <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" name="name"></div><span class="error"></span></td>
-                                <td><div class="ipt-wrap"><input type="text" class="ipt" name="spec"></div><span class="error"></span></td>
-                                <td><div class="ipt-wrap"><input type="text" class="ipt" name="level"></div><span class="error"></span></td>
-                                <td><div class="ipt-wrap"><input type="text" class="ipt" name="originOf"></div><span class="error"></span></td>
-                                <td><input type="text" class="ipt" name="expectDate" value="" onclick="laydate({min:laydate.now()})"><span class="error"></span></td>
-                                <td><input type="text" class="ipt amount" name="amount" value=""><span class="error"></span></td>
-                                <td><input type="text" class="ipt price" name="price" value=""><span class="error"></span></td>
-                                <td class="jtotal"></td>
-                                <td>
-                                    <a href="javascript:;" class="add">添加</a>
-                                </td>
-                            </tr>
+                            <#if commodityVos??&&commodityVos?has_content>
+                                <#list commodityVos as commodity>
+                                    <tr>
+                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.name!}" class="ipt ipt-name" name="name"></div><span class="error"></span></td>
+                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.spec!}" class="ipt" name="spec"></div><span class="error"></span></td>
+                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.level!}" class="ipt" name="level"></div><span class="error"></span></td>
+                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.originOf!}" class="ipt" name="originOf"></div><span class="error"></span></td>
+                                        <td><input type="text" class="ipt" name="expectDate" value="${commodity.expectDate?string("yyyy-MM-dd")}" onclick="laydate({min:laydate.now()})"><span class="error"></span></td>
+                                        <td><input type="text" class="ipt amount" name="amount" value="${commodity.amount!}"><span class="error"></span></td>
+                                        <td><input type="text" class="ipt price" name="price" value="${commodity.price!}"><span class="error"></span></td>
+                                        <td class="jtotal"></td>
+                                        <td>
+                                            <a href="javascript:;" class="add">添加</a>
+                                            <#if (commodityVos?size>1)>
+                                                <a href="javascript:;" class="remove c-red">删除</a>
+                                            </#if>
+                                        </td>
+                                    </tr>
+                                </#list>
+                                <#else>
+                                    <tr>
+                                        <td><div class="ipt-wrap"><input type="text"  class="ipt ipt-name" name="name"></div><span class="error"></span></td>
+                                        <td><div class="ipt-wrap"><input type="text"  class="ipt" name="spec"></div><span class="error"></span></td>
+                                        <td><div class="ipt-wrap"><input type="text"  class="ipt" name="level"></div><span class="error"></span></td>
+                                        <td><div class="ipt-wrap"><input type="text"  class="ipt" name="originOf"></div><span class="error"></span></td>
+                                        <td><input type="text" class="ipt" name="expectDate"  onclick="laydate({min:laydate.now()})"><span class="error"></span></td>
+                                        <td><input type="text" class="ipt amount" name="amount" ><span class="error"></span></td>
+                                        <td><input type="text" class="ipt price" name="price" >><span class="error"></span></td>
+                                        <td class="jtotal"></td>
+                                        <td>
+                                            <a href="javascript:;" class="add">添加</a>
+                                        </td>
+                                    </tr>
+                            </#if>
+
                             </tbody>
                         </table>
                     </form>
@@ -148,25 +170,25 @@
                     <div class="group">
                         <div class="txt">收&nbsp;&nbsp;货&nbsp;&nbsp;人：</div>
                         <div class="cnt">
-                            <input type="text" name="consignee" class="ipt" placehoder="" autocomplete="off" value="">
+                            <input type="text" name="consignee" class="ipt" placehoder="" autocomplete="off" value="<#if shippingAddressHistory??>${shippingAddressHistory.consignee!}</#if>">
                         </div>
                     </div>
                     <div class="group">
                         <div class="txt">手机号码：</div>
                         <div class="cnt">
-                            <input type="text"  name="tel" class="ipt" placehoder="" autocomplete="off" value="">
+                            <input type="text"  name="tel" class="ipt" placehoder="" autocomplete="off" value="<#if shippingAddressHistory??>${shippingAddressHistory.tel!}</#if>">
                         </div>
                     </div>
                     <div class="group">
                         <div class="txt">所在地区：</div>
                         <div class="cnt">
-                            <select name="province" id="province" data-value="">
+                            <select name="province" id="province" data-value="<#if shippingAddressHistory??&&shippingAddressHistory.areaObj??>${shippingAddressHistory.areaObj.provinceId!}</#if>">
                                 <option value="">-省-</option>
                             </select>
-                            <select name="city" id="city" data-value="">
+                            <select name="city" id="city" data-value="<#if shippingAddressHistory??&&shippingAddressHistory.areaObj??>${shippingAddressHistory.areaObj.cityId!}</#if>">
                                 <option value="">-市-</option>
                             </select>
-                            <select name="area" id="area" data-value="">
+                            <select name="area" id="area" data-value="<#if shippingAddressHistory??&&shippingAddressHistory.areaObj??>${shippingAddressHistory.areaObj.id!}</#if>">
                                 <option value="">-区/县-</option>
                             </select>
                         </div>
@@ -174,7 +196,7 @@
                     <div class="group">
                         <div class="txt">详细地址：</div>
                         <div class="cnt">
-                            <textarea name="detail"  cols="30" rows="10" class="ipt ipt-mul"></textarea>
+                            <textarea name="detail"  cols="30" rows="10" class="ipt ipt-mul"><#if shippingAddressHistory??>${shippingAddressHistory.detail!}</#if></textarea>
                         </div>
                     </div>
                 </div>
@@ -186,7 +208,7 @@
                     <div class="group">
                         <div class="txt">订单备注：</div>
                         <div class="cnt">
-                            <textarea name="remark" id="" cols="30" rows="10" placeholder="" class="ipt ipt-note"></textarea>
+                            <textarea name="remark"  id="" cols="30" rows="10" placeholder="" class="ipt ipt-note"><#if origOrderForm??>${origOrderForm.remark!}</#if></textarea>
                         </div>
                     </div>
                 </div>
@@ -194,19 +216,22 @@
 
             <div class="chart-info">
                 <input type="hidden" id="userId" name="userId" value="${user.id!}">
+
+                <input type="hidden" id="orderId" name="orderId" value="<#if order_type=='修改订单'>${origOrderForm.id!}</#if>">
+
                 <h3>订单总额</h3>
                 <div class="fa-form summary">
                     <div class="item">
                         <span>商品合计：</span>
-                        <em class="jsum"></em>
+                        <em class="jsum"><#if origOrderForm??>${origOrderForm.sum!}</#if></em>
                     </div>
                     <div class="item">
                         <span>运&#12288;&#12288;费：</span>
-                        <em><input type="text" class="ipt" id="jfreightPrice"></em>
+                        <em><input value="<#if origOrderForm??>${origOrderForm.shippingCosts!}</#if>" type="text" class="ipt" id="jfreightPrice"></em>
                     </div>
                     <div class="item">
                         <span>实际应付：</span>
-                        <em class="price jsum2"></em>
+                        <em class="price jsum2"><#if origOrderForm??>${origOrderForm.amountsPayable!}</#if></em>
                     </div>
                 </div>
             </div>
@@ -262,6 +287,7 @@
             init: function() {
                 this.myformEvent();
                 this.addGoodsToOrder();
+                this.insertArea();
 
                 $("#order_address").change(function(){
                    var id =  $(this).val()
@@ -295,10 +321,6 @@
                            }
                        })
                    }
-
-
-
-
                 })
             },
             myformEvent: function() {
@@ -551,6 +573,9 @@
                         //运费
                         var jfreightPrice = $("#jfreightPrice").val();
                         formObj.shippingCosts = jfreightPrice;
+                        //订单号
+                        var orderId = $("#orderId").val();
+                        formObj.orderId = orderId;
 
 
                         var formData = JSON.stringify(formObj);
@@ -573,6 +598,9 @@
                     }
                     return false;
                 })
+            },
+            insertArea: function() {
+
             }
         }
     }

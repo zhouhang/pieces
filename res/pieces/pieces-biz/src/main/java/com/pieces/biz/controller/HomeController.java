@@ -11,6 +11,7 @@ import com.pieces.service.enums.WeightEnum;
 import com.pieces.service.utils.predicate.RegularPredicate;
 import org.apache.commons.beanutils.BeanPredicate;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.map.LinkedMap;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,7 +130,7 @@ public class HomeController extends BaseController{
 				"K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
 		for(CategoryVo categoryVo : categoryVoList){
 			List<CategoryVo> childCategorys = categoryService.findByLevelAndPinyin(2,categoryVo.getId(),null);
-			Map<String,List<CategoryVo>> map = new HashMap<>();
+			Map<String,List<CategoryVo>> map = new LinkedHashMap<>();
 			for(String letter: letters){
 				RegularPredicate eqlPredicate = new RegularPredicate(Pattern.compile(letter.toLowerCase()+"[a-z]*"));
 				Collection<CategoryVo> collection = CollectionUtils.select(childCategorys,new BeanPredicate("pinyin",eqlPredicate));

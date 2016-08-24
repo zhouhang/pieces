@@ -14,6 +14,7 @@ import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.*;
 import com.pieces.tools.utils.SeqNoUtil;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -113,6 +114,9 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
         return page;
     }
 
+
+
+
     /**
      *
      * @param orderFormVo
@@ -129,8 +133,9 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
         orderFormVo.setStatus(OrderEnum.UNPAID.getValue());
         orderFormVo.setAddrHistoryId(shippingAddressHistory.getId());
         orderFormDao.create(orderFormVo);
-
-        orderFormVo.setCode(SeqNoUtil.get("", orderFormVo.getId(), 6));
+        if(StringUtils.isBlank(orderFormVo.getCode())){
+            orderFormVo.setCode(SeqNoUtil.get("", orderFormVo.getId(), 6));
+        }
         orderFormDao.update(orderFormVo);
 
         //保存商品
@@ -143,5 +148,25 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
         orderCommodityService.save(list);
 
         return orderFormVo;
+    }
+
+
+    @Override
+    @Transactional
+    public OrderFormVo create(OrderFormVo orderFormVo, Integer origOrderId){
+        //原订单状态改成已取消
+        OrderForm orderForm =findById(origOrderId);
+        orderForm.setStatus(OrderEnum.CANCEL.getValue());
+        orderFormDao.update(orderForm);
+
+        String origCode = orderForm.getCode();
+        if(!origCode.contains("-")){
+            orderFormVo.setCode(origCode+"-1");
+        }else{
+            String[] code = origCode.split("-");
+            Integer time = Integer.valueOf(code[1])+1;
+            orderFormVo.setCode(code[0]+"-"+time);
+        }
+        return create(orderFormVo);
     }
 }

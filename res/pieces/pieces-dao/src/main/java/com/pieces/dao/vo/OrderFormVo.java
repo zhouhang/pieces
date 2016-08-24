@@ -15,6 +15,8 @@ import java.util.*;
  */
 public class OrderFormVo extends OrderForm {
 
+    private Integer orderId;
+
     // 商品列表
     private List<OrderCommodity> commodities;
 
@@ -155,6 +157,14 @@ public class OrderFormVo extends OrderForm {
     @Override
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
 
