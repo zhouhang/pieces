@@ -211,10 +211,10 @@
 
                 $('#consigneeForm').validator({
                     fields: {
-                        consigneeName: '收货人: required; nickName',
-                        consigneeMobile: '手机号码: required; mobile',
+                        consignee: '收货人: required; nickName',
+                        tel: '手机号码: required; mobile',
                         areaId: '所在地区: required',
-                        consigneeAddress: '详细地址: required'
+                        detail: '详细地址: required'
                     },
                     valid: function (form) {
                         var myfromValid = this;
@@ -267,20 +267,26 @@
 
                 // 保存
                 $("#consigneeForm").submit(function () {
-                    var data = $(this).serializeObject();
-                    if(data.isDefault == "1"){
-                        data.isDefault = true;
-                    } else {
-                        data.isDefault = false;
-                    }
-                    var url = _global.v.saveUrl;
-                    $.post(url, data, function (data) {
-                        if(data.status == "y") {
-                            layer.closeAll();
-                            window.location.reload();
+                    $('#consigneeForm').isValid(function (v) {
+                        //console.log(v ? '表单验证通过' : '表单验证不通过');
+                        if (v) {
+                            var data = $(this).serializeObject();
+                            if (data.isDefault == "1") {
+                                data.isDefault = true;
+                            } else {
+                                data.isDefault = false;
+                            }
+                            var url = _global.v.saveUrl;
+                            $.post(url, data, function (data) {
+                                if (data.status == "y") {
+                                    layer.closeAll();
+                                    window.location.reload();
+                                }
+                            })
                         }
                     })
-                    return false;
+
+                        return false;
                 })
             },
             // 默认地址
@@ -299,7 +305,6 @@
                     return false; // 组织默认事件
                 })
             }
-        }
     }
     $(function () {
         _global.fn.init();

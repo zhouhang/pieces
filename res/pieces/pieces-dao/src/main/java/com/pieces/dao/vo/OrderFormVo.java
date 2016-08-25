@@ -134,7 +134,9 @@ public class OrderFormVo extends OrderForm {
                 names[i] = commodities.get(i).getName();
             }
             commodityOverview = StringUtils.join(names, ",");
-            commodityOverview += "...";
+            if (lenght>3) {
+                commodityOverview += "...";
+            }
         }
 
         return commodityOverview;
