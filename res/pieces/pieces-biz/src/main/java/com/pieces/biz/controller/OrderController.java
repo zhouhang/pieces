@@ -167,7 +167,8 @@ public class OrderController extends BaseController {
 		orderFormService.save(orderFormVo, user);
 		request.getSession().removeAttribute(SessionEnum.ORDER_TOKEN.getKey());
 		modelMap.put("total", total);
-		modelMap.put("orderId", orderFormVo.getCode());
+		modelMap.put("orderCode", orderFormVo.getCode());
+		modelMap.put("orderId", orderFormVo.getId());
         return "order_success";
 	}
 	
