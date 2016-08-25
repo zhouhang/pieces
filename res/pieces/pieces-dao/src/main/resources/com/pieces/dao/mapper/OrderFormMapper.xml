@@ -124,6 +124,7 @@
                 and o.status != 7
             </if>
         </where>
+        order by creater_time desc
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
