@@ -14,7 +14,7 @@
         <div class="title">
             <h3><i class="fa fa-chevron-right"></i>为${user.userName!}${order_type!}</h3>
             <div class="extra">
-                <a class="btn btn-gray" href="create_order.html">取消</a>
+                <a class="btn btn-gray" href="/order/index">取消</a>
                 <a class="btn btn-red" id="submitOrder2" href="javascript:;">提交订单</a>
             </div>
         </div>
@@ -309,16 +309,13 @@
                        var area = $(this).find('option:selected').data('area').split(',');
                        $(area).each(function(index,obj){
                            if(index==0){
-                               console.log("province:"+obj)
                                $("#province").val(obj);
                            }
                            if(index==1){
-                               console.log("city:"+obj)
                                $("#province").change();
                                $("#city").val(obj);
                            }
                            if(index==2){
-                               console.log("area:"+obj)
                                $("#area").val(obj);
                            }
                        })
@@ -601,7 +598,6 @@
                         //订单号
                         var orderId = $("#orderId").val();
                         formObj.orderId = orderId;
-
 
                         var formData = JSON.stringify(formObj);
                         $.ajax({

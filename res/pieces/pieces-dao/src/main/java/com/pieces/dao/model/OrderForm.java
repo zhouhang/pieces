@@ -39,6 +39,8 @@ public class OrderForm  implements Serializable {
 	
 	//下单日期
 	private Date createrTime;
+
+	private Integer createMember;
 	
 	//付款日期
 	private Date paymentDate;
@@ -140,5 +142,12 @@ public class OrderForm  implements Serializable {
 	public void setPaymentDate(Date paymentDate) {
 		this.paymentDate = paymentDate;
 	}
-	
+
+	public Integer getCreateMember() {
+		return createMember;
+	}
+
+	public void setCreateMember(Integer createMember) {
+		this.createMember = createMember;
+	}
 }

@@ -13,11 +13,11 @@
         <div class="wrap">
             <div class="title title-btm">
                 <h3>请选择客户</h3>
-                <div class="extra"><a class="btn btn-gray" href="customers-add.html">返回</a></div>
+                <div class="extra"><a class="btn btn-gray" href="/order/index">返回</a></div>
             </div>
             <div class="pagin">
                 <div class="extra"> 
-                    <button class="btn btn-gray" type="button" onclick="" id="reset">重置条件</button>
+                    <button class="btn btn-gray" type="button" onclick="/order/customer" id="reset">重置条件</button>
                     <button class="btn btn-blue" type="button" id="submit"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
                 <@p.pager pageInfo=customerPage  pageUrl="order/customer"  params=customerParams/>

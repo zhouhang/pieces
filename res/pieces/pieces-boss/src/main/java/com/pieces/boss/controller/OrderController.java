@@ -56,6 +56,7 @@ public class OrderController extends BaseController{
     @Autowired
     private AreaService areaService;
 
+
     /**
      * 订单列表页面
      * @return
@@ -65,9 +66,7 @@ public class OrderController extends BaseController{
         PageInfo<OrderFormVo> pageInfo = orderFormService.findByParams(vo,pageNum,pageSize);
         modelMap.put("pageInfo",pageInfo);
         modelMap.put("vo",vo);
-
         modelMap.put("param", vo.serialize());
-
         return  "order";
     }
 
@@ -161,7 +160,6 @@ public class OrderController extends BaseController{
     public String createOrder(@PathVariable("customerId") Integer customerId,
                               ModelMap model){
         orderModel(customerId,null,model);
-
         model.put("order_type","创建新订单");
         return "order_create";
     }
@@ -199,18 +197,19 @@ public class OrderController extends BaseController{
         BigDecimal payable = new BigDecimal(orderFormVo.getShippingCosts()).add(sum);
         orderFormVo.setAmountsPayable(payable.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
 
+
+        Member member = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
+        orderFormVo.setCreateMember(member.getId());
         if(orderFormVo.getOrderId()==null){
             orderFormService.create(orderFormVo);
         }else{
             orderFormService.create(orderFormVo,orderFormVo.getOrderId());
         }
-
         return new Result(true).data(orderFormVo);
     }
 
 
     private void orderModel(Integer customerId,Integer orderId,ModelMap model){
-
         if(orderId!=null){
             //查询订单详情
             OrderForm orderForm =  orderFormService.findById(orderId);
@@ -257,4 +256,6 @@ public class OrderController extends BaseController{
         model.put("user",user);
 
     }
+
+
 }
