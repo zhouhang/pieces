@@ -127,7 +127,7 @@
 
                         <div class="history">
                             <ul id="remarklist">
-                                <#if vo.remark?exists>
+                                <#if vo.remark?exists??&&vo.remark != "">
                                     <li>
                                         <span> <#if vo.createrTime?exists>${vo.createrTime?date}</#if></span>
                                         <span>客户备注</span>
