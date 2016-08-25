@@ -160,7 +160,7 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
         OrderForm orderForm =findById(origOrderId);
         orderForm.setStatus(OrderEnum.CANCEL.getValue());
         orderFormDao.update(orderForm);
-
+        //改变订单号
         String origCode = orderForm.getCode();
         if(!origCode.contains("-")){
             orderFormVo.setCode(origCode+"-1");
