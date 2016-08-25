@@ -146,7 +146,6 @@
 <script src="js/layer/layer.js"></script>
 <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
 <script src="js/area.js"></script>
-<script src="js/common.js"></script>
 <script src="js/jquery_util.js"></script>
 <script>
     var _global = {

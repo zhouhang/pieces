@@ -44,13 +44,13 @@
                         <td>
                             <select name="status" id="status">
                                 <option value=""></option>
-                                <option value="1">未付款</option>
-                                <option value="2">等待发货</option>
-                                <option value="3">已发货</option>
-                                <option value="4">已完成</option>
-                                <option value="5">已取消</option>
-                                <option value="6">已删除</option>
-                                <option value="7">配送失败</option>
+                                <option value="1">待付款</option>
+                                <option value="2">付款待确认</option>
+                                <option value="3">等待发货</option>
+                                <option value="4">已发货</option>
+                                <option value="5">已完成</option>
+                                <option value="6">已取消</option>
+                                <option value="7">已删除</option>
                             </select>
                         </td>
                         <td></td>
