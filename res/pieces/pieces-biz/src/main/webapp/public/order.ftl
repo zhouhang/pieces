@@ -25,7 +25,7 @@
                         <h3>收货信息</h3>
                     </div>
                     
-                    <div class="consignee">
+                    <div class="consignee" id="addConsignee">
                         <#if shippingAddressCurrent??>
                         <ul>
                             <li id= "shippingAddressCurrent">
@@ -394,6 +394,7 @@
                 // 新增收货地址
                 addConsignee: function() {
                     var $consigneeBox = $('#jconsigneeBox');
+                    var $addConsignee = $('#addConsignee');
                     $('.jaddConsignee').on('click', function() {
                         layer.open({
                             area: ['600px'],
@@ -449,15 +450,16 @@
 									    $("#jconsigneeList").find("ul li").removeClass("current");
                                         $("#jconsigneeList").find("ul").append(html);
                                          
-		                            	html = '<input type="hidden" name="addrHistoryId" id="addrHistoryId" value="'+result.info+'">'+
+		                            	html = '<ul><li>' +
+		                            	'<input type="hidden" name="addrHistoryId" id="addrHistoryId" value="'+result.info+'">'+
 		                                '<p><span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>'+consigneeName+'</p>'+
 		                                '<p><span>联系方式：</span>'+consigneeMobile+'</p>'+
 		                                '<p><span>收货地址：</span>'+add+'</p>'+
 		                                '<div class="extra">'+
 		                                    '<a href="javascript:;" class="c-blue" id="jchooseConsignee">切换地址</a>'+
 		                                    '<div class="btn btn-lgray jaddConsignee">新增收货地址</div>'+
-		                                '</div>';
-			                            $("#shippingAddressCurrent").html(html);
+		                                '</div>' + '</li></ul>';
+			                            $("#addConsignee").html(html);
 			                            _global.fn.addConsignee();
 			                            _global.fn.chooseConsignee();
                                     }
@@ -496,15 +498,15 @@
                     	var currentid = $consigneeList.find(".current").find("input[name='shippingAddressId']").val();
                     	var $p = $consigneeList.find(".current").find("p")
                     	
-                    	var html = '<input type="hidden" name="addrHistoryId" id="addrHistoryId" value="'+currentid+'">'+
+                    	var html = '<ul><li>'+'<input type="hidden" name="addrHistoryId" id="addrHistoryId" value="'+currentid+'">'+
                         '<p>'+$($p[0]).html()+'</p>'+
                         '<p>'+$($p[1]).html()+'</p>'+
                         '<p>'+$($p[2]).html()+'</p>'+
                         '<div class="extra">'+
                         '<a href="javascript:;" class="c-blue" id="jchooseConsignee">切换地址</a>'+
                         '<div class="btn btn-lgray jaddConsignee">新增收货地址</div>'+
-                        '</div>';
-                        $("#shippingAddressCurrent").html(html);
+                        '</div>'+'</li></ul>';
+                        $("#addConsignee").html(html);
                         _global.fn.addConsignee();
 			            _global.fn.chooseConsignee();
                         layer.closeAll();

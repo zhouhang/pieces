@@ -19,8 +19,8 @@
             <div class="hd">
                 <h3>您的订单已提交成功！</h3>
                 <p class="cf">
-                    <a class="fr c-blue" href="user_order_detail.html">查看该订单</a>
-                    <span>订单号：${orderId}</span>
+                    <a class="fr c-blue" href="/center/order/detail/${orderId}">查看该订单</a>
+                    <span>订单号：${orderCode}</span>
                     <span>订单金额：<em>¥${total}</em></span>
                     <span>请在<em>10</em>个工作日内完成付款。</span>
                 </p>
