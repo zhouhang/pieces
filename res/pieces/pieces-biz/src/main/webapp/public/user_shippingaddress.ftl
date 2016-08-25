@@ -150,10 +150,10 @@
 <script>
     var _global = {
         v: {
-            saveUrl:"/user/shippingaddress/save",
-            deleteUrl:"/user/shippingaddress/delete/",
-            defaultUrl:"/user/shippingaddress/default/",
-            getDetailUrl:"/user/shippingaddress/detail/"
+            saveUrl: "/user/shippingaddress/save",
+            deleteUrl: "/user/shippingaddress/delete/",
+            defaultUrl: "/user/shippingaddress/default/",
+            getDetailUrl: "/user/shippingaddress/detail/"
         },
         fn: {
             init: function () {
@@ -167,11 +167,11 @@
                     var $this = $(this);
                     layer.confirm('要删除此地址？', {icon: 3, title: '提示'}, function (index) {
                         var url = _global.v.deleteUrl + $this.attr("href");
-                        $.get(url, function(data) {
-                            if(data.status == "y") {
+                        $.get(url, function (data) {
+                            if (data.status == "y") {
                                 window.location.reload();
                             }
-                        },"json");
+                        }, "json");
                         layer.close(index);
                     });
                     return false; // 组织默认事件
@@ -182,7 +182,7 @@
                 var $consigneeBox = $('#jconsigneeBox');
                 $('.jaddConsignee').on('click', function () {
                     var total = $("#add-body tr").size();
-                    if (total >= 10 ) {
+                    if (total >= 10) {
                         $.notify({
                             type: 'info',
                             title: '警告',
@@ -230,7 +230,7 @@
 
                     $.get(url, function (data) {
                         if (data.status == "y") {
-                            var  addr = data.data;
+                            var addr = data.data;
                             // 填充数据
                             $("#id").val(addr.id);
                             $('#consigneeName').val(addr.consignee);
@@ -241,11 +241,11 @@
                             setTimeout(function () {
                                 $('#city').val(addr.cityId);
                                 $('#city').trigger("change")
-                            },500)
+                            }, 500)
 
                             setTimeout(function () {
                                 $('#area').val(addr.areaId);
-                            },1000)
+                            }, 1000)
 
                             //getArea('', $province);
 
@@ -260,7 +260,7 @@
                                 title: '修改地址'
                             });
                         }
-                    },"json")
+                    }, "json")
 
                     return false;
                 })
@@ -286,7 +286,7 @@
                         }
                     })
 
-                        return false;
+                    return false;
                 })
             },
             // 默认地址
@@ -295,16 +295,17 @@
                     var $this = $(this);
                     layer.confirm('确认次将此地址设为默认地址？', {icon: 3, title: '提示'}, function (index) {
                         var url = _global.v.defaultUrl + $this.attr("href");
-                        $.get(url, function(data) {
-                            if(data.status == "y") {
+                        $.get(url, function (data) {
+                            if (data.status == "y") {
                                 window.location.reload();
                             }
-                        },"json");
+                        }, "json");
                         layer.close(index);
                     });
                     return false; // 组织默认事件
                 })
             }
+        }
     }
     $(function () {
         _global.fn.init();
