@@ -116,13 +116,13 @@
                             <#if commodityVos??&&commodityVos?has_content>
                                 <#list commodityVos as commodity>
                                     <tr>
-                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.name!}" class="ipt ipt-name" name="name"></div><span class="error"></span></td>
-                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.spec!}" class="ipt" name="spec"></div><span class="error"></span></td>
-                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.level!}" class="ipt" name="level"></div><span class="error"></span></td>
-                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.originOf!}" class="ipt" name="originOf"></div><span class="error"></span></td>
-                                        <td><input type="text" class="ipt" name="expectDate" value="${commodity.expectDate?string("yyyy-MM-dd")}" onclick="laydate({min:laydate.now()})"><span class="error"></span></td>
-                                        <td><input type="text" class="ipt amount" name="amount" value="${commodity.amount!}"><span class="error"></span></td>
-                                        <td><input type="text" class="ipt price" name="price" value="${commodity.price!}"><span class="error"></span></td>
+                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.name!}" class="ipt ipt-name" name="name"><span class="error"></span></div></td>
+                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.spec!}" class="ipt" name="spec"><span class="error"></span></div></td>
+                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.level!}" class="ipt" name="level"><span class="error"></span></div></td>
+                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.originOf!}" class="ipt" name="originOf"><span class="error"></span></div></td>
+                                        <td><div class="pr"><input type="text" class="ipt" name="expectDate" value="${commodity.expectDate?string("yyyy-MM-dd")}" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
+                                        <td><div class="pr"><input type="text" class="ipt amount" name="amount" value="${commodity.amount!}"><span class="error"></span></div></td>
+                                        <td><div class="pr"><input type="text" class="ipt price" name="price" value="${commodity.price!}"><span class="error"></span></div></td>
                                         <td class="jtotal"></td>
                                         <td>
                                             <a href="javascript:;" class="add">添加</a>
@@ -134,13 +134,13 @@
                                 </#list>
                                 <#else>
                                     <tr>
-                                        <td><div class="ipt-wrap"><input type="text"  class="ipt ipt-name" name="name"></div><span class="error"></span></td>
-                                        <td><div class="ipt-wrap"><input type="text"  class="ipt" name="spec"></div><span class="error"></span></td>
-                                        <td><div class="ipt-wrap"><input type="text"  class="ipt" name="level"></div><span class="error"></span></td>
-                                        <td><div class="ipt-wrap"><input type="text"  class="ipt" name="originOf"></div><span class="error"></span></td>
-                                        <td><input type="text" class="ipt" name="expectDate"  onclick="laydate({min:laydate.now()})"><span class="error"></span></td>
-                                        <td><input type="text" class="ipt amount" name="amount" ><span class="error"></span></td>
-                                        <td><input type="text" class="ipt price" name="price" ><span class="error"></span></td>
+                                        <td><div class="ipt-wrap"><input type="text"  class="ipt ipt-name" name="name"><span class="error"></span></div></td>
+                                        <td><div class="ipt-wrap"><input type="text"  class="ipt" name="spec"><span class="error"></span></div></td>
+                                        <td><div class="ipt-wrap"><input type="text"  class="ipt" name="level"><span class="error"></span></div></td>
+                                        <td><div class="ipt-wrap"><input type="text"  class="ipt" name="originOf"><span class="error"></span></div></td>
+                                        <td><div class="pr"><input type="text" class="ipt" name="expectDate"  onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
+                                        <td><div class="pr"><input type="text" class="ipt amount" name="amount" ><span class="error"></span></div></td>
+                                        <td><div class="pr"><input type="text" class="ipt price" name="price" ><span class="error"></span></div></td>
                                         <td class="jtotal"></td>
                                         <td>
                                             <a href="javascript:;" class="add">添加</a>
@@ -264,13 +264,13 @@
 
 <script type="temp" id="jmodal">
         <tr>
-            <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" name="name"></div><span class="error"></span></td>
-            <td><div class="ipt-wrap"><input type="text" class="ipt" name="spec"></div><span class="error"></span></td>
-            <td><div class="ipt-wrap"><input type="text" class="ipt" name="level"></div><span class="error"></span></td>
-            <td><div class="ipt-wrap"><input type="text" class="ipt" name="originOf"></div><span class="error"></span></td>
-            <td><input type="text" class="ipt" name="expectDate" value="" onclick="laydate({min:laydate.now()})"><span class="error"></span></td>
-            <td><input type="text" class="ipt amount" name="amount" value=""><span class="error"></span></td>
-            <td><input type="text" class="ipt price" name="price" value=""><span class="error"></span></td>
+            <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" name="name"><span class="error"></span></div></td>
+            <td><div class="ipt-wrap"><input type="text" class="ipt" name="spec"><span class="error"></span></div></td>
+            <td><div class="ipt-wrap"><input type="text" class="ipt" name="level"><span class="error"></span></div></td>
+            <td><div class="ipt-wrap"><input type="text" class="ipt" name="originOf"><span class="error"></span></div></td>
+            <td><div class="pr"><input type="text" class="ipt" name="expectDate" value="" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
+            <td><div class="pr"><input type="text" class="ipt amount" name="amount" value=""><span class="error"></span></div></td>
+            <td><div class="pr"><input type="text" class="ipt price" name="price" value=""><span class="error"></span></div></td>
             <td class="jtotal"></td>
             <td>
                 <a href="javascript:;" class="add">添加</a>
@@ -290,37 +290,9 @@
             init: function() {
                 this.myformEvent();
                 this.addGoodsToOrder();
+                this.insertArea();
 
-                $("#order_address").change(function(){
-                   var id =  $(this).val()
-                   if(id!=null&&id!=""){
-                       var data =  $(this).find('option:selected').data('val').split(',');
-                       $(data).each(function(index,obj){
-                            if(index==0){
-                               $(".cnt input[name='consignee']").val(obj)
-                            }
-                            if(index==1){
-                               $(".cnt input[name='tel']").val(obj)
-                            }
-                            if(index==2){
-                               $(".cnt textarea[name='detail']").val(obj)
-                            }
-                       })
-                       var area = $(this).find('option:selected').data('area').split(',');
-                       $(area).each(function(index,obj){
-                           if(index==0){
-                               $("#province").val(obj);
-                           }
-                           if(index==1){
-                               $("#province").change();
-                               $("#city").val(obj);
-                           }
-                           if(index==2){
-                               $("#area").val(obj);
-                           }
-                       })
-                   }
-                })
+
 
 
                 $('#myform').validator({
@@ -648,35 +620,35 @@
                     if (name) {
                         $name.nextAll('.error').html('').hide();
                     } else {
-                        $name.nextAll('.error').html('此处不可空白').show();
+                        $name.nextAll('.error').html('不可空白').show();
                         result.pass = false;
                     }
 
                     if (standard) {
                         $standard.nextAll('.error').css('display','none').html('');
                     } else {
-                        $standard.nextAll('.error').css('display','block').html('此处不可空白');
+                        $standard.nextAll('.error').css('display','block').html('不可空白');
                         result.pass = false;
                     }
 
                     if (level) {
                         $level.nextAll('.error').css('display','none').html('');
                     } else {
-                        $level.nextAll('.error').css('display','block').html('此处不可空白');
+                        $level.nextAll('.error').css('display','block').html('不可空白');
                         result.pass = false;
                     }
 
                     if (origin) {
                         $origin.nextAll('.error').css('display','none').html('');
                     } else {
-                        $origin.nextAll('.error').css('display','block').html('此处不可空白');
+                        $origin.nextAll('.error').css('display','block').html('不可空白');
                         result.pass = false;
                     }
 
                     if (price) {
                         $price.nextAll('.error').css('display','none').html('');
                     } else {
-                        $price.nextAll('.error').css('display','block').html('此处不可空白');
+                        $price.nextAll('.error').css('display','block').html('不可空白');
                         result.pass = false;
                     }
 
@@ -684,14 +656,14 @@
                     if (amount) {
                         $amount.nextAll('.error').css('display','none').html('');
                     } else {
-                        $amount.nextAll('.error').css('display','block').html('此处不可空白');
+                        $amount.nextAll('.error').css('display','block').html('不可空白');
                         result.pass = false;
                     }
 
                     if (date) {
                         $date.nextAll('.error').css('display','none').html('');
                     } else {
-                        $date.nextAll('.error').css('display','block').html('此处不可空白');
+                        $date.nextAll('.error').css('display','block').html('不可空白');
                         result.pass = false;
                     }
 
@@ -706,10 +678,37 @@
                             expectDate: date
                         })
                     } else {
+                        window.scrollTo(0, 200);
                         return false;
                     }
                 })
                 return result;
+            },
+            insertArea: function() {
+                $("#order_address").change(function(){
+                    if(this.value){
+                        var $checked = $(this).find('option:selected');
+                        var data = $checked.data('val').split(',');
+                        var area = $checked.data('area').split(',');
+                        var timer;
+
+                        $(".cnt input[name='consignee']").val(data[0]);
+                        $(".cnt input[name='tel']").val(data[1]);
+                        $(".cnt textarea[name='detail']").val(data[2]);
+
+                        $("#city").data('value', area[1]);
+                        $("#area").data('value', area[2]);
+
+                        $("#province").val(area[0]).trigger('change');
+
+                        timer = setInterval(function() {
+                            if ($('#city').val() != 0) {
+                                $("#city").trigger('change');
+                                clearInterval(timer);
+                            }
+                        }, 20);
+                    }
+                })
             }
         }
     }
