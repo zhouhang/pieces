@@ -267,10 +267,11 @@
 
                 // 保存
                 $("#consigneeForm").submit(function () {
+                    var $this = $(this);
                     $('#consigneeForm').isValid(function (v) {
                         //console.log(v ? '表单验证通过' : '表单验证不通过');
                         if (v) {
-                            var data = $(this).serializeObject();
+                            var data = $this.serializeObject();
                             if (data.isDefault == "1") {
                                 data.isDefault = true;
                             } else {
