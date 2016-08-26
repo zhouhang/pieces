@@ -32,4 +32,6 @@ public interface CategoryDao extends ICommonDao<Category>{
 
 	public List<HomeCategoryVo>  findHomeCategoryByIds(Collection<Integer> collection);
 
+	public Category findByNameAndLevel(CategoryVo categoryVo);
+
 }

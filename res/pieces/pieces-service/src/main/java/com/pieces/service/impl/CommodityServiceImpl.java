@@ -246,4 +246,14 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         }
         return commodityDao.findVoByIds(list);
     }
+
+    @Override
+    @Transactional
+    public void create(List<Commodity> commodityList) {
+        for(Commodity commodity : commodityList){
+            commodity.setCreateTime(new Date());
+            commodityDao.create(commodity);
+        }
+
+    }
 }

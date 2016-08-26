@@ -1,7 +1,7 @@
 package com.pieces.service.utils;
 
 import com.pieces.dao.model.Commodity;
-import com.pieces.dao.model.EnquiryCommoditys;
+import com.pieces.dao.vo.CommodityVo;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 
@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+
 import java.util.Date;
 import java.util.List;
 
@@ -18,9 +19,9 @@ import java.util.List;
  */
 public class CommodityExcelParse {
 
-    public static List<Commodity> parseEnquiryXLS(InputStream inp) throws IOException, InvalidFormatException {
+    public static List<CommodityVo> parseEnquiryXLS(InputStream inp) throws IOException, InvalidFormatException {
 
-        List<Commodity> list = new ArrayList<>();
+        List<CommodityVo> list = new ArrayList<>();
 
         Workbook wb = WorkbookFactory.create(inp);
         Sheet sheet = wb.getSheetAt(0);
@@ -34,9 +35,9 @@ public class CommodityExcelParse {
             if (r == null) {
                 continue;
             }
-            Commodity commoditys = new Commodity();
+            CommodityVo commoditys = new CommodityVo();
 
-            for (int cn = 0; cn < 7; cn++) {
+            for (int cn = 0; cn < 8; cn++) {
                 // 0商品名称(必填)	1切制规格（必填）	2等级（必填）	3产地（数量）	4数量（必填）	5期望单价（元/公斤）	6期望交期（必填）
                 Cell c = r.getCell(cn, Row.RETURN_BLANK_AS_NULL);
                 if (c == null) {
@@ -44,13 +45,36 @@ public class CommodityExcelParse {
                     continue;
                 } else {
                     try {
-                        String val = getCellValue(c);
-                        System.out.println(val);
+                        switch (cn) {
+                            case 0:
+                                commoditys.setCategoryName(getCellValue(c));
+                                break;
+                            case 1:
+                                commoditys.setBreedName(getCellValue(c));
+                                break;
+                            case 2:
+                                commoditys.setName(getCellValue(c));
+                                break;
+                            case 3:
+                                commoditys.setSpecName(getCellValue(c));
+                                break;
+                            case 4:
+                                commoditys.setLevel(Double.valueOf(getCellValue(c)).intValue());
+                                break;
+                            case 5:
+                                commoditys.setExterior(getCellValue(c));
+                                break;
+                            case 6:
+                                commoditys.setFactoryStr(getCellValue(c));
+                                break;
+                            case 7:
+                                commoditys.setExecutiveStandard(getCellValue(c));
+
+                        }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-
                 }
             }
 
@@ -89,10 +113,11 @@ public class CommodityExcelParse {
 
 
     public static void main(String[] args) throws IOException, InvalidFormatException {
-         File file = new File("G:\\Downloads\\产品规格等级手册20160524.xls");
+        File file = new File("G:\\Downloads\\产品规格等级手册20160524.xls");
 
-        CommodityExcelParse.parseEnquiryXLS(new FileInputStream(file));
+        List<CommodityVo> commodityVos =   CommodityExcelParse.parseEnquiryXLS(new FileInputStream(file));
 
+        System.out.println(commodityVos);
     }
 
 }

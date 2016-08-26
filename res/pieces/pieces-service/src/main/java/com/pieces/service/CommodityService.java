@@ -70,4 +70,6 @@ public interface CommodityService extends ICommonService<Commodity>{
 
     List<CommodityVo> findVoByIds(String ids);
 
+
+    void create(List<Commodity> commodityList);
 }

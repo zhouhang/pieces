@@ -114,4 +114,10 @@ public class CategoryDaoImpl extends BaseDaoImpl implements CategoryDao {
         return getSqlSession().selectList("com.pieces.dao.CategoryMapper.findByHomeCategoryIds", new ArrayList<>(collection));
     }
 
+
+    @Override
+    public Category findByNameAndLevel(CategoryVo categoryVo) {
+        return getSqlSession().selectOne("com.pieces.dao.CategoryMapper.findByNameAndLevel", categoryVo);
+    }
+
 }

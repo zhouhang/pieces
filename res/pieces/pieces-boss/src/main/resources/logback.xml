@@ -34,6 +34,24 @@
         </layout>
     </appender>
 
+    <appender name="commodityFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
+        <File>E:\logs\commodityFile.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>E:\logs\commodityFile-%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+            <MaxHistory>10</MaxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>5MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
     <!-- 日志级别 -->
     <root>
         <level value="error" />
@@ -45,6 +63,11 @@
     <logger name="com.pieces.tools.log.internal.LogHandle"  additivity="false">
         <level value="info" />
         <appender-ref ref="file" />
+    </logger>
+
+    <logger name="com.pieces.boss.controller.DemoController"  additivity="false">
+        <level value="info" />
+        <appender-ref ref="commodityFile" />
     </logger>
 	
 </configuration>

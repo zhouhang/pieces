@@ -125,6 +125,7 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 		ca.setOrigins(bvo.getOrigins());
 		ca.setLevels(bvo.getLevels());
 		categoryDao.create(ca);
+		bvo.setId(ca.getId());
 	}
 	
 	/**
@@ -260,6 +261,15 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 		String pinyin = letterShift(letter,false);
 		List<CategoryVo> breedList=	findByLevelAndPinyin(2,parentId,pinyin,30);
 		return breedList;
+	}
+
+	@Override
+	public Category findByNameAndLevel(String name, Integer level) {
+		CategoryVo categoryVo = new CategoryVo();
+		categoryVo.setName(name);
+		categoryVo.setLevel(level);
+		Category category =	categoryDao.findByNameAndLevel(categoryVo);
+		return category;
 	}
 
 	private String letterShift(String letter,Boolean capital){

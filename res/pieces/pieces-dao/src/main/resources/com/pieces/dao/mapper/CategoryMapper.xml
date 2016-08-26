@@ -106,7 +106,21 @@
         </if>
         order by create_time desc
     </select>
-    
+
+    <select id="findByNameAndLevel" parameterType="com.pieces.dao.vo.CategoryVo" resultMap="CategoryResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from category
+        <where>
+            <if test="level!=null">
+                level =#{level}
+            </if>
+            <if test="name!=null">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
+
     <select id="findBreedNoPage" parameterType="com.pieces.dao.vo.CategoryVo" resultType="com.pieces.dao.vo.CategoryVo">
         select
         <include refid="Base_Column_List" />

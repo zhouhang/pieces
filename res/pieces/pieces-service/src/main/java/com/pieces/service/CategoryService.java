@@ -52,5 +52,7 @@ public interface CategoryService extends ICommonService<Category> {
 	public List<HomeCategoryVo>  findHomeCategoryByIds(List<Integer> ids);
 
 	public List<CategoryVo> menuCategoryBreed(Integer parentId, String letter);
-	
+
+
+	public Category findByNameAndLevel(String name,Integer level);
 }

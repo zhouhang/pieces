@@ -97,6 +97,21 @@ public enum CodeEnum {
         return null;
     }
 
+    /**
+     * 通过类型和名称查找ID
+     * @param type
+     * @param name
+     * @return
+     */
+    public static Integer findByTypeAndName(Type type,String name){
+        List<CodeEnum> codeEnumList = findByType(type);
+        for(CodeEnum codeEnum :codeEnumList){
+            if(codeEnum.getName().equals(name)){
+                return codeEnum.getId();
+            }
+        }
+        return null;
+    }
 
     /**
      * 批量查询属性ID对应的属性名
