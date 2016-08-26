@@ -41,6 +41,10 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 	@Override
 	public List<ShippingAddressVo> findByParams(ShippingAddressVo shippingAddressVo) {
 		List<ShippingAddressVo>  list = shippingAddressDao.findByParams(shippingAddressVo);
+		// 如果用户的收货地址只有一个设置为默认收货地址.
+		if (list.size() == 1){
+			list.get(0).setIsDefault(true);
+		}
 		return list;
 	}
 
@@ -78,6 +82,10 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 	@Override
 	@Transactional
 	public void saveOrUpdate(ShippingAddress address, User user) {
+		// 如果用户的收货地址只有一个设置为默认收货地址.
+		if (shippingAddressDao.getCountByUserId(user.getId()) <1){
+			address.setIsDefault(true);
+		}
 
 		if (address.getId() == null) {
 			address.setCreateTime(new Date());
@@ -117,8 +125,10 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 	 * 获取地址全称
 	 */
 	private void getFullAdd(ShippingAddressVo shippingAddressVo){
-		Area area = areaService.findParentsById(shippingAddressVo.getAreaId());
-		shippingAddressVo.setArea(area);
-		shippingAddressVo.setFullAdd( area.getProvince() + area.getCity() + area.getAreaname());
+		if (shippingAddressVo.getAreaId() != null) {
+			Area area = areaService.findParentsById(shippingAddressVo.getAreaId());
+			shippingAddressVo.setArea(area);
+			shippingAddressVo.setFullAdd( area.getProvince() + area.getCity() + area.getAreaname());
+		}
 	}
 }

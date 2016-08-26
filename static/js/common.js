@@ -200,9 +200,11 @@ function currNav() {
         }
     }) 
 
+	$side.find('.expand dd').css({'display':'block'});
 	$side.on('click', 'dt', function() {
-		$(this).parent().toggleClass('expand').siblings().removeClass('expand');
-	})
+		$(this).next().slideToggle();
+		$(this).parent().toggleClass('expand').siblings().removeClass('expand').find('dd').slideUp();
+	});
 }
 
 // 询价
