@@ -394,8 +394,10 @@
                 // 新增收货地址
                 addConsignee: function() {
                     var $consigneeBox = $('#jconsigneeBox');
+                    var $consigneeForm = $("#consigneeForm")
                     var $addConsignee = $('#addConsignee');
                     $('.jaddConsignee').on('click', function() {
+                    	$consigneeForm[0].reset();
                         layer.open({
                             area: ['600px'],
                             closeBtn: 1,
