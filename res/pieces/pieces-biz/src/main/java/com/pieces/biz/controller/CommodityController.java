@@ -29,6 +29,8 @@ import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
 import com.pieces.service.utils.ValidUtils;
 import com.pieces.tools.utils.WebUtil;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Author: ff 7/19/16. 商品信息
@@ -328,5 +330,7 @@ public class CommodityController extends BaseController {
 
 		return "product_detail";
 	}
+
+
 
 }

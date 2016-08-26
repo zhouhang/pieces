@@ -123,4 +123,8 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="getCountByUserId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        select count(id)  FROM shipping_address WHERE user_id = #{userId}
+    </select>
 </mapper>

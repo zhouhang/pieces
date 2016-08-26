@@ -14,4 +14,11 @@ public interface ShippingAddressDao extends ICommonDao<ShippingAddress>{
     public void deleteByUserIdAndId(@Param("userId")Integer userId, @Param("id") Integer addressId);
 
     public void updateAllNotDefault(Integer userId);
+
+    /**
+     * 根据用户id 查询用户送货地址数量
+     * @param userId
+     * @return
+     */
+    public Integer getCountByUserId(Integer userId);
 }
