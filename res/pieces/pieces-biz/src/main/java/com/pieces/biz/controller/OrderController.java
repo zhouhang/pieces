@@ -241,7 +241,7 @@ public class OrderController extends BaseController {
 	 * @param status
      * @return
      */
-	@RequestMapping(value = "/order/status", method = RequestMethod.GET)
+	@RequestMapping(value = "/order/status", method = RequestMethod.POST)
 	@ResponseBody
 	public Result changeStatus(Integer orderId, Integer status) {
 		return orderFormService.changeOrderStatus(orderId, status);

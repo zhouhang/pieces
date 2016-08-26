@@ -50,15 +50,18 @@
                             </td>
                             <td width="140">
                                 <#if (orderForm.status == 1)>
-                                    <a href="#" class="btn btn-red">付款</a>
+                                    <a href="${orderForm.id}" class="btn btn-red">付款</a>
                                 </#if>
                                 <#if (orderForm.status == 4)>
-                                    <a href="#" class="btn btn-red">确认收货</a>
+                                    <a href="${orderForm.id}" name="5" class="btn btn-red status">确认收货</a>
+                                </#if>
+                                <#if (orderForm.status &lt;= 2)>
+                                    <span><a href="${orderForm.id}" name="6" class="c-blue jremove status">取消订单</a></span>
+                                </#if>
+                                <#if (orderForm.status == 6)>
+                                    <span><a href="${orderForm.id}" name="7" class="c-blue jremove status">删除订单</a></span>
                                 </#if>
                                 <span><a href="/center/order/detail/${orderForm.id}" class="c-blue">查看详情</a></span>
-                                <#if (orderForm.status &lt;= 2)>
-                                    <span><a href="#" class="c-blue jremove">取消订单</a></span>
-                                </#if>
                             </td>
                         </tr>
                         <tr class="space"></tr>
@@ -80,4 +83,18 @@
 
 <#include "./inc/footer.ftl"/>
 </body>
+<script>
+    $(function () {
+        $("a.status").on("click", function(){
+            var id = $(this).attr("href");
+            var status = $(this).attr("name");
+            $.post("/center/order/status",{orderId:id,status:status}, function (data) {
+                if (data.status == "y") {
+                    window.location.reload();
+                }
+            },"json")
+            return false;
+        })
+    })
+</script>
 </html>
