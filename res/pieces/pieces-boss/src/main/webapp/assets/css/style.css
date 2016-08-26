@@ -294,8 +294,10 @@ vertical-align:middle;
 .chart-info .summary{line-height:30px;padding:12px 30px;text-align:right;}
 .chart-info .summary span{display:inline-block;vertical-align:middle;color:#999;}
 .chart-info .summary em{position:relative;display:inline-block;width:135px;vertical-align:middle;color:#333;}
-.chart-info .summary em span{position:absolute;top:110%;left:15px;line-height:26px;padding:0 12px;background:#c3272b;color:#fff;}
-.chart-info .summary em span:before{content:"";position:absolute;top:-10px;left:10px;border:5px dashed transparent;border-bottom:5px solid #c3272b;}
+.chart-info .summary em .msg-box{position:absolute;top:100%;left:15px;line-height:26px;padding:0 12px;background:#c3272b;color:#fff;}
+.chart-info .summary em .msg-box:before{content:"";position:absolute;top:-10px;left:10px;border:5px dashed transparent;border-bottom:5px solid #c3272b;}
+.chart-info .summary em .msg-box span{color:#fff;}
+.chart-info .summary em .msg-box i{display:none;}
 .chart-info .summary .price{font-size:16px;font-weight:700;color:#c3272b;}
 .note-form{padding:30px;font-size:12px;border:1px solid #e7e7e7;overflow:hidden;}
 .note-form .txt{float:left;}
