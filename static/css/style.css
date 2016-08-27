@@ -657,13 +657,13 @@ vertical-align:middle;
 .mybill .info b{font-weight:700;}
 .mybill .info .img{height:42px;}
 .mybill .info img{margin-right:6px;vertical-align:middle;}
-
-.message{margin-bottom:30px;padding:6px 19px;border:1px solid #e7e7e7;background:#f5f5f5;} 
-.message i{margin-right:8px;font-size:24px;}
-.message .fa-prompt{color:#fca31d;} 
-.message .fa-check-circle{color:#58c805;} 
-.message .fa-times-circle{color:#c3272b;} 
-.message span{vertical-align:middle;} 
+.mybill .state{margin-bottom:30px;padding:6px 19px;border:1px solid #e7e7e7;background:#f5f5f5;} 
+.mybill .state i{margin-right:8px;font-size:24px;}
+.mybill .state .fa-prompt{color:#fca31d;} 
+.mybill .state .fa-check-circle{color:#58c805;} 
+.mybill .state .fa-times-circle{color:#c3272b;} 
+.mybill .state span{vertical-align:middle;} 
+.mybill .state span em{color:#999;font-size:12px;} 
 
 
 /* 上传图片 */

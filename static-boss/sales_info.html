@@ -304,6 +304,7 @@
                     this.upImg();
                 },
                 upImg: function() {
+                    var self = this;
                     var options = {
                         uploadUrl:'img_save_to_file.php',
                         customUploadButtonId: 'imgCrop',
@@ -311,6 +312,8 @@
                             cropModal.destroy();
                             $('#imgCrop').html('<img src="' + response.url + '" title="点击图片看大图" /><i class="del" title="删除"></i>')
                             .next().val(response.url);
+                            cropModal = new Croppic('imgCropWrap', options);
+                            
                         },
                         onError:function(msg){
                             $.notify({

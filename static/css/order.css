@@ -64,33 +64,83 @@
 .payment{margin-top:20px;border:1px solid #e7e7e7;}
 .payment .title{line-height:50px;padding:0 30px;border-bottom:1px solid #e7e7e7;background:#f0eff5;} 
 .payment .main{padding:30px;font-size:12px;}
-.payment .info{line-height:18px;padding-bottom:20px;border-bottom:1px solid #e7e7e7;}
-.payment .info dt{float:left;width:85px;color:#999;text-align:right;}
-.payment .info dd{margin-left:85px;min-height:28px;}
-.payment .info dd em{font-weight:700;color:#c3272b;font-size:16px;vertical-align:middle;}
-.payment .info dd span{margin-left:10px;color:#999;}
-.payment .info dd label{line-height:20px;margin-right:20px;}
-.payment .info dd input{margin-right:4px;vertical-align:-2px;}
-.payment .info dd p{margin-bottom:6px;}
+.payment .main .hd{margin:20px 0 30px;padding-top:30px;font-size:14px;font-weight:700;color:#333;border-top:1px solid #e7e7e7;}
+.payment .main{line-height:18px;padding-bottom:20px;}
+.payment .main dt{float:left;width:85px;color:#999;text-align:right;}
+.payment .main dd{margin-left:85px;min-height:28px;}
+.payment .main dd em{font-weight:700;color:#c3272b;font-size:16px;vertical-align:middle;}
+.payment .main dd span{margin-left:10px;color:#999;}
+.payment .main dd label{line-height:20px;margin-right:20px;}
+.payment .main dd input{margin-right:4px;vertical-align:-2px;}
+.payment .main dd p{margin-bottom:6px;}
+.payment .main .fa-form{padding:0;}
+.payment .main .group{padding-left:65px;}
+.payment .main .txt{width:auto;line-height:40px;color:#999;}
+.payment .main .cnt{height:auto;min-height:40px;padding-bottom:20px;}
+.payment .main .ipt{width:200px;padding:9px;}
+.payment .main .btn{width:220px;}
+.payment .main .tips{margin-left:6px;vertical-align:middle;}
+.payment .main .up-img{margin-right:20px;vertical-align:middle;}
+.payment .main .up-img img{cursor:pointer;}
+.payment .main .cnt .msg-box{display:inline-block;line-height:38px;margin:0 0 0 5px;vertical-align:top;}
+.payment .main .cnt select{width:220px;height:40px;line-height:40px;}
+.payment .state{padding:30px;}
+.payment .state h4{font-size:24px;color:#333;font-weight:700;}
+.payment .state h4 i{margin-right:10px;color:#58c805;font-size:32px;font-weight:400;}
+.payment .state p{margin-left:44px;color:#999;font-size:12px;}
 
-.payment .form{margin-top:24px;}
-.payment .form .group{padding-left:65px;}
-.payment .form .txt{width:auto;line-height:40px;color:#999;}
-.payment .form .cnt{height:auto;min-height:40px;padding-bottom:20px;}
-.payment .form .ipt{width:200px;padding:9px;}
-.payment .form .btn{width:220px;}
 
-.payment .main .hd{font-size:14px;font-weight:700;color:#333;}
-.payment .main .hd h3{font-size:24px;}
-.payment .main .hd p{font-size:12px;color:#666;}
-.payment .main .hd p span{margin-right:10px;}
-.payment .main .hd p em{color:#c3272b;font-weight:700;}
-.payment .main .bd{font-size:12px;}
-.payment .main .bd h3{padding:30px 0 0;}
-.payment .main .bd dt{padding:15px 0 5px;font-weight:700;}
-.payment .main .bd dd{color:#666;line-height:24px;}
-.payment .main .bd p{line-height:24px;}
-.payment .main .address .btn{padding:2px 10px;font-size:12px;}
-.payment .main .address li{position:relative;padding-bottom:30px;border-bottom:1px solid #e7e7e7;}
-.payment .main .address h3{margin-bottom:18px;}
-.payment .main .address p{margin-top:12px;color:#999;}
+.icon-bank{display:inline-block;width:142px;height:36px;background:url(../images/icon-banksv6.png) 0 100px no-repeat;}
+.icon-CMB{background-position:0 -252px;}
+.icon-ICBCB2C{width:200px;background-position:0px -432px;}
+.icon-CCB{width:200px;background-position:0px -108px;}
+.icon-ABC{width:190px;background-position:0px 0px;}
+.icon-BOCB2C{background-position:0px -72px;}
+.icon-CEB{width:170px;background-position:0px -144px;}
+.icon-CEBBANK{width:170px;background-position:0px -144px;}
+.icon-CITIC{background-position:0px -216px;}
+.icon-CIB{background-position:0px -180px;}
+.icon-POSTGC{width:250px;background-position:0px -468px;}
+.icon-COMM{width:164px;background-position:0px -324px;}
+.icon-SPDBB2B{background-position:0px -576px;}
+.icon-SPDB{background-position:0px -576px;}
+.icon-GDB{background-position:0px -360px;}
+.icon-CMBC{width:190px;background-position:0px -288px;}
+.icon-BJBANK{width:148px;background-position:0px -36px;}
+.icon-SPABANK{background-position:0px -540px;}
+.icon-NBBANK{background-position:0px 100px;}
+.icon-SHBANK{background-position:0px -504px;}
+.icon-HXBANK{background-position:0px -612px;}
+.icon-HZCBB2C{background-position:0px -396px;}
+.icon-DYBANK{background-position:0px 100px;}
+.icon-FJNXBANK{background-position:0px 100px;}
+.icon-GZBANK{background-position:0px 100px;}
+.icon-SDNXH{background-position:0px 100px;}
+.icon-FDB{background-position:0px -1441px;}
+.icon-STANBANK{background-position:0px -684px;}
+.icon-CITIBANK{background-position:0px -648px;}
+.icon-EEDSBANK{width:190px;background-position:0px -719px;}
+.icon-FJHXBANK{width:190px;background-position:0px -754px;}
+.icon-HUBEIBANK{width:148px;background-position:0px -791px;}
+.icon-JHCCB{background-position:0px -826px;}
+.icon-NCBANK{background-position:0px -864px;}
+.icon-QHRCCB{width:230px;background-position:0px -900px;}
+.icon-WLMQSYBANK{width:250px;background-position:0px -936px;}
+.icon-ZJCZBANK{width:220px;background-position:0px -1007px;}
+.icon-LZBANK{background-position:0px -1043px;}
+.icon-XTBANK{width:170px;background-position:0px -973px;}
+.icon-LJBANK{background-position:0px -1080px;}
+.icon-QLBANK{background-position:0px -1115px;}
+.icon-QDCCB{width:148px;background-position:0px -1153px;}
+.icon-GZNCSYBANK{width:200px;background-position:0px -1188px;}
+.icon-PDSCB{width:190px;background-position:0px -1224px;}
+.icon-GYBANK{width:170px;background-position:0px -1260px;}
+.icon-AHRCU{width:220px;background-position:0px -1296px;}
+.icon-CSNSBANK{width:220px;background-position:0px -1332px;}
+.icon-WZBANK{width:170px;background-position:0px -1368px;}
+.icon-DRCBANK{width:240px;background-position:0px -1404px;}
+.icon-GUILINBANK{background-position:0px -1476px;}
+.icon-JXCCB{background-position:0px -1512px;}
+.icon-JYNSBANK{width:190px;background-position:0px -1548px;}
+.icon-SHNSBANK{width:190px;background-position:0px -1584px;}
+.icon-BSBANK{width:190px;background-position:0px -1620px;}

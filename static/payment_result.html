@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>支付-饮片B2B</title>
+    <title>支付结果-饮片B2B</title>
     <meta name="renderer" content="webkit" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/order.css" />
@@ -49,96 +49,14 @@
                 <h3>支付</h3>
             </div>
 
-            <div class="main">
-                <dl>
-                    <dt>订单号：</dt>
-                    <dd>201608101125001</dd>
+            <div class="state">
+                <h4><i class="fa fa-check-circle"></i>您的付款信息已提交成功！</h4>
+                <p>款项确认无误后平台将立即安排为您发货。 </p>
+            </div>
 
-                    <dt>应付金额：</dt>
-                    <dd>
-                        <em>&yen;21000.00</em>
-                        <span>剩余付款时间：9天23时20分</span>
-                    </dd>
-
-                    <dt>支付方式：</dt>
-                    <dd id="jpayType">
-                        <label><input type="radio" name="type" value="0" checked>现款支付</label>
-                        <label><input type="radio" name="type" value="1">账期支付</label>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>平台收款帐号：</dt>
-                    <dd>
-                        <p><label><input type="radio" name="bank">中国工商银行 XXX 6222 0210 0107 0070 872</label></p>
-                        <p><label><input type="radio" name="bank">中国工商银行 XXX 6222 0210 0107 0070 872</label></p>
-                    </dd>
-                </dl>
-                
-                <div class="fa-form">
-                    <form action="" id="myform2">
-                        <div class="hd">申请账期</div>
-                        <div class="group">
-                            <div class="txt">账期时间：</div>
-                            <div class="cnt">
-                                <select name="" id="">
-                                    <option value="">请选择</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="group">
-                            <button type="submit" class="btn btn-red">确认</button>
-                        </div>
-                    </form>
-
-                    <form action="" id="myform">
-                        <div class="hd">填写付款信息</div>
-                        <div class="group">
-                            <div class="txt">支付金额：</div>
-                            <div class="cnt">
-                                <input type="text" id="money" name="money" autocomplete="off" value="" class="ipt">
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">开户银行：</div>
-                            <div class="cnt">
-                                <input type="text" id="bank" name="bank" autocomplete="off" value="" class="ipt">
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">开  户  人：</div>
-                            <div class="cnt">
-                                <input type="text" id="name" name="name" autocomplete="off" value="" class="ipt">
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">银行卡号：</div>
-                            <div class="cnt">
-                                <input type="text" id="bankNumber" name="bankNumber" autocomplete="off" value="" class="ipt" maxlength="23">
-                                <div class="bank-tip" id="J_bank_tip" style="display:none;">
-                                    <span class="icon-bank icon-CMB"></span>
-                                    <span class="bank-type">信用卡</span>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">付款时间：</div>
-                            <div class="cnt">
-                                <input type="text" id="date" name="date" autocomplete="off" value="" class="ipt" onclick="laydate()">
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">支付凭证：</div>
-                            <div class="cnt">
-                                <span class="up-img" id="imgCrop"></span>
-                                <em class="tips">请上传银行开具的打款凭证照片。</em>
-                            </div>
-                        </div>
-                        <div class="group">
-                            <button type="submit" class="btn btn-red">确认</button>
-                        </div>
-                    </form>
-                </div>
+            <div class="state">
+                <h4><i class="fa fa-check-circle"></i>您的账期申请已提交成功！</h4>
+                <p>平台工作人员会与您联系，沟通具体账期事宜。  </p>
             </div>
         </div>
     </div>
@@ -183,7 +101,6 @@
     			init: function() {
                     this.formInit();
                     this.goodsImg();
-                    this.payType();
     			},
                 formInit: function() {
                     var self = this;
@@ -251,33 +168,7 @@
                         }
                     }
                     var cropModal = new Croppic('imgCropWrap', options);
-                },
-                // 支付方式切换
-                payType: function() {
-                    var $el = $('#jpayType');
-
-                    var changeForm = function($el) {
-                        var value = $el.val();
-
-                        console.log(value)
-
-                        if (value === '0') {
-                            $el.closest('dl').next().show();
-                            $('#myform').show();
-                            $('#myform2').hide();
-
-                        } else {
-                            $el.closest('dl').next().hide();
-                            $('#myform').hide();
-                            $('#myform2').show();
-                        }
-                    }
-
-                    $el.on('click', 'input', function() {
-                        changeForm($(this));
-                    });
-                    changeForm($el.find('input:checked'));
-                }
+                }  
     		}
     	}
     	$(function() {
