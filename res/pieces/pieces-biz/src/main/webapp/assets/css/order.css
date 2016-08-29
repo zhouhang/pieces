@@ -57,3 +57,34 @@
 .consignee-list .button .btn{padding:0;height:34px;}
 .consignee-list .button .submit{width:150px;margin-right:16px;}
 .consignee-list .button .cancel{width:100px;}
+
+
+
+/* 支付 */
+.payment{margin-top:20px;border:1px solid #e7e7e7;}
+.payment .title{line-height:50px;padding:0 30px;border-bottom:1px solid #e7e7e7;background:#f0eff5;} 
+.payment .main{padding:30px;font-size:12px;}
+.payment .main .hd{margin:20px 0 30px;padding-top:30px;font-size:14px;font-weight:700;color:#333;border-top:1px solid #e7e7e7;}
+.payment .main{line-height:18px;padding-bottom:40px;}
+.payment .main dt{float:left;width:85px;color:#999;text-align:right;}
+.payment .main dd{margin-left:85px;min-height:28px;}
+.payment .main dd em{font-weight:700;color:#c3272b;font-size:16px;vertical-align:middle;}
+.payment .main dd span{margin-left:10px;color:#999;}
+.payment .main dd label{line-height:20px;margin-right:20px;}
+.payment .main dd input{margin-right:4px;vertical-align:-2px;}
+.payment .main dd p{margin-bottom:6px;}
+.payment .main .fa-form{padding:0;}
+.payment .main .group{padding-left:65px;}
+.payment .main .txt{width:auto;line-height:40px;color:#999;}
+.payment .main .cnt{height:auto;min-height:40px;padding-bottom:20px;}
+.payment .main .ipt{width:200px;padding:9px;}
+.payment .main .btn{width:220px;margin-top:10px;}
+.payment .main .tips{margin-left:6px;vertical-align:middle;}
+.payment .main .up-img{margin-right:20px;vertical-align:middle;}
+.payment .main .up-img img{cursor:pointer;}
+.payment .main .cnt .msg-box{display:inline-block;line-height:38px;margin:0 0 0 5px;vertical-align:top;}
+.payment .main .cnt select{width:220px;height:40px;line-height:40px;}
+.payment .state{padding:30px;}
+.payment .state h4{font-size:24px;color:#333;font-weight:700;}
+.payment .state h4 i{margin-right:10px;color:#58c805;font-size:32px;font-weight:400;vertical-align:-4px;}
+.payment .state p{margin-left:44px;color:#999;font-size:12px;}
