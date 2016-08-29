@@ -153,7 +153,7 @@ vertical-align:middle;
 .fa-floor .main .title h3 i{margin-right:6px;color:#666;}
 .fa-floor .main .title .extra .btn{width:60px;margin-left:10px;}
 .fa-floor .main .title .extra .btn-red{width:100px;}
-.fa-floor .main .title .extra a.btn-gray{padding:4px 0;width:58px;}
+.fa-floor .main .title .extra a.btn-gray{padding:0;width:58px;}
 .fa-floor .chart{margin-top:20px;}
 
 /* table */
