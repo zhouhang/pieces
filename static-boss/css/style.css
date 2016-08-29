@@ -269,13 +269,13 @@ vertical-align:middle;
 .user-info .info{padding:35px 30px;}
 .user-info .info table{width:auto;}
 .user-info .info tbody:nth-child(n+1){margin-top:20px;}
-.user-info .info th{width:150px;text-align:left;font-weight:400;}
+.user-info .info th{width:150px;text-align:right;font-weight:400;}
 .user-info .info td{width:360px;padding:7px 15px;border:0;}
 .user-info .info em{color:#999;}
 .user-info .info b{font-weight:700;}
 .user-info .info .space{height:5px;}
 .user-info .info .price{color:#c3272b;font-weight:700;}
-.user-info .info .img{height:42px;}
+.user-info .info .img{height:42px;line-height:78px;}
 .user-info .info img{margin-right:6px;vertical-align:middle;}
 
 .user-info .fa-form{padding:50px 0 20px 50px;}

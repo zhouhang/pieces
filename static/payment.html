@@ -75,20 +75,6 @@
                 </dl>
                 
                 <div class="fa-form">
-                    <form action="" id="myform2">
-                        <div class="hd">申请账期</div>
-                        <div class="group">
-                            <div class="txt">账期时间：</div>
-                            <div class="cnt">
-                                <select name="" id="">
-                                    <option value="">请选择</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="group">
-                            <button type="submit" class="btn btn-red">确认</button>
-                        </div>
-                    </form>
 
                     <form action="" id="myform">
                         <div class="hd">填写付款信息</div>
@@ -132,6 +118,26 @@
                             <div class="cnt">
                                 <span class="up-img" id="imgCrop"></span>
                                 <em class="tips">请上传银行开具的打款凭证照片。</em>
+                            </div>
+                        </div>
+                        <div class="group">
+                            <button type="submit" class="btn btn-red">确认</button>
+                        </div>
+                    </form>
+
+                    <form action="" id="myform2">
+                        <div class="hd">申请账期</div>
+                        <div class="group">
+                            <div class="txt">账期时间：</div>
+                            <div class="cnt">
+                                <select name="billtime" id="billtime" data-msg="请选择账期时间">
+                                    <option value="">请选择</option>
+                                    <option value="1">1个月</option>
+                                    <option value="2">2个月</option>
+                                    <option value="3">3个月</option>
+                                    <option value="6">6个月</option>
+                                    <option value="12">1年</option>
+                                </select>
                             </div>
                         </div>
                         <div class="group">
@@ -197,7 +203,13 @@
                             name: 'required',
                             bankNumber: 'required, bankNumber',
                             date: 'required'
-                        },
+                        }
+                    });
+
+                    $('#myform2').validator({
+                        fields: {
+                            billtime: 'required'
+                        }
                     });
 
                     // 金额
@@ -258,8 +270,6 @@
 
                     var changeForm = function($el) {
                         var value = $el.val();
-
-                        console.log(value)
 
                         if (value === '0') {
                             $el.closest('dl').next().show();

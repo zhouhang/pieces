@@ -650,12 +650,12 @@ vertical-align:middle;
 .mybill .info{margin-bottom:20px;border:1px solid #ccc;font-size:12px;}
 .mybill .info .hd{line-height:29px;padding:0 19px;font-weight:700;background:#f0eff5;border-bottom:1px solid #ccc;}
 .mybill .info .bd{margin:0 19px;padding:25px 0;}
-.mybill .info .bt1{border-top:1px solid #ccc;}
+.mybill .info .bt1{padding-bottom:45px;border-top:1px solid #ccc;}
 .mybill .info table{width:auto;}
 .mybill .info td{width:330px;padding:3px 0;border:0;}
 .mybill .info em{color:#999;}
 .mybill .info b{font-weight:700;}
-.mybill .info .img{height:42px;}
+.mybill .info .img{height:42px;line-height:66px;}
 .mybill .info img{margin-right:6px;vertical-align:middle;}
 .mybill .state{margin-bottom:30px;padding:6px 19px;border:1px solid #e7e7e7;background:#f5f5f5;} 
 .mybill .state i{margin-right:8px;font-size:24px;}
