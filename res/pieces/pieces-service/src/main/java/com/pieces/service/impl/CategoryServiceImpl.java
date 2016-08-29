@@ -124,6 +124,8 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 		ca.setSpecs(bvo.getSpecs());
 		ca.setOrigins(bvo.getOrigins());
 		ca.setLevels(bvo.getLevels());
+		String pinyin = PinyinUtil.field2Pinyin(ca.getName());
+		ca.setPinyin(pinyin);
 		categoryDao.create(ca);
 		bvo.setId(ca.getId());
 	}

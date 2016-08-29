@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -56,8 +57,6 @@ public class DemoController {
         WebUtil.print(response,new Result(true).info("索引创建成功"));
     }
 
-    @RequestMapping("install/commodity")
-    @ResponseBody
     public Result installCommodity()throws Exception{
         File file = new File("G:\\Downloads\\产品规格等级手册20160524.xls");
         List<CommodityVo> commodityVos =   CommodityExcelParse.parseEnquiryXLS(new FileInputStream(file));
@@ -72,12 +71,12 @@ public class DemoController {
                 //类别名称
                 String categoryName = commodityVo.getCategoryName();
                 if(StringUtils.isBlank(categoryName) ){
-                    break;
+                    continue;
                 }
                 //真实类别
                 Category category = categoryService.findByNameAndLevel(categoryName,1);
                 if(category==null){
-                    break;
+                    continue;
                 }
                 //品种名称
                 String breedName = commodityVo.getBreedName();
@@ -96,6 +95,8 @@ public class DemoController {
                 commodity.setExterior(commodityVo.getExterior());
                 commodity.setFactory(commodityVo.getFactoryStr());
                 commodity.setExecutiveStandard(commodityVo.getExecutiveStandard());
+                commodity.setCreateTime(new Date());
+                commodity.setStatus(1);
                 commodityService.create(commodity);
             }catch (Exception e){
                 e.printStackTrace();
