@@ -26,7 +26,7 @@
                 <div class="title">
                     <h3><i class="fa fa-people"></i>${user.userName}</h3>
                     <div class="extra">
-                        <button type="button" class="btn btn-gray" onclick="javascript:window.location.href='/user/index'">返回</button>
+                        <a  class="btn btn-gray" href="/user/index">返回</a>
                         <button type="button" class="btn btn-red">保存</button>
                     </div>
                 </div>

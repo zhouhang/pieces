@@ -205,26 +205,42 @@
 		</dependency>
 	</dependencies>
 
+
+	<profiles>
+		<profile>
+			<id>dev-wb</id>
+			<properties>
+				<pieces.env>dev-wb</pieces.env>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev-ppc</id>
+			<properties>
+				<pieces.env>dev</pieces.env>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev-ff</id>
+			<properties>
+				<pieces.env>dev</pieces.env>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<pieces.env>test</pieces.env>
+			</properties>
+		</profile>
+	</profiles>
+
+
 	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.mybatis.generator</groupId>
-				<artifactId>mybatis-generator-maven-plugin</artifactId>
-				<version>1.3.2</version>
-				<configuration>
-					<configurationFile>${basedir}/src/main/resources/generator.xml</configurationFile>
-					<overwrite>false</overwrite>
-					<verbose>true</verbose>
-				</configuration>
-				<dependencies>
-					<dependency>
-						<groupId>pieces-tools</groupId>
-						<artifactId>pieces-tools</artifactId>
-						<version>0.0.1</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 	</build>
 
 </project>

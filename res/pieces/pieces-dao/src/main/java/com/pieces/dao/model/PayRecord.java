@@ -25,18 +25,21 @@ public class PayRecord  implements Serializable {
 	private Float actualPayment;
 	
 	//开户行
-	private String openBank;
+	private String payBank;
 	
 	//开户人
-	private String openAccount;
+	private String payAccount;
 	
 	//银行卡号
-	private String openBankCard;
+	private String payBankCard;
 	
+	//收款银行
 	private String receiveBank;
 	
+	//收款账户
 	private String receiveAccount;
 	
+	//收款银行卡
 	private String receiveBankCard;
 	
 	//付款用户
@@ -47,6 +50,15 @@ public class PayRecord  implements Serializable {
 	
 	//0审核中，1支付成功，2支付失败
 	private Integer status;
+	
+	//失败原因
+	private String failReason;
+	
+	//操作人
+	private Integer memberId;
+	
+	//操作时间
+	private Date operationTime;
 	
 	//创建时间
 	private Date createTime;
@@ -101,28 +113,28 @@ public class PayRecord  implements Serializable {
 		this.actualPayment = actualPayment;
 	}
 	
-	public String getOpenBank() {
-		return openBank;
+	public String getPayBank() {
+		return payBank;
 	}
 
-	public void setOpenBank(String openBank) {
-		this.openBank = openBank;
+	public void setPayBank(String payBank) {
+		this.payBank = payBank;
 	}
 	
-	public String getOpenAccount() {
-		return openAccount;
+	public String getPayAccount() {
+		return payAccount;
 	}
 
-	public void setOpenAccount(String openAccount) {
-		this.openAccount = openAccount;
+	public void setPayAccount(String payAccount) {
+		this.payAccount = payAccount;
 	}
 	
-	public String getOpenBankCard() {
-		return openBankCard;
+	public String getPayBankCard() {
+		return payBankCard;
 	}
 
-	public void setOpenBankCard(String openBankCard) {
-		this.openBankCard = openBankCard;
+	public void setPayBankCard(String payBankCard) {
+		this.payBankCard = payBankCard;
 	}
 	
 	public String getReceiveBank() {
@@ -171,6 +183,30 @@ public class PayRecord  implements Serializable {
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	
+	public String getFailReason() {
+		return failReason;
+	}
+
+	public void setFailReason(String failReason) {
+		this.failReason = failReason;
+	}
+	
+	public Integer getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
+	}
+	
+	public Date getOperationTime() {
+		return operationTime;
+	}
+
+	public void setOperationTime(Date operationTime) {
+		this.operationTime = operationTime;
 	}
 	
 	public Date getCreateTime() {
