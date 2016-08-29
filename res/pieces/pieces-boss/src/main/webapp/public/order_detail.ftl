@@ -22,11 +22,11 @@
                 <div class="title">
                     <h3><i class="fa fa-chevron-right"></i>订单 ${vo.code} | <#if vo.createrTime?exists>${vo.createrTime?datetime}</#if></h3>
                     <div class="extra">
-                        <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                        <button type="button" class="btn btn-gray" onclick="javascript:location.href='/order/edit/${vo.id!}'">修改</button>
-                        <button type="button" class="btn btn-gray">发票</button>
-                        <button type="button" class="btn btn-gray">配送</button>
-                        <button type="submit" class="btn btn-red" onclick="javascript:location.href='/order/anew/${vo.id!}'">重新下单</button>
+                        <a  class="btn btn-gray" href="order/index">返回</a>
+                        <a  class="btn btn-gray" href="/order/edit/${vo.id!}">修改</a>
+                        <a type="button" class="btn btn-gray">发票</a>
+                        <a type="button" class="btn btn-gray">配送</a>
+                        <a  class="btn btn-red" href="/order/anew/${vo.id!}">重新下单</a>
                     </div>
                 </div>
 

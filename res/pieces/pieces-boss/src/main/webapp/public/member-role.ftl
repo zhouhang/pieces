@@ -41,7 +41,7 @@
                 <div class="title title-btm">
                     <h3><i class="fa fa-people"></i><#if member??>${member.username}<#else>创建用户</#if></h3>
                     <div class="extra">
-                        <button class="btn btn-gray" href="member/index">返回</button>
+                        <a class="btn btn-gray" href="member/index">返回</a>
                         <button id="submit" type="button" class="btn btn-red">保存</button>
                     </div>
                 </div>

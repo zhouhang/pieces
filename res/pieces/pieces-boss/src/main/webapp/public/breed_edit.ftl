@@ -26,7 +26,7 @@
                     <div class="title">
                         <h3><i class="fa fa-chevron-right"></i>修改品种 “${breed.name }”</h3>
                         <div class="extra">
-                            <button type="button" class="btn btn-gray" onclick="javascript:window.location.href='/breed/list'">返回</button>
+                            <a  class="btn btn-gray" href="/breed/list">返回</a>
                             <@shiro.hasPermission name="breed:delete">
                             <button id="delete" type="button" class="btn btn-gray">删除</button>
                             </@shiro.hasPermission>
