@@ -165,6 +165,18 @@
                             success: function(result) {
                                 if(result.status=="y"){
                                     location.href="/center/pay/success"
+                                }else{
+                                    $.notify({
+                                        type: 'error',
+                                        title: '错误信息',   // 不允许的文件类型
+                                        text: result.info,     //'支持 jpg、jepg、png、gif等格式图片文件',
+                                        delay: 3e3,
+                                        call:function(){
+                                            setTimeout(function () {
+                                                location.href = '/center/order/list';
+                                            }, 3e3);
+                                        }
+                                    });
                                 }
                             }
                         })
@@ -237,8 +249,7 @@
                         onError:function(msg){
                             $.notify({
                                 type: 'error', 
-                                title: msg.title,   // 不允许的文件类型
-                                text: msg.message,     //'支持 jpg、jepg、png、gif等格式图片文件', 
+                                text: msg.info,     //'支持 jpg、jepg、png、gif等格式图片文件',
                                 delay: 3e3
                             });
                         }

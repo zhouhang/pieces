@@ -13,69 +13,7 @@
     <!-- member-box start -->
     <div class="member-box">
         <div class="wrap">
-            <div class="side">
-                <dl>
-                    <dt>
-                        <em class="fa fa-question-circle"></em>
-                        <span>询价</span>
-                        <i class="fa fa-chevron-right"></i>
-                    </dt>
-                </dl>
-                <dl>
-                    <dt>
-                        <em class="fa fa-menu"></em>
-                        <span>订单</span>
-                        <i class="fa fa-chevron-right"></i>
-                    </dt>
-                </dl>
-                <dl>
-                    <dt>
-                        <em class="fa fa-clock"></em>
-                        <span>交货周期</span>
-                        <i class="fa fa-chevron-right"></i>
-                    </dt>
-                </dl>
-                <dl>
-                    <dt>
-                        <em class="fa fa-invoice"></em>
-                        <span>发票</span>
-                        <i class="fa fa-chevron-right"></i>
-                    </dt>
-                </dl>
-                <dl>
-                    <dt>
-                        <em class="fa fa-bill"></em>
-                        <span>对账单</span>
-                        <i class="fa fa-chevron-right"></i>
-                    </dt>
-                    <dd>
-                        <a href="user_bill.html">支付记录</a>
-                        <a href="user_payment.html">账期账单</a>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>
-                        <em class="fa fa-heart"></em>
-                        <span>收藏</span>
-                        <i class="fa fa-chevron-right"></i>
-                    </dt>
-                    <dd>
-                        <a href="user_collect.html">我的收藏</a>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>
-                        <em class="fa fa-setting"></em>
-                        <span>设置</span>
-                        <i class="fa fa-chevron-right"></i>
-                    </dt>
-                    <dd>
-                        <a href="user_info.html">注册资料</a>
-                        <a href="user_consignee.html">收货地址</a>
-                        <a href="user_update_password.html">修改密码</a>
-                    </dd>
-                </dl>
-            </div>
+            <#include "./inc/side-center.ftl"/>
 
             <div class="main">
                 <div class="title">

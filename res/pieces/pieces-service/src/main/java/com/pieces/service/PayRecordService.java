@@ -1,6 +1,7 @@
 package com.pieces.service;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.model.Member;
 import com.pieces.dao.model.PayRecord;
 import com.pieces.dao.vo.PayRecordVo;
 

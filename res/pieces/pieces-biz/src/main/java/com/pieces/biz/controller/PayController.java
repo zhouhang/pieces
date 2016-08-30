@@ -1,8 +1,10 @@
 package com.pieces.biz.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.pieces.dao.enums.SessionEnum;
 import com.pieces.dao.model.OrderForm;
 import com.pieces.dao.model.PayAccount;
+import com.pieces.dao.model.PayRecord;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.PayRecordVo;
 import com.pieces.service.OrderFormService;
@@ -37,8 +39,6 @@ public class PayController extends BaseController{
 
     @Autowired
     private HttpSession httpSession;
-
-
     @Autowired
     private PayAccountService payAccountService;
     @Autowired
@@ -87,9 +87,27 @@ public class PayController extends BaseController{
 
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         payRecordService.create(payRecordVo,img,user.getId());
-
+        //清空令牌
+        httpSession.setAttribute(SessionEnum.PAY_TOKEN.getKey(),null);
         return new Result(true).info("支付信息提交成功!");
     }
 
+    /**
+     * 支付记录
+     * @param modelMap
+     * @param pageSize
+     * @param pageNum
+     * @return
+     */
+    @RequestMapping(value = "/record")
+    public String record(ModelMap modelMap,
+                         Integer pageSize,
+                         Integer pageNum){
+        pageNum=pageNum==null?1:pageNum;
+        pageSize=pageSize==null?10:pageSize;
+        PageInfo<PayRecord> recordPage = payRecordService.find(pageNum,pageSize);
+        modelMap.put("recordPage",recordPage);
+        return "pay_record";
+    }
 
 }

@@ -4,12 +4,17 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.PayRecordDao;
-import com.pieces.dao.model.PayRecord;
+import com.pieces.dao.model.*;
 import com.pieces.dao.vo.PayRecordVo;
-import com.pieces.service.AbsCommonService;
-import com.pieces.service.PayRecordService;
+import com.pieces.service.*;
+import com.pieces.service.enums.PathEnum;
+import com.pieces.tools.utils.FileUtil;
+import com.pieces.tools.utils.SeqNoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -60,14 +65,16 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		payRecordVo.setPayCode(SeqNoUtil.get("", payRecordVo.getId(), 6));
 		payRecordDao.update(payRecordVo);
 
-		for(String img : imgs){
-			PayDocument payDocument = new PayDocument();
-			payDocument.setPayRecordId(payRecordVo.getId());
-			payDocument.setCreateDate(new Date());
-			payDocument.setPath(FileUtil.saveFileFromTemp(img, PathEnum.COMMODITY.getValue()));
-			payDocumentService.create(payDocument);
+		//添加支付凭证
+		if(imgs!=null){
+			for(String img : imgs){
+				PayDocument payDocument = new PayDocument();
+				payDocument.setPayRecordId(payRecordVo.getId());
+				payDocument.setCreateDate(new Date());
+				payDocument.setPath(FileUtil.saveFileFromTemp(img, PathEnum.COMMODITY.getValue()));
+				payDocumentService.create(payDocument);
+			}
 		}
-
 		return payRecordVo;
 	}
 
