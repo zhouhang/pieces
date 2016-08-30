@@ -19,10 +19,10 @@ public class PayRecord  implements Serializable {
 	private Integer orderId;
 	
 	//应付金额
-	private Float amountsPayable;
+	private Double amountsPayable;
 	
 	//实付金额
-	private Float actualPayment;
+	private Double actualPayment;
 	
 	//开户行
 	private String payBank;
@@ -96,23 +96,23 @@ public class PayRecord  implements Serializable {
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
-	
-	public Float getAmountsPayable() {
+
+	public Double getAmountsPayable() {
 		return amountsPayable;
 	}
 
-	public void setAmountsPayable(Float amountsPayable) {
+	public void setAmountsPayable(Double amountsPayable) {
 		this.amountsPayable = amountsPayable;
 	}
-	
-	public Float getActualPayment() {
+
+	public Double getActualPayment() {
 		return actualPayment;
 	}
 
-	public void setActualPayment(Float actualPayment) {
+	public void setActualPayment(Double actualPayment) {
 		this.actualPayment = actualPayment;
 	}
-	
+
 	public String getPayBank() {
 		return payBank;
 	}

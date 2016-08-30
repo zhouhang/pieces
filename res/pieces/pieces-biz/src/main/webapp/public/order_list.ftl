@@ -50,7 +50,7 @@
                             </td>
                             <td width="140">
                                 <#if (orderForm.status == 1)>
-                                    <a href="/pay/go/${orderForm.id}" class="btn btn-red">付款</a>
+                                    <a href="/center/pay/go/${orderForm.id}" class="btn btn-red">付款</a>
                                 </#if>
                                 <#if (orderForm.status == 4)>
                                     <a href="${orderForm.id}" name="5" class="btn btn-red status">确认收货</a>
