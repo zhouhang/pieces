@@ -10,6 +10,8 @@ import com.pieces.service.AbsCommonService;
 import com.pieces.service.CommodityCollectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -31,6 +33,21 @@ public class CommodityCollectServiceImpl  extends AbsCommonService<CommodityColl
 	@Override
 	public ICommonDao<CommodityCollect> getDao() {
 		return commodityCollectDao;
+	}
+
+
+	@Override
+	public List<CommodityCollectVo> findByUser(Integer userId) {
+		return commodityCollectDao.findByUser(userId);
+		
+	}
+
+
+	@Override
+	@Transactional
+	public void deleteCollect(CommodityCollect commodityCollect) {
+		commodityCollectDao.deleteCollect(commodityCollect);
+		
 	}
 
 }

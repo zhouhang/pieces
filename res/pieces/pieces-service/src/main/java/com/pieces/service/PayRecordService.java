@@ -10,4 +10,21 @@ public interface PayRecordService extends ICommonService<PayRecord>{
 
 
     public PayRecord create(PayRecordVo payRecordVo,String[] img,Integer userId);
+
+    public PayRecordVo findVoById(Integer id);
+
+    /**
+     * 支付成功
+     * @param payId
+     * @return
+     */
+    public void success(Integer payId, Member member);
+
+    /**
+     * 支付失败
+     * @param payId
+     * @param msg
+     * @return
+     */
+    public void fail(Integer payId, String msg, Member member);
 }

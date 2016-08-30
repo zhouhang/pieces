@@ -42,6 +42,9 @@
             <if test="id != null">
                 id = #{id}
             </if>
+            <if test="payRecordId != null">
+                pay_record_id = #{payRecordId}
+            </if>
         </where>
     </select>
 

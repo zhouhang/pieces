@@ -44,6 +44,24 @@
             </if>
         </where>
     </select>
+    
+    <select id="findByUser" resultMap="CommodityCollectResultMapVo" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from commodity_collect
+        <where>
+            <if test="value != null">
+                user_id = #{value}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+    
+    <delete id="deleteCollect" parameterType="com.pieces.dao.model.CommodityCollect">
+        delete from commodity_collect
+        where commodity_id = #{commodityId}
+        and user_id = #{userId}
+    </delete>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from commodity_collect

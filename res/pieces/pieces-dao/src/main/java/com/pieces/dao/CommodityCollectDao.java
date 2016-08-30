@@ -10,4 +10,8 @@ public interface CommodityCollectDao extends ICommonDao<CommodityCollect>{
 
     public List<CommodityCollectVo> findByParams(CommodityCollectVo commodityCollectVo);
 
+	public List<CommodityCollectVo> findByUser(Integer userId);
+
+	public void deleteCollect(CommodityCollect commodityCollect);
+
 }
