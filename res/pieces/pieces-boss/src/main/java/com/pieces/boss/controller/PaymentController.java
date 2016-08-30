@@ -1,11 +1,21 @@
 package com.pieces.boss.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.pieces.dao.model.Member;
+import com.pieces.dao.vo.PayRecordVo;
+import com.pieces.service.PayRecordService;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.service.enums.RedisEnum;
+import com.pieces.tools.utils.Reflection;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Author: koabs
@@ -16,13 +26,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("payment/")
 public class PaymentController {
 
+    @Autowired
+    PayRecordService payRecordService;
+
+    @Autowired
+    HttpSession httpSession;
+
     /**
      * 支付记录index
      * @return
      */
     @RequestMapping(value = "index", method = RequestMethod.GET)
-    public String index() {
-
+    public String index(PayRecordVo vo, Integer pageNum, Integer pageSize, ModelMap modelMap) {
+        PageInfo<PayRecordVo> pageInfo = payRecordService.findByParams(vo, pageNum, pageSize);
+        modelMap.put("pageInfo", pageInfo);
+        modelMap.put("param", vo);
+        modelMap.put("paramGet", Reflection.serialize(vo));
         return "payment";
     }
 
@@ -32,7 +51,9 @@ public class PaymentController {
      * @return
      */
     @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
-    public String detail(@PathVariable("id")Integer id) {
+    public String detail(@PathVariable("id")Integer id, ModelMap modelMap) {
+        PayRecordVo vo = payRecordService.findVoById(id);
+        modelMap.put("pay",vo);
         return "payment_detail";
     }
 
@@ -44,6 +65,8 @@ public class PaymentController {
     @RequestMapping(value = "/success", method = RequestMethod.POST)
     @ResponseBody
     public Result success(Integer payId) {
+        Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
+        payRecordService.success(payId,mem);
         return new Result(true).info("支付状态修改成功.");
     }
 
@@ -56,8 +79,8 @@ public class PaymentController {
     @RequestMapping(value = "/fail", method = RequestMethod.POST)
     @ResponseBody
     public Result fail(Integer payId, String msg) {
+        Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
+        payRecordService.fail(payId,msg,mem);
         return new Result(true).info("支付状态修改成功");
     }
-
-    // TODO: 收款账号管理
 }

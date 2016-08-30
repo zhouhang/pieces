@@ -15,7 +15,7 @@
             <dl>
                 <dt>支付信息</dt>
                 <dd>
-                    <a class="curr" href="payment_info.html">支付信息</a>
+                    <a class="curr" href="/payment/index">支付信息</a>
                 </dd>
             </dl>
         </div>
@@ -25,7 +25,7 @@
                 <div class="extra">
                     <button type="button" class="btn btn-gray" id="jsuc">成功</button>
                     <button type="button" class="btn btn-gray" id="jfail">失败</button>
-                    <a href="#" class="btn btn-red">返回</a>
+                    <a href="/payment/index" class="btn btn-red">返回</a>
                 </div>
             </div>
             <div class="user-info">
@@ -34,15 +34,15 @@
                     <table>
                         <tbody>
                         <tr>
-                            <td><em>支付流水号：</em>20160819180100001</td>
-                            <td><em>订单编号：</em>20160711154600001</td>
+                            <td><em>支付流水号：</em>${pay.payCode}</td>
+                            <td><em>订单编号：</em>${pay.orderCode}</td>
                         </tr>
                         <tr>
-                            <td><em>订 购 用 户 ：</em>hehuan</td>
-                            <td><em>用药单位：</em>速采（武汉）科技有限公司</td>
+                            <td><em>订 购 用 户 ：</em>${pay.orderUserName}</td>
+                            <td><em>用药单位：</em>${pay.companyFullName}</td>
                         </tr>
                         <tr>
-                            <td><em>应 付 金 额 ：</em>&yen; 2100.00</td>
+                            <td><em>应 付 金 额 ：</em>&yen; ${pay.amountsPayable}</td>
                             <td><em>支付渠道：</em>线下打款</td>
                         </tr>
                         </tbody>
@@ -57,7 +57,7 @@
                     <table>
                         <tbody>
                         <tr>
-                            <td><b>支付金额：<span class="price">&yen; 21000.00</span></b></td>
+                            <td><b>支付金额：<span class="price">&yen;${pay.actualPayment}</span></b></td>
                             <td>&nbsp;</td>
                         </tr>
                         <tr>
@@ -69,11 +69,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><em>开&nbsp; 户&nbsp; 行：</em>中国招商银行</td>
-                            <td><em>开户人：</em>周行</td>
+                            <td><em>开&nbsp; 户&nbsp; 行：</em>${pay.receiveBank}</td>
+                            <td><em>开户人：</em>${pay.receiveAccount}</td>
                         </tr>
                         <tr>
-                            <td><em>收款账号：</em>6222 0210 0107 0070 872</td>
+                            <td><em>收款账号：</em>${pay.receiveBankCard}</td>
                             <td>&nbsp;</td>
                         </tr>
                         <tr>
@@ -85,45 +85,54 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><em>开&nbsp; 户&nbsp; 行：</em>中国招商银行</td>
-                            <td><em>开户人：</em>周行</td>
+                            <td><em>开&nbsp; 户&nbsp; 行：</em>${pay.payBank}</td>
+                            <td><em>开户人：</em>${pay.payAccount}</td>
                         </tr>
                         <tr>
-                            <td><em>收款账号：</em>6222 0210 0107 0070 872</td>
+                            <td><em>收款账号：</em>${pay.payBankCard}</td>
                             <td rowspan="2">
                                 <div class="img">
                                     <em>支付凭证：</em>
                                             <span class="thumb">
-                                                <img src="uploads/p0.jpg" data-src="http://static.sankobuy.com/files/upload/wool/2016/8/5fcf1a8a-c6d6-4292-bd4e-3150437948e2芡实.jpg" alt="" width="50" height="50">
+                                            <#list pay.imgs as img>
+                                                <img src="${img.path}"
+                                                     data-src="http://static.sankobuy.com/files/upload/wool/2016/8/5fcf1a8a-c6d6-4292-bd4e-3150437948e2芡实.jpg"
+                                                     alt="" width="50" height="50">
+                                            </#list>
                                             </span>
                                 </div>
                             </td>
                         </tr>
                         <tr>
-                            <td><em>支付时间：</em>2016-08-22</td>
+                            <td><em>支付时间：</em>${pay.paymentTime?date}</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-
+        <#if pay.status != 0>
             <div class="user-info">
                 <h3>支付结果</h3>
                 <div class="info">
                     <table>
                         <tbody>
                         <tr>
-                            <td><em>支付结果：</em>支付失败</td>
-                            <td><em>操作人员：</em>何欢</td>
+                            <td><em>支付结果：</em>${pay.statusText}</td>
+                            <td><em>操作人员：</em>${pay.memberName}</td>
                         </tr>
                         <tr>
-                            <td><em>记录时间：</em>2016-08-22</td>
-                            <td><em>失败原因：</em>银行账户上查不到该付款记录。</td>
+                            <td><em>记录时间：</em>${pay.operationTime?date}</td>
+                            <td>
+                                <#if pay.failReason?exists>
+                                    <em>失败原因：</em>${pay.failReason}
+                                </#if>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+        </#if>
 
         </div>
     </div><!-- fa-floor end -->
@@ -147,7 +156,10 @@
 <script src="js/lightbox.js"></script>
 <script>
     var _global = {
-        v: {},
+        v: {
+            successUrl:"/payment/success",
+            failUrl:"/payment/fail"
+        },
         fn: {
             init: function() {
                 this.bindEvent();
@@ -158,6 +170,12 @@
                         title: '付款成功',
                         btn: ['确认','取消'] //按钮
                     }, function(index){
+                        var url = _global.v.successUrl +"?payId=${pay.id}"
+                        $.post(url, function(data) {
+                            if (data.status == "y") {
+                                window.location.reload();
+                            }
+                        },"json")
                         layer.close(index);
                     });
                 });
@@ -169,7 +187,12 @@
                     }, function(pass){
                         layer.prompt({title: '付款失败原因', formType: 2, btn: ['确认']},
                                 function(text){
-                                    layer.msg('演示完毕！您的口令：'+ pass +' 您最后写下了：'+ text);
+                                    var url = _global.v.failUrl +"?payId=${pay.id}"
+                                    $.post(url,{msg:text}, function(data) {
+                                        if (data.status == "y") {
+                                            window.location.reload();
+                                        }
+                                    },"json")
                                 });
                     });
                 });

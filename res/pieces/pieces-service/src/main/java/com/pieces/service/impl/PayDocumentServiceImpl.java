@@ -8,6 +8,7 @@ import com.pieces.dao.model.PayDocument;
 import com.pieces.dao.vo.PayDocumentVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.PayDocumentService;
+import com.pieces.tools.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -27,6 +28,12 @@ public class PayDocumentServiceImpl  extends AbsCommonService<PayDocument> imple
         return page;
 	}
 
+	@Override
+	public List<PayDocumentVo> findByPayId(Integer payId) {
+		PayDocumentVo payDocumentVo = new PayDocumentVo();
+		payDocumentVo.setPayRecordId(payId);
+		return FileUtil.convertAbsolutePathToUrl(payDocumentDao.findByParams(payDocumentVo), "path");
+	}
 
 	@Override
 	public ICommonDao<PayDocument> getDao() {
