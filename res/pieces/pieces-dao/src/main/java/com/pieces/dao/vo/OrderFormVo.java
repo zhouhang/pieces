@@ -1,5 +1,6 @@
 package com.pieces.dao.vo;
 
+import com.pieces.dao.OrderFormDao;
 import com.pieces.dao.config.SystemConfig;
 import com.pieces.dao.enums.OrderEnum;
 import com.pieces.dao.model.*;
@@ -144,6 +145,7 @@ public class OrderFormVo extends OrderForm {
     }
 
     public String getStatusText() {
+        getOrderValidityPeriod();
         return OrderEnum.findByValue(getStatus());
     }
 
@@ -196,6 +198,12 @@ public class OrderFormVo extends OrderForm {
                 if (createTime <= currentTime) {
                     // 付款期限已过 设置付款状态为取消
                     // TODO:
+                    this.setStatus(OrderEnum.CANCEL.getValue());
+//                    OrderFormDao orderFormDao = (OrderFormDao)SpringUtil.getBean(OrderFormDao.class);
+//                    OrderForm form = new OrderForm();
+//                    form.setId(orderId);
+//                    form.setStatus(OrderEnum.CANCEL.getValue());
+//                    orderFormDao.update(form);
                 } else {
                     Long difference = createTime - currentTime;
                     Long dayS = difference / day;

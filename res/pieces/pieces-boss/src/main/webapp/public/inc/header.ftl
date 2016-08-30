@@ -29,6 +29,7 @@
                     <a href="/enquiry/index">询价管理</a>
                     </@shiro.hasPermission>
                     <a href="/order/index">订单管理</a>
+                    <a href="/payment/index">支付管理</a>
                     </div>
                 </li>
             </@shiro.hasPermission>
