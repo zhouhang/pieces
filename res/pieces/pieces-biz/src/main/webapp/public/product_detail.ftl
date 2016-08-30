@@ -76,7 +76,7 @@
                         </div>
                         <div class="buttons">
                             <a class="btn btn-red j_pop_login" href="/center/enquiry/index?commodityId=${commodity.id!}">询价</a>
-                            <a class="btn btn-gray" href="#"><i class="fa fa-heart"></i>收藏</a>
+                            <a class="btn btn-gray" href="javascript:;"><i class="fa fa-heart"></i>收藏</a>
                         </div>
                     </div>
                 </div>
@@ -97,6 +97,35 @@
     <#include "./inc/helper.ftl"/>
     <#include "./inc/footer.ftl"/>
     <script src="/js/layer/layer.js"></script>
-
+    <script>
+        var _global = {
+            v: {
+            },
+            fn: {
+                init: function() {
+                    this.addFav();
+                },
+                // 添加
+                addFav: function() {
+                    $('.btn-gray').on('click', function() {
+                        $.ajax({
+                            url: '/center/collect/add/${commodity.id!}',
+                            dataType: 'json',
+                            success: function(result) {
+                                if (result.status=="y") {
+                                    layer.msg('收藏成功！', {icon: 1});
+                                    return false;
+                                }
+                            }
+                        })
+                    })
+                }
+            }
+        }
+        //加载页面js
+        $(function() {
+            _global.fn.init();
+        });
+    </script>
 </body>
 </html>

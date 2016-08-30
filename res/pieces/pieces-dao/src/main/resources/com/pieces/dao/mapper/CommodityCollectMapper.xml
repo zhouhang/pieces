@@ -50,8 +50,8 @@
         <include refid="Base_Column_List" />
         from commodity_collect
         <where>
-            <if test="userId != null">
-                user_id = #{userId}
+            <if test="value != null">
+                user_id = #{value}
             </if>
         </where>
         order by create_time desc

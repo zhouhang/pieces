@@ -4,6 +4,7 @@ package com.pieces.biz.controller;
 import java.util.Date;
 import java.util.List;
 
+import com.pieces.service.utils.ValidUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,13 +57,15 @@ public class CommodityCollectController {
 	public String index(ModelMap model) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		List<CommodityCollectVo> ccl = commodityCollectService.findByUser(user.getId());
-		String ids = "";
-		for(CommodityCollectVo ccv : ccl){
-			ids = ids + ccv.getCommodityId() + ",";
+		List<CommodityVo> cvl = null;
+		if(ValidUtils.listNotBlank(ccl)){
+			String ids = "";
+			for(CommodityCollectVo ccv : ccl){
+				ids = ids + ccv.getCommodityId() + ",";
+			}
+			ids = ids.substring(0, ids.length()-1);
+			cvl = commodityService.findVoByIds(ids);
 		}
-		ids = ids.substring(0, ids.length()-1);
-		List<CommodityVo> cvl = commodityService.findVoByIds(ids);
-		
 		model.put("commodityVoList", cvl);
 		return "user_collect";
 	}

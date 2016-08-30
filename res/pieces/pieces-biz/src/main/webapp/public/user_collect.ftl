@@ -8,22 +8,6 @@
 <body>
 	<#include "./inc/header-center.ftl"/>
 
-
-    <!-- header start -->
-    <div class="header header-red">
-        <div class="wrap">
-            <div class="logo">
-                <a href="home.html">饮片B2B首页</a>
-            </div>
-            <div class="title">
-                <h1>我的供应链</h1>
-            </div>
-            <div class="plus">
-                <a class="back" href="home.html"><i class="fa fa-chevron-left"></i> 返回商城首页</a>
-            </div>
-        </div>
-    </div><!-- header end -->
-
     <!-- member-box start -->
     <div class="member-box">
         <div class="wrap">
@@ -59,13 +43,14 @@
 	                                    <td>${commodity.exterior}</td>
 	                                    <td>${commodity.originOfName}</td>
 	                                    <td>
-	                                        <if commodity.status == 1><a href="/center/enquiry/index?commodityId=${commodity.id!}" class="c-blue">询价</a></#if>
-	                                        <a href="/center/collect/delete/${commodity.id}" class="c-red jdel">删除</a>
+	                                        <#if commodity.status == 1><a href="/center/enquiry/index?commodityId=${commodity.id!}" class="c-blue">询价</a></#if>
+	                                        <a onclick="_global.fn.delFav(${commodity.id!});" href="javascript:;" class="c-red jdel">删除</a>
 	                                    </td>
 	                                </tr>
                                 </#list>
                             </tbody>
                             <#else>
+                            <tbody>
 								<tr>
                                     <td colspan="6">
                                         <div class="empty">
@@ -73,6 +58,7 @@
                                         </div>
                                     </td>
                                 </tr>
+                            </tbody>
                            </#if> 
                         </table>
                     </div>
@@ -125,17 +111,14 @@
             },
             fn: {
                 init: function() {
-                    this.delFav();
                 },
                 // 删除
-                delFav: function() {
-                    $('.fa-chart').on('click', '.jdel', function() {
+                delFav: function(id) {
                         layer.confirm('确认从收藏夹中删除这个商品吗？', {icon: 3, title:'提示'}, function(index){
-                            alert('删除成功')
+                            window.location.href = '/center/collect/delete/' + id,
                             layer.close(index); // 关闭弹层
                         });  
                         return false; // 组织默认事件
-                    })
                 }
             }
         }

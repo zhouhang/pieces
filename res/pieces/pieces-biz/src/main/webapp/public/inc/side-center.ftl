@@ -47,6 +47,9 @@
             <span>收藏</span>
             <i class="fa fa-chevron-right"></i>
         </dt>
+        <dd>
+            <a href="/center/collect/index" class="curr">我的收藏</a>
+        </dd>
     </dl>
     <dl>
         <dt>
