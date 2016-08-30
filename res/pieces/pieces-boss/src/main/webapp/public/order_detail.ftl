@@ -23,7 +23,7 @@
                     <h3><i class="fa fa-chevron-right"></i>订单 ${vo.code} | <#if vo.createrTime?exists>${vo.createrTime?datetime}</#if></h3>
                     <div class="extra">
                         <a  class="btn btn-gray" href="order/index">返回</a>
-                        <a  class="btn btn-gray" href="/order/edit/${vo.id!}">修改</a>
+                        <a  id="editerOrder" class="btn btn-gray" href="javascript:;">修改</a>
                         <a type="button" class="btn btn-gray">发票</a>
                         <a type="button" class="btn btn-gray">配送</a>
                         <a  class="btn btn-red" href="/order/anew/${vo.id!}">重新下单</a>
@@ -154,6 +154,7 @@
     <#include "./inc/footer.ftl"/>
 <!-- footer end -->
     <script src="/js/common.js"></script>
+    <script src="/js/layer/layer.js"></script>
 <script>
     var enquiryPage = {
         v: {},
@@ -175,6 +176,15 @@
                         }
                     })
                 })
+
+                $("#editerOrder").click(function () {
+                    var $this = $(this);
+                    layer.confirm('您确认吗？该订单将会被取消并生成新的订单', {icon: 3, title: '提示'}, function (index) {
+                        window.location.href = "/order/edit/${vo.id!}";
+                        layer.close(index);
+                    });
+                    return false
+                });
             }
         }
     }
