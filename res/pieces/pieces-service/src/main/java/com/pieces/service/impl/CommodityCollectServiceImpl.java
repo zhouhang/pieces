@@ -33,4 +33,18 @@ public class CommodityCollectServiceImpl  extends AbsCommonService<CommodityColl
 		return commodityCollectDao;
 	}
 
+
+	@Override
+	public List<CommodityCollectVo> findByUser(Integer userId) {
+		return commodityCollectDao.findByUser(userId);
+		
+	}
+
+
+	@Override
+	public void deleteCollect(CommodityCollect commodityCollect) {
+		commodityCollectDao.deleteCollect(commodityCollect);
+		
+	}
+
 }
