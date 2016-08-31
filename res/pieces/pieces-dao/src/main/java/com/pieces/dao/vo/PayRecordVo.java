@@ -8,6 +8,15 @@ import java.util.List;
 
 public class PayRecordVo extends PayRecord{
 
+    private Integer payAccountId;
+
+    public Integer getPayAccountId() {
+        return payAccountId;
+    }
+
+    public void setPayAccountId(Integer payAccountId) {
+        this.payAccountId = payAccountId;
+    }
     // 订购用户
     private String orderUserName;
 

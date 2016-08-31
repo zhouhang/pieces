@@ -370,7 +370,6 @@
                         if (result.pass) {
                             isSubmit = true;
                             var list = JSON.stringify(page.fn.formatTableData());
-                            console.log(list)
                             var billId = $("#billId").val()
                             $.ajax({
                                 type : 'post',

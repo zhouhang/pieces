@@ -4,11 +4,13 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Member;
 import com.pieces.dao.model.PayRecord;
 import com.pieces.dao.vo.PayRecordVo;
-import com.pieces.service.constant.bean.Result;
 
 public interface PayRecordService extends ICommonService<PayRecord>{
 
     public PageInfo<PayRecordVo> findByParams(PayRecordVo payRecordVo, Integer pageNum, Integer pageSize);
+
+
+    public PayRecord create(PayRecordVo payRecordVo,String[] img,Integer userId);
 
     public PayRecordVo findVoById(Integer id);
 
