@@ -22,7 +22,7 @@
                 </dl>
             </div>
             <div class="main">
-                
+                <form action="/bank/save" id="myform">
                 <div class="title title-btm">
                     <h3><i class="fa fa-chevron-right"></i>新增收款账户</h3>
                     <div class="extra">
@@ -34,7 +34,7 @@
                 <div class="user-info">
                     <h3>收款账户信息</h3>
                     <div class="fa-form">
-                        <form action="/bank/save" id="myform">
+
                         <div class="group">
                             <div class="txt">
                                 <i>*</i> 开户行：
@@ -70,9 +70,10 @@
                                 </select>
                             </div>
                         </div>
-                        </form>
+
                     </div>
                 </div>
+                </form>
             </div>
         </div><!-- fa-floor end -->
     </div>
@@ -81,7 +82,9 @@
     <#include "./inc/footer.ftl"/>
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
+    <script src="/js/jquery.form.js"></script>
+    <script src="/js/validator/jquery.validator.min.js?local=zh-CN"></script>
+    <script src="/js/common.js"></script>
     <script>
         var _global = {
             v: {},

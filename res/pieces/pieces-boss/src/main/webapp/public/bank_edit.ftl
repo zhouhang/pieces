@@ -1,72 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>修改收款账户-boss-饮片B2B</title>
-    <meta name="renderer" content="webkit" />
-    <link rel="stylesheet" href="css/style.css" />
+    <#include "./inc/meta.ftl"/>
 </head>
 
 <body>
 
-    <!-- header start -->
-    <div class="header">
-        <div class="wrap">
-            <div class="logo">
-                <a href="home.html">药优优电子商务管理系统</a>
-            </div>
-            <div class="user">
-                <span>登录用户 hehuan</span>
-                <i>|</i>
-                <span>2016年6月20日 星期三</span>
-                <i>|</i>
-                <a href="logout.html">退出</a>
-            </div>
-        </div>
-    </div><!-- header end -->
-
-
-    <!-- nav start -->
-    <div class="nav">
-        <div class="wrap">
-            <ul>
-                <li><a href="home.html">首页</a></li>
-                <li>
-                    <a href="#!">销售</a>
-                    <div class="subnav">
-                        <a href="enquiry.html">询价管理</a>
-                        <a href="order.html">订单管理</a>
-                    </div>
-                </li>
-                <li>
-                    <a href="#!">目录</a>
-                    <div class="subnav">
-                        <a href="goods.html">商品管理</a>
-                        <a href="category.html">分类管理</a>
-                        <a href="breed.html">品种管理</a>
-                    </div>
-                </li>
-                <li>
-                    <a href="#!">客户</a>
-                    <div class="subnav">
-                        <a href="customers.html">客户管理</a>
-                    </div>
-                </li>
-                <li><a href="#!">促销</a></li>
-                <li><a href="#!">邮件列表</a></li>
-                <li><a href="#!">CMS</a></li>
-                <li><a href="#!">报表</a></li>
-                <li>
-                    <a class="curr" href="#!">系统</a>
-                    <div class="subnav">
-                        <a class="on" href="user.html">用户管理</a>
-                        <a href="role.html">角色管理</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div><!-- nav end -->
+    <#include "./inc/header.ftl"/>
 
 
     <!-- fa-floor start -->
@@ -76,31 +17,31 @@
                 <dl>
                     <dt>收款账户信息</dt>
                     <dd>
-                        <a class="curr" href="user_info.html">收款账户信息</a>
+                        <a class="curr" href="/bank/index">收款账户信息</a>
                     </dd>
                 </dl>
             </div>
             <div class="main">
-                
+                <form action="" id="myform">
                 <div class="title title-btm">
                     <h3><i class="fa fa-chevron-right"></i>修改收款账户</h3>
                     <div class="extra">
-                        <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                        <button type="button" class="btn btn-gray">删除</button>
-                        <button type="button" class="btn btn-red" id="jSave">保存</button>
+                        <a  class="btn btn-gray" href="/bank/index">返回</a>
+                        <button id="delete" type="button" class="btn btn-gray">删除</button>
+                        <button type="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
 
                 <div class="user-info">
                     <h3>收款账户信息</h3>
                     <div class="fa-form">
-                        <form action="" id="myform">
+                        <input type="hidden" value="${payAccount.id }"  name="id" id="id">
                         <div class="group">
                             <div class="txt">
                                 <i>*</i> 开户行：
                             </div>
                             <div class="cnt">
-                                <input type="text" placeholder="" id="bank" name="bank" autocomplete="off" value="中国工商银行" class="ipt">                            
+                                <input type="text" placeholder="" id="bank" name="receiveBank" autocomplete="off" value="${payAccount.receiveBank}" class="ipt">
                             </div>
                         </div>
                         <div class="group">
@@ -108,7 +49,7 @@
                                 <i>*</i> 开户人：
                             </div>
                             <div class="cnt">
-                                <input type="text" placeholder="" id="name" name="name" autocomplete="off" value="何欢" class="ipt">                            
+                                <input type="text" placeholder="" id="name" name="receiveAccount" autocomplete="off" value="${payAccount.receiveAccount}" class="ipt">
                             </div>
                         </div>
                         <div class="group">
@@ -116,7 +57,7 @@
                                 <i>*</i> 收款账号：
                             </div>
                             <div class="cnt">
-                                <input type="text" placeholder="" id="bankNumber" name="bankNumber" autocomplete="off" value="6222 0210 0107 0070 872" class="ipt">                            
+                                <input type="text" placeholder="" id="bankNumber" name="receiveBankCard" autocomplete="off" value="${payAccount.receiveBankCard}" class="ipt">
                             </div>
                         </div>
                         <div class="group">
@@ -124,53 +65,99 @@
                                 <i>*</i> 状态：
                             </div>
                             <div class="cnt">
-                                <select name="state" id="state" class="wide">
-                                    <option value="1">激活</option>
-                                    <option value="2">禁用</option>
+                                <select name="status" id="state" class="wide">
+                                    <option <#if payAccount.status == 1>selected="selected"</#if> value="1">激活</option>
+                                    <option <#if payAccount.status == 0>selected="selected"</#if> value="0">禁用</option>
                                 </select>
                             </div>
                         </div>
                         </form>
                     </div>
                 </div>
+                </form>
             </div>
         </div><!-- fa-floor end -->
     </div>
 
 
-    <!-- footer start -->
-    <div class="footer">
-        <div class="wrap">            
-            <div class="copyright">
-                <p>药优优电商管理系统 版本 1.0  版权所有 &copy; 2016 药优优</p>
-            </div>
-        </div>
-    </div><!-- footer end -->
+    <#include "./inc/footer.ftl"/>
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
+    <script src="/js/jquery.form.js"></script>
+    <script src="/js/validator/jquery.validator.min.js?local=zh-CN"></script>
+    <script src="/js/common.js"></script>
+    <script src="/js/layer/layer.js"></script>
     <script>
         var _global = {
             v: {},
             fn: {
                 init: function() {
                     this.formValidate();
+
+                    $('#delete').on('click', function() {
+                        alert(111)
+                        var $self = $(this);
+                        layer.confirm('确认删除该品种？', {
+                            btn: ['确认','取消'] //按钮
+                        }, function(index){
+                            layer.close(index);
+                            $.ajax({
+                                url: "/bank/delete/" + $("#id").val(),
+                                type: "POST",
+                                success: function(data){
+                                    if(data.status == "y"){
+                                        $.notify({
+                                            type: 'success',
+                                            title: data.info,
+                                            text: '3秒后自动跳转到账户列表页',
+                                            delay: 3e3,
+                                            call: function() {
+                                                setTimeout(function() {
+                                                    location.href = '/bank/index';
+                                                }, 3e3);
+                                            }
+                                        });
+                                    }else{
+                                        $.notify({
+                                            type: 'error',
+                                            title: data.info,
+                                            delay: 3e3
+                                        });
+                                    }
+                                }
+                            });
+                        });
+                        return false;
+                    });
                 },
                 formValidate: function() {
                     $('#myform').validator({
                         rules: {
-                            bankNumber: [/^\d{12,19}$/, '银行卡号是12-19位数字']
+                            receiveBankCard: [/^\d{12,19}$/, '银行卡号是12-19位数字']
                         },
                         fields: {
-                            bank: '开户行: required',
-                            name: '开户人: required, nickName',
-                            bankNumber: '收款账号: required, bankNumber'
+                            receiveBank: '开户行: required',
+                            receiveAccount: '开户人: required, nickName',
+                            receiveBankCard: '收款账号: required, bankNumber'
+                        },
+                        valid: function(form) {
+                            if ( $(form).isValid() ) {
+                                $.ajax({
+                                    url: "/bank/save",
+                                    data: $(form).formSerialize(),
+                                    type: "POST",
+                                    success: function(data){
+                                        //$(form)[0].reset();
+                                        $.notify({
+                                            type: 'success',
+                                            title: data.info,
+                                            delay: 3e3
+                                        });
+                                    }
+                                });
+                            }
                         }
                     });
-
-                    $('#jSave').on('click', function() {
-                        $('#myform').submit();
-                    })
 
                 }
             }
