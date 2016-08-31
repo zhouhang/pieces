@@ -46,7 +46,7 @@ public class CommodityCollectController {
 		commodityCollectVo.setCommodityId(cid);
 		commodityCollectVo.setUserId(user.getId());
 		PageInfo<CommodityCollectVo> ccp = commodityCollectService.findByParams(commodityCollectVo,1, 10);
-		if(!ValidUtils.listNotBlank(ccp.getList())){
+		if(ccp.getSize() == 0){
 			CommodityCollect cc = new CommodityCollect();
 			cc.setCommodityId(cid);
 			cc.setUserId(user.getId());
