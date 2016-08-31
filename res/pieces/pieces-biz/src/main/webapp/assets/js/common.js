@@ -236,6 +236,7 @@ function quoteEvent() {
     })
 }
 
+
 // 商品分类
 function cat() {
 	$cat = $('#jcat');
