@@ -1,6 +1,8 @@
 package com.pieces.biz.controller;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -12,12 +14,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.pieces.service.CommodityService;
+import com.pieces.service.impl.CommodityServiceImpl;
 import com.pieces.service.impl.CreateHtmlService;
+import com.pieces.service.vo.CropResult;
+import com.pieces.tools.bean.FileBo;
+import com.pieces.tools.upload.TempUploadFile;
 import com.pieces.tools.utils.SpringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -45,8 +55,13 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 @RequestMapping(value = "gen")
 public class GeneralController extends BaseController {
 
+    Logger logger = LoggerFactory.getLogger(GeneralController.class);
+
+
     @Autowired
     private SmsService smsService;
+    @Autowired
+    private CommodityService commodityService;
     @Autowired
     private CreateHtmlService createHtmlService;
 
@@ -77,8 +92,24 @@ public class GeneralController extends BaseController {
                            HttpServletResponse response,
                            @RequestParam(required = false) MultipartFile file)throws Exception {
         defaultUploadFile.uploadFile(file.getOriginalFilename(), file.getInputStream());
-
     }
+
+    /**
+     * 上传图片
+     * @param request
+     * @param response
+     * @param img
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/img/upload")
+    @ResponseBody
+    public CropResult imgUpload(HttpServletRequest request,
+                                HttpServletResponse response,
+                                @RequestParam(required = false) MultipartFile img)throws Exception {
+        return commodityService.uploadImage(img);
+    }
+
 
     /**
      * 省市区接口
@@ -162,7 +193,6 @@ public class GeneralController extends BaseController {
     public void createHtml(HttpServletRequest request){
         WebApplicationContext webApplicationContext = RequestContextUtils.findWebApplicationContext(request);
         FreeMarkerConfigurer freeMarkerConfigurer =  (FreeMarkerConfigurer) webApplicationContext.getBean("freemarkerConfig");
-        System.out.println(freeMarkerConfigurer);
         createHtmlService.createHomePage(freeMarkerConfigurer);
     }
 

@@ -24,8 +24,8 @@
                     <div class="extra">
                         <a  class="btn btn-gray" href="order/index">返回</a>
                         <a  id="editerOrder" class="btn btn-gray" href="javascript:;">修改</a>
-                        <a type="button" class="btn btn-gray">发票</a>
-                        <a type="button" class="btn btn-gray">配送</a>
+                        <a type="button" class="btn btn-gray" href="javascript:;">发票</a>
+                        <a id="delivery" type="button" class="btn btn-gray" href="javascript:;">配送</a>
                         <a  class="btn btn-red" href="/order/anew/${vo.id!}">重新下单</a>
                     </div>
                 </div>
@@ -182,6 +182,25 @@
                     layer.confirm('您确认吗？该订单将会被取消并生成新的订单', {icon: 3, title: '提示'}, function (index) {
                         window.location.href = "/order/edit/${vo.id!}";
                         layer.close(index);
+                    });
+                    return false
+                });
+
+                $("#delivery").click(function () {
+                    layer.confirm('您确认吗？订单已经发货', {icon: 3, title: '提示'}, function (index) {
+                        layer.close(index);
+                        $.post("/order/status",{status:4,orderId:${vo.id}}, function (data) {
+                            if (data.status == "y") {
+                                $.notify({
+                                    type: 'success',
+                                    title: '订单状态修为为已发货.',
+                                    delay: 3e3,
+                                    call: function () {
+                                        window.location.reload();
+                                    }
+                                });
+                            }
+                        })
                     });
                     return false
                 });

@@ -17,14 +17,8 @@
 	<!--Spring3.1开始的注解 HandlerMapping ,支持 product consume annotation-->
 	<bean id="includePageInterceptor" class="com.pieces.biz.freemarker.interceptor.IncludePageInterceptor"/>
 
-	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
-		<property name="order" value="1" />
-		<property name="interceptors">
-			<list>
-				<ref bean="includePageInterceptor"/>
-			</list>
-		</property>
-	</bean>
+	<bean   class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+
 
 	<!--Spring3.1开始的注解 HandlerAdapter -->  
 	<bean  class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
@@ -35,14 +29,6 @@
 	</bean>
 	
 	<bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape" />
-
-	<bean id="jsonHttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-		<property name="supportedMediaTypes">
-			<list>
-				<value>application/json</value>
-			</list>
-		</property>
-	</bean>
 
 
 	<!-- 配置freeMarker的模板路径 -->
@@ -74,6 +60,22 @@
 	<bean id="pinyin_category" class="com.pieces.biz.freemarker.tag.PinyinCategoryBreedDirective"/>
 	<bean id="help_foot" class="com.pieces.biz.freemarker.tag.HelpFootDirective"/>
 
+
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.json.GsonHttpMessageConverter">
+					<property name="gson">
+						<!-- 获取方法返回值：调用valueGenerator的getValue方法 -->
+						<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+							<property name="targetClass" value="com.pieces.dao.utils.GsonFactory"/>
+							<property name="targetMethod" value="getInstance"/>
+						</bean>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<!-- 配置多视图协商解析器 ,ppa策略,先找parameter，再找header，最后找accept-->
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">

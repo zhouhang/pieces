@@ -99,6 +99,18 @@ public class OrderController extends BaseController{
         return new Result(true).info("添加成功!").data(remark);
     }
 
+    /**
+     * 修改订单状态
+     * @param orderId
+     * @param status
+     * @return
+     */
+    @RequestMapping(value = "/status", method = RequestMethod.POST)
+    @ResponseBody
+    public Result changeStatus(Integer orderId, Integer status) {
+        return orderFormService.changeOrderStatus(orderId, status);
+    }
+
 
     /**
      * 新建订单客户列表

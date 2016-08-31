@@ -3,6 +3,7 @@ package com.pieces.dao.vo;
 import com.pieces.dao.OrderFormDao;
 import com.pieces.dao.config.SystemConfig;
 import com.pieces.dao.enums.OrderEnum;
+import com.pieces.dao.event.OrderStatusEvent;
 import com.pieces.dao.model.*;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.SpringUtil;
@@ -136,7 +137,7 @@ public class OrderFormVo extends OrderForm {
                 names[i] = commodities.get(i).getName();
             }
             commodityOverview = StringUtils.join(names, ",");
-            if (lenght>3) {
+            if (commodities.size() > 3) {
                 commodityOverview += "...";
             }
         }
@@ -199,11 +200,7 @@ public class OrderFormVo extends OrderForm {
                     // 付款期限已过 设置付款状态为取消
                     // TODO:
                     this.setStatus(OrderEnum.CANCEL.getValue());
-//                    OrderFormDao orderFormDao = (OrderFormDao)SpringUtil.getBean(OrderFormDao.class);
-//                    OrderForm form = new OrderForm();
-//                    form.setId(orderId);
-//                    form.setStatus(OrderEnum.CANCEL.getValue());
-//                    orderFormDao.update(form);
+                    SpringUtil.getApplicationContext().publishEvent(new OrderStatusEvent(getId(), OrderEnum.CANCEL.getValue()));
                 } else {
                     Long difference = createTime - currentTime;
                     Long dayS = difference / day;

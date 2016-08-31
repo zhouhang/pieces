@@ -20,20 +20,7 @@
                 <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                 <button class="btn btn-blue" type="button" id="submit"><i class="fa fa-search"></i><span>搜索</span></button>
             </div>
-            <div class="skip">
-                <span>第</span>
-                <a class="fa fa-chevron-left btn btn-gray"></a><input type="text" class="ipt" value="1"><a class="fa fa-chevron-right btn btn-gray"></a>
-                <span>页，共</span><em>6</em><span>页</span>
-                <i>|</i>
-                <span>每页</span>
-                <select name="" id="">
-                    <option value="">10</option>
-                    <option value="">20</option>
-                    <option value="">30</option>
-                    <option value="">40</option>
-                </select>
-                <span>个记录，共有 2 个记录</span>
-            </div>
+        <@p.pager pageInfo=pageInfo  pageUrl="payment/index"  params=paramGet />
         </div>
         <div class="chart">
             <table class="tc">
@@ -50,23 +37,22 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                    <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                    <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                    <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
+                    <td><div class="ipt-wrap"><input type="text" class="ipt" name="payCode" value="${param.payCode}"></div></td>
+                    <td><div class="ipt-wrap"><input type="text" class="ipt" name="orderCode" value="${param.orderCode}"></div></td>
+                    <td><div class="ipt-wrap"><input type="text" class="ipt" name="userName" value="${param.userName}"></div></td>
+                    <td><div class="ipt-wrap"><input type="text" class="ipt" name="companyFullName" value="${param.companyFullName}"></div></td>
                     <td>
                         <select name="" id="">
                             <option value=""></option>
                             <option value="">线下打款</option>
-                            <option value="">在线支付</option>
                         </select>
                     </td>
                     <td>
-                        <select name="" id="">
+                        <select name="status" id="status">
                             <option value=""></option>
-                            <option value="">待处理</option>
-                            <option value="">支付成功</option>
-                            <option value="">支付失败</option>
+                            <option value="0">待处理</option>
+                            <option value="1">支付成功</option>
+                            <option value="2">支付失败</option>
                         </select>
                     </td>
                     <td></td>
@@ -74,106 +60,18 @@
                 </thead>
                 <tfoot></tfoot>
                 <tbody>
+                <#list pageInfo.list as pay>
                 <tr>
-                    <td>01</td>
-                    <td>20160819180100001</td>
-                    <td>20160711154600001</td>
-                    <td>hehuan</td>
-                    <td>速采（武汉）科技有限公司</td>
+                    <td>${pay.id}</td>
+                    <td>${pay.payCode}</td>
+                    <td>${pay.orderCode}</td>
+                    <td>${pay.orderUserName}</td>
+                    <td>${pay.companyFullName}</td>
                     <td>线下打款</td>
-                    <td>待处理</td>
-                    <td><a href="payment_detail.html">查看</a></td>
+                    <td>${pay.statusText}</td>
+                    <td><a href="/payment/detail/${pay.id}">查看</a></td>
                 </tr>
-                <tr>
-                    <td>02</td>
-                    <td>20160819180100001</td>
-                    <td>20160711154600001</td>
-                    <td>hehuan</td>
-                    <td>速采（武汉）科技有限公司</td>
-                    <td>在线支付</td>
-                    <td>支付成功</td>
-                    <td><a href="payment_detail.html">查看</a></td>
-                </tr>
-                <tr>
-                    <td>03</td>
-                    <td>20160819180100001</td>
-                    <td>20160711154600001</td>
-                    <td>hehuan</td>
-                    <td>速采（武汉）科技有限公司</td>
-                    <td>线下打款</td>
-                    <td>支付失败</td>
-                    <td><a href="payment_detail.html">查看</a></td>
-                </tr>
-                <tr>
-                    <td>04</td>
-                    <td>20160819180100001</td>
-                    <td>20160711154600001</td>
-                    <td>hehuan</td>
-                    <td>速采（武汉）科技有限公司</td>
-                    <td>线下打款</td>
-                    <td>待处理</td>
-                    <td><a href="payment_detail.html">查看</a></td>
-                </tr>
-                <tr>
-                    <td>05</td>
-                    <td>20160819180100001</td>
-                    <td>20160711154600001</td>
-                    <td>hehuan</td>
-                    <td>速采（武汉）科技有限公司</td>
-                    <td>线下打款</td>
-                    <td>待处理</td>
-                    <td><a href="payment_detail.html">查看</a></td>
-                </tr>
-                <tr>
-                    <td>06</td>
-                    <td>20160819180100001</td>
-                    <td>20160711154600001</td>
-                    <td>hehuan</td>
-                    <td>速采（武汉）科技有限公司</td>
-                    <td>线下打款</td>
-                    <td>待处理</td>
-                    <td><a href="payment_detail.html">查看</a></td>
-                </tr>
-                <tr>
-                    <td>07</td>
-                    <td>20160819180100001</td>
-                    <td>20160711154600001</td>
-                    <td>hehuan</td>
-                    <td>速采（武汉）科技有限公司</td>
-                    <td>线下打款</td>
-                    <td>待处理</td>
-                    <td><a href="payment_detail.html">查看</a></td>
-                </tr>
-                <tr>
-                    <td>08</td>
-                    <td>20160819180100001</td>
-                    <td>20160711154600001</td>
-                    <td>hehuan</td>
-                    <td>速采（武汉）科技有限公司</td>
-                    <td>线下打款</td>
-                    <td>待处理</td>
-                    <td><a href="payment_detail.html">查看</a></td>
-                </tr>
-                <tr>
-                    <td>09</td>
-                    <td>20160819180100001</td>
-                    <td>20160711154600001</td>
-                    <td>hehuan</td>
-                    <td>速采（武汉）科技有限公司</td>
-                    <td>线下打款</td>
-                    <td>待处理</td>
-                    <td><a href="payment_detail.html">查看</a></td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>20160819180100001</td>
-                    <td>20160711154600001</td>
-                    <td>hehuan</td>
-                    <td>速采（武汉）科技有限公司</td>
-                    <td>线下打款</td>
-                    <td>待处理</td>
-                    <td><a href="payment/detail/1">查看</a></td>
-                </tr>
+                </#list>
                 </tbody>
             </table>
         </div>
@@ -183,6 +81,26 @@
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
 <script>
+    $(function () {
+        $("#status").val(${vo.param});
+        var payment = {
+            url:"/payment/index?"
+        };
+
+        $('#submit').on('click', function() {
+            var $ipts = $('.chart .ipt, .chart select');
+            var params = [];
+            $ipts.each(function() {
+                var val = $.trim(this.value);
+                val && params.push($(this).attr('name') + '=' + val);
+            })
+            location.href=payment.url+params.join('&');
+        })
+
+        $("#reset").on("click", function (){
+            window.location.href = payment.url;
+        });
+    })
 </script>
 </body>
 </html>

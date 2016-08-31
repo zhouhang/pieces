@@ -19,6 +19,8 @@
                 <div class="extra"></div>
             </div>
 
+            <div style="display: none;">${orderForm.statusText}</div>
+
             <div class="order-list order-detail">
                 <table class="tc">
                     <tbody>
@@ -40,7 +42,7 @@
                         </td>
                         <td class="nl">
                         <#if (orderForm.status == 1)>
-                            <a href="${orderForm.id}" class="btn btn-red">付款</a>
+                            <a href="/center/pay/go/${orderForm.id}" class="btn btn-red">付款</a>
                         </#if>
                         <#if (orderForm.status == 4)>
                             <a href="${orderForm.id}" name="5" class="btn btn-red status">确认收货</a>
@@ -90,7 +92,7 @@
                             <td><#if commodity.price??>¥${commodity.price}</#if></td>
                             <td><#if commodity.subtotal??>¥${commodity.subtotal}</#if></td>
                             <#if commodity_index == 0>
-                                <td rowspan="${commodity?size}"><span class="c-red">待付款</span></td>
+                                <td rowspan="${commodity?size}"><span class="c-red">${orderForm.statusText}</span></td>
                             </#if>
                         </tr>
                         </#list>
