@@ -40,6 +40,9 @@
             <span>对账单</span>
             <i class="fa fa-chevron-right"></i>
         </dt>
+        <dd>
+            <a href="/center/pay/record"  class="curr">支付记录</a>
+        </dd>
     </dl>
     <dl>
         <dt>
