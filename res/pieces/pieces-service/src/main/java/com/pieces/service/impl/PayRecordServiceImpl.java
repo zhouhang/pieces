@@ -83,6 +83,9 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 				payDocumentService.create(payDocument);
 			}
 		}
+
+		// 支付添加成功后把订单状态改成付款待确认
+		orderFormService.changeOrderStatus(orderId, OrderEnum.VERIFY.getValue());
 		return payRecordVo;
 	}
 
@@ -108,7 +111,7 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		payRecord.setOperationTime(new Date());
 		payRecordDao.update(payRecord);
 		payRecord = payRecordDao.findById(payId);
-		//改变订单状态 TODO:
+		//改变订单状态
 		orderFormService.changeOrderStatus(payRecord.getOrderId(), OrderEnum.WAIT_DELIVERY.getValue());
 }
 
@@ -123,7 +126,7 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		payRecord.setFailReason(msg);
 		payRecordDao.update(payRecord);
 		payRecord = payRecordDao.findById(payId);
-		//改变订单状态 TODO:
+		//改变订单状态
 		orderFormService.changeOrderStatus(payRecord.getOrderId(), OrderEnum.CANCEL.getValue());
 	}
 
