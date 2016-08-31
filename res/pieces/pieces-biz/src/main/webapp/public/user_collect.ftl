@@ -62,7 +62,9 @@
                            </#if> 
                         </table>
                     </div>
-
+                <#if pageInfo?? && pageInfo.size &gt; 0>
+                    <@p.pager inPageNo=pageInfo.pageNum-1 pageSize=pageInfo.pageSize recordCount=pageInfo.total toURL="/center/collect/index"/>
+                </#if>
                 </div>
             </div>
         </div>

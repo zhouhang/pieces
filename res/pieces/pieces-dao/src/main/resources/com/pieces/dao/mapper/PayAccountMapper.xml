@@ -48,6 +48,18 @@
             <if test="id != null">
                 id = #{id}
             </if>
+            <if test="receiveBank != null">
+                receive_bank like CONCAT('%','${receiveBank}','%' )
+            </if>
+            <if test="receiveAccount != null">
+                receive_account like CONCAT('%','${receiveAccount}','%' )
+            </if>
+            <if test="receiveBankCard != null">
+                receive_bank_card like CONCAT('%','${receiveBankCard}','%' )
+            </if>
+            <if test="status != null">
+                status = #{status}
+            </if>
         </where>
     </select>
 

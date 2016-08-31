@@ -85,6 +85,7 @@
                         <@shiro.hasPermission name="role:index">
                             <a href="role/index">角色管理</a>
                         </@shiro.hasPermission>
+                        <a href="bank/index">收款账户管理</a>
                     </div>
                 </li>
             </@shiro.hasPermission>

@@ -4,6 +4,7 @@ package com.pieces.biz.controller;
 import java.util.Date;
 import java.util.List;
 
+import com.github.pagehelper.PageInfo;
 import com.pieces.service.utils.ValidUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,15 +39,20 @@ public class CommodityCollectController {
 	 * 添加商品收藏
 	 */
 	@RequestMapping(value = "/collect/add/{id}")
-	@ResponseBody
-	public Result addCollect(@PathVariable("id") Integer cid, ModelMap model) {
+	public String addCollect(@PathVariable("id") Integer cid, ModelMap model) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-		CommodityCollect cc = new CommodityCollect();
-		cc.setCommodityId(cid);
-		cc.setUserId(user.getId());
-		cc.setCreateTime(new Date());
-		commodityCollectService.create(cc);
-		return new Result(true).info("成功添加收藏");
+		CommodityCollectVo commodityCollectVo = new CommodityCollectVo();
+		commodityCollectVo.setCommodityId(cid);
+		commodityCollectVo.setUserId(user.getId());
+		PageInfo<CommodityCollectVo> ccp = commodityCollectService.findByParams(commodityCollectVo,1, 10);
+		if(!ValidUtils.listNotBlank(ccp.getList())){
+			CommodityCollect cc = new CommodityCollect();
+			cc.setCommodityId(cid);
+			cc.setUserId(user.getId());
+			cc.setCreateTime(new Date());
+			commodityCollectService.create(cc);
+		}
+		return "redirect:/commodity/"+cid;
 	}
 	
 	/**
@@ -54,19 +60,24 @@ public class CommodityCollectController {
 	 *
 	 */
 	@RequestMapping(value = "/collect/index")
-	public String index(ModelMap model) {
+	public String index(ModelMap model,Integer pageNum, Integer pageSize) {
+		pageNum = pageNum == null ? 1 : pageNum;
+		pageSize = pageSize == null ? 10 : pageSize;
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-		List<CommodityCollectVo> ccl = commodityCollectService.findByUser(user.getId());
+		CommodityCollectVo commodityCollectVo = new CommodityCollectVo();
+		commodityCollectVo.setUserId(user.getId());
+		PageInfo<CommodityCollectVo> ccp = commodityCollectService.findByParams(commodityCollectVo,pageNum, pageSize);
 		List<CommodityVo> cvl = null;
-		if(ValidUtils.listNotBlank(ccl)){
+		if(ValidUtils.listNotBlank(ccp.getList())){
 			String ids = "";
-			for(CommodityCollectVo ccv : ccl){
+			for(CommodityCollectVo ccv : ccp.getList()){
 				ids = ids + ccv.getCommodityId() + ",";
 			}
 			ids = ids.substring(0, ids.length()-1);
 			cvl = commodityService.findVoByIds(ids);
 		}
 		model.put("commodityVoList", cvl);
+		model.put("pageInfo", ccp);
 		return "user_collect";
 	}
 	

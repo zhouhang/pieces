@@ -42,6 +42,10 @@
             <if test="id != null">
                 id = #{id}
             </if>
+            <if test="userId != null">
+                user_id = #{userId}
+            </if>
+            order by create_time desc
         </where>
     </select>
     

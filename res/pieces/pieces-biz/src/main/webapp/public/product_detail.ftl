@@ -76,7 +76,7 @@
                         </div>
                         <div class="buttons">
                             <a class="btn btn-red j_pop_login" href="/center/enquiry/index?commodityId=${commodity.id!}">询价</a>
-                            <a class="btn btn-gray" href="javascript:;"><i class="fa fa-heart"></i>收藏</a>
+                            <a class="btn btn-gray j_pop_login" href="/center/collect/add/${commodity.id!}"><i class="fa fa-heart"></i>收藏</a>
                         </div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
             },
             fn: {
                 init: function() {
-                    this.addFav();
+                    //this.addFav();
                 },
                 // 添加
                 addFav: function() {
