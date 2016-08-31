@@ -96,7 +96,7 @@
                                             <span class="thumb">
                                             <#list pay.imgs as img>
                                                 <img src="${img.path}"
-                                                     data-src="http://static.sankobuy.com/files/upload/wool/2016/8/5fcf1a8a-c6d6-4292-bd4e-3150437948e2芡实.jpg"
+                                                     data-src="${img.path}"
                                                      alt="" width="50" height="50">
                                             </#list>
                                             </span>
