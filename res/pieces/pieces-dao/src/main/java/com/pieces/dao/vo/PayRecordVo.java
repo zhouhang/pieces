@@ -1,14 +1,17 @@
 package com.pieces.dao.vo;
 
 import com.pieces.dao.enums.PayEnum;
-import com.pieces.dao.model.PayDocument;
+import com.pieces.dao.model.OrderCommodity;
 import com.pieces.dao.model.PayRecord;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 
 public class PayRecordVo extends PayRecord{
 
     private Integer payAccountId;
+
+    private List<OrderCommodity> commodities;
 
     public Integer getPayAccountId() {
         return payAccountId;
@@ -28,6 +31,9 @@ public class PayRecordVo extends PayRecord{
 
     //审核人员
     private String memberName;
+
+    // 商品信息摘要
+    private String commodityOverview;
 
     private List<PayDocumentVo> imgs;
 
@@ -69,4 +75,30 @@ public class PayRecordVo extends PayRecord{
     public void setImgs(List<PayDocumentVo> imgs) {
         this.imgs = imgs;
     }
+
+    public List<OrderCommodity> getCommodities() {
+        return commodities;
+    }
+
+    public void setCommodities(List<OrderCommodity> commodities) {
+        this.commodities = commodities;
+    }
+
+    public String getCommodityOverview() {
+        if (commodities != null) {
+            commodityOverview = "";
+            int lenght = commodities.size() >= 3 ? 3 : commodities.size();
+            String[] names = new String[lenght];
+            for (int i = 0; i < lenght; i++) {
+                names[i] = commodities.get(i).getName();
+            }
+            commodityOverview = StringUtils.join(names, ",");
+            if (commodities.size() > 3) {
+                commodityOverview += "...";
+            }
+        }
+
+        return commodityOverview;
+    }
+
 }

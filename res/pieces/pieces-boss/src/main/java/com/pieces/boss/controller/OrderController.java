@@ -1,19 +1,16 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
-import com.pieces.dao.OrderFormDao;
-import com.pieces.dao.OrderRemarkDao;
 import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.model.*;
 import com.pieces.dao.vo.*;
+import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.WebUtil;
-import org.apache.commons.io.ByteOrderMark;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -224,7 +221,7 @@ public class OrderController extends BaseController{
     private void orderModel(Integer customerId,Integer orderId,ModelMap model){
         if(orderId!=null){
             //查询订单详情
-            OrderForm orderForm =  orderFormService.findById(orderId);
+            com.pieces.dao.model.OrderForm orderForm =  orderFormService.findById(orderId);
 
             customerId = orderForm.getUserId();
 

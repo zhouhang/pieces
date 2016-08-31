@@ -5,11 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.OrderFormDao;
 import com.pieces.dao.enums.OrderEnum;
-import com.pieces.dao.model.OrderCommodity;
-import com.pieces.dao.model.OrderForm;
-import com.pieces.dao.model.OrderInvoice;
-import com.pieces.dao.model.ShippingAddressHistory;
-import com.pieces.dao.model.User;
+import com.pieces.dao.model.*;
 import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
@@ -29,7 +25,7 @@ import java.util.List;
  * 8/15/16.
  */
 @Service
-public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements OrderFormService {
+public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.OrderForm> implements OrderFormService {
 
     @Autowired
     private OrderFormDao orderFormDao;
@@ -46,14 +42,14 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
 
 
     @Override
-    public ICommonDao<OrderForm> getDao() {
+    public ICommonDao<com.pieces.dao.model.OrderForm> getDao() {
         return orderFormDao;
     }
 
 
 
     @Override
-    public PageInfo<OrderFormVo> findByParams(OrderFormVo orderFormVo,Integer pageNum,Integer pageSize) {
+    public PageInfo<OrderFormVo> findByParams(OrderFormVo orderFormVo, Integer pageNum, Integer pageSize) {
         pageNum = pageNum == null ? 1 : pageNum;
         pageSize = pageSize == null ? 10 : pageSize;
 
@@ -84,7 +80,7 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
         orderFormVo.setCreaterTime(new Date());
         orderFormVo.setStatus(OrderEnum.UNPAID.getValue());
         orderFormDao.create(orderFormVo);
-        OrderForm of = new OrderForm();
+        com.pieces.dao.model.OrderForm of = new com.pieces.dao.model.OrderForm();
         of.setId(orderFormVo.getId());
         of.setCode(SeqNoUtil.get("", orderFormVo.getId(), 6));
         orderFormVo.setCode(of.getCode());
@@ -157,7 +153,7 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
     @Transactional
     public OrderFormVo create(OrderFormVo orderFormVo, Integer origOrderId){
         //原订单状态改成已取消
-        OrderForm orderForm =findById(origOrderId);
+        com.pieces.dao.model.OrderForm orderForm =findById(origOrderId);
         orderForm.setStatus(OrderEnum.CANCEL.getValue());
         orderFormDao.update(orderForm);
         //改变订单号
@@ -175,10 +171,16 @@ public class OrderFormServiceImpl extends AbsCommonService<OrderForm> implements
     @Override
     @Transactional
     public Result changeOrderStatus(Integer orderId, Integer status) {
-        OrderForm form = new OrderForm();
+        com.pieces.dao.model.OrderForm form = new com.pieces.dao.model.OrderForm();
         form.setId(orderId);
         form.setStatus(status);
         orderFormDao.update(form);
         return new Result(true).info("");
+    }
+
+    @Override
+    public OrderForm findByOrderCode(String orderCode) {
+        OrderForm orderForm = orderFormDao.findByOrderCode(orderCode);
+        return orderForm;
     }
 }

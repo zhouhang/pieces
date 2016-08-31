@@ -41,12 +41,23 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 	public PageInfo<PayRecordVo> findByParams(PayRecordVo payRecordVo,Integer pageNum,Integer pageSize) {
 		pageNum = pageNum == null ? 1 : pageNum;
 		pageSize = pageSize == null ? 10 : pageSize;
-
 		PageHelper.startPage(pageNum, pageSize);
     	List<PayRecordVo>  list = payRecordDao.findByParams(payRecordVo);
         PageInfo page = new PageInfo(list);
         return page;
 	}
+
+
+	@Override
+	public PageInfo<PayRecordVo> findByNormalRecord(Integer pageNum, Integer pageSize) {
+		pageNum = pageNum == null ? 1 : pageNum;
+		pageSize = pageSize == null ? 10 : pageSize;
+		List<PayRecordVo>  list = payRecordDao.findByNormalRecord();
+		PageHelper.startPage(pageNum, pageSize);
+		PageInfo page = new PageInfo(list);
+		return page;
+	}
+
 
 	@Override
 	@Transactional

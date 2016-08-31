@@ -10,6 +10,8 @@ public interface PayRecordService extends ICommonService<PayRecord>{
     public PageInfo<PayRecordVo> findByParams(PayRecordVo payRecordVo, Integer pageNum, Integer pageSize);
 
 
+    public PageInfo<PayRecordVo> findByNormalRecord(Integer pageNum, Integer pageSize);
+
     public PayRecord create(PayRecordVo payRecordVo,String[] img,Integer userId);
 
     public PayRecordVo findVoById(Integer id);
