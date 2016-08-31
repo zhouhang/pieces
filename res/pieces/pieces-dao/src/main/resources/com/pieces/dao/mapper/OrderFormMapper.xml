@@ -79,6 +79,13 @@
         where id = #{id}
     </select>
 
+    <select id="findByOrderCode" parameterType="java.lang.String" resultMap="OrderFormResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from order_form
+        where code = #{orderCode}
+    </select>
+
     <select id="findAll"  resultMap="OrderFormResultMap">
         select
         <include refid="Base_Column_List" />

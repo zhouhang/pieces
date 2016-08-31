@@ -16,7 +16,7 @@ import java.util.*;
  * Author: koabs
  * 8/15/16.
  */
-public class OrderFormVo extends OrderForm {
+public class OrderFormVo extends com.pieces.dao.model.OrderForm {
 
     private Integer orderId;
 

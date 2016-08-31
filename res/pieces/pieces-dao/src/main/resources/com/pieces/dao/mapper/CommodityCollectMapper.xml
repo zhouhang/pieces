@@ -38,15 +38,17 @@
         select
         <include refid="Base_Column_List" />
         from commodity_collect
-        <where>
+        where 1=1
             <if test="id != null">
-                id = #{id}
+                and id = #{id}
             </if>
             <if test="userId != null">
-                user_id = #{userId}
+                and user_id = #{userId}
             </if>
-            order by create_time desc
-        </where>
+            <if test="commodityId != null">
+                and commodity_id = #{commodityId}
+            </if>
+        order by create_time desc
     </select>
     
     <select id="findByUser" resultMap="CommodityCollectResultMapVo" parameterType="java.lang.Integer">

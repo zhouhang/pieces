@@ -39,20 +39,22 @@ public class CommodityCollectController {
 	 * 添加商品收藏
 	 */
 	@RequestMapping(value = "/collect/add/{id}")
-	public String addCollect(@PathVariable("id") Integer cid, ModelMap model) {
+	@ResponseBody
+	public Result addCollect(@PathVariable("id") Integer cid, ModelMap model) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		CommodityCollectVo commodityCollectVo = new CommodityCollectVo();
 		commodityCollectVo.setCommodityId(cid);
 		commodityCollectVo.setUserId(user.getId());
 		PageInfo<CommodityCollectVo> ccp = commodityCollectService.findByParams(commodityCollectVo,1, 10);
-		if(!ValidUtils.listNotBlank(ccp.getList())){
+		if(ccp.getSize() == 0){
 			CommodityCollect cc = new CommodityCollect();
 			cc.setCommodityId(cid);
 			cc.setUserId(user.getId());
 			cc.setCreateTime(new Date());
 			commodityCollectService.create(cc);
+			return new Result(true).info("添加成功！");
 		}
-		return "redirect:/commodity/"+cid;
+		return new Result(false).info("已添加该商品！");
 	}
 	
 	/**

@@ -36,93 +36,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
-                                </tr>
-                                <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
-                                </tr>
-                                <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
-                                </tr>
-                                <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
-                                </tr>
-                                <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
-                                </tr>
-                                <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
-                                </tr>
-                                <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
-                                </tr>
-                                <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
-                                </tr>
+                            <#if recordPage??&&recordPage?has_content>
+                                <#list recordPage.list as payRecord>
+                                    <tr>
+                                        <td>${payRecord.payCode!}</td>
+                                        <td>${payRecord.orderCode!} <span>${payRecord.commodityOverview!}</span></td>
+                                        <td>&yen;${payRecord.amountsPayable!}</td>
+                                        <td>&yen;${payRecord.actualPayment!}</td>
+                                        <td>${payRecord.paymentTime?string("yyyy-MM-dd")}</td>
+                                        <td><em class="c-red">${payRecord.statusText!}</em></td>
+                                        <td><a href="/center/pay/details/${payRecord.id!}" class="c-blue">查看详情</a></td>
+                                    </tr>
+                                </#list>
+                            </#if>
                             </tbody>
                         </table>
                     </div>
 
-                    <div class="pagin">
-                        <span class="disabled">上一页</span>
-                        <span class="curr">1</span>
-                        <a href="?page=2">2</a>
-                        <a href="?page=3">3</a>
-                        <a href="?page=4">4</a>
-                        <a href="?page=5">5</a>
-                        <a href="?page=2">下一页</a>
-                        <a href="?page=2">尾页</a>
-                        <em>共 284 个商品 / 共29页</em>
-                    </div>
+                <#if recordPage??>
+                    <@p.pager inPageNo=recordPage.pageNum-1 pageSize=recordPage.pageSize recordCount=recordPage.total toURL="/center/pay/record"/>
+                </#if>
 
                 </div>
             </div>
@@ -131,186 +64,9 @@
 
 
     <!-- footer start -->
-    <div class="footer">
-        <div class="wrap">
-            <div class="links">
-                <a href="#">关于上工之选</a>
-                <i>|</i>
-                <a href="#">联系我们</a>
-                <i>|</i>
-                <a href="#">法律申明</a>
-                <i>|</i>
-                <a href="#">建议与投诉</a>
-                <i>|</i>
-                <a href="#">友情链接</a>
-                <i>|</i>
-                <a href="#">站长统计</a>
-            </div>
-            <div class="copyright">
-                <p> 电信与信息服务业务经营许可证号：皖B20140001  备案号：皖ICP备13006003号  互联网药品交易服务资格证：皖B20130001  互联网药品信息服务资格证：（皖）-经营性-2016-0001</p>
-                <p>网站商务合作邮箱：bd@copy;yaoyy.com  客户服务企业邮箱：service@copy;yaoyy.com  Copyright &copy; 2015 – 2020 上工之选 All Rights Reserved</p>
-            </div>
-        </div>
-    </div><!-- footer end -->
+    <#include "./inc/footer.ftl"/>
+    <!-- footer end -->
 
 
-
-    <!-- start 新增收货地址 -->
-    <div class="fa-form fa-form-layer" id="jconsigneeBox">
-        <form action="" id="consigneeForm">
-            <div class="group fl">
-                <div class="txt">
-                    <span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>
-                </div>
-                <div class="cnt">
-                    <input type="text" name="consigneeName" id="consigneeName" class="ipt ipt-short" autocomplete="off" placeholder="" data-msg-nickName="只能输入中文、英文，长度2-50" maxlength="50">
-                </div>
-            </div>
-
-            <div class="group fr">
-                <div class="txt">
-                    <span>手机号码：</span>
-                </div>
-                <div class="cnt">
-                    <input type="text" name="consigneeMobile" id="consigneeMobile" class="ipt ipt-short" autocomplete="off" placeholder="">
-                    <span class="error"></span>
-                </div>
-            </div>
-
-            <div class="cf"></div>
-
-            <div class="group">
-                <div class="txt">
-                    <span>所在地区：</span>
-                </div>
-                <div class="cnt">
-                    <select name="provinceCode" id="province">
-                        <option value="">-省-</option>
-                    </select>
-                    <select name="cityCode" id="city">
-                        <option value="">-市-</option>
-                    </select>
-                    <select name="areaId" id="area" data-msg-required="请选择至最后一级">
-                        <option value="">-区/县-</option>
-                    </select>
-                    <input type="hidden" id="areaFull" name="areaFull" value="">
-                    <span class="error"></span>
-                </div>
-            </div>
-
-            <div class="group">
-                <div class="txt">
-                    <span>详细地址：</span>
-                </div>
-                <div class="cnt">
-                    <input type="text" name="consigneeAddress" id="consigneeAddress" class="ipt ipt-wide" autocomplete="off">
-                    <span class="error"></span>
-                </div>
-            </div>
-
-            <div class="group ah">
-                <div class="cnt">
-                    <label><input type="checkbox" class="cbx" name="default" id="consigneeDefault" checked>设为默认地址</label>                            
-                </div>
-            </div>
-
-            <div class="button">
-                <button type="submit" class="btn btn-red submit">保存</button>
-                <button type="reset" class="btn btn-gray cancel">取消</button>
-            </div>
-        </form>
-    </div><!-- end 新增收货地址 -->
-
-    <script src="js/jquery.min.js"></script>
-    <script src="js/layer/layer.js"></script>
-    <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
-    <script src="js/area.js"></script>
-    <script src="js/common.js"></script>
-    <script>
-        var _global = {
-            v: {
-            },
-            fn: {
-                init: function() {
-                    this.delConsignee();
-                    this.addConsignee();
-                    this.defaultConsignee();
-                },
-                // 删除
-                delConsignee: function() {
-                    $('.fa-chart').on('click', '.jdel', function() {
-                        layer.confirm('要删除此地址？', {icon: 3, title:'提示'}, function(index){
-                            layer.close(index);
-                        });  
-                        return false; // 组织默认事件
-                    })
-                },
-                // 新增 & 修改
-                addConsignee: function() {
-                    var $consigneeBox = $('#jconsigneeBox');
-                    $('.jaddConsignee').on('click', function() {
-                        layer.open({
-                            area: ['600px'],
-                            closeBtn: 1,
-                            type: 1,
-                            moveType: 1,
-                            content: $consigneeBox,
-                            title: '新建地址'
-                        });
-                    })
-                    // 关闭弹层
-                    $consigneeBox.on('click', '.cancel', function() {
-                        layer.closeAll();
-                    })
-
-                    $('#consigneeForm').validator({
-                        fields : {
-                            consigneeName : '收货人: required; nickName',
-                            consigneeMobile : '手机号码: required; mobile',
-                            areaId : '所在地区: required',
-                            consigneeAddress : '详细地址: required'
-                        },
-                        valid: function(form) {
-                            var myfromValid = this;
-                            if ( $(form).isValid() ) {
-                                $("#areaFull").val($('#province option:selected').text() + $('#city option:selected').text() + $('#area option:selected').text());
-                            } 
-                        }
-                    });
-
-                    // 修改
-                    $('.fa-chart').on('click', '.jedit', function() {
-                        // 填充数据
-                        $('#consigneeName').val('收货人');
-                        $('#consigneeMobile').val('手机');
-                        // $('#areaFull').val();
-                        // $('#consigneeName').val('地区');
-                        $('#consigneeAddress').val('详细地址');
-                        $('#consigneeDefault').prop('checked', true || false);
-                        layer.open({
-                            area: ['600px'],
-                            closeBtn: 1,
-                            type: 1,
-                            moveType: 1,
-                            content: $consigneeBox,
-                            title: '新建地址'
-                        });
-                    })
-                },
-                // 默认地址
-                defaultConsignee: function() {
-                    $('.fa-chart').on('click', '.jdefault', function() {
-                        layer.confirm('确认次将此地址设为默认地址？', {icon: 3, title:'提示'}, function(index){
-                            layer.close(index);
-                        });  
-                        return false; // 组织默认事件
-                    })
-                }
-            }
-        }
-        $(function() {
-            _global.fn.init();
-        })
-    </script>
 </body>
 </html>

@@ -106,8 +106,9 @@ public class HomeController extends BaseController{
 	 * @return
 	 */
 	@RequestMapping(value = "/popLogin", method = RequestMethod.GET)
-	public String toLogin(ModelMap model,String url, HttpServletRequest request) {
+	public String toLogin(ModelMap model,String url,String ajaxurl, HttpServletRequest request) {
 		model.put("url", url);
+		model.put("ajaxurl", ajaxurl);
 		return "login_mini";
 	}
 

@@ -10,7 +10,7 @@ import com.pieces.service.constant.bean.Result;
  * Author: koabs
  * 8/15/16.
  */
-public interface OrderFormService extends ICommonService<OrderForm>{
+public interface OrderFormService extends ICommonService<com.pieces.dao.model.OrderForm>{
 
     /**
      * 根据参数查询订单列表
@@ -19,7 +19,7 @@ public interface OrderFormService extends ICommonService<OrderForm>{
      * @param pageSize
      * @return
      */
-    public PageInfo<OrderFormVo> findByParams(OrderFormVo orderFormVo,Integer pageNum,Integer pageSize);
+    public PageInfo<OrderFormVo> findByParams(OrderFormVo orderFormVo, Integer pageNum, Integer pageSize);
 
     /**
      * 保存订单
@@ -43,14 +43,13 @@ public interface OrderFormService extends ICommonService<OrderForm>{
      * @param pageSize
      * @return
      */
-    public PageInfo<OrderFormVo> findOrderByUserId(Integer userId,Integer pageNum,Integer pageSize);
+    public PageInfo<OrderFormVo> findOrderByUserId(Integer userId, Integer pageNum, Integer pageSize);
 
 
     public OrderFormVo create(OrderFormVo orderFormVo);
 
 
-    public OrderFormVo create(OrderFormVo orderFormVo,Integer origOrderId);
-
+    public OrderFormVo create(OrderFormVo orderFormVo, Integer origOrderId);
     /**
      * 修改订单状态
      * @param orderId
@@ -58,5 +57,8 @@ public interface OrderFormService extends ICommonService<OrderForm>{
      * @return
      */
     public Result changeOrderStatus(Integer orderId, Integer status);
+
+
+    public OrderForm findByOrderCode(String orderCode);
 
 }

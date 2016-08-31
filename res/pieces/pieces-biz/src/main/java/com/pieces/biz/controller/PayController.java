@@ -2,17 +2,12 @@ package com.pieces.biz.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.enums.SessionEnum;
-import com.pieces.dao.model.OrderForm;
-import com.pieces.dao.model.PayAccount;
-import com.pieces.dao.model.PayRecord;
-import com.pieces.dao.model.User;
+import com.pieces.dao.model.*;
+import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.dao.vo.PayRecordVo;
-import com.pieces.service.OrderFormService;
-import com.pieces.service.PayAccountService;
-import com.pieces.service.PayRecordService;
+import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
-import com.pieces.tools.utils.httpclient.common.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,14 +40,14 @@ public class PayController extends BaseController{
     private OrderFormService orderFormService;
     @Autowired
     private PayRecordService payRecordService;
-
-
+    @Autowired
+    private OrderCommodityService orderCommodityService;
 
     @RequestMapping(value = "/go/{orderId}")
     public String go(ModelMap modelMap,
                      @PathVariable("orderId")Integer orderId){
 
-        OrderForm orderForm = orderFormService.findById(orderId);
+        com.pieces.dao.model.OrderForm orderForm = orderFormService.findById(orderId);
         modelMap.put("orderForm",orderForm);
         String token = UUID.randomUUID().toString();
         httpSession.setAttribute(SessionEnum.PAY_TOKEN.getKey(),token);
@@ -105,9 +100,37 @@ public class PayController extends BaseController{
                          Integer pageNum){
         pageNum=pageNum==null?1:pageNum;
         pageSize=pageSize==null?10:pageSize;
-        PageInfo<PayRecord> recordPage = payRecordService.find(pageNum,pageSize);
+        PageInfo<PayRecordVo> recordPage = payRecordService.findByNormalRecord(pageNum,pageSize);
+        for(PayRecordVo payRecordVo : recordPage.getList()){
+            assignCommodity(payRecordVo);
+        }
         modelMap.put("recordPage",recordPage);
         return "pay_record";
     }
+
+
+    @RequestMapping(value = "/details/{id}")
+    public String details(ModelMap modelMap,
+                          @PathVariable("id")Integer id){
+        PayRecordVo payRecordVo =  payRecordService.findVoById(id);
+        modelMap.put("payRecordVo",payRecordVo);
+        return "pay_detail";
+    }
+
+
+
+    private void assignCommodity(PayRecordVo payRecordVo){
+        String orderCode =  payRecordVo.getOrderCode();
+        OrderForm orderForm = orderFormService.findByOrderCode(orderCode);
+        Integer orderId = orderForm.getId();
+        List<OrderCommodity>  commodityList = orderCommodityService.getCommodityByOrderId(orderId);
+        payRecordVo.setCommodities(commodityList);
+    }
+
+
+
+
+
+
 
 }

@@ -86,6 +86,17 @@
         ORDER BY pr.create_time DESC
     </select>
 
+
+    <select id="findByNormalRecord" resultMap="PayRecordResultMapVo" parameterType="com.pieces.dao.vo.PayRecordVo">
+        select
+        <include refid="Base_Column_List" />
+        from pay_record pr
+        <where>
+           pr.status = 1 or  pr.status = 2
+        </where>
+        ORDER BY pr.create_time DESC
+    </select>
+
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from pay_record
         where id = #{id}

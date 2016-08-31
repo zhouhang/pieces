@@ -6,7 +6,7 @@ import com.pieces.dao.vo.OrderFormVo;
 
 import java.util.List;
 @AutoMapper
-public interface OrderFormDao extends ICommonDao<OrderForm>{
+public interface OrderFormDao extends ICommonDao<com.pieces.dao.model.OrderForm>{
 
     public List<OrderFormVo> findByParams(OrderFormVo orderFormVo);
 
@@ -16,5 +16,8 @@ public interface OrderFormDao extends ICommonDao<OrderForm>{
      * @return
      */
     public OrderFormVo findVoById(Integer id);
+
+    public OrderForm findByOrderCode(String orderCode);
+
 
 }

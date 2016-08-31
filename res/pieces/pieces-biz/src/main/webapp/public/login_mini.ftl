@@ -17,6 +17,7 @@
 						<i class="fa fa-people"></i>
 					</div>
 					<div class="cnt">
+                        <input type="hidden" value="${ajaxurl }" id="ajaxurl" name="url">
 						<input type="hidden" value="${url }" id="url" name="url">
 						<input type="text" class="ipt" value="" autocomplete="off"
 							name="username" id="username" placeholder="用户名">
@@ -47,38 +48,52 @@
 	</div>
 	<#include "./inc/footer.ftl"/>
 	<script src="/js/login.js"></script>
+    <script src="/js/layer/layer.js"></script>
 	<script>
 		$(function() {
 			var 
 				$submit = $('#submit'),
-				isSubmit = false;
+				isSubmit = false,
+				url = $('#url').val(),
+				ajaxurl = $('#ajaxurl').val();
 
 			$submit.on('click', function() {
 				if (!isSubmit && loginPage.fn.checkForm()) {
 					isSubmit = true;
-					$.ajax({
-						type : 'POST',
-						url : '/user/login',
-						data : {
-							userName : loginPage.v.$username.val(),
-							password : loginPage.v.$pwd.val(),
-							url      : $('#url').val()
-						},
-						dataType : 'json',
-						success : function(data) {
-							var status = data.status;
-							if (status != 'y') {
-								loginPage.fn.showMsg('用户名密码错误!'); // login.js
-							} else {
-								window.parent.location.href = data.info;
-								// window.parent.productPage.fn.logined(data.info);
-							}
-						},
-						complete: function() {
-							isSubmit = false;
-						}
-					});
-				}
+                        $.ajax({
+                            type : 'POST',
+                            url : '/user/login',
+                            data : {
+                                userName : loginPage.v.$username.val(),
+                                password : loginPage.v.$pwd.val(),
+                                url      : $('#url').val()
+                            },
+                            dataType : 'json',
+                            success : function(data) {
+                                var status = data.status;
+                                if (status != 'y') {
+                                    loginPage.fn.showMsg('用户名密码错误!'); // login.js
+                                } else {
+
+                                    if(ajaxurl != "") {
+                                        $.ajax({
+                                            url: $('#ajaxurl').val(),
+                                            type: "POST",
+                                            dataType : "json",
+                                            success: function(data){
+                                                window.parent.loginCall && window.parent.loginCall(data.status);
+                                            }
+                                        });
+                                    }else{
+                                        window.parent.location.href = data.info;
+									}
+                                }
+                            },
+                            complete: function() {
+                                isSubmit = false;
+                            }
+                        });
+					}
 				return false; // 阻止表单提交
 			})
 		})

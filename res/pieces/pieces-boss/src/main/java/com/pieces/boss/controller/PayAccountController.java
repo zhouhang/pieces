@@ -7,6 +7,7 @@ import com.pieces.dao.vo.*;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.utils.ValidUtils;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.WebUtil;
 import org.apache.commons.lang.StringUtils;
@@ -89,6 +90,24 @@ public class PayAccountController extends BaseController{
             payAccountService.update(payAccount);
             result.info("修改账户成功。");
         }
+        WebUtil.printJson(response, result);
+    }
+
+    /**
+     * 删除账户
+     * @param request
+     * @param response
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/delete/{id}")
+    public void delete(HttpServletRequest request,
+                               HttpServletResponse response,
+                               @PathVariable("id") Integer id,
+                               ModelMap model){
+        payAccountService.deleteById(id);
+        Result result = new Result(true).info("删除分类成功。");
         WebUtil.printJson(response, result);
     }
 }
