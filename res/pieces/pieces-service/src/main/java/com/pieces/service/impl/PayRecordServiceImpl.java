@@ -5,11 +5,13 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.PayDocumentDao;
 import com.pieces.dao.PayRecordDao;
+import com.pieces.dao.enums.OrderEnum;
 import com.pieces.dao.model.Member;
 import com.pieces.dao.model.PayDocument;
 import com.pieces.dao.model.PayRecord;
 import com.pieces.dao.vo.PayRecordVo;
 import com.pieces.service.AbsCommonService;
+import com.pieces.service.OrderFormService;
 import com.pieces.service.PayDocumentService;
 import com.pieces.service.PayRecordService;
 import com.pieces.service.constant.bean.Result;
@@ -28,6 +30,9 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 
 	@Autowired
 	private PayDocumentService payDocumentService;
+
+	@Autowired
+	private OrderFormService orderFormService;
 
 
 	@Override
@@ -62,7 +67,10 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		payRecord.setStatus(1);
 		payRecord.setOperationTime(new Date());
 		payRecordDao.update(payRecord);
-	}
+		payRecord = payRecordDao.findById(payId);
+		//改变订单状态 TODO:
+		orderFormService.changeOrderStatus(payRecord.getOrderId(), OrderEnum.WAIT_DELIVERY.getValue());
+}
 
 	@Transactional
 	@Override
@@ -74,6 +82,9 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		payRecord.setOperationTime(new Date());
 		payRecord.setFailReason(msg);
 		payRecordDao.update(payRecord);
+		payRecord = payRecordDao.findById(payId);
+		//改变订单状态 TODO:
+		orderFormService.changeOrderStatus(payRecord.getOrderId(), OrderEnum.CANCEL.getValue());
 	}
 
 	@Override
