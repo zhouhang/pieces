@@ -41,7 +41,7 @@
             <i class="fa fa-chevron-right"></i>
         </dt>
         <dd>
-            <a href="/center/pay/record"  class="curr">支付记录</a>
+            <a href="/center/pay/record">支付记录</a>
         </dd>
     </dl>
     <dl>
@@ -51,7 +51,7 @@
             <i class="fa fa-chevron-right"></i>
         </dt>
         <dd>
-            <a href="/center/collect/index" class="curr">我的收藏</a>
+            <a href="/center/collect/index" >我的收藏</a>
         </dd>
     </dl>
     <dl>

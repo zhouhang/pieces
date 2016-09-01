@@ -141,8 +141,6 @@
                     this.goodsImg();
                     this.payType();
 
-
-
                     $("#cashSubmit").click(function(){
                         var bank=$('input:radio[name="bank"]:checked').val();
                         if(!bank){
@@ -187,7 +185,8 @@
                     var self = this;
                     $('#myform').validator({
                         rules: {
-                            bankNumber: [/^\d{12,19}$/, '银行卡号是12-19位数字']
+                            bankNumber: [/^\d{12,19}$/, '银行卡号是12-19位数字'],
+                            money: [/^-?\d+\.{0,}\d{0,}$/, '请输入正确的金额']
                         },
                         fields: {
                             actualPayment: 'required, money',

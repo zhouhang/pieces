@@ -30,7 +30,6 @@ import java.util.UUID;
 @RequestMapping("/center/pay")
 public class PayController extends BaseController{
 
-    Logger logger = LoggerFactory.getLogger(PayController.class);
 
     @Autowired
     private HttpSession httpSession;
@@ -118,7 +117,6 @@ public class PayController extends BaseController{
     }
 
 
-
     private void assignCommodity(PayRecordVo payRecordVo){
         String orderCode =  payRecordVo.getOrderCode();
         OrderForm orderForm = orderFormService.findByOrderCode(orderCode);
@@ -126,10 +124,6 @@ public class PayController extends BaseController{
         List<OrderCommodity>  commodityList = orderCommodityService.getCommodityByOrderId(orderId);
         payRecordVo.setCommodities(commodityList);
     }
-
-
-
-
 
 
 
