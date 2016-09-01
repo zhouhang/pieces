@@ -83,17 +83,31 @@
 
 <#include "./inc/footer.ftl"/>
 </body>
+<script src="/js/layer/layer.js"></script>    <script src="/js/layer/layer.js"></script>    <script src="/js/layer/layer.js"></script>    <script src="/js/layer/layer.js"></script>
 <script>
     $(function () {
         $("a.status").on("click", function(){
             var id = $(this).attr("href");
             var status = $(this).attr("name");
-            $.post("/center/order/status",{orderId:id,status:status}, function (data) {
-                if (data.status == "y") {
-                    window.location.reload();
-                }
-            },"json")
-            return false;
+            var text = "";
+            if (status == 5) {
+                changeOrderStatus(id, status);
+            } else {
+                if (status == 6) { text = '您确认吗？订单将取消'}
+                if(status == 7) { text = '您确认吗？订单将删除'}
+                layer.confirm(text, {icon: 3, title: '提示'}, function (index) {
+                    changeOrderStatus(id, status);
+                });
+            }
+
+            function changeOrderStatus(id, status) {
+                $.post("/center/order/status",{orderId:id,status:status}, function (data) {
+                    if (data.status == "y") {
+                        window.location.reload();
+                    }
+                },"json")
+            }
+           return false;
         })
     })
 </script>

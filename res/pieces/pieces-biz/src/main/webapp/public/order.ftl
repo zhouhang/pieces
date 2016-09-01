@@ -464,6 +464,8 @@
 			                            $("#addConsignee").html(html);
 			                            _global.fn.addConsignee();
 			                            _global.fn.chooseConsignee();
+                                    }else{
+                                        layer.msg(result.info, {icon: 5});
                                     }
                                 }
                             })
