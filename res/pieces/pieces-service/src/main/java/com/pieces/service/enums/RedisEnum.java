@@ -7,7 +7,8 @@ public enum RedisEnum {
 	MEMBER_SESSION_BOSS("member_session_boss"),
 	USER_SESSION_BIZ("user_session_biz"),
 	SITE_TAG_PINYIN_CATEGORY("site_tag_pinyin_category"),
-	KEY_MOBILE_CAPTCHA("mobile_captcha"); //手机验证码
+	KEY_MOBILE_CAPTCHA("mobile_captcha"),
+	KEY_MOBILE_TIMER("mobile_timer");
 
 	@Override
 	public String toString(){
