@@ -69,7 +69,11 @@
                     <td>${pay.companyFullName}</td>
                     <td>线下打款</td>
                     <td>${pay.statusText}</td>
-                    <td><a href="/payment/detail/${pay.id}">查看</a></td>
+                    <td>
+                    <@shiro.hasPermission name="pay:info">
+                        <a href="/payment/detail/${pay.id}">查看</a>
+                    </@shiro.hasPermission>
+                    </td>
                 </tr>
                 </#list>
                 </tbody>

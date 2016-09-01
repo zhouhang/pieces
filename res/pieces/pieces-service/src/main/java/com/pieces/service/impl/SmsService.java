@@ -1,11 +1,13 @@
 package com.pieces.service.impl;
 
+import com.pieces.dao.exception.SmsOverException;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.enums.TextTemplateEnum;
 import com.pieces.service.redis.RedisManager;
 import com.pieces.tools.utils.SeqNoUtil;
 import com.pieces.tools.utils.httpclient.HttpClientUtil;
 import com.pieces.tools.utils.httpclient.common.HttpConfig;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +42,18 @@ public class SmsService {
      * @throws Exception
      */
     public String sendSmsCaptcha(String mobile) throws Exception {
+        String timerStr = redisManager.get(RedisEnum.KEY_MOBILE_TIMER.getValue()+mobile);
+        if(StringUtils.isNotBlank(timerStr)){
+            Integer timer =  Integer.valueOf(timerStr);
+            if(timer>=3){
+                throw new SmsOverException("'"+mobile+"'该手机号短信发送次数超标!");
+            }else{
+                redisManager.set(RedisEnum.KEY_MOBILE_TIMER.getValue()+mobile,(timer+1)+"",SMS_EXPIRE_TIME);
+            }
+        }else{
+            redisManager.set(RedisEnum.KEY_MOBILE_TIMER.getValue()+mobile,"1",SMS_EXPIRE_TIME);
+        }
+
         //生成并发送验证码
         String code = SeqNoUtil.getRandomNum(5);
 
@@ -72,5 +86,8 @@ public class SmsService {
         param.put("text", TextTemplateEnum.SMS_BOSS_UPDATEUSER_PASSWORD_TEMPLATE.getText("【上工之选】",username,passWord));
         HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
     }
+
+
+
 
 }

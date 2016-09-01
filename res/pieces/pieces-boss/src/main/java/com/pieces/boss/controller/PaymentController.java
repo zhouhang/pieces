@@ -7,6 +7,7 @@ import com.pieces.service.PayRecordService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.utils.Reflection;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -36,6 +37,7 @@ public class PaymentController {
      * 支付记录index
      * @return
      */
+    @RequiresPermissions(value = "pay:index")
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index(PayRecordVo vo, Integer pageNum, Integer pageSize, ModelMap modelMap) {
         PageInfo<PayRecordVo> pageInfo = payRecordService.findByParams(vo, pageNum, pageSize);
@@ -50,6 +52,7 @@ public class PaymentController {
      * @param id
      * @return
      */
+    @RequiresPermissions(value = "pay:info")
     @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable("id")Integer id, ModelMap modelMap) {
         PayRecordVo vo = payRecordService.findVoById(id);

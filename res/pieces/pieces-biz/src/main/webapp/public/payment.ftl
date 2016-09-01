@@ -110,7 +110,7 @@
                             </div>
                         </div>
                         <div class="group">
-                            <button type="submit" class="btn btn-red">确认</button>
+                            <button id="stageSubmit" type="button" class="btn btn-red">确认</button>
                         </div>
                     </form>
                 </div>
@@ -178,6 +178,10 @@
                                 }
                             }
                         })
+                    })
+
+                    $("#stageSubmit").click(function(){
+                        alert("分期账单还未开放!");
                     })
 
     			},

@@ -41,6 +41,7 @@ public class PayAccountController extends BaseController{
      * @return
      */
     @RequestMapping("/index")
+    @RequiresPermissions(value = "bank:index")
     public String index(PayAccountVo vo, Integer pageSize, Integer pageNum, ModelMap modelMap){
         pageNum = pageNum==null?1:pageNum;
         pageSize = pageSize==null?10:pageSize;
@@ -56,6 +57,7 @@ public class PayAccountController extends BaseController{
      * @return
      */
     @RequestMapping("/add")
+    @RequiresPermissions(value = "bank:add")
     public String add(ModelMap modelMap){
         return  "bank_add";
     }
@@ -65,6 +67,7 @@ public class PayAccountController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/edit/{id}")
+    @RequiresPermissions(value = "bank:edit")
     public String edit(HttpServletRequest request,
                                HttpServletResponse response,
                                @PathVariable("id") Integer id,
@@ -78,6 +81,7 @@ public class PayAccountController extends BaseController{
      * 保存账户，id为空新增，id不为空修改
      */
     @RequestMapping(value = "/save")
+    @RequiresPermissions(value = {"bank:add","bank:edit"},logical = Logical.OR)
     public void save(HttpServletRequest request,
                              HttpServletResponse response,
                              PayAccount payAccount,

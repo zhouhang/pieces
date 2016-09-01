@@ -10,6 +10,8 @@ import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.WebUtil;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -58,6 +60,7 @@ public class OrderController extends BaseController{
      * 订单列表页面
      * @return
      */
+    @RequiresPermissions(value = "order:index")
     @RequestMapping("index")
     public String index(OrderFormVo vo, Integer pageSize, Integer pageNum, ModelMap modelMap){
         PageInfo<OrderFormVo> pageInfo = orderFormService.findByParams(vo,pageNum,pageSize);
@@ -72,6 +75,7 @@ public class OrderController extends BaseController{
      * @param id
      * @return
      */
+    @RequiresPermissions(value = "order:info")
     @RequestMapping("detail/{id}")
     public String detail(@PathVariable("id") Integer id, ModelMap modelMap){
         OrderFormVo vo = orderFormService.findVoById(id);
@@ -117,6 +121,7 @@ public class OrderController extends BaseController{
      * @param userVo
      * @return
      */
+    @RequiresPermissions(value = "order:add")
     @RequestMapping(value = "customer")
     public String customerOrderIndex(Integer pageNum,
                                      Integer pageSize,
@@ -137,6 +142,7 @@ public class OrderController extends BaseController{
      * @param model
      * @return
      */
+    @RequiresPermissions(value = "order:edit")
     @RequestMapping(value = "anew/{orderId}")
     public String anewOrder(@PathVariable("orderId") Integer orderId,
                             ModelMap model){
@@ -151,6 +157,7 @@ public class OrderController extends BaseController{
      * @param model
      * @return
      */
+    @RequiresPermissions(value = "order:edit")
     @RequestMapping(value = "edit/{orderId}")
     public String updateOrder(@PathVariable("orderId") Integer orderId,
                               ModelMap model){
@@ -165,6 +172,7 @@ public class OrderController extends BaseController{
      * @param customerId
      * @return
      */
+    @RequiresPermissions(value = "order:add")
     @RequestMapping(value = "create/{customerId}")
     public String createOrder(@PathVariable("customerId") Integer customerId,
                               ModelMap model){
@@ -190,6 +198,7 @@ public class OrderController extends BaseController{
     /**
      * 提交订单
      */
+    @RequiresPermissions(value = {"order:add","order:edit"},logical = Logical.OR)
     @RequestMapping(value = "submit")
     @ResponseBody
     public Result save(@RequestBody OrderFormVo orderFormVo){
@@ -260,10 +269,8 @@ public class OrderController extends BaseController{
         if(!shippingAddressList.isEmpty()){
             model.put("shippingAddressList", shippingAddressList);
         }
-
         model.put("billsPage",billsPageInfo);
         model.put("user",user);
-
     }
 
 

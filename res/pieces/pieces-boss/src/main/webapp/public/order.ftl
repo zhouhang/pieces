@@ -11,7 +11,11 @@
         <div class="wrap">
             <div class="title title-btm">
                 <h3>订单管理</h3>
-                <div class="extra"><a class="btn btn-red" href="/order/customer"><i class="fa fa-plus"></i>新建订单</a></div>
+                <div class="extra">
+                    <@shiro.hasPermission name="order:add">
+                    <a class="btn btn-red" href="/order/customer"><i class="fa fa-plus"></i>新建订单</a>
+                    </@shiro.hasPermission>
+                </div>
             </div>
             <div class="pagin">
                 <div class="extra">
@@ -67,7 +71,11 @@
                         <td>¥${order.amountsPayable}</td>
                         <td><#if order.createrTime?exists>${order.createrTime?datetime}</#if></td>
                         <td>${order.statusText}</td>
-                        <td><a href="/order/detail/${order.id}">查看</a></td>
+                        <td>
+                        <@shiro.hasPermission name="order:info">
+                            <a href="/order/detail/${order.id}">查看</a>
+                        </@shiro.hasPermission>
+                        </td>
                     </tr>
                     </#list>
                     </tbody>

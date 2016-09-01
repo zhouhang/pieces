@@ -15,7 +15,11 @@
         <div class="wrap">
             <div class="title title-btm">
                 <h3>收款账户管理</h3>
-                <div class="extra"><a class="btn btn-red" href="/bank/add"><i class="fa fa-plus"></i>增加新收款账户</a></div>
+                <div class="extra">
+                <@shiro.hasPermission name="bank:add">
+                    <a class="btn btn-red" href="/bank/add"><i class="fa fa-plus"></i>增加新收款账户
+                </@shiro.hasPermission>
+                </div>
             </div>
             <div class="pagin">
                 <div class="extra">
@@ -59,7 +63,11 @@
                             <td>${pv.receiveAccount}</td>
                             <td>${pv.receiveBankCard}</td>
                             <td><#if (pv.status==0)>禁用</#if><#if (pv.status==1)>激活</#if></td>
-                            <td><a href="/bank/edit/${pv.id}">配置</a></td>
+                            <td>
+                            <@shiro.hasPermission name="bank:edit">
+                                <a href="/bank/edit/${pv.id}">配置</a>
+                            </@shiro.hasPermission>
+                            </td>
                         </tr>
                         </#list>
                     </tbody>

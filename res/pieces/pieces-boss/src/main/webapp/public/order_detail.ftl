@@ -23,10 +23,14 @@
                     <h3><i class="fa fa-chevron-right"></i>订单 ${vo.code} | <#if vo.createrTime?exists>${vo.createrTime?datetime}</#if></h3>
                     <div class="extra">
                         <a  class="btn btn-gray" href="order/index">返回</a>
-                        <a  id="editerOrder" class="btn btn-gray" href="javascript:;">修改</a>
-                        <a type="button" class="btn btn-gray" href="javascript:;">发票</a>
-                        <a id="delivery" type="button" class="btn btn-gray" href="javascript:;">配送</a>
-                        <a  class="btn btn-red" href="/order/anew/${vo.id!}">重新下单</a>
+                        <@shiro.hasPermission name="order:edit">
+                            <a id="editerOrder" class="btn btn-gray" href="javascript:;">修改</a>
+                        </@shiro.hasPermission>
+                            <a type="button" class="btn btn-gray" href="javascript:;">发票</a>
+                            <a id="delivery" type="button" class="btn btn-gray" href="javascript:;">配送</a>
+                        <@shiro.hasPermission name="order:edit">
+                            <a  class="btn btn-red" href="/order/anew/${vo.id!}">重新下单</a>
+                        </@shiro.hasPermission>
                     </div>
                 </div>
 

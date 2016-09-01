@@ -28,8 +28,12 @@
                     <@shiro.hasPermission name="enquiry:index">
                     <a href="/enquiry/index">询价管理</a>
                     </@shiro.hasPermission>
+                    <@shiro.hasPermission name="order:index">
                     <a href="/order/index">订单管理</a>
+                    </@shiro.hasPermission>
+                    <@shiro.hasPermission name="pay:index">
                     <a href="/payment/index">支付管理</a>
+                    </@shiro.hasPermission>
                     </div>
                 </li>
             </@shiro.hasPermission>
@@ -72,7 +76,6 @@
                     <a href="cms/article/index?model=2">文章管理</a>
                     <a href="cms/category/index?model=2">文章分类管理</a>
                 </div>
-
             </li>
             <li><a href="#!">报表</a></li>
             <@shiro.hasPermission name="system:index">
@@ -85,7 +88,9 @@
                         <@shiro.hasPermission name="role:index">
                             <a href="role/index">角色管理</a>
                         </@shiro.hasPermission>
-                        <a href="bank/index">收款账户管理</a>
+                        <@shiro.hasPermission name="bank:index">
+                            <a href="bank/index">收款账户管理</a>
+                        </@shiro.hasPermission>
                     </div>
                 </li>
             </@shiro.hasPermission>
