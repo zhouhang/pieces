@@ -184,7 +184,7 @@ public class GeneralController extends BaseController {
 						HttpServletResponse response) throws Exception{
 		String code =  smsService.sendSmsCaptcha(contactMobile);
 		Map<String, String> result = new HashMap<String, String>();
-		result.put("ok", code);
+		result.put("ok", "ok");
         WebUtil.print(response,result);
 	}
 
