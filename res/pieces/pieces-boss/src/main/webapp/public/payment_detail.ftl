@@ -23,8 +23,10 @@
             <div class="title">
                 <h3><i class="fa fa-chevron-right"></i>E20160620170402</h3>
                 <div class="extra">
+                <#if pay.status == 0>
                     <button type="button" class="btn btn-gray" id="jsuc">成功</button>
                     <button type="button" class="btn btn-gray" id="jfail">失败</button>
+                </#if>
                     <a href="/payment/index" class="btn btn-red">返回</a>
                 </div>
             </div>
@@ -96,7 +98,7 @@
                                             <span class="thumb">
                                             <#list pay.imgs as img>
                                                 <img src="${img.path}"
-                                                     data-src="http://static.sankobuy.com/files/upload/wool/2016/8/5fcf1a8a-c6d6-4292-bd4e-3150437948e2芡实.jpg"
+                                                     data-src="${img.path}"
                                                      alt="" width="50" height="50">
                                             </#list>
                                             </span>
