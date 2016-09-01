@@ -95,7 +95,6 @@
                     this.formValidate();
 
                     $('#delete').on('click', function() {
-                        alert(111)
                         var $self = $(this);
                         layer.confirm('确认删除该品种？', {
                             btn: ['确认','取消'] //按钮
