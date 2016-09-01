@@ -105,9 +105,14 @@ public class OrderController extends BaseController {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		shippingAddress.setUserId(user.getId());
 		shippingAddress.setCreateTime(new Date());
+
+		List<ShippingAddressVo>  shippingAddressList = shippingAddressService.findByUser(user.getId());
+		if(shippingAddressList.size()>=10){
+			return new Result(false).info("收货地址不能超过10条");
+		}
+
 		//修改默认地址
 		if(shippingAddress.getIsDefault()){
-			List<ShippingAddressVo>  shippingAddressList = shippingAddressService.findByUser(user.getId());
 			for(ShippingAddressVo sav : shippingAddressList){
 				if(sav.getIsDefault()!=null && sav.getIsDefault()){
 					ShippingAddress sa = new ShippingAddress();
