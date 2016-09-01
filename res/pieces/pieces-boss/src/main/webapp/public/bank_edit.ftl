@@ -96,7 +96,7 @@
 
                     $('#delete').on('click', function() {
                         var $self = $(this);
-                        layer.confirm('确认删除该品种？', {
+                        layer.confirm('确认删除该账户？', {
                             btn: ['确认','取消'] //按钮
                         }, function(index){
                             layer.close(index);
