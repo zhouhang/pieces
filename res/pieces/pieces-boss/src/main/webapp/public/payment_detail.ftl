@@ -23,11 +23,12 @@
             <div class="title">
                 <h3><i class="fa fa-chevron-right"></i>E20160620170402</h3>
                 <div class="extra">
+                    <a href="/payment/index" class="btn btn-gray">返回</a>
                 <#if pay.status == 0>
-                    <button type="button" class="btn btn-gray" id="jsuc">成功</button>
-                    <button type="button" class="btn btn-gray" id="jfail">失败</button>
+                    <button type="button" class="btn  btn-gray" id="jfail">失败</button>
+                    <button type="button" class="btn  btn-red" id="jsuc">成功</button>
                 </#if>
-                    <a href="/payment/index" class="btn btn-red">返回</a>
+
                 </div>
             </div>
             <div class="user-info">
