@@ -9,6 +9,8 @@ import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.CodeEnum;
 import com.pieces.boss.upload.AdUploadFile;
 import com.pieces.tools.utils.Reflection;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -35,6 +37,7 @@ public class AdController extends BaseController{
      * @param model
      * @return
      */
+    @RequiresPermissions(value = "ad:index")
     @RequestMapping("index")
     public String index(Integer pageSize,
                         Integer pageNum,
@@ -56,6 +59,7 @@ public class AdController extends BaseController{
      * @param model
      * @return
      */
+    @RequiresPermissions(value = "ad:add")
     @RequestMapping("add")
     public String add(ModelMap model){
         List<CodeEnum> adTypeList = CodeEnum.findByType(CodeEnum.Type.AD);
@@ -69,6 +73,7 @@ public class AdController extends BaseController{
      * @param model
      * @return
      */
+    @RequiresPermissions(value = "ad:edit")
     @RequestMapping("edit/{id}")
     public String info(@PathVariable("id") Integer id,
                        ModelMap model){
@@ -88,6 +93,7 @@ public class AdController extends BaseController{
      * @param ad
      * @return
      */
+    @RequiresPermissions(value = {"ad:add","ad:edit"},logical = Logical.OR)
     @RequestMapping("save")
     @ResponseBody
     public Result save(Ad ad){
@@ -108,6 +114,7 @@ public class AdController extends BaseController{
      * @param id
      * @return
      */
+    @RequiresPermissions(value = {"ad:add","ad:edit"},logical = Logical.OR)
     @RequestMapping("delete")
     @ResponseBody
     public Result delete(Integer id){

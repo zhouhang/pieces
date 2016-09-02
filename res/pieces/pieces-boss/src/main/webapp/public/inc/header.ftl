@@ -61,22 +61,36 @@
                     </div>
                 </li>
             </@shiro.hasPermission>
-            <li>
-                <a href="#!">促销</a>
-                <div class="subnav">
-                    <a href="ad/index">广告管理</a>
-                </div>
-            </li>
+            <@shiro.hasPermission name="sales:index">
+                <li>
+                    <a href="#!">促销</a>
+                    <div class="subnav">
+                    <@shiro.hasPermission name="ad:index">
+                        <a href="ad/index">广告管理</a>
+                    </@shiro.hasPermission>
+                    </div>
+                </li>
+            </@shiro.hasPermission>
             <li><a href="#!">邮件列表</a></li>
-            <li>
-                <a href="#!">CMS</a>
-                <div class="subnav">
-                    <a href="cms/article/index?model=1">单页面管理</a>
-                    <a href="cms/category/index?model=1">单页面分类管理</a>
-                    <a href="cms/article/index?model=2">文章管理</a>
-                    <a href="cms/category/index?model=2">文章分类管理</a>
-                </div>
-            </li>
+            <@shiro.hasPermission name="cms:index">
+                <li>
+                    <a href="#!">CMS</a>
+                    <div class="subnav">
+                        <@shiro.hasPermission name="single:index">
+                            <a href="cms/article/index?model=1">单页面管理</a>
+                        </@shiro.hasPermission>
+                        <@shiro.hasPermission name="single:category">
+                            <a href="cms/category/index?model=1">单页面分类管理</a>
+                        </@shiro.hasPermission>
+                        <@shiro.hasPermission name="post:index">
+                            <a href="cms/article/index?model=2">文章管理</a>
+                        </@shiro.hasPermission>
+                        <@shiro.hasPermission name="post:category">
+                            <a href="cms/category/index?model=2">文章分类管理</a>
+                        </@shiro.hasPermission>
+                    </div>
+                </li>
+            </@shiro.hasPermission>
             <li><a href="#!">报表</a></li>
             <@shiro.hasPermission name="system:index">
                 <li>

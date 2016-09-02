@@ -11,6 +11,8 @@ import com.pieces.service.enums.ModelEnum;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.enums.StatusEnum;
 import com.pieces.tools.utils.Reflection;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -42,6 +44,7 @@ public class CMSController extends BaseController{
      * model 1=help,2=news
      * @return
      */
+    @RequiresPermissions(value = {"single:index","post:index"},logical = Logical.OR)
     @RequestMapping(value = "article/index", method = RequestMethod.GET)
     public String index(ArticleVo articleVo, Integer pageSize, Integer pageNum, ModelMap model){
         String url = "";
@@ -70,6 +73,7 @@ public class CMSController extends BaseController{
      * 添加文章
      * @return
      */
+    @RequiresPermissions(value = {"single:index","post:index"},logical = Logical.OR)
     @RequestMapping(value = "article/add", method = RequestMethod.GET)
     public String add(Integer model, ModelMap modelMap){
         String url = "";
@@ -88,6 +92,7 @@ public class CMSController extends BaseController{
      * @param modelMap
      * @return
      */
+    @RequiresPermissions(value = {"single:index","post:index"},logical = Logical.OR)
     @RequestMapping(value = "article/detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable("id") Integer id, ModelMap modelMap){
 
@@ -105,6 +110,7 @@ public class CMSController extends BaseController{
      * @param id
      * @return
      */
+    @RequiresPermissions(value = {"single:index","post:index"},logical = Logical.OR)
     @RequestMapping(value = "article/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
     public Result delete (@PathVariable("id") Integer id){
@@ -117,6 +123,7 @@ public class CMSController extends BaseController{
      * @param article
      * @return
      */
+    @RequiresPermissions(value = {"single:index","post:index"},logical = Logical.OR)
     @RequestMapping(value = "article/save", method = RequestMethod.POST)
     @ResponseBody
     public Result save (Article article){
@@ -130,6 +137,7 @@ public class CMSController extends BaseController{
      * model 1=help,2=news
      * @return
      */
+    @RequiresPermissions(value = {"single:category","post:category"},logical = Logical.OR)
     @RequestMapping(value = "category/index", method = RequestMethod.GET)
     public String categoryIndex(ArticleCategory category, Integer pageSize, Integer pageNum, ModelMap modelMap){
 
@@ -149,6 +157,7 @@ public class CMSController extends BaseController{
      * @param modelMap
      * @return
      */
+    @RequiresPermissions(value = {"single:category","post:category"},logical = Logical.OR)
     @RequestMapping(value = "category/add", method = RequestMethod.GET)
     public String addCategory(Integer model, ModelMap modelMap) {
         modelMap.put("model", model);
@@ -162,7 +171,8 @@ public class CMSController extends BaseController{
      * @param category
      * @return
      */
-    @RequestMapping(value = "category/save", method = RequestMethod.POST)
+   @RequiresPermissions(value = {"single:category","post:category"},logical = Logical.OR)
+   @RequestMapping(value = "category/save", method = RequestMethod.POST)
     @ResponseBody
     public Result saveCategory(ArticleCategory category) {
         Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
@@ -174,6 +184,7 @@ public class CMSController extends BaseController{
      * 修改类别页面
      * @return
      */
+    @RequiresPermissions(value = {"single:category","post:category"},logical = Logical.OR)
     @RequestMapping(value = "category/detail/{id}", method = RequestMethod.GET)
     public String categoryDetail(@PathVariable("id")Integer id, ModelMap modelMap){
         ArticleCategory category = articleService.getCategoryById(id);
@@ -186,6 +197,7 @@ public class CMSController extends BaseController{
      * @param id
      * @return
      */
+    @RequiresPermissions(value = {"single:category","post:category"},logical = Logical.OR)
     @RequestMapping(value = "category/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
     public Result deleteCategory (@PathVariable("id") Integer id){
