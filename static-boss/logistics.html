@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>文章分类管理-boss-饮片B2B</title>
+    <title>物流管理-boss-饮片B2B</title>
     <meta name="renderer" content="webkit" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -17,7 +17,7 @@
                 <a href="home.html">药优优电子商务管理系统</a>
             </div>
             <div class="user">
-                <span>登录用户 hehuan</span>
+                <span>登录用户 20160711154600001</span>
                 <i>|</i>
                 <span>2016年6月20日 星期三</span>
                 <i>|</i>
@@ -33,16 +33,17 @@
             <ul>
                 <li><a href="home.html">首页</a></li>
                 <li>
-                    <a href="#!">销售</a>
+                    <a class="curr" href="#!">销售</a>
                     <div class="subnav">
                         <a href="enquiry.html">询价管理</a>
                         <a href="order.html">订单管理</a>
+                        <a class="on" href="payment.html">交易管理</a>
                     </div>
                 </li>
                 <li>
                     <a href="#!">目录</a>
                     <div class="subnav">
-                        <a href="goods.html">商品管理</a>
+                        <a class="on" href="goods.html">商品管理</a>
                         <a href="category.html">分类管理</a>
                         <a href="breed.html">品种管理</a>
                     </div>
@@ -55,15 +56,7 @@
                 </li>
                 <li><a href="#!">促销</a></li>
                 <li><a href="#!">邮件列表</a></li>
-                <li>
-                    <a class="curr" href="#!">CMS</a>
-                    <div class="subnav">
-                        <a href="cms.html">单页面管理</a>
-                        <a href="cms_category.html">单页面分类管理</a>
-                        <a href="article.html">文章管理</a>
-                        <a class="on" href="article_category.html">文章分类管理</a>
-                    </div>
-                </li>
+                <li><a href="#!">CMS</a></li>
                 <li><a href="#!">报表</a></li>
                 <li>
                     <a href="#!">系统</a>
@@ -81,8 +74,7 @@
     <div class="fa-floor">
         <div class="wrap">
             <div class="title title-btm">
-                <h3>文章分类管理</h3>
-                <div class="extra"><a class="btn btn-red" href="article_category_info.html"><i class="fa fa-plus"></i>增加新分类</a></div>
+                <h3>物流管理</h3>
             </div>
             <div class="pagin">
                 <div class="extra">
@@ -108,12 +100,18 @@
                 <table class="tc">
                     <thead>
                         <tr>
-                            <th width="100">编号</th>
-                            <th class="tl">单页面分类</th>
-                            <th width="150">操作</th>
+                            <th width="70">编号</th>
+                            <th>运单号</th>
+                            <th>发货日期</th>
+                            <th>订单商品总数</th>
+                            <th>本次发货商品数</th>
+                            <th width="100">操作</th>
                         </tr>
                         <tr>
                             <td></td>
+                            <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
+                            <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
+                            <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
                             <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
                             <td></td>
                         </tr>
@@ -121,9 +119,84 @@
                     <tfoot></tfoot>
                     <tbody>
                         <tr>
+                            <td>01</td>
+                            <td>20160819180100001</td>
+                            <td>2017-08-31</td>
+                            <td>20160711154600001</td>
+                            <td>11</td>
+                            <td><a href="logistics_detail.html">查看</a></td>
+                        </tr>
+                        <tr>
+                            <td>02</td>
+                            <td>20160819180100001</td>
+                            <td>2017-08-31</td>
+                            <td>20160711154600001</td>
+                            <td>123</td>
+                            <td><a href="logistics_detail.html">查看</a></td>
+                        </tr>
+                        <tr>
+                            <td>03</td>
+                            <td>20160819180100001</td>
+                            <td>2017-08-31</td>
+                            <td>20160711154600001</td>
+                            <td>123</td>
+                            <td><a href="logistics_detail.html">查看</a></td>
+                        </tr>
+                        <tr>
+                            <td>04</td>
+                            <td>20160819180100001</td>
+                            <td>2017-08-31</td>
+                            <td>20160711154600001</td>
+                            <td>123</td>
+                            <td><a href="logistics_detail.html">查看</a></td>
+                        </tr>
+                        <tr>
+                            <td>05</td>
+                            <td>20160819180100001</td>
+                            <td>2017-08-31</td>
+                            <td>20160711154600001</td>
+                            <td>123</td>
+                            <td><a href="logistics_detail.html">查看</a></td>
+                        </tr>
+                        <tr>
+                            <td>06</td>
+                            <td>20160819180100001</td>
+                            <td>2017-08-31</td>
+                            <td>20160711154600001</td>
+                            <td>123</td>
+                            <td><a href="logistics_detail.html">查看</a></td>
+                        </tr>
+                        <tr>
+                            <td>07</td>
+                            <td>20160819180100001</td>
+                            <td>2017-08-31</td>
+                            <td>20160711154600001</td>
+                            <td>123</td>
+                            <td><a href="logistics_detail.html">查看</a></td>
+                        </tr>
+                        <tr>
+                            <td>08</td>
+                            <td>20160819180100001</td>
+                            <td>2017-08-31</td>
+                            <td>20160711154600001</td>
+                            <td>123</td>
+                            <td><a href="logistics_detail.html">查看</a></td>
+                        </tr>
+                        <tr>
+                            <td>09</td>
+                            <td>20160819180100001</td>
+                            <td>2017-08-31</td>
+                            <td>20160711154600001</td>
+                            <td>123</td>
+                            <td><a href="logistics_detail.html">查看</a></td>
+                        </tr>
+                        <tr>
                             <td>10</td>
-                            <td><div class="tl">新闻公告</div></td>
-                            <td><a href="article_info.html">修改</a></td>
+                            <td>20160819180100001</td>
+                            <td>2017-08-31</td>
+                            <td>20160711154600001</td>
+                            <td>123</td>
+                            <td><a href="logistics_detail.html">查看</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -142,43 +215,6 @@
     </div><!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
-    <script>
-    //定义根变量
-    !(function($) {
-        var page = {
-            //定义全局变量区
-            v: {
-                id: "page"
-            },
-            //定义方法区
-            fn: {
-                //初始化方法区
-                init: function () {
-                    page.fn.filter();
-                },
-                // 筛选
-                filter: function() {
-                    var $ipts = $('.chart .ipt, .chart select');
-
-                    $('#submit').on('click', function() {
-                        var params = [];
-                        $ipts.each(function() {
-                            var val = $.trim(this.value);
-                            val && params.push($(this).attr('name') + '=' + val);
-                        })
-                        console.log(params.join('&'))
-                    })
-                }
-            }
-        }
-        //加载页面js
-        $(function() {
-            page.fn.init();
-        });
-    })(jQuery);
-
-        
-    </script>
 </body>
 </html>
 

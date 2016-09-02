@@ -504,6 +504,7 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
+    <script src="js/common.js"></script>
     <script>
         var page = {
             //定义全局变量区
@@ -653,3 +654,14 @@
     </script>
 </body>
 </html>
+
+
+<script>
+$.ajax({
+    url: 'sidemenu.html',
+    success: function(menu) {
+        $('.side').off().html(menu);
+        currNav();
+    }
+})
+</script>

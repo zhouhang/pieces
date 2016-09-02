@@ -23,8 +23,8 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .bg-gray{background-color:#f0eff5;}
 .fl{float:left;}
 .fr{float:right;}
-.tc{text-align:center;}
-.tl{text-align:left;}
+.tc{text-align:center !important;}
+.tl{text-align:left !important;}
 .tr{text-align:right !important;}
 .hide{display:none;}
 .wrap{width:1200px;margin:0 auto;}
@@ -95,6 +95,7 @@ vertical-align:middle;
 .fa-question-circle:before { content: "\e602"; }
 .fa-times:before { content: "\e616"; }
 .fa-menu:before { content: "\e606"; }
+.fa-logistics:before { content: "\e61a"; }
 .fa-check-circle:before { content: "\e60e"; }
 .fa-consignee:before { content: "\e619"; }
 .fa-frown:before { content: "\e618"; }
@@ -210,6 +211,7 @@ vertical-align:middle;
 .fa-chart th span{font-weight:400;}
 .fa-chart td{border:1px solid #ccc;color:#666;font-size:12px;}
 .fa-chart td a{margin:0 4px;}
+.fa-chart td .btn{width:78px;line-height:24px;margin-bottom:5px;padding:0;}
 .fa-chart select{width:90%;height:32px;line-height:32px;text-align:center;font-size:12px;}
 .fa-chart option{text-align:center;}
 .fa-chart tbody tr:nth-child(even){background:#f5f5f5;}
@@ -219,6 +221,7 @@ vertical-align:middle;
 .fa-chart .error{position:absolute;z-index:2;top:110%;left:0;padding:5px;color:#fa5468;border:1px solid #fa5468;border-radius:2px;white-space:nowrap;display:none;}
 .fa-chart .error:before{position:absolute;top:-16px;left:14px;content:"";border:8px dashed transparent;border-bottom:8px solid #fa5468;}
 .fa-chart .error:after{position:absolute;top:-13px;left:16px;content:"";border:6px dashed transparent;border-bottom:7px solid #fff;}
+.fa-chart .empty{text-align:center;}
 .fa-chart-d{font-size:12px;}      
 .fa-chart-d .empty{margin:40px 0 10px;text-align:center;}      
 .fa-chart-d .group{margin-bottom:10px;border:1px solid #ccc;overflow:hidden;*zoom:1;}      
@@ -622,15 +625,18 @@ vertical-align:middle;
 
 
 /* 弹层表单 */
-.fa-form-layer{line-height:34px;padding-right:30px;font-size:12px;display:none;}
-.fa-form-layer .group{padding:0 0 0 100px;height:60px;}
+.fa-form-layer{line-height:34px;padding:30px 40px;font-size:12px;display:none;}
+.fa-form-layer .group{padding:0 0 10px 100px;}
 .fa-form-layer .ah{height:auto;}
-.fa-form-layer .txt{width:90px;line-height:34px;color:#999;}
+.fa-form-layer .txt{left:-20px;width:110px;line-height:34px;color:#999;}
+.fa-form-layer .txt i{margin-right:0;font:700 14px tahoma;}
 .fa-form-layer .cnt{position:relative;height:auto;}
-.fa-form-layer .cnt .ipt{width:455px;padding:6px;}
+.fa-form-layer .cnt .ipt{width:300px;padding:6px;}
 .fa-form-layer .cnt .ipt-short{width:136px;}
-.fa-form-layer .cnt select{width:150px;height:34px;line-height:34px;margin-right:6px;}
-.fa-form-layer .cnt .msg-box{margin-top:0;}
+.fa-form-layer .cnt select{width:99px;height:34px;line-height:34px;margin-right:6px;}
+.fa-form-layer .cnt .msg-box{position:absolute;top:90%;left:5px;padding:2px 5px;margin:0;margin;background:#c3272b;color:#fff;z-index:2;}
+.fa-form-layer .cnt .msg-box:after{content:"";position:absolute;top:-10px;left:10px;border:5px dashed transparent;border-bottom:5px solid #c3272b;}
+.fa-form-layer .cnt .msg-box .error{color:#fff;}
 .fa-form-layer .button{padding:10px 0 0 100px;}
 .fa-form-layer .button .btn{padding:0;height:34px;}
 .fa-form-layer .button .submit{width:150px;margin-right:16px;}

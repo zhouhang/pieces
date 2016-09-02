@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>客户信息-boss-饮片B2B</title>
+    <title>账单信息-boss-饮片B2B</title>
     <meta name="renderer" content="webkit" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -74,9 +74,9 @@
         <div class="wrap">
             <div class="side">
                 <dl>
-                    <dt>支付信息</dt>
+                    <dt>账单信息</dt>
                     <dd>
-                        <a class="curr" href="payment_info.html">支付信息</a>
+                        <a class="curr" href="bill.html">账单信息</a>
                     </dd>
                 </dl>
             </div>
@@ -93,18 +93,29 @@
                     <h3>交易信息</h3>
                     <div class="info">
                         <table>
-                            <tbody>
+                            <tbody>       
                                 <tr>
-                                    <td><em>支付流水号：</em>20160819180100001</td>
-                                    <td><em>订单编号：</em>20160711154600001</td>
+                                    <td><em>账期订单：</em>20160711154600001</td>
+                                    <td><em>支付方式：</em>账期支付</td>
                                 </tr>
                                 <tr>
-                                    <td><em>订 购 用 户 ：</em>hehuan</td>
+                                    <td><em>订购用户 ：</em>hehuan</td>
                                     <td><em>用药单位：</em>速采（武汉）科技有限公司</td>
                                 </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="user-info">
+                    <h3>付款信息</h3><!-- 待处理时是 “付款信息” 其他是“账单信息”-->
+
+                    <div class="info">
+                        <table>
+                            <tbody>
                                 <tr>
-                                    <td><em>应 付 金 额 ：</em>&yen; 2100.00</td>
-                                    <td><em>支付渠道：</em>线下打款</td>
+                                    <td><em>应付金额：</em>&yen; 21000.00</td>
+                                    <td><em>账期时间：</em>1年</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -112,56 +123,57 @@
                 </div>
 
                 <div class="user-info">
-                    <h3>付款信息</h3>
+                    <h3>支付记录</h3><!-- 待处理时是 “付款信息” 其他是“账单信息”-->
 
-                    <div class="info">
+                    <div class="info chart">
                         <table>
+                            <thead>
+                                <tr>
+                                    <th width="70">编号</th>
+                                    <th>支付流水号</th>
+                                    <th>支付渠道</th>
+                                    <th>支付时间</th>
+                                    <th>支付金额</th>
+                                    <th>支付状态</th>
+                                    <th width="100">操作</th>
+                                </tr>
+                            </thead>
                             <tbody>
                                 <tr>
-                                    <td><b>支付金额：<span class="price">&yen; 21000.00</span></b></td>
-                                    <td>&nbsp;</td>
+                                    <td>01</td>
+                                    <td>20160819180100001</td>
+                                    <td>线下打款</td>
+                                    <td>2016-08-31</td>
+                                    <td>&yen; 6</td>
+                                    <td>支付成功</td>
+                                    <td><a href="payment_detail.html">查看</a></td>
                                 </tr>
                                 <tr>
-                                    <td class="space"></td>
+                                    <td>01</td>
+                                    <td>20160819180100001</td>
+                                    <td>线下打款</td>
+                                    <td>2016-08-31</td>
+                                    <td>&yen; 6</td>
+                                    <td>支付成功</td>
+                                    <td><a href="payment_detail.html">查看</a></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2">
-                                        <b>收款账户</b>
-                                    </td>
+                                    <td>01</td>
+                                    <td>20160819180100001</td>
+                                    <td>线下打款</td>
+                                    <td>2016-08-31</td>
+                                    <td>&yen; 6</td>
+                                    <td>支付成功</td>
+                                    <td><a href="payment_detail.html">查看</a></td>
                                 </tr>
                                 <tr>
-                                    <td><em>开&nbsp; 户&nbsp; 行：</em>中国招商银行</td>
-                                    <td><em>开户人：</em>周行</td>
-                                </tr>
-                                <tr>
-                                    <td><em>收款账号：</em>6222 0210 0107 0070 872</td>
-                                    <td>&nbsp;</td>
-                                </tr>
-                                <tr>
-                                    <td class="space"></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
-                                        <b>打款账户</b>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><em>开&nbsp; 户&nbsp; 行：</em>中国招商银行</td>
-                                    <td><em>开户人：</em>周行</td>
-                                </tr>
-                                <tr>
-                                    <td><em>收款账号：</em>6222 0210 0107 0070 872</td>
-                                    <td rowspan="2">
-                                        <div class="img">
-                                            <em>支付凭证：</em>
-                                            <span class="thumb">
-                                                <img src="uploads/p0.jpg" data-src="http://static.sankobuy.com/files/upload/wool/2016/8/5fcf1a8a-c6d6-4292-bd4e-3150437948e2芡实.jpg" alt="" width="50" height="50">
-                                            </span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><em>支付时间：</em>2016-08-22</td>
+                                    <td>01</td>
+                                    <td>20160819180100001</td>
+                                    <td>线下打款</td>
+                                    <td>2016-08-31</td>
+                                    <td>&yen; 6</td>
+                                    <td>支付成功</td>
+                                    <td><a href="payment_detail.html">查看</a></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -169,17 +181,17 @@
                 </div>
 
                 <div class="user-info">
-                    <h3>支付结果</h3>
+                    <h3>审核信息</h3>
                     <div class="info">
                         <table>
                             <tbody>
                                 <tr>
-                                    <td><em>支付结果：</em>支付失败</td>
+                                    <td><em>审核结果：</em>拒绝</td>
                                     <td><em>操作人员：</em>何欢</td>
                                 </tr>
                                 <tr>
                                     <td><em>记录时间：</em>2016-08-22</td>
-                                    <td><em>失败原因：</em>银行账户上查不到该付款记录。</td>
+                                    <td><em>拒绝原因：</em>用户信用等级不够。</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -277,6 +277,9 @@ vertical-align:middle;
 .user-info .info .price{color:#c3272b;font-weight:700;}
 .user-info .info .img{height:42px;line-height:78px;}
 .user-info .info img{margin-right:6px;vertical-align:middle;}
+.user-info .chart{margin:-1px;padding:0;background:#fff;}
+.user-info .chart th{padding:20px 0;text-align:center;}
+.user-info .chart td{padding:10px 0;border:1px solid #ccc;text-align:center;}
 
 .user-info .fa-form{padding:50px 0 20px 50px;}
 .user-info .fa-form .br{display:block;margin-top:10px;}
