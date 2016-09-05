@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.LogisticalCommodityDao">
+    <resultMap id="LogisticalCommodityResultMap" type="com.pieces.dao.model.LogisticalCommodity">
+            <id column="id"  property="id" />
+            <result column="logistical_id"  property="logisticalId" />
+            <result column="order_commodity_id"  property="orderCommodityId" />
+            <result column="amount"  property="amount" />
+        
+    </resultMap>
+
+    <resultMap id="LogisticalCommodityResultMapVo" type="com.pieces.dao.vo.LogisticalCommodityVo">
+            <id column="id"  property="id" />
+            <result column="logistical_id"  property="logisticalId" />
+            <result column="order_commodity_id"  property="orderCommodityId" />
+            <result column="amount"  property="amount" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,logistical_id,order_commodity_id,amount
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="LogisticalCommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from logistical_commodity
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="LogisticalCommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from logistical_commodity
+    </select>
+
+    <select id="findByParams" resultMap="LogisticalCommodityResultMapVo" parameterType="com.pieces.dao.vo.LogisticalCommodityVo">
+        select
+        <include refid="Base_Column_List" />
+        from logistical_commodity
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from logistical_commodity
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.LogisticalCommodity">
+        insert into
+        logistical_commodity (logistical_id,order_commodity_id,amount)
+        values
+        (#{logisticalId},#{orderCommodityId},#{amount})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.LogisticalCommodity">
+        update logistical_commodity
+        <set>
+                                                        
+            <if test="logisticalId != null">
+                logistical_id = #{logisticalId},
+            </if>
+                                            
+            <if test="orderCommodityId != null">
+                order_commodity_id = #{orderCommodityId},
+            </if>
+                                            
+            <if test="amount != null">
+                amount = #{amount},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

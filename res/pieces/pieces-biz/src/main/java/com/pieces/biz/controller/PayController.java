@@ -3,14 +3,11 @@ package com.pieces.biz.controller;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.enums.SessionEnum;
 import com.pieces.dao.model.*;
-import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.dao.vo.PayRecordVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -30,7 +27,6 @@ import java.util.UUID;
 @RequestMapping("/center/pay")
 public class PayController extends BaseController{
 
-
     @Autowired
     private HttpSession httpSession;
     @Autowired
@@ -46,7 +42,7 @@ public class PayController extends BaseController{
     public String go(ModelMap modelMap,
                      @PathVariable("orderId")Integer orderId){
 
-        com.pieces.dao.model.OrderForm orderForm = orderFormService.findById(orderId);
+        OrderForm orderForm = orderFormService.findById(orderId);
         modelMap.put("orderForm",orderForm);
         String token = UUID.randomUUID().toString();
         httpSession.setAttribute(SessionEnum.PAY_TOKEN.getKey(),token);

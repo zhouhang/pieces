@@ -72,7 +72,7 @@
                                 </tr>
                                 <tr>
                                     <td><em>收款账号：</em>${payRecordVo.receiveBankCard!}</td>
-                                    <td>&nbsp;</td>
+                                    <td><em>付款金额：</em>${payRecordVo.actualPayment!}</td>
                                 </tr>
                             </table>
                         </div>

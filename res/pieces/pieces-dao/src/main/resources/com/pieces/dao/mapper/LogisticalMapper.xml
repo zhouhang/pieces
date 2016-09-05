@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.LogisticalDao">
+    <resultMap id="LogisticalResultMap" type="com.pieces.dao.model.Logistical">
+            <id column="id"  property="id" />
+            <result column="order_id"  property="orderId" />
+            <result column="code"  property="code" />
+            <result column="ship_date"  property="shipDate" />
+            <result column="total"  property="total" />
+            <result column="ship_number"  property="shipNumber" />
+            <result column="remark"  property="remark" />
+            <result column="create_date"  property="createDate" />
+        
+    </resultMap>
+
+    <resultMap id="LogisticalResultMapVo" type="com.pieces.dao.vo.LogisticalVo">
+            <id column="id"  property="id" />
+            <result column="order_id"  property="orderId" />
+            <result column="code"  property="code" />
+            <result column="ship_date"  property="shipDate" />
+            <result column="total"  property="total" />
+            <result column="ship_number"  property="shipNumber" />
+            <result column="remark"  property="remark" />
+            <result column="create_date"  property="createDate" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,order_id,code,ship_date,total,ship_number,remark,create_date
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="LogisticalResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from logistical
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="LogisticalResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from logistical
+    </select>
+
+    <select id="findByParams" resultMap="LogisticalResultMapVo" parameterType="com.pieces.dao.vo.LogisticalVo">
+        select
+        <include refid="Base_Column_List" />
+        from logistical
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from logistical
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Logistical">
+        insert into
+        logistical (order_id,code,ship_date,total,ship_number,remark,create_date)
+        values
+        (#{orderId},#{code},#{shipDate},#{total},#{shipNumber},#{remark},#{createDate})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.Logistical">
+        update logistical
+        <set>
+                                                        
+            <if test="orderId != null">
+                order_id = #{orderId},
+            </if>
+                                            
+            <if test="code != null">
+                code = #{code},
+            </if>
+                                            
+            <if test="shipDate != null">
+                ship_date = #{shipDate},
+            </if>
+                                            
+            <if test="total != null">
+                total = #{total},
+            </if>
+                                            
+            <if test="shipNumber != null">
+                ship_number = #{shipNumber},
+            </if>
+                                            
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+                                            
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

@@ -192,6 +192,7 @@ public class CMSController extends BaseController{
         return  ModelEnum.getUrl("category-editer", category.getModel());
     }
 
+
     /**
      * 删除类别
      * @param id

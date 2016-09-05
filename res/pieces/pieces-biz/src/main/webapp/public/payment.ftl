@@ -153,10 +153,21 @@
                             return false;
                         }
 
+
                         $("#myform").ajaxSubmit({
                             data:{'payAccountId':bank},
                             beforeSend: function() {
                                 if(!$("#myform").isValid()){
+                                    return false;
+                                }
+                                var imgLength =  $('input[name="img"]').length;
+                                if(imgLength<=1){
+                                    $.notify({
+                                        type: 'error',
+                                        title: '',
+                                        text: '请至少上传一张支付凭证!',
+                                        delay: 3e3
+                                    });
                                     return false;
                                 }
                             },

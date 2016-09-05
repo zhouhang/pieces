@@ -15,7 +15,6 @@
 </div>
 <!-- header end -->
 
-
 <!-- nav start -->
 <div class="nav">
     <div class="wrap">
@@ -57,11 +56,13 @@
                 <li>
                     <a href="#!">客户</a>
                     <div class="subnav">
+                        <@shiro.hasPermission name="   customer:view">
                         <a href="user/index">客户管理</a>
+                        </@shiro.hasPermission>
                     </div>
                 </li>
             </@shiro.hasPermission>
-            <@shiro.hasPermission name="sales:index">
+            <@shiro.hasPermission name="promotion:index">
                 <li>
                     <a href="#!">促销</a>
                     <div class="subnav">

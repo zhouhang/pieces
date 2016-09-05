@@ -15,7 +15,9 @@ public class PayRecord  implements Serializable {
 	
 	//订单编号
 	private String orderCode;
-	
+
+	private Integer accountBillId;
+
 	private Integer orderId;
 	
 	//应付金额
@@ -216,5 +218,12 @@ public class PayRecord  implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	
+
+	public Integer getAccountBillId() {
+		return accountBillId;
+	}
+
+	public void setAccountBillId(Integer accountBillId) {
+		this.accountBillId = accountBillId;
+	}
 }

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.AccountBillDao">
+    <resultMap id="AccountBillResultMap" type="com.pieces.dao.model.AccountBill">
+            <id column="id"  property="id" />
+            <result column="code"  property="code" />
+            <result column="order_id"  property="orderId" />
+            <result column="amounts_payable"  property="amountsPayable" />
+            <result column="already_payable"  property="alreadyPayable" />
+            <result column="un_payable"  property="unPayable" />
+            <result column="status"  property="status" />
+            <result column="repay_time"  property="repayTime" />
+            <result column="create_date"  property="createDate" />
+        
+    </resultMap>
+
+    <resultMap id="AccountBillResultMapVo" type="com.pieces.dao.vo.AccountBillVo">
+            <id column="id"  property="id" />
+            <result column="code"  property="code" />
+            <result column="order_id"  property="orderId" />
+            <result column="amounts_payable"  property="amountsPayable" />
+            <result column="already_payable"  property="alreadyPayable" />
+            <result column="un_payable"  property="unPayable" />
+            <result column="status"  property="status" />
+            <result column="repay_time"  property="repayTime" />
+            <result column="create_date"  property="createDate" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,code,order_id,amounts_payable,already_payable,un_payable,status,repay_time,create_date
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="AccountBillResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from account_bill
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="AccountBillResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from account_bill
+    </select>
+
+    <select id="findByParams" resultMap="AccountBillResultMapVo" parameterType="com.pieces.dao.vo.AccountBillVo">
+        select
+        <include refid="Base_Column_List" />
+        from account_bill
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from account_bill
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.AccountBill">
+        insert into
+        account_bill (code,order_id,amounts_payable,already_payable,un_payable,status,repay_time,create_date)
+        values
+        (#{code},#{orderId},#{amountsPayable},#{alreadyPayable},#{unPayable},#{status},#{repayTime},#{createDate})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.AccountBill">
+        update account_bill
+        <set>
+                                                        
+            <if test="code != null">
+                code = #{code},
+            </if>
+                                            
+            <if test="orderId != null">
+                order_id = #{orderId},
+            </if>
+                                            
+            <if test="amountsPayable != null">
+                amounts_payable = #{amountsPayable},
+            </if>
+                                            
+            <if test="alreadyPayable != null">
+                already_payable = #{alreadyPayable},
+            </if>
+                                            
+            <if test="unPayable != null">
+                un_payable = #{unPayable},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                                            
+            <if test="repayTime != null">
+                repay_time = #{repayTime},
+            </if>
+                                            
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
