@@ -7,4 +7,8 @@ import com.pieces.dao.vo.AccountBillVo;
 public interface AccountBillService extends ICommonService<AccountBill>{
 
     public PageInfo<AccountBillVo> findByParams(AccountBillVo accountBillVo, Integer pageNum, Integer pageSize);
+
+
+    public AccountBill createBill(AccountBill accountBill);
+
 }

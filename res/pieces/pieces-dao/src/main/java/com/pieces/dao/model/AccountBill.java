@@ -12,21 +12,28 @@ public class AccountBill  implements Serializable {
 	
 	//账单编号
 	private String code;
-	
+
+
+	private Integer userId;
+
 	//订单号
 	private Integer orderId;
 	
 	//应付
-	private Float amountsPayable;
+	private Double amountsPayable;
 	
 	//已付
-	private Float alreadyPayable;
-	
+	private Double alreadyPayable;
+
+	//账单时间
+	private Integer billTime;
+
+
 	//未付
-	private Float unPayable;
+	private Double unPayable;
 	
 	//状态(-1:拒绝,0:s申请中,1:未完结,2:已完结)
-	private String status;
+	private Integer status;
 	
 	//还款时间
 	private Date repayTime;
@@ -58,39 +65,39 @@ public class AccountBill  implements Serializable {
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
-	
-	public Float getAmountsPayable() {
+
+	public Double getAmountsPayable() {
 		return amountsPayable;
 	}
 
-	public void setAmountsPayable(Float amountsPayable) {
+	public void setAmountsPayable(Double amountsPayable) {
 		this.amountsPayable = amountsPayable;
 	}
-	
-	public Float getAlreadyPayable() {
+
+	public Double getAlreadyPayable() {
 		return alreadyPayable;
 	}
 
-	public void setAlreadyPayable(Float alreadyPayable) {
+	public void setAlreadyPayable(Double alreadyPayable) {
 		this.alreadyPayable = alreadyPayable;
 	}
-	
-	public Float getUnPayable() {
+
+	public Double getUnPayable() {
 		return unPayable;
 	}
 
-	public void setUnPayable(Float unPayable) {
+	public void setUnPayable(Double unPayable) {
 		this.unPayable = unPayable;
 	}
-	
-	public String getStatus() {
+
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
+
 	public Date getRepayTime() {
 		return repayTime;
 	}
@@ -106,5 +113,20 @@ public class AccountBill  implements Serializable {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
-	
+
+	public Integer getBillTime() {
+		return billTime;
+	}
+
+	public void setBillTime(Integer billTime) {
+		this.billTime = billTime;
+	}
+
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 }

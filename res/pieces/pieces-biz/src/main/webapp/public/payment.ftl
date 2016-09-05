@@ -94,7 +94,8 @@
                         </div>
                     </form>
 
-                    <form action="" id="myform2">
+                    <form action="/center/pay/bill" id="myform2">
+                        <input type="hidden" name="orderId" value="${orderForm.id!}">
                         <div class="hd">申请账期</div>
                         <div class="group">
                             <div class="txt">账期时间：</div>
@@ -173,7 +174,7 @@
                             },
                             success: function(result) {
                                 if(result.status=="y"){
-                                    location.href="/center/pay/success"
+                                    location.href="/center/pay/success?state=payment"
                                 }else{
                                     $.notify({
                                         type: 'error',
@@ -192,7 +193,32 @@
                     })
 
                     $("#stageSubmit").click(function(){
-                        alert("分期账单还未开放!");
+                        $("#myform2").ajaxSubmit({
+                            beforeSend: function() {
+                                if(!$("#myform2").isValid()){
+                                    return false;
+                                }
+                            },
+                            success:function(result) {
+                                if(result.status=="y"){
+                                    location.href="/center/pay/success?state=bill"
+                                }else{
+                                    $.notify({
+                                        type: 'error',
+                                        title: '错误信息',   // 不允许的文件类型
+                                        text: result.info,     //'支持 jpg、jepg、png、gif等格式图片文件',
+                                        delay: 3e3,
+                                        call:function(){
+                                            setTimeout(function () {
+                                                location.href = '/center/order/list';
+                                            }, 3e3);
+                                        }
+                                    });
+                                }
+
+                            }
+
+                        })
                     })
 
     			},

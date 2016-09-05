@@ -89,7 +89,15 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     public PageInfo<CommodityVo> query(CommodityVo commodity, int pageNum, int pageSize) {
         return commodityDao.findByParam(commodity, pageNum, pageSize);
     }
-    
+
+    @Override
+    @Transactional
+    public int deleteById(int id) {
+        int record =  super.deleteById(id);
+        commoditySearchService.deleteByCommodityId(id);
+        return record;
+    }
+
     @Override
     public List<Commodity> queryNoPage(CommodityVo commodity) {
         return commodityDao.findByParamNoPage(commodity);

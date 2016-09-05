@@ -18,22 +18,7 @@ public class DateUtils {
 
 	}
 
-	public static void main(String[] args) throws ParseException {
-		// System.out.println(DateTools.dateToDateWithFormat(new Date(),
-		// "yyyy-MM-01"));
-		//		
-		// System.out.println(DateTools.dateWithFormat(new Date(),
-		// "yyyy-MM-1"));
 
-		// System.out.println(DateTools.dateCompare(DateTools.stringToDateWithFormat("2008-09-12",
-		// "yyyy-MM-dd")));
-
-		// System.out.println(DateTools.getDays(new Date()));
-		// System.out.println(DateTools.getRemainDays(new Date()));
-		
-		System.out.println(new Date());
-		
-	}
 
 	/**
 	 *  获得上m月的第一天
@@ -345,5 +330,10 @@ public class DateUtils {
 			return true;
 		}
 		return false;
+	}
+
+	public static void main(String[] args) {
+		Date date =	dateAddMonth(new Date(),3);
+		System.out.println(date);
 	}
 }

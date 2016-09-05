@@ -10,7 +10,7 @@ import com.pieces.service.constant.bean.Result;
  * Author: koabs
  * 8/15/16.
  */
-public interface OrderFormService extends ICommonService<com.pieces.dao.model.OrderForm>{
+public interface OrderFormService extends ICommonService<OrderForm>{
 
     /**
      * 根据参数查询订单列表

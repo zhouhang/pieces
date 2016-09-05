@@ -5,6 +5,8 @@
             <id column="id"  property="id" />
             <result column="code"  property="code" />
             <result column="order_id"  property="orderId" />
+            <result column="user_id"  property="userId" />
+            <result column="bill_time"  property="billTime" />
             <result column="amounts_payable"  property="amountsPayable" />
             <result column="already_payable"  property="alreadyPayable" />
             <result column="un_payable"  property="unPayable" />
@@ -18,6 +20,8 @@
             <id column="id"  property="id" />
             <result column="code"  property="code" />
             <result column="order_id"  property="orderId" />
+            <result column="user_id"  property="userId" />
+            <result column="bill_time"  property="billTime" />
             <result column="amounts_payable"  property="amountsPayable" />
             <result column="already_payable"  property="alreadyPayable" />
             <result column="un_payable"  property="unPayable" />
@@ -28,7 +32,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,code,order_id,amounts_payable,already_payable,un_payable,status,repay_time,create_date
+        id,code,order_id,user_id,bill_time,amounts_payable,already_payable,un_payable,status,repay_time,create_date
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="AccountBillResultMap">
@@ -62,23 +66,28 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.AccountBill">
         insert into
-        account_bill (code,order_id,amounts_payable,already_payable,un_payable,status,repay_time,create_date)
+        account_bill (code,order_id,user_id,bill_time,amounts_payable,already_payable,un_payable,status,repay_time,create_date)
         values
-        (#{code},#{orderId},#{amountsPayable},#{alreadyPayable},#{unPayable},#{status},#{repayTime},#{createDate})
+        (#{code},#{orderId},#{userId},#{billTime},#{amountsPayable},#{alreadyPayable},#{unPayable},#{status},#{repayTime},#{createDate})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.AccountBill">
         update account_bill
         <set>
-                                                        
             <if test="code != null">
                 code = #{code},
             </if>
-                                            
             <if test="orderId != null">
                 order_id = #{orderId},
             </if>
-                                            
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+
+            <if test="billTime != null">
+                bill_time = #{billTime},
+            </if>
+
             <if test="amountsPayable != null">
                 amounts_payable = #{amountsPayable},
             </if>

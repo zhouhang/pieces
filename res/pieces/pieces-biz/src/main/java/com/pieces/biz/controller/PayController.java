@@ -37,6 +37,8 @@ public class PayController extends BaseController{
     private PayRecordService payRecordService;
     @Autowired
     private OrderCommodityService orderCommodityService;
+    @Autowired
+    private AccountBillService accountBillService;
 
     @RequestMapping(value = "/go/{orderId}")
     public String go(ModelMap modelMap,
@@ -53,7 +55,9 @@ public class PayController extends BaseController{
     }
 
     @RequestMapping(value = "/success")
-    public String success(){
+    public String success(ModelMap modelMap,
+                          String state){
+        modelMap.put("state",state);
         return "payment_result";
     }
 
@@ -81,6 +85,21 @@ public class PayController extends BaseController{
         httpSession.setAttribute(SessionEnum.PAY_TOKEN.getKey(),null);
         return new Result(true).info("支付信息提交成功!");
     }
+
+    @RequestMapping(value = "/bill")
+    @ResponseBody
+    public Result bill(Integer billtime,
+                       Integer orderId){
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        AccountBill accountBill = new AccountBill();
+        accountBill.setUserId(user.getId());
+
+        accountBill.setOrderId(orderId);
+        accountBill.setBillTime(billtime);
+        accountBillService.createBill(accountBill);
+        return new Result(true).info("账单提交成功!");
+    }
+
 
     /**
      * 支付记录

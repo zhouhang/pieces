@@ -37,4 +37,7 @@ public class NewsController extends BaseController {
         model.put("article",article);
         return "article";
     }
+
+
+
 }

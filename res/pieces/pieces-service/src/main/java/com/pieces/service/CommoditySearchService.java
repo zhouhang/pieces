@@ -49,4 +49,6 @@ public interface CommoditySearchService {
     public void createAllCommodityDoc();
 
 
+    public void  deleteByCommodityId(Integer commodityId);
+
 }

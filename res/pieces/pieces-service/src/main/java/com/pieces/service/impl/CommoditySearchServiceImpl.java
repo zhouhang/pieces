@@ -64,6 +64,12 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     }
 
 
+    @Override
+    public void deleteByCommodityId(Integer commodityId) {
+        commoditySearchRepository.delete(commodityId);
+    }
+
+
     public Page<CommodityDoc> findByNameOrCategoryName(Integer pageNum, Integer pageSize, String field){
         SearchQuery searchQuery =null;
         if(StringUtils.isBlank(field)){
