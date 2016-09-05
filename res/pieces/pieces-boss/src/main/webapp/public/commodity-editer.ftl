@@ -261,7 +261,7 @@ ${commodity.details}
                 $("#form").validator({
                     fields: {
                         categoryId: "required",
-                        name: "required;length[2~20]",
+                        name: "required;length[2~50]",
                         spec: "required(not, -1)",
                         level: "required(not, -1)",
                         originOf: "required(not, -1)",
