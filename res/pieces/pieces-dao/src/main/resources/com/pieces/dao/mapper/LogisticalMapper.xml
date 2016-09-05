@@ -16,13 +16,14 @@
     <resultMap id="LogisticalResultMapVo" type="com.pieces.dao.vo.LogisticalVo">
             <id column="id"  property="id" />
             <result column="order_id"  property="orderId" />
-            <result column="code"  property="code" />
+            <result column="lCode"  property="lCode" />
             <result column="ship_date"  property="shipDate" />
             <result column="total"  property="total" />
             <result column="ship_number"  property="shipNumber" />
             <result column="remark"  property="remark" />
             <result column="create_date"  property="createDate" />
-        
+            <result column="oCode"  property="oCode" />
+        	<result column="addr"  property="addr" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -100,4 +101,18 @@
         </set>
         where id = #{id}
     </update>
+    
+    <select id="findByUser" resultMap="LogisticalResultMapVo" parameterType="com.pieces.dao.vo.LogisticalVo">
+        select
+        	l.id,l.order_id,l.code as lCode,l.ship_date,l.total,l.ship_number,l.remark,l.create_date,o.code as oCode,o.addr_history_id as addr
+        from logistical l,order_form o
+        where
+        	l.order_id = o.id
+            <if test="userId != null">
+                and o.user_id = #{userId}
+            </if>
+        	<if test="id != null">
+                and l.id = #{id}
+            </if>
+    </select>
 </mapper>

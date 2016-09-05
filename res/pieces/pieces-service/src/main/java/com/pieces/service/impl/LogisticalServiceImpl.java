@@ -27,6 +27,13 @@ public class LogisticalServiceImpl  extends AbsCommonService<Logistical> impleme
         return page;
 	}
 
+	@Override
+	public PageInfo<LogisticalVo> findByUser(LogisticalVo logisticalVo,Integer pageNum,Integer pageSize) {
+    PageHelper.startPage(pageNum, pageSize);
+    	List<LogisticalVo>  list = logisticalDao.findByUser(logisticalVo);
+        PageInfo page = new PageInfo(list);
+        return page;
+	}
 
 	@Override
 	public ICommonDao<Logistical> getDao() {

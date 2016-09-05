@@ -22,6 +22,16 @@
     </dl>
     <dl>
         <dt>
+            <em class="fa fa-logistics"></em>
+            <span>物流</span>
+            <i class="fa fa-chevron-right"></i>
+        </dt>
+        <dd>
+            <a href="/center/logistics/list">我的物流</a>
+        </dd>
+    </dl>
+    <dl>
+        <dt>
             <em class="fa fa-clock"></em>
             <span>交货周期</span>
             <i class="fa fa-chevron-right"></i>

@@ -9,5 +9,7 @@ import java.util.List;
 public interface LogisticalDao extends ICommonDao<Logistical>{
 
     public List<LogisticalVo> findByParams(LogisticalVo logisticalVo);
+    
+    public List<LogisticalVo> findByUser(LogisticalVo logisticalVo);
 
 }

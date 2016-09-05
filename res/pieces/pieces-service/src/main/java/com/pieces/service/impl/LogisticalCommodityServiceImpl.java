@@ -6,6 +6,7 @@ import com.pieces.dao.ICommonDao;
 import com.pieces.dao.LogisticalCommodityDao;
 import com.pieces.dao.model.LogisticalCommodity;
 import com.pieces.dao.vo.LogisticalCommodityVo;
+import com.pieces.dao.vo.LogisticalVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.LogisticalCommodityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,12 @@ public class LogisticalCommodityServiceImpl  extends AbsCommonService<Logistical
 	@Override
 	public ICommonDao<LogisticalCommodity> getDao() {
 		return logisticalCommodityDao;
+	}
+
+
+	@Override
+	public List<LogisticalCommodityVo> findCommoditys(LogisticalCommodityVo logisticalCommodityVo) {
+		return logisticalCommodityDao.findCommoditys(logisticalCommodityVo);
 	}
 
 }
