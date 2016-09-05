@@ -238,7 +238,17 @@
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>**/preConfig.properties</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
+				<includes>
+					<include>**/preConfig.properties</include>
+				</includes>
 			</resource>
 		</resources>
 	</build>

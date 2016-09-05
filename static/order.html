@@ -207,28 +207,68 @@
                 </div>
                 <div class="cnt">
                     <label><input type="radio" name="invoice" value="0" class="cbx" data-text="普通发票">普通发票</label>
-                    <label><input type="radio" name="invoice" value="1" class="cbx" data-text="增值税专用发票">增值税专用发票</label>
+                    <label><input type="radio" name="invoice" value="1" class="cbx" id="tax" data-text="增值税专用发票">增值税专用发票</label>
                     <label><input type="radio" name="invoice" value="2" class="cbx" data-text="暂不需要">暂不需要</label>
                 </div>
             </div>
 
             <div class="group">
                 <div class="txt">
-                    <span>单位名称：</span>
+                    <i>*</i>
+                    <span>发票抬头：</span>
                 </div>
                 <div class="cnt">
-                    <input type="text" name="companyName" class="ipt" autocomplete="off" placeholder="提示：若为个人客户，请在该项填写“个人”">
-                    <span class="error"></span>
+                    <input type="text" name="invoiceTitle" class="ipt" autocomplete="off" placeholder="请填写发票抬头">
                 </div>
             </div>
 
             <div class="group">
                 <div class="txt">
-                    <span>发票内容：</span>
+                    <i class="hide">*</i>
+                    <span>纳税人识别号：</span>
                 </div>
                 <div class="cnt">
-                    <input type="text" name="invoiceDetail" class="ipt" autocomplete="off" placeholder="">
-                    <span class="error"></span>
+                    <input type="text" name="invoiceNumber" class="ipt" autocomplete="off" placeholder="15，17，18或20位纳税人识别号">
+                </div>
+            </div>
+
+            <div class="group">
+                <div class="txt">
+                    <i class="hide">*</i>
+                    <span>注册地址：</span>
+                </div>
+                <div class="cnt">
+                    <input type="text" name="invoiceAddress" class="ipt" autocomplete="off" placeholder="请填写注册地址">
+                </div>
+            </div>
+
+            <div class="group">
+                <div class="txt">
+                    <i class="hide">*</i>
+                    <span>注册电话：</span>
+                </div>
+                <div class="cnt">
+                    <input type="text" name="invoiceTel" class="ipt" autocomplete="off" placeholder="请填写注册电话">
+                </div>
+            </div>
+
+            <div class="group">
+                <div class="txt">
+                    <i class="hide">*</i>
+                    <span>开户银行：</span>
+                </div>
+                <div class="cnt">
+                    <input type="text" name="invoiceBank" class="ipt" autocomplete="off" placeholder="请填写开户银行">
+                </div>
+            </div>
+
+            <div class="group">
+                <div class="txt">
+                    <i class="hide">*</i>
+                    <span>银行帐号：</span>
+                </div>
+                <div class="cnt">
+                    <input type="text" name="invoiceBankNumber" class="ipt" autocomplete="off" placeholder="请填写银行帐号">
                 </div>
             </div>
 
@@ -243,26 +283,23 @@
     <!-- start 新增收货地址 -->
     <div class="fa-form fa-form-layer" id="jconsigneeBox">
         <form action="" id="consigneeForm">
-            <div class="group fl">
+            <div class="group">
                 <div class="txt">
                     <span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>
                 </div>
                 <div class="cnt">
-                    <input type="text" name="consigneeName" id="consigneeName" class="ipt ipt-short" autocomplete="off" placeholder="" data-msg-nickName="只能输入中文、英文，长度2-50" maxlength="50">
+                    <input type="text" name="consigneeName" id="consigneeName" class="ipt" autocomplete="off" placeholder="" data-msg-nickName="只能输入中文、英文，长度2-50" maxlength="50">
                 </div>
             </div>
 
-            <div class="group fr">
+            <div class="group">
                 <div class="txt">
                     <span>手机号码：</span>
                 </div>
                 <div class="cnt">
-                    <input type="text" name="consigneeMobile" id="consigneeMobile" class="ipt ipt-short" autocomplete="off" placeholder="">
-                    <span class="error"></span>
+                    <input type="text" name="consigneeMobile" id="consigneeMobile" class="ipt" autocomplete="off" placeholder="">
                 </div>
             </div>
-
-            <div class="cf"></div>
 
             <div class="group">
                 <div class="txt">
@@ -279,7 +316,6 @@
                         <option value="">-区/县-</option>
                     </select>
                     <input type="hidden" id="areaFull" name="areaFull" value="">
-                    <span class="error"></span>
                 </div>
             </div>
 
@@ -289,7 +325,6 @@
                 </div>
                 <div class="cnt">
                     <input type="text" name="consigneeAddress" id="consigneeAddress" class="ipt ipt-wide" autocomplete="off">
-                    <span class="error"></span>
                 </div>
             </div>
 
@@ -371,9 +406,10 @@
                     // 新增
                     $invoice.on('click', '.jinvoiceAdd', function() {
                         $invoiceBox.find('.cbx:eq(0)').prop('checked', true);
+                        $invoiceBox.find('.hide').hide();
 
                         layer.open({
-                            area: ['600px'],
+                            area: ['540px'],
                             closeBtn: 1,
                             type: 1,
                             moveType: 1,
@@ -387,12 +423,19 @@
                         var info = $invoice.find('em');
                         $invoiceBox.find('.cbx').each(function() {
                             this.checked = $(this).data('text') === info.eq(0).html();
+                            if (this.checked && this.id === 'tax') {
+                                $invoiceBox.find('.hide').show();
+                            }
                         });
-                        $invoiceBox.find('input[name="companyName"]').val(info.eq(1).html());
-                        $invoiceBox.find('input[name="invoiceDetail"]').val(info.eq(2).html());
+                        $invoiceBox.find('input[name="invoiceTitle"]').val(info.eq(1).html());
+                        $invoiceBox.find('input[name="invoiceNumber"]').val(info.eq(2).html());
+                        $invoiceBox.find('input[name="invoiceAddress"]').val(info.eq(3).html());
+                        $invoiceBox.find('input[name="invoiceTel"]').val(info.eq(4).html());
+                        $invoiceBox.find('input[name="invoiceBank"]').val(info.eq(5).html());
+                        $invoiceBox.find('input[name="invoiceBankNumber"]').val(info.eq(6).html());
 
                         layer.open({
-                            area: ['600px'],
+                            area: ['540px'],
                             closeBtn: 1,
                             type: 1,
                             moveType: 1,
@@ -407,18 +450,38 @@
                     })
 
                     $('#invoiceForm').validator({
+                        focusCleanup: true,
+                        stopOnError: true,
+                        rules: {
+                            isTax: function() {
+                                return $('#tax').prop('checked');
+                            },
+                            phone: function(val) {
+                                return this.test(val, "mobile") === true ||
+                                       this.test(val, "tel") === true ||
+                                       '请填写有效的电话号码或手机号码';
+                            }
+                        },
                         fields : {
-                            invoice: '发票类型: checked',
-                            companyName : '单位名称: required',
-                            invoiceDetail : '发票内容: required'
+                            invoice: '发票类型: checked',                            
+                            invoiceTitle : '发票抬头: required',
+                            invoiceNumber: '纳税人识别号: required(isTax)',
+                            invoiceAddress: '注册地址: required(isTax)',
+                            invoiceTel: '注册电话: required(isTax); phone',
+                            invoiceBank: '开户银行: required(isTax)',
+                            invoiceBankNumber: '银行帐号: required(isTax); bankNumber'
                         },
                         valid: function(form) {
                             var myfromValid = this;
                             if ( $(form).isValid() ) {
                                 var html = ['<span class="tips">您当前的发票信息如下：</span>'];
                                 html.push('<em>', $invoiceBox.find('input[name="invoice"]:checked').data('text'), '</em>');
-                                html.push('<em>', $invoiceBox.find('input[name="companyName"]').val(), '</em>');
-                                html.push('<em>', $invoiceBox.find('input[name="invoiceDetail"]').val(), '</em>');
+                                html.push('<em>', $invoiceBox.find('input[name="invoiceTitle"]').val(), '</em>');
+                                html.push('<em>', $invoiceBox.find('input[name="invoiceNumber"]').val(), '</em>');
+                                html.push('<em>', $invoiceBox.find('input[name="invoiceAddress"]').val(), '</em>');
+                                html.push('<em>', $invoiceBox.find('input[name="invoiceTel"]').val(), '</em>');
+                                html.push('<em>', $invoiceBox.find('input[name="invoiceBank"]').val(), '</em>');
+                                html.push('<em>', $invoiceBox.find('input[name="invoiceBankNumber"]').val(), '</em>');
                                 html.push('<a href="javascript:;" class="c-blue jinvoiceEdit">修改</a>');
                                 $invoice.html(html.join(''));
 
@@ -438,6 +501,12 @@
                         } else {
                             $invoiceBox.find('.submit').attr('type', 'submit').removeClass('jinvoiceDel');
                         }
+
+                        if (this.id === 'tax') {
+                            $invoiceBox.find('.hide').show();
+                        } else {
+                            $invoiceBox.find('.hide').hide();
+                        }
                     });
 
                     $invoiceBox.on('click', '.jinvoiceDel', function() {
@@ -445,15 +514,14 @@
                         $invoice.html('<button class="btn btn-lgray jinvoiceAdd">新增发票</button>');
                         $invoiceBox.find('.submit').attr('type', 'submit').removeClass('jinvoiceDel');
                         return false;
-                    })
-
+                    });
                 },
                 // 新增收货地址
                 addConsignee: function() {
                     var $consigneeBox = $('#jconsigneeBox');
                     $('.jaddConsignee').on('click', function() {
                         layer.open({
-                            area: ['600px'],
+                            area: ['540px'],
                             closeBtn: 1,
                             type: 1,
                             moveType: 1,
@@ -486,7 +554,7 @@
                     var $consigneeList = $('#jconsigneeList');
                     $('#jchooseConsignee').on('click', function() {
                         layer.open({
-                            area: ['600px'],
+                            area: ['540px'],
                             closeBtn: 1,
                             type: 1,
                             moveType: 1,

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>支付记录-饮片B2B</title>
+    <title>账单详情-饮片B2B</title>
     <meta name="renderer" content="webkit" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -75,14 +75,14 @@
                         <i class="fa fa-chevron-right"></i>
                     </dt>
                 </dl>
-                <dl>
+                <dl class="expand">
                     <dt>
                         <em class="fa fa-bill"></em>
                         <span>对账单</span>
                         <i class="fa fa-chevron-right"></i>
                     </dt>
                     <dd>
-                        <a href="user_bill.html">支付记录</a>
+                        <a href="user_bill.html" class="curr">支付记录</a>
                         <a href="user_payment.html">账期账单</a>
                     </dd>
                 </dl>
@@ -112,114 +112,67 @@
 
             <div class="main">
                 <div class="title">
-                    <h3>支付记录</h3>
+                    <h3>账单详情</h3>
                     <div class="extra"></div>
                 </div>
 
-                <div class="mybill">
+                <div class="order-list order-detail">
+                    <table class="tc">
+                        <tbody>
+                            <tr>
+                                <th colspan="3" class="tl">
+                                    <span>账单编号：B20160711154600001</span>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="tl nr">
+                                    <span>应付：<em>&yen;2100.00</em></span>
+                                    <span>已付：<em>&yen;2100.00</em></span>
+                                    <span>未付：<em>&yen;0.00</em></span>
+                                </td>
+                                <td class="tl nl nr">
+                                    <span>&#12288;&#12288;立账时间：<em>2016-08-31</em></span>
+                                    <span>约定还款时间：<em>2016-08-31</em></span>
+                                </td>
+                                <td class="nl">
+                                    <a class="btn btn-red" href="payment2.html">付款</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="fa-table order-detail-list">
                     <div class="fa-chart">
                         <table>
                             <thead>
-                                <tr>                                                      
-                                    <th width="180">支付流水号</th>
-                                    <th width="170">支付订单</th>
-                                    <th width="110">应付</th>
-                                    <th width="110">实付</th>
-                                    <th width="110">支付时间</th>
-                                    <th width="100">状态</th>
-                                    <th>操作</th>
+                                <tr>
+                                    <th width="130">支付流水号</th>
+                                    <th width="70">支付渠道</th>
+                                    <th width="70">支付时间</th>
+                                    <th width="100">支付时间</th>
+                                    <th width="90">状态</th>
                                 </tr>
                             </thead>
+                            <tfoot></tfoot>
                             <tbody>
                                 <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
+                                    <td>20160819180100009</td>
+                                    <td>在线支付</td>
+                                    <td>2016-08-31</td>
+                                    <td>&yen;6</td>
+                                    <td rowspan="2"><span class="c-red">未完结</span></td>
                                 </tr>
                                 <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
-                                </tr>
-                                <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
-                                </tr>
-                                <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
-                                </tr>
-                                <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
-                                </tr>
-                                <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
-                                </tr>
-                                <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
-                                </tr>
-                                <tr>
-                                    <td>20160711154600001</td>
-                                    <td>20160711154600001 <span>艾叶、金银花、炒白芍...</span></td>
-                                    <td>&yen;21000.00</td>
-                                    <td>&yen;21000.00</td>
-                                    <td>¥21000.00</td>
-                                    <td><em class="c-red">支付成功</em></td>
-                                    <td><a href="user_bill_detail.html" class="c-blue">查看详情</a></td>
+                                    <td>20160819180100009</td>
+                                    <td>线下打款</td>
+                                    <td>2016-08-31</td>
+                                    <td>&yen;6</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-
-                    <div class="pagin">
-                        <span class="disabled">上一页</span>
-                        <span class="curr">1</span>
-                        <a href="?page=2">2</a>
-                        <a href="?page=3">3</a>
-                        <a href="?page=4">4</a>
-                        <a href="?page=5">5</a>
-                        <a href="?page=2">下一页</a>
-                        <a href="?page=2">尾页</a>
-                        <em>共 284 个商品 / 共29页</em>
-                    </div>
-
                 </div>
+
             </div>
         </div>
     </div><!-- member-box end -->
@@ -320,6 +273,7 @@
     <script src="js/layer/layer.js"></script>
     <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
     <script src="js/area.js"></script>
+    <script src="js/lightbox.js"></script>
     <script src="js/common.js"></script>
     <script>
         var _global = {

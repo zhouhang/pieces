@@ -293,3 +293,25 @@
     <script src="js/jquery.min.js"></script>
 </body>
 </html>
+
+<script>
+// 以下js为本地导航模板代码，上线时请删掉
+$(function() {
+    $.ajax({
+        url: 'nav.html',
+        success: function(menu) {
+            $('.nav').html(menu);
+
+            var $side = $('.nav'),
+                URL = document.URL.split('#')[0].split('?')[0].toLowerCase();
+
+            $side.find('a').each(function() {
+                if (URL === this.href.toLowerCase()) {
+                    $(this).addClass("on").parent().prev().addClass('curr');
+                    return false; // break
+                }
+            }) 
+        }
+    })
+})
+</script>

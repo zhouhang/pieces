@@ -355,3 +355,14 @@
     </script>
 </body>
 </html>
+
+
+<script>
+$.ajax({
+    url: 'sidemenu.html',
+    success: function(menu) {
+        $('.side').off().html(menu);
+        currNav();
+    }
+})
+</script>

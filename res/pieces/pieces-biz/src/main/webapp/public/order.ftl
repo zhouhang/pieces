@@ -156,7 +156,7 @@
                 </div>
                 <div class="cnt">
                     <label><input type="radio" name="invoice" value="0" class="cbx" data-text="普通发票">普通发票</label>
-                    <label><input type="radio" name="invoice" value="1" class="cbx" data-text="增值税专用发票">增值税专用发票</label>
+                    <label><input type="radio" name="invoice" value="1" class="cbx" data-text="增值税专用发票" id="tax">增值税专用发票</label>
                     <label><input type="radio" name="invoice" value="2" class="cbx" data-text="暂不需要">暂不需要</label>
                 </div>
             </div>
@@ -193,26 +193,24 @@
     <div class="fa-form fa-form-layer" id="jconsigneeBox">
         <form action="/center/address/add" id="consigneeForm">
         <input type="hidden" name="commodityIds" value="${commodityIds}">
-            <div class="group fl">
+            <div class="group">
                 <div class="txt">
                     <span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>
                 </div>
                 <div class="cnt">
-                    <input type="text" name="consignee" id="consigneeName" class="ipt ipt-short" autocomplete="off" placeholder="" data-msg-nickName="只能输入中文、英文，长度2-50" maxlength="50">
+                    <input type="text" name="consignee" id="consigneeName" class="ipt" autocomplete="off" placeholder="" data-msg-nickName="只能输入中文、英文，长度2-50" maxlength="50">
                 </div>
             </div>
 
-            <div class="group fr">
+            <div class="group">
                 <div class="txt">
                     <span>手机号码：</span>
                 </div>
                 <div class="cnt">
-                    <input type="text" name="tel" id="consigneeMobile" class="ipt ipt-short" autocomplete="off" placeholder="">
+                    <input type="text" name="tel" id="consigneeMobile" class="ipt" autocomplete="off" placeholder="">
                     <span class="error"></span>
                 </div>
             </div>
-
-            <div class="cf"></div>
 
             <div class="group">
                 <div class="txt">
