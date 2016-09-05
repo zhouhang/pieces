@@ -194,10 +194,19 @@ function currNav() {
         URL = document.URL.split('#')[0].split('?')[0].toLowerCase();
 
     $side.find('a').each(function() {
+
+		var $href = this.href.toLowerCase();
         if (URL === this.href.toLowerCase()) {
             $(this).addClass("curr").closest('dl').addClass('expand');
             return false; // break
-        }
+        }else{
+        	var urlBefore = URL.split('/')[3] + URL.split('/')[4];
+			var hrefBefore = $href.split('/')[3] + $href.split('/')[4];
+			if(urlBefore === hrefBefore){
+				$(this).closest('dl').addClass('expand');
+				return false; // break
+			}
+		}
     }) 
 
 	$side.find('.expand dd').css({'display':'block'});

@@ -7,9 +7,13 @@ function currNav() {
 	$side.find('a').each(function() {
 		var str = this.href.toLowerCase();
 		str = str.replace(base,"");
-		if (str !== "" && URL.toLowerCase().indexOf(str) !== -1) {
-			$(this).addClass("on").parent().prev("a").addClass('curr');
-			return false; // break
+		if (str !== "") {
+			var urlBefore = URL.split('/')[3];
+			var hrefBefore = str.split('/')[0];
+			if(urlBefore === hrefBefore){
+				$(this).addClass("on").parent().prev("a").addClass('curr');
+				return false; // break
+			}
 		}
 	})
 
