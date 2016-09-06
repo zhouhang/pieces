@@ -194,17 +194,26 @@
                 /**
                  * 初始化自动提示框.
                  */
-                $('#categoryId').autocomplete({
+               var $that = $('#categoryId').autocomplete({
                     serviceUrl: '/breed/search',
                     paramName:'name',
                     preventBadQueries:false,
+                    deferRequestBy:0,
+                    triggerSelectOnValidInput:false,
+//                    autoSelectFirst:true,
                     transformResult: function(response) {
                         response = JSON.parse(response);
-                        return {
-                            suggestions: $.map(response.data, function(dataItem) {
-                                return { value: dataItem.name, data: dataItem.id };
-                            })
-                        };
+                        if (response.status == "y") {
+                            return {
+                                suggestions: $.map(response.data, function(dataItem) {
+                                    return { value: dataItem.name, data: dataItem.id };
+                                })
+                            };
+                        } else {
+                            return {
+                                suggestions:[]
+                            }
+                        }
                     },
                     onSelect: function (suggestion) {
                         $("#categoryIdV").val(suggestion.data);
@@ -212,6 +221,8 @@
                         $("#spec").code({beedId:suggestion.data,typeId:'SPEC'});//"切制规格"
                         $("#originOf").code({beedId:suggestion.data,typeId:'ORIGIN'});//"原药产地"
                         $("#level").code({beedId:suggestion.data,typeId:'LEVEL'});//"等级"
+                        categoryIdV = suggestion.data;
+                        categoryId =  suggestion.value;
                     }
                 });
 
@@ -219,15 +230,24 @@
                  * 清空品种输入框的值.
                  */
                 $("#categoryId").blur(function(){
+                    var html = "<option value='-1'>请选择</option>";
                     if($("#categoryIdV").val() == "") {
                         $("#categoryId").val("");
+                        cleanCode();
                         return;
                     }
 
-                    if ($("#categoryIdV").val() == categoryIdV && categoryId != $("#categoryIdV").val()) {
+                    if ($("#categoryIdV").val() == categoryIdV && categoryId != $("#categoryId").val()) {
                         $("#categoryId").val("");
                         $("#categoryIdV").val("");
+                        cleanCode();
                         return;
+                    }
+
+                    function cleanCode(){
+                        $("#spec").html(html);
+                        $("#originOf").html(html);
+                        $("#level").html(html);
                     }
 
                 });

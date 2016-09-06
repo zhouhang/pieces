@@ -190,7 +190,8 @@ ${commodity.details}
     $('#categoryId').autocomplete({
         serviceUrl: '/breed/search',
         paramName:'name',
-        deferRequestBy:1,
+        deferRequestBy:100,
+        triggerSelectOnValidInput:false,
         transformResult: function(response) {
             response = JSON.parse(response);
             return {
@@ -202,6 +203,8 @@ ${commodity.details}
         onSelect: function (suggestion) {
             $("#categoryIdV").val(suggestion.data);
             commodityAddPage.fn.initCode(suggestion.data);
+            categoryIdV = suggestion.data;
+            categoryId =  suggestion.value;
         }
     });
 
@@ -209,15 +212,24 @@ ${commodity.details}
      * 清空品种输入框的值.
      */
     $("#categoryId").blur(function(){
+        var html = "<option value='-1'>请选择</option>";
         if($("#categoryIdV").val() == "") {
             $("#categoryId").val("");
+            cleanCode();
             return;
         }
 
         if ($("#categoryIdV").val() == categoryIdV && categoryId != $("#categoryIdV").val()) {
             $("#categoryId").val("");
             $("#categoryIdV").val("");
+            cleanCode();
             return;
+        }
+
+        function cleanCode(){
+            $("#spec").html(html);
+            $("#originOf").html(html);
+            $("#level").html(html);
         }
 
     });
