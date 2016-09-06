@@ -34,10 +34,15 @@ public class AccountBill  implements Serializable {
 	
 	//状态(-1:拒绝,0:s申请中,1:未完结,2:已完结)
 	private Integer status;
-	
+
+
 	//还款时间
 	private Date repayTime;
-	
+
+	private Integer memberId;
+
+	private Date operateTime;
+
 	private Date createDate;
 	
 	public AccountBill(){}
@@ -128,5 +133,21 @@ public class AccountBill  implements Serializable {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	public Integer getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
+	}
+
+	public Date getOperateTime() {
+		return operateTime;
+	}
+
+	public void setOperateTime(Date operateTime) {
+		this.operateTime = operateTime;
 	}
 }

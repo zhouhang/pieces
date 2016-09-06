@@ -5,10 +5,15 @@ import com.pieces.dao.model.Member;
 import com.pieces.dao.model.PayRecord;
 import com.pieces.dao.vo.PayRecordVo;
 
+import java.util.List;
+
 public interface PayRecordService extends ICommonService<PayRecord>{
 
     public PageInfo<PayRecordVo> findByParams(PayRecordVo payRecordVo, Integer pageNum, Integer pageSize);
+    public List<PayRecordVo> findByParams(PayRecordVo payRecordVo);
 
+
+    public PayRecord createForBill(PayRecordVo payRecordVo, String[] imgs,Integer userId);
 
     public PageInfo<PayRecordVo> findByNormalRecord(Integer pageNum, Integer pageSize);
 

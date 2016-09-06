@@ -54,6 +54,7 @@ public class PayController extends BaseController{
         return "payment";
     }
 
+
     @RequestMapping(value = "/success")
     public String success(ModelMap modelMap,
                           String state){
@@ -86,6 +87,7 @@ public class PayController extends BaseController{
         return new Result(true).info("支付信息提交成功!");
     }
 
+
     @RequestMapping(value = "/bill")
     @ResponseBody
     public Result bill(Integer billtime,
@@ -116,11 +118,15 @@ public class PayController extends BaseController{
         pageSize=pageSize==null?10:pageSize;
         PageInfo<PayRecordVo> recordPage = payRecordService.findByNormalRecord(pageNum,pageSize);
         for(PayRecordVo payRecordVo : recordPage.getList()){
-            assignCommodity(payRecordVo);
+            String orderCode =  payRecordVo.getOrderCode();
+            OrderForm orderForm = orderFormService.findByOrderCode(orderCode);
+            Integer orderId = orderForm.getId();
+            payRecordVo.setCommodities(assignCommodity(orderId));
         }
         modelMap.put("recordPage",recordPage);
         return "pay_record";
     }
+
 
 
     @RequestMapping(value = "/details/{id}")
@@ -132,12 +138,10 @@ public class PayController extends BaseController{
     }
 
 
-    private void assignCommodity(PayRecordVo payRecordVo){
-        String orderCode =  payRecordVo.getOrderCode();
-        OrderForm orderForm = orderFormService.findByOrderCode(orderCode);
-        Integer orderId = orderForm.getId();
+
+    private List<OrderCommodity> assignCommodity(Integer orderId){
         List<OrderCommodity>  commodityList = orderCommodityService.getCommodityByOrderId(orderId);
-        payRecordVo.setCommodities(commodityList);
+        return commodityList;
     }
 
 
