@@ -27,7 +27,8 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 
 	@Autowired
 	private PayRecordDao payRecordDao;
-
+	@Autowired
+	private AccountBillService accountBillService;
 	@Autowired
 	private PayAccountService payAccountService;
 	@Autowired
@@ -47,6 +48,12 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
         return page;
 	}
 
+	@Override
+	public List<PayRecordVo> findByParams(PayRecordVo payRecordVo) {
+		List<PayRecordVo>  list = payRecordDao.findByParams(payRecordVo);
+		return list;
+	}
+
 
 	@Override
 	public PageInfo<PayRecordVo> findByNormalRecord(Integer pageNum, Integer pageSize) {
@@ -57,6 +64,45 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		PageInfo page = new PageInfo(list);
 		return page;
 	}
+
+	@Override
+	@Transactional
+	public PayRecord createForBill(PayRecordVo payRecordVo, String[] imgs,Integer userId){
+		Integer billId = payRecordVo.getAccountBillId();
+		Integer orderId =	payRecordVo.getOrderId();
+		AccountBill accountBill =	accountBillService.findById(billId);
+		payRecordVo.setAmountsPayable(accountBill.getUnPayable());
+
+		OrderForm orderForm = orderFormService.findById(orderId);
+		payRecordVo.setOrderCode(orderForm.getCode());
+
+		//添加收款账户信息
+		PayAccount payAccount = payAccountService.findById(payRecordVo.getPayAccountId());
+		payRecordVo.setReceiveAccount(payAccount.getReceiveAccount());
+		payRecordVo.setReceiveBank(payAccount.getReceiveBank());
+		payRecordVo.setReceiveBankCard(payAccount.getReceiveBankCard());
+
+
+		//其他信息
+		payRecordVo.setUserId(userId);
+		payRecordVo.setPaymentTime(new Date());
+		payRecordVo.setStatus(0);
+		payRecordVo.setCreateTime(new Date());
+		payRecordDao.create(payRecordVo);
+		//生成支付流水号
+		payRecordVo.setPayCode(SeqNoUtil.get("", payRecordVo.getId(), 6));
+		payRecordDao.update(payRecordVo);
+
+		//添加支付凭证
+		createPayDocument(payRecordVo.getId(),imgs);
+
+
+		return payRecordVo;
+	}
+
+
+
+
 
 
 	@Override
@@ -84,17 +130,7 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		payRecordVo.setPayCode(SeqNoUtil.get("", payRecordVo.getId(), 6));
 		payRecordDao.update(payRecordVo);
 
-		//添加支付凭证
-		if(imgs!=null){
-			for(String img : imgs){
-				PayDocument payDocument = new PayDocument();
-				payDocument.setPayRecordId(payRecordVo.getId());
-				payDocument.setCreateDate(new Date());
-				payDocument.setPath(FileUtil.saveFileFromTemp(img, PathEnum.COMMODITY.getValue()));
-				payDocumentService.create(payDocument);
-			}
-		}
-
+		createPayDocument(payRecordVo.getId(),imgs);
 		// 支付添加成功后把订单状态改成付款待确认
 		orderFormService.changeOrderStatus(orderId, OrderEnum.VERIFY.getValue());
 		return payRecordVo;
@@ -146,4 +182,17 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		return payRecordDao;
 	}
 
+
+	private void createPayDocument(Integer payRecordId,String[] imgs){
+		//添加支付凭证
+		if(imgs!=null){
+			for(String img : imgs){
+				PayDocument payDocument = new PayDocument();
+				payDocument.setPayRecordId(payRecordId);
+				payDocument.setCreateDate(new Date());
+				payDocument.setPath(FileUtil.saveFileFromTemp(img, PathEnum.COMMODITY.getValue()));
+				payDocumentService.create(payDocument);
+			}
+		}
+	}
 }

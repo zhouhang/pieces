@@ -6,7 +6,7 @@ package com.pieces.dao.enums;
  * 订单状态
  */
 public enum SessionEnum {
-    ORDER_TOKEN("order_token"),PAY_TOKEN("pay_token");
+    ORDER_TOKEN("order_token"),PAY_TOKEN("pay_token"),PAY_BILL_TOKEN("pay_bill_token");
 
     private SessionEnum(String key) {
         this.key = key;

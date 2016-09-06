@@ -6,10 +6,13 @@ import com.pieces.dao.ICommonDao;
 import com.pieces.dao.AccountBillDao;
 import com.pieces.dao.model.AccountBill;
 import com.pieces.dao.model.OrderForm;
+import com.pieces.dao.model.PayRecord;
 import com.pieces.dao.vo.AccountBillVo;
+import com.pieces.dao.vo.PayRecordVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.AccountBillService;
 import com.pieces.service.OrderFormService;
+import com.pieces.service.PayRecordService;
 import com.pieces.tools.utils.DateUtils;
 import com.pieces.tools.utils.SeqNoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +29,8 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 	private AccountBillDao accountBillDao;
 	@Autowired
 	private OrderFormService orderFormService;
-
+	@Autowired
+	private PayRecordService payRecordService;
 
 	@Override
 	public PageInfo<AccountBillVo> findByParams(AccountBillVo accountBillVo,Integer pageNum,Integer pageSize) {
@@ -64,6 +68,17 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 		List<AccountBillVo>	 list = accountBillDao.findVoAll();
 		PageInfo page = new PageInfo(list);
 		return page;
+	}
+
+	@Override
+	public AccountBillVo findVoById(Integer billId) {
+		AccountBillVo accountBill =  accountBillDao.findVoById(billId);
+		PayRecordVo payRecordVo = new PayRecordVo();
+		payRecordVo.setAccountBillId(billId);
+		payRecordVo.setStatus(1);
+		List<PayRecordVo> list = payRecordService.findByParams(payRecordVo);
+		accountBill.setPayRecordVoList(list);
+		return accountBill;
 	}
 
 

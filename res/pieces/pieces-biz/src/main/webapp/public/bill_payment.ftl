@@ -17,19 +17,17 @@
 
             <div class="main">
                 <dl>
-                    <dt>订单号：</dt>
-                    <dd>${orderForm.code!}</dd>
+                    <dt>账单编号：</dt>
+                    <dd>${accountBill.code!}</dd>
 
                     <dt>应付金额：</dt>
                     <dd>
-                        <em>&yen;${orderForm.amountsPayable!}</em>
-                        <#--<span>剩余付款时间：9天23时20分</span>-->
+                        <em>&yen;${accountBill.amountsPayable!}</em>
                     </dd>
 
                     <dt>支付方式：</dt>
                     <dd id="jpayType">
                         <label><input type="radio" name="type" value="0" checked>现款支付</label>
-                        <label><input type="radio" name="type" value="1">账期支付</label>
                     </dd>
                 </dl>
                 <dl>
@@ -42,10 +40,11 @@
                 </dl>
                 
                 <div class="fa-form">
-                    <form action="/center/pay/create" id="myform" method="post">
+                    <form action="/center/bill/create" id="myform" method="post">
 
                     <div class="hd">填写付款信息</div>
-                        <input type="hidden" name="orderId" value="${orderForm.id!}">
+                        <input type="hidden" name="accountBillId" value="${accountBill.id!}">
+                        <input type="hidden" name="orderId" value="${accountBill.orderId!}">
                         <input type="hidden" name="token" value="${token!}">
                         <div class="group">
                             <div class="txt">支付金额：</div>
@@ -94,26 +93,7 @@
                         </div>
                     </form>
 
-                    <form action="/center/pay/bill" id="myform2">
-                        <input type="hidden" name="orderId" value="${orderForm.id!}">
-                        <div class="hd">申请账期</div>
-                        <div class="group">
-                            <div class="txt">账期时间：</div>
-                            <div class="cnt">
-                                <select name="billtime" id="billtime" data-msg="请选择账期时间">
-                                    <option value="">请选择</option>
-                                    <option value="1">1个月</option>
-                                    <option value="2">2个月</option>
-                                    <option value="3">3个月</option>
-                                    <option value="6">6个月</option>
-                                    <option value="12">1年</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="group">
-                            <button id="stageSubmit" type="button" class="btn btn-red">确认</button>
-                        </div>
-                    </form>
+
                 </div>
             </div>
         </div>
@@ -189,35 +169,6 @@
                                     });
                                 }
                             }
-                        })
-                    })
-
-                    $("#stageSubmit").click(function(){
-                        $("#myform2").ajaxSubmit({
-                            beforeSend: function() {
-                                if(!$("#myform2").isValid()){
-                                    return false;
-                                }
-                            },
-                            success:function(result) {
-                                if(result.status=="y"){
-                                    location.href="/center/pay/success?state=bill"
-                                }else{
-                                    $.notify({
-                                        type: 'error',
-                                        title: '错误信息',   // 不允许的文件类型
-                                        text: result.info,     //'支持 jpg、jepg、png、gif等格式图片文件',
-                                        delay: 3e3,
-                                        call:function(){
-                                            setTimeout(function () {
-                                                location.href = '/center/order/list';
-                                            }, 3e3);
-                                        }
-                                    });
-                                }
-
-                            }
-
                         })
                     })
 
