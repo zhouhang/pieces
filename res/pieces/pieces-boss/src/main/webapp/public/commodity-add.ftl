@@ -194,7 +194,7 @@
                 /**
                  * 初始化自动提示框.
                  */
-               var $that = $('#categoryId').autocomplete({
+               $('#categoryId').autocomplete({
                     serviceUrl: '/breed/search',
                     paramName:'name',
                     preventBadQueries:false,
