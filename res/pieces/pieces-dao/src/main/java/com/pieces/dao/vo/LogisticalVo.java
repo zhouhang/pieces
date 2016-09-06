@@ -11,6 +11,8 @@ public class LogisticalVo extends Logistical{
 	private String oCode;
 	//收货地址
 	private Integer addr;
+	//发货日期
+	private String shipDateStr;
 	public Integer getUserId() {
 		return userId;
 	}
@@ -34,6 +36,12 @@ public class LogisticalVo extends Logistical{
 	}
 	public void setAddr(Integer addr) {
 		this.addr = addr;
+	}
+	public String getShipDateStr() {
+		return shipDateStr;
+	}
+	public void setShipDateStr(String shipDateStr) {
+		this.shipDateStr = shipDateStr;
 	}
 	
 	

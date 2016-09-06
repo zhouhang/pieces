@@ -114,5 +114,20 @@
         	<if test="id != null">
                 and l.id = #{id}
             </if>
+            <if test="lCode != null">
+                and l.code like "%"#{lCode}"%"
+            </if>
+            <if test="oCode != null">
+                and o.code like "%"#{oCode}"%"
+            </if>
+            <if test="total != null">
+                and l.total = #{total}
+            </if>
+            <if test="shipNumber != null">
+                and l.ship_number = #{shipNumber}
+            </if>
+            <if test="shipDateStr != null">
+                and DATE_FORMAT(l.ship_date, '%Y-%m-%d') = DATE_FORMAT(#{shipDateStr},'%Y-%m-%d')
+            </if>
     </select>
 </mapper>

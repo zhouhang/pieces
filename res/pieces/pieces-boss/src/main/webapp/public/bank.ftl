@@ -17,7 +17,7 @@
                 <h3>收款账户管理</h3>
                 <div class="extra">
                 <@shiro.hasPermission name="bank:add">
-                    <a class="btn btn-red" href="/bank/add"><i class="fa fa-plus"></i>增加新收款账户
+                    <a class="btn btn-red" href="/bank/add"><i class="fa fa-plus"></i>增加新收款账户</a>
                 </@shiro.hasPermission>
                 </div>
             </div>
@@ -87,7 +87,6 @@
         var page = {
             //定义全局变量区
             v: {
-                id: "page",
                 pageNum:${pageInfo.pageNum},
                 pageSize:${pageInfo.pageSize}
             },
