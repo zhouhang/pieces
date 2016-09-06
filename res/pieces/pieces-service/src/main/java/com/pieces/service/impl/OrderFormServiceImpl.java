@@ -183,4 +183,14 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
         OrderForm orderForm = orderFormDao.findByOrderCode(orderCode);
         return orderForm;
     }
+
+    @Override
+    @Transactional
+    public void saveInvoice(Integer orderId, OrderInvoice invoice) {
+        orderInvoiceService.create(invoice);
+        OrderForm orderForm = new OrderForm();
+        orderForm.setId(orderId);
+        orderForm.setInvoiceId(invoice.getId());
+        orderFormDao.update(orderForm);
+    }
 }
