@@ -52,6 +52,7 @@
         </dt>
         <dd>
             <a href="/center/pay/record">支付记录</a>
+            <a href="/center/bill/index">帐期账单</a>
         </dd>
     </dl>
     <dl>
