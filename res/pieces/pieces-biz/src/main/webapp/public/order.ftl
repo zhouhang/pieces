@@ -472,7 +472,7 @@
 
                     $invoiceBox.on('click', '.jinvoiceDel', function() {
                         closeLayer();
-                        $invoice.html('<button class="btn btn-lgray jinvoiceAdd">新增发票</button>');
+                        $invoice.html('<span class="btn btn-lgray jinvoiceAdd">新增发票</span>');
                         $invoiceBox.find('.submit').attr('type', 'submit').removeClass('jinvoiceDel');
                         return false;
                     });
