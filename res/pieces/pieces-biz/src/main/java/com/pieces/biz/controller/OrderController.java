@@ -132,14 +132,12 @@ public class OrderController extends BaseController {
 	public String orderSave(HttpServletRequest request,
             HttpServletResponse response,
             ModelMap modelMap,
-            OrderInvoice orderInvoice,
             OrderFormVo orderFormVo,
             String token){
 		if(request.getSession().getAttribute(SessionEnum.ORDER_TOKEN.getKey()) == null){
 			return "redirect:/center/enquiry/record";
 		}
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-		orderFormVo.setInvoice(orderInvoice);
 		ShippingAddress sa = shippingAddressService.findById(orderFormVo.getAddrHistoryId());
 		ShippingAddressHistory sah = new ShippingAddressHistory();
 		BeanUtils.copyProperties(sa, sah);
