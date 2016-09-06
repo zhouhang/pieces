@@ -28,7 +28,7 @@
             <result column="status"  property="status" />
             <result column="repay_time"  property="repayTime" />
             <result column="create_date"  property="createDate" />
-        
+            <result column="order_code"  property="orderCode" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -56,6 +56,7 @@
             <if test="id != null">
                 id = #{id}
             </if>
+
         </where>
     </select>
 
@@ -115,4 +116,14 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="findVoAll"  resultMap="AccountBillResultMapVo">
+        SELECT
+        *,o.code as order_code
+        FROM  account_bill a
+        LEFT JOIN order_form o on a.order_id = o.id
+    </select>
+
+
+
 </mapper>

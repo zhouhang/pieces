@@ -58,6 +58,14 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 		return accountBill;
 	}
 
+	@Override
+	public PageInfo<AccountBillVo> findVoAll(Integer pageNum, Integer pageSize) {
+		PageHelper.startPage(pageNum, pageSize);
+		List<AccountBillVo>	 list = accountBillDao.findVoAll();
+		PageInfo page = new PageInfo(list);
+		return page;
+	}
+
 
 	@Override
 	public ICommonDao<AccountBill> getDao() {
