@@ -141,7 +141,9 @@ vertical-align:middle;
 .nav .cat{position:relative;z-index:5;float:left;width:200px;height:40px;}
 .nav .cat .hd{position:absolute;top:0;left:-8px;width:100%;line-height:38px;padding:0 8px 2px;color:#fff;font-size:16px;text-indent:30px;background:url(../images/nav-bg.png) no-repeat;}
 .nav .cat .bd{position:absolute;z-index:5;top:100%;left:0;width:200px;height:420px;padding:20px 0;background:url(../images/cat-bg.png);display:none;}
-.nav .cat .bd .cat-name{line-height:38px;padding:0 30px;color:#fff;background:url(../images/cat-arrow.png) no-repeat 163px 12px;cursor:default;}
+.nav .cat .bd .cat-name{line-height:18px;padding:10px 30px;color:#fff;background:url(../images/cat-arrow.png) no-repeat 163px 23px;cursor:default;}
+.nav .cat .bd .cat-name em{display:block;font-weight:700;}
+.nav .cat .bd .cat-name a{color:#fff;font-size:12px;}
 .nav .cat .bd .cat-list{position:absolute;left:200px;top:0;width:760px;height:420px;padding:20px 0;background:#fff;overflow:hidden;display:none;}
 .nav .cat .bd .cat-list dl{padding:14px 30px;font:12px/24px 'Microsoft Yahei';overflow:hidden;*zoom:1;}
 .nav .cat .bd .cat-list dt{float:left;width:70px;font-size:16px;}
@@ -150,7 +152,8 @@ vertical-align:middle;
 .nav .cat .bd .cat-list a{margin-right:10px;color:#999;white-space:nowrap;}
 .nav .cat .bd .cat-list a:hover{color:#c3272b;}
 .nav .cat .bd .cat-list .more{position:absolute;right:24px;bottom:26px;font-size:12px;}
-.nav .cat .bd .on .cat-name{background-color:#fff;color:#c3272b;background-position:163px -18px;}
+.nav .cat .bd .on .cat-name{background-color:#fff;color:#c3272b;background-position:163px -65px;}
+.nav .cat .bd .on .cat-name a{color:#c3272b;}
 .nav .cat .bd .on .cat-list{display:block;}
 .nav .cat-show .bd{display:block;}
 .nav .menu{float:left;font-size:16px;}
