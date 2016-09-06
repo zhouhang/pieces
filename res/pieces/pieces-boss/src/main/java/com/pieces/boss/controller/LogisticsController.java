@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.model.Logistical;
+import com.pieces.dao.model.LogisticalCommodity;
 import com.pieces.dao.model.ShippingAddressHistory;
 import com.pieces.dao.vo.LogisticalCommodityVo;
 import com.pieces.dao.vo.LogisticalVo;
+import com.pieces.dao.vo.OrderCommodityVo;
 import com.pieces.service.LogisticalCommodityService;
 import com.pieces.service.LogisticalService;
+import com.pieces.service.OrderCommodityService;
 import com.pieces.service.ShippingAddressHistoryService;
 import com.pieces.tools.utils.Reflection;
 
@@ -39,7 +43,8 @@ public class LogisticsController extends BaseController {
     @Autowired
     private ShippingAddressHistoryService shippingAddressHistoryService;
 
-
+    @Autowired
+    private OrderCommodityService orderCommodityService;
     /**
      * 我的物流页面
      * @return
@@ -74,5 +79,25 @@ public class LogisticsController extends BaseController {
     }
 
 
-
+    /**
+     * 物流保存
+     * @return
+     */
+    @RequestMapping(value = "/logistics/create", method = RequestMethod.GET)
+    public void create(Logistical logistic,String logisticalCommodityIds,ModelMap modelMap) {
+    	List<OrderCommodityVo> orderCommodityVo = orderCommodityService.findByOrderId(logistic.getOrderId());
+    	String[] logisticalCommodityId = logisticalCommodityIds.split(",");
+    	logistic.setTotal(orderCommodityVo.size());
+    	logistic.setShipNumber(logisticalCommodityId.length);
+    	logisticalService.create(logistic);
+    	for(OrderCommodityVo ocv : orderCommodityVo){
+    		if(logisticalCommodityIds.contains(ocv.getId().toString())){
+    			LogisticalCommodity logisticalCommodity = new LogisticalCommodity();
+        		logisticalCommodity.setLogisticalId(logistic.getId());
+        		logisticalCommodity.setOrderCommodityId(ocv.getId());
+        		logisticalCommodity.setAmount(ocv.getAmount());
+        		logisticalCommodityService.create(logisticalCommodity);
+    		}
+    	}
+    }
 }
