@@ -26,6 +26,7 @@ public class CommodityVo extends Commodity implements Serializable {
 	
 	private String breedName;
 
+	private String eqName;
 
 	//设置商品列表页面该code是否选中
 	private boolean checked;
@@ -92,4 +93,12 @@ public class CommodityVo extends Commodity implements Serializable {
         }
         return str;
     }
+
+	public String getEqName() {
+		return eqName;
+	}
+
+	public void setEqName(String eqName) {
+		this.eqName = eqName;
+	}
 }

@@ -34,6 +34,7 @@
         <result column="picture_url"  property="pictureUrl" />
         <result column="status"  property="status" />
         <result column="categoryName" property="categoryName" />
+        <result column="eqName" property="eqName" />
         <result column="create_time"  property="createTime" />
     </resultMap>
 
@@ -49,9 +50,10 @@
     </select>
 
     <select id="findByIds" parameterType="java.lang.String" resultMap="CommodityVOResultMap">
-        select
-        <include refid="Base_Column_List" />
+        select  *,
+        category.name as categoryName
         from commodity
+        left join category on category_id = category.id
         where id in (${ids})
     </select>
 
