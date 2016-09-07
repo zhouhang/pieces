@@ -26,7 +26,6 @@ public class CommodityVo extends Commodity implements Serializable {
 	
 	private String breedName;
 	
-	private String eqName;
 
 	private String eqName;
 
@@ -74,13 +73,7 @@ public class CommodityVo extends Commodity implements Serializable {
 		this.categoryName = categoryName;
 	}
 	
-	public String getEqName() {
-		return eqName;
-	}
 
-	public void setEqName(String eqName) {
-		this.eqName = eqName;
-	}
 
 	public boolean isChecked() {
 		return checked;
