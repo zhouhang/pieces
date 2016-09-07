@@ -195,16 +195,16 @@ vertical-align:middle;
 .fa-guide .curr strong{color:#333;}
 
 /* fa-filter */
-.fa-filter{margin-bottom:20px;padding:3px 10px;border:1px solid #ccc;}
-.fa-filter dl{overflow:hidden;*zoom:1;}
-.fa-filter dt{float:left;width:80px;padding-top:5px;font-weight:700;}
-.fa-filter dd{font-size:12px;}
+.fa-filter{margin-bottom:20px;padding:10px;border:1px solid #ccc;}
+.fa-filter dl{line-height:18px;overflow:hidden;*zoom:1;}
+.fa-filter dt{float:left;width:80px;font-weight:700;}
 .fa-filter .bd{margin:0 110px 0 80px;}
-.fa-filter .bd a{float:left;margin:5px;padding:0 8px;color:#c3272b;border:1px solid #e7e7e7;}
-.fa-filter .bd a:hover{text-decoration:none;}
+.fa-filter .bd a{float:left;padding:0 8px;color:#333;}
+.fa-filter .bd a:hover{color:#c3272b;text-decoration:none;}
+.fa-filter .bd .current{color:#c3272b;}
 .fa-filter .bd i{margin-left:6px;font-size:12px;}
 .fa-filter .extra{float:right;width:110px;padding-top:5px;}
-.fa-filter .extra a{padding:0 13px;}
+.fa-filter .extra a{padding:0 13px;font-size:12px;}
 
 /* table */
 .fa-chart{font-size:12px;text-align:center;}

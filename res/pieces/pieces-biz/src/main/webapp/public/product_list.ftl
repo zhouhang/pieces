@@ -25,10 +25,7 @@
             <div class="fa-filter">
                 <dl>
                     <dt>你已筛选：</dt>
-                    
-                    <dd class="extra">
-                        <a id="reset" class="btn btn-gray" href="javascript:;">重置筛选条件</a>
-                    </dd>
+
 					<dd class="bd" id="screen">
                     	<#list screens as screen>
                         	<a data-name="${screen }" href="javascript:;">${screen }<i class='fa fa-times'></i></a>
@@ -44,113 +41,11 @@
                     <thead class="tc">
                         <tr>
                             <th width="150"></th>
-                            <th width="240">商品信息</th>
-                            <th>
-                            <#if commodity.categoryId??>
-                                <input type="hidden" name="categoryId"  value="${commodity.categoryId }">
-                            </#if>
-                            <#if commodity.breedId??>
-                                <input type="hidden" name="breedId"  value="${commodity.breedId }">
-                            </#if>
-                                <div class="drop-dowm">
-                                    <div class="hd">
-                                        <span>切割规格</span><i class="fa fa-chevron-down"></i>
-                                    </div>
-                                    <div class="bd">
-                                        <dl>
-                                            <dt>
-                                                <label><input type="checkbox" name="" id="" class="cbx">全选</label>
-                                                <button class="btn btn-gray">确定</button>
-                                            </dt>
-                                            <dd>
-                                            	<#list specifications as specifications>
-                                                	<label><input type="checkbox" name="specNameStr" data-name="${specifications.name }"  class="cbx" value="${specifications.id }" <#if specifications.checked>checked="checked"</#if>>${specifications.name }</label>
-                                                </#list>
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="drop-dowm">
-                                    <div class="hd">
-                                        <span>等级</span><i class="fa fa-chevron-down"></i>
-                                    </div>
-                                    <div class="bd">
-                                        <dl>
-                                            <dt>
-                                                <label><input type="checkbox" name="" id="" class="cbx">全选</label>
-                                                <button class="btn btn-gray">确定</button>
-                                            </dt>
-                                            <dd>
-                                            	<#list levels as level>
-                                                	<label><input type="checkbox" name="levelNameStr" data-name="${level.name }" class="cbx" value="${level.id }" <#if level.checked>checked="checked"</#if>>${level.name }</label>
-                                                </#list>
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            </th>
-                            <th>
-                                <div class="drop-dowm">
-                                    <div class="hd">
-                                        <span>原药产地</span><i class="fa fa-chevron-down"></i>
-                                    </div>
-                                    <div class="bd">
-                                        <dl>
-                                            <dt>
-                                                <label><input type="checkbox" name="" id="" class="cbx">全选</label>
-                                                <button class="btn btn-gray">确定</button>
-                                            </dt>
-                                            <dd>
-                                            	<#list place as place>
-                                                	<label><input type="checkbox" name="originOfNameStr" data-name="${place.name }" class="cbx" value="${place.id }" <#if place.checked>checked="checked"</#if>>${place.name }</label>
-                                                </#list>
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            </th>
-                            <th width="190">
-                                <div class="drop-dowm">
-                                    <div class="hd">
-                                        <span>执行标准</span><i class="fa fa-chevron-down"></i>
-                                    </div>
-                                    <div class="bd">
-                                        <dl>
-                                            <dt>
-                                                <label><input type="checkbox" name="" id="" class="cbx">全选</label>
-                                                <button class="btn btn-gray">确定</button>
-                                            </dt>
-                                            <dd>
-                                                <#list standards as standard>
-                                                	<label><input type="checkbox" name="executiveStandardNameStr" data-name="${standard.executiveStandard }" class="cbx" value="${standard.executiveStandard }"  <#if standard.checked>checked="checked"</#if>>${standard.executiveStandard }</label>
-                                                </#list>
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            </th>
-                            <th width="180">
-                                <div class="drop-dowm">
-                                    <div class="hd">
-                                        <span>生产厂家</span><i class="fa fa-chevron-down"></i>
-                                    </div>
-                                    <div class="bd">
-                                        <dl>
-                                            <dt>
-                                                <label><input type="checkbox" name="" id="" class="cbx">全选</label>
-                                                <button class="btn btn-gray">确定</button>
-                                            </dt>
-                                            <dd>
-                                                <#list factorys as factory>
-                                                	<label><input type="checkbox" name="factoryStr" class="cbx" data-name="${factory.factory }" value="${factory.factory }" <#if factory.checked>checked="checked"</#if>>${factory.factory }</label>
-                                                </#list>
-                                            </dd>
-                                        </dl>
-                                    </div>
-                                </div>
-                            </th>
+                            <th width="260">商品信息</th>
+                            <th width="160">规格等级</th>
+                            <th width="110">切制规格</th>
+                            <th width="120">原药产地</th>
+                            <th width="">执行标准</th>
                             <th width="140">操作</th>
                         </tr>
                     </thead>
@@ -166,11 +61,10 @@
 	                                    <p>${commodity.exterior }</p>
 	                                </div>
 	                            </td>
-	                            <td>${commodity.specName}</td>
 	                            <td>${commodity.levelName}</td>
+                                <td>${commodity.specName}</td>
 	                            <td>${commodity.originOfName}</td>
-	                            <td class="tl">${commodity.executiveStandard}</td>
-	                            <td>${commodity.factory }</td>
+	                            <td>${commodity.executiveStandard}</td>
 	                            <td><a href="/center/enquiry/index?commodityId=${commodity.id!}" class="btn btn-white btn-quote j_pop_login">立即询价</a></td>
 	                        </tr>
 	                    </#list>
