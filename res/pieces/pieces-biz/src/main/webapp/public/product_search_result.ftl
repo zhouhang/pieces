@@ -56,13 +56,6 @@
                             </div>
                         </div>
                     </th>
-                    <th width="180">
-                        <div class="drop-dowm">
-                            <div class="hd">
-                                <span>生产厂家</span></i>
-                            </div>
-                        </div>
-                    </th>
                     <th width="140">操作</th>
                 </tr>
                 </thead>
@@ -81,7 +74,6 @@
                             <td>${commodityDoc.level!}</td>
                             <td>${commodityDoc.originOf!}</td>
                             <td class="tl">${commodityDoc.executiveStandard!}</td>
-                            <td>${commodityDoc.factory!}</td>
                             <td><a class="btn btn-white btn-quote j_pop_login" href="/center/enquiry/index?commodityId=${commodityDoc.id!}">立即询价</a></td>
                         </tr>
                     </#list>

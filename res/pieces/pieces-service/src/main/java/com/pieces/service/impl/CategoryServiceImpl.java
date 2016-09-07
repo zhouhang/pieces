@@ -185,16 +185,7 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
      */
 	@Override
 	public List<Code> findCode(Integer breedId , String type) {
-		Category category = this.findById(breedId);
-		if(CodeEnum.Type.SPEC.name().equals(type)){
-			return this.findCodeByString(category.getSpecs());
-		}
-		if(CodeEnum.Type.ORIGIN.name().equals(type)){
-			return this.findCodeByString(category.getOrigins());
-		}
-		if(CodeEnum.Type.LEVEL.name().equals(type)){
-			return this.findCodeByString(category.getLevels());
-		}
+
 		return null;
 	}
 
