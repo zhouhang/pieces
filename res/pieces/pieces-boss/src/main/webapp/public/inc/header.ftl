@@ -33,6 +33,7 @@
                     <@shiro.hasPermission name="pay:index">
                     <a href="/payment/index">支付管理</a>
                     </@shiro.hasPermission>
+                    <a href="/account/bill/index">账单管理</a>
                     <a href="/logistics/index">物流管理</a>
                     </div>
                 </li>

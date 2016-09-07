@@ -16,4 +16,23 @@ public interface AccountBillService extends ICommonService<AccountBill>{
 
     public AccountBillVo findVoById(Integer billId);
 
+    /**
+     * 账单审核成功
+     * @param billId
+     */
+    public void auditSuccess(Integer billId, Integer memberId);
+
+    /**
+     * 账单审核失败
+     * @param billId
+     */
+    public void auditFail(Integer billId, String msg, Integer memberId);
+
+
+    /**
+     * 当用户付款单审核通过时改变账单数据
+     * @param billId
+     */
+    public void refreshStatus(Integer billId);
+
 }
