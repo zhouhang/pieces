@@ -21,14 +21,14 @@
                 </#if>
             </div>
 			
-			<#if (screens??&&screens?size>0)>
+			<#if (lxCommodity??&&lxCommodity?size>0)>
             <div class="fa-filter">
                 <dl>
                     <dt>你已筛选：</dt>
 
 					<dd class="bd" id="screen">
-                    	<#list screens as screen>
-                        	<a data-name="${screen }" href="javascript:;">${screen }<i class='fa fa-times'></i></a>
+                    	<#list lxCommodity as lc>
+                        	<a href="javascript:void(0)" data-name="${lc.name }" onclick="productPage.fn.lcClick(this);">${lc.name }<i class='fa fa-times'></i></a>
                         </#list>
                     </dd>
                 </dl>
@@ -118,6 +118,10 @@
         			$("#myform")[0].submit();
                 	//return false;
                 })
+        	},
+        	lcClick: function(obj) {
+        		var $this = $(obj);
+        		window.location.href = "/commodity/index?eqName=" + $this.attr('data-name').replace("-",'|');
         	},
             // 全选事件
             checkboxEvent: function() {

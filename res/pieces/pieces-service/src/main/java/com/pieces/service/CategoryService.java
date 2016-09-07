@@ -55,4 +55,5 @@ public interface CategoryService extends ICommonService<Category> {
 
 
 	public Category findByNameAndLevel(String name,Integer level);
+	public List<CategoryVo> findBreedByNameLx(CategoryVo categoryVo);
 }

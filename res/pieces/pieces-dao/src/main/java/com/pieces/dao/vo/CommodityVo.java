@@ -16,6 +16,9 @@ public class CommodityVo implements Serializable {
 
 	//商品名称
 	private String name;
+	
+	//商品名称精确查询
+	private String eqName;
 
 	//切制规格
 	private Integer spec;
@@ -334,4 +337,14 @@ public class CommodityVo implements Serializable {
         }
         return str;
     }
+
+	public String getEqName() {
+		return eqName;
+	}
+
+	public void setEqName(String eqName) {
+		this.eqName = eqName;
+	}
+	
+	
 }
