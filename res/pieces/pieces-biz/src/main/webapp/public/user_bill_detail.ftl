@@ -77,17 +77,13 @@
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
     </div><!-- member-box end -->
 
-
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
-
-
 
 </body>
 </html>
