@@ -69,19 +69,22 @@
                 pr.id = #{id}
             </if>
             <if test="orderUserName != null">
-                u.user_name like "%"#{orderUserName}"%"
+               and  u.user_name like "%"#{orderUserName}"%"
             </if>
             <if test="companyFullName != null">
-                u.company_full_name like "%"#{companyFullName}"%"
+               and   u.company_full_name like "%"#{companyFullName}"%"
+            </if>
+            <if test="accountBillId != null">
+               and  pr.account_bill_id = #{accountBillId}
             </if>
             <if test="payCode != null">
-                pr.pay_code like "%"#{payCode}"%"
+               and  pr.pay_code like "%"#{payCode}"%"
             </if>
             <if test="orderCode != null">
-                pr.order_code like "%"#{orderCode}"%"
+               and  pr.order_code like "%"#{orderCode}"%"
             </if>
             <if test="status != null">
-                pr.status = #{status}
+               and  pr.status = #{status}
             </if>
         </where>
         ORDER BY pr.create_time DESC
@@ -126,7 +129,7 @@
                 order_id = #{orderId},
             </if>
 
-            <if test="account_bill_id != null">
+            <if test="accountBillId != null">
                 account_bill_id = #{accountBillId},
             </if>
 

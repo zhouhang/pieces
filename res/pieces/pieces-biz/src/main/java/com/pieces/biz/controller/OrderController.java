@@ -251,5 +251,19 @@ public class OrderController extends BaseController {
 	}
 
 
+	/**
+	 * 保存订单发票信息(补开发票)
+	 * @param orderId
+	 * @param invoice
+	 * @return
+	 */
+	@RequestMapping(value = "/order/invoice", method = RequestMethod.POST)
+	@ResponseBody
+	public Result invoice(Integer orderId, OrderInvoice invoice) {
+		orderFormService.saveInvoice(orderId, invoice);
+		return new Result(true).info("发票信息保存成功");
+	}
+
+
 
 }

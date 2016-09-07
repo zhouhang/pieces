@@ -2,6 +2,7 @@ package com.pieces.service;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.OrderForm;
+import com.pieces.dao.model.OrderInvoice;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.constant.bean.Result;
@@ -60,5 +61,13 @@ public interface OrderFormService extends ICommonService<OrderForm>{
 
 
     public OrderForm findByOrderCode(String orderCode);
+
+
+    /**
+     * 补开发票
+     * @param orderId
+     * @param invoice
+     */
+    public void saveInvoice(Integer orderId, OrderInvoice invoice);
 
 }

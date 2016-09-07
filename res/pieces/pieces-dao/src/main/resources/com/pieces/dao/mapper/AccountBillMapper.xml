@@ -12,6 +12,7 @@
             <result column="un_payable"  property="unPayable" />
             <result column="status"  property="status" />
             <result column="repay_time"  property="repayTime" />
+            <result column="operate_time"  property="operateTime" />
             <result column="create_date"  property="createDate" />
         
     </resultMap>
@@ -27,12 +28,13 @@
             <result column="un_payable"  property="unPayable" />
             <result column="status"  property="status" />
             <result column="repay_time"  property="repayTime" />
+            <result column="operate_time"  property="operateTime" />
             <result column="create_date"  property="createDate" />
             <result column="order_code"  property="orderCode" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,code,order_id,user_id,bill_time,amounts_payable,already_payable,un_payable,status,repay_time,create_date
+        id,code,order_id,user_id,bill_time,amounts_payable,already_payable,un_payable,status,repay_time,operate_time,create_date
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="AccountBillResultMap">
@@ -67,9 +69,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.AccountBill">
         insert into
-        account_bill (code,order_id,user_id,bill_time,amounts_payable,already_payable,un_payable,status,repay_time,create_date)
+        account_bill (code,order_id,user_id,bill_time,amounts_payable,already_payable,un_payable,status,repay_time,operate_time,create_date)
         values
-        (#{code},#{orderId},#{userId},#{billTime},#{amountsPayable},#{alreadyPayable},#{unPayable},#{status},#{repayTime},#{createDate})
+        (#{code},#{orderId},#{userId},#{billTime},#{amountsPayable},#{alreadyPayable},#{unPayable},#{status},#{repayTime},#{operateTime},#{createDate})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.AccountBill">
@@ -124,6 +126,12 @@
         LEFT JOIN order_form o on a.order_id = o.id
     </select>
 
-
+    <select id="findVoById"  parameterType="java.lang.Integer" resultMap="AccountBillResultMapVo">
+        SELECT
+        *,o.code as order_code
+        FROM  account_bill a
+        LEFT JOIN order_form o on a.order_id = o.id
+        WHERE a.id = #{billId}
+    </select>
 
 </mapper>

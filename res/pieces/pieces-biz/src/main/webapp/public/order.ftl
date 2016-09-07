@@ -447,10 +447,6 @@
                         }
                     });
 
-                    $('#invoiceForm').submit(function () {
-                        return false;
-                    })
-
                     // 不需要发票
                     var pass = true;
                     $invoiceBox.find('.cbx').on('click', function() {
@@ -472,8 +468,9 @@
 
                     $invoiceBox.on('click', '.jinvoiceDel', function() {
                         closeLayer();
-                        $invoice.html('<button class="btn btn-lgray jinvoiceAdd">新增发票</button>');
+                        $invoice.html('<button type="button" class="btn btn-lgray jinvoiceAdd">新增发票</button>');
                         $invoiceBox.find('.submit').attr('type', 'submit').removeClass('jinvoiceDel');
+                        $("#invoiceValue").html('');
                         return false;
                     });
                 },
