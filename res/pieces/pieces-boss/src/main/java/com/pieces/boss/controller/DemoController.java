@@ -64,10 +64,6 @@ public class DemoController {
 
             try {
                 Commodity commodity = new Commodity();
-                Integer spec = CodeEnum.findByTypeAndName(CodeEnum.Type.SPEC,commodityVo.getSpecName());
-                Integer level = CodeEnum.findByTypeAndName(CodeEnum.Type.LEVEL,commodityVo.getLevel()+"");
-                commodity.setSpec(spec);
-                commodity.setLevel(level);
                 //类别名称
                 String categoryName = commodityVo.getCategoryName();
                 if(StringUtils.isBlank(categoryName) ){
@@ -93,7 +89,6 @@ public class DemoController {
                 }
                 commodity.setName(commodityVo.getName());
                 commodity.setExterior(commodityVo.getExterior());
-                commodity.setFactory(commodityVo.getFactoryStr());
                 commodity.setExecutiveStandard(commodityVo.getExecutiveStandard());
                 commodity.setCreateTime(new Date());
                 commodity.setStatus(1);

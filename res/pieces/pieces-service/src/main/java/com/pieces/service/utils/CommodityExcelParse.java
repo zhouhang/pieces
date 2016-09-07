@@ -56,17 +56,17 @@ public class CommodityExcelParse {
                                 commoditys.setName(getCellValue(c));
                                 break;
                             case 3:
-                                commoditys.setSpecName(getCellValue(c));
+                                commoditys.setSpec(getCellValue(c));
                                 break;
                             case 4:
-                                commoditys.setLevel(Double.valueOf(getCellValue(c)).intValue());
+                                commoditys.setLevel(getCellValue(c));
                                 break;
                             case 5:
                                 commoditys.setExterior(getCellValue(c));
                                 break;
-                            case 6:
-                                commoditys.setFactoryStr(getCellValue(c));
-                                break;
+//                            case 6:
+//                                commoditys.setFactoryStr(getCellValue(c));
+//                                break;
                             case 7:
                                 commoditys.setExecutiveStandard(getCellValue(c));
 

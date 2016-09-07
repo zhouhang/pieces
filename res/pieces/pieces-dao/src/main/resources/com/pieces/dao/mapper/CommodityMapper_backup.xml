@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.CommodityMapper">
+
+    <resultMap id="CommodityResultMap" type="com.pieces.dao.model.Commodity">
+            <id column="id"  property="id" />
+            <result column="name"  property="name" />
+            <result column="spec"  property="spec" />
+            <result column="level"  property="level" />
+            <result column="origin_of"  property="originOf" />
+            <result column="executive_standard"  property="executiveStandard" />
+            <result column="factory"  property="factory" />
+            <result column="exterior"  property="exterior" />
+            <result column="picture_url"  property="pictureUrl" />
+            <result column="details"  property="details" />
+            <result column="status"  property="status" />
+            <result column="category_id"  property="categoryId" />
+            <result column="create_time"  property="createTime" />
+    </resultMap>
+
+    <resultMap id="CommodityVOResultMap" type="com.pieces.dao.vo.CommodityVo">
+        <id column="id"  property="id" />
+        <result column="name"  property="name" />
+        <result column="spec"  property="spec" />
+        <result column="level"  property="level" />
+        <result column="levelName"  property="levelName" />
+        <result column="specName"  property="specName" />
+        <result column="origin_of"  property="originOf" />
+        <result column="originOfName"  property="originOfName" />
+        <result column="executive_standard"  property="executiveStandard" />
+        <result column="factory"  property="factory" />
+        <result column="exterior"  property="exterior" />
+        <result column="picture_url"  property="pictureUrl" />
+        <result column="details"  property="details" />
+        <result column="status"  property="status" />
+        <result column="category_id"  property="categoryId" />
+        <result column="categoryName" property="categoryName" />
+        <result column="create_time"  property="createTime" />
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id,name,level,spec,origin_of,executive_standard,factory,exterior,picture_url,details,status,category_id,create_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="CommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from commodity
+        where id = #{id}
+    </select>
+
+    <select id="findByIds" parameterType="java.lang.String" resultMap="CommodityVOResultMap">
+        coom.id as id,coom.name as name,spec,origin_of,executive_standard,factory,exterior,
+        picture_url,coom.status as status,category_id,coom.create_time as create_time,
+        coom.level as level,
+        level.name as levelName,
+        spec.name as specName,
+        originOf.name as originOfName,
+        category.name as categoryName
+        from commodity coom
+        left join code level on coom.level = level.id
+        left join code spec ON spec = spec.id
+        left join code originOf on origin_of = originOf.id
+        left join category on category_id = category.id
+        where id in (${ids})
+    </select>
+
+    <select id="findAll"  resultMap="CommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from commodity
+    </select>
+
+    <select id="findByParam" parameterType="com.pieces.dao.vo.CommodityVo" resultMap="CommodityVOResultMap">
+        select
+        coom.id as id,coom.name as name,spec,origin_of,executive_standard,factory,exterior,
+        picture_url,details,coom.status as status,category_id,coom.create_time as create_time,
+        coom.level as level,
+        level.name as levelName,
+        spec.name as specName,
+        originOf.name as originOfName,
+        category.name as categoryName
+        from commodity coom
+        left join code level on coom.level = level.id
+        left join code spec ON spec = spec.id
+        left join code originOf on origin_of = originOf.id
+        left join category on category_id = category.id
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+
+            <if test="name != null">
+               and coom.name like "%"#{name}"%"
+            </if>
+
+            <if test="spec != null">
+               and spec = #{spec}
+            </if>
+            <!-- 根据specNameStr使用in查询，使用在商品列表 -->
+            <if test="specNameStr != null">
+               and spec in (${specNameStr})
+            </if>
+            <!-- 根据levelNameStr使用in查询，使用在商品列表 -->
+            <if test="levelNameStr != null">
+               and coom.level in (${levelNameStr})
+            </if>
+            <if test="originOf != null">
+               and origin_of = #{originOf}
+            </if>
+            <!-- 根据originOfNameStr使用in查询，使用在商品列表 -->
+            <if test="originOfNameStr != null">
+               and origin_of in (${originOfNameStr})
+            </if>
+
+            <if test="executiveStandard != null">
+               and executive_standard like "%"#{executiveStandard}"%"
+            </if>
+            <!-- 根据executiveStandardNameStr使用in查询，使用在商品列表 -->
+            <if test="executiveStandardNameStr != null">
+               and executive_standard in (${executiveStandardNameStr})
+            </if>
+
+            <if test="factory != null">
+               and factory like "%"#{factory}"%"
+            </if>
+            <!-- 根据factoryStr使用in查询，使用在商品列表 -->
+            <if test="factoryStr != null">
+               and factory in (${factoryStr})
+            </if>
+
+            <if test="exterior != null">
+               and exterior = #{exterior}
+            </if>
+
+            <if test="pictureUrl != null">
+               and picture_url = #{pictureUrl}
+            </if>
+
+            <if test="details != null">
+               and details = #{details}
+            </if>
+
+            <if test="status != null">
+               and coom.status = #{status}
+            </if>
+
+            <if test="categoryId != null">
+               and category_id = #{categoryId}
+            </if>
+
+            <if test="categoryIds != null">
+                and category_id in (${categoryIds})
+            </if>
+
+            <if test="createTime != null">
+               and create_time = #{createTime}
+            </if>
+            <if test="categoryName != null">
+                and category.name like "%"#{categoryName}"%"
+            </if>
+            <if test="specName != null">
+                and spec.name like  "%"#{specName}"%"
+            </if>
+            <if test="originOfName != null">
+                and originOf.name like "%"#{originOfName}"%"
+            </if>
+        </where>
+        order by coom.id DESC
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from commodity
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Commodity">
+        insert into
+        commodity (name,spec,level,origin_of,executive_standard,factory,exterior,picture_url,details,status,category_id,create_time)
+        values
+        (#{name},#{spec},#{level},#{originOf},#{executiveStandard},#{factory},#{exterior},#{pictureUrl},#{details},#{status},#{categoryId},#{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.Commodity">
+        update commodity
+        <set>
+                                                        
+            <if test="name != null">
+                name = #{name},
+            </if>
+                                            
+            <if test="spec != null">
+                spec = #{spec},
+            </if>
+
+            <if test="level != null">
+                level = #{level},
+            </if>
+                                            
+            <if test="originOf != null">
+                origin_of = #{originOf},
+            </if>
+                                            
+            <if test="executiveStandard != null">
+                executive_standard = #{executiveStandard},
+            </if>
+                                            
+            <if test="factory != null">
+                factory = #{factory},
+            </if>
+                                            
+            <if test="exterior != null">
+                exterior = #{exterior},
+            </if>
+                                            
+            <if test="pictureUrl != null">
+                picture_url = #{pictureUrl},
+            </if>
+                                            
+            <if test="details != null">
+                details = #{details},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                                            
+            <if test="categoryId != null">
+                category_id = #{categoryId},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <select id="findVoByPage" resultMap="CommodityVOResultMap" >
+        select
+        commodity.id,
+        commodity.name,
+        spec,
+        origin_of,
+        executive_standard,
+        factory,
+        exterior,
+        picture_url,
+        details,
+        commodity.status,
+        category_id,
+        commodity.create_time,
+        spec.name as specName,
+        originOf.name as originOfName,
+        category.name as categoryName,
+        levels.name as levelName
+        from commodity
+        left join code spec ON spec = spec.id
+        left join code originOf on origin_of = originOf.id
+        left join code levels ON commodity.level = levels.id
+        left join category on category_id = category.id
+    </select>
+
+    <select id="findVoById" parameterType="java.lang.Integer" resultMap="CommodityVOResultMap" >
+         select
+        commodity.id as id,
+        commodity.name,
+        spec,
+        origin_of,
+        executive_standard,
+        factory,
+        exterior,
+        picture_url,
+        details,
+        commodity.status,
+        category_id,
+        commodity.level as level,
+        commodity.create_time,
+        spec.name as specName,
+        originOf.name as originOfName,
+        category.name as categoryName,
+        levels.name as levelName
+        from commodity
+        left join code spec ON spec = spec.id
+        left join code originOf on origin_of = originOf.id
+        left join code levels ON commodity.level = levels.id
+        left join category on category_id = category.id
+        where commodity.id = #{id}
+    </select>
+
+
+    <select id="findVoByIds" parameterType="java.util.List" resultMap="CommodityVOResultMap" >
+        select
+        commodity.id as id,
+        commodity.name,
+        spec,
+        origin_of,
+        executive_standard,
+        factory,
+        exterior,
+        picture_url,
+        details,
+        commodity.status,
+        category_id,
+        commodity.level as level,
+        commodity.create_time,
+        spec.name as specName,
+        originOf.name as originOfName,
+        category.name as categoryName,
+        levels.name as levelName
+        from commodity
+        left join code spec ON spec = spec.id
+        left join code originOf on origin_of = originOf.id
+        left join code levels ON commodity.level = levels.id
+        left join category on category_id = category.id
+        where commodity.id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+
+    </select>
+
+
+    <select id="findCommodityByBreedId" parameterType="java.lang.Integer" resultType="com.pieces.dao.vo.CommodityVo">
+        select *
+	        from commodity a
+	        where a.status = 1
+	        and a.category_id = #{categoryId}
+    </select>
+    
+    <select id="findStandardByBreedId" parameterType="com.pieces.dao.vo.CommodityVo" resultType="com.pieces.dao.vo.CommodityVo">
+        select distinct a.executive_standard as executiveStandard
+	        from commodity a
+	        where a.status = 1
+	        <if test="breedIds != null and breedIds != ''">
+	        	and a.category_id in (${breedIds})
+	        </if>
+    </select>
+    
+    <select id="findFactoryByBreedId" parameterType="com.pieces.dao.vo.CommodityVo" resultType="com.pieces.dao.vo.CommodityVo">
+        select distinct a.factory as factory
+	        from commodity a
+	        where a.status = 1
+	        <if test="breedIds != null and breedIds != ''">
+	        	and a.category_id in (${breedIds})
+	        </if>
+    </select>
+
+
+
+</mapper>
