@@ -64,6 +64,22 @@
                             </dd>
                         </dl>
                     </div>
+                    <#if vo.invoice?exists>
+                        <div class="group">
+                            <dl>
+                                <dt>发票信息</dt>
+                                <dd>
+                                    <p>发票类型：${vo.invoice.typeText}</p>
+                                    <p>发票抬头：${vo.invoice.name}</p>
+                                    <p>纳税人识别号：${vo.invoice.identifier}</p>
+                                    <p>注册地址：${vo.invoice.registeredAddress}</p>
+                                    <p>注册电话：${vo.invoice.registeredTel}</p>
+                                    <p>开户银行：${vo.invoice.bankName}</p>
+                                    <p>银行账号：${vo.invoice.bankAccount}/p>
+                                </dd>
+                            </dl>
+                        </div>
+                    </#if>
                 </div>
 
                 <div class="chart-info">
