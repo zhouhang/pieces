@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.model.Category;
 import com.pieces.dao.model.Commodity;
 import com.pieces.dao.vo.CommodityVo;
 
@@ -32,4 +33,8 @@ public interface CommodityDao extends ICommonDao<Commodity>{
 	List<CommodityVo> findFactoryByBreedId(String ids);
 
 	List<Commodity> findByParamNoPage(CommodityVo commodity);
+
+	public List<CommodityVo> findCommodityByName(CommodityVo commodityVO);
+	
+	public List<CommodityVo> findCommodityByNameLx(CommodityVo commodityVO);
 }

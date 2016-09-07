@@ -213,16 +213,6 @@ public class CategoryController {
 	public String addBreed(HttpServletRequest request,
 							  HttpServletResponse response,
 							  ModelMap model){
-		BreedVo breed = new BreedVo();
-		
-		//获取品种属性
-		List<Code> spaces = categoryService.findCode(CodeEnum.Type.SPEC.name());
-		List<Code> origins = categoryService.findCode(CodeEnum.Type.ORIGIN.name());
-		List<Code> levels = categoryService.findCode(CodeEnum.Type.LEVEL.name());
-		breed.setSpecelist(spaces);
-		breed.setOriginlist(origins);
-		breed.setLevellist(levels);
-		model.put("breed", breed);
 		return "breed_add";
 	}
 	
@@ -241,17 +231,6 @@ public class CategoryController {
 							  @PathVariable("id") Integer id,
 							  ModelMap model){
 		BreedVo breed = categoryService.getBreedById(id);
-		
-		//获取品种属性
-		List<Code> spaces = categoryService.findCode(CodeEnum.Type.SPEC.name());
-		List<Code> origins = categoryService.findCode(CodeEnum.Type.ORIGIN.name());
-		List<Code> levels = categoryService.findCode(CodeEnum.Type.LEVEL.name());
-		setCodeCheck(spaces,breed.getSpecs());
-		setCodeCheck(origins,breed.getOrigins());
-		setCodeCheck(levels,breed.getLevels());
-		breed.setSpecelist(spaces);
-		breed.setOriginlist(origins);
-		breed.setLevellist(levels);
 		model.put("breed", breed);
 		return "breed_edit";
 	}

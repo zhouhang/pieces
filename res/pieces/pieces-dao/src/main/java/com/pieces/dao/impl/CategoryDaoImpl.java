@@ -120,4 +120,10 @@ public class CategoryDaoImpl extends BaseDaoImpl implements CategoryDao {
         return getSqlSession().selectOne("com.pieces.dao.CategoryMapper.findByNameAndLevel", categoryVo);
     }
 
+
+	@Override
+	public List<CategoryVo> findBreedByNameLx(CategoryVo categoryVo) {
+		return getSqlSession().selectList("com.pieces.dao.CategoryMapper.findBreedByNameLx", categoryVo);
+	}
+
 }

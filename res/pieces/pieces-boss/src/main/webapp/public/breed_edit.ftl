@@ -65,36 +65,6 @@
                                     <span class="tips">多个别名请用逗号隔开</span>
                                 </div>
                             </div>
-                            <div class="group">
-                                <div class="txt">
-                                    <i>*</i>常见切制规格：
-                                </div>
-                                <div class="cnt cnt-mul">
-                                    <#list breed.specelist as specifications>
-                                           <label><input type="checkbox" name="specs"  class="cbx" value="${specifications.id }" <#if specifications.checked>checked="checked"</#if>>${specifications.name }</label>
-                                    </#list>
-                                </div>
-                            </div>
-                            <div class="group">
-                                <div class="txt">
-                                    <i>*</i>常见原药产地：
-                                </div>
-                                <div class="cnt cnt-mul">
-                                    <#list breed.originlist as origin>
-                                           <label><input type="checkbox" name="origins"  class="cbx" value="${origin.id }" <#if origin.checked>checked="checked"</#if>>${origin.name }</label>
-                                    </#list>
-                                </div>
-                            </div>
-                            <div class="group">
-                                <div class="txt">
-                                    <i>*</i>等级：
-                                </div>
-                                <div class="cnt cnt-mul">
-                                    <#list breed.levellist as level>
-                                           <label><input type="checkbox" name="levels"  class="cbx" value="${level.id }" <#if level.checked>checked="checked"</#if>>${level.name }</label>
-                                    </#list>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </form>
@@ -159,10 +129,7 @@
                         fields: {
                         	classifyId: "required",
                         	name: "required",
-                        	aliases: "required,aliases",
-                        	spece: "checked",
-                        	origins: "checked",
-                        	levels: "checked"
+                        	aliases: "required,aliases"
                         },
                         valid: function(form) {
             		    	if ( $(form).isValid() ) {

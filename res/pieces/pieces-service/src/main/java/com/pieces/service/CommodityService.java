@@ -1,6 +1,7 @@
 package com.pieces.service;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.model.Category;
 import com.pieces.dao.model.Commodity;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.CommodityVo;
@@ -72,4 +73,6 @@ public interface CommodityService extends ICommonService<Commodity>{
 
 
     void create(List<Commodity> commodityList);
+    public Category findBreedByName(CommodityVo commodityVO);
+    public List<CommodityVo> findCommodityByName(CommodityVo commodityVO);
 }

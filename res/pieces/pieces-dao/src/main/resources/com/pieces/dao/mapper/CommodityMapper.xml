@@ -73,6 +73,10 @@
             <if test="name != null">
                and coom.name like "%"#{name}"%"
             </if>
+            
+            <if test="eqName != null">
+               and coom.name = #{eqName}
+            </if>
 
             <if test="spec != null">
                and spec = #{spec}
@@ -240,6 +244,23 @@
     
 
 
-
-
+    <select id="findCommodityByName" parameterType="com.pieces.dao.vo.CommodityVo" resultMap="CommodityVOResultMap">
+        select 
+        <include refid="Base_Column_List" />
+	        from commodity a
+	        where a.status = 1
+	        <if test="eqName != null">
+	        	and a.name = <![CDATA[#{eqName}]]>
+	        </if>
+    </select>
+    
+    <select id="findCommodityByNameLx" parameterType="com.pieces.dao.vo.CommodityVo" resultMap="CommodityVOResultMap">
+        select 
+        	distinct a.name
+	        from commodity a
+	        where a.status = 1
+	        <if test="name != null">
+	        	and a.name like "%"#{name}"%"
+	        </if>
+    </select>
 </mapper>
