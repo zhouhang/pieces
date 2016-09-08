@@ -1,9 +1,5 @@
 package com.pieces.dao.vo;
 
-import java.util.List;
-
-import com.pieces.dao.model.Code;
-
 public class BreedVo {
 	private Integer id;
 	//类别id
@@ -14,17 +10,6 @@ public class BreedVo {
 	private String name;
 	//别名
 	private String aliases;
-	private String specs;
-	
-	private String origins;
-	
-	private String levels;
-	
-	private List<Code> specelist;
-	
-	private List<Code> originlist;
-	
-	private List<Code> levellist;
 
 	public Integer getId() {
 		return id;
@@ -64,54 +49,6 @@ public class BreedVo {
 
 	public void setAliases(String aliases) {
 		this.aliases = aliases;
-	}
-
-	public String getSpecs() {
-		return specs;
-	}
-
-	public void setSpecs(String specs) {
-		this.specs = specs;
-	}
-
-	public String getOrigins() {
-		return origins;
-	}
-
-	public void setOrigins(String origins) {
-		this.origins = origins;
-	}
-
-	public String getLevels() {
-		return levels;
-	}
-
-	public void setLevels(String levels) {
-		this.levels = levels;
-	}
-
-	public List<Code> getSpecelist() {
-		return specelist;
-	}
-
-	public void setSpecelist(List<Code> specelist) {
-		this.specelist = specelist;
-	}
-
-	public List<Code> getOriginlist() {
-		return originlist;
-	}
-
-	public void setOriginlist(List<Code> originlist) {
-		this.originlist = originlist;
-	}
-
-	public List<Code> getLevellist() {
-		return levellist;
-	}
-
-	public void setLevellist(List<Code> levellist) {
-		this.levellist = levellist;
 	}
 	
 	

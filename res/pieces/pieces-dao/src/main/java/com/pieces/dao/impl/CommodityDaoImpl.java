@@ -2,6 +2,7 @@ package com.pieces.dao.impl;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.CommodityDao;
+import com.pieces.dao.model.Category;
 import com.pieces.dao.model.Commodity;
 import com.pieces.dao.vo.CommodityVo;
 import com.pieces.tools.utils.FileUtil;
@@ -118,4 +119,14 @@ public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao {
         return FileUtil.convertAbsolutePathToUrl(getSqlSession().
                 selectList("com.pieces.dao.CommodityMapper.findByIds", ids),param);
     }
+
+	@Override
+	public List<CommodityVo> findCommodityByName(CommodityVo commodityVO) {
+		return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findCommodityByName", commodityVO);
+	}
+	
+	@Override
+	public List<CommodityVo> findCommodityByNameLx(CommodityVo commodityVO) {
+		return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findCommodityByNameLx", commodityVO);
+	}
 }

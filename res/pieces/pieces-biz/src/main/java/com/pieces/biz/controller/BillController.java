@@ -113,11 +113,11 @@ public class BillController  extends BaseController{
         return "user_bill_detail";
     }
 
-
-
     private List<OrderCommodity> assignCommodity(Integer orderId){
         List<OrderCommodity>  commodityList = orderCommodityService.getCommodityByOrderId(orderId);
         return commodityList;
     }
+
+
 
 }

@@ -15,6 +15,16 @@ public class AccountBillVo extends AccountBill{
 
     private String statusText;
 
+    // 订购用户
+    private String orderUser;
+
+    // 用药单位
+    private String orderCompany;
+
+    private String memberName;
+
+
+
     private List<PayRecordVo> payRecordVoList;
 
     // 商品信息摘要
@@ -67,5 +77,30 @@ public class AccountBillVo extends AccountBill{
 
     public void setPayRecordVoList(List<PayRecordVo> payRecordVoList) {
         this.payRecordVoList = payRecordVoList;
+    }
+
+
+    public String getOrderUser() {
+        return orderUser;
+    }
+
+    public void setOrderUser(String orderUser) {
+        this.orderUser = orderUser;
+    }
+
+    public String getOrderCompany() {
+        return orderCompany;
+    }
+
+    public void setOrderCompany(String orderCompany) {
+        this.orderCompany = orderCompany;
+    }
+
+    public String getMemberName() {
+        return memberName;
+    }
+
+    public void setMemberName(String memberName) {
+        this.memberName = memberName;
     }
 }

@@ -4,51 +4,48 @@ import java.io.Serializable;
 import java.util.Date;
 
 
-public class Commodity  implements Serializable {
+
+public class CommodityBackup  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
 	
-	//原药品种
-	private Integer categoryId;
-	
 	//商品名称
 	private String name;
 	
-	//商品标题
-	private String title;
-	
-	//等级
-	private String level;
-	
-	//规格等级
-	private String spec;
+	//切制规格
+	private Integer spec;
 	
 	//原药产地
-	private String originOf;
+	private Integer originOf;
 	
 	//执行标准
 	private String executiveStandard;
+
+	//商品等级
+	private Integer level;
+
+	//生产厂家
+	private String factory;
 	
-	//性状描述
+	//外观描述
 	private String exterior;
 	
-	//商品属性(json结构)
-	private String attribute;
-	
-	//商品详情
-	private String details;
-	
-	//图片地址
+	//商品图片地址
 	private String pictureUrl;
 	
-	//状态
+	//详细信息
+	private String details;
+	
 	private Integer status;
+	
+	//与商品相关联的二级品种ID
+	private Integer categoryId;
 	
 	private Date createTime;
 	
-	public Commodity(){}
+
 	
 	public Integer getId() {
 		return id;
@@ -56,14 +53,6 @@ public class Commodity  implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-	
-	public Integer getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(Integer categoryId) {
-		this.categoryId = categoryId;
 	}
 	
 	public String getName() {
@@ -74,35 +63,19 @@ public class Commodity  implements Serializable {
 		this.name = name;
 	}
 	
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	
-	public String getLevel() {
-		return level;
-	}
-
-	public void setLevel(String level) {
-		this.level = level;
-	}
-	
-	public String getSpec() {
+	public Integer getSpec() {
 		return spec;
 	}
 
-	public void setSpec(String spec) {
+	public void setSpec(Integer spec) {
 		this.spec = spec;
 	}
 	
-	public String getOriginOf() {
+	public Integer getOriginOf() {
 		return originOf;
 	}
 
-	public void setOriginOf(String originOf) {
+	public void setOriginOf(Integer originOf) {
 		this.originOf = originOf;
 	}
 	
@@ -114,34 +87,20 @@ public class Commodity  implements Serializable {
 		this.executiveStandard = executiveStandard;
 	}
 	
+	public String getFactory() {
+		return factory;
+	}
+
+	public void setFactory(String factory) {
+		this.factory = factory;
+	}
+	
 	public String getExterior() {
 		return exterior;
 	}
 
 	public void setExterior(String exterior) {
 		this.exterior = exterior;
-	}
-	
-	public String getAttribute() {
-		return attribute;
-	}
-
-	public void setAttribute(String attribute) {
-		this.attribute = attribute;
-	}
-
-	public String getDetails() {
-		if (details!=null) {
-			details = details.replace("&lt","<").replace("&gt",">");
-		}
-		return details;
-	}
-
-	public void setDetails(String details) {
-		if (details!=null) {
-			details = details.replace("&lt","<").replace("&gt",">");
-		}
-		this.details = details;
 	}
 	
 	public String getPictureUrl() {
@@ -152,12 +111,28 @@ public class Commodity  implements Serializable {
 		this.pictureUrl = pictureUrl;
 	}
 	
+	public String getDetails() {
+		return details;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+	
 	public Integer getStatus() {
 		return status;
 	}
 
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	
+	public Integer getCategoryId() {
+		return categoryId;
+	}
+
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
 	}
 	
 	public Date getCreateTime() {
@@ -167,5 +142,12 @@ public class Commodity  implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
 }

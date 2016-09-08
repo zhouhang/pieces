@@ -25,7 +25,7 @@ public class AccountBill  implements Serializable {
 	//已付
 	private Double alreadyPayable;
 
-	//账单时间
+	//账单时间(账期 单位:月)
 	private Integer billTime;
 
 
@@ -35,6 +35,8 @@ public class AccountBill  implements Serializable {
 	//状态(-1:拒绝,0:s申请中,1:未完结,2:已完结)
 	private Integer status;
 
+	// 拒绝原因
+	private String remark;
 
 	//还款时间
 	private Date repayTime;
@@ -149,5 +151,13 @@ public class AccountBill  implements Serializable {
 
 	public void setOperateTime(Date operateTime) {
 		this.operateTime = operateTime;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 }

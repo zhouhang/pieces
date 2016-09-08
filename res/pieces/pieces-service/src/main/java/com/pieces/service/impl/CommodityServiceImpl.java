@@ -3,20 +3,13 @@ package com.pieces.service.impl;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import javax.imageio.ImageIO;
 
-import com.pieces.dao.EnquiryCommoditysDao;
-import com.pieces.dao.model.EnquiryCommoditys;
-import com.pieces.dao.model.User;
-import com.pieces.dao.vo.CategoryVo;
-import com.pieces.service.CategoryService;
-import com.pieces.service.CommoditySearchService;
-import com.pieces.service.enums.PathEnum;
-import com.pieces.tools.upload.TempUploadFile;
-import com.pieces.tools.upload.UEditorUploadFile;
-import com.pieces.tools.utils.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +19,26 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.CommodityDao;
+import com.pieces.dao.EnquiryCommoditysDao;
 import com.pieces.dao.ICommonDao;
+import com.pieces.dao.model.Category;
 import com.pieces.dao.model.Commodity;
+import com.pieces.dao.model.EnquiryCommoditys;
+import com.pieces.dao.model.User;
+import com.pieces.dao.vo.CategoryVo;
 import com.pieces.dao.vo.CommodityVo;
 import com.pieces.service.AbsCommonService;
+import com.pieces.service.CategoryService;
+import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
+import com.pieces.service.enums.PathEnum;
 import com.pieces.service.utils.ImageUtil;
 import com.pieces.service.vo.CropInfo;
 import com.pieces.service.vo.CropResult;
 import com.pieces.tools.bean.FileBo;
+import com.pieces.tools.upload.TempUploadFile;
+import com.pieces.tools.upload.UEditorUploadFile;
+import com.pieces.tools.utils.FileUtil;
 
 /**
  * Author: koabs
@@ -264,4 +268,17 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         }
 
     }
+
+	@Override
+	public Category findBreedByName(CommodityVo commodityVO) {
+		CommodityVo vo = commodityDao.findCommodityByName(commodityVO).get(0);
+		return categoryService.findById(vo.getCategoryId());
+	}
+
+	@Override
+	public List<CommodityVo> findCommodityByName(CommodityVo commodityVO) {
+		return commodityDao.findCommodityByNameLx(commodityVO);
+	}
+	
+	
 }

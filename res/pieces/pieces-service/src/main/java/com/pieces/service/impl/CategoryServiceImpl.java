@@ -121,9 +121,6 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 		ca.setStatus(CategoryEnum.STATUS_VALID.getValue());
 		ca.setLevel(CategoryEnum.LEVEL_BREED.getValue());
 		ca.setCreateTime(new Date());
-		ca.setSpecs(bvo.getSpecs());
-		ca.setOrigins(bvo.getOrigins());
-		ca.setLevels(bvo.getLevels());
 		String pinyin = PinyinUtil.field2Pinyin(ca.getName());
 		ca.setPinyin(pinyin);
 		categoryDao.create(ca);
@@ -188,16 +185,7 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
      */
 	@Override
 	public List<Code> findCode(Integer breedId , String type) {
-		Category category = this.findById(breedId);
-		if(CodeEnum.Type.SPEC.name().equals(type)){
-			return this.findCodeByString(category.getSpecs());
-		}
-		if(CodeEnum.Type.ORIGIN.name().equals(type)){
-			return this.findCodeByString(category.getOrigins());
-		}
-		if(CodeEnum.Type.LEVEL.name().equals(type)){
-			return this.findCodeByString(category.getLevels());
-		}
+
 		return null;
 	}
 
@@ -298,6 +286,11 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 	@Override
 	public ICommonDao<Category> getDao() {
 		return categoryDao;
+	}
+
+	@Override
+	public List<CategoryVo> findBreedByNameLx(CategoryVo categoryVo) {
+		return categoryDao.findBreedByNameLx(categoryVo);
 	}
 
 }

@@ -17,8 +17,7 @@ public class CommodityDoc {
     private Integer id;
     //商品名称
     private String name;
-    //生产厂家
-    private String factory;
+
     //外观描述
     @Field( type = FieldType.String,index= FieldIndex.not_analyzed)
     private String exterior;
@@ -57,13 +56,6 @@ public class CommodityDoc {
         this.name = name;
     }
 
-    public String getFactory() {
-        return factory;
-    }
-
-    public void setFactory(String factory) {
-        this.factory = factory;
-    }
 
     public String getExterior() {
         return exterior;

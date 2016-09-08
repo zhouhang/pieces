@@ -10,7 +10,6 @@ import com.pieces.service.CategoryService;
 import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
 import com.pieces.service.constant.bean.Result;
-import com.pieces.service.enums.CodeEnum;
 import com.pieces.service.utils.CommodityExcelParse;
 import com.pieces.tools.utils.GsonUtil;
 import com.pieces.tools.utils.WebUtil;
@@ -21,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -64,10 +62,6 @@ public class DemoController {
 
             try {
                 Commodity commodity = new Commodity();
-                Integer spec = CodeEnum.findByTypeAndName(CodeEnum.Type.SPEC,commodityVo.getSpecName());
-                Integer level = CodeEnum.findByTypeAndName(CodeEnum.Type.LEVEL,commodityVo.getLevel()+"");
-                commodity.setSpec(spec);
-                commodity.setLevel(level);
                 //类别名称
                 String categoryName = commodityVo.getCategoryName();
                 if(StringUtils.isBlank(categoryName) ){
@@ -93,7 +87,6 @@ public class DemoController {
                 }
                 commodity.setName(commodityVo.getName());
                 commodity.setExterior(commodityVo.getExterior());
-                commodity.setFactory(commodityVo.getFactoryStr());
                 commodity.setExecutiveStandard(commodityVo.getExecutiveStandard());
                 commodity.setCreateTime(new Date());
                 commodity.setStatus(1);
