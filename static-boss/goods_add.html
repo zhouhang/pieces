@@ -113,13 +113,28 @@
 
                             <div class="group">
                                 <div class="txt">
+                                    <i>*</i>商品标题：
+                                </div>
+                                <div class="cnt">
+                                    <input type="text" class="ipt" value="" autocomplete="off" placeholder="">                            
+                                </div>
+                            </div>
+
+                            <div class="group">
+                                <div class="txt">
+                                    <i>*</i>规格等级：
+                                </div>
+                                <div class="cnt">
+                                    <input type="text" class="ipt" value="" autocomplete="off" placeholder="">                            
+                                </div>
+                            </div>
+
+                            <div class="group">
+                                <div class="txt">
                                     <i>*</i>切制规格：
                                 </div>
                                 <div class="cnt">
-                                    <select name="" id="" class="wide">
-                                        <option value=""></option>
-                                        <option value="">个</option>
-                                    </select>                         
+                                    <input type="text" class="ipt" value="" autocomplete="off" placeholder="">                            
                                 </div>
                             </div>
 
@@ -146,22 +161,65 @@
 
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>外观描述：
+                                    <i>*</i>性状描述：
                                 </div>
                                 <div class="cnt cnt-mul">
                                     <textarea class="ipt ipt-mul" name=""></textarea>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="group">
-                                <div class="txt">
-                                    <i>*</i>生产厂家：
-                                </div>
-                                <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" placeholder="">                            
-                                </div>
-                            </div>
+                    <div class="user-info">
+                        <h3>商品属性</h3>
+                        <div class="chart chart-form">
+                            <table id="attribute">
+                                <thead>
+                                    <tr>
+                                        <th width="200">属性名</th>
+                                        <th width="380">属性值</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3"><span class="c-blue" id="addAttribute">+增加新属性</span></td>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <tr>
+                                        <td><input type="text" class="ipt" value="年限"></td>
+                                        <td><input type="text" class="ipt" value=""></td>
+                                        <td><span class="c-red">删除</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="ipt" value="采收时间"></td>
+                                        <td><input type="text" class="ipt" value=""></td>
+                                        <td><span class="c-red">删除</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="ipt" value="加工方式"></td>
+                                        <td><input type="text" class="ipt" value=""></td>
+                                        <td><span class="c-red">删除</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="ipt" value="含硫情况"></td>
+                                        <td><input type="text" class="ipt" value=""></td>
+                                        <td><span class="c-red">删除</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="text" class="ipt" value="含量"></td>
+                                        <td><input type="text" class="ipt" value=""></td>
+                                        <td><span class="c-red">删除</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
+                    <div class="user-info">
+                        <h3>商品图片与详情</h3>
+                        <div class="fa-form">
                             <div class="group">
                                 <div class="txt">
                                     <i>*</i>商品图片：
@@ -226,6 +284,7 @@
                     this.formValidate();
                     this.submitEvent();
                     this.goodsImg();
+                    this.parameter();
                 },
                 formValidate: function() {
                     $("#myform").validator({
@@ -320,6 +379,22 @@
                         }
                     }
                     this.cropModal = new Croppic('imgCrop', options);
+                },
+                // 商品自定义参数
+                parameter: function() {
+                    var $table = $('#attribute').find('tbody');
+                    
+                    // 新增
+                    $('#addAttribute').on('click', function(){
+                        var tr = '<tr> \n <td><input type="text" class="ipt" value=""></td> \n <td><input type="text" class="ipt" value=""></td> \n <td><span class="c-red">删除</span></td> \n </tr>';
+
+                        $table.append(tr);
+                    })
+
+                    // 删除
+                    $table.on('click', '.c-red', function() {
+                        $(this).closest('tr').remove();
+                    })
                 }            
             }
         }

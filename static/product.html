@@ -529,40 +529,56 @@
                         <img src="uploads/p4.jpg" width="360" height="360" alt="">
                     </div>
                     <div class="ext-info">
-                        <h1 class="name">白芍</h1>
-                        <div class="summary">
-                            <ul>
-                                <li>
-                                    <div class="dt">切制规格</div>
-                                    <div class="dd">薄片</div>
-                                </li>
-                                <li>
-                                    <div class="dt">原药产地</div>
-                                    <div class="dd">湖北</div>
-                                </li>
-                                <li>
-                                    <div class="dt">外观描述</div>
-                                    <div class="dd">圆片、厚2-3mm、直径1.8cm以上、14#-18#、无空心片、异形片、黑片</div>
-                                </li>
-                                <li>
-                                    <div class="dt">执行标准</div>
-                                    <div class="dd">《中国药典》2015年版一部</div>
-                                </li>
-                                <li>
-                                    <div class="dt">生产厂家</div>
-                                    <div class="dd">安徽沪谯饮片厂</div>
-                                </li>
-                            </ul>
-                        </div>
+                        <h1 class="name">亳白芍选片20-24号筛  趁鲜加工  芍药苷3.0%  5年生  无硫</h1>
+
+                        <dl>
+                            <dt>商品名称</dt>
+                            <dd>白芍</dd>
+
+                            <dt>切制规格</dt>
+                            <dd>薄片</dd>
+
+                            <dt>原药产地</dt>
+                            <dd>湖北</dd>
+
+                            <dt>外观描述</dt>
+                            <dd>圆片、厚2-3mm、直径1.8cm以上、14#-18#、无空心片、异形片、黑片</dd>
+
+                            <dt>执行标准</dt>
+                            <dd>《中国药典》2015年版一部</dd>
+                        </dl>
+
+                        <dl class="line" id="rank">
+                            <dt>规格等级</dt>
+                            <dd>
+                                <a href="javascript:;" class="current">选装18-20号筛</a>
+                                <a href="javascript:;">选装16-18号筛</a>
+                                <a href="javascript:;">选装14-16号筛</a>
+                                <a href="javascript:;">选装12-14号筛</a>
+                                <a href="javascript:;">选装18-20号筛</a>
+                                <a href="javascript:;">选装16-18号筛</a>
+                                <a href="javascript:;">选装14-16号筛</a>
+                                <a href="javascript:;">选装12-14号筛</a>
+                            </dd>
+                        </dl>
                         <div class="buttons">
                             <a class="btn btn-red" href="#">询价</a>
-                            <a class="btn btn-gray" href="#"><i class="fa fa-heart"></i>收藏</a>
+                            <a class="btn btn-gray faved" href="#"><i class="fa fa-heart"></i>已收藏</a>
                         </div>
                     </div>
                 </div>
                 <div class="product-detail">
                     <div class="tab">
                         <span class="on">详细信息</span>
+                    </div>
+                    <div class="parameter">
+                        <ul>                                                                                          
+                            <li>年限：5年（确保全部5年生）</li>
+                            <li>加工方式：产地收购，趁鲜加工</li>
+                            <li>采收时间：夏季采收</li>
+                            <li>含量：芍药苷3.0%（药典含量1.2%）</li>
+                            <li>含硫情况：无硫</li>
+                        </ul>
                     </div>
                     <div class="tab-cont">
                         <div class="item">
@@ -658,5 +674,23 @@
 
     <script src="js/jquery.min.js"></script>
     <script src="js/common.js"></script>
+    <script>
+    var _global = {
+        v: {},
+        fn: {
+            init: function() {
+                this.rank();
+            },
+            rank: function() {
+                $('#rank').on('click', 'a', function() {
+                    $(this).addClass('current').siblings().removeClass('current');
+                })
+            }
+        }
+    }
+    $(function() {
+        _global.fn.init();
+    })
+    </script>
 </body>
 </html>

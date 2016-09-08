@@ -98,10 +98,10 @@
                                     <i>*</i>所属分类：
                                 </div>
                                 <div class="cnt">
-                                    <select name="" class="wide">
+                                    <select name="type" class="wide" id="type" data-msg="请选择所属分类">
                                         <option value="">--请选择--</option>
-                                        <option value="">根茎类</option>
-                                        <option value="">果实籽仁类</option>
+                                        <option value="1">根茎类</option>
+                                        <option value="2">果实籽仁类</option>
                                     </select>
                                 </div>
                             </div>
@@ -110,51 +110,16 @@
                                     <i>*</i>原药品种：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="name" id="name" placeholder="">                            
+                                    <input type="text" class="ipt" value="" autocomplete="off" name="name" placeholder="" data-msg="请填写原药品种"> 
                                 </div>
                             </div>
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>品种别名：
+                                    品种别名：
                                 </div>
                                 <div class="cnt cnt-mul">
                                     <textarea name="" class="ipt ipt-mul"></textarea>
                                     <span class="tips">多个别名请用逗号隔开</span>
-                                </div>
-                            </div>
-                            <div class="group">
-                                <div class="txt">
-                                    <i>*</i>常见切制规格：
-                                </div>
-                                <div class="cnt cnt-mul">
-                                    <label><input type="checkbox" class="cbx">个</label>
-                                    <label><input type="checkbox" class="cbx">两字</label>
-                                    <label><input type="checkbox" class="cbx">三个字</label>
-                                    <label><input type="checkbox" class="cbx">有四个字</label>
-                                    <label><input type="checkbox" class="cbx">还有五个字</label>
-                                    <label><input type="checkbox" class="cbx">尽然有六个字</label>
-                                </div>
-                            </div>
-                            <div class="group">
-                                <div class="txt">
-                                    <i>*</i>常见原药产地：
-                                </div>
-                                <div class="cnt cnt-mul">
-                                    <label><input type="checkbox" class="cbx">湖北省</label>
-                                    <label><input type="checkbox" class="cbx">湖南省</label>
-                                    <label><input type="checkbox" class="cbx">山东省</label>
-                                    <label><input type="checkbox" class="cbx">陕西省</label>
-                                </div>
-                            </div>
-                            <div class="group">
-                                <div class="txt">
-                                    <i>*</i>等级：
-                                </div>
-                                <div class="cnt cnt-mul">
-                                    <label><input type="checkbox" class="cbx">1</label>
-                                    <label><input type="checkbox" class="cbx">2</label>
-                                    <label><input type="checkbox" class="cbx">3</label>
-                                    <label><input type="checkbox" class="cbx">4</label>
                                 </div>
                             </div>
                         </div>
@@ -177,7 +142,7 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
     <script>
-        var roleAddPage = {
+        var _global = {
             v: {},
             fn: {
                 init: function() {
@@ -186,14 +151,15 @@
                 formValidate: function() {
                     $("#myform").validator({
                         fields: {
-                            username: "required"
+                            type: 'required',
+                            name: 'required'
                         }
                     });
                 }
             }
         }
         $(function() {
-            roleAddPage.fn.init();
+            _global.fn.init();
         })
     </script>
 </body>
