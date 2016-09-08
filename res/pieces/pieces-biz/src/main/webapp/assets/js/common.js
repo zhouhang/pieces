@@ -1,3 +1,7 @@
+/*! Lazy Load 1.9.7 - MIT license - Copyright 2010-2015 Mika Tuupola */
+!function(t,e,o,i){var n=t(e);t.fn.lazyload=function(r){function a(){var e=0;l.each(function(){var o=t(this);if(!h.skip_invisible||o.is(":visible"))if(t.abovethetop(this,h)||t.leftofbegin(this,h));else if(t.belowthefold(this,h)||t.rightoffold(this,h)){if(++e>h.failure_limit)return!1}else o.trigger("appear"),e=0})}var f,l=this,h={threshold:0,failure_limit:0,event:"scroll",effect:"show",container:e,data_attribute:"original",skip_invisible:!1,appear:null,load:null,defaultImg:"images/default-img.png",placeholder:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"};return l.each(function(){t(this).data(h.data_attribute)||t(this).attr("data-"+h.data_attribute,h.defaultImg)}),r&&(i!==r.failurelimit&&(r.failure_limit=r.failurelimit,delete r.failurelimit),i!==r.effectspeed&&(r.effect_speed=r.effectspeed,delete r.effectspeed),t.extend(h,r)),f=h.container===i||h.container===e?n:t(h.container),0===h.event.indexOf("scroll")&&f.on(h.event,function(){return a()}),this.each(function(){var e=this,o=t(e);e.loaded=!1,(o.attr("src")===i||o.attr("src")===!1)&&o.is("img")&&o.attr("src",h.placeholder),o.one("appear",function(){if(!this.loaded){if(h.appear){var i=l.length;h.appear.call(e,i,h)}t("<img />").one("load",function(){var i=o.attr("data-"+h.data_attribute);o.hide(),o.is("img")?o.attr("src",i):o.css("background-image","url('"+i+"')"),o[h.effect](h.effect_speed),e.loaded=!0;var n=t.grep(l,function(t){return!t.loaded});if(l=t(n),h.load){var r=l.length;h.load.call(e,r,h)}}).attr("src",o.attr("data-"+h.data_attribute))}}),0!==h.event.indexOf("scroll")&&o.on(h.event,function(){e.loaded||o.trigger("appear")})}),n.on("resize",function(){a()}),/(?:iphone|ipod|ipad).*os 5/gi.test(navigator.appVersion)&&n.on("pageshow",function(e){e.originalEvent&&e.originalEvent.persisted&&l.each(function(){t(this).trigger("appear")})}),t(o).ready(function(){a()}),this},t.belowthefold=function(o,r){var a;return a=r.container===i||r.container===e?(e.innerHeight?e.innerHeight:n.height())+n.scrollTop():t(r.container).offset().top+t(r.container).height(),a<=t(o).offset().top-r.threshold},t.rightoffold=function(o,r){var a;return a=r.container===i||r.container===e?n.width()+n.scrollLeft():t(r.container).offset().left+t(r.container).width(),a<=t(o).offset().left-r.threshold},t.abovethetop=function(o,r){var a;return a=r.container===i||r.container===e?n.scrollTop():t(r.container).offset().top,a>=t(o).offset().top+r.threshold+t(o).height()},t.leftofbegin=function(o,r){var a;return a=r.container===i||r.container===e?n.scrollLeft():t(r.container).offset().left,a>=t(o).offset().left+r.threshold+t(o).width()},t.inviewport=function(e,o){return!(t.rightoffold(e,o)||t.leftofbegin(e,o)||t.belowthefold(e,o)||t.abovethetop(e,o))},t.extend(t.expr[":"],{"below-the-fold":function(e){return t.belowthefold(e,{threshold:0})},"above-the-top":function(e){return!t.belowthefold(e,{threshold:0})},"right-of-screen":function(e){return t.rightoffold(e,{threshold:0})},"left-of-screen":function(e){return!t.rightoffold(e,{threshold:0})},"in-viewport":function(e){return t.inviewport(e,{threshold:0})},"above-the-fold":function(e){return!t.belowthefold(e,{threshold:0})},"right-of-fold":function(e){return t.rightoffold(e,{threshold:0})},"left-of-fold":function(e){return!t.rightoffold(e,{threshold:0})}})}(jQuery,window,document);
+
+
 ;(function($){
 	var defaults = {
 		clickToHide: true 	// 点击关闭
@@ -97,57 +101,6 @@ function throttle(func, wait, mustRun) {
     };
 };
 
-// 图片懒加载
-function loazyload() {
-	var $images = $('img[data-original]'),
-		size = $images.length,
-		defaultImg = 'images/default-img.png',
-		count = 0;
-		
-	var getEleCoord = function(element) {
-		var h = element.offsetHeight,
-			t = 0;
-
-	    while (element.offsetParent) {
-			t += element.offsetTop;
-	        element = element.offsetParent;
-	    }
-	    return {top: t, height: h};
-	}
-
-	var imgLoad = function() {
-		$images.each(function() {
-			var src = this.getAttribute('data-original');
-			if ($(this).data('loaded') === '1') {
-				return true; // continue
-			}
-
-			if (src) {
-				var docHeight = document.documentElement.clientHeight || document.body.clientHeight;
-				var docTop  = document.documentElement.scrollTop || document.body.scrollTop;
-				var coord  = getEleCoord(this);
-				if (coord.top <= docTop + docHeight && coord.top + coord.height >= docTop) {
-					this.src = src;
-					this.removeAttribute('data-original');
-				 	count ++;
-					$(this).removeClass('lazyload').data('loaded', '1');
-				}
-			} else {
-				count ++;
-				this.removeAttribute('data-original');
-				$(this).removeClass('lazyload').attr({
-					'loaded': '1',
-					'src': defaultImg
-				});
-			}
-
-			count === size && $(window).off('scroll.lazyload');
-		})
-	}
-	imgLoad();
-	count < size && $(window).on('scroll.lazyload', throttle(imgLoad,200,500));
-}
-
 function bindSearch() {
 	var $searchForm = $('#_search_form'),
 		timer, call;
@@ -193,8 +146,7 @@ function currNav() {
 	var $side = $('.side'),
         URL = document.URL.split('#')[0].split('?')[0].toLowerCase();
 
-    $side.find('a').each(function() {
-
+	$side.find('a').each(function() {
 		var $href = this.href.toLowerCase();
         if (URL === this.href.toLowerCase()) {
             $(this).addClass("curr").closest('dl').addClass('expand');
@@ -245,7 +197,6 @@ function quoteEvent() {
     })
 }
 
-
 // 商品分类
 function cat() {
 	$cat = $('#jcat');
@@ -295,7 +246,11 @@ function cat() {
 
 function pageInit() {
 	// 开启图片懒加载
-	loazyload();
+	$('.lazyload').lazyload({ 
+  		placeholder : 'images/loader.gif',
+       	effect_speed: 700,
+       	effect: 'fadeIn'
+    }); 
 	// search
 	bindSearch();
 	// 用户中心导航高亮
