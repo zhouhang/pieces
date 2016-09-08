@@ -1,3 +1,5 @@
+import com.sun.jmx.snmp.Timestamp;
+
 import java.util.*;
 
 /**
@@ -7,7 +9,16 @@ public class TestList {
 
 
     public static void main(String[] args) {
-        listIterator1();
+
+        Timestamp ts = new Timestamp(new Date().getTime());
+
+
+        String time = String.valueOf( ts.getDateTime());
+
+        System.out.println(time);
+        System.out.println(time.length());
+
+
     }
 
     public static void listIterator1() {

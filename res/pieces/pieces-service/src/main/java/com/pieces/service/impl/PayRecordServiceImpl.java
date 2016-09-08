@@ -160,6 +160,10 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		payRecord = payRecordDao.findById(payId);
 		//改变订单状态
 		orderFormService.changeOrderStatus(payRecord.getOrderId(), OrderEnum.WAIT_DELIVERY.getValue());
+
+		if (payRecord.getAccountBillId() != null) {
+			accountBillService.refreshStatus(payRecord.getAccountBillId());
+		}
 }
 
 	@Transactional

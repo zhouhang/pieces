@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.AccountBillDao;
+import com.pieces.dao.enums.PayEnum;
 import com.pieces.dao.model.AccountBill;
 import com.pieces.dao.model.OrderForm;
 import com.pieces.dao.model.PayRecord;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +36,9 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 
 	@Override
 	public PageInfo<AccountBillVo> findByParams(AccountBillVo accountBillVo,Integer pageNum,Integer pageSize) {
-    PageHelper.startPage(pageNum, pageSize);
+		pageNum = pageNum == null ? 1 : pageNum;
+		pageSize = pageSize == null ? 10 : pageSize;
+		PageHelper.startPage(pageNum, pageSize);
     	List<AccountBillVo>  list = accountBillDao.findByParams(accountBillVo);
         PageInfo page = new PageInfo(list);
         return page;
@@ -81,6 +85,63 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 		return accountBill;
 	}
 
+	@Override
+	@Transactional
+	public void auditSuccess(Integer billId, Integer memberId) {
+
+		AccountBill temp = accountBillDao.findById(billId);
+
+		// 约定还款时间(根据审核时间和 账期计算出来)
+		AccountBill accountBill = new AccountBill();
+		//账单状态 未完结
+		accountBill.setStatus(1);
+		accountBill.setMemberId(memberId);
+		// 立账时间()
+		accountBill.setOperateTime(new Date());
+		accountBill.setId(billId);
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, temp.getBillTime());
+		accountBill.setRepayTime(calendar.getTime());
+		accountBillDao.update(accountBill);
+	}
+
+	@Override
+	@Transactional
+	public void auditFail(Integer billId, String msg, Integer memberId) {
+		// 失败原因
+		// 审核人审核时间
+		AccountBill accountBill = new AccountBill();
+		accountBill.setId(billId);
+		accountBill.setOperateTime(new Date());
+		accountBill.setMemberId(memberId);
+		accountBill.setRemark(msg);
+		// 更改状态拒绝
+		accountBill.setStatus(-1);
+		accountBillDao.update(accountBill);
+	}
+
+	@Override
+	@Transactional
+	public void refreshStatus(Integer billId) {
+		// 账单状态 和 已付未付金额
+		AccountBillVo accountBillVo =  accountBillDao.findVoById(billId);
+		if (accountBillVo.getStatus() == 1) {
+			//已付
+			Double alreadyPayable = 0D;
+			for (PayRecordVo pay : accountBillVo.getPayRecordVoList()) {
+				if (pay.getStatus() == PayEnum.SUCCESS.getValue()) {
+					alreadyPayable += pay.getActualPayment();
+				}
+			}
+			//未付
+			Double unPayable = accountBillVo.getAmountsPayable() - alreadyPayable;
+			AccountBill accountBill = new AccountBill();
+			accountBill.setId(billId);
+			accountBill.setAlreadyPayable(alreadyPayable);
+			accountBill.setUnPayable(unPayable);
+			accountBillDao.update(accountBill);
+		}
+	}
 
 	@Override
 	public ICommonDao<AccountBill> getDao() {

@@ -161,4 +161,6 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
         return commodityDoc;
     }
 
+
+
 }
