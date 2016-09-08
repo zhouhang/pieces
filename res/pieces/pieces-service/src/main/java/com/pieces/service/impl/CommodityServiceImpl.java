@@ -10,6 +10,7 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import com.pieces.service.utils.ValidUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -271,8 +272,8 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 
 	@Override
 	public Category findBreedByName(CommodityVo commodityVO) {
-		CommodityVo vo = commodityDao.findCommodityByName(commodityVO).get(0);
-		return categoryService.findById(vo.getCategoryId());
+        List<CommodityVo> list= commodityDao.findCommodityByName(commodityVO);
+		return ValidUtils.listNotBlank(list) ? categoryService.findById(list.get(0).getCategoryId()) : null;
 	}
 
 	@Override
