@@ -42,6 +42,10 @@
         id,category_id,name,title,level,spec,origin_of,executive_standard,exterior,attribute,details,picture_url,status,create_time
     </sql>
 
+    <sql id="Base_Column_List_B">
+        coom.id as id,category_id,name,title,level,spec,origin_of,executive_standard,exterior,attribute,details,picture_url,status,create_time
+    </sql>
+
     <select id="findById" parameterType="java.lang.Integer" resultMap="CommodityResultMap">
         select
         <include refid="Base_Column_List" />
@@ -65,8 +69,10 @@
 
     <select id="findByParam" parameterType="com.pieces.dao.vo.CommodityVo" resultMap="CommodityVOResultMap">
         select
-        <include refid="Base_Column_List" />
+        coom.*,
+        category.name as categoryName
         from commodity coom
+        left join category on category_id = category.id
         <where>
             <if test="id != null">
                 id = #{id}
@@ -81,11 +87,11 @@
             </if>
 
             <if test="spec != null">
-               and spec = #{spec}
+               and spec like "%"#{spec}"%"
             </if>
 
             <if test="originOf != null">
-               and origin_of = #{originOf}
+               and origin_of like "%"#{originOf}"%"
             </if>
             <if test="executiveStandard != null">
                and executive_standard like "%"#{executiveStandard}"%"
@@ -121,6 +127,10 @@
             <if test="categoryName != null">
                 and category.name like "%"#{categoryName}"%"
             </if>
+            <if test="level != null">
+                and coom.level like "%"#{level}"%"
+            </if>
+
 
         </where>
         order by coom.id DESC

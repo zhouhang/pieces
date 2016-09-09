@@ -35,7 +35,8 @@
                                 <i>*</i>原药品种：
                             </div>
                             <div class="cnt">
-                                <input type="text" id="categoryId" class="ipt" value="" autocomplete="off" placeholder="">
+                                <input type="text" id="categoryId" class="ipt" value="" autocomplete="off"
+                                       placeholder="">
                                 <input type="text" id="categoryIdV" name="categoryId" style=" display: none;">
                             </div>
                         </div>
@@ -48,37 +49,36 @@
                                 <input type="text" class="ipt" value="" name="name" autocomplete="off" placeholder="">
                             </div>
                         </div>
-
+                        <div class="group">
+                            <div class="txt">
+                                <i>*</i>商品标题：
+                            </div>
+                            <div class="cnt">
+                                <input type="text" class="ipt" value="" name="title" autocomplete="off" placeholder="">
+                            </div>
+                        </div>
+                        <div class="group">
+                            <div class="txt">
+                                <i>*</i>规格等级：
+                            </div>
+                            <div class="cnt">
+                                <input type="text" class="ipt" value="" name="level" autocomplete="off" placeholder="">
+                            </div>
+                        </div>
                         <div class="group">
                             <div class="txt">
                                 <i>*</i>切制规格：
                             </div>
                             <div class="cnt">
-                                <select name="spec" id="spec" class="wide">
-                                    <option value="-1">请选择</option>
-                                </select>
+                                <input type="text" class="ipt" value="" name="spec" autocomplete="off" placeholder="">
                             </div>
                         </div>
-
-                        <div class="group">
-                            <div class="txt">
-                                <i>*</i>等级：
-                            </div>
-                            <div class="cnt">
-                                <select name="level" id="level" class="wide">
-                                    <option value="-1">请选择</option>
-                                </select>
-                            </div>
-                        </div>
-
                         <div class="group">
                             <div class="txt">
                                 <i>*</i>原药产地：
                             </div>
                             <div class="cnt">
-                                <select name="originOf" id="originOf" class="wide">
-                                    <option value="-1">请选择</option>
-                                </select>
+                                <input type="text" class="ipt" value="" name="originOf" autocomplete="off" placeholder="">
                             </div>
                         </div>
 
@@ -94,21 +94,68 @@
 
                         <div class="group">
                             <div class="txt">
-                                <i>*</i>外观描述：
+                                <i>*</i>性状描述：
                             </div>
                             <div class="cnt cnt-mul">
                                 <textarea class="ipt ipt-mul" name="exterior"></textarea>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="group">
-                            <div class="txt">
-                                <i>*</i>生产厂家：
-                            </div>
-                            <div class="cnt">
-                                <input type="text" name="factory" class="ipt" value="" autocomplete="off" placeholder="">
-                            </div>
-                        </div>
+                <!-- 商品属性 -->
+                <div class="user-info">
+                    <h3>商品属性</h3>
+                    <div class="chart chart-form">
+                        <table id="attribute">
+                            <thead>
+                            <tr>
+                                <th width="200">属性名</th>
+                                <th width="380">属性值</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <td colspan="3"><span class="c-blue" id="addAttribute">+增加新属性</span></td>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            <tr>
+                                <td><input type="text" class="ipt" value="年限"></td>
+                                <td><input type="text" class="ipt" value=""></td>
+                                <td><span class="c-red">删除</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="ipt" value="采收时间"></td>
+                                <td><input type="text" class="ipt" value=""></td>
+                                <td><span class="c-red">删除</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="ipt" value="加工方式"></td>
+                                <td><input type="text" class="ipt" value=""></td>
+                                <td><span class="c-red">删除</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="ipt" value="含硫情况"></td>
+                                <td><input type="text" class="ipt" value=""></td>
+                                <td><span class="c-red">删除</span></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="ipt" value="含量"></td>
+                                <td><input type="text" class="ipt" value=""></td>
+                                <td><span class="c-red">删除</span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- 商品属性 -->
+                <input name="attribute" id="attribute"  style="display: none;">
+                <!-- 商品图片与详情 -->
+                <div class="user-info">
+                    <h3>商品图片与详情</h3>
+                    <div class="fa-form">
 
                         <div class="group">
                             <div class="txt">
@@ -126,7 +173,8 @@
                             <div class="txt">
                                 <i>*</i>详细信息：
                             </div>
-                            <div class="cnt cnt-mul" name="details" id="details" style="width: 700px; height: 350px; clear: both;">
+                            <div class="cnt cnt-mul" name="details" id="details"
+                                 style="width: 700px; height: 350px; clear: both;">
                             </div>
                             <div id="detailsError" style="padding-top: 10px;" class="clear">
                             </div>
@@ -157,14 +205,14 @@
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
 <script src="/js/jquery.autocomplete.js"></script>
-<link type="text/css" rel="stylesheet" href="/js/autocomplete/style.css" />
+<link type="text/css" rel="stylesheet" href="/js/autocomplete/style.css"/>
 
 <script src="/js/code.js"></script>
 <script src="/js/common.js"></script>
 <script src="/js/croppic.min.js"></script>
 <script src="/js/layer/layer.js"></script>
-<link type="text/css" rel="stylesheet" href="/js/layer/skin/layer.css" />
-<link type="text/css" rel="stylesheet" href="/js/validator/jquery.validator.css" />
+<link type="text/css" rel="stylesheet" href="/js/layer/skin/layer.css"/>
+<link type="text/css" rel="stylesheet" href="/js/validator/jquery.validator.css"/>
 <script src="/js/validator/jquery.validator.min.js"></script>
 <script src="/js/validator/local/zh-CN.js"></script>
 
@@ -178,7 +226,7 @@
 
     var commodityAddPage = {
         v: {
-            form:null
+            form: null
         },
         fn: {
             init: function () {
@@ -186,86 +234,71 @@
                 this.submitEvent();
                 this.goodsImg();
                 this.initAutocomplete();
+                this.parameter();
             },
             initAutocomplete: function () {
                 var categoryId = $('#categoryId').val();
-                var categoryIdV =   $("#categoryIdV").val();
+                var categoryIdV = $("#categoryIdV").val();
 
                 /**
                  * 初始化自动提示框.
                  */
-               $('#categoryId').autocomplete({
+                $('#categoryId').autocomplete({
                     serviceUrl: '/breed/search',
-                    paramName:'name',
-                    preventBadQueries:false,
-                    deferRequestBy:0,
-                    triggerSelectOnValidInput:false,
+                    paramName: 'name',
+                    preventBadQueries: false,
+                    deferRequestBy: 0,
+                    triggerSelectOnValidInput: false,
 //                    autoSelectFirst:true,
-                    transformResult: function(response) {
+                    transformResult: function (response) {
                         response = JSON.parse(response);
                         if (response.status == "y") {
                             return {
-                                suggestions: $.map(response.data, function(dataItem) {
-                                    return { value: dataItem.name, data: dataItem.id };
+                                suggestions: $.map(response.data, function (dataItem) {
+                                    return {value: dataItem.name, data: dataItem.id};
                                 })
                             };
                         } else {
                             return {
-                                suggestions:[]
+                                suggestions: []
                             }
                         }
                     },
                     onSelect: function (suggestion) {
                         $("#categoryIdV").val(suggestion.data);
-                        //TODO: 获取品种的切制规格,原药产地,等级,执行标准
-                        $("#spec").code({beedId:suggestion.data,typeId:'SPEC'});//"切制规格"
-                        $("#originOf").code({beedId:suggestion.data,typeId:'ORIGIN'});//"原药产地"
-                        $("#level").code({beedId:suggestion.data,typeId:'LEVEL'});//"等级"
-                        categoryIdV = suggestion.data;
-                        categoryId =  suggestion.value;
                     }
                 });
 
                 /**
                  * 清空品种输入框的值.
                  */
-                $("#categoryId").blur(function(){
-                    var html = "<option value='-1'>请选择</option>";
-                    if($("#categoryIdV").val() == "") {
+                $("#categoryId").blur(function () {
+                    if ($("#categoryIdV").val() == "") {
                         $("#categoryId").val("");
-                        cleanCode();
                         return;
                     }
 
                     if ($("#categoryIdV").val() == categoryIdV && categoryId != $("#categoryId").val()) {
                         $("#categoryId").val("");
                         $("#categoryIdV").val("");
-                        cleanCode();
                         return;
                     }
-
-                    function cleanCode(){
-                        $("#spec").html(html);
-                        $("#originOf").html(html);
-                        $("#level").html(html);
-                    }
-
                 });
             },
             formValidate: function () {
                 $("#form").validator({
                     fields: {
                         categoryId: "required",
-                        name: "required;length[2~50]",
-                        spec: "required(not, -1)",
-                        level: "required(not, -1)",
-                        originOf: "required(not, -1)",
+                        name: "required;length[2~20]",
+                        title:"required;length[2~50]",
+                        spec: "required;length[2~20]",
+                        level: "required;length[2~50]",
+                        originOf: "required;length[2~20]",
                         executiveStandard: "required;length[1~20]",
                         exterior: "required;length[2~50]",
-                        factory: "required;length[2~20]",
-                        imgUrl: "required",
+                        pictureUrl: "required",
                         details: {
-                            rule:  "required",
+                            rule: "required",
                             target: "#detailsError"
                         },
                         status: "required"
@@ -275,12 +308,19 @@
             // 提交事件
             submitEvent: function () {
                 $('#submit').on('click', function () {
-                    $('#form').isValid(function(v){
+                    $('#form').isValid(function (v) {
                         //console.log(v ? '表单验证通过' : '表单验证不通过');
-                        if(v) {
+
+                        if (v) {
+                            var attr = {};
+                            var trs = $("#attribute>tbody tr");
+                            $.each(trs, function (k, v) {
+                                attr[$($(v).find("input")[0]).val()] = $($(v).find("input")[1]).val();
+                            })
                             var data = $("#form").serializeObject();
-                            $.post("/commodity/save",data, function(data){
-                                if(data.status == "y") {
+                            data.attribute = JSON.stringify(attr);
+                            $.post("/commodity/save", data, function (data) {
+                                if (data.status == "y") {
                                     $.notify({
                                         type: 'success',
                                         title: '保存成功',
@@ -294,8 +334,9 @@
                             })
                         }
                     });
+                    return false;
                 })
-                return false;
+
             },
             // 商品图片
             goodsImg: function () {
@@ -347,8 +388,8 @@
                     onBeforeImgUpload: function () {
 
                         // 检查图片大小
-                        var size =  $("#imgCrop_imgUploadField")[0].files[0].size;
-                        if (size && size/(1024*1024) >2) {
+                        var size = $("#imgCrop_imgUploadField")[0].files[0].size;
+                        if (size && size / (1024 * 1024) > 2) {
                             $.notify({
                                 type: 'error',
                                 title: "提示消息",   // 不允许的文件类型
@@ -386,6 +427,22 @@
                     }
                 }
                 this.cropModal = new Croppic('imgCrop', options);
+            },
+            // 商品自定义参数
+            parameter: function () {
+                var $table = $('#attribute').find('tbody');
+
+                // 新增
+                $('#addAttribute').on('click', function () {
+                    var tr = '<tr> \n <td><input type="text" class="ipt" value=""></td> \n <td><input type="text" class="ipt" value=""></td> \n <td><span class="c-red">删除</span></td> \n </tr>';
+
+                    $table.append(tr);
+                })
+
+                // 删除
+                $table.on('click', '.c-red', function () {
+                    $(this).closest('tr').remove();
+                })
             }
         }
     }

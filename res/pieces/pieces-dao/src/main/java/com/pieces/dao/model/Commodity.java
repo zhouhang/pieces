@@ -19,10 +19,10 @@ public class Commodity  implements Serializable {
 	//商品标题
 	private String title;
 	
-	//等级
+	//规格等级
 	private String level;
 	
-	//规格等级
+	//切制规格
 	private String spec;
 	
 	//原药产地

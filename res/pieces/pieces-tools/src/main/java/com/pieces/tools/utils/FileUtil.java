@@ -101,7 +101,8 @@ public class FileUtil {
     public static String saveFileFromTemp(String url, String direct) {
         // 判断url中不包含temp 直接return null
         if (!url.contains("temp/")) {
-            return null;
+            url = url.replace(urlPre, absolutePath);
+            return url;
         }
 
         File srcFile = new File(url.replace(urlPre, absolutePath));

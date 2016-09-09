@@ -11,7 +11,7 @@ import com.pieces.tools.utils.GsonUtil;
 import org.apache.commons.lang.StringUtils;
 
 
-public class CommodityVo extends Commodity implements Serializable {
+public class CommodityVo extends Commodity {
 
 	private static final long serialVersionUID = 1L;
 
