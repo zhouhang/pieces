@@ -32,11 +32,6 @@ public class CommodityVo extends Commodity {
 	private String eqName;
 
 
-
-	//设置商品列表页面该code是否选中
-	private boolean checked;
-
-
 	private Map<String,String> attributeView;
 
 	public Integer getBreedId() {
@@ -78,14 +73,6 @@ public class CommodityVo extends Commodity {
 
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
-	}
-
-	public boolean isChecked() {
-		return checked;
-	}
-
-	public void setChecked(boolean checked) {
-		this.checked = checked;
 	}
 
 
