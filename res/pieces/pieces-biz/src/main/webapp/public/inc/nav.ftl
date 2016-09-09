@@ -13,7 +13,7 @@
             <li>|</li>
             <li><a href="/help/0">帮助中心</a></li>
             <li>|</li>
-            <li><a href="sitemap.html">网站导航 <i class="fa fa-chevron-down"></i></a></li>
+            <li><a href="/sitemap">网站导航 <i class="fa fa-chevron-down"></i></a></li>
         </ul>
     </div>
 </div><!-- site-nav end -->

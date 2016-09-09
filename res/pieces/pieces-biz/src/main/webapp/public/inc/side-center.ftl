@@ -32,20 +32,6 @@
     </dl>
     <dl>
         <dt>
-            <em class="fa fa-clock"></em>
-            <span>交货周期</span>
-            <i class="fa fa-chevron-right"></i>
-        </dt>
-    </dl>
-    <dl>
-        <dt>
-            <em class="fa fa-invoice"></em>
-            <span>发票</span>
-            <i class="fa fa-chevron-right"></i>
-        </dt>
-    </dl>
-    <dl>
-        <dt>
             <em class="fa fa-bill"></em>
             <span>对账单</span>
             <i class="fa fa-chevron-right"></i>

@@ -325,6 +325,36 @@ public class RedisManager{
 		}
 		return false;
 	}
+
+
+	/**
+	 * 当key不存在的时候设置key
+	 * @param key
+	 * @param value
+     * @return
+     */
+	public boolean setnx(String key,String value){
+		ShardedJedis jedis = null;
+		try {
+			jedis = getJedis();
+			return jedis.setnx(key, value)==1L;
+		} catch (JedisConnectionException e) {
+			try {
+				releaseBroken(jedis);
+			} catch (Exception ex) {
+				log.error(ex.toString());
+			}
+		} catch (Exception e) {
+			log.error(e.toString());
+		} finally {
+			try {
+				release(jedis);
+			} catch (Exception e) {
+				log.error(e.toString());
+			}
+		}
+		return false;
+	}
 	
 	
 	

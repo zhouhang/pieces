@@ -47,7 +47,9 @@
                                         <td><em class="c-red">${bill.statusText!}</em></td>
                                         <td>${bill.repayTime?string("yyyy-MM-dd")}</td>
                                         <td class="tc">
-                                            <a class="btn btn-red" href="/center/bill/pay/${bill.id}">付款</a>
+                                            <#if bill.status==1>
+                                                <a class="btn btn-red" href="/center/bill/pay/${bill.id}">付款</a>
+                                            </#if>
                                             <a href="/center/bill/detail/${bill.id}" class="c-blue">查看详情</a>
                                         </td>
                                     </tr>
