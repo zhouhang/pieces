@@ -20,23 +20,23 @@
                         <dl>
                             <dt>组&#12288;&#12288;成：</dt>
                             <dd>
-                                <a href="#">桂枝</a>
-                                <a href="#">芍药</a>
-                                <a href="#">生姜</a>
-                                <a href="#">大枣</a>
-                                <a href="#">甘草</a>
+                                <a href="/commodity/search?keyword=桂枝" target="_black">桂枝</a>
+                                <a href="/commodity/search?keyword=芍药" target="_black">芍药</a>
+                                <a href="/commodity/search?keyword=生姜" target="_black">生姜</a>
+                                <a href="/commodity/search?keyword=大枣" target="_black">大枣</a>
+                                <a href="/commodity/search?keyword=甘草" target="_black">甘草</a>
                             </dd>
                             <dt>常见配伍：</dt>
                             <dd>                                
-                                <a href="#">葛根</a>
-                                <a href="#">厚朴</a>
-                                <a href="#">杏仁</a>
-                                <a href="#">防风</a>
-                                <a href="#">荆芥</a>
-                                <a href="#">淡豆豉</a>
-                                <a href="#">黄芪</a>
-                                <a href="#">苏子</a>
-                                <a href="#">桔梗</a>
+                                <a href="/commodity/search?keyword=葛根" target="_black">葛根</a>
+                                <a href="/commodity/search?keyword=厚朴" target="_black">厚朴</a>
+                                <a href="/commodity/search?keyword=杏仁" target="_black">杏仁</a>
+                                <a href="/commodity/search?keyword=防风" target="_black">防风</a>
+                                <a href="/commodity/search?keyword=荆芥" target="_black">荆芥</a>
+                                <a href="/commodity/search?keyword=淡豆豉" target="_black">淡豆豉</a>
+                                <a href="/commodity/search?keyword=黄芪" target="_black">黄芪</a>
+                                <a href="/commodity/search?keyword=苏子" target="_black">苏子</a>
+                                <a href="/commodity/search?keyword=桔梗" target="_black">桔梗</a>
                             </dd>
                         </dl>
                         <div class="pic">
@@ -50,25 +50,25 @@
                         <dl>
                             <dt>组&#12288;&#12288;成：</dt>
                             <dd>
-                                <a href="#">麻黄</a>
-                                <a href="#">桂枝</a>
-                                <a href="#">杏仁</a>
-                                <a href="#">甘草</a>
+                                <a href="/commodity/search?keyword=麻黄" target="_black">麻黄</a>
+                                <a href="/commodity/search?keyword=桂枝" target="_black">桂枝</a>
+                                <a href="/commodity/search?keyword=杏仁" target="_black">杏仁</a>
+                                <a href="/commodity/search?keyword=甘草" target="_black">甘草</a>
                             </dd>
                             <dt>常见配伍：</dt>
                             <dd>                                                
-                                <a href="#">苏子</a>
-                                <a href="#">半夏</a>
-                                <a href="#">苍耳子</a>
-                                <a href="#">辛夷</a>
-                                <a href="#">苍术</a>
-                                <a href="#">薏苡仁</a>
-                                <a href="#">石膏</a>
-                                <a href="#">黄芩</a>
-                                <a href="#">桔梗</a>
-                                <a href="#">白术</a>
-                                <a href="#">生姜</a>
-                                <a href="#">大枣</a>
+                                <a href="/commodity/search?keyword=苏子" target="_black">苏子</a>
+                                <a href="/commodity/search?keyword=半夏" target="_black">半夏</a>
+                                <a href="/commodity/search?keyword=苍耳子" target="_black">苍耳子</a>
+                                <a href="/commodity/search?keyword=辛夷" target="_black">辛夷</a>
+                                <a href="/commodity/search?keyword=苍术" target="_black">苍术</a>
+                                <a href="/commodity/search?keyword=薏苡仁" target="_black">薏苡仁</a>
+                                <a href="/commodity/search?keyword=石膏" target="_black">石膏</a>
+                                <a href="/commodity/search?keyword=黄芩" target="_black">黄芩</a>
+                                <a href="/commodity/search?keyword=桔梗" target="_black">桔梗</a>
+                                <a href="/commodity/search?keyword=白术" target="_black">白术</a>
+                                <a href="/commodity/search?keyword=生姜" target="_black">生姜</a>
+                                <a href="/commodity/search?keyword=大枣" target="_black">大枣</a>
                             </dd>
                         </dl>
                         <div class="pic">
@@ -82,27 +82,27 @@
                         <dl>
                             <dt>组&#12288;&#12288;成：</dt>
                             <dd>                        
-                                <a href="#">葛根</a>
-                                <a href="#">麻黄</a>
-                                <a href="#">桂枝</a>
-                                <a href="#">芍药</a>
-                                <a href="#">甘草</a>
-                                <a href="#">生姜</a>
-                                <a href="#">大枣</a>
+                                <a href="/commodity/search?keyword=葛根" target="_black">葛根</a>
+                                <a href="/commodity/search?keyword=麻黄" target="_black">麻黄</a>
+                                <a href="/commodity/search?keyword=桂枝" target="_black">桂枝</a>
+                                <a href="/commodity/search?keyword=芍药" target="_black">芍药</a>
+                                <a href="/commodity/search?keyword=甘草" target="_black">甘草</a>
+                                <a href="/commodity/search?keyword=生姜" target="_black">生姜</a>
+                                <a href="/commodity/search?keyword=大枣" target="_black">大枣</a>
                             </dd>
                             <dt>常见配伍：</dt>
                             <dd>                                                                                            
-                                <a href="#">半夏</a>
-                                <a href="#">黄芩</a>
-                                <a href="#">升麻</a>
-                                <a href="#">秦艽</a>
-                                <a href="#">荆芥</a>
-                                <a href="#">赤芍</a>
-                                <a href="#">白芷</a>
-                                <a href="#">枳实</a>
-                                <a href="#">栀子</a>
-                                <a href="#">仁豉</a>
-                                <a href="#">当归</a>
+                                <a href="/commodity/search?keyword=半夏" target="_black">半夏</a>
+                                <a href="/commodity/search?keyword=黄芩" target="_black">黄芩</a>
+                                <a href="/commodity/search?keyword=升麻" target="_black">升麻</a>
+                                <a href="/commodity/search?keyword=秦艽" target="_black">秦艽</a>
+                                <a href="/commodity/search?keyword=荆芥" target="_black">荆芥</a>
+                                <a href="/commodity/search?keyword=赤芍" target="_black">赤芍</a>
+                                <a href="/commodity/search?keyword=白芷" target="_black">白芷</a>
+                                <a href="/commodity/search?keyword=枳实" target="_black">枳实</a>
+                                <a href="/commodity/search?keyword=栀子" target="_black">栀子</a>
+                                <a href="/commodity/search?keyword=仁豉" target="_black">仁豉</a>
+                                <a href="/commodity/search?keyword=当归" target="_black">当归</a>
                             </dd>
                         </dl>
                         <div class="pic">
@@ -116,29 +116,29 @@
                         <dl>
                             <dt>组&#12288;&#12288;成：</dt>
                             <dd>                                                    
-                                <a href="#">柴胡</a>
-                                <a href="#">黄芩</a>
-                                <a href="#">半夏</a>
-                                <a href="#">人参</a>
-                                <a href="#">紫草</a>
-                                <a href="#">黄连</a>
-                                <a href="#">茯苓</a>
-                                <a href="#">甘草</a>
+                                <a href="/commodity/search?keyword=柴胡" target="_black">柴胡</a>
+                                <a href="/commodity/search?keyword=黄芩" target="_black">黄芩</a>
+                                <a href="/commodity/search?keyword=半夏" target="_black">半夏</a>
+                                <a href="/commodity/search?keyword=人参" target="_black">人参</a>
+                                <a href="/commodity/search?keyword=紫草" target="_black">紫草</a>
+                                <a href="/commodity/search?keyword=黄连" target="_black">黄连</a>
+                                <a href="/commodity/search?keyword=茯苓" target="_black">茯苓</a>
+                                <a href="/commodity/search?keyword=甘草" target="_black">甘草</a>
                             </dd>
                             <dt>常见配伍：</dt>
                             <dd>                                                                                            
-                                <a href="#">半夏</a>
-                                <a href="#">黄芩</a>
-                                <a href="#">升麻</a>
-                                <a href="#">秦艽</a>
-                                <a href="#">荆芥</a>
-                                <a href="#">赤芍</a>
-                                <a href="#">苏叶</a>
-                                <a href="#">白芷</a>
-                                <a href="#">枳实</a>
-                                <a href="#">栀子</a>
-                                <a href="#">仁豉</a>
-                                <a href="#">当归</a>
+                                <a href="/commodity/search?keyword=半夏" target="_black">半夏</a>
+                                <a href="/commodity/search?keyword=黄芩" target="_black">黄芩</a>
+                                <a href="/commodity/search?keyword=升麻" target="_black">升麻</a>
+                                <a href="/commodity/search?keyword=秦艽" target="_black">秦艽</a>
+                                <a href="/commodity/search?keyword=荆芥" target="_black">荆芥</a>
+                                <a href="/commodity/search?keyword=赤芍" target="_black">赤芍</a>
+                                <a href="/commodity/search?keyword=苏叶" target="_black">苏叶</a>
+                                <a href="/commodity/search?keyword=白芷" target="_black">白芷</a>
+                                <a href="/commodity/search?keyword=枳实" target="_black">枳实</a>
+                                <a href="/commodity/search?keyword=栀子" target="_black">栀子</a>
+                                <a href="/commodity/search?keyword=仁豉" target="_black">仁豉</a>
+                                <a href="/commodity/search?keyword=当归" target="_black">当归</a>
                             </dd>
                         </dl>
                         <div class="pic">
@@ -152,16 +152,16 @@
                         <dl>
                             <dt>组&#12288;&#12288;成：</dt>
                             <dd>                                                                
-                                <a href="#">石膏</a>
-                                <a href="#">知母</a>
-                                <a href="#">粳米</a>
-                                <a href="#">甘草</a>
+                                <a href="/commodity/search?keyword=石膏" target="_black">石膏</a>
+                                <a href="/commodity/search?keyword=知母" target="_black">知母</a>
+                                <a href="/commodity/search?keyword=粳米" target="_black">粳米</a>
+                                <a href="/commodity/search?keyword=甘草" target="_black">甘草</a>
                             </dd>
                             <dt>常见配伍：</dt>        
                             <dd>                                                                                            
-                                <a href="#">人参</a>
-                                <a href="#">桂枝</a>
-                                <a href="#">苍术</a>
+                                <a href="/commodity/search?keyword=人参" target="_black">人参</a>
+                                <a href="/commodity/search?keyword=桂枝" target="_black">桂枝</a>
+                                <a href="/commodity/search?keyword=苍术" target="_black">苍术</a>
                             </dd>
                         </dl>
                         <div class="pic">
@@ -175,15 +175,15 @@
                         <dl>
                             <dt>组&#12288;&#12288;成：</dt>
                             <dd>                                                                
-                                <a href="#">大黄</a>        
-                                <a href="#">枳实</a>
-                                <a href="#">厚朴</a>
+                                <a href="/commodity/search?keyword=大黄" target="_black">大黄</a>
+                                <a href="/commodity/search?keyword=枳实" target="_black">枳实</a>
+                                <a href="/commodity/search?keyword=厚朴" target="_black">厚朴</a>
                             </dd>
                             <dt>常见配伍：</dt>        
                             <dd>                                                                                            
-                                <a href="#">干姜</a>
-                                <a href="#">芒硝</a>        
-                                <a href="#">甘草</a>
+                                <a href="/commodity/search?keyword=干姜" target="_black">干姜</a>
+                                <a href="/commodity/search?keyword=芒硝" target="_black">芒硝</a>
+                                <a href="/commodity/search?keyword=甘草" target="_black">甘草</a>
                             </dd>
                         </dl>
                         <div class="pic">
@@ -197,21 +197,21 @@
                         <dl>
                             <dt>组&#12288;&#12288;成：</dt>
                             <dd>                                                                
-                                <a href="#">枳实</a>                                        
-                                <a href="#">玄明粉</a>
-                                <a href="#">瓜篓霜</a>
-                                <a href="#">桔梗</a>
-                                <a href="#">甘草</a>
-                                <a href="#">紫苏</a>
-                                <a href="#">茯苓</a>
-                                <a href="#">陈皮</a>
-                                <a href="#">杏仁</a>
+                                <a href="/commodity/search?keyword=枳实" target="_black">枳实</a>
+                                <a href="/commodity/search?keyword=玄明粉" target="_black">玄明粉</a>
+                                <a href="/commodity/search?keyword=瓜篓霜" target="_black">瓜篓霜</a>
+                                <a href="/commodity/search?keyword=桔梗" target="_black">桔梗</a>
+                                <a href="/commodity/search?keyword=甘草" target="_black">甘草</a>
+                                <a href="/commodity/search?keyword=紫苏" target="_black">紫苏</a>
+                                <a href="/commodity/search?keyword=茯苓" target="_black">茯苓</a>
+                                <a href="/commodity/search?keyword=陈皮" target="_black">陈皮</a>
+                                <a href="/commodity/search?keyword=杏仁" target="_black">杏仁</a>
                             </dd>
                             <dt>常见配伍：</dt>        
                             <dd>                                                                                            
-                                <a href="#">葶苈子</a>        
-                                <a href="#">大黄</a>        
-                                <a href="#">甘遂</a>
+                                <a href="/commodity/search?keyword=葶苈子" target="_black">葶苈子</a>
+                                <a href="/commodity/search?keyword=大黄" target="_black">大黄</a>
+                                <a href="/commodity/search?keyword=甘遂" target="_black">甘遂</a>
                             </dd>
                         </dl>
                         <div class="pic">
@@ -225,18 +225,18 @@
                         <dl>
                             <dt>组&#12288;&#12288;成：</dt>
                             <dd>                                                                
-                                <a href="#">水蛭</a>                    
-                                <a href="#">虻虫</a>
-                                <a href="#">桃仁</a>
-                                <a href="#">大黄</a>
+                                <a href="/commodity/search?keyword=水蛭" target="_black">水蛭</a>
+                                <a href="/commodity/search?keyword=虻虫" target="_black">虻虫</a>
+                                <a href="/commodity/search?keyword=桃仁" target="_black">桃仁</a>
+                                <a href="/commodity/search?keyword=大黄" target="_black">大黄</a>
                             </dd>
                             <dt>常见配伍：</dt>        
                             <dd>                                                                                                            
-                                <a href="#">生地</a>
-                                <a href="#">归尾</a>        
-                                <a href="#">穿山甲</a>
-                                <a href="#">玄明粉</a>
-                                <a href="#">桂枝</a>
+                                <a href="/commodity/search?keyword=生地" target="_black">生地</a>
+                                <a href="/commodity/search?keyword=归尾" target="_black">归尾</a>
+                                <a href="/commodity/search?keyword=穿山甲" target="_black">穿山甲</a>
+                                <a href="/commodity/search?keyword=玄明粉" target="_black">玄明粉</a>
+                                <a href="/commodity/search?keyword=桂枝" target="_black">桂枝</a>
                             </dd>
                         </dl>
                         <div class="pic">
@@ -250,17 +250,17 @@
                         <dl>
                             <dt>组&#12288;&#12288;成：</dt>
                             <dd>                                                                        
-                                <a href="#">附子</a>        
-                                <a href="#">干姜</a>
-                                <a href="#">甘草</a>
+                                <a href="/commodity/search?keyword=附子" target="_black">附子</a>
+                                <a href="/commodity/search?keyword=干姜" target="_black">干姜</a>
+                                <a href="/commodity/search?keyword=甘草" target="_black">甘草</a>
                             </dd>
                             <dt>常见配伍：</dt>        
                             <dd>                                                                                                            
-                                <a href="#">人参</a>
-                                <a href="#">茯苓</a>        
-                                <a href="#">白术</a>
-                                <a href="#">葱白</a>
-                                <a href="#">芍药</a>
+                                <a href="/commodity/search?keyword=人参" target="_black">人参</a>
+                                <a href="/commodity/search?keyword=茯苓" target="_black">茯苓</a>
+                                <a href="/commodity/search?keyword=白术" target="_black">白术</a>
+                                <a href="/commodity/search?keyword=葱白" target="_black">葱白</a>
+                                <a href="/commodity/search?keyword=芍药" target="_black">芍药</a>
                             </dd>
                         </dl>
                         <div class="pic">
@@ -274,24 +274,24 @@
                         <dl>
                             <dt>组&#12288;&#12288;成：</dt>
                             <dd>                     
-                                <a href="#">附子</a>        
-                                <a href="#">干姜</a>
-                                <a href="#">甘草</a>
+                                <a href="/commodity/search?keyword=附子" target="_black">附子</a>
+                                <a href="/commodity/search?keyword=干姜" target="_black">干姜</a>
+                                <a href="/commodity/search?keyword=甘草" target="_black">甘草</a>
                             </dd>
                             <dt>常见配伍：</dt>        
                             <dd>                                                                                                                                        
-                                <a href="#">附子</a>
-                                <a href="#">枳实</a>        
-                                <a href="#">茯苓</a>
-                                <a href="#">川椒</a>
-                                <a href="#">乌梅</a>
-                                <a href="#">桂枝</a>
-                                <a href="#">黄连</a>
-                                <a href="#">陈皮</a>
-                                <a href="#">当归</a>
-                                <a href="#">白芍</a>
-                                <a href="#">厚朴</a>
-                                <a href="#">青皮</a>
+                                <a href="/commodity/search?keyword=附子" target="_black">附子</a>
+                                <a href="/commodity/search?keyword=枳实" target="_black">枳实</a>
+                                <a href="/commodity/search?keyword=茯苓" target="_black">茯苓</a>
+                                <a href="/commodity/search?keyword=川椒" target="_black">川椒</a>
+                                <a href="/commodity/search?keyword=乌梅" target="_black">乌梅</a>
+                                <a href="/commodity/search?keyword=桂枝" target="_black">桂枝</a>
+                                <a href="/commodity/search?keyword=黄连" target="_black">黄连</a>
+                                <a href="/commodity/search?keyword=陈皮" target="_black">陈皮</a>
+                                <a href="/commodity/search?keyword=当归" target="_black">当归</a>
+                                <a href="/commodity/search?keyword=白芍" target="_black">白芍</a>
+                                <a href="/commodity/search?keyword=厚朴" target="_black">厚朴</a>
+                                <a href="/commodity/search?keyword=青皮" target="_black">青皮</a>
                             </dd>
                         </dl>
                         <div class="pic">
@@ -303,190 +303,9 @@
         </div>
     </div>
 
-    <div class="helper">
-        <div class="wrap">
-            <div class="inner">
-            <dl>
-                <dt>新手指南</dt>
-                <dd><a href="#">用户注册</a></dd>
-                <dd><a href="#">注册协议</a></dd>
-                <dd><a href="#">视频介绍</a></dd>
-            </dl>
-            <dl>
-                <dt>产品询价</dt>    
-                <dd><a href="#">寻找商品</a></dd>
-                <dd><a href="#">在线询价</a></dd>
-                <dd><a href="#">一键下单</a></dd>
-            </dl>
-            <dl>
-                <dt>交期管理</dt>   
-                <dd><a href="#">验货签收</a></dd>
-                <dd><a href="#">交货周期</a></dd>
-                <dd><a href="#">用户确认</a></dd>
-            </dl>
-            <dl>
-                <dt>增值服务</dt>   
-                <dd><a href="#">关于发票</a></dd>
-                <dd><a href="#">统计分析</a></dd>
-                <dd><a href="#">在线对账</a></dd>
-            </dl>
-            <dl>
-                <dt>服务说明</dt>   
-                <dd><a href="#">隐私声明</a></dd>
-                <dd><a href="#">产权保护</a></dd>
-                <dd><a href="#">法律声明</a></dd>
-            </dl></div>
-        </div>
-    </div>
+    <#include "./inc/helper.ftl"/>
 
     <!-- footer start -->
-    <div class="footer">
-        <div class="wrap">
-            <div class="links">
-                <a href="#">关于上工之选</a>
-                <i>|</i>
-                <a href="#">联系我们</a>
-                <i>|</i>
-                <a href="#">法律申明</a>
-                <i>|</i>
-                <a href="#">建议与投诉</a>
-                <i>|</i>
-                <a href="#">友情链接</a>
-                <i>|</i>
-                <a href="#">站长统计</a>
-            </div>
-            <div class="copyright">
-                <p> 电信与信息服务业务经营许可证号：皖B20140001  备案号：皖ICP备13006003号  互联网药品交易服务资格证：皖B20130001  互联网药品信息服务资格证：（皖）-经营性-2016-0001</p>
-                <p>网站商务合作邮箱：bd@copy;yaoyy.com  客户服务企业邮箱：service@copy;yaoyy.com  Copyright &copy; 2015 – 2020 上工之选 All Rights Reserved</p>
-            </div>
-            <div class="authentication">
-                <a href="#"><img src="images/atc1.png" width="48" height="48" alt=""></a>
-                <a href="#"><img src="images/atc2.png" width="48" height="48" alt=""></a>
-                <a href="#"><img src="images/atc3.png" width="116" height="48" alt=""></a>
-                <a href="#"><img src="images/atc4.png" width="116" height="48" alt=""></a>
-                <a href="#"><img src="images/atc5.png" width="120" height="48" alt=""></a>
-            </div>
-        </div>
-    </div><!-- footer end -->    
-
-    <script src="js/jquery.min.js"></script>
-    <script src="js/layer/layer.js"></script>
-    <script src="js/common.js"></script>
-    <script>
-    var page = {
-        v: {
-
-        },
-        fn: {
-            init: function() {
-                this.checkboxEvent();
-                this.dorpDown();
-                this.quote();
-            },
-            // 全选事件
-            checkboxEvent: function() {
-                var _self = this;
-                $('.drop-dowm dt .cbx').each(function() {
-                    var $this = $(this),
-                        $cbxList = $this.closest('dt').next().find('.cbx')
-
-                    _self.checkAll($this, $cbxList);
-                })
-                return this;
-            },
-            // 全选
-            checkAll: function($checkAll, $checkList) {
-                var amount = $checkList.length, // 总个数
-                    total  = 0; // 当前选中的个数
-                
-                // 单选
-                $checkList.on("click", function() {
-                    total += this.checked ? 1 : -1;
-                    $checkAll.prop('checked', total === amount);
-
-                }).each(function() {
-                    // 统计已选个数
-                    total += this.checked ? 1 : 0;
-                });
-
-                // 全选
-                $checkAll.on("click", function() {
-                    var icheck = this.checked;
-                    $checkList.each(function() {
-                        this.checked = icheck;
-                    });
-                    
-                    total = icheck ? amount : 0;
-                }).each(function() {
-                    this.checked = total !== 0 && total === amount;
-                });
-
-                // 确定按钮
-                $checkAll.parent().next().on('click', function() {
-                    var data = $('#myform').formSerialize();
-                    console.log(data)
-                    var val = [];
-                    $checkList.filter(':checked').each(function() {
-                        val.push(this.value);
-                    });
-
-                    // console.log(val) 
-
-                    // 关闭下拉
-                    $(this).closest('.bd').hide();
-                    // window.open('search?' + $checkAll.val() + '=' + val.join('-'));
-                    // location.href = 'search?' + $checkAll.val() + '=' + val.join('-');
-                    return false;
-                })
-            },
-            // 下拉
-            dorpDown: function() {
-                var $dorpDownList = $('.drop-dowm .bd');
-                // 打开当前下拉并关闭其他下拉
-                $('.drop-dowm').on('click', '.hd', function() {
-                    $dorpDownList.hide();
-                    $(this).next().show();
-                    return false;
-                })
-                // 点击页面关闭下拉
-                $(document).on('click', function() {
-                    $dorpDownList.hide();
-                })
-                // 点击下拉区域阻止关闭
-                $(document).on('click', '.drop-dowm', function(e) {
-                    if (e.stopPropagation) {
-                        e.stopPropagation();
-                    }
-                    else {
-                        e.cancelBubble = true;
-                    }
-                })
-                return this;
-            },
-            // 询价
-            quote: function() {
-                $('#myform').on('click', '.btn-quote', function() {
-                    layer.open({
-                        type: 2,
-                        title: '账户登录',
-                        area: ['360px', '360px'],
-                        content: ['login_mini.html', 'no']
-                    });
-                    return false;
-                })
-            },
-            // 登录成功关闭弹框
-            logined: function() {
-                layer.closeAll();
-            },
-            defaultImg: function() {
-                $('img[original]')
-            }
-        }
-    }
-    $(function() {
-        page.fn.init();
-    })
-    </script>
+    <#include "./inc/footer.ftl"/><!-- footer end -->
 </body>
 </html>

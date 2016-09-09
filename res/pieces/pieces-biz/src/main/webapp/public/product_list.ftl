@@ -59,12 +59,12 @@
 	                            <td class="tl">                                
 	                                <div class="desc">
 	                                    <h3><a href="/commodity/${commodity.id}">${commodity.name }</a></h3>
-	                                    <p>${commodity.exterior }</p>
+	                                    <p>${commodity.title}</p>
 	                                </div>
 	                            </td>
-	                            <td>${commodity.levelName}</td>
-                                <td>${commodity.specName}</td>
-	                            <td>${commodity.originOfName}</td>
+	                            <td>${commodity.level}</td>
+                                <td>${commodity.spec}</td>
+	                            <td>${commodity.originOf}</td>
 	                            <td>${commodity.executiveStandard}</td>
 	                            <td><a href="/center/enquiry/index?commodityId=${commodity.id!}" class="btn btn-white btn-quote j_pop_login">立即询价</a></td>
 	                        </tr>
