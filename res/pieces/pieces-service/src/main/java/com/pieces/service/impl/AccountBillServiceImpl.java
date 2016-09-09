@@ -124,7 +124,7 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 	@Transactional
 	public void refreshStatus(Integer billId) {
 		// 账单状态 和 已付未付金额
-		AccountBillVo accountBillVo =  accountBillDao.findVoById(billId);
+		AccountBillVo accountBillVo = findVoById(billId);
 		if (accountBillVo.getStatus() == 1) {
 			//已付
 			Double alreadyPayable = 0D;

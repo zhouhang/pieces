@@ -236,7 +236,6 @@ ${commodity.details}
      * 清空品种输入框的值.
      */
     $("#categoryId").blur(function(){
-        var html = "<option value='-1'>请选择</option>";
         if($("#categoryIdV").val() == "") {
             $("#categoryId").val("");
             return;
