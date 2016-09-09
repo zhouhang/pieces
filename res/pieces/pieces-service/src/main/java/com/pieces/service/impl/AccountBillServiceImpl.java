@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.AccountBillDao;
+import com.pieces.dao.enums.BillEnum;
 import com.pieces.dao.enums.PayEnum;
 import com.pieces.dao.model.AccountBill;
 import com.pieces.dao.model.OrderForm;
@@ -139,6 +140,9 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 			accountBill.setId(billId);
 			accountBill.setAlreadyPayable(alreadyPayable);
 			accountBill.setUnPayable(unPayable);
+			if (unPayable <= 0) {
+				accountBill.setStatus(BillEnum.ALREADY_FINISH.getValue());
+			}
 			accountBillDao.update(accountBill);
 		}
 	}
