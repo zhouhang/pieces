@@ -1,6 +1,5 @@
 package com.pieces.biz.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import com.pieces.dao.model.User;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.tools.utils.Reflection;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,8 +29,6 @@ import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
 import com.pieces.service.utils.ValidUtils;
 import com.pieces.tools.utils.WebUtil;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Author: ff 7/19/16. 商品信息
@@ -76,7 +74,7 @@ public class CommodityController extends BaseController {
 		model.put("pageSize", pageSize);
 		model.put("pageInfo", pageInfo);
 		model.put("commodity", commodityVO);
-		model.put("commodityParam", commodityVO.toString());
+		model.put("commodityParam", Reflection.serialize(commodityVO));
 		return "product_list";
 	}
 	
@@ -85,7 +83,6 @@ public class CommodityController extends BaseController {
 	 * @param pageSize
 	 * @param pageNum
 	 * @param commodityVO
-	 * @param indexParameter 封装参数
 	 * @param model
 	 */
 	private PageInfo<CommodityVo> indexBreed(Integer pageSize, Integer pageNum, CommodityVo commodityVO, ModelMap model) {
@@ -95,7 +92,7 @@ public class CommodityController extends BaseController {
 			category = categoryService.findById(commodityVO.getBreedId());
 		}
 		if(commodityVO.getEqName() != null){
-			commodityVO.setEqName(commodityVO.getEqName().replace("%", "\\%").replace("&", "\\&"));
+			commodityVO.setEqName(commodityVO.getEqName());
 			category = commodityService.findBreedByName(commodityVO);
 		}
 		
@@ -104,7 +101,7 @@ public class CommodityController extends BaseController {
 		}
 		commodityVO.setName(category.getName());
 		lxCommodity = commodityService.findCommodityByName(commodityVO);
-		commodityVO.setName("");
+		commodityVO.setName(null);
 		
 		Category parent = categoryService.findById(category.getParentId());
 		Integer cid = commodityVO.getCategoryId();
@@ -123,7 +120,6 @@ public class CommodityController extends BaseController {
 	 * @param pageSize
 	 * @param pageNum
 	 * @param commodityVO
-	 * @param indexParameter
 	 * @param model
 	 * @return
 	 */

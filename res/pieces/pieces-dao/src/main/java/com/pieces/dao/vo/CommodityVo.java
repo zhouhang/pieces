@@ -15,6 +15,7 @@ public class CommodityVo extends Commodity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+
 	private String categoryName;
 
 	// 商品二级类别ID的集合 1,2,3
@@ -26,10 +27,11 @@ public class CommodityVo extends Commodity implements Serializable {
 	private String breedIds;
 	
 	private String breedName;
+	
 
 	private String eqName;
 
-	
+
 
 	//设置商品列表页面该code是否选中
 	private boolean checked;
@@ -127,7 +129,4 @@ public class CommodityVo extends Commodity implements Serializable {
 	public void setEqName(String eqName) {
 		this.eqName = eqName;
 	}
-
-
-
 }
