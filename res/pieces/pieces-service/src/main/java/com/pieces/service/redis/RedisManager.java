@@ -599,6 +599,34 @@ public class RedisManager{
 		}
 		return false;
 	}
+
+	/**
+	 * 判断key存不存在,存在返回true
+	 * @param key
+	 * @return
+     */
+	public boolean exists(String key){
+		ShardedJedis shardedJedis = null;
+		try {
+			shardedJedis = getJedis();
+			return shardedJedis.exists(key);
+		} catch (JedisConnectionException e) {
+			try {
+				releaseBroken(shardedJedis);
+			} catch (Exception ex) {
+				log.error(ex.toString());
+			}
+		} catch (Exception e) {
+			log.error(e.toString());
+		} finally {
+			try {
+				release(shardedJedis);
+			} catch (Exception e) {
+				log.error(e.toString());
+			}
+		}
+		return false;
+	}
 	
 //////////////////////////////////////////////////////////////redis set 數據結構操作//////////////////////////////////////////////////////////////////////
 

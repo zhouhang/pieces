@@ -4,15 +4,16 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.pieces.dao.model.Commodity;
+import com.pieces.tools.utils.GsonUtil;
 import org.apache.commons.lang.StringUtils;
 
 
 public class CommodityVo extends Commodity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
 
 	private String categoryName;
 
@@ -25,12 +26,16 @@ public class CommodityVo extends Commodity implements Serializable {
 	private String breedIds;
 	
 	private String breedName;
-	
 
 	private String eqName;
 
+	
+
 	//设置商品列表页面该code是否选中
 	private boolean checked;
+
+
+	private Map<String,String> attributeView;
 
 	public Integer getBreedId() {
 		return breedId;
@@ -72,8 +77,6 @@ public class CommodityVo extends Commodity implements Serializable {
 	public void setCategoryName(String categoryName) {
 		this.categoryName = categoryName;
 	}
-	
-
 
 	public boolean isChecked() {
 		return checked;
@@ -81,6 +84,18 @@ public class CommodityVo extends Commodity implements Serializable {
 
 	public void setChecked(boolean checked) {
 		this.checked = checked;
+	}
+
+
+	public Map<String, String> getAttributeView() {
+		if(StringUtils.isBlank(getAttribute())){
+			return null;
+		}
+		return GsonUtil.jsonToEntity(getAttribute(),Map.class);
+	}
+
+	public void setAttributeView(Map<String, String> attributeView) {
+		this.attributeView = attributeView;
 	}
 
 	@Override
@@ -112,4 +127,7 @@ public class CommodityVo extends Commodity implements Serializable {
 	public void setEqName(String eqName) {
 		this.eqName = eqName;
 	}
+
+
+
 }

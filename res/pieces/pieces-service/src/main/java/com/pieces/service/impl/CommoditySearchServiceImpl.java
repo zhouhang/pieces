@@ -35,7 +35,7 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     private CommodityService commodityService;
 
     @Autowired
-    ElasticsearchTemplate esTemplate;
+    private ElasticsearchTemplate esTemplate;
 
     @Override
     public CommodityDoc save(Commodity commodity) {
