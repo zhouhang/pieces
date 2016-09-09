@@ -274,16 +274,17 @@ ${commodity.details}
                 })
             },
             initParameter: function () {
+            <#if commodity.attribute?exists && commodity.attribute != "">
                 var parameter = ${commodity.attribute};
                 var html = "";
-                $.each(parameter, function(k,v){
-                    html += '<tr> \n <td><input type="text" class="ipt" value="'+k+'"></td> \n ' +
-                            '<td><input type="text" class="ipt" value="'+v+'"></td> \n ' +
+                $.each(parameter, function (k, v) {
+                    html += '<tr> \n <td><input type="text" class="ipt" value="' + k + '"></td> \n ' +
+                            '<td><input type="text" class="ipt" value="' + v + '"></td> \n ' +
                             '<td><span class="c-red">删除</span></td> \n </tr>';
                 })
                 var $table = $('#attribute').find('tbody');
                 $table.html(html);
-
+            </#if>
             },
             formValidate: function () {
                 $("#form").validator({
