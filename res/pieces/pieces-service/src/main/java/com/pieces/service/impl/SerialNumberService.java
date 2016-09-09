@@ -15,7 +15,10 @@ public class SerialNumberService {
     @Autowired
     private RedisManager redisManager;
 
-
+    /**
+     * 生成十位时间戳+两位随机数的订单号
+     * @return
+     */
     public  String generateOrderCode(){
         String randomNum = null;
         synchronized (this){

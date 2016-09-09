@@ -75,7 +75,7 @@
                                     <p>注册地址：${vo.invoice.registeredAddress}</p>
                                     <p>注册电话：${vo.invoice.registeredTel}</p>
                                     <p>开户银行：${vo.invoice.bankName}</p>
-                                    <p>银行账号：${vo.invoice.bankAccount}/p>
+                                    <p>银行账号：${vo.invoice.bankAccount}</p>
                                 </dd>
                             </dl>
                         </div>

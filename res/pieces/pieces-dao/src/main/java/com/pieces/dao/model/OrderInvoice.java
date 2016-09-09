@@ -57,7 +57,7 @@ public class OrderInvoice  implements Serializable {
 	}
 
 	public String getTypeText() {
-		return this.type == 1?"个人发票":"增值税发票";
+		return this.type == 1?"普通发票":"增值税专用发票";
 	}
 
 	public void setType(Integer type) {

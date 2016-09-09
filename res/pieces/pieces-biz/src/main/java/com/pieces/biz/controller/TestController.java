@@ -30,7 +30,6 @@ public class TestController {
     public  Result test() throws Exception{
         List<String> arrayList = new ArrayList<>();
 
-        Thread.sleep(10000);
 
         Set<String> set = new HashSet<>();
         String code = serialNumberService.generateOrderCode();

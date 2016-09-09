@@ -114,6 +114,17 @@ public class HomeController extends BaseController{
 
 
 	/**
+	 * 站点地图
+	 * @return
+     */
+	@RequestMapping(value = "/sitemap", method = RequestMethod.GET)
+	public String sitemap(){
+		return "sitemap";
+	}
+
+
+
+	/**
 	 * 全部分类
 	 * @return
      */

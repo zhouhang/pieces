@@ -4,6 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.AccountBillDao;
+import com.pieces.dao.enums.BillEnum;
+import com.pieces.dao.enums.OrderEnum;
 import com.pieces.dao.enums.PayEnum;
 import com.pieces.dao.model.AccountBill;
 import com.pieces.dao.model.OrderForm;
@@ -63,6 +65,8 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 
 		accountBill.setCode(SeqNoUtil.get("B", accountBill.getId(), 6));
 		this.update(accountBill);
+		// 改变订单状态
+		orderFormService.changeOrderStatus(accountBill.getOrderId(), OrderEnum.VERIFY.getValue());
 		return accountBill;
 	}
 
@@ -103,6 +107,8 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 		calendar.add(Calendar.MONTH, temp.getBillTime());
 		accountBill.setRepayTime(calendar.getTime());
 		accountBillDao.update(accountBill);
+		// 改变订单状态
+		orderFormService.changeOrderStatus(temp.getOrderId(), OrderEnum.WAIT_DELIVERY.getValue());
 	}
 
 	@Override
@@ -118,13 +124,16 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 		// 更改状态拒绝
 		accountBill.setStatus(-1);
 		accountBillDao.update(accountBill);
+		//改变订单状态
+		AccountBill temp = accountBillDao.findById(billId);
+		orderFormService.changeOrderStatus(temp.getOrderId(), OrderEnum.CANCEL.getValue());
 	}
 
 	@Override
 	@Transactional
 	public void refreshStatus(Integer billId) {
 		// 账单状态 和 已付未付金额
-		AccountBillVo accountBillVo =  accountBillDao.findVoById(billId);
+		AccountBillVo accountBillVo = findVoById(billId);
 		if (accountBillVo.getStatus() == 1) {
 			//已付
 			Double alreadyPayable = 0D;
@@ -139,6 +148,9 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 			accountBill.setId(billId);
 			accountBill.setAlreadyPayable(alreadyPayable);
 			accountBill.setUnPayable(unPayable);
+			if (unPayable <= 0) {
+				accountBill.setStatus(BillEnum.ALREADY_FINISH.getValue());
+			}
 			accountBillDao.update(accountBill);
 		}
 	}

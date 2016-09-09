@@ -142,6 +142,7 @@
         *,o.code as order_code
         FROM  account_bill a
         LEFT JOIN order_form o on a.order_id = o.id
+        order by a.id desc
     </select>
 
     <select id="findVoById"  parameterType="java.lang.Integer" resultMap="AccountBillResultMapVo">

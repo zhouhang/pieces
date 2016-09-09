@@ -29,16 +29,14 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
 
     @Autowired
     private OrderFormDao orderFormDao;
-
     @Autowired
     private OrderCommodityService orderCommodityService;
-
     @Autowired
     private ShippingAddressHistoryService shippingAddressHistoryService;
-
-
     @Autowired
     private OrderInvoiceService orderInvoiceService;
+    @Autowired
+    private SerialNumberService serialNumberService;
 
 
     @Override
@@ -67,6 +65,8 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
         // 2. 订单地址
         // 3. 订单商品
         // 4. 发票信息
+        String orderCode = serialNumberService.generateOrderCode();
+
         orderFormVo.setUserId(user.getId());
         shippingAddressHistoryService.create(orderFormVo.getAddress());
         
@@ -74,18 +74,13 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
         if(!orderInvoice.getName().equals("")){
         	orderInvoiceService.create(orderInvoice);
         }
-
+        orderFormVo.setCode(orderCode);
         orderFormVo.setInvoiceId(orderFormVo.getInvoice().getId());
         orderFormVo.setAddrHistoryId(orderFormVo.getAddress().getId());
         orderFormVo.setCreaterTime(new Date());
         orderFormVo.setStatus(OrderEnum.UNPAID.getValue());
         orderFormDao.create(orderFormVo);
-        com.pieces.dao.model.OrderForm of = new com.pieces.dao.model.OrderForm();
-        of.setId(orderFormVo.getId());
-        of.setCode(SeqNoUtil.get("", orderFormVo.getId(), 6));
-        orderFormVo.setCode(of.getCode());
-        orderFormDao.update(of);
-        
+
         List<OrderCommodity> list = orderFormVo.getCommodities();
         for(OrderCommodity oc : list){
         	oc.setOrderId(orderFormVo.getId());
@@ -130,11 +125,13 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
         orderFormVo.setCreaterTime(new Date());
         orderFormVo.setStatus(OrderEnum.UNPAID.getValue());
         orderFormVo.setAddrHistoryId(shippingAddressHistory.getId());
-        orderFormDao.create(orderFormVo);
+
         if(StringUtils.isBlank(orderFormVo.getCode())){
-            orderFormVo.setCode(SeqNoUtil.get("", orderFormVo.getId(), 6));
+            String orderCode = serialNumberService.generateOrderCode();
+            orderFormVo.setCode(orderCode);
         }
-        orderFormDao.update(orderFormVo);
+        orderFormDao.create(orderFormVo);
+
 
         //保存商品
         List<OrderCommodity> list = orderFormVo.getCommodities();
@@ -153,7 +150,7 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
     @Transactional
     public OrderFormVo create(OrderFormVo orderFormVo, Integer origOrderId){
         //原订单状态改成已取消
-        com.pieces.dao.model.OrderForm orderForm =findById(origOrderId);
+        OrderForm orderForm =findById(origOrderId);
         orderForm.setStatus(OrderEnum.CANCEL.getValue());
         orderFormDao.update(orderForm);
         //改变订单号
