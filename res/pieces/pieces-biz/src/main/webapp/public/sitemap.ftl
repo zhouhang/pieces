@@ -70,29 +70,29 @@
 
                     <dt>帮助中心</dt>
                     <dd>
-                        <a href="#11111">用户注册</a>
-                        <a href="#11111">注册协议</a>
-                        <a href="#11111">视频介绍</a>
-                        <a href="#11111">寻找商品</a>
-                        <a href="#11111">在线询价</a>
-                        <a href="#11111">一键下单</a>
-                        <a href="#11111">验货签收</a>
-                        <a href="#11111">交货周期</a>
-                        <a href="#11111">用户确认</a>
-                        <a href="#11111">关于发票</a>
-                        <a href="#11111">统计分析</a>
-                        <a href="#11111">在线对账</a>
-                        <a href="#11111">隐私声明</a>
-                        <a href="#11111">产权保护</a>
-                        <a href="#11111">法律声明</a>
+                        <a href="/help/15">用户注册</a>
+                        <a href="/help/16">注册协议</a>
+                        <a href="/help/17">视频介绍</a>
+                        <a href="/help/18">寻找商品</a>
+                        <a href="/help/19">在线询价</a>
+                        <a href="/help/20">一键下单</a>
+                        <a href="/help/21">验货签收</a>
+                        <a href="/help/22">交货周期</a>
+                        <a href="/help/23">用户确认</a>
+                        <a href="/help/24">关于发票</a>
+                        <a href="/help/25">统计分析</a>
+                        <a href="/help/26">在线对账</a>
+                        <a href="/help/27">隐私声明</a>
+                        <a href="/help/28">产权保护</a>
+                        <a href="/help/29">法律声明</a>
                     </dd>
 
                     <dt>网站信息</dt>
                     <dd>
-                        <a href="#11111">关于上工之选</a>
-                        <a href="#11111">联系我们</a>
-                        <a href="#11111">法律声明</a>
-                        <a href="#11111">友情链接</a>
+                        <a href="/help/11">关于上工之选</a>
+                        <a href="/help/8">联系我们</a>
+                        <a href="/help/29">法律声明</a>
+                        <a href="/help/33">友情链接</a>
                     </dd>
 
                     <dt>建议与投诉</dt>

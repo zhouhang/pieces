@@ -151,6 +151,7 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
         CommodityDoc commodityDoc = new CommodityDoc();
         commodityDoc.setId(commodityVO.getId());
         commodityDoc.setName(commodityVO.getName());
+        commodityDoc.setTitle(commodityVO.getTitle());
         commodityDoc.setExterior(commodityVO.getExterior());
         commodityDoc.setOriginOf(commodityVO.getOriginOf());
         commodityDoc.setLevel(commodityVO.getLevel());

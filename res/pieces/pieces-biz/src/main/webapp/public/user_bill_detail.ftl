@@ -40,7 +40,9 @@
                                     <span>约定还款时间：<em>${accountBillVo.repayTime?string("yyyy-MM-dd")}</em></span>
                                 </td>
                                 <td class="nl">
+                                <#if accountBillVo.status==1>
                                     <a class="btn btn-red" href="/center/bill/pay/${accountBillVo.id}">付款</a>
+                                </#if>
                                 </td>
                             </tr>
                         </tbody>
@@ -68,7 +70,7 @@
                                         <td>${payRecord.paymentTime?string("yyyy-MM-dd")}</td>
                                         <td>&yen;${payRecord.actualPayment!}</td>
                                         <#if payRecord_index == 0>
-                                            <td rowspan="2"><span class="c-red">${accountBillVo.statusText!}</span></td>
+                                            <td rowspan="${accountBillVo.payRecordVoList?size}"><span class="c-red">${accountBillVo.statusText!}</span></td>
                                         </#if>
                                     </tr>
                                     </#list>

@@ -18,6 +18,8 @@ public class CommodityDoc {
     //商品名称
     private String name;
 
+    private String title;
+
     //外观描述
     @Field( type = FieldType.String,index= FieldIndex.not_analyzed)
     private String exterior;
@@ -111,5 +113,13 @@ public class CommodityDoc {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

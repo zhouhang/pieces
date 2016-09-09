@@ -21,41 +21,11 @@
                 <thead>
                 <tr>
                     <th width="150"></th>
-                    <th width="240">
-                        <div class="drop-dowm">
-                            <div class="hd">
-                                <span>商品信息</span></i>
-                            </div>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="drop-dowm">
-                            <div class="hd">
-                                <span>切割规格</span></i>
-                            </div>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="drop-dowm">
-                            <div class="hd">
-                                <span>等级</span></i>
-                            </div>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="drop-dowm">
-                            <div class="hd">
-                                <span>原药产地</span></i>
-                            </div>
-                        </div>
-                    </th>
-                    <th width="190">
-                        <div class="drop-dowm">
-                            <div class="hd">
-                                <span>执行标准</span></i>
-                            </div>
-                        </div>
-                    </th>
+                    <th width="260">商品信息</th>
+                    <th width="160">规格等级</th>
+                    <th width="110">切制规格</th>
+                    <th width="120">原药产地</th>
+                    <th width="">执行标准</th>
                     <th width="140">操作</th>
                 </tr>
                 </thead>
@@ -63,18 +33,18 @@
                 <tbody>
                     <#list commodityDocPage.content as commodityDoc>
                         <tr>
-                            <td><a href="/commodity/${commodityDoc.id!}"><img src="${commodityDoc.pictureUrl!}" width="130" height="130" alt=""></a></td>
+                            <td><a href="/commodity/${commodityDoc.id!}"><img class="lazyload" src="${commodityDoc.pictureUrl!}" data-original="${commodityDoc.pictureUrl!}" width="130" height="130" alt=""></a></td>
                             <td class="tl">
                                 <div class="desc">
                                     <h3><a href="/commodity/${commodityDoc.id!}">${commodityDoc.name!}</a></h3>
-                                    <p>${commodityDoc.exterior!}</p>
+                                    <p>${commodityDoc.title!}</p>
                                 </div>
                             </td>
-                            <td>${commodityDoc.spec!}</td>
                             <td>${commodityDoc.level!}</td>
+                            <td>${commodityDoc.spec!}</td>
                             <td>${commodityDoc.originOf!}</td>
-                            <td class="tl">${commodityDoc.executiveStandard!}</td>
-                            <td><a class="btn btn-white btn-quote j_pop_login" href="/center/enquiry/index?commodityId=${commodityDoc.id!}">立即询价</a></td>
+                            <td>${commodityDoc.executiveStandard!}</td>
+                            <td><a href="/center/enquiry/index?commodityId=${commodityDoc.id!}" class="btn btn-white btn-quote j_pop_login">立即询价</a></td>
                         </tr>
                     </#list>
                 <#else>
@@ -85,7 +55,7 @@
                             <dl>
                                 <dt>建议您：</dt>
                                 <dd>1. 检查输入文字是否有误后重新搜索 </dd>
-                                <dd>2. 使用 <a href="#">快速询价</a> 功能，提交您的采购单</dd>
+                                <dd>2. 使用 <a href="/center/enquiry/index">快速询价</a> 功能，提交您的采购单</dd>
                             </dl>
                         </div>
                     </div>

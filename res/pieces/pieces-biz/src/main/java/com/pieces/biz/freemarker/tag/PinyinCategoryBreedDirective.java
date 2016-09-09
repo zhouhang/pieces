@@ -26,6 +26,7 @@ public class PinyinCategoryBreedDirective implements TemplateDirectiveModel {
     @Autowired
     private RedisManager redisManager;
 
+    private static final int EXPIRE = 24*3600;
 
     @Override
     public void execute(Environment environment, Map params, TemplateModel[] templateModels, TemplateDirectiveBody templateDirectiveBody) throws TemplateException, IOException {
@@ -39,8 +40,18 @@ public class PinyinCategoryBreedDirective implements TemplateDirectiveModel {
 
             for(CategoryVo parentCategory : parentCategoryList){
 
+                List<CategoryVo> topThreeBreeds = categoryService.findByLevelAndPinyin(2,parentCategory.getId(),null,3);
+
+
                 sb.append("<li>");
-                sb.append("<div class='cat-name'>").append(parentCategory.getName()).append("</div>");
+                sb.append("<div class='cat-name'>");
+                sb.append("<em>").append(parentCategory.getName()).append("</em>");
+                for(CategoryVo breed :topThreeBreeds){
+                    sb.append("<a href='commodity/index?breedId=").append(breed.getId()).append("'>").append(breed.getName()).append("</a>\n");
+                }
+
+                sb.append("</div>");
+
                 sb.append("<div class='cat-list'>");
                 for(String letter : letterArr){
                     List<CategoryVo> categoryVoList = categoryService.menuCategoryBreed(parentCategory.getId(),letter);
@@ -63,7 +74,7 @@ public class PinyinCategoryBreedDirective implements TemplateDirectiveModel {
                 sb.append("</li>");
             }
             body = sb.toString();
-            redisManager.set(RedisEnum.SITE_TAG_PINYIN_CATEGORY.getValue(),body);
+            redisManager.set(RedisEnum.SITE_TAG_PINYIN_CATEGORY.getValue(),body, EXPIRE);
         }
         environment.getOut().append(body);
     }
