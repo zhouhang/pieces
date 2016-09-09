@@ -203,11 +203,11 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         List<CommodityVo> list = new ArrayList<>();
         // TODO: 用户询价商品.
         if (user != null) {
-            List<EnquiryCommoditys> commodityses = enquiryCommoditysDao.findCommoditysByUser(String.valueOf(user.getId()));
+            List<EnquiryCommoditys> commodities = enquiryCommoditysDao.findCommoditysByUser(String.valueOf(user.getId()));
 
-            if (!commodityses.isEmpty()){
+            if (!commodities.isEmpty()){
                 String ids = "";
-                for (EnquiryCommoditys vo : commodityses) {
+                for (EnquiryCommoditys vo : commodities) {
                     ids += "'" + vo.getId() + "',";
                 }
 
@@ -280,6 +280,11 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 	public List<CommodityVo> findCommodityByName(CommodityVo commodityVO) {
 		return commodityDao.findCommodityByNameLx(commodityVO);
 	}
-	
-	
+
+    @Override
+    public List<Commodity> findByName(String name) {
+        return commodityDao.findByName(name);
+    }
+
+
 }

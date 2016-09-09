@@ -74,5 +74,9 @@ public interface CommodityService extends ICommonService<Commodity>{
 
     void create(List<Commodity> commodityList);
     public Category findBreedByName(CommodityVo commodityVO);
+
     public List<CommodityVo> findCommodityByName(CommodityVo commodityVO);
+
+    public List<Commodity> findByName(String name);
+
 }

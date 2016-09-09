@@ -265,4 +265,11 @@
 	        	and a.name like "%"#{name}"%"
 	        </if>
     </select>
+
+    <select id="findByName" parameterType="java.lang.String" resultMap="CommodityResultMap">
+        SELECT <include refid="Base_Column_List" />
+        from commodity
+        where name = #{name} and status = 1
+    </select>
+
 </mapper>

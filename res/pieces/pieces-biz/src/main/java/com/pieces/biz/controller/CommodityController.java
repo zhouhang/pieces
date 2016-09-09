@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.pieces.dao.model.Commodity;
 import com.pieces.dao.model.User;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.utils.Reflection;
@@ -41,7 +42,7 @@ public class CommodityController extends BaseController {
 	private CommoditySearchService commoditySearchService;
 
 	@Autowired
-	CommodityService commodityService;
+	private CommodityService commodityService;
 
 	@Autowired
 	private CategoryService categoryService;
@@ -207,8 +208,6 @@ public class CommodityController extends BaseController {
 	/**
 	 * 搜索并跳转到搜索结果页面
 	 *
-	 * @param request
-	 * @param response
 	 * @param pageNum
 	 * @param pageSize
 	 * @param model
@@ -216,7 +215,7 @@ public class CommodityController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "search")
-	public String proResult(HttpServletRequest request, HttpServletResponse response, Integer pageNum, Integer pageSize,
+	public String proResult( Integer pageNum, Integer pageSize,
 			ModelMap model, String keyword) {
 		pageNum = pageNum == null ? 1 : pageNum;
 		pageSize = pageSize == null ? 10 : pageSize;
@@ -246,11 +245,13 @@ public class CommodityController extends BaseController {
 	public String detail(@PathVariable("id") Integer id, ModelMap model) {
 		CommodityVo commodity = commodityService.findVoById(id);
 		if (commodity == null) {
-
 			// TODO: 商品不存在
-
 			return "redirect:error/404";
 		}
+
+		List<Commodity> commodityList =	commodityService.findByName(commodity.getName());
+		model.put("relations", commodityList);
+
 		Category category = categoryService.findById(commodity.getCategoryId());
 		Category category1 = categoryService.findById(category.getParentId());
 		User user = (User) session.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
@@ -260,7 +261,7 @@ public class CommodityController extends BaseController {
 		model.put("commodity", commodity);
 		model.put("featured", featured);
 
-		return "product_detail";
+		return "product";
 	}
 
 

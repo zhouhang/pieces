@@ -129,4 +129,9 @@ public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao {
 	public List<CommodityVo> findCommodityByNameLx(CommodityVo commodityVO) {
 		return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findCommodityByNameLx", commodityVO);
 	}
+
+    @Override
+    public List<Commodity> findByName(String name) {
+        return getSqlSession().selectList("com.pieces.dao.CommodityMapper.findByName", name);
+    }
 }

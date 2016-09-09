@@ -67,19 +67,14 @@
                         <dl class="line" id="rank">
                             <dt>规格等级</dt>
                             <dd>
-                                <a href="javascript:;" class="current">选装18-20号筛</a>
-                                <a href="javascript:;">选装16-18号筛</a>
-                                <a href="javascript:;">选装14-16号筛</a>
-                                <a href="javascript:;">选装12-14号筛</a>
-                                <a href="javascript:;">选装18-20号筛</a>
-                                <a href="javascript:;">选装16-18号筛</a>
-                                <a href="javascript:;">选装14-16号筛</a>
-                                <a href="javascript:;">选装12-14号筛</a>
+                                <#list relations as relCommodity>
+                                    <a href="/commodity/${relCommodity.id!}" <#if relCommodity.id == commodity.id> class="current"</#if>>${relCommodity.level!}</a>
+                                </#list>
                             </dd>
                         </dl>
                         <div class="buttons">
-                            <a class="btn btn-red" href="#">询价</a>
-                            <a class="btn btn-gray faved" href="#"><i class="fa fa-heart"></i>已收藏</a>
+                            <a class="btn btn-red j_pop_login" href="/center/enquiry/index?commodityId=${commodity.id!}">询价</a>
+                            <a class="btn btn-gray j_pop_login_collect" ajaxurl="/center/collect/add/${commodity.id!}" url="/commodity/${commodity.id!}"><i class="fa fa-heart"></i>收藏</a>
                         </div>
                     </div>
                 </div>
@@ -113,7 +108,66 @@
     <#include "./inc/footer.ftl"/>
 
     <!-- footer end -->
+    <script src="/js/layer/layer.js"></script>
+    <script>
 
+        // 收藏结果回调
+        function loginCall(status) {
+            layer.closeAll('iframe');
+            if(status === 'y') {
+                layer.msg('收藏成功！', {icon: 1});
+            }else{
+                layer.msg('已收藏该商品！', {icon: 2});
+            }
+        }
+        var _global = {
+            v: {
+            },
+            fn: {
+                init: function() {
+                    this.addFav();
+                },
+                // 收藏
+                addFav: function() {
+                    $('.j_pop_login_collect').on('click', function() {
+                        var url = $(this).attr('url');
+                        var ajaxurl = $(this).attr('ajaxurl');
+                        // 检查登录状态
+                        $.ajax({
+                            url: "/pop",
+                            type: "POST",
+                            dataType : "json",
+                            success: function(data){
+                                var status = data.status;
+                                if(status === 'y') {
+                                    $.ajax({
+                                        url: ajaxurl,
+                                        type: "POST",
+                                        dataType : "json",
+                                        success: function(data){
+                                            loginCall(data.status);
+                                        }
+                                    });
+                                }else{
+                                    layer.open({
+                                        type: 2,
+                                        title: '账户登录',
+                                        area: ['360px', '360px'],
+                                        content: ['/popLogin?url=' + url + '&ajaxurl=' + ajaxurl , 'no']
+                                    });
+                                }
+                            }
+                        });
+                        return false;
+                    })
+                }
+            }
+        }
+        //加载页面js
+        $(function() {
+            _global.fn.init();
+        });
+    </script>
 
 </body>
 </html>

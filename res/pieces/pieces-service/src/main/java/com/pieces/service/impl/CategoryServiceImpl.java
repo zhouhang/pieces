@@ -33,7 +33,6 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 	private CodeDao codeDao;
 
 
-
 	@Override
 	public List<Category> findAll() {
 		return categoryDao.findAll();

@@ -89,9 +89,9 @@
                                     <#list commodityList as commodity>
                                         <tr>
                                             <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="${commodity.name!}" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="<#if commodityList[0]??>${commodityList[0].id!}</#if>" /></td>
-                                            <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.specName!}" name="specs" autocomplete="off"><span class="error"></span></div></td>
-                                            <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.levelName!}" name="level" autocomplete="off"><span class="error"></span></div></td>
-                                            <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.originOfName!}" name="origin" autocomplete="off"><span class="error"></span></div></td>
+                                            <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.spec!}" name="specs" autocomplete="off"><span class="error"></span></div></td>
+                                            <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.level!}" name="level" autocomplete="off"><span class="error"></span></div></td>
+                                            <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.originOf!}" name="origin" autocomplete="off"><span class="error"></span></div></td>
                                             <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"><span class="error"></span></div></td>
                                             <td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"><span class="error"></span></div></td>
                                             <td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
