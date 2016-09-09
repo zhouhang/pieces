@@ -43,8 +43,9 @@
                                 <i>*</i>原药品种：
                             </div>
                             <div class="cnt">
-                                <input type="text" id="categoryId" class="ipt" value="${commodity.categoryName}" autocomplete="off" placeholder="">
-                                <input type="text" id="categoryIdV" value="${commodity.categoryId}" name="categoryId" style="display: none;">
+                                <input type="text" id="categoryId" class="ipt" value="${commodity.categoryName}" autocomplete="off"
+                                       placeholder="">
+                                <input type="text" id="categoryIdV" name="categoryId" value="${commodity.categoryId}" style=" display: none;">
                             </div>
                         </div>
 
@@ -53,39 +54,39 @@
                                 <i>*</i>商品名称：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="${commodity.name}" name="name" autocomplete="off" placeholder="">
+                                <input type="text" class="ipt" name="name" value="${commodity.name}" autocomplete="off" placeholder="">
                             </div>
                         </div>
-
+                        <div class="group">
+                            <div class="txt">
+                                <i>*</i>商品标题：
+                            </div>
+                            <div class="cnt">
+                                <input type="text" class="ipt" name="title" value="${commodity.title}" autocomplete="off" placeholder="">
+                            </div>
+                        </div>
+                        <div class="group">
+                            <div class="txt">
+                                <i>*</i>规格等级：
+                            </div>
+                            <div class="cnt">
+                                <input type="text" class="ipt" name="level" value="${commodity.level}" autocomplete="off" placeholder="">
+                            </div>
+                        </div>
                         <div class="group">
                             <div class="txt">
                                 <i>*</i>切制规格：
                             </div>
                             <div class="cnt">
-                                <select name="spec" id="spec" class="wide">
-                                    <option>请选择</option>
-                                </select>
+                                <input type="text" class="ipt" name="spec" value="${commodity.spec}" autocomplete="off" placeholder="">
                             </div>
                         </div>
-
-                        <div class="group">
-                            <div class="txt">
-                                <i>*</i>等级：
-                            </div>
-                            <div class="cnt">
-                                <select name="level" id="level" class="wide">
-                                </select>
-                            </div>
-                        </div>
-
                         <div class="group">
                             <div class="txt">
                                 <i>*</i>原药产地：
                             </div>
                             <div class="cnt">
-                                <select name="originOf" id="originOf" class="wide">
-                                    <option>请选择</option>
-                                </select>
+                                <input type="text" class="ipt" name="originOf" value="${commodity.originOf}" autocomplete="off" placeholder="">
                             </div>
                         </div>
 
@@ -94,28 +95,50 @@
                                 <i>*</i>执行标准：
                             </div>
                             <div class="cnt">
-                                <input value="${commodity.executiveStandard}" name="executiveStandard" id="executiveStandard" class="ipt">
+                                <input name="executiveStandard" id="executiveStandard" value="${commodity.executiveStandard}" class="ipt">
                                 </input>
                             </div>
                         </div>
 
                         <div class="group">
                             <div class="txt">
-                                <i>*</i>外观描述：
+                                <i>*</i>性状描述：
                             </div>
                             <div class="cnt cnt-mul">
                                 <textarea class="ipt ipt-mul" name="exterior">${commodity.exterior}</textarea>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="group">
-                            <div class="txt">
-                                <i>*</i>生产厂家：
-                            </div>
-                            <div class="cnt">
-                                <input type="text" name="factory" class="ipt" value="${commodity.factory}" autocomplete="off" placeholder="">
-                            </div>
-                        </div>
+                <!-- 商品属性 -->
+                <div class="user-info">
+                    <h3>商品属性</h3>
+                    <div class="chart chart-form">
+                        <table id="attribute">
+                            <thead>
+                            <tr>
+                                <th width="200">属性名</th>
+                                <th width="380">属性值</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <td colspan="3"><span class="c-blue" id="addAttribute">+增加新属性</span></td>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- 商品属性 -->
+                <input name="attribute" id="attribute"  style="display: none;">
+                <!-- 商品图片与详情 -->
+                <div class="user-info">
+                    <h3>商品图片与详情</h3>
+                    <div class="fa-form">
 
                         <div class="group">
                             <div class="txt">
@@ -133,7 +156,8 @@
                             <div class="txt">
                                 <i>*</i>详细信息：
                             </div>
-                            <div class="cnt cnt-mul" name="details" id="details" style="width: 700px; height: 350px; clear: both;">
+                            <div class="cnt cnt-mul" name="details" id="details"
+                                 style="width: 700px; height: 350px; clear: both;">
                             </div>
                             <div id="detailsError" style="padding-top: 10px;" class="clear">
                             </div>
@@ -145,12 +169,13 @@
                             </div>
                             <div class="cnt">
                                 <select name="status" id="status" class="wide">
-                                    <option>请选择</option>
+                                    <option value="-1">请选择</option>
                                     <option value="1" selected="selected">激活</option>
                                     <option value="0">禁用</option>
                                 </select>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </form>
@@ -202,7 +227,6 @@ ${commodity.details}
         },
         onSelect: function (suggestion) {
             $("#categoryIdV").val(suggestion.data);
-            commodityAddPage.fn.initCode(suggestion.data);
             categoryIdV = suggestion.data;
             categoryId =  suggestion.value;
         }
@@ -215,23 +239,14 @@ ${commodity.details}
         var html = "<option value='-1'>请选择</option>";
         if($("#categoryIdV").val() == "") {
             $("#categoryId").val("");
-            cleanCode();
             return;
         }
 
-        if ($("#categoryIdV").val() == categoryIdV && categoryId != $("#categoryIdV").val()) {
+        if ($("#categoryIdV").val() == categoryIdV && categoryId != $("#categoryId").val()) {
             $("#categoryId").val("");
             $("#categoryIdV").val("");
-            cleanCode();
             return;
         }
-
-        function cleanCode(){
-            $("#spec").html(html);
-            $("#originOf").html(html);
-            $("#level").html(html);
-        }
-
     });
 
     var commodityAddPage = {
@@ -241,18 +256,14 @@ ${commodity.details}
                 this.formValidate();
                 this.submitEvent();
                 this.goodsImg();
+                this.parameter();
+                this.initParameter();
 
-                // 初始化 切制规格,等级,原药产地,详细信息
+                // 初始化详细信息
                 var um = UM.getEditor('details');
                 um.ready(function(){
                     um.setContent($("#umeditorContent").html());
                 })
-                commodityAddPage.fn.initCode(${commodity.categoryId})
-                setTimeout(function(){
-                    $("#spec").val("${commodity.spec}");
-                    $("#originOf").val("${commodity.originOf}");
-                    $("#level").val("${commodity.level}");
-                }, 1000);
 
 
                 $("#delete").click(function(){
@@ -263,25 +274,32 @@ ${commodity.details}
                     window.location.href = "/commodity/add/${commodity.id}";
                 })
             },
-            initCode: function(beedId) {
-                $("#spec").code({beedId:beedId,typeId:'SPEC'});//"切制规格"
-                $("#originOf").code({beedId:beedId,typeId:'ORIGIN'});//"原药产地"
-                $("#level").code({beedId:beedId,typeId:'LEVEL'});//"等级"
+            initParameter: function () {
+                var parameter = ${commodity.attribute};
+                var html = "";
+                $.each(parameter, function(k,v){
+                    html += '<tr> \n <td><input type="text" class="ipt" value="'+k+'"></td> \n ' +
+                            '<td><input type="text" class="ipt" value="'+v+'"></td> \n ' +
+                            '<td><span class="c-red">删除</span></td> \n </tr>';
+                })
+                var $table = $('#attribute').find('tbody');
+                $table.html(html);
+
             },
             formValidate: function () {
                 $("#form").validator({
                     fields: {
                         categoryId: "required",
-                        name: "required;length[2~50]",
-                        spec: "required(not, -1)",
-                        level: "required(not, -1)",
-                        originOf: "required(not, -1)",
+                        name: "required;length[2~20]",
+                        title:"required;length[2~50]",
+                        spec: "required;length[2~20]",
+                        level: "required;length[2~50]",
+                        originOf: "required;length[2~20]",
                         executiveStandard: "required;length[1~20]",
                         exterior: "required;length[2~50]",
-                        factory: "required;length[2~20]",
-                        imgUrl: "required",
+                        pictureUrl: "required",
                         details: {
-                            rule:  "required",
+                            rule: "required",
                             target: "#detailsError"
                         },
                         status: "required"
@@ -308,28 +326,38 @@ ${commodity.details}
             // 提交事件
             submitEvent: function () {
                 var self = this;
+
+
                 $('#submit').on('click', function () {
-                    $('#form').isValid(function (v) {
+                    $('#form').isValid(function(v) {
                         //console.log(v ? '表单验证通过' : '表单验证不通过');
                         if (v) {
+                            var attr = {};
+                            var trs = $("#attribute>tbody tr");
+                            $.each(trs, function (k, v) {
+                                attr[$($(v).find("input")[0]).val()] = $($(v).find("input")[1]).val();
+                            })
                             var data = $("#form").serializeObject();
+                            data.attribute = JSON.stringify(attr);
 
                             $.post("/commodity/save", data, function (data) {
-                                $.notify({
-                                    type: 'success',
-                                    title: '保存成功',
-                                    text: '商品保存成功',
-                                    delay: 3e3,
-                                    call: function () {
-                                        $("#submit").attr("disabled", "disabled");
-                                    }
-                                });
+                                if (data.status == "y") {
+                                    $.notify({
+                                        type: 'success',
+                                        title: '保存成功',
+                                        text: '商品保存成功',
+                                        delay: 3e3,
+                                        call: function () {
+                                            $("#submit").attr("disabled", "disabled");
+                                        }
+                                    });
+                                }
                             })
                         }
-                        return false;
                     })
+                    return false;
                 })
-                        },
+            },
             // 商品图片
             goodsImg: function () {
                 var self = this;
@@ -391,7 +419,6 @@ ${commodity.details}
                             self.cropModal.reset();
                             throw new Error("图片超过2M无法上传!");
                         }
-
                     },
                     onAfterImgUpload: function () {
                     },
@@ -407,7 +434,7 @@ ${commodity.details}
                         layer.closeAll();
                     },
                     onReset: function () {
-                       // console.log('onReset')
+                        //console.log('onReset')
                     },
                     onError: function (msg) {
                         //console.log(msg)
@@ -420,6 +447,22 @@ ${commodity.details}
                     }
                 }
                 this.cropModal = new Croppic('imgCrop', options);
+            },
+            // 商品自定义参数
+            parameter: function () {
+                var $table = $('#attribute').find('tbody');
+
+                // 新增
+                $('#addAttribute').on('click', function () {
+                    var tr = '<tr> \n <td><input type="text" class="ipt" value=""></td> \n <td><input type="text" class="ipt" value=""></td> \n <td><span class="c-red">删除</span></td> \n </tr>';
+
+                    $table.append(tr);
+                })
+
+                // 删除
+                $table.on('click', '.c-red', function () {
+                    $(this).closest('tr').remove();
+                })
             }
         }
     }

@@ -34,7 +34,7 @@
                         <th width="240">商品名称</th>
                         <th width="100">切制规格</th>
                         <th width="100">原料产地</th>
-                        <th>生产厂家</th>
+                        <th>规格等级</th>
                         <th width="100">状态</th>
                         <th width="100">操作</th>
                     </tr>
@@ -44,7 +44,7 @@
                         <td><div class="ipt-wrap"><input name="name" type="text" class="ipt" value="${vo.name}"></div></td>
                         <td><div class="ipt-wrap"><input name="specName" type="text" class="ipt" value="${vo.specName}"></div></td>
                         <td><div class="ipt-wrap"><input name="originOfName" type="text" class="ipt" value="${vo.originOfName}"></div></td>
-                        <td><div class="ipt-wrap"><input name="factory" type="text" class="ipt" value="${vo.factory}"></div></td>
+                        <td><div class="ipt-wrap"><input name="level" type="text" class="ipt" value="${vo.level}"></div></td>
                         <td>
                             <select name="status" id="">
                                 <option value=""></option>
@@ -62,9 +62,9 @@
                         <td>${commodity.id}</td>
                         <td>${commodity.categoryName}</td>
                         <td>${commodity.name}</td>
-                        <td>${commodity.specName}</td>
-                        <td>${commodity.originOfName}</td>
-                        <td>${commodity.factory}</td>
+                        <td>${commodity.spec}</td>
+                        <td>${commodity.originOf}</td>
+                        <td>${commodity.level}</td>
                         <td><#if commodity.status ==1>激活<#else>禁用</#if></td>
                         <td>
                             <@shiro.hasPermission name="commodity:edit">
