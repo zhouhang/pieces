@@ -110,7 +110,7 @@
                                 <td>${record.paymentTime?date}</td>
                                 <td>&yen; ${record.actualPayment}</td>
                                 <td>${record.statusText}</td>
-                                <td><a href="payment_detail.html">查看</a></td>
+                                <td><a href="/payment/detail/${record.id}">查看</a></td>
                             </tr>
                             </#list>
                             </tbody>

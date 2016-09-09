@@ -21,7 +21,7 @@
         </div>
         <div class="main">
             <div class="title">
-                <h3><i class="fa fa-chevron-right"></i>E20160620170402</h3>
+                <h3><i class="fa fa-chevron-right"></i>${pay.payCode}</h3>
                 <div class="extra">
                     <a href="/payment/index" class="btn btn-gray">返回</a>
                 <#if pay.status == 0>
