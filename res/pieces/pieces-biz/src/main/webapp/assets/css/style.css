@@ -111,8 +111,8 @@ vertical-align:middle;
 .fa-chevron-left{font-size:12px;}
 
 /* site-nav */
-.site-nav{height:29px;line-height:29px;font-size:12px;border-bottom:1px solid #e7e7e7;background:#ededed;}
-.site-nav li{float:left;padding-left:10px;}
+.site-nav{height:29px;line-height:29px;font-size:12px;border-bottom:1px solid #e7e7e7;background:#ededed;overflow:hidden;}
+.site-nav li{float:left;height:29px;padding-left:10px;}
 
 
 /* header */
