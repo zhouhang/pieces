@@ -103,13 +103,13 @@
                         <dl>
                             <dt>
                                 <#if category.showcase??>
-                                    <a href="${category.showcase.link!}"><img src="${category.showcase.pictureUrl!}" class="lazyload" data-original="${category.showcase.pictureUrl!}" width="400" height="270"></a>
+                                    <a href="${category.showcase.link!}"><img src="images/blank.gif" class="lazyload" data-original="${category.showcase.pictureUrl!}" width="400" height="270"></a>
                                 </#if>
                             </dt>
                             <#if category.breedList??>
                                 <#list category.commodityList as commodity>
                                     <dd>
-                                        <a href="/commodity/${commodity.id!}"><img src="${commodity.pictureUrl!}" class="lazyload" data-original="${commodity.pictureUrl!}" width="180" height="180"></a>
+                                        <a href="/commodity/${commodity.id!}"><img src="images/blank.gif" class="lazyload" data-original="${commodity.pictureUrl!}" width="180" height="180"></a>
                                         <a href="/commodity/${commodity.id!}">${commodity.name!}</a>
                                         <span>切制规格：${commodity.specName!}</span>
                                     </dd>
@@ -123,7 +123,7 @@
             <#assign adindex=(category_index/2)>
             <#if AD_SHOWCASE_BAR[adindex]?? >
                 <div class="wide-banner">
-                    <a href="${AD_SHOWCASE_BAR[adindex?int].link!}"><img src="${AD_SHOWCASE_BAR[adindex?int].pictureUrl!}" class="lazyload" data-original="${AD_SHOWCASE_BAR[adindex?int].pictureUrl!}" width="1200" height="90"></a>
+                    <a href="${AD_SHOWCASE_BAR[adindex?int].link!}"><img src="images/blank.gif" class="lazyload" data-original="${AD_SHOWCASE_BAR[adindex?int].pictureUrl!}" width="1200" height="90"></a>
                 </div>
             </#if>
         </#if>

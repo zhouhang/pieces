@@ -80,7 +80,17 @@ public class HomeWeightServiceImpl extends AbsCommonService<HomeWeight> implemen
         return list;
     }
 
-
+    @Override
+    public Map<String, List<CommodityVo>> getEfficacyCommodities() {
+        List<HomeWeight>  homeWeights = findByType(WeightEnum.EFFICACY.name());
+        Map<String,List<CommodityVo>> map = new HashMap<>();
+        for(HomeWeight homeWeight : homeWeights){
+            String name =  homeWeight.getName();
+            List<CommodityVo> list = commodityService.findVoByIds(homeWeight.getValue());
+            map.put(name,list);
+        }
+        return map;
+    }
 
 
     /**

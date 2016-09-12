@@ -28,35 +28,29 @@ public class PinyinCategoryBreedDirective implements TemplateDirectiveModel {
 
     private static final int EXPIRE = 24*3600;
 
-    @Override
-    public void execute(Environment environment, Map params, TemplateModel[] templateModels, TemplateDirectiveBody templateDirectiveBody) throws TemplateException, IOException {
 
+    @Override
+    public void execute(Environment environment,Map params, TemplateModel[] templateModels, TemplateDirectiveBody templateDirectiveBody) throws TemplateException, IOException {
         String body = redisManager.get(RedisEnum.SITE_TAG_PINYIN_CATEGORY.getValue());
         if(StringUtils.isBlank(body)){
             String[]  letterArr = new String[]{"A~E","F~J","K~O","P~T","U~Z"};
             StringBuffer sb = new StringBuffer();
 
             List<CategoryVo> parentCategoryList = categoryService.findByLevelAndPinyin(1,null,null,30);
-
             for(CategoryVo parentCategory : parentCategoryList){
-
                 List<CategoryVo> topThreeBreeds = categoryService.findByLevelAndPinyin(2,parentCategory.getId(),null,3);
-
-
                 sb.append("<li>");
                 sb.append("<div class='cat-name'>");
                 sb.append("<em>").append(parentCategory.getName()).append("</em>");
                 for(CategoryVo breed :topThreeBreeds){
                     sb.append("<a href='commodity/index?breedId=").append(breed.getId()).append("'>").append(breed.getName()).append("</a>\n");
                 }
-
                 sb.append("</div>");
-
                 sb.append("<div class='cat-list'>");
                 for(String letter : letterArr){
                     List<CategoryVo> categoryVoList = categoryService.menuCategoryBreed(parentCategory.getId(),letter);
                     if(categoryVoList.isEmpty()){
-                        break;
+                        continue;
                     }
                     sb.append("<dl>");
                     sb.append(letterTitle(letter));

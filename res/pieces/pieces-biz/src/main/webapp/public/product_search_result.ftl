@@ -33,7 +33,7 @@
                 <tbody>
                     <#list commodityDocPage.content as commodityDoc>
                         <tr>
-                            <td><a href="/commodity/${commodityDoc.id!}"><img class="lazyload" src="${commodityDoc.pictureUrl!}" data-original="${commodityDoc.pictureUrl!}" width="130" height="130" alt=""></a></td>
+                            <td><a href="/commodity/${commodityDoc.id!}"><img class="lazyload" src="images/blank.gif" data-original="${commodityDoc.pictureUrl!}" width="130" height="130" alt=""></a></td>
                             <td class="tl">
                                 <div class="desc">
                                     <h3><a href="/commodity/${commodityDoc.id!}">${commodityDoc.name!}</a></h3>

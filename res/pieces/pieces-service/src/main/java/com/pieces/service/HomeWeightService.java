@@ -30,5 +30,6 @@ public interface HomeWeightService extends ICommonService<HomeWeight>{
     public List<HomeCategoryVo> getHomeCategorys();
 
 
+    Map<String,List<CommodityVo>> getEfficacyCommodities();
 
 }
