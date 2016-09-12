@@ -700,6 +700,18 @@ vertical-align:middle;
 .mybill .state span{vertical-align:middle;} 
 .mybill .state span em{color:#999;font-size:12px;} 
 
+/* 功效 */
+.pro-floor{margin-bottom:80px;}
+.pro-floor .hd{padding:44px 0 10px;}
+.pro-floor .hd h2{line-height:26px;padding-left:10px;font-size:26px;border-left:4px solid #c3272b;}
+.pro-floor .bd{border-left:1px solid #e7e7e7;overflow:hidden;}
+.pro-floor .bd ul{margin-left:-1px;}
+.pro-floor .bd li{float:left;width:221px;height:300px;line-height:26px;padding:9px;border:1px solid #e7e7e7;border-left:0;text-align:center;}
+.pro-floor .bd li img{width:220px;height:220px;margin-bottom:14px;}
+.pro-floor .bd li a{display:inline-block;color:#666;text-align:left;}
+.pro-floor .bd li b{font-weight:700;color:#333;}
+.pro-floor .bd li .title{max-height:52px;padding:0 11px;overflow:hidden;}
+
 
 /* 上传图片 */
 .up-img{position:relative;display:inline-block;width:78px;height:78px;line-height:78px;border:1px dashed #ccc;background:#fff url(../images/upfile.png) no-repeat 50%;cursor:pointer;text-align:center;}

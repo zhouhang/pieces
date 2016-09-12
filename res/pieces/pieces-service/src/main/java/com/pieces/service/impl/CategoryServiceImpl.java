@@ -55,11 +55,13 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 	}
 
 	@Override
+	@Transactional
 	public int create(Category t) {
 		return categoryDao.create(t);
 	}
 
 	@Override
+	@Transactional
 	public int update(Category t) {
 		return categoryDao.update(t);
 	}
@@ -75,6 +77,7 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 	}
 
 	@Override
+	@Transactional
 	public int updateClassify(String classifyName, int id) {
 		Category t = new Category();
 		t.setId(id);
@@ -84,6 +87,7 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 	}
 
 	@Override
+	@Transactional
 	public int addClassify(String classifyName) {
 		Category t = new Category();
 		t.setName(classifyName);
