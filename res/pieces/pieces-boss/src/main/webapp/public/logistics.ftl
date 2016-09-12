@@ -9,7 +9,6 @@
 
     <#include "./inc/header.ftl"/>
 
-
     <!-- fa-floor start -->
     <div class="fa-floor">
         <div class="wrap">

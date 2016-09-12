@@ -32,7 +32,7 @@
                             </div>
                             <div class="desc">
                                 <h3><a href="/commodity/${commodity.id}">${commodity.name}</a></h3>
-                                <P>${commodity.specName}</P>
+                                <P>${commodity.spec}</P>
                             </div>
                         </dd>
                     </#list>
