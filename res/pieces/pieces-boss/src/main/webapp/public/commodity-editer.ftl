@@ -246,7 +246,9 @@ ${commodity.details}
     });
 
     var commodityAddPage = {
-        v: {},
+        v: {
+            attr_index:0
+        },
         fn: {
             init: function () {
                 this.formValidate();
@@ -275,9 +277,10 @@ ${commodity.details}
                 var parameter = ${commodity.attribute};
                 var html = "";
                 $.each(parameter, function (k, v) {
-                    html += '<tr> \n <td><input type="text" class="ipt" value="' + k + '"></td> \n ' +
-                            '<td><input type="text" class="ipt" value="' + v + '"></td> \n ' +
+                    html += '<tr> \n <td><input name="attrN_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="' + k + '" data-rule="required;length[1~20]"></td> \n ' +
+                            '<td><input name="attrV_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="' + v + '" data-rule="required;length[1~20]"></td> \n ' +
                             '<td><span class="c-red">删除</span></td> \n </tr>';
+                    commodityAddPage.v.attr_index += 1;
                 })
                 var $table = $('#attribute').find('tbody');
                 $table.html(html);
@@ -336,6 +339,11 @@ ${commodity.details}
                                         attr[$($(v).find("input")[0]).val()] = $($(v).find("input")[1]).val();
                                     })
                                     var data = $("#form").serializeObject();
+                                    $.each(data, function(k,v){
+                                        if (k.match("attr")){
+                                            delete data[k];
+                                        }
+                                    })
                                     data.attribute = JSON.stringify(attr);
 
                                     $.post("/commodity/save", data, function (data) {
@@ -452,8 +460,10 @@ ${commodity.details}
 
                 // 新增
                 $('#addAttribute').on('click', function () {
-                    var tr = '<tr> \n <td><input type="text" class="ipt" value=""></td> \n <td><input type="text" class="ipt" value=""></td> \n <td><span class="c-red">删除</span></td> \n </tr>';
-
+                    var tr = '<tr> \n <td><input name="attrN_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="" data-rule="required;length[1~20]"></td> ' +
+                            '\n <td><input name="attrV_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="" data-rule="required;length[1~20]"></td> ' +
+                            '\n <td><span class="c-red">删除</span></td> \n </tr>';
+                    commodityAddPage.v.attr_index += 1;
                     $table.append(tr);
                 })
 

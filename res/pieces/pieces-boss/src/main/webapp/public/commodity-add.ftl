@@ -122,28 +122,28 @@
                             </tfoot>
                             <tbody>
                             <tr>
-                                <td><input type="text" class="ipt" value="年限"></td>
-                                <td><input type="text" class="ipt" value=""></td>
+                                <td><input name="attrN_1" type="text" class="ipt" value="年限" data-rule="required;length[1~20]"></td>
+                                <td><input name="attrV_1" type="text" class="ipt" value="" data-rule="required;length[1~20]"></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             <tr>
-                                <td><input type="text" class="ipt" value="采收时间"></td>
-                                <td><input type="text" class="ipt" value=""></td>
+                                <td><input name="attrN_2" type="text" class="ipt" value="采收时间" data-rule="required;length[1~20]"></td>
+                                <td><input name="attrV_2" type="text" class="ipt" value="" name="attr" data-rule="required;length[1~20]"></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             <tr>
-                                <td><input type="text" class="ipt" value="加工方式"></td>
-                                <td><input type="text" class="ipt" value=""></td>
+                                <td><input name="attrN_3" type="text" class="ipt" value="加工方式" data-rule="required;length[1~20]"></td>
+                                <td><input name="attrV_3" type="text" class="ipt" value="" data-rule="required;length[1~20]"></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             <tr>
-                                <td><input type="text" class="ipt" value="含硫情况"></td>
-                                <td><input type="text" class="ipt" value=""></td>
+                                <td><input name="attrN_4" type="text" class="ipt" value="含硫情况" data-rule="required;length[1~20]"></td>
+                                <td><input name="attrV_4" type="text" class="ipt" value="" data-rule="required;length[1~20]"></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             <tr>
-                                <td><input type="text" class="ipt" value="含量"></td>
-                                <td><input type="text" class="ipt" value=""></td>
+                                <td><input name="attrN_5" type="text" class="ipt" value="含量" data-rule="required;length[1~20]"></td>
+                                <td><input name="attrV_5" type="text" class="ipt" value="" data-rule="required;length[1~20]"></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             </tbody>
@@ -226,7 +226,8 @@
 
     var commodityAddPage = {
         v: {
-            form: null
+            form: null,
+            attr_index:8
         },
         fn: {
             init: function () {
@@ -301,7 +302,8 @@
                             rule: "required",
                             target: "#detailsError"
                         },
-                        status: "required"
+                        status: "required",
+                        attr:"required;length[2~20]"
                     }
                 });
             },
@@ -318,6 +320,11 @@
                                 attr[$($(v).find("input")[0]).val()] = $($(v).find("input")[1]).val();
                             })
                             var data = $("#form").serializeObject();
+                            $.each(data, function(k,v){
+                                if (k.match("attr")){
+                                    delete data[k];
+                                }
+                            })
                             data.attribute = JSON.stringify(attr);
                             $.post("/commodity/save", data, function (data) {
                                 if (data.status == "y") {
@@ -434,8 +441,10 @@
 
                 // 新增
                 $('#addAttribute').on('click', function () {
-                    var tr = '<tr> \n <td><input type="text" class="ipt" value=""></td> \n <td><input type="text" class="ipt" value=""></td> \n <td><span class="c-red">删除</span></td> \n </tr>';
-
+                    var tr = '<tr> \n <td><input name="attrN_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="" data-rule="required;length[1~20]"></td> ' +
+                            '\n <td><input name="attrV_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="" data-rule="required;length[1~20]"></td> ' +
+                            '\n <td><span class="c-red">删除</span></td> \n </tr>';
+                    commodityAddPage.v.attr_index += 1;
                     $table.append(tr);
                 })
 
