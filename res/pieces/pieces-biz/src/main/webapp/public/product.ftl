@@ -28,7 +28,7 @@
                     <#list featured as commodity>
                         <dd>
                             <div class="pic">
-                                <a href="/commodity/${commodity.id}"><img class="lazyload" src="${commodity.pictureUrl!}" data-original="${commodity.pictureUrl!}" width="80" height="80" alt=""></a>
+                                <a href="/commodity/${commodity.id}"><img class="lazyload" src="images/blank.gif" data-original="${commodity.pictureUrl!}" width="80" height="80" alt=""></a>
                             </div>
                             <div class="desc">
                                 <h3><a href="/commodity/${commodity.id}">${commodity.name}</a></h3>
@@ -42,7 +42,7 @@
             <div class="main">
                 <div class="product-summary">
                     <div class="preview">
-                        <img src="${commodity.pictureUrl!}" width="360" height="360" alt="">
+                        <img src="images/blank.gif" width="360" height="360" alt="">
                     </div>
                     <div class="ext-info">
                         <h1 class="name">${commodity.title!}</h1>
@@ -86,7 +86,7 @@
                         <#if commodity.attributeView??>
                             <ul>
                                 <#list commodity.attributeView?keys as key>
-                                    <li>${key}：${commodity.attributeView[key]}</li>
+                                    <li title="${commodity.attributeView[key]}">${key}：${commodity.attributeView[key]}</li>
                                 </#list>
                             </ul>
                         </#if>
