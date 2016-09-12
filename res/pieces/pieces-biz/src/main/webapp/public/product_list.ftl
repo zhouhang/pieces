@@ -27,7 +27,7 @@
                     <dt>商品名称：</dt>
 
 					<dd class="bd" id="screen">
-                        <a href="/commodity/index?breedId=${category.id }">全部</a>
+                        <a href="/commodity/index?breedId=${category.id }" <#if commodity.eqName == "">class="current" </#if>>全部</a>
                     	<#list lxCommodity as lc>
                         	<a href="javascript:void(0)" data-name="${lc.name }" onclick="productPage.fn.lcClick(this);" <#if commodity.eqName == lc.name>class="current" </#if>>${lc.name }</a>
                         </#list>
