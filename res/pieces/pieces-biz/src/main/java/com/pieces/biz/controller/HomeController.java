@@ -113,6 +113,7 @@ public class HomeController extends BaseController{
 	}
 
 
+
 	/**
 	 * 站点地图
 	 * @return
@@ -122,7 +123,16 @@ public class HomeController extends BaseController{
 		return "sitemap";
 	}
 
-
+	/**
+	 * 功效
+	 * @return
+     */
+	@RequestMapping(value = "/efficacy", method = RequestMethod.GET)
+	public String efficacy(ModelMap model){
+		Map<String,List<CommodityVo>>  map = homeWeightService.getEfficacyCommodities();
+		model.put("efficacies",map);
+		return "efficacy_list";
+	}
 
 	/**
 	 * 全部分类

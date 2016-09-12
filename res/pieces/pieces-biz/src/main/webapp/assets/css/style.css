@@ -443,7 +443,7 @@ vertical-align:middle;
 .product-summary .buttons .fa{margin-right:6px;font-size:22px;vertical-align:top;}
 .product-detail{margin-top:20px;border:1px solid #e7e7e7;}
 .product-detail .parameter{margin:0 20px 16px;padding:30px 0;line-height:1;font-size:12px;border-bottom:1px solid #e7e7e7;overflow:hidden;*zoom:1;}
-.product-detail .parameter li{float:left;width:33%;padding:10px 0;}
+.product-detail .parameter li{float:left;width:30%;height:12px;margin-right:3%;padding:10px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .product-detail .tab{height:40px;line-height:40px;background:#f0eff5;border-bottom:1px solid #e7e7e7;}
 .product-detail .tab span{float:left;width:120px;text-align:center;}
 .product-detail .tab .on{position:relative;margin:-1px 0 0 -1px;color:#c3272b;background:#fff;border-top:2px solid #c3272b;border-left:1px solid #e7e7e7;border-right:1px solid #e7e7e7;}

@@ -39,7 +39,7 @@
                 <li><a href="/commodity/index">产品</a></li>
                 <li><a href="manufacturers.html">厂家</a></li>
                 <li><a href="/channel/prescription">经方</a></li>
-                <li><a href="manufacturers.html">功效</a></li>
+                <li><a href="/efficacy">功效</a></li>
             </ul>
         </div>
         <div class="plus">

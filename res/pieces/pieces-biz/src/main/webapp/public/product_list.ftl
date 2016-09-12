@@ -27,9 +27,9 @@
                     <dt>商品名称：</dt>
 
 					<dd class="bd" id="screen">
-                        <a href="/commodity/index?breedId=${category.id }">全部</a>
+                        <a href="/commodity/index?breedId=${category.id }" <#if commodity.eqName == "">class="current" </#if>>全部</a>
                     	<#list lxCommodity as lc>
-                        	<a href="javascript:void(0)" data-name="${lc.name }" onclick="productPage.fn.lcClick(this);">${lc.name }</a>
+                        	<a href="javascript:void(0)" data-name="${lc.name }" onclick="productPage.fn.lcClick(this);" <#if commodity.eqName == lc.name>class="current" </#if>>${lc.name }</a>
                         </#list>
                     </dd>
                 </dl>
@@ -55,7 +55,7 @@
                     <#if (pageInfo??&&pageInfo.list?size>0)>
 	                    <#list pageInfo.list as commodity>
 	                        <tr>
-	                            <td><a href="/commodity/${commodity.id }"><img class="lazyload" src="${commodity.pictureUrl!}" data-original="${commodity.pictureUrl!}" width="130" height="130" alt=""></a></td>
+	                            <td><a href="/commodity/${commodity.id }"><img class="lazyload" src="images/blank.gif" data-original="${commodity.pictureUrl!}" width="130" height="130" alt=""></a></td>
 	                            <td class="tl">                                
 	                                <div class="desc">
 	                                    <h3><a href="/commodity/${commodity.id}">${commodity.name }</a></h3>
