@@ -1,5 +1,7 @@
 package com.pieces.tools.upload;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -24,4 +26,9 @@ public class DefaultUploadFile extends AbstractUploadFile{
         return sb.toString();
     }
 
+
+    @Override
+    public InputStream addWatermark(InputStream inputStream, String ext) throws IOException {
+        return inputStream;
+    }
 }

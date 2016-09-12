@@ -3,6 +3,8 @@ package com.pieces.tools.upload;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 import java.util.UUID;
 
@@ -21,5 +23,10 @@ public class TempUploadFile extends AbstractUploadFile {
         StringBuffer sb = new StringBuffer();
         sb.append("temp").append("/").append(year).append("/").append(month).append("/").append(UUID.randomUUID() + fileName);
         return sb.toString();
+    }
+
+    @Override
+    public InputStream addWatermark(InputStream inputStream, String ext) throws IOException {
+        return inputStream;
     }
 }

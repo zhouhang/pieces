@@ -5,6 +5,7 @@ import com.pieces.tools.upload.AbstractUploadFile;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -38,4 +39,8 @@ public class AdUploadFile extends AbstractUploadFile{
         return sb.toString();
     }
 
+    @Override
+    public InputStream addWatermark(InputStream inputStream, String ext) throws IOException {
+        return inputStream;
+    }
 }

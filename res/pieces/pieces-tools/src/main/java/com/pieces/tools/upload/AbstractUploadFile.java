@@ -4,10 +4,13 @@ package com.pieces.tools.upload;
 import com.pieces.tools.bean.FileBo;
 import com.pieces.tools.exception.FileUploadException;
 import com.pieces.tools.utils.FileUtil;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.File;
-import java.io.InputStream;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 
 /**
  * Created by wangbin on 2016/6/27.
@@ -35,7 +38,11 @@ public abstract class AbstractUploadFile {
             }
             //自定义文件名
             String fileName = customImageName(originalFileName);
-            File file = FileUtil.save(inputStream,getBasePath(),fileName);
+
+            //图片加水印
+            InputStream is = addWatermark(inputStream, ext);
+
+            File file = FileUtil.save(is ,getBasePath(),fileName);
             FileBo fileBo = new FileBo(file,file.getName(),
                     getUrl() + fileName,getBasePath()+fileName,ext);
             return fileBo;
@@ -54,6 +61,9 @@ public abstract class AbstractUploadFile {
      * @return
      */
     public abstract String customImageName(String fileName);
+
+
+    public abstract InputStream addWatermark(InputStream inputStream, String ext) throws IOException;
 
     /**
      * 判断文件后缀
