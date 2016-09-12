@@ -22,10 +22,12 @@
                 <div class="title">
                     <h3><i class="fa fa-chevron-right"></i>${vo.code}</h3>
                     <div class="extra">
-                    <#if vo.status == 0 >
-                        <button type="button" class="btn btn-gray" id="jsuc">成功</button>
-                        <button type="button" class="btn btn-gray" id="jfail">失败</button>
-                    </#if>
+                    <@shiro.hasPermission name="bill:edit">
+                        <#if vo.status == 0 >
+                            <button type="button" class="btn btn-gray" id="jsuc">成功</button>
+                            <button type="button" class="btn btn-gray" id="jfail">失败</button>
+                        </#if>
+                    </@shiro.hasPermission>
                         <a href="/account/bill/index" class="btn btn-red">返回</a>
                     </div>
                 </div>

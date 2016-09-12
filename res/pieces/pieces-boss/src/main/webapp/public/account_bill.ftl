@@ -60,7 +60,11 @@
                         <td>${bill.orderUser}</td>
                         <td>${bill.orderCompany}</td>
                         <td>${bill.statusText}</td>
-                        <td><a href="/account/bill/detail?id=${bill.id}">查看</a></td>
+                        <td>
+                        <@shiro.hasPermission name="bill:info">
+                            <a href="/account/bill/detail?id=${bill.id}">查看</a>
+                        </@shiro.hasPermission>
+                        </td>
                     </tr>
                     </#list>
                     </tbody>

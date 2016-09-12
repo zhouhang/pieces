@@ -7,6 +7,8 @@ import com.pieces.service.AccountBillService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.utils.Reflection;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,6 +33,7 @@ public class AccountBillController extends BaseController{
     @Autowired
     HttpSession httpSession;
 
+    @RequiresPermissions(value = "bill:index")
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index(AccountBillVo vo, Integer pageNum, Integer pageSize, ModelMap modelMap) {
         PageInfo<AccountBillVo> pageInfo = accountBillService.findByParams(vo, pageNum, pageSize);
@@ -45,6 +48,7 @@ public class AccountBillController extends BaseController{
      * @param id
      * @return
      */
+    @RequiresPermissions(value = "bill:info")
     @RequestMapping(value = "detail", method = RequestMethod.GET)
     public String detail(Integer id, ModelMap modelMap) {
         AccountBillVo vo = accountBillService.findVoById(id);
@@ -57,6 +61,7 @@ public class AccountBillController extends BaseController{
      * @param id
      * @return
      */
+    @RequiresPermissions(value = "bill:edit")
     @RequestMapping(value = "success", method = RequestMethod.POST)
     @ResponseBody
     public Result success(Integer id) {
@@ -70,6 +75,7 @@ public class AccountBillController extends BaseController{
      * @param id
      * @return
      */
+    @RequiresPermissions(value = "bill:edit")
     @RequestMapping(value = "fail", method = RequestMethod.POST)
     @ResponseBody
     public Result fail(Integer id, String msg) {

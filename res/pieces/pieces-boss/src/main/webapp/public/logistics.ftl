@@ -55,7 +55,11 @@
                             <td>${list.oCode}</td>
                             <td>${list.total}</td>
                             <td>${list.shipNumber}</td>
-                            <td><a href="/logistics/${list.id}">查看</a></td>
+                            <td>
+                            <@shiro.hasPermission name="logistical:info">
+                                <a href="/logistics/${list.id}">查看</a>
+                            </@shiro.hasPermission>
+                            </td>
                         </tr>
                     </#list>
                     </tbody>

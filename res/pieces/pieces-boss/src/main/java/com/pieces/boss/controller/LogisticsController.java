@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -49,6 +50,7 @@ public class LogisticsController extends BaseController {
      * 我的物流页面
      * @return
      */
+    @RequiresPermissions(value = "logistical:index")
     @RequestMapping(value = "/logistics/index", method = RequestMethod.GET)
     public String list(LogisticalVo logisticalVo,Integer pageNum, Integer pageSize, ModelMap modelMap) {
 		pageNum = pageNum == null ? 1 : pageNum;
@@ -64,6 +66,7 @@ public class LogisticsController extends BaseController {
      * 物流详情页面
      * @return
      */
+    @RequiresPermissions(value = "logistical:info")
     @RequestMapping(value = "/logistics/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable("id")Integer id, ModelMap modelMap) {
         LogisticalVo logisticalVo = new LogisticalVo();
