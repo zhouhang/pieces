@@ -6,7 +6,6 @@
 </head>
 
 <body>
-
     <#include "./inc/header-center.ftl"/>
 
     <!-- member-box start -->
@@ -35,37 +34,33 @@
                             </tr>
                             </thead>
 
-                            <#if billPage??&&billPage?has_content>
                                 <tbody>
+                                <#if billPage??&&billPage.list?has_content>
                                     <#list billPage.list as bill>
-                                    <tr>
-                                        <td>${bill.code!}</td>
-                                        <td>${bill.orderCode!} <span>${bill.commodityOverview!}</span></td>
-                                        <td>&yen;${bill.amountsPayable!}</td>
-                                        <td>&yen;${bill.alreadyPayable!}</td>
-                                        <td>&yen;${bill.unPayable!}</td>
-                                        <td><em class="c-red">${bill.statusText!}</em></td>
-                                        <td>${bill.repayTime?string("yyyy-MM-dd")}</td>
-                                        <td class="tc">
-                                            <#if bill.status==1>
-                                                <a class="btn btn-red" href="/center/bill/pay/${bill.id}">付款</a>
-                                            </#if>
-                                            <a href="/center/bill/detail/${bill.id}" class="c-blue">查看详情</a>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>${bill.code!}</td>
+                                            <td>${bill.orderCode!} <span>${bill.commodityOverview!}</span></td>
+                                            <td>&yen;${bill.amountsPayable!}</td>
+                                            <td>&yen;${bill.alreadyPayable!}</td>
+                                            <td>&yen;${bill.unPayable!}</td>
+                                            <td><em class="c-red">${bill.statusText!}</em></td>
+                                            <td>${bill.repayTime?string("yyyy-MM-dd")}</td>
+                                            <td class="tc">
+                                                <#if bill.status==1>
+                                                    <a class="btn btn-red" href="/center/bill/pay/${bill.id}">付款</a>
+                                                </#if>
+                                                <a href="/center/bill/detail/${bill.id}" class="c-blue">查看详情</a>
+                                            </td>
+                                        </tr>
                                     </#list>
+                                    <#else>
+                                        <td colspan="8">
+                                            <div class="empty">
+                                                您还没有任何账单信息！
+                                            </div>
+                                        </td>
+                                </#if>
                                 </tbody>
-                            <#else>
-                                <tbody>
-                                    <td colspan="8">
-                                        <div class="empty">
-                                            您还没有任何账单信息！
-                                        </div>
-                                    </td>
-                                </tbody>
-                            </#if>
-
-
                         </table>
                     </div>
                     <#if billPage??>
