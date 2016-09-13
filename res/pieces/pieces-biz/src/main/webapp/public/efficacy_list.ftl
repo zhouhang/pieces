@@ -24,7 +24,7 @@
                         <#list efficacies[key] as commodity>
                             <li>
                                 <a href="/commodity/${commodity.id!}"><img src="images/blank.gif" class="lazyload" data-original="${commodity.pictureUrl!}" width="220" height="220" alt=""></a>
-                                <a href="/commodity/${commodity.id!}" class="title"><b>${commodity.level!}</b>${commodity.title!}</a>
+                                <a href="/commodity/${commodity.id!}" class="title"><b>${commodity.title!}</b></a>
                             </li>
                         </#list>
                     </ul>
