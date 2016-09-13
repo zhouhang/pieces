@@ -71,11 +71,13 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
         shippingAddressHistoryService.create(orderFormVo.getAddress());
         
         OrderInvoice orderInvoice = orderFormVo.getInvoice();
-        if(!orderInvoice.getName().equals("")){
+        Integer invoiceId = null;
+        if(orderInvoice != null && !orderInvoice.getName().equals("")){
         	orderInvoiceService.create(orderInvoice);
+            invoiceId = orderFormVo.getInvoice().getId();
         }
         orderFormVo.setCode(orderCode);
-        orderFormVo.setInvoiceId(orderFormVo.getInvoice().getId());
+        orderFormVo.setInvoiceId(invoiceId);
         orderFormVo.setAddrHistoryId(orderFormVo.getAddress().getId());
         orderFormVo.setCreaterTime(new Date());
         orderFormVo.setStatus(OrderEnum.UNPAID.getValue());
