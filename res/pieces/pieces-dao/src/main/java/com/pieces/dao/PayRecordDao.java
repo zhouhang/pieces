@@ -12,4 +12,6 @@ public interface PayRecordDao extends ICommonDao<PayRecord>{
 
     public List<PayRecordVo> findByNormalRecord();
 
+    public List<PayRecordVo> findByNormalRecord(PayRecordVo payRecordVo);
+
 }

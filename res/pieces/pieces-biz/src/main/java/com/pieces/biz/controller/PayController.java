@@ -40,6 +40,12 @@ public class PayController extends BaseController{
     @Autowired
     private AccountBillService accountBillService;
 
+    /**
+     * 订单支付
+     * @param modelMap
+     * @param orderId
+     * @return
+     */
     @RequestMapping(value = "/go/{orderId}")
     public String go(ModelMap modelMap,
                      @PathVariable("orderId")Integer orderId){
@@ -54,7 +60,12 @@ public class PayController extends BaseController{
         return "payment";
     }
 
-
+    /**
+     * 支付成功
+     * @param modelMap
+     * @param state
+     * @return
+     */
     @RequestMapping(value = "/success")
     public String success(ModelMap modelMap,
                           String state){
@@ -88,6 +99,12 @@ public class PayController extends BaseController{
     }
 
 
+    /**
+     * 提交帐单
+     * @param billtime
+     * @param orderId
+     * @return
+     */
     @RequestMapping(value = "/bill")
     @ResponseBody
     public Result bill(Integer billtime,
@@ -114,9 +131,8 @@ public class PayController extends BaseController{
     public String record(ModelMap modelMap,
                          Integer pageSize,
                          Integer pageNum){
-        pageNum=pageNum==null?1:pageNum;
-        pageSize=pageSize==null?10:pageSize;
-        PageInfo<PayRecordVo> recordPage = payRecordService.findByNormalRecord(pageNum,pageSize);
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        PageInfo<PayRecordVo> recordPage = payRecordService.findByNormalRecord(user.getId(),pageNum,pageSize);
         for(PayRecordVo payRecordVo : recordPage.getList()){
             String orderCode =  payRecordVo.getOrderCode();
             OrderForm orderForm = orderFormService.findByOrderCode(orderCode);
@@ -128,11 +144,21 @@ public class PayController extends BaseController{
     }
 
 
-
+    /**
+     * 支付详情
+     * @param modelMap
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "/details/{id}")
     public String details(ModelMap modelMap,
                           @PathVariable("id")Integer id){
         PayRecordVo payRecordVo =  payRecordService.findVoById(id);
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        if(!payRecordVo.getUserId().equals(user.getId())){
+            return "redirect:error/404";
+        }
+
         modelMap.put("payRecordVo",payRecordVo);
         return "pay_detail";
     }

@@ -42,7 +42,7 @@
             <div class="main">
                 <div class="product-summary">
                     <div class="preview">
-                        <img src="images/blank.gif" data-original="${commodity.pictureUrl!}" width="360" height="360" alt="">
+                        <img src="${commodity.pictureUrl!}"  width="360" height="360" alt="">
                     </div>
                     <div class="ext-info">
                         <h1 class="name">${commodity.title!}</h1>

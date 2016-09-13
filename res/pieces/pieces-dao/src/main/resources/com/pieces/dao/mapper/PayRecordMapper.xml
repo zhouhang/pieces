@@ -91,12 +91,15 @@
     </select>
 
 
-    <select id="findByNormalRecord" resultMap="PayRecordResultMapVo" parameterType="com.pieces.dao.vo.PayRecordVo">
+    <select id="findByNormalRecord"    resultMap="PayRecordResultMapVo" parameterType="com.pieces.dao.vo.PayRecordVo">
         select
         <include refid="Base_Column_List" />
         from pay_record pr
         <where>
-           pr.status = 1 or  pr.status = 2
+            (pr.status = 1 or  pr.status = 2)
+           <if test="userId != null">
+           and  pr.user_id = #{userId}
+           </if>
         </where>
         ORDER BY pr.create_time DESC
     </select>

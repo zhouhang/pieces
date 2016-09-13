@@ -223,7 +223,12 @@ public class OrderController extends BaseController {
      */
     @RequestMapping(value = "/order/detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable("id")Integer id, ModelMap modelMap) {
-        OrderFormVo vo =  orderFormService.findVoById(id);
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+		OrderFormVo vo =  orderFormService.findVoById(id);
+		//该订单非用户自己订单
+		if(!user.getId().equals(vo.getUserId())){
+			return "redirect:error/404";
+		}
         modelMap.put("orderForm", vo);
         return "order_detail";
     }
