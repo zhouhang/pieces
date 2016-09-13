@@ -38,10 +38,10 @@
 								<#list commodityVoList as commodity>
 	                                <tr>
 	                                    <td>${commodity.name}</td>
-	                                    <td>${commodity.specName}</td>
-	                                    <td>${commodity.levelName}</td>
+	                                    <td>${commodity.spec}</td>
+	                                    <td>${commodity.level}</td>
 	                                    <td>${commodity.exterior}</td>
-	                                    <td>${commodity.originOfName}</td>
+	                                    <td>${commodity.originOf}</td>
 	                                    <td>
 	                                        <#if commodity.status == 1><a href="/center/enquiry/index?commodityId=${commodity.id!}" class="c-blue">询价</a></#if>
 	                                        <a onclick="_global.fn.delFav(${commodity.id!});" href="javascript:;" class="c-red jdel">删除</a>
@@ -82,7 +82,6 @@
 		<div class="bd"></div>
 	</div><!-- 输入框联想 end -->
 
-    <script src="js/jquery.min.js"></script>
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
     <script>
