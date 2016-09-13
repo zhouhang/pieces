@@ -65,7 +65,7 @@
                     <a href="/commodity/${commodity.id!}">
                         <div class="txt">
                             <h4>${commodity.name!}</h4>
-                            <p>规格：${commodity.specName!}</p>
+                            <p>规格：${commodity.spec!}</p>
                             <p><span class="t-orange">热销</span></p>
                         </div>
                         <div class="img">
@@ -111,7 +111,7 @@
                                     <dd>
                                         <a href="/commodity/${commodity.id!}"><img src="images/blank.gif" class="lazyload" data-original="${commodity.pictureUrl!}" width="180" height="180"></a>
                                         <a href="/commodity/${commodity.id!}">${commodity.name!}</a>
-                                        <span>切制规格：${commodity.specName!}</span>
+                                        <span>切制规格：${commodity.spec!}</span>
                                     </dd>
                                 </#list>
                             </#if>
