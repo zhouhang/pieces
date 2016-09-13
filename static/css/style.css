@@ -17,7 +17,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 ::-moz-selection{background:#af2327;color:#fff;}
 ::-webkit-selection{background:#af2327;color:#fff;}
 ::-ms-clear,::-ms-reveal{display:none;}
-
+:-ms-input-placeholder{color:#999;} 
 
 /* layout */
 .bg-gray{background-color:#f0eff5;}
@@ -114,7 +114,6 @@ vertical-align:middle;
 .site-nav{height:29px;line-height:29px;font-size:12px;border-bottom:1px solid #e7e7e7;background:#ededed;overflow:hidden;}
 .site-nav li{float:left;height:29px;padding-left:10px;}
 
-
 /* header */
 .header{background:#fff;}
 .header .logo{float:left;width:200px;height:100px;background:url(../images/logo.png) no-repeat 0 50%;overflow:hidden;}
@@ -135,6 +134,7 @@ vertical-align:middle;
 .header-red .title h1{color:#fff;border-left-color:#fff;}
 .header-red .plus .back{display:inline-block;margin-top:37px;padding:4px 11px;font-size:12px;color:#c3272b;background:#e7e7e7;}
 .header-red .plus .back:hover{text-decoration:none;}
+.header-shadow{margin-bottom:-20px;padding-bottom:20px;background:url(../images/header-shadow.png) repeat-x;}
 
 /* nav */
 .nav{height:38px;background:#fff;border-bottom:2px solid #333;}
