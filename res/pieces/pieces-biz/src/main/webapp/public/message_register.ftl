@@ -8,7 +8,7 @@
 <body>
 
     <!-- header start -->
-    <div class="header">
+    <div class="header header-shadow">
         <div class="wrap">
             <div class="logo">
                 <a href="/">饮片B2B首页</a>
