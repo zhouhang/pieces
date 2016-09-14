@@ -33,39 +33,37 @@
                         <a href="/commodity/index?categoryId=1077">藤皮类</a>
                         <a href="/commodity/index?categoryId=1192">树脂菌脂类</a>
                         <a href="/commodity/index?categoryId=1238">矿石动物类</a>
-                        <a href="#11111">其他类</a>
+                        <a href="/commodity/index?categoryId=1680">其他类</a>
                     </dd>
 
                     <dt>经方</dt>
                     <dd>                        
-                        <a href="#11111">桂枝汤</a>
-                        <a href="#11111">麻黄汤</a>
-                        <a href="#11111">葛根汤</a>
-                        <a href="#11111">柴胡汤</a>
-                        <a href="#11111">泻心汤</a>
-                        <a href="#11111">白虎汤</a>
-                        <a href="#11111">承气汤</a>
-                        <a href="#11111">陷胸汤</a>
-                        <a href="#11111">抵挡汤</a>
-                        <a href="#11111">四逆汤</a>
-                        <a href="#11111">理中汤</a>
+                        <a href="/channel/prescription#guizhi">桂枝汤</a>
+                        <a href="/channel/prescription#mahuang">麻黄汤</a>
+                        <a href="/channel/prescription#gegeng">葛根汤</a>
+                        <a href="/channel/prescription#caihu">柴胡汤</a>
+                        <a href="/channel/prescription#baihu">白虎汤</a>
+                        <a href="/channel/prescription#chengqi">承气汤</a>
+                        <a href="/channel/prescription#xianxiong">陷胸汤</a>
+                        <a href="/channel/prescription#didang">抵挡汤</a>
+                        <a href="/channel/prescription#sini">四逆汤</a>
+                        <a href="/channel/prescription#lizhong">理中汤</a>
                     </dd>
 
                     <dt>功效</dt>
                     <dd>
-                        <a href="#11111">清热药</a>
-                        <a href="#11111">解表药</a>
-                        <a href="#11111">利水渗湿药</a>
-                        <a href="#11111">泻下药</a>
-                        <a href="#11111">活血化瘀药</a>
-                        <a href="#11111">止血药</a>
-                        <a href="#11111">补虚药</a>
-                        <a href="#11111">收涩药</a>
-                        <a href="#11111">平肝熄风药</a>
-                        <a href="#11111">安神药</a>
-                        <a href="#11111">化痰止咳平喘药</a>
-                        <a href="#11111">去风湿药</a>
-                        <a href="#11111">其他</a>
+                        <a href="/efficacy#清热药">清热药</a>
+                        <a href="/efficacy#解表药">解表药</a>
+                        <a href="/efficacy#利水渗湿药">利水渗湿药</a>
+                        <a href="/efficacy#泻下药">泻下药</a>
+                        <a href="/efficacy#活血化瘀药">活血化瘀药</a>
+                        <a href="/efficacy#止血药">止血药</a>
+                        <a href="/efficacy#补虚药">补虚药</a>
+                        <a href="/efficacy#收涩药">收涩药</a>
+                        <a href="/efficacy#平肝熄风药">平肝熄风药</a>
+                        <a href="/efficacy#安神药">安神药</a>
+                        <a href="/efficacy#化痰止咳平喘药">化痰止咳平喘药</a>
+                        <a href="/efficacy#去风湿药">去风湿药</a>
                     </dd>
 
                     <dt>帮助中心</dt>

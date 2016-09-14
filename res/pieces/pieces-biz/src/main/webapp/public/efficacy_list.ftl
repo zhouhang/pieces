@@ -17,7 +17,7 @@
         <div class="pro-floor">
             <#list efficacies?keys as key >
                 <div class="hd">
-                    <h2>${key}</h2>
+                    <h2 id="${key}">${key}</h2>
                 </div>
                 <div class="bd">
                     <ul>
