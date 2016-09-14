@@ -18,13 +18,15 @@ import java.util.Date;
  */
 public class DateTypeEditor extends PropertyEditorSupport {
 
+
 	/**
 	 * 短类型日期长度
 	 */
 	public static final int SHORT_DATE = 10;
 
 	public void setAsText(String text) throws IllegalArgumentException {
-	 	DateFormat DF_LONG = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+		DateFormat DF_LONG = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		DateFormat DF_SHORT = new SimpleDateFormat("yyyy-MM-dd");
 		text = text.trim();
 		if (!StringUtils.hasText(text)) {
@@ -49,8 +51,8 @@ public class DateTypeEditor extends PropertyEditorSupport {
 	 * Format the Date as String, using the specified DateFormat.
 	 */
 	public String getAsText() {
-		DateFormat DF_LONG = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date value = (Date) getValue();
+		DateFormat DF_LONG = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return (value != null ? DF_LONG.format(value) : "");
 	}
 }

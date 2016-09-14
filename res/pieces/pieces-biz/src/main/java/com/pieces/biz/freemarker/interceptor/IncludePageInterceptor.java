@@ -20,7 +20,7 @@ public class IncludePageInterceptor extends HandlerInterceptorAdapter {
             String viewName = modelAndView.getViewName();
             if (viewName != null && (viewName.startsWith("template") || viewName.startsWith("/template"))) {
                 // freemarker 原生的IncludePage指令
-                modelAndView.addObject("include_page", new CustomIncludePage(request, response));
+                System.out.println(viewName);
             }
         }
     }

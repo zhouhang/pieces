@@ -110,8 +110,6 @@ public class BillController  extends BaseController{
     public String billDetail(ModelMap modelMap,
                              @PathVariable("billId")Integer billId){
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-
-
         AccountBillVo accountBillVo =  accountBillService.findVoById(billId);
         if(!accountBillVo.getUserId().equals(user.getId())){
             return "redirect:error/404";
