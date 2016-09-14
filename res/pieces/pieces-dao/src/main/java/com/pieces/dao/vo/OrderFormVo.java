@@ -186,9 +186,9 @@ public class OrderFormVo extends com.pieces.dao.model.OrderForm {
 
     public String getOrderValidityPeriod() {
         if (this.getCreaterTime() != null) {
-            if (this.getStatus() == OrderEnum.UNPAID.getValue()) {
+            if (this.getStatus().equals(OrderEnum.UNPAID.getValue()) ) {
                 // 10天的间隔 转换成毫秒
-                Long intervals = Long.valueOf(SystemConfig.orderValidityPeriod * 24 * 60 * 60 * 1000);
+                Long intervals = Long.valueOf(SystemConfig.orderValidityPeriod * 24 * 60 * 60 * 1000L);
                 Long day = 24 * 60 * 60 * 1000L;
                 Long hour = 60 * 60 * 1000L;
                 Long minute = 60 * 1000L;

@@ -85,7 +85,11 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
     	String salt = "";
         if(info instanceof SaltedAuthenticationInfo){
         	ByteSource bs = ((SaltedAuthenticationInfo)info).getCredentialsSalt();
-        	salt = new String(bs.getBytes());
+            try {
+                salt = new String(bs.getBytes(),"utf-8");
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
         Password passObj = EncryptUtil.PiecesEncode(new String((char[])token.getCredentials()), salt);
         String tokenHashedCredentials = passObj.getPassword();
