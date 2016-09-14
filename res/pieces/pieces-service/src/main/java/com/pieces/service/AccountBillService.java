@@ -14,6 +14,20 @@ public interface AccountBillService extends ICommonService<AccountBill>{
 
     public PageInfo<AccountBillVo> findVoAll(Integer pageNum, Integer pageSize);
 
+    /**
+     * 查询用户所有帐单
+     * @param userId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public PageInfo<AccountBillVo> findVoAll(Integer userId,Integer pageNum, Integer pageSize);
+
+    /**
+     * 查询所有用户帐单
+     * @param billId
+     * @return
+     */
     public AccountBillVo findVoById(Integer billId);
 
     /**

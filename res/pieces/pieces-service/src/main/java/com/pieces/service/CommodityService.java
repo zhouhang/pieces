@@ -78,5 +78,6 @@ public interface CommodityService extends ICommonService<Commodity>{
     public List<CommodityVo> findCommodityByName(CommodityVo commodityVO);
 
     public List<Commodity> findByName(String name);
+	public List<CommodityVo> findDistinctName(CommodityVo commodityVO);
 
 }

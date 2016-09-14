@@ -137,11 +137,16 @@
         where id = #{id}
     </update>
 
-    <select id="findVoAll"  resultMap="AccountBillResultMapVo">
+    <select id="findVoAll"  resultMap="AccountBillResultMapVo" parameterType="com.pieces.dao.vo.AccountBillVo">
         SELECT
         *,o.code as order_code
         FROM  account_bill a
         LEFT JOIN order_form o on a.order_id = o.id
+        <where>
+            <if test="userId != null">
+                a.user_id = #{userId}
+            </if>
+        </where>
         order by a.id desc
     </select>
 

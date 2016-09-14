@@ -39,4 +39,6 @@ public interface CommodityDao extends ICommonDao<Commodity>{
 	public List<CommodityVo> findCommodityByNameLx(CommodityVo commodityVO);
 
 	public List<Commodity> findByName(String name);
+
+	public List<CommodityVo> findDistinctName(CommodityVo commodityVO);
 }

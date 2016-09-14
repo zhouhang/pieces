@@ -22,7 +22,7 @@
 
                     <dt>应付金额：</dt>
                     <dd>
-                        <em>&yen;${accountBill.amountsPayable!}</em>
+                        <em>&yen;${accountBill.unPayable!}</em>
                     </dd>
 
                     <dt>支付方式：</dt>
@@ -78,7 +78,7 @@
                         <div class="group">
                             <div class="txt">付款时间：</div>
                             <div class="cnt">
-                                <input type="text" id="date" name="paymentTime" autocomplete="off" value="" class="ipt" onclick="laydate()">
+                                <input type="text" id="date" name="paymentTime" autocomplete="off" value="" class="ipt" >
                             </div>
                         </div>
                         <div class="group">
@@ -121,6 +121,7 @@
                     this.formInit();
                     this.goodsImg();
                     this.payType();
+                    this.dateInit();
 
                     $("#cashSubmit").click(function(){
                         var bank=$('input:radio[name="bank"]:checked').val();
@@ -154,7 +155,7 @@
                             },
                             success: function(result) {
                                 if(result.status=="y"){
-                                    location.href="/center/pay/success?state=payment"
+                                    location.href="/center/pay/success?state=payment&way=bill"
                                 }else{
                                     $.notify({
                                         type: 'error',
@@ -173,6 +174,27 @@
                     })
 
     			},
+                dateInit: function () {
+                    var start = {
+                        elem: '#date',
+                        format: 'YYYY-MM-DD hh:mm:ss',
+                        min: laydate.now(), //设定最小日期为当前日期
+                        max: '2099-06-16 23:59:59', //最大日期
+                        istime: true,
+                        choose: function(date){
+                            $('#date').removeClass('n-invalid').next().html('');
+                        }
+                    };
+
+                    laydate(start);
+                    $('#date').on('blur', function () {
+                        if (this.value != '') {
+
+                            $(this).removeClass('n-invalid').next().html('');
+                        }
+                    })
+
+                },
                 formInit: function() {
                     var self = this;
                     $('#myform').validator({

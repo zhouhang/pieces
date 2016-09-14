@@ -372,7 +372,6 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/info")
 	public String userInfo(ModelMap model, HttpServletRequest request) {
-		String url = request.getRequestURI();
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		model.put("user", user);
 		return "user_info";

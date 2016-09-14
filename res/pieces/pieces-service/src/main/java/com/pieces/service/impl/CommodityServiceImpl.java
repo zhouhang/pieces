@@ -286,5 +286,10 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         return commodityDao.findByName(name);
     }
 
+	@Override
+	public List<CommodityVo> findDistinctName(CommodityVo commodityVO) {
+		return commodityDao.findDistinctName(commodityVO);
+	}
+
 
 }

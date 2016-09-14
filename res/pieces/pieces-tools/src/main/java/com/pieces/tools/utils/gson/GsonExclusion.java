@@ -52,7 +52,7 @@ public class GsonExclusion implements ExclusionStrategy {
             return true;
         }
         String fieldName = f.getName();
-        if (exclusionFields.equals(fieldName)) {
+        if (exclusionFields.contains(fieldName)) {
             return true;
         }
         return false;

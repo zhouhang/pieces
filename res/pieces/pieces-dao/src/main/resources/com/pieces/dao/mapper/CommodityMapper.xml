@@ -282,4 +282,13 @@
         where name = #{name} and status = 1
     </select>
 
+    <select id="findDistinctName" parameterType="com.pieces.dao.vo.CommodityVo" resultType="com.pieces.dao.vo.CommodityVo">
+        select distinct a.name
+        from commodity a
+        where a.status = 1
+        <if test="breedId != null and breedId != ''">
+            and a.category_id = #{breedId}
+        </if>
+    </select>
+
 </mapper>

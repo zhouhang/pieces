@@ -79,6 +79,16 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 	}
 
 	@Override
+	public PageInfo<AccountBillVo> findVoAll(Integer userId, Integer pageNum, Integer pageSize) {
+		AccountBillVo accountBillVo = new AccountBillVo();
+		accountBillVo.setUserId(userId);
+		PageHelper.startPage(pageNum, pageSize);
+		List<AccountBillVo>	 list = accountBillDao.findVoAll(accountBillVo);
+		PageInfo page = new PageInfo(list);
+		return page;
+	}
+
+	@Override
 	public AccountBillVo findVoById(Integer billId) {
 		AccountBillVo accountBill =  accountBillDao.findVoById(billId);
 		PayRecordVo payRecordVo = new PayRecordVo();

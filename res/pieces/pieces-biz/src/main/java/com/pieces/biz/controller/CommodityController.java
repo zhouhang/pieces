@@ -91,18 +91,20 @@ public class CommodityController extends BaseController {
 		List<CommodityVo> lxCommodity = null;
 		if(commodityVO.getBreedId() != null){
 			category = categoryService.findById(commodityVO.getBreedId());
+			lxCommodity = commodityService.findDistinctName(commodityVO);
 		}
 		if(commodityVO.getEqName() != null){
 			commodityVO.setEqName(commodityVO.getEqName());
 			category = commodityService.findBreedByName(commodityVO);
+			commodityVO.setBreedId(category.getId());
+			lxCommodity = commodityService.findDistinctName(commodityVO);
+			commodityVO.setBreedId(null);
 		}
 		
 		if(category == null){
 			return null;
 		}
-		commodityVO.setName(category.getName());
-		lxCommodity = commodityService.findCommodityByName(commodityVO);
-		commodityVO.setName(null);
+
 		
 		Category parent = categoryService.findById(category.getParentId());
 		Integer cid = commodityVO.getCategoryId();
