@@ -17,7 +17,7 @@ public class BeanUtils {
 	/**
 	 * The constant beanCopierMap.
 	 */
-	public static final Map<String, BeanCopier> beanCopierMap = new HashMap<>();
+	public static  Map<String, BeanCopier> beanCopierMap = new HashMap<>();
 
 	/**
 	 * Copy.

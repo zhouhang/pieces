@@ -161,7 +161,7 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
             orderFormVo.setCode(origCode+"-1");
         }else{
             String[] code = origCode.split("-");
-            Integer time = Integer.valueOf(code[1])+1;
+            Integer time = Integer.parseInt(code[1])+1;
             orderFormVo.setCode(code[0]+"-"+time);
         }
         return create(orderFormVo);

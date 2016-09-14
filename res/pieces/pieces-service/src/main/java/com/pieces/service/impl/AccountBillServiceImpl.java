@@ -148,7 +148,7 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 			//已付
 			Double alreadyPayable = 0D;
 			for (PayRecordVo pay : accountBillVo.getPayRecordVoList()) {
-				if (pay.getStatus() == PayEnum.SUCCESS.getValue()) {
+				if (pay.getStatus() .equals( PayEnum.SUCCESS.getValue())) {
 					alreadyPayable += pay.getActualPayment();
 				}
 			}
