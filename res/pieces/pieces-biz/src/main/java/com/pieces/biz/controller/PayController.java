@@ -68,8 +68,10 @@ public class PayController extends BaseController{
      */
     @RequestMapping(value = "/success")
     public String success(ModelMap modelMap,
+                          String way,
                           String state){
         modelMap.put("state",state);
+        modelMap.put("way",way);
         return "payment_result";
     }
 

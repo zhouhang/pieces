@@ -26,7 +26,12 @@
             <#else>
                 <div class="state">
                     <h4><i class="fa fa-check-circle"></i>您的付款信息已提交成功！</h4>
-                    <p>款项确认无误后平台将立即安排为您发货。 </p>
+                    <#if way='bill'>
+                        <p>款项确认无误将有短信通知您。 </p>
+                        <#else>
+                        <p>款项确认无误后平台将立即安排为您发货。 </p>
+                    </#if>
+
                 </div>
             </#if>
 
