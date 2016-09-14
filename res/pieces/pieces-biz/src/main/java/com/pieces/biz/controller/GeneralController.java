@@ -15,12 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.pieces.service.CommodityService;
-import com.pieces.service.impl.CommodityServiceImpl;
 import com.pieces.service.impl.CreateHtmlService;
 import com.pieces.service.vo.CropResult;
-import com.pieces.tools.bean.FileBo;
-import com.pieces.tools.upload.TempUploadFile;
-import com.pieces.tools.utils.SpringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +62,7 @@ public class GeneralController extends BaseController {
     private CreateHtmlService createHtmlService;
 
 
-    public static ConfigurableCaptchaService captchaService = new ConfigurableCaptchaService();
+    private final static ConfigurableCaptchaService captchaService = new ConfigurableCaptchaService();
 
     static {
         //生成验证码
@@ -182,7 +178,7 @@ public class GeneralController extends BaseController {
 	public void getMobileCode(String contactMobile,
 						HttpServletRequest request,
 						HttpServletResponse response) throws Exception{
-		String code =  smsService.sendSmsCaptcha(contactMobile);
+		smsService.sendSmsCaptcha(contactMobile);
 		Map<String, String> result = new HashMap<String, String>();
 		result.put("ok", "ok");
         WebUtil.print(response,result);
