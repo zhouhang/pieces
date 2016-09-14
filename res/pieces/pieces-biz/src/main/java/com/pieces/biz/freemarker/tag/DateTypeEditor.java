@@ -10,22 +10,22 @@ import java.util.Date;
 
 /**
  * 日期编辑器
- * 
+ *
  * 根据日期字符串长度判断是长日期还是短日期。只支持yyyy-MM-dd，yyyy-MM-dd HH:mm:ss两种格式。
- * 
+ *
  * @author liufang
- * 
+ *
  */
 public class DateTypeEditor extends PropertyEditorSupport {
-	public static final DateFormat DF_LONG = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss");
-	public static final DateFormat DF_SHORT = new SimpleDateFormat("yyyy-MM-dd");
+
 	/**
 	 * 短类型日期长度
 	 */
 	public static final int SHORT_DATE = 10;
 
 	public void setAsText(String text) throws IllegalArgumentException {
+	 	DateFormat DF_LONG = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		DateFormat DF_SHORT = new SimpleDateFormat("yyyy-MM-dd");
 		text = text.trim();
 		if (!StringUtils.hasText(text)) {
 			setValue(null);
@@ -49,6 +49,7 @@ public class DateTypeEditor extends PropertyEditorSupport {
 	 * Format the Date as String, using the specified DateFormat.
 	 */
 	public String getAsText() {
+		DateFormat DF_LONG = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date value = (Date) getValue();
 		return (value != null ? DF_LONG.format(value) : "");
 	}

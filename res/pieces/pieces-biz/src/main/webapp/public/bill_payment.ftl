@@ -22,7 +22,7 @@
 
                     <dt>应付金额：</dt>
                     <dd>
-                        <em>&yen;${accountBill.amountsPayable!}</em>
+                        <em>&yen;${accountBill.unPayable!}</em>
                     </dd>
 
                     <dt>支付方式：</dt>

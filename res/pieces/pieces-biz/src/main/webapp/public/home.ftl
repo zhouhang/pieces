@@ -90,7 +90,7 @@
                         <ul>
                             <#if category.breedList??>
                                 <#list category.breedList as breed>
-                                    <li><a href="commodity/index?categoryId=${breed.id!}">${breed.name!}</a></li>
+                                    <li><a href="commodity/index?breedId=${breed.id!}">${breed.name!}</a></li>
                                 </#list>
                             </#if>
                         </ul>
