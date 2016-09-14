@@ -63,7 +63,7 @@
                         <a href="/efficacy#平肝熄风药">平肝熄风药</a>
                         <a href="/efficacy#安神药">安神药</a>
                         <a href="/efficacy#化痰止咳平喘药">化痰止咳平喘药</a>
-                        <a href="/efficacy#去风湿药">去风湿药</a>
+                        <a href="/efficacy#去风湿药">祛风湿药</a>
                     </dd>
 
                     <dt>帮助中心</dt>
