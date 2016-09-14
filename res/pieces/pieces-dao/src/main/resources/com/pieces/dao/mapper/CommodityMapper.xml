@@ -286,8 +286,8 @@
         select distinct a.name
         from commodity a
         where a.status = 1
-        <if test="breedIds != null and breedIds != ''">
-            and a.category_id = #{breedIds}
+        <if test="breedId != null and breedId != ''">
+            and a.category_id = #{breedId}
         </if>
     </select>
 
