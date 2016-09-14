@@ -182,18 +182,14 @@
                         max: '2099-06-16 23:59:59', //最大日期
                         istime: true,
                         choose: function(date){
-                            $('#date').removeClass('n-invalid').next().html('');
+                            $('#date').trigger('blur');
                         }
                     };
 
                     laydate(start);
-                    $('#date').on('blur', function () {
-                        if (this.value != '') {
-
-                            $(this).removeClass('n-invalid').next().html('');
-                        }
+                    $('body').on('click','#laydate_today',function(){
+                        $('#date').trigger('blur')
                     })
-
                 },
                 formInit: function() {
                     var self = this;
