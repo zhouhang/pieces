@@ -162,7 +162,7 @@
                         url:"/center/enquiry/parseXsl",
                         success: function(result) {
                             page.fn.toTable(result)
-                        }}
+                        }
                     });
                     $("#excel").change(function(){
                         $("#excelForm").submit();
