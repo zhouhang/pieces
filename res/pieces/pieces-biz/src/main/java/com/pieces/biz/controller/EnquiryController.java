@@ -44,7 +44,7 @@ import java.util.*;
 @RequestMapping(value = "/center/enquiry")
 public class EnquiryController extends BaseController{
 
-    private final int COOKIE_EXPIRE = 3600;
+    private static final int COOKIE_EXPIRE = 3600;
 
     @Autowired
     private CommodityService commodityService;

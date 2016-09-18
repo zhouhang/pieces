@@ -19,7 +19,7 @@ import java.util.Set;
 @Repository
 public class CommodityDaoImpl extends BaseDaoImpl implements CommodityDao {
 
-    public static String param = "pictureUrl";
+    public final static String param = "pictureUrl";
 
     @Override
     public Commodity findById(int id) {

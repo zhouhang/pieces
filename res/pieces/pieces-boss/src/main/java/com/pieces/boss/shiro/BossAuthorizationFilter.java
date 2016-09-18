@@ -21,7 +21,6 @@ public class BossAuthorizationFilter extends AuthorizationFilter {
 
 
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
-		HttpServletRequest req = (HttpServletRequest) request;
 		Subject subject = getSubject(request, response);
 
 //		Session session = subject.getSession();

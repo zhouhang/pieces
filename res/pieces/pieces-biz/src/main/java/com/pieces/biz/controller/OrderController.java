@@ -180,7 +180,7 @@ public class OrderController extends BaseController {
 	 */
 	private ShippingAddressVo getCurrentAdd(List<ShippingAddressVo>  shippingAddressList,Integer id){
 		for(ShippingAddressVo svo : shippingAddressList){
-			if(svo.getId() == id){
+			if(svo.getId().equals(id)){
 				return svo;
 			}
         }

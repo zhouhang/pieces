@@ -66,6 +66,7 @@ public class ExcelParse {
 
                         }
                     } catch (Exception e) {
+                        e.printStackTrace();
                         //TODO: continue
                     }
 
@@ -73,7 +74,9 @@ public class ExcelParse {
                 }
             }
 
-            list.add(commoditys);
+            if(commoditys.getCommodityName()!=null){
+                list.add(commoditys);
+            }
         }
 
         inp.close();
@@ -107,9 +110,4 @@ public class ExcelParse {
     }
 
 
-    public static void main(String[] args) throws IOException, InvalidFormatException {
-//        List<EnquiryCommoditys> list = ExcelParse.parseEnquiryXLS("/Users/kevin1/Downloads/批量采购模版.xls");
-//
-//        System.out.println("args = [" + args + "]");
-    }
 }

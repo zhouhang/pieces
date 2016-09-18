@@ -1,4 +1,7 @@
 <#macro pager inPageNo pageSize toURL recordCount>
+    <#if pageSize==0>
+        <#local pageSize=10 >
+    </#if>
     <#assign pageCount=((recordCount + pageSize -1 ) / pageSize)?int>
     <#assign pageNo=inPageNo+1 >
     <#if recordCount==0><#return/></#if>

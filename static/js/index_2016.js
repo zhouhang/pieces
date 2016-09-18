@@ -1,11 +1,5 @@
 // slide
 !(function($){
-	$.easing.easeInOutExpo = function (x, t, b, c, d) {
-		if (t==0) return b;
-		if (t==d) return b+c;
-		if ((t/=d/2) < 1) return c/2 * Math.pow(2, 10 * (t - 1)) + b;
-		return c/2 * (-Math.pow(2, -10 * --t) + 2) + b;
-	}
 
 	var defaults = {
 		speed: 700,
@@ -165,13 +159,11 @@ $(function(){
 	// 楼层导航
 	var 
 		$win      = $(window),
-		$gotop 	  = $('#jgotop'),
 		$elevator = $('#jelevator'),
 		threshold = $('.idx-main').offset().top,
 		elevator  = function() {
 			var stop  = $win.scrollTop();
 			$elevator[stop < threshold ? 'fadeOut' : 'fadeIn'](100);
-			$gotop[stop < threshold ? 'fadeOut' : 'fadeIn'](100);
 		},
 		_elevator = throttle(elevator, 50, 150);
 
@@ -186,9 +178,5 @@ $(function(){
 	elevator();
 	$win.on('scroll.elevator', _elevator);
 	$elevator.html(html.join('')).onePageNav();
-	$gotop.on('click', function() {
-		$('html, body').animate({
-			scrollTop: 0
-		}, 700, EASING);
-	});
+
 });

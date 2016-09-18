@@ -198,8 +198,8 @@ public abstract class DirectiveUtils {
 	public static Boolean getBool(String name, Map<String, TemplateModel> params)
 			throws TemplateException {
 		TemplateModel model = params.get(name);
-		if (model == null) {
-			return null;
+		if (null==model) {
+			return false;
 		}
 		if (model instanceof TemplateBooleanModel) {
 			return ((TemplateBooleanModel) model).getAsBoolean();
@@ -212,7 +212,7 @@ public abstract class DirectiveUtils {
 				return !(s.equals("0") || s.equalsIgnoreCase("false") || s
 						.equalsIgnoreCase("f"));
 			} else {
-				return null;
+				return false;
 			}
 		} else {
 			throw new MustBooleanException(name);

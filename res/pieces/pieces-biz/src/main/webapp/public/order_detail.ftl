@@ -95,7 +95,7 @@
                             <td><#if commodity.price??>¥${commodity.price}</#if></td>
                             <td><#if commodity.subtotal??>¥${commodity.subtotal}</#if></td>
                             <#if commodity_index == 0>
-                                <td rowspan="${commodity?size}"><span class="c-red">${orderForm.statusText}</span></td>
+                                <td rowspan="${orderForm.commodities?size}"><span class="c-red">${orderForm.statusText}</span></td>
                             </#if>
                         </tr>
                         </#list>

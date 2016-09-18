@@ -49,8 +49,8 @@ public class BillController  extends BaseController{
                         Integer pageSize,
                         Integer pageNum){
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-        pageNum=pageNum==null?1:pageNum;
-        pageSize=pageSize==null?10:pageSize;
+        pageNum=pageNum==null?Integer.valueOf(1):pageNum;
+        pageSize=pageSize==null?Integer.valueOf(10):pageSize;
         PageInfo<AccountBillVo> billVoPageInfo = accountBillService.findVoAll(user.getId(),pageNum,pageSize);
         for(AccountBillVo accountBillVo : billVoPageInfo.getList()){
             accountBillVo.setCommodities(assignCommodity(accountBillVo.getOrderId()));
@@ -110,8 +110,6 @@ public class BillController  extends BaseController{
     public String billDetail(ModelMap modelMap,
                              @PathVariable("billId")Integer billId){
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-
-
         AccountBillVo accountBillVo =  accountBillService.findVoById(billId);
         if(!accountBillVo.getUserId().equals(user.getId())){
             return "redirect:error/404";

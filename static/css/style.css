@@ -634,8 +634,8 @@ vertical-align:middle;
 .gotop a{display:block;color:#fff;background:#fff;}
 .gotop a:hover{background:#c3272b;color:#fff;text-decoration:none;}
 .gotop a:hover b{display:none;}
-.gotop b{display:block;line-height:40px;font-size:20px;color:#999;}
-.gotop em{display:block;line-height:14px;padding:6px;font-size:12px;}
+.gotop b{display:block;line-height:38px;font-size:20px;color:#999;border:1px solid #e7e7e7;}
+.gotop em{display:block;line-height:14px;padding:5px 6px;font-size:12px;border:1px solid #c3272b;}
 
 /* allsort */
 .allsort{margin:20px 0 50px;border:1px solid #e7e7e7;}

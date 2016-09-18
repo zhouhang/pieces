@@ -51,7 +51,7 @@ public class GeneralController {
     CommodityService commodityService;
 
 
-    public static ConfigurableCaptchaService captchaService = new ConfigurableCaptchaService();
+    public final static ConfigurableCaptchaService captchaService = new ConfigurableCaptchaService();
 
     static {
         //生成验证码

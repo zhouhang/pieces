@@ -296,7 +296,7 @@ ${commodity.details}
                         categoryId: "required",
                         name: "required;length[2~20]",
                         title:"required;length[2~50]",
-                        spec: "required;length[2~20]",
+                        spec: "required;length[1~20]",
                         level: "required;length[2~50]",
                         originOf: "required;length[2~20]",
                         executiveStandard: "required;length[1~20]",
