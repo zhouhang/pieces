@@ -32,7 +32,7 @@
 						</div>
 						<div class="cnt">
 							<input type="text" class="ipt" value="" autocomplete="off"
-								name="userName" id="username" placeholder="6-20位，以字母开头"
+								name="userName" id="username" placeholder="以字母开头，支持字母、数字，6-20位"
 								data-msg-required="请输入用户名">
 						</div>
 					</div>
@@ -158,7 +158,7 @@
 						<dd>验收无误收货</dd>
 						<dd>网上对账付款</dd>
 						<dd>
-							<a href="helper.html">查看平台详细教程</a>
+							<a href="/help/15">查看平台详细教程</a>
 						</dd>
 					</dl>
 				</div>
