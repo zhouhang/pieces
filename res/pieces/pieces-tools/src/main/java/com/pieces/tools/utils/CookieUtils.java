@@ -61,15 +61,14 @@ public class CookieUtils {
         response.addCookie(cookie);
     }
 
-    public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, String name) {
+    public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, String name)throws Exception {
     	Cookie[] allCookie = request.getCookies();
     	if(allCookie != null ){
     		for( int i=0; i<allCookie.length; i++){
     			Cookie ck = allCookie[i];
     	        if( ck.getName().equals(name) ){
-    	        	ck.setMaxAge(0); // 设置cookie的周期为0，也就是删除cookie。。
-    	        	response.addCookie( ck ); //必须要加上这一句，否则上面的一句就等于无效。结论：服务器修改cookie后，一定要调用addCookie()方法，重新添加到客户端中。。。
-    	        }  
+                    setCookie(response,name,"",0);
+    	        }
     	     }
     	}
     }

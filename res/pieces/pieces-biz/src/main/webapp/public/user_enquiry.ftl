@@ -38,7 +38,7 @@
 	                				<tr>
 	                					<th width="180">商品名称</th>
 	                					<th>切制规格</th>
-	                					<th>等级</th>
+	                					<th>规格等级</th>
 	                					<th>产地</th>
 	                					<th>数量<span>（公斤）</span></th>
 	                					<th width="130">期望单价<span>（元/公斤）</span></th>
@@ -137,7 +137,7 @@
     <div class="suggestions" id="suggestions">
 		<div class="hd">
 			<div class="group">
-				<span class="w1">商品名称</span><span class="w2">切制规格</span><span class="w3">等级</span><span class="w4">产地</span>
+				<span class="w1">商品名称</span><span class="w2">切制规格</span><span class="w3">规格等级</span><span class="w4">产地</span>
 			</div>
 		</div>
 		<div class="bd"></div>
@@ -162,7 +162,7 @@
                         url:"/center/enquiry/parseXsl",
                         success: function(result) {
                             page.fn.toTable(result)
-                        }}
+                        }
                     });
                     $("#excel").change(function(){
                         $("#excelForm").submit();
