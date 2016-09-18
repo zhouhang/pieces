@@ -33,7 +33,7 @@
                             <i>*</i>用户名：
                         </div>
                         <div class="cnt">
-                            <input type="text" class="ipt" value="" autocomplete="off" name="username" id="username" placeholder="6-20位，以字母开头，数字结尾的组合组成">                            
+                            <input type="text" class="ipt" value="" autocomplete="off" name="userName" placeholder="以字母开头，支持字母、数字，6-20位">                            
                         </div>
                     </div>
 
@@ -42,7 +42,7 @@
                             <i>*</i>密码：
                         </div>
                         <div class="cnt">
-                            <input type="password" class="ipt" value="" autocomplete="off" name="pwd" id="pwd" placeholder="由数字、字母或下划线组成，长度为6-20">                            
+                            <input type="password" class="ipt" value="" autocomplete="off" name="password" placeholder="支持字母、数字、下划线，6-20位">
                         </div>
                     </div>
 
@@ -51,7 +51,7 @@
                             <i>*</i>确认密码：
                         </div>
                         <div class="cnt">
-                            <input type="password" class="ipt" value="" autocomplete="off" name="pwdRepeat" id="pwdRepeat" placeholder="确认您输入的密码">                            
+                            <input type="password" class="ipt" value="" autocomplete="off" name="pwdRepeat" placeholder="确认您输入的密码">                            
                         </div>
                     </div>
 
@@ -60,7 +60,7 @@
                             <i>*</i>企业全称：
                         </div>
                         <div class="cnt">
-                            <input type="text" class="ipt" value="" autocomplete="off" name="companyFullName" id="companyName" placeholder="工商局注册的企业名称">                            
+                            <input type="text" class="ipt" value="" autocomplete="off" name="companyFullName" placeholder="工商局注册的企业名称">                            
                         </div>
                     </div>
 
@@ -87,7 +87,7 @@
                             <i>*</i>联系人姓名：
                         </div>
                         <div class="cnt">
-                            <input type="text" class="ipt" value="" autocomplete="off" name="contactName" id="linkMan" placeholder="企业联系人姓名">                            
+                            <input type="text" class="ipt" value="" autocomplete="off" name="contactName" placeholder="企业联系人姓名">                            
                         </div>
                     </div>
 
@@ -96,7 +96,7 @@
                             <i>*</i>联系人手机号码：
                         </div>
                         <div class="cnt">
-                            <input type="text" class="ipt" value="" autocomplete="off" name="contactMobile" id="mobile" placeholder="企业联系人的手机号码">                            
+                            <input type="text" class="ipt" value="" autocomplete="off" name="contactMobile" placeholder="企业联系人的手机号码">                            
                         </div>
                     </div>
 
@@ -105,14 +105,14 @@
                             <i>*</i>验证码：
                         </div>
                         <div class="cnt">
-                            <input type="text" class="ipt" value="" autocomplete="off" name="mobileCode" id="mobileCode" placeholder="手机短信收到的验证码">
+                            <input type="text" class="ipt" value="" autocomplete="off" name="mobileCode" placeholder="手机短信收到的验证码">
                             <button type="button" class="btn btn-gray btn-inside" id="getMobileCode">获取验证码</button>
                         </div>
                     </div>
 
                     <div class="group agreement">
                         <div class="cnt">
-                            <label><input type="checkbox" class="cbx" name="agreement" id="agreement">我已阅读并同意<a href="#">《上工之选用户注册协议》</a></label>                            
+                            <label><input type="checkbox" class="cbx" name="agreement">我已阅读并同意<a href="#">《上工之选用户注册协议》</a></label>                            
                         </div>
                     </div>
 
@@ -176,7 +176,7 @@
     </div><!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/validform.min.js"></script>
+    <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
     <script src="js/area.js"></script>
     <script>
     $(function() {
@@ -184,76 +184,23 @@
             $element.siblings(".Validform_checktip").attr('class', 'Validform_checktip Validform_wrong').html(msg);
         }
 
-        var formValidate = $("#myform").Validform({
-            ajaxPost: true,
-            url: 'json/form.php',
-            callback: function(data){
-                switch (data.status) {
-                    case 'y':
-                        window.location.href = 'login.html?userName='+ $('#username').val() + '&password='+ $('#pwd').val();
-                        break;
-                    case 'fail':
-                        _showMsg($('#username'), data.resultMessage);
-                        break;
-                    // no default
-                }
+        var formValidate = $("#myform").validator({
+            fields : {
+                userName : '用户名: required;username',
+                password : '密码: required; password',
+                pwdRepeat : '确认密码: required; match(password)',
+                companyFullName : '用药单位: required, company',
+                areaId : '所在地区: required',
+                contactName : '联系人: required;nickName',
+                contactMobile : '手机号码: required;mobile',
+                mobileCode : '验证码: required',
+                agreement : '同意协议：checked'
+            },
+            valid: function(form) {
+                var myfromValid = this;
+                if ( $(form).isValid() ) {} 
             }
         });
-
-        formValidate.addRule([
-            {
-                ele: '#username',
-                datatype: 'uname',
-                ajaxurl: 'json/checkname.php',
-                nullmsg: '用户名必须以英文字母开头，长度6到20位',
-                errormsg: '用户名长度只能在6-20位字符之间'
-            },
-            {
-                ele: '#pwd',
-                datatype: 'pwd',
-                nullmsg: '请输入密码',
-                errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
-            },
-            {
-                ele: '#pwdRepeat',
-                datatype: '*',
-                recheck: 'pwd',
-                nullmsg: '请再重复输入一遍密码，不能留空',
-                errormsg: '确认新密码与新密码不一致'
-            },
-            {
-                ele: '#companyName',
-                datatype: '*',
-                nullmsg: '请输入企业名称'
-            },
-            {
-                ele: '#area',
-                datatype: '*',
-                nullmsg: '请选择企业注册地'
-            },
-            {
-                ele: '#linkMan',
-                datatype: '*',
-                nullmsg: '请再重复输入一遍密码，不能留空'
-            },
-            {
-                ele: '#mobile',
-                datatype: 'm',
-                ajaxurl: 'json/checkmobile.php',
-                nullmsg: '请输入手机号码',
-                errormsg: '请输入正确的手机号码'
-            },
-            {
-                ele: '#mobileCode',
-                datatype: '*',
-                nullmsg: '请输入短信验证码'
-            },
-            {
-                ele: '#agreement',
-                datatype: '*',
-                nullmsg: '请同意协议并勾选'
-            }
-        ])
 
         var $mobile = $('#mobile'),
             $getMobileCode = $('#getMobileCode'),

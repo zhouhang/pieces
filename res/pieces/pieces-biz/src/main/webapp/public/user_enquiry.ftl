@@ -22,7 +22,7 @@
 
                 <div class="fa-table">
                 	<div class="caption">
-                        <form id="excelForm" action=""/center/enquiry/parseXsl" method="post" enctype="multipart/form-data">
+                        <form id="excelForm" action="/center/enquiry/parseXsl" method="post" enctype="multipart/form-data">
                         <p>请输入要询价的商品名称及对应数量，期望单价可以不输入。一次可以添加多个商品。</p>
                         <p>您还可以<a class="btn" href="/file/批量采购模版.xls">下载模板</a>填入内容后，
                             <span class="btn btn-file">上传文档<input type="file" id="excel" name="excel"></span>
@@ -160,48 +160,32 @@
                 uploadExcel:function(){
                     $("#excelForm").ajaxForm({
                         url:"/center/enquiry/parseXsl",
-                        beforeSend: function() {
-                        },
-                        uploadProgress: function(event, position, total, percentComplete) {
-                        },
                         success: function(result) {
                             page.fn.toTable(result)
-                        },
-                        complete: function(xhr) {
-
-                        }
+                        }}
                     });
                     $("#excel").change(function(){
                         $("#excelForm").submit();
                     })
                 },
                 toTable:function(result){
-                    var getItemVal = function(val){
-                        if(val){
-                            return val;
-                        }else{
-                            return "";
-                        }
+                    var html = [];
+                    var row = 0;
+                    var getVal = function(val){
+                        return val ? val : '';
                     }
-                    var html = "";
-                    $.each(result,function(i,item){
-                        html+='<tr>'+
-                              '<td>'+
-                              '<div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="'+getItemVal(item.commodityName)+'" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="'+getItemVal(item.commodityId)+'" /></td>'+
-                              '<td><div class="ipt-wrap"><input type="text" class="ipt" value="'+getItemVal(item.specs)+'" name="specs" autocomplete="off"><span class="error"></span></div></td>'+
-                              '<td><div class="ipt-wrap"><input type="text" class="ipt" value="'+getItemVal(item.level)+'" name="level" autocomplete="off"><span class="error"></span></div></td>'+
-                              '<td><div class="ipt-wrap"><input type="text" class="ipt" value="'+getItemVal(item.origin)+'" name="origin" autocomplete="off"><span class="error"></span></div></td>'+
-                              '<td><div class="ipt-wrap"><input type="text" class="ipt amount" value="'+getItemVal(item.amount)+'" name="amount" autocomplete="off"></div><span class="error"></span></td>'+
-                              '<td><div class="ipt-wrap"><input type="text" class="ipt price" value="'+getItemVal(item.expectPrice)+'" name="expectPrice" autocomplete="off"></div><span class="error"></span></td>'+
-                              '<td><div class="ipt-wrap"><input type="text" class="ipt date" value="'+page.fn.formatDate(getItemVal(item.expectDate))+'" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>'+
-                              '<td>'+
-                              '<a class="add c-blue" href="javascript:;">添加</a>'+
-                                (result.length >1?'<a class="remove c-red" href="javascript:;">删除</a>':'')+
-                              '</td>'+
-                              '</tr>'
+                    var formatDate = function(date) {
+                        return date ? date.split(' ')[0] : '';
+                    }
+                    $.each(result,function(i, item){
+                        if ($.isEmptyObject(item)) {
+                            return true; // break
+                        }
+                        row ++;
+                        html.push('<tr><td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="', getVal(item.commodityName), '" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="', getVal(item.commodityId), '" /></td><td><div class="ipt-wrap"><input type="text" class="ipt" value="', getVal(item.specs), '" name="specs" autocomplete="off"><span class="error"></span></div></td><td><div class="ipt-wrap"><input type="text" class="ipt" value="', getVal(item.level), '" name="level" autocomplete="off"><span class="error"></span></div></td><td><div class="ipt-wrap"><input type="text" class="ipt" value="', getVal(item.origin), '" name="origin" autocomplete="off"><span class="error"></span></div></td><td><div class="ipt-wrap"><input type="text" class="ipt amount" value="', getVal(item.amount), '" name="amount" autocomplete="off"><span class="error"></span></div></td><td><div class="ipt-wrap"><input type="text" class="ipt price" value="', getVal(item.expectPrice), '" name="expectPrice" autocomplete="off"><span class="error"></span></div></td><td><div class="ipt-wrap"><input type="text" class="ipt date" value="', formatDate(item.expectDate), '" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td><td><a class="add c-blue" href="javascript:;">添加</a><a class="remove c-red" href="javascript:;">删除</a></td></tr>');
                     })
-                    this.$tbody.empty();
-                    this.$tbody.html(html);
+                    this.$tbody.empty().html(html.join(''));
+                    row < 2 && this.$tbody.find('.remove').remove();
                 },
     			// input
     			myformEvent: function() {
@@ -222,12 +206,10 @@
                     // 第一个输入框不为空时自动获取焦点
                     $ipt.val() === '' && $ipt.focus() && $ipt.after($suggestions);
 
-
                     // 隐藏错误提示
                     $myform.on('focus', '.ipt', function() {
                         $(this).nextAll('.error').html('').hide();
                     })
-
 
                     // 数量
                     $myform.on('keyup', '.amount', function(e) {
@@ -274,10 +256,7 @@
                         .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
                         .closest('td').next().find('.ipt').val(data[2]).trigger('focus').end()
                         .closest('td').next().find('.ipt').val(data[3]).trigger('focus').end();
-
-                        // .closest('td').next().find('.ipt').val(data[4]);
-                        $suggestions.parent().next().val(data[4]);
-                        $suggestions.hide();
+                        $suggestions.hide().parent().next().val(data[4]);
                     })
 
     				// 新增一行
@@ -361,7 +340,6 @@
                 submit: function() {
                     var self     = this;
                     var isSubmit = false;
-
                     $('#submit').on('click', function() {
                         if (isSubmit) {
                             return false;
@@ -369,11 +347,10 @@
                         var result = self.checkForm();
                         if (result.pass) {
                             isSubmit = true;
-                            var list = JSON.stringify(page.fn.formatTableData());
-                            var billId = $("#billId").val()
+                            var list = JSON.stringify(result.data);
                             $.ajax({
                                 type : 'post',
-                                url : '/center/enquiry/submit?billId='+billId,
+                                url : '/center/enquiry/submit?billId=' + $('#billId').val(),
                                 contentType : 'application/json',
                                 data :list,
                                 dataType : 'json',
@@ -395,106 +372,42 @@
                 },
                 checkForm: function() {
                     var result = {
-                        pass: true,
-                        serialize: []
+                        data: [],
+                        pass: true
                     };
+                    var $tag;
                     this.$tbody.find('tr').each(function() {
-                        var
-                                $name     = $(this).find('.ipt[name="commodityName"]'),
-                                name      = $.trim($name.val()),
-                                $standard = $(this).find('.ipt[name="specs"]'),
-                                standard  = $.trim($standard.val()),
-                                $level    = $(this).find('.ipt[name="level"]'),
-                                level     = $.trim($level.val()),
-                                $origin   = $(this).find('.ipt[name="origin"]'),
-                                origin    = $.trim($origin.val()),
-                                $amount   = $(this).find('.ipt[name="amount"]'),
-                                amount    = $.trim($amount.val()),
-                                $price    = $(this).find('.ipt[name="expectPrice"]'),
-                                price     = $.trim($price.val()),
-                                $date     = $(this).find('.ipt[name="expectDate"]'),
-                                date      = $.trim($date.val());
+                        var row = {};
+                        $(this).find('.ipt').each(function() {
+                            $tag = $(this);
+                            if ($tag.hasClass('price')) {
+                                // nothing
+                            } else if (this.value.length === 0) {
+                                $tag.nextAll('.error').html('此处不可空白').show();
+                                result.pass = false;
+                            } else {
+                                $tag.nextAll('.error').html('').hide();
+                            }
+                            row[this.name] = this.value;
+                        })
+                        result.data.push(row);
 
-                        if (name) {
-                            $name.nextAll('.error').html('').hide();
-                        } else {
-                            $name.nextAll('.error').html('此处不可空白').show();
-                            result.pass = false;
-                        }
-
-                        if (standard) {
-                            $standard.nextAll('.error').css('display','none').html('');
-                        } else {
-                            $standard.nextAll('.error').css('display','block').html('此处不可空白');
-                            result.pass = false;
-                        }
-
-                        if (level) {
-                            $level.nextAll('.error').css('display','none').html('');
-                        } else {
-                            $level.nextAll('.error').css('display','block').html('此处不可空白');
-                            result.pass = false;
-                        }
-
-                        if (origin) {
-                            $origin.nextAll('.error').css('display','none').html('');
-                        } else {
-                            $origin.nextAll('.error').css('display','block').html('此处不可空白');
-                            result.pass = false;
-                        }
-
-
-
-                        if (amount) {
-                            $amount.nextAll('.error').css('display','none').html('');
-                        } else {
-                            $amount.nextAll('.error').css('display','block').html('此处不可空白');
-                            result.pass = false;
-                        }
-
-                        if (date) {
-                            $date.nextAll('.error').css('display','none').html('');
-                        } else {
-                            $date.nextAll('.error').css('display','block').html('此处不可空白');
-                            result.pass = false;
-                        }
-
-                        if (result.pass) {
-                            result.serialize.push({
-                                name: name,
-                                standard: standard,
-                                level: level,
-                                origin: origin,
-                                amount: amount,
-                                price: price,
-                                date: date
-                            })
-                        } else {
+                        if (!result.pass) {
+                            window.scrollTo(0, $tag.offset().top);
                             return false;
                         }
                     })
                     return result;
                 },
-                formatTableData: function () {
-                    var tableObj = $('#enquiryForm tbody tr').map(function (i) {
-                        var row = {};
-                        $(this).find('input').each(function (i) {
-                            row[$(this).attr("name")] = $(this).val();
-                        });
-                        return row;
-                    }).get();
-
-                    return tableObj;
-                },
                 response:function(result){
-                    if(result.status=="y"){
+                    if(result.status=='y'){
                         $.notify({
                             type: 'success',
                             title: '提交成功',
                             text: result.info
                         })
                         this.$tbody.empty().html(this.modal).find('.remove').remove();
-                        $("#billId").val("");
+                        $('#billId').val('');
                     }else{
                         $.notify({
                             type: 'error',
@@ -502,11 +415,7 @@
                             text: result.info
                         })
                     }
-                },
-                formatDate: function(date) {
-                    return date ? date.split(' ')[0] : '';
                 }
-
     		}
     	}
     	$(function() {

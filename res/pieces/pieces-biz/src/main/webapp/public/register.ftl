@@ -43,7 +43,7 @@
 						</div>
 						<div class="cnt">
 							<input type="password" class="ipt" value="" autocomplete="off"
-								name="password" id="pwd" placeholder="由数字、字母或下划线组成，长度为6-20"
+								name="password" id="pwd" placeholder="支持字母、数字、下划线，6-20位"
 								data-msg-required="请输入密码"
 								data-msg-password="密码由数字、字母或下划线组成，长度为6-20位">
 						</div>
