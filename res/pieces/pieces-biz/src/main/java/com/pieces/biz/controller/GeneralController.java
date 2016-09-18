@@ -182,7 +182,7 @@ public class GeneralController extends BaseController {
 	public void getMobileCode(String contactMobile,
 						HttpServletRequest request,
 						HttpServletResponse response) throws Exception{
-		String code =  smsService.sendSmsCaptcha(contactMobile);
+		smsService.sendSmsCaptcha(contactMobile);
 		Map<String, String> result = new HashMap<String, String>();
 		result.put("ok", "ok");
         WebUtil.print(response,result);

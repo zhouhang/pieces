@@ -15,7 +15,6 @@ import com.pieces.dao.model.ShippingAddress;
 import com.pieces.dao.vo.ShippingAddressVo;
 import com.pieces.service.ShippingAddressService;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.HttpRequest;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -372,7 +371,6 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/info")
 	public String userInfo(ModelMap model, HttpServletRequest request) {
-		String url = request.getRequestURI();
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		model.put("user", user);
 		return "user_info";

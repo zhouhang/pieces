@@ -61,7 +61,7 @@ public class CMSController extends BaseController{
         model.put("vo", articleVo);
         model.put("param", Reflection.serialize(articleVo));
 
-        if (articleVo.getModel() == ModelEnum.help.getValue()) {
+        if (articleVo.getModel().equals(ModelEnum.help.getValue())) {
             url = "help";
         } else {
             url = "news";
