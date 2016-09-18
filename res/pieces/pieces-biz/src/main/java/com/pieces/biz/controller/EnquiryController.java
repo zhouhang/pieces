@@ -128,7 +128,7 @@ public class EnquiryController extends BaseController{
     public void submit(HttpServletRequest request,
                        HttpServletResponse response,
                        Integer billId,
-                       @RequestBody List<EnquiryCommoditys> list){
+                       @RequestBody List<EnquiryCommoditys> list)throws Exception{
             String message = "您的询价提交成功!";
             User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
             if(billId==null){
