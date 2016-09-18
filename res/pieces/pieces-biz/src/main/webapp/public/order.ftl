@@ -61,7 +61,7 @@
                                 <tr>
                                     <th width="180">商品名称</th>
                                     <th width="80">切制规格</th>
-                                    <th width="80">等级</th>
+                                    <th width="80">规格等级</th>
                                     <th width="110">产地</th>
                                     <th width="110">期望交货日期</th>
                                     <th width="110">数量<em>（公斤）</em></th>
