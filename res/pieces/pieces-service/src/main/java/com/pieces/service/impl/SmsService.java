@@ -30,6 +30,8 @@ public class SmsService {
     @Value("${sms.apikey}")
     private String apikey;
 
+    private boolean enable = true;
+
     private final String smsUrl = "https://sms.yunpian.com/v2/sms/single_send.json";
 
     @Autowired
@@ -87,7 +89,116 @@ public class SmsService {
         HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
     }
 
+    // 后台报价 quoted
+    //【上工之选】@@@ 您好,您的询价单 @@@ (询价商品 @@@ 等)已有报价,请在询价记录中查看.
+    public void sendQuoted(String username, String code, String commodity, String mobile) {
+        if (enable) {
+            try {
+                Map<String, Object> param = new HashMap<>();
+                param.put("apikey", apikey);
+                param.put("mobile", mobile);
+                param.put("text", TextTemplateEnum.SMS_BOSS_QUOTED.getText(username, code, commodity));
+                HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+            } catch (Exception e) {
+                throw new RuntimeException("后台报价短信发送失败", e);
+            }
+        }
+    }
 
+    //后台修改报价 quotedUpdate
+    //【上工之选】@@@ 您好,您的询价单 @@@ 中部分商品的报价有更新,请在询价记录中查看.
+    public void sendQuotedUpdate(String username, String code, String mobile) {
+        if (enable) {
+            try {
+                Map<String, Object> param = new HashMap<>();
+                param.put("apikey", apikey);
+                param.put("mobile", mobile);
+                param.put("text", TextTemplateEnum.SMS_BOSS_QUOTEDUPDATE.getText(username, code));
+                HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+            } catch (Exception e) {
+                throw new RuntimeException("后台修改报价短信发送失败", e);
+            }
+        }
+    }
 
+    //后台确认支付(非账期)paySuccess
+    //【上工之选】@@@ 您好,您 @@@元 的款项支付成功,详情请在支付记录中查看,平台会尽快为您安排发货.
+    public void sendPaySuccess(String username, Double money, String mobile) {
+        if (enable) {
+            try {
+                Map<String, Object> param = new HashMap<>();
+                param.put("apikey", apikey);
+                param.put("mobile", mobile);
+                param.put("text", TextTemplateEnum.SMS_BOSS_PAYSUCCESS.getText(username,String.valueOf(money)));
+                HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+            } catch (Exception e) {
+                throw new RuntimeException("后台确认支付(非账期)短信发送失败", e);
+            }
+        }
+    }
+
+    // 后台确认支付(账期)payAccountSuccess
+    //【上工之选】@@@ 您好,您 @@@元 的款项支付成功,详情请在支付记录中查看.
+    public void sendPayAccountSuccess(String username, Double money, String mobile){
+        if (enable) {
+            try {
+                Map<String, Object> param = new HashMap<>();
+                param.put("apikey", apikey);
+                param.put("mobile", mobile);
+                param.put("text", TextTemplateEnum.SMS_BOSS_PAYACCOUNTSUCCESS.getText(username, String.valueOf(money)));
+                HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+            } catch (Exception e) {
+                throw new RuntimeException("后台确认支付(账期)短信发送失败", e);
+            }
+        }
+    }
+
+    //后台确认支付失败payFail
+    //【上工之选】@@@ 您好,您 @@@元 的款项支付失败,详情在支付记录中查看.
+    public void sendPayFail(String username, Double money, String mobile) {
+        if (enable) {
+            try {
+                Map<String, Object> param = new HashMap<>();
+                param.put("apikey", apikey);
+                param.put("mobile", mobile);
+                param.put("text", TextTemplateEnum.SMS_BOSS_PAYFAIL.getText(username, String.valueOf(money)));
+                HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+            } catch (Exception e) {
+                throw new RuntimeException("后台确认支付失败短信发送失败", e);
+            }
+        }
+    }
+
+    //账期成功accountSuccess
+    //【上工之选】@@@ 您好,您 @@@元 的账期申请成功,详情请在账期账单中查看,平台会尽快为您安排发货.
+    public void sendAccountSuccess(String username, Double money, String mobile) {
+        if (enable) {
+            try {
+                Map<String, Object> param = new HashMap<>();
+                param.put("apikey", apikey);
+                param.put("mobile", mobile);
+                param.put("text", TextTemplateEnum.SMS_BOSS_ACCOUNTSUCCESS.getText(username, String.valueOf(money)));
+                HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+            } catch (Exception e) {
+                throw new RuntimeException("账期申请成功短信发送失败", e);
+            }
+        }
+    }
+
+    //账期失败accountFail
+    //【上工之选】@@@ 您好,您 @@@元 的账期申请失败,详情请在账期账单中查看.
+    public void sendAccountFail(String username, Double money, String mobile){
+        if (enable) {
+            try {
+                Map<String, Object> param = new HashMap<>();
+                param.put("apikey", apikey);
+                param.put("mobile", mobile);
+                param.put("text", TextTemplateEnum.SMS_BOSS_ACCOUNTFAIL.getText(username, String.valueOf(money)));
+                HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+            } catch (Exception e) {
+                throw new RuntimeException("账期申请失败短信发送失败", e);
+            }
+        }
+    }
 
 }

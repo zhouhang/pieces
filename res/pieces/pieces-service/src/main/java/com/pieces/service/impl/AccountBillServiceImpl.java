@@ -11,6 +11,7 @@ import com.pieces.dao.model.AccountBill;
 import com.pieces.dao.model.OrderForm;
 import com.pieces.dao.model.PayRecord;
 import com.pieces.dao.vo.AccountBillVo;
+import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.dao.vo.PayRecordVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.AccountBillService;
@@ -35,6 +36,9 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 	private OrderFormService orderFormService;
 	@Autowired
 	private PayRecordService payRecordService;
+
+	@Autowired
+	private SmsService smsService;
 
 	@Override
 	public PageInfo<AccountBillVo> findByParams(AccountBillVo accountBillVo,Integer pageNum,Integer pageSize) {
@@ -119,6 +123,12 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 		accountBillDao.update(accountBill);
 		// 改变订单状态
 		orderFormService.changeOrderStatus(temp.getOrderId(), OrderEnum.WAIT_DELIVERY.getValue());
+
+		//账期审核成功发送短信通知
+		OrderFormVo orderFormVo = orderFormService.findVoById(temp.getOrderId());
+		smsService.sendAccountSuccess(orderFormVo.getUser().getContactName(),temp.getAmountsPayable(),
+				orderFormVo.getUser().getContactMobile());
+
 	}
 
 	@Override
@@ -137,6 +147,11 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 		//改变订单状态
 		AccountBill temp = accountBillDao.findById(billId);
 		orderFormService.changeOrderStatus(temp.getOrderId(), OrderEnum.CANCEL.getValue());
+
+		// 账期审核失败 发送短信通知
+		OrderFormVo orderFormVo = orderFormService.findVoById(temp.getOrderId());
+		smsService.sendAccountFail(orderFormVo.getUser().getContactName(),temp.getAmountsPayable(),
+				orderFormVo.getUser().getContactMobile());
 	}
 
 	@Override
