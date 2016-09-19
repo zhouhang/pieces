@@ -149,7 +149,7 @@ function bindSearch() {
 
 // 用户中心导航高亮
 function currNav() {
-	var $side = $('.side'),
+	var $side = $('.member-box').find('.side'),
         URL = document.URL.split('#')[0].split('?')[0].toLowerCase();
 
 	$side.find('a').each(function() {
