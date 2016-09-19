@@ -178,7 +178,7 @@
                     var start = {
                         elem: '#date',
                         format: 'YYYY-MM-DD hh:mm:ss',
-                        min: laydate.now(), //设定最小日期为当前日期
+                        min: '2016-06-16 23:59:59', //设定最小日期为当前日期
                         max: '2099-06-16 23:59:59', //最大日期
                         istime: true,
                         choose: function(date){

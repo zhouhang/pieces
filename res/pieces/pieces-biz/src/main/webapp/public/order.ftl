@@ -51,7 +51,7 @@
                 <!-- start 送货清单 -->
                 <div class="group">
                     <div class="hd cf">
-                        <a href="#" class="c-blue fr">返回询价单</a>
+                        <a href="/center/enquiry/record" class="c-blue fr">返回询价单</a>
                         <h3>送货清单</h3>
                     </div>
 

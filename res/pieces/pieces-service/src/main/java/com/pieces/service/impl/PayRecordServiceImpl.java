@@ -6,6 +6,7 @@ import com.pieces.dao.ICommonDao;
 import com.pieces.dao.PayRecordDao;
 import com.pieces.dao.enums.OrderEnum;
 import com.pieces.dao.model.*;
+import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.dao.vo.PayRecordVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.OrderFormService;
@@ -36,6 +37,9 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 
 	@Autowired
 	private OrderFormService orderFormService;
+
+	@Autowired
+	private SmsService smsService;
 
 
 	@Override
@@ -173,9 +177,18 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		//改变订单状态
 		orderFormService.changeOrderStatus(payRecord.getOrderId(), OrderEnum.WAIT_DELIVERY.getValue());
 
+		OrderFormVo orderFormVo = orderFormService.findVoById(payRecord.getOrderId());
+
+		// 支付成功发送短信
 		if (payRecord.getAccountBillId() != null) {
 			accountBillService.refreshStatus(payRecord.getAccountBillId());
+			smsService.sendPayAccountSuccess(orderFormVo.getUser().getContactName(),payRecord.getActualPayment(),
+					orderFormVo.getUser().getContactMobile());
+		} else {
+			smsService.sendPaySuccess(orderFormVo.getUser().getContactName(),payRecord.getActualPayment(),
+					orderFormVo.getUser().getContactMobile());
 		}
+
 }
 
 	@Transactional
@@ -191,6 +204,11 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		payRecord = payRecordDao.findById(payId);
 		//改变订单状态
 		orderFormService.changeOrderStatus(payRecord.getOrderId(), OrderEnum.CANCEL.getValue());
+
+		// 支付失败发送短信
+		OrderFormVo orderFormVo = orderFormService.findVoById(payRecord.getOrderId());
+		smsService.sendPayFail(orderFormVo.getUser().getContactName(),payRecord.getActualPayment(),
+				orderFormVo.getUser().getContactMobile());
 	}
 
 	@Override
