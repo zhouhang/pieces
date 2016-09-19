@@ -29,8 +29,8 @@
                     <div class="bd">
                         <div class="th">
                             <span class="w1">商品</span>
-                            <span class="w2">规格</span>
-                            <span class="w3">等级</span>
+                            <span class="w2">切制规格</span>
+                            <span class="w3">规格等级</span>
                             <span class="w4">产地</span>
                         </div>
                         <#list billsPage.list as bill>
@@ -64,8 +64,8 @@
                 <div class="bd">
                     <div class="th">
                         <span class="w1">商品</span>
-                        <span class="w2">规格</span>
-                        <span class="w3">等级</span>
+                        <span class="w2">切制规格</span>
+                        <span class="w3">规格等级</span>
                         <span class="w4">产地</span>
                     </div>
                     <dl>
@@ -97,7 +97,7 @@
                             <tr>
                                 <th>商品名称</th>
                                 <th>切制规格</th>
-                                <th>等级</th>
+                                <th>规格等级</th>
                                 <th width="100">产地</th>
                                 <th width="100">期望交货日期</th>
                                 <th width="90">数量（公斤）</th>
@@ -256,7 +256,7 @@
 <div class="suggestions" id="suggestions">
     <div class="hd">
         <div class="group">
-            <span class="w1">商品名称</span><span class="w2">切制规格</span><span class="w3">等级</span><span class="w4">产地</span>
+            <span class="w1">商品名称</span><span class="w2">切制规格</span><span class="w3">规格等级</span><span class="w4">产地</span>
         </div>
     </div>
     <div class="bd"></div>

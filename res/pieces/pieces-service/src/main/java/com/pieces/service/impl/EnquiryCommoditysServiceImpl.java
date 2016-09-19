@@ -5,6 +5,7 @@ import com.pieces.dao.EnquiryCommoditysDao;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.EnquiryCommoditys;
+import com.pieces.dao.vo.EnquiryBillsVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.EnquiryCommoditysService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
     @Autowired
     private EnquiryBillsDao enquiryBillsDao;
 
+    @Autowired
+    private SmsService smsService;
+
     @Override
     public ICommonDao<EnquiryCommoditys> getDao() {
         return enquiryCommoditysDao;
@@ -43,8 +47,11 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
         if(list != null && list.size()>0) {
             removeNullQuoted(list);
             enquiryCommoditysDao.quotedUpdate(list);
-        }
 
+            // 报价更新后发生短信
+            EnquiryBillsVo billsVo = enquiryBillsDao.findVOById(billsId);
+            smsService.sendQuotedUpdate(billsVo.getContactName(), billsVo.getCode(), billsVo.getContactMobile());
+        }
     }
 
     @Override
@@ -78,6 +85,11 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
         if(list != null && list.size()>0) {
             removeNullQuoted(list);
             enquiryCommoditysDao.quotedUpdate(list);
+            // 报价后发生短信
+            EnquiryBillsVo billsVo = enquiryBillsDao.findVOById(billsId);
+            EnquiryCommoditys commoditys = enquiryCommoditysDao.findById(list.get(0).getId());
+            smsService.sendQuoted(billsVo.getContactName(), billsVo.getCode(),commoditys.getCommodityName(),
+                    billsVo.getContactMobile());
         }
     }
 

@@ -111,33 +111,5 @@
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
     <script src="js/common.js"></script>
-    <script>
-    	var page = {
-    		v: {
-    		},
-    		fn: {
-    			init: function() {
-                    this.remove();
-                    this.navLight();
-    			},
-                // 取消订单
-                remove: function() {
-                    $('.order-list').on('click', '.jremove', function() {
-                        // 弹层确认删除
-                        layer.confirm('要删除此订单？', {icon: 3, title:'提示'}, function(index){
-                            layer.close(index);
-                        });       
-                    })
-                },
-                // 导航高亮
-                navLight: function() {
-                    $('.side dl:eq(1)').addClass('expand').find('a').addClass('curr');
-                }
-    		}
-    	}
-    	$(function() {
-    		page.fn.init();
-    	})
-    </script>
 </body>
 </html>

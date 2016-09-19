@@ -296,7 +296,7 @@
                         level: "required;length[2~50]",
                         originOf: "required;length[2~20]",
                         executiveStandard: "required;length[1~20]",
-                        exterior: "required;length[2~50]",
+                        exterior: "required;length[2~100]",
                         pictureUrl: "required",
                         details: {
                             rule: "required",

@@ -26,7 +26,7 @@
                                 <tr>
                                     <th width="150">商品名称</th>
                                     <th width="70">切制规格</th>
-                                    <th width="70">等级</th>
+                                    <th width="70">规格等级</th>
                                     <th>外观描述</th>
                                     <th width="120">产地</th>
                                     <th width="120">操作</th>
@@ -76,7 +76,7 @@
     <div class="suggestions" id="suggestions">
 		<div class="hd">
 			<div class="group">
-				<span class="w1">商品名称</span><span class="w2">切制规格</span><span class="w3">等级</span><span class="w4">产地</span>
+				<span class="w1">商品名称</span><span class="w2">切制规格</span><span class="w3">规格等级</span><span class="w4">产地</span>
 			</div>
 		</div>
 		<div class="bd"></div>

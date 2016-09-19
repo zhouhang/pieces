@@ -21,7 +21,7 @@
     $.fn.code.type = {
         COMMODITY_SPECIFICATIONS: 'SPEC',//"切制规格"
         COMMODITY_PLACE: 'ORIGIN',//"原药产地"
-        COMMODITY_LEVEL: 'LEVEL'//"等级"
+        COMMODITY_LEVEL: 'LEVEL'//"规格等级"
     }
 
     $.fn.code.settings = {

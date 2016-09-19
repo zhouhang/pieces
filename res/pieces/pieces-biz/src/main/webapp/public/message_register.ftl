@@ -31,7 +31,7 @@
                 <p>—— 您可以立即免费使用询价功能 ——</p>
             </div>
             <div class="ft">
-                <a class="btn btn-red" href="#">开始询价</a>
+                <a class="btn btn-red" href="/commodity/index">开始询价</a>
             </div>
         </div>
     </div><!-- fa-message start --> 

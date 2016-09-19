@@ -34,7 +34,7 @@
                                 <div class="tr th">
                                     <div class="td w1">商品名称</div>
                                     <div class="td w2">切制规格</div>
-                                    <div class="td w3">等级</div>
+                                    <div class="td w3">规格等级</div>
                                     <div class="td w4">产地</div>
                                     <div class="td w5">数量<span>（公斤）</span></div>
                                     <div class="td w6">期望单价<span>（元/公斤）</span></div>
@@ -113,7 +113,7 @@
     <div class="suggestions" id="suggestions">
 		<div class="hd">
 			<div class="group">
-				<span class="w1">商品名称</span><span class="w2">切制规格</span><span class="w3">等级</span><span class="w4">产地</span>
+				<span class="w1">商品名称</span><span class="w2">切制规格</span><span class="w3">规格等级</span><span class="w4">产地</span>
 			</div>
 		</div>
 		<div class="bd"></div>

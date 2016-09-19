@@ -49,7 +49,7 @@
                         <tr>
                             <th>商品名称</th>
                             <th width="80">切制规格</th>
-                            <th width="80">等级</th>
+                            <th width="80">规格等级</th>
                             <th>产地</th>
                             <th width="90">数量（公斤）</th>
                             <th width="140">期望单价（元/公斤）</th>
