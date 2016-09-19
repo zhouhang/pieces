@@ -562,6 +562,12 @@ vertical-align:middle;
 .news .main .date{height:40px;font-size:12px;color:#999;}
 .news .main .article{line-height:30px;padding:17px 0;color:#666;font-size:12px;text-align:left;border-top:1px solid #e7e7e7;}
 .news .main .article p{margin:2em 0;text-indent:2em;}
+.news .main .article b,
+.news .main .article strong{font-weight:700;}
+.news .main .article em,
+.news .main .article i{font-style:italic;}
+.news .main .article ul{list-style:disc;padding-left:10px;}
+.news .main .article ol{list-style:decimal;padding-left:10px;}
 
 /* banner-slider */
 .banner-slider{position:relative;height:460px;overflow:hidden;*zoom:1;}

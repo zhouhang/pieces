@@ -37,7 +37,7 @@ public abstract class AbstractUploadFile {
                 throw new FileUploadException("文件类型错误!");
             }
             //自定义文件名
-            String fileName = customImageName(originalFileName);
+            String fileName = customImageName(ext);
 
             //图片加水印
             InputStream is = addWatermark(inputStream, ext);
