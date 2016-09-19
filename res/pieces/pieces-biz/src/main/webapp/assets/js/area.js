@@ -36,6 +36,7 @@ $(function() {
 	$province.on('change', function() {
 		var val = $(this).val();
 		getArea(val, $city);
+		getArea('9999', $area);
 	});
 
 	$city.on('change', function() {
