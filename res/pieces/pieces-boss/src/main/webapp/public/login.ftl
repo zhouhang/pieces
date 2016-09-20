@@ -7,7 +7,7 @@
 
 <body>
     <div class="login-box">
-        <div class="title"><strong>上工之选</strong>电子商务管理系统</div>
+        <div class="title"><strong>上工好药</strong>电子商务管理系统</div>
         <div class="form">
             <form id="loginForm" action="/login" method="post">
                 <div id="msg" class="msg"></div>

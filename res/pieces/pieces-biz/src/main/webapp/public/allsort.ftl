@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>全部商品分类-上工之选</title>
+    <title>全部商品分类-上工好药</title>
 </head>
 
 <body>

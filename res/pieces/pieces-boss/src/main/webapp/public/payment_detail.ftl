@@ -16,6 +16,11 @@
                 <dt>支付信息</dt>
                 <dd>
                     <a class="curr" href="/payment/index">支付信息</a>
+                    <@shiro.hasPermission name="order:info">
+                        <#if pay.orderId??>
+                            <a target="_blank" href="/order/detail/${pay.orderId}">订单信息</a>
+                        </#if>
+                    </@shiro.hasPermission>
                 </dd>
             </dl>
         </div>

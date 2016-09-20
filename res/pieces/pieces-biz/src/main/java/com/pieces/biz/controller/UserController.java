@@ -178,7 +178,6 @@ public class UserController extends BaseController {
 
 	/**
 	 * 退出系统
-	 * 
 	 * @param model
 	 * @return
 	 */
@@ -329,7 +328,6 @@ public class UserController extends BaseController {
 
 	/**
 	 * 修改密码第二步
-	 * 
 	 * @param model
 	 * @param pwd
 	 * @param userName

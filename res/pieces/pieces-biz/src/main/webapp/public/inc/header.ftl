@@ -4,7 +4,7 @@
 <div class="header">
     <div class="wrap">
         <div class="logo">
-            <a href="/">上工之选首页</a>
+            <a href="/">上工好药首页</a>
         </div>
         <div class="search">
             <div class="form">

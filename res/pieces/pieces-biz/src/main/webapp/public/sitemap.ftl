@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>站点地图-上工之选</title>
+    <title>站点地图-上工好药</title>
 </head>
 
 <body>
@@ -87,7 +87,7 @@
 
                     <dt>网站信息</dt>
                     <dd>
-                        <a href="/help/11">关于上工之选</a>
+                        <a href="/help/11">关于上工好药</a>
                         <a href="/help/8">联系我们</a>
                         <a href="/help/29">法律声明</a>
                         <a href="/help/33">友情链接</a>
