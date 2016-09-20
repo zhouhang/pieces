@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>收款账户清单-boss-饮片B2B</title>
+    <title>收款账户清单-boss-上工好药</title>
     <#include "./inc/meta.ftl"/>
 </head>
 

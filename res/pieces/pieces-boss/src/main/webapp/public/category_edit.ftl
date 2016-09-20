@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>修改分类-boss-饮片B2B</title>
+    <title>修改分类-boss-上工好药</title>
     <#include "./inc/meta.ftl"/>
 </head>
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <#include "./inc/meta.ftl"/>
-<title>登录-饮片B2B</title>
+<title>登录-上工好药</title>
 </head>
 <body>
 	<div class="login-box login-mini">

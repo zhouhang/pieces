@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <#include "./inc/meta.ftl"/>
-    <title>经方-饮片B2B</title>
+    <title>经方-上工好药</title>
 </head>
 
 <body class="bg-gray">

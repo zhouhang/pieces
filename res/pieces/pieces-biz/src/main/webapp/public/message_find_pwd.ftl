@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>成功找回密码-饮片B2B</title>
+    <title>成功找回密码-上工好药</title>
 </head>
 
 <body>
@@ -11,7 +11,7 @@
     <div class="header header-shadow">
         <div class="wrap">
             <div class="logo">
-                <a href="home.html">饮片B2B首页</a>
+                <a href="home.html">上工好药首页</a>
             </div>
             <div class="title">
                 <h1>找回密码</h1>

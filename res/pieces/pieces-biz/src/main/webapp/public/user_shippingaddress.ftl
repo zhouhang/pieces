@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <#include "./inc/meta.ftl"/>
-    <title>收货地址-饮片B2B</title>
+    <title>收货地址-上工好药</title>
     <link rel="stylesheet" href="/css/order.css"/>
 </head>
 

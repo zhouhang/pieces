@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>角色权限-boss-饮片B2B</title>
+    <title>角色权限-boss-上工好药</title>
     <#include "./inc/meta.ftl"/>
     <link rel="stylesheet" href="css/zTreeStyle/zTreeStyle.css" />
 
