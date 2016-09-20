@@ -35,10 +35,10 @@
         </div>
         <div class="menu">
             <ul>
-                <li><a href="/">首页</a></li>
-                <li><a href="/commodity/index">产品</a></li>
-                <li><a href="/channel/prescription">经方</a></li>
-                <li><a href="/efficacy">功效</a></li>
+                <li <#if CURRENT_PAGE??&&CURRENT_PAGE=='home'>class="current"</#if>><a href="/">首页</a></li>
+                <li <#if CURRENT_PAGE??&&CURRENT_PAGE=='commodity'>class="current"</#if>><a href="/commodity/index">产品</a></li>
+                <li <#if CURRENT_PAGE??&&CURRENT_PAGE=='prescription'>class="current"</#if>><a href="/channel/prescription">经方</a></li>
+                <li <#if CURRENT_PAGE??&&CURRENT_PAGE=='efficacy'>class="current"</#if>><a href="/efficacy">功效</a></li>
             </ul>
         </div>
         <div class="plus">

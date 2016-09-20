@@ -131,6 +131,9 @@ public class HomeController extends BaseController{
 	public String efficacy(ModelMap model){
 		Map<String,List<CommodityVo>>  map = homeWeightService.getEfficacyCommodities();
 		model.put("efficacies",map);
+
+		//标志功效
+		model.put("CURRENT_PAGE","efficacy");
 		return "efficacy_list";
 	}
 

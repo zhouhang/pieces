@@ -96,6 +96,9 @@
                             ${commodity.details!}
                         </div>
                     </div>
+                    <div class="guide">
+                        <img src="images/uploads/guide.jpg" alt="">
+                    </div>
                 </div>
             </div>
         </div>

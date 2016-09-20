@@ -5,6 +5,7 @@ import com.pieces.dao.vo.ShippingAddressVo;
 import com.pieces.service.enums.RedisEnum;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -18,7 +19,9 @@ import java.util.List;
 public class ChannelController extends BaseController{
 
     @RequestMapping("/prescription")
-    public String prescription(){
+    public String prescription(ModelMap model){
+
+        model.put("CURRENT_PAGE","prescription");
         return "prescription_list";
     }
 }

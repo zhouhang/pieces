@@ -76,6 +76,10 @@ public class CommodityController extends BaseController {
 		model.put("pageInfo", pageInfo);
 		model.put("commodity", commodityVO);
 		model.put("commodityParam", Reflection.serialize(commodityVO));
+
+
+		//标志产品
+		model.put("CURRENT_PAGE","commodity");
 		return "product_list";
 	}
 	
@@ -224,6 +228,10 @@ public class CommodityController extends BaseController {
 		Page<CommodityDoc> commodityDocPage = commoditySearchService.findByNameOrCategoryName(pageNum, pageSize, keyword);
 		model.put("commodityDocPage", commodityDocPage);
 		model.put("keyword", keyword);
+
+		//标志产品
+		model.put("CURRENT_PAGE","commodity");
+
 		return "product_search_result";
 	}
 
@@ -263,6 +271,8 @@ public class CommodityController extends BaseController {
 		model.put("commodity", commodity);
 		model.put("featured", featured);
 
+		//标志产品
+		model.put("CURRENT_PAGE","commodity");
 		return "product";
 	}
 
