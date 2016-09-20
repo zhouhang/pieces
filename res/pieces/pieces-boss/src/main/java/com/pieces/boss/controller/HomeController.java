@@ -39,7 +39,7 @@ public class HomeController extends BaseController{
     @RequestMapping(value = "/")
     public String index(HttpServletRequest request,
                         HttpServletResponse response) {
-        return "redirect:/user/index";
+        return "home";
     }
 
     /**
