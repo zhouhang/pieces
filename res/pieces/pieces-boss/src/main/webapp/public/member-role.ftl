@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>新增用户-boss-饮片B2B</title>
+    <title>新增用户-boss-上工好药</title>
 </head>
 
 <body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>新增品种-boss-饮片B2B</title>
+    <title>新增品种-boss-上工好药</title>
     <#include "./inc/meta.ftl"/>
 </head>
 
