@@ -182,6 +182,71 @@
 			<artifactId>poi-ooxml</artifactId>
 			<version>3.14</version>
 		</dependency>
-
 	</dependencies>
+
+
+	<profiles>
+		<profile>
+			<id>dev-wb</id>
+			<properties>
+				<redis.host>192.168.1.174</redis.host>
+				<redis.port>6379</redis.port>
+				<elasticsearch.host>192.168.1.174:9300</elasticsearch.host>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev-ppc</id>
+			<properties>
+				<redis.host>192.168.1.174</redis.host>
+				<redis.port>6379</redis.port>
+				<elasticsearch.host>192.168.1.174:9300</elasticsearch.host>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev-ff</id>
+			<properties>
+				<redis.host>192.168.1.174</redis.host>
+				<redis.port>6379</redis.port>
+				<elasticsearch.host>192.168.1.174:9300</elasticsearch.host>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<redis.host>192.168.1.174</redis.host>
+				<redis.port>6379</redis.port>
+				<elasticsearch.host>192.168.1.174:9300</elasticsearch.host>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<redis.host>localhost</redis.host>
+				<redis.port>6379</redis.port>
+				<elasticsearch.host>localhost:9300</elasticsearch.host>
+			</properties>
+		</profile>
+	</profiles>
+
+
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>**/config.properties</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/config.properties</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
+
 </project>

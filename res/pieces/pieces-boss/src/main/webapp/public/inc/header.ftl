@@ -2,7 +2,7 @@
 <div class="header">
     <div class="wrap">
         <div class="logo">
-            <a href="/">上工好药电子商务管理系统</a>
+            <a href="/"><em>上工好药</em>电子商务管理系统</a>
         </div>
         <div class="user">
             <span>登录用户 ${member_session_boss.username }</span>
