@@ -296,7 +296,7 @@ vertical-align:middle;
 .user-info .chart-form span{cursor:pointer;}
 .user-info .chart-form .inner{position:relative;}
 .user-info .chart-form .ipt{text-align:center;border:none;}
-.user-info .chart-form .msg-box{position:absolute;z-index:2;top:110%;left:38%;line-height:18px;margin:0;padding:5px;color:#fa5468;border:1px solid #fa5468;background:#fff;border-radius:2px;white-space:nowrap;display:none;}
+.user-info .chart-form .msg-box{position:absolute;z-index:2;top:110%;left:38%;line-height:18px;margin:0;padding:5px;color:#fa5468;border:1px solid #fa5468;background:#fff;border-radius:2px;white-space:nowrap;}
 .user-info .chart-form .msg-box:before{position:absolute;top:-16px;left:14px;content:"";border:8px dashed transparent;border-bottom:8px solid #fa5468;}
 .user-info .chart-form .msg-box:after{position:absolute;top:-13px;left:16px;content:"";border:6px dashed transparent;border-bottom:7px solid #fff;}
 
