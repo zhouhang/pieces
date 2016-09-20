@@ -129,7 +129,7 @@
 					<div class="group agreement">
 						<div class="cnt">
 							<label><input type="checkbox" class="cbx"
-								name="agreement" id="agreement">我已阅读并同意<a href="#">《上工好药用户注册协议》</a></label>
+								name="agreement" id="agreement">我已阅读并同意<a href="/help/16" target="_blank">《上工之选用户注册协议》</a></label>
 						</div>
 					</div>
 

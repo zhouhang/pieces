@@ -280,22 +280,25 @@ vertical-align:middle;
 .user-info .chart{margin:-1px;padding:0;background:#fff;}
 .user-info .chart th{text-align:center;}
 .user-info .chart td{border:1px solid #ccc;text-align:center;}
-
-.user-info .chart-form{padding:50px;background:none;}
-.user-info .chart-form table{width:680px;}
-.user-info .chart-form th{height:40px;padding:0;font-weight:700;}
-.user-info .chart-form td{height:40px;padding:0;background:#fff;font-size:14px;}
-.user-info .chart-form span{cursor:pointer;}
-.user-info .chart-form .ipt{text-align:center;border:none;}
-
 .user-info .fa-form{padding:50px 0 20px 50px;}
 .user-info .fa-form .br{display:block;margin-top:10px;}
-
 .groups{margin-right:-30px;overflow:hidden;*zoom:1;}
 .groups .group{float:left;width:475px;margin:0 30px 30px 0;}
 .groups .group dl{min-height:160px;border:1px solid #e7e7e7;}
 .groups .group dt{line-height:34px;padding:7px 30px;font-weight:700;background:#f0eff5;border-bottom:1px solid #e7e7e7;}
 .groups .group dd{line-height:22px;padding:22px 30px;font-size:12px;color:#666;}
+
+/*添加&编辑商品*/
+.user-info .chart-form{padding:50px;background:none;}
+.user-info .chart-form table{width:680px;}
+.user-info .chart-form th{height:40px;padding:0;font-weight:700;}
+.user-info .chart-form td{height:40px;padding:0;background:#fff;font-size:14px;}
+.user-info .chart-form span{cursor:pointer;}
+.user-info .chart-form .inner{position:relative;}
+.user-info .chart-form .ipt{text-align:center;border:none;}
+.user-info .chart-form .msg-box{position:absolute;z-index:2;top:110%;left:38%;line-height:18px;margin:0;padding:5px;color:#fa5468;border:1px solid #fa5468;background:#fff;border-radius:2px;white-space:nowrap;display:none;}
+.user-info .chart-form .msg-box:before{position:absolute;top:-16px;left:14px;content:"";border:8px dashed transparent;border-bottom:8px solid #fa5468;}
+.user-info .chart-form .msg-box:after{position:absolute;top:-13px;left:16px;content:"";border:6px dashed transparent;border-bottom:7px solid #fff;}
 
 /* user-table */
 .user-table{}
