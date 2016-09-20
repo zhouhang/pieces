@@ -234,8 +234,8 @@
 		<profile>
 			<id>prod</id>
 			<properties>
-				<biz.base.url>http://www.sghaoyao.com</biz.base.url>
-				<biz.upload.url>http://static.sghaoyao.com/files/upload/</biz.upload.url>
+				<biz.base.url>http://www.sankobuy.com</biz.base.url>
+				<biz.upload.url>http://static.sankobuy.com/files/upload/</biz.upload.url>
 				<biz.upload.path>E:\Program Files (x86)\nginx-1.10.0\html\files\upload\</biz.upload.path>
 			</properties>
 		</profile>
