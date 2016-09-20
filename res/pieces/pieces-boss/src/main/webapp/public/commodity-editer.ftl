@@ -354,7 +354,7 @@ ${commodity.details}
                                                 text: '商品保存成功',
                                                 delay: 3e3,
                                                 call: function () {
-                                                    $("#submit").attr("disabled", "disabled");
+                                                    // $("#submit").attr("disabled", "disabled");
                                                 }
                                             });
                                         }
