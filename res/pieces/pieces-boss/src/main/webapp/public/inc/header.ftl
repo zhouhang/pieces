@@ -78,7 +78,6 @@
                     </div>
                 </li>
             </@shiro.hasPermission>
-            <li><a href="javascript:;">邮件列表</a></li>
             <@shiro.hasPermission name="cms:index">
                 <li>
                     <a href="javascript:;">CMS</a>
@@ -98,7 +97,6 @@
                     </div>
                 </li>
             </@shiro.hasPermission>
-            <li><a href="javascript:;">报表</a></li>
             <@shiro.hasPermission name="system:index">
                 <li>
                     <a href="javascript:;">系统</a>

@@ -231,6 +231,12 @@
 				<pieces.env>test</pieces.env>
 			</properties>
 		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<pieces.env>prod</pieces.env>
+			</properties>
+		</profile>
 	</profiles>
 
 
