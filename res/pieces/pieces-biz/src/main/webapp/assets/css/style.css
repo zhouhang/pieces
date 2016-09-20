@@ -116,9 +116,9 @@ vertical-align:middle;
 
 /* header */
 .header{background:#fff;}
-.header .logo{float:left;width:200px;height:100px;background:url(../images/logo.png) no-repeat 0 50%;overflow:hidden;}
-.header .logo a{display:block;width:100%;height:100%;text-indent:-999px;}
-.header .search{width:500px;margin:0 auto;padding-top:30px;}
+.header .logo{float:left;padding-right:106px;height:100px;background:url(../images/logo_txt.png) no-repeat 100% 50%;overflow:hidden;}
+.header .logo a{display:block;width:200px;height:100%;text-indent:-999px;background:url(../images/logo.png) no-repeat 0 50%;}
+.header .search{width:500px;margin:0 auto;padding:30px 0 0 72px;}
 .header .search .hotwords{height:30px;line-height:30px;font-size:12px;overflow:hidden;}
 .header .search .hotwords a{margin-right:4px;color:#999;}
 .header .search .hotwords .hot{color:#c3272b;}
@@ -452,7 +452,7 @@ vertical-align:middle;
 .product-detail .tab span{float:left;width:120px;text-align:center;}
 .product-detail .tab .on{position:relative;margin:-1px 0 0 -1px;color:#c3272b;background:#fff;border-top:2px solid #c3272b;border-left:1px solid #e7e7e7;border-right:1px solid #e7e7e7;}
 .product-detail .tab-cont{padding:20px;}
-.product-detail .guide{padding-bottom:70px;text-align:center;}
+.product-detail .guide{padding-bottom:20px;text-align:center;}
 .product-detail p{font-size:12px;line-height:24px;}
 .product-detail img{max-width:100%;}
 
