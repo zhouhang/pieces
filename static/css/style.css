@@ -159,6 +159,7 @@ vertical-align:middle;
 .nav .menu{float:left;font-size:16px;}
 .nav .menu li{float:left;text-align:center;}
 .nav .menu a{display:block;min-width:100px;height:40px;line-height:40px;}
+.nav .menu .current a{color:#c3272b;}
 .nav .plus{float:right;padding-top:2px;}
 .nav .plus a{padding:2px 11px;}
 .nav .plus i{margin-right:4px;color:#c3272b;}
