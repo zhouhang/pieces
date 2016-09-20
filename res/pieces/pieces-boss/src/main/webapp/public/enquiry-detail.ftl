@@ -106,7 +106,7 @@
                         }
                     });
 
-                    $(this).attr("disabled", "disabled");
+//                    $(this).attr("disabled", "disabled");
                     $.post( "<#if enquiryBills.status ==1>enquiry/quotedUpdate<#else>enquiry/quoted</#if>?billsId=${enquiryBills.id}", JSON.stringify(enquiryPage.fn.formatTableData()),function(data){
                         if(data.status == "y") {
                             $.notify({

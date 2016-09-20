@@ -16,6 +16,7 @@
                 <dt>支付信息</dt>
                 <dd>
                     <a class="curr" href="/payment/index">支付信息</a>
+                    <a class="curr" href="/order/detail/${pay.orderId}">订单详情</a>
                 </dd>
             </dl>
         </div>
