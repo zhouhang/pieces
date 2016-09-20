@@ -6,7 +6,7 @@
                 <dt>新手指南</dt>
                 <dd><a href="/help/15">用户注册</a></dd>
                 <dd><a href="/help/16">注册协议</a></dd>
-                <dd><a href="/help/17">视频介绍</a></dd>
+                <dd><a href="/help/17">维护资料</a></dd>
             </dl>
             <dl>
                 <dt>产品询价</dt>
@@ -21,15 +21,15 @@
                 <dd><a href="/help/23">用户确认</a></dd>
             </dl>
             <dl>
-                <dt>增值服务</dt>
+                <dt>交易支付</dt>
                 <dd><a href="/help/24">关于发票</a></dd>
-                <dd><a href="/help/25">统计分析</a></dd>
+                <dd><a href="/help/25">关于支付</a></dd>
                 <dd><a href="/help/26">在线对账</a></dd>
             </dl>
             <dl>
                 <dt>服务说明</dt>
-                <dd><a href="/help/27">隐私声明</a></dd>
-                <dd><a href="/help/28">产权保护</a></dd>
+                <dd><a href="/help/27">配送服务</a></dd>
+                <dd><a href="/help/28">售后服务</a></dd>
                 <dd><a href="/help/29">法律声明</a></dd>
             </dl>
         </div>

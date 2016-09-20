@@ -122,28 +122,28 @@
                             </tfoot>
                             <tbody>
                             <tr>
-                                <td><input name="attrN_1" type="text" class="ipt" value="年限" data-rule="required;length[1~20]"></td>
-                                <td><input name="attrV_1" type="text" class="ipt" value="" data-rule="required;length[1~20]"></td>
+                                <td><div class="inner"><input name="attrN_1" type="text" class="ipt" value="年限" data-rule="required;length[1~20]"></div></td>
+                                <td><div class="inner"><input name="attrV_1" type="text" class="ipt" value="" data-rule="required;length[1~100]"></div></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             <tr>
-                                <td><input name="attrN_2" type="text" class="ipt" value="采收时间" data-rule="required;length[1~20]"></td>
-                                <td><input name="attrV_2" type="text" class="ipt" value="" name="attr" data-rule="required;length[1~20]"></td>
+                                <td><div class="inner"><input name="attrN_2" type="text" class="ipt" value="采收时间" data-rule="required;length[1~20]"></div></td>
+                                <td><div class="inner"><input name="attrV_2" type="text" class="ipt" value="" name="attr" data-rule="required;length[1~100]"></div></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             <tr>
-                                <td><input name="attrN_3" type="text" class="ipt" value="加工方式" data-rule="required;length[1~20]"></td>
-                                <td><input name="attrV_3" type="text" class="ipt" value="" data-rule="required;length[1~20]"></td>
+                                <td><div class="inner"><input name="attrN_3" type="text" class="ipt" value="加工方式" data-rule="required;length[1~20]"></div></td>
+                                <td><div class="inner"><input name="attrV_3" type="text" class="ipt" value="" data-rule="required;length[1~100]"></div></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             <tr>
-                                <td><input name="attrN_4" type="text" class="ipt" value="含硫情况" data-rule="required;length[1~20]"></td>
-                                <td><input name="attrV_4" type="text" class="ipt" value="" data-rule="required;length[1~20]"></td>
+                                <td><div class="inner"><input name="attrN_4" type="text" class="ipt" value="含硫情况" data-rule="required;length[1~20]"></div></td>
+                                <td><div class="inner"><input name="attrV_4" type="text" class="ipt" value="" data-rule="required;length[1~100]"></div></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             <tr>
-                                <td><input name="attrN_5" type="text" class="ipt" value="含量" data-rule="required;length[1~20]"></td>
-                                <td><input name="attrV_5" type="text" class="ipt" value="" data-rule="required;length[1~20]"></td>
+                                <td><div class="inner"><input name="attrN_5" type="text" class="ipt" value="含量" data-rule="required;length[1~20]"></div></td>
+                                <td><div class="inner"><input name="attrV_5" type="text" class="ipt" value="" data-rule="required;length[1~100]"></div></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             </tbody>
@@ -441,8 +441,8 @@
 
                 // 新增
                 $('#addAttribute').on('click', function () {
-                    var tr = '<tr> \n <td><input name="attrN_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="" data-rule="required;length[1~20]"></td> ' +
-                            '\n <td><input name="attrV_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="" data-rule="required;length[1~20]"></td> ' +
+                    var tr = '<tr> \n <td><div class="inner"><input name="attrN_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="" data-rule="required;length[1~20]"></div></td> ' +
+                            '\n <td><div class="inner"><input name="attrV_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="" data-rule="required;length[1~100]"></div></td> ' +
                             '\n <td><span class="c-red">删除</span></td> \n </tr>';
                     commodityAddPage.v.attr_index += 1;
                     $table.append(tr);
