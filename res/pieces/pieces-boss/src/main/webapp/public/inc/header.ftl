@@ -19,7 +19,7 @@
 <div class="nav">
     <div class="wrap">
         <ul>
-            <li><a href="javascript:;">首页</a></li>
+            <li><a href="/">首页</a></li>
             <@shiro.hasPermission name="sales:index">
                 <li>
                     <a href="javascript:;">销售</a>

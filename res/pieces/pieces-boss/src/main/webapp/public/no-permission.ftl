@@ -30,34 +30,5 @@
     <#include "./inc/footer.ftl"/>
 
 
-    <button onclick="notify('success', '提交成功！', '5秒后自动跳转到商品详情页')">success</button>
-    <button onclick="notify('error', '提交失败！')">error</button>
-    <button onclick="notify('warn', '警告')">warn</button>
-
-    <script src="js/common.js"></script>
-    <script>
-    var options = {
-        clickToHide: true   // 点击关闭
-        ,delay: 5e3         // 5秒后自动关闭，为0时不关闭
-        ,title: '提示消息'  // 文字
-        ,text: ''           // 说明
-        ,type: 'warn'       // 类型：错误(error)，正确(success)，警告(warn)
-        ,call: null         // 关闭后回调
-    }
-
-    function notify(type, title, text) {
-        $.notify({
-            type: type, 
-            title: title, 
-            text: text, 
-            delay: 5e3,
-			call: function() {
-				setTimeout(function() {
-                    // localtion.href=  '';
-                }, 5e3);
-			}
-        });
-    }
-    </script>
 </body>
 </html>
