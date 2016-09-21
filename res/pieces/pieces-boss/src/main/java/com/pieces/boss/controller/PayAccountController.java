@@ -1,6 +1,7 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.model.*;
 import com.pieces.dao.vo.*;
@@ -8,6 +9,7 @@ import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.utils.ValidUtils;
+import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.WebUtil;
 import org.apache.commons.lang.StringUtils;
@@ -42,6 +44,7 @@ public class PayAccountController extends BaseController{
      */
     @RequestMapping("/index")
     @RequiresPermissions(value = "bank:index")
+    @BizLog(type = LogConstant.pay, desc = "支付银行账号页面")
     public String index(PayAccountVo vo, Integer pageSize, Integer pageNum, ModelMap modelMap){
         pageNum = pageNum==null?1:pageNum;
         pageSize = pageSize==null?10:pageSize;
@@ -58,6 +61,7 @@ public class PayAccountController extends BaseController{
      */
     @RequestMapping("/add")
     @RequiresPermissions(value = "bank:add")
+    @BizLog(type = LogConstant.pay, desc = "支付添加银行账号页面")
     public String add(ModelMap modelMap){
         return  "bank_add";
     }
@@ -68,6 +72,7 @@ public class PayAccountController extends BaseController{
      */
     @RequestMapping(value = "/edit/{id}")
     @RequiresPermissions(value = "bank:edit")
+    @BizLog(type = LogConstant.pay, desc = "支付编辑银行账号页面")
     public String edit(HttpServletRequest request,
                                HttpServletResponse response,
                                @PathVariable("id") Integer id,
@@ -82,6 +87,7 @@ public class PayAccountController extends BaseController{
      */
     @RequestMapping(value = "/save")
     @RequiresPermissions(value = {"bank:add","bank:edit"},logical = Logical.OR)
+    @BizLog(type = LogConstant.pay, desc = "保存银行账号")
     public void save(HttpServletRequest request,
                              HttpServletResponse response,
                              PayAccount payAccount,
@@ -106,6 +112,7 @@ public class PayAccountController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/delete/{id}")
+    @BizLog(type = LogConstant.pay, desc = "支付银行账号删除")
     public void delete(HttpServletRequest request,
                                HttpServletResponse response,
                                @PathVariable("id") Integer id,

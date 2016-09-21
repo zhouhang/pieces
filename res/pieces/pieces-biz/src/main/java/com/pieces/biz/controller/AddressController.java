@@ -1,5 +1,6 @@
 package com.pieces.biz.controller;
 
+import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.model.ShippingAddress;
 import com.pieces.dao.model.ShippingAddressHistory;
 import com.pieces.dao.model.User;
@@ -8,6 +9,7 @@ import com.pieces.service.ShippingAddressHistoryService;
 import com.pieces.service.ShippingAddressService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.tools.log.annotation.BizLog;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,7 @@ public class AddressController extends BaseController{
 
     @RequestMapping("/user")
     @ResponseBody
+    @BizLog(type = LogConstant.address, desc = "获取收货地址")
     public List<ShippingAddressVo> findByUser(){
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         List<ShippingAddressVo>  list =   shippingAddressService.findByUser(user.getId());
@@ -46,6 +49,7 @@ public class AddressController extends BaseController{
      */
     @RequestMapping("/save")
     @ResponseBody
+    @BizLog(type = LogConstant.address, desc = "保存收货地址")
     public Result save(ShippingAddress shippingAddress){
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         shippingAddress.setUserId(user.getId());
@@ -63,6 +67,7 @@ public class AddressController extends BaseController{
 
     @RequestMapping("/delete")
     @ResponseBody
+    @BizLog(type = LogConstant.address, desc = "删除收货地址")
     public Result delete(Integer id){
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         shippingAddressService.delete(user.getId(),id);
@@ -71,6 +76,7 @@ public class AddressController extends BaseController{
 
     @RequestMapping("/save/history")
     @ResponseBody
+    @BizLog(type = LogConstant.address, desc = "收货地址history")
     public Result address(Integer id){
         ShippingAddressHistory shippingAddressHistory = shippingAddressHistoryService.createByAddress(id);
         return new Result(true).data(shippingAddressHistory);

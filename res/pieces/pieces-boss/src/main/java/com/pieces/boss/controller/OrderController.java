@@ -1,6 +1,7 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.model.*;
 import com.pieces.dao.vo.*;
@@ -8,6 +9,7 @@ import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.WebUtil;
 import org.apache.shiro.authz.annotation.Logical;
@@ -62,6 +64,7 @@ public class OrderController extends BaseController{
      */
     @RequiresPermissions(value = "order:index")
     @RequestMapping("index")
+    @BizLog(type = LogConstant.order, desc = "订单列表页面")
     public String index(OrderFormVo vo, Integer pageSize, Integer pageNum, ModelMap modelMap){
         PageInfo<OrderFormVo> pageInfo = orderFormService.findByParams(vo,pageNum,pageSize);
         modelMap.put("pageInfo",pageInfo);
@@ -77,6 +80,7 @@ public class OrderController extends BaseController{
      */
     @RequiresPermissions(value = "order:info")
     @RequestMapping("detail/{id}")
+    @BizLog(type = LogConstant.order, desc = "订单详情")
     public String detail(@PathVariable("id") Integer id, ModelMap modelMap){
         OrderFormVo vo = orderFormService.findVoById(id);
         List<OrderRemarkVo> remarks = orderRemarkService.findByOrderId(id);
@@ -92,6 +96,7 @@ public class OrderController extends BaseController{
      */
     @RequestMapping(value = "addComment", method = RequestMethod.POST)
     @ResponseBody
+    @BizLog(type = LogConstant.order, desc = "订单添加评论")
     public Result addComment(OrderRemark remark){
         Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         remark.setUserId(mem.getId());
@@ -108,6 +113,7 @@ public class OrderController extends BaseController{
      */
     @RequestMapping(value = "/status", method = RequestMethod.POST)
     @ResponseBody
+    @BizLog(type = LogConstant.order, desc = "修改订单状态")
     public Result changeStatus(Integer orderId, Integer status) {
         return orderFormService.changeOrderStatus(orderId, status);
     }
@@ -123,6 +129,7 @@ public class OrderController extends BaseController{
      */
     @RequiresPermissions(value = "order:add")
     @RequestMapping(value = "customer")
+    @BizLog(type = LogConstant.order, desc = "新建订单客户选择页面")
     public String customerOrderIndex(Integer pageNum,
                                      Integer pageSize,
                                      ModelMap model,
@@ -144,6 +151,7 @@ public class OrderController extends BaseController{
      */
     @RequiresPermissions(value = "order:edit")
     @RequestMapping(value = "anew/{orderId}")
+    @BizLog(type = LogConstant.order, desc = "重新下单页面")
     public String anewOrder(@PathVariable("orderId") Integer orderId,
                             ModelMap model){
         orderModel(null,orderId,model);
@@ -159,6 +167,7 @@ public class OrderController extends BaseController{
      */
     @RequiresPermissions(value = "order:edit")
     @RequestMapping(value = "edit/{orderId}")
+    @BizLog(type = LogConstant.order, desc = "修改订单页面")
     public String updateOrder(@PathVariable("orderId") Integer orderId,
                               ModelMap model){
         orderModel(null,orderId,model);
@@ -174,6 +183,7 @@ public class OrderController extends BaseController{
      */
     @RequiresPermissions(value = "order:add")
     @RequestMapping(value = "create/{customerId}")
+    @BizLog(type = LogConstant.order, desc = "创建订单页面")
     public String createOrder(@PathVariable("customerId") Integer customerId,
                               ModelMap model){
         orderModel(customerId,null,model);
@@ -201,6 +211,7 @@ public class OrderController extends BaseController{
     @RequiresPermissions(value = {"order:add","order:edit"},logical = Logical.OR)
     @RequestMapping(value = "submit")
     @ResponseBody
+    @BizLog(type = LogConstant.order, desc = "提交订单")
     public Result save(@RequestBody OrderFormVo orderFormVo){
         List<OrderCommodity> commodities = orderFormVo.getCommodities();
         //计算商品金额

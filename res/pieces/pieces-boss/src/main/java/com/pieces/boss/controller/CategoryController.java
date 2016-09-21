@@ -5,7 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pieces.boss.commons.LogConstant;
 import com.pieces.service.enums.CategoryEnum;
+import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
@@ -49,6 +51,7 @@ public class CategoryController {
 	 */
 	@RequiresPermissions(value = "category:index")
 	@RequestMapping(value = "/category/list" ,method = RequestMethod.GET)
+	@BizLog(type = LogConstant.category, desc = "商品分类列表")
 	public String getCategory(HttpServletRequest request,
 							  HttpServletResponse response,
 							  Integer pageNum,
@@ -76,6 +79,7 @@ public class CategoryController {
 	 * @return
 	 */
 	@RequestMapping(value = "/category/list" ,method = RequestMethod.POST)
+	@BizLog(type = LogConstant.category, desc = "获取所有的商品分类")
 	public void getAllCategory(HttpServletRequest request,
 							  HttpServletResponse response,
 							  ModelMap model){
@@ -95,6 +99,7 @@ public class CategoryController {
 	 */
 	@RequiresPermissions(value = "category:add")
 	@RequestMapping(value = "/category/add")
+	@BizLog(type = LogConstant.category, desc = "添加商品分类页面")
 	public String addCategory(HttpServletRequest request,
 							  HttpServletResponse response){
 		return "category_add";
@@ -110,6 +115,7 @@ public class CategoryController {
 	 */
 	@RequiresPermissions(value = "category:edit")
 	@RequestMapping(value = "/category/edit/{id}")
+	@BizLog(type = LogConstant.category, desc = "修改商品分类页面")
 	public String editCategory(HttpServletRequest request,
 							  HttpServletResponse response,
 							  @PathVariable("id") Integer id,
@@ -129,6 +135,7 @@ public class CategoryController {
 	 */
 	@RequiresPermissions(value = "category:delete")
 	@RequestMapping(value = "/category/delete/{id}")
+	@BizLog(type = LogConstant.category, desc = "删除商品分类")
 	public void deleteCategory(HttpServletRequest request,
 							  HttpServletResponse response,
 							  @PathVariable("id") Integer id,
@@ -154,6 +161,7 @@ public class CategoryController {
 	 */
 	@RequiresPermissions(value = {"category:add","category:edit"},logical = Logical.OR)
 	@RequestMapping(value = "/category/save")
+	@BizLog(type = LogConstant.category, desc = "保存商品分类")
 	public void saveCategory(HttpServletRequest request,
 							  HttpServletResponse response,
 							  Integer id,
@@ -183,6 +191,7 @@ public class CategoryController {
 	 */
 	@RequiresPermissions(value = "breed:index")
 	@RequestMapping(value = "/breed/list")
+	@BizLog(type = LogConstant.category, desc = "商品品种列表页面")
 	public String getBreed(HttpServletRequest request,
 							  HttpServletResponse response,
 							  Integer pageNum,
@@ -210,6 +219,7 @@ public class CategoryController {
 	 */
 	@RequiresPermissions(value = "breed:add")
 	@RequestMapping(value = "/breed/add")
+	@BizLog(type = LogConstant.category, desc = "添加商品品种页面")
 	public String addBreed(HttpServletRequest request,
 							  HttpServletResponse response,
 							  ModelMap model){
@@ -226,6 +236,7 @@ public class CategoryController {
 	 */
 	@RequiresPermissions(value = "breed:edit")
 	@RequestMapping(value = "/breed/edit/{id}")
+	@BizLog(type = LogConstant.category, desc = "修改商品品种页面")
 	public String editBreed(HttpServletRequest request,
 							  HttpServletResponse response,
 							  @PathVariable("id") Integer id,
@@ -244,6 +255,7 @@ public class CategoryController {
 	 */
 	@RequiresPermissions(value = {"breed:add","breed:edit"} ,logical = Logical.OR)
 	@RequestMapping(value = "/breed/save")
+	@BizLog(type = LogConstant.category, desc = "保存品种")
 	public void saveBreed(HttpServletRequest request,
 							  HttpServletResponse response,
 							  BreedVo bvo,
@@ -271,6 +283,7 @@ public class CategoryController {
 	 */
 	@RequiresPermissions(value = "breed:delete")
 	@RequestMapping(value = "/breed/delete/{id}")
+	@BizLog(type = LogConstant.category, desc = "删除品种")
 	public void deleteBreed(HttpServletRequest request,
 							  HttpServletResponse response,
 							  @PathVariable("id") Integer id,
@@ -304,6 +317,7 @@ public class CategoryController {
      */
 	@RequestMapping(value = "/breed/search", method = RequestMethod.GET)
 	@ResponseBody
+	@BizLog(type = LogConstant.category, desc = "根据名称查询品种列表")
 	public Result searchBreed(String name){
 		return new Result(true).data(categoryService.findBreedByName(name));
 	}

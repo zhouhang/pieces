@@ -25,8 +25,13 @@ public class LogHandle {
     }
 
     public static void handle(LogInfo logInfo) {
-        LogHandleTask logHandleTask = new LogHandle.LogHandleTask(logInfo);
-        logHandleTask.run();
+//        LogHandleTask logHandleTask = new LogHandle.LogHandleTask(logInfo);
+//        logHandleTask.run();
+        try {
+            logger.info("日志:" + JSONUtils.toJson(logInfo));
+        } catch (Exception e) {
+
+        }
     }
 
     private static class LogHandleTask implements Runnable {

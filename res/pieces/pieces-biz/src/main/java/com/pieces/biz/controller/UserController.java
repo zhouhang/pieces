@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.model.ShippingAddress;
 import com.pieces.dao.vo.ShippingAddressVo;
 import com.pieces.service.ShippingAddressService;
+import com.pieces.tools.log.annotation.BizLog;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -262,6 +264,7 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/findpwd/stepone", method = RequestMethod.GET)
+	@BizLog(type = LogConstant.user, desc = "修改密码页面")
 	public String toFindPassword(Model model, HttpServletRequest request) {
 		return "find_password";
 	}
@@ -277,6 +280,7 @@ public class UserController extends BaseController {
 	 * @param mobileCode
 	 */
 	@RequestMapping(value = "/findpwd/stepone", method = RequestMethod.POST)
+	@BizLog(type = LogConstant.user, desc = "修改密码One")
 	public void findPasswordOne(HttpServletRequest request, HttpServletResponse response, Model model, String username,
 			String mobile, String mobileCode) {
 		User user = userService.findByUserName(username);
@@ -334,6 +338,7 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/findpwd/steptwo", method = RequestMethod.POST)
+	@BizLog(type = LogConstant.user, desc = "修改密码Two")
 	public void findPasswordTwo(Model model, String pwd, String userName,HttpServletRequest request,HttpServletResponse response) throws Exception {
 		User user = userService.findByUserName(userName);
 		user.setPassword(pwd);
@@ -397,6 +402,7 @@ public class UserController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/pwd/update" , method = RequestMethod.POST)
+	@BizLog(type = LogConstant.user, desc = "修改密码")
 	public void userUpdatePassword(ModelMap model, String pwdOld, String pwd, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		user = userService.findById(user.getId());
@@ -453,6 +459,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/shippingaddress/save", method = RequestMethod.POST)
 	@ResponseBody
+	@BizLog(type = LogConstant.user, desc = "保存或者添加用户收货地址")
 	public Result saveShippingAddress(ShippingAddress address){
 		User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		shippingAddressService.saveOrUpdate(address, user);
@@ -465,6 +472,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/shippingaddress/delete/{id}", method = RequestMethod.GET)
 	@ResponseBody
+	@BizLog(type = LogConstant.user, desc = "删除收货地址")
 	public Result deleteShippingAddress(@PathVariable("id")Integer id){
 		shippingAddressService.deleteById(id);
 		return new Result(true).info("删除成功!");
@@ -476,6 +484,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/shippingaddress/default/{id}", method = RequestMethod.GET)
 	@ResponseBody
+	@BizLog(type = LogConstant.user, desc = "设置默认收货地址")
 	public Result defaultShippingAddress(@PathVariable("id")Integer id){
 		User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		shippingAddressService.settingDefaultAddress(id, user.getId());

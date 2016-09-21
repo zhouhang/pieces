@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.pieces.boss.commons.LogConstant;
+import com.pieces.tools.log.annotation.BizLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,6 +54,7 @@ public class LogisticsController extends BaseController {
      */
     @RequiresPermissions(value = "logistical:index")
     @RequestMapping(value = "/logistics/index", method = RequestMethod.GET)
+    @BizLog(type = LogConstant.logistics, desc = "物流列表页面")
     public String list(LogisticalVo logisticalVo,Integer pageNum, Integer pageSize, ModelMap modelMap) {
 		pageNum = pageNum == null ? 1 : pageNum;
 		pageSize = pageSize == null ? 10 : pageSize;
@@ -68,6 +71,7 @@ public class LogisticsController extends BaseController {
      */
     @RequiresPermissions(value = "logistical:info")
     @RequestMapping(value = "/logistics/{id}", method = RequestMethod.GET)
+    @BizLog(type = LogConstant.logistics, desc = "物流详情页面")
     public String detail(@PathVariable("id")Integer id, ModelMap modelMap) {
         LogisticalVo logisticalVo = new LogisticalVo();
         logisticalVo.setId(id);
@@ -87,6 +91,7 @@ public class LogisticsController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/logistics/create", method = RequestMethod.GET)
+    @BizLog(type = LogConstant.logistics, desc = "保存物流")
     public void create(Logistical logistic,String logisticalCommodityIds,ModelMap modelMap) {
     	List<OrderCommodityVo> orderCommodityVo = orderCommodityService.findByOrderId(logistic.getOrderId());
     	String[] logisticalCommodityId = logisticalCommodityIds.split(",");

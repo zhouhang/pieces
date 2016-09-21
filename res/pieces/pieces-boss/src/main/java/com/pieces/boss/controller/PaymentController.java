@@ -1,11 +1,13 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.model.Member;
 import com.pieces.dao.vo.PayRecordVo;
 import com.pieces.service.PayRecordService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +41,7 @@ public class PaymentController {
      */
     @RequiresPermissions(value = "pay:index")
     @RequestMapping(value = "index", method = RequestMethod.GET)
+    @BizLog(type = LogConstant.pay, desc = "支付记录页面")
     public String index(PayRecordVo vo, Integer pageNum, Integer pageSize, ModelMap modelMap) {
         PageInfo<PayRecordVo> pageInfo = payRecordService.findByParams(vo, pageNum, pageSize);
         modelMap.put("pageInfo", pageInfo);
@@ -55,6 +58,7 @@ public class PaymentController {
      */
     @RequiresPermissions(value = "pay:info")
     @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
+    @BizLog(type = LogConstant.pay, desc = "支付记录详情")
     public String detail(@PathVariable("id")Integer id, ModelMap modelMap) {
         PayRecordVo vo = payRecordService.findVoById(id);
         modelMap.put("pay",vo);
@@ -68,6 +72,7 @@ public class PaymentController {
      */
     @RequestMapping(value = "/success", method = RequestMethod.POST)
     @ResponseBody
+    @BizLog(type = LogConstant.pay, desc = "支付成功")
     public Result success(Integer payId) {
         Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         payRecordService.success(payId,mem);
@@ -82,6 +87,7 @@ public class PaymentController {
      */
     @RequestMapping(value = "/fail", method = RequestMethod.POST)
     @ResponseBody
+    @BizLog(type = LogConstant.pay, desc = "支付成功")
     public Result fail(Integer payId, String msg) {
         Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         payRecordService.fail(payId,msg,mem);

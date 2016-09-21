@@ -7,9 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.model.Commodity;
 import com.pieces.dao.model.User;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -221,6 +223,7 @@ public class CommodityController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "search")
+	@BizLog(type = LogConstant.commodity, desc = "商品搜索信息")
 	public String proResult( Integer pageNum, Integer pageSize,
 			ModelMap model, String keyword) {
 		pageNum = pageNum == null ? 1 : pageNum;
@@ -252,6 +255,7 @@ public class CommodityController extends BaseController {
 	}
 
 	@RequestMapping(value = "/{id}")
+	@BizLog(type = LogConstant.commodity, desc = "商品详情页面")
 	public String detail(@PathVariable("id") Integer id, ModelMap model) {
 		CommodityVo commodity = commodityService.findVoById(id);
 		if (commodity == null) {

@@ -1,6 +1,7 @@
-package com.pieces.boss.commons;
+package com.pieces.biz.controller.commons;
 
 import com.pieces.dao.model.Member;
+import com.pieces.dao.model.User;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.log.api.GetLogUser;
 import com.pieces.tools.log.api.LogUser;
@@ -19,11 +20,11 @@ public class GetUser implements GetLogUser {
 
     @Override
     public LogUser getLogUser() {
-        Member member = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
+        User userB = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         LogUser user = new LogUser();
-        if (member != null) {
-            user.setUserName(member.getUsername());
-            user.setUserId(Long.valueOf(member.getId()));
+        if (userB != null) {
+            user.setUserName(userB.getUserName());
+            user.setUserId(Long.valueOf(userB.getId()));
         }
 
         return user;

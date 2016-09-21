@@ -7,9 +7,11 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.vo.UserVo;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.impl.SmsService;
+import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.SeqNoUtil;
 import com.pieces.tools.utils.WebUtil;
@@ -49,6 +51,7 @@ public class UserController extends  BaseController{
      */
 	@RequiresPermissions(value = "customer:view")
 	@RequestMapping(value = "/index")
+	@BizLog(type = LogConstant.user, desc = "会员查询页面")
 	public String userIndex(HttpServletRequest request,
 							HttpServletResponse response,
 							String  advices,
@@ -75,6 +78,7 @@ public class UserController extends  BaseController{
      */
 	@RequiresPermissions(value = "customer:edit" )
 	@RequestMapping(value = "/info/{id}")
+	@BizLog(type = LogConstant.user, desc = "会员详细信息页面")
 	public String userInfo(HttpServletRequest request,
 						   HttpServletResponse response,
 						   @PathVariable("id") Integer id,
@@ -94,6 +98,7 @@ public class UserController extends  BaseController{
      */
 	@RequiresPermissions(value = "customer:add" )
 	@RequestMapping(value = "/add" ,method= RequestMethod.GET)
+	@BizLog(type = LogConstant.user, desc = "添加会员页面")
 	public String userAdd(HttpServletRequest request,
 						  HttpServletResponse response){
 
@@ -109,6 +114,7 @@ public class UserController extends  BaseController{
      */
 	@RequiresPermissions(value = {"customer:add","customer:edit"} ,logical = Logical.OR)
 	@RequestMapping(value = "/save" ,method= RequestMethod.POST)
+	@BizLog(type = LogConstant.user, desc = "保存会员信息")
 	public void userSubmit(HttpServletRequest request,
 						   HttpServletResponse response,
 						   Boolean random,
@@ -182,6 +188,7 @@ public class UserController extends  BaseController{
      */
 	@RequiresPermissions(value = "customer:edit" )
 	@RequestMapping(value = "/edit/{id}" ,method= RequestMethod.GET)
+	@BizLog(type = LogConstant.user, desc = "修改会员信息页面")
 	public String edit(HttpServletRequest request,
 					   HttpServletResponse response,
 					   @PathVariable("id") Integer id,
