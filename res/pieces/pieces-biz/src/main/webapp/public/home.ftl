@@ -35,7 +35,7 @@
                 <div class="col" index="0">
                     <#list AD_MANUFACTURERS as ad>
                         <#if ad_index<4>
-                        <a href="${ad.link!"#!"}"><img src="${ad.pictureUrl!}" alt=""></a>
+                        <a target="_blank" href="${ad.link!"#!"}"><img src="${ad.pictureUrl!}" alt=""></a>
                         </#if>
                     </#list>
                 </div>
