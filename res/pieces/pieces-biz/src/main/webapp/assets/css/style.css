@@ -130,7 +130,8 @@ vertical-align:middle;
 .header .title{float:left;padding:25px 24px;}
 .header .title h1{height:50px;line-height:48px;padding-left:40px;font-size:16px;border-left:1px solid #ccc;}
 .header-red{background:#c3272b;}
-.header-red .logo{background-image:url(../images/logo-red.png);}
+.header-red .logo{padding:0;background:#c3272b;}
+.header-red .logo a{background-image:url(../images/logo-red.png);}
 .header-red .title h1{color:#fff;border-left-color:#fff;}
 .header-red .plus .back{display:inline-block;margin-top:37px;padding:4px 11px;font-size:12px;color:#c3272b;background:#e7e7e7;}
 .header-red .plus .back:hover{text-decoration:none;}
