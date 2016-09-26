@@ -194,7 +194,11 @@
 			<groupId>com.github.bingoohuang</groupId>
 			<artifactId>patchca</artifactId>
 		</dependency>
-
+		<!-- 验证框架 -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+		</dependency>
 	</dependencies>
 
 
