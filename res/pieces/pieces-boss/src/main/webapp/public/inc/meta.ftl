@@ -3,5 +3,5 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <base href="${baseUrl}"/>
 <link type="text/css" rel="stylesheet" href="/css/style.css" />
-<script src="js/jquery.min.js"></script>
+<script src="/js/jquery.min.js"></script>
 <#--<link rel="shortcut icon" href="/assets/favicon.ico" />-->
