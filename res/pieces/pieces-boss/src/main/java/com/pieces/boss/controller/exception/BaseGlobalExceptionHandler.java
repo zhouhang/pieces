@@ -2,11 +2,17 @@ package com.pieces.boss.controller.exception;
 
 import com.google.common.base.Throwables;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.tools.log.util.JSONUtils;
 import com.pieces.tools.utils.WebUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -15,14 +21,24 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by wangbin on 2016/6/30.
  */
 public class BaseGlobalExceptionHandler {
 
+    private boolean debug = true;
+
     protected static final Logger logger = null;
+
+    public Logger getLogger() {
+        return LoggerFactory.getLogger(BaseGlobalExceptionHandler.class);
+    }
+
     protected static final String DEFAULT_ERROR_MESSAGE = "系统忙，请稍后再试";
+
 
     protected ModelAndView handleError(HttpServletRequest req, HttpServletResponse rsp, Exception e, String viewName, HttpStatus status) throws Exception {
         if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null){
@@ -34,7 +50,7 @@ public class BaseGlobalExceptionHandler {
 
         getLogger().error("Request: {} raised {}", req.getRequestURI(), errorStack);
         if (isAjaxRequest(req)) {
-            return handleAjaxError(rsp, errorMsg, status);
+            return handleAjaxError(rsp, e);
         }
         return handleViewError(req.getRequestURL().toString(), errorStack, errorMsg, viewName);
     }
@@ -49,14 +65,17 @@ public class BaseGlobalExceptionHandler {
         return mav;
     }
 
-    protected ModelAndView handleAjaxError(HttpServletResponse rsp, String errorMessage, HttpStatus status) throws IOException {
-        WebUtil.print(rsp,new Result(false).info(DEFAULT_ERROR_MESSAGE));
+    protected ModelAndView handleAjaxError(HttpServletResponse rsp, Exception e) {
+        String msg = DEFAULT_ERROR_MESSAGE;
+        if (isValidAndBindException(e)) {
+            WebUtil.print(rsp,new Result(false).data(formatVaildAndBindError(e)));
+        } else {
+            WebUtil.print(rsp,new Result(false).info(msg));
+        }
         return null;
     }
 
-    public Logger getLogger() {
-        return LoggerFactory.getLogger(BaseGlobalExceptionHandler.class);
-    }
+
 
     public static boolean isAjaxRequest(HttpServletRequest request) {
         String requestType = request.getHeader("X-Requested-With");
@@ -65,5 +84,43 @@ public class BaseGlobalExceptionHandler {
         } else {
             return false;
         }
+    }
+
+    /**
+     * 判断是否数据绑定和验证错误
+     * @return
+     */
+    public static boolean isValidAndBindException(Exception e){
+        Boolean result = false;
+        if(e instanceof BindException || e instanceof MethodArgumentNotValidException){
+            result = true;
+        }
+        return result;
+    }
+
+    public static Map<String, String> formatVaildAndBindError(Exception e) {
+        Map result = new HashMap<String, String>();
+        if(e instanceof BindException) {
+            BindException be = (BindException)e;
+            for(ObjectError error : be.getAllErrors()){
+                if(error instanceof FieldError) {
+                    FieldError errorf = (FieldError)error;
+                    result.put(errorf.getField(), error.getDefaultMessage());
+                } else {
+                    result.put("error", error.getDefaultMessage());
+                }
+            }
+        } else if (e instanceof MethodArgumentNotValidException){
+            MethodArgumentNotValidException me = (MethodArgumentNotValidException)e;
+            for(ObjectError error : me.getBindingResult().getAllErrors()){
+                if(error instanceof  FieldError) {
+                    FieldError errorf = (FieldError)error;
+                    result.put(errorf.getField(), error.getDefaultMessage());
+                } else {
+                    result.put("error", error.getDefaultMessage());
+                }
+            }
+        }
+        return result;
     }
 }

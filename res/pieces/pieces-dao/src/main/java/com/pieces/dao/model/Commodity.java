@@ -1,5 +1,9 @@
 package com.pieces.dao.model;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,36 +18,53 @@ public class Commodity  implements Serializable {
 	private Integer categoryId;
 	
 	//商品名称
+	@NotEmpty
+	@Length(min = 1, max = 20)
 	private String name;
 	
 	//商品标题
+	@NotEmpty
+	@Length(min = 1, max = 50)
 	private String title;
 	
 	//规格等级
+	@NotEmpty
+	@Length(min = 1, max = 50)
 	private String level;
 	
 	//切制规格
+	@NotEmpty
+	@Length(min = 1, max = 20)
 	private String spec;
 	
 	//原药产地
+	@NotEmpty
+	@Length(min = 1, max = 20)
 	private String originOf;
 	
 	//执行标准
+	@NotEmpty
+	@Length(min = 1, max = 20)
 	private String executiveStandard;
 	
 	//性状描述
+	@NotEmpty
+	@Length(min = 1, max = 200)
 	private String exterior;
 	
 	//商品属性(json结构)
 	private String attribute;
 	
 	//商品详情
+	@NotEmpty
 	private String details;
 	
 	//图片地址
+	@NotEmpty
 	private String pictureUrl;
 	
 	//状态
+	@NotNull
 	private Integer status;
 	
 	private Date createTime;
