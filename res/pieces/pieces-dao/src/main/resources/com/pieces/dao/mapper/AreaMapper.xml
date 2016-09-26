@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pieces.dao.AreaMapper">
+<mapper namespace="com.pieces.dao.AreaDao">
 
   <resultMap id="BaseResultMap" type="com.pieces.dao.model.Area">
     <id column="id" jdbcType="INTEGER" property="id" />
@@ -101,7 +101,7 @@
 
 
   <!--通过等级查找地区-->
-  <select id="selectByLevel" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="findByLevel" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from area
@@ -116,7 +116,7 @@
   </select>
 
   <!--通过父ID查询地区-->
-  <select id="selectByParent" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="findByParent" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from area
@@ -124,14 +124,14 @@
   </select>
 
   <!--通过地区编码查询地区-->
-  <select id="selectByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="findByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from area
     where areacode = #{areacode,jdbcType=VARCHAR}
   </select>
 
-  <select id="selectParentsById" parameterType="java.lang.Integer" resultType="com.pieces.dao.model.Area">
+  <select id="findParentsByCode" parameterType="java.lang.Integer" resultType="com.pieces.dao.model.Area">
     SELECT
 	  a.id as id,a.areaname as areaname,b.id as cityId,b.areaname as city,c.id as provinceId,c.areaname as province
     FROM

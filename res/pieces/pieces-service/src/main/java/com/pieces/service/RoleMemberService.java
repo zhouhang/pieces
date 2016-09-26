@@ -18,7 +18,6 @@ public interface RoleMemberService extends ICommonService<RoleMember>{
 
     void createRoleMember(Integer[] roleIds,Integer memberId);
 
-    List<RoleMember> findByCondition();
 
     List<RoleMember> findByRole(Integer roleId);
 

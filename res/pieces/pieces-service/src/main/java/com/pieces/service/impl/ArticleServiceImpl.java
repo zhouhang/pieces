@@ -1,5 +1,6 @@
 package com.pieces.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ArticleCategoryDao;
 import com.pieces.dao.ArticleDao;
@@ -37,7 +38,10 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
 
     @Override
     public PageInfo<ArticleCategory> queryCategory(ArticleCategory category, int pageNum, int pageSize) {
-        return articleCategoryDao.findByParam(category,pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
+        List<ArticleCategory> list =articleCategoryDao.findByParam(category);
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
     @Override
@@ -56,7 +60,10 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
 
     @Override
     public PageInfo<ArticleVo> queryArticle(ArticleVo articleVo, int pageNum, int pageSize) {
-        return articleDao.findByParam(articleVo,pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
+        List<ArticleVo> list = articleDao.findByParam(articleVo);
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
     @Override
@@ -104,8 +111,10 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
 
     @Override
     public PageInfo<ArticleVo> findByModel(int model, int pageNum, int pageSize) {
-        PageInfo<ArticleVo> pageInfo = articleDao.findByModel(model,pageNum,pageSize);
-        return pageInfo;
+        PageHelper.startPage(pageNum, pageSize);
+        List<ArticleVo> list = articleDao.findByModel(model);
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
 

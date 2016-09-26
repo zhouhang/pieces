@@ -1,18 +1,19 @@
 package com.pieces.dao;
 
-import com.github.pagehelper.PageInfo;
+import com.pieces.dao.annotation.AutoMapper;
 import com.pieces.dao.model.Member;
 import com.pieces.dao.model.Resources;
 import com.pieces.dao.vo.MemberVo;
 
 import java.util.List;
 
+@AutoMapper
 public interface MemberDao extends ICommonDao<Member>{
 
 
 	Member findByUsername(String username);
 
-	PageInfo<Member> findByCondition(MemberVo memberVo, Integer pageNum, Integer pageSize);
+	List<Member> findByCondition(MemberVo memberVo);
 
 	List<Resources> findResourcesByUserName(String username);
 }

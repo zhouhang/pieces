@@ -1,10 +1,14 @@
 package com.pieces.dao;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.annotation.AutoMapper;
 import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.vo.EnquiryBillsVo;
 import com.pieces.dao.vo.EnquiryRecordVo;
 
+import java.util.List;
+
+@AutoMapper
 public interface EnquiryBillsDao extends ICommonDao<EnquiryBills>{
 
     /**
@@ -24,5 +28,6 @@ public interface EnquiryBillsDao extends ICommonDao<EnquiryBills>{
      */
     public EnquiryBillsVo findVOById(Integer id);
 
-    public PageInfo<EnquiryBills> findByCommoditys(int pageNum, int pageSize,EnquiryRecordVo enquiryRecordVo);
+
+    public List<EnquiryBills> findByCommoditys(EnquiryRecordVo enquiryRecordVo);
 }

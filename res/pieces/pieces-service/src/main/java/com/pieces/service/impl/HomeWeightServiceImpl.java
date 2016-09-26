@@ -119,7 +119,11 @@ public class HomeWeightServiceImpl extends AbsCommonService<HomeWeight> implemen
         HomeWeight homeWeight = new HomeWeight();
         homeWeight.setType(type);
         homeWeight.setRelevanceId(relevanceId);
-        return homeWeightDao.findOneByParams(homeWeight);
+        List<HomeWeight>  homeWeightList =  homeWeightDao.findByParams(homeWeight);
+        if(!homeWeightList.isEmpty()){
+            return homeWeightList.get(0);
+        }
+        return null;
     }
 
 

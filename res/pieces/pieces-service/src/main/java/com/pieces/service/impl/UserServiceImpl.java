@@ -3,6 +3,7 @@ package com.pieces.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,7 +97,10 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 
     @Override
     public PageInfo<User> findByCondition(UserVo userVo, Integer pageNum, Integer pageSize) {
-        return userDao.findByCondition(userVo,pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> list = userDao.findByCondition(userVo);
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
     @Override
@@ -107,7 +111,10 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 
     @Override
     public PageInfo<User> findUserByVagueCondition(User user, Integer pageNum, Integer pageSize) {
-        return userDao.findUserByVagueCondition(user, pageNum, pageSize);
+        PageHelper.startPage(pageNum, pageSize);
+        List<User> list = userDao.findUserByVagueCondition(user);
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
     @Override

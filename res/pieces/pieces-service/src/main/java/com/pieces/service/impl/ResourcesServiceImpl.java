@@ -21,4 +21,6 @@ public class ResourcesServiceImpl extends AbsCommonService<Resources> implements
     public ICommonDao<Resources> getDao() {
         return resourcesDao;
     }
+
+
 }

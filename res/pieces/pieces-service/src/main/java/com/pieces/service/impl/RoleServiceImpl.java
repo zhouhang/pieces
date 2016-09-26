@@ -1,12 +1,11 @@
 package com.pieces.service.impl;
 
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.RoleDao;
 import com.pieces.dao.model.Role;
-import com.pieces.dao.model.RoleMember;
-import com.pieces.dao.model.RoleResources;
 import com.pieces.dao.vo.RoleVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.RoleMemberService;
@@ -17,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by wangbin on 2016/7/8.
@@ -27,6 +27,7 @@ public class RoleServiceImpl extends AbsCommonService<Role> implements RoleServi
 
     @Autowired
     private RoleDao roleDao;
+
     @Autowired
     private RoleMemberService roleMemberService;
     @Autowired
@@ -39,8 +40,11 @@ public class RoleServiceImpl extends AbsCommonService<Role> implements RoleServi
     }
 
     @Override
-    public PageInfo<Role> findByCondition(RoleVo memberVo, Integer pageNum, Integer pageSize) {
-        return roleDao.findByCondition(memberVo,pageNum,pageSize);
+    public PageInfo<Role> findByCondition(RoleVo roleVo, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Role> list =  roleDao.findByCondition(roleVo);
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
 

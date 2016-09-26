@@ -1,14 +1,17 @@
 package com.pieces.dao;
 
+import com.pieces.dao.annotation.AutoMapper;
 import com.pieces.dao.model.EnquiryCommoditys;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@AutoMapper
 public interface EnquiryCommoditysDao extends ICommonDao<EnquiryCommoditys>{
 
-    public List<EnquiryCommoditys> findByBillId(Integer billId,Integer pageSize);
+    public List<EnquiryCommoditys> findByBillId(@Param(value = "billId") Integer billId,@Param(value = "pageSize") Integer pageSize);
 
-    public List<EnquiryCommoditys> findByBillId(Integer userId,Integer billId,Integer pageSize);
+    public List<EnquiryCommoditys> findByBillId(@Param(value = "userId") Integer userId, @Param(value = "billId") Integer billId,@Param(value = "pageSize") Integer pageSize);
 
     public void batchCreate(List<EnquiryCommoditys> enquiryCommoditysList);
 

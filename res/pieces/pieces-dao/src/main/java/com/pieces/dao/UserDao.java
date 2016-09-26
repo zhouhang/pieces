@@ -3,13 +3,15 @@ package com.pieces.dao;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.annotation.AutoMapper;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.UserVo;
 
+@AutoMapper
 public interface UserDao extends ICommonDao<User>{
 	List<User> findUserByCondition(User user);
 	
-	PageInfo<User> findUserByVagueCondition(User user,Integer pageNum, Integer pageSize);
+	List<User> findUserByVagueCondition(User user);
 
 	int addUser(User user);
 
@@ -18,7 +20,7 @@ public interface UserDao extends ICommonDao<User>{
 	User findByUserName(String userName);
 
 
-	PageInfo<User> findByCondition(UserVo userVo, Integer pageNum, Integer pageSize);
+	List<User> findByCondition(UserVo userVo);
 
 
 }
