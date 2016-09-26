@@ -108,43 +108,23 @@ function throttle(func, wait, mustRun) {
 };
 
 function bindSearch() {
-	var $searchForm = $('#_search_form'),
-		timer, call;
-
-	if ($searchForm.length === 0) {
-		return false;
-	}
-
-	// 可以页面其他地方引入了autocomplete.js
-	if($.isFunction($.fn.autocomplete)){ 
-		call();
-	} else {
-		loadScript('js/jquery.autocomplete.min.js');
-		timer = setInterval(function() {
-			call();
-		}, 300);
-	}
-
-	call = function() {
-		timer && clearTimeout(timer);
-		$('#_search_ipt').autocomplete({
-	        serviceUrl: '/commodity/search/auto',
-	        paramName: 'keyword',
-	        groupBy: 'category',
-	        transformResult: function(response) {
-	            response = JSON.parse(response);
-	            return  {suggestions:$.map(response, function(dataItem) {
-	            	return {
-	            		value: (dataItem.category ? dataItem.category + ':' : '') + dataItem.value,
-	            		data: {'category': dataItem.category}
-	            	}
-	            })};
-	        },
-	        onSelect: function (suggestion) {
-	            $searchForm.submit();
-	        }
-	    });
-	}
+	$('#_search_ipt').autocomplete({
+        serviceUrl: '/commodity/search/auto',
+        paramName: 'keyword',
+        groupBy: 'category',
+        transformResult: function(response) {
+            response = JSON.parse(response);
+            return  {suggestions:$.map(response, function(dataItem) {
+            	return {
+            		value: (dataItem.category ? dataItem.category + ':' : '') + dataItem.value,
+            		data: {'category': dataItem.category}
+            	}
+            })};
+        },
+        onSelect: function (suggestion) {
+            $('#_search_form').submit();
+        }
+    });
 }
 
 // 用户中心导航高亮
