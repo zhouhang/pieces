@@ -11,7 +11,7 @@
 	<div class="header header-shadow">
 		<div class="wrap">
 			<div class="logo">
-				<a href="home.html">上工好药首页</a>
+				<a href="/">上工好药首页</a>
 			</div>
 			<div class="title">
 				<h1>找回密码</h1>
@@ -80,7 +80,7 @@
 
 			<div class="side">
 				<div class="hd">
-					已有账号<a class="btn btn-gray" href="login.html">请登录</a>
+					已有账号<a class="btn btn-gray" href="/user/login">请登录</a>
 				</div>
 				<div class="bd">
 					<dl>
@@ -95,14 +95,14 @@
 						<dd>验收无误收货</dd>
 						<dd>网上对账付款</dd>
 						<dd>
-							<a href="helper.html">查看平台详细教程</a>
+							<a href="/help/15">查看平台详细教程</a>
 						</dd>
 					</dl>
 				</div>
 				<div class="ft">
 					<p>在线咨询：</p>
 					<p>
-						<i class="fa fa-tel"></i><span>400-123-1234</span>
+						<i class="fa fa-tel"></i><span>0558-5120088</span>
 					</p>
 				</div>
 			</div>

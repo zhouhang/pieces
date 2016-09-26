@@ -165,7 +165,7 @@
 				<div class="ft">
 					<p>在线咨询：</p>
 					<p>
-						<i class="fa fa-tel"></i><span>400-123-1234</span>
+						<i class="fa fa-tel"></i><span>0558-5120088</span>
 					</p>
 				</div>
 			</div>
