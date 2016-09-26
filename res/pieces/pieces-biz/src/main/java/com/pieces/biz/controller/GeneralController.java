@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.pieces.dao.exception.SmsOverException;
 import com.pieces.service.CommodityService;
 import com.pieces.service.impl.CreateHtmlService;
 import com.pieces.service.vo.CropResult;
@@ -177,9 +178,16 @@ public class GeneralController extends BaseController {
 	@RequestMapping(value="/code")
 	public void getMobileCode(String contactMobile,
 						HttpServletRequest request,
-						HttpServletResponse response) throws Exception{
-		smsService.sendSmsCaptcha(contactMobile);
-		Map<String, String> result = new HashMap<String, String>();
+						HttpServletResponse response){
+        try {
+            smsService.sendSmsCaptcha(contactMobile);
+        } catch (Exception e) {
+            Map<String, String> result = new HashMap<String, String>();
+            result.put("error", "该手机号短信发送次数超标!");
+            WebUtil.print(response,result);
+            return;
+        }
+        Map<String, String> result = new HashMap<String, String>();
 		result.put("ok", "ok");
         WebUtil.print(response,result);
 	}
