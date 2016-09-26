@@ -1,6 +1,7 @@
 package com.pieces.biz.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.EnquiryCommoditys;
@@ -15,6 +16,7 @@ import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.utils.ExcelParse;
+import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.CookieUtils;
 import com.pieces.tools.utils.GsonUtil;
 import com.pieces.tools.utils.WebUtil;
@@ -60,6 +62,7 @@ public class EnquiryController extends BaseController{
      * 客户询价页面
      */
     @RequestMapping(value = "index")
+    @BizLog(type = LogConstant.enquiry, desc = "客户询价页面")
     public String index(HttpServletRequest request,
                         HttpServletResponse response,
                         ModelMap modelMap,
@@ -125,6 +128,7 @@ public class EnquiryController extends BaseController{
      * 提交询价单
      */
     @RequestMapping(value = "submit")
+    @BizLog(type = LogConstant.enquiry, desc = "提交询价单")
     public void submit(HttpServletRequest request,
                        HttpServletResponse response,
                        Integer billId,
@@ -172,6 +176,7 @@ public class EnquiryController extends BaseController{
      * @return
      */
     @RequestMapping(value = "record")
+    @BizLog(type = LogConstant.enquiry, desc = "询价记录页面")
     public String enquiryRecord(HttpServletRequest request,
                                 HttpServletResponse response,
                                 ModelMap modelMap,

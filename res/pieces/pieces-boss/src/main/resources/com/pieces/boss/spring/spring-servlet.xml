@@ -139,15 +139,18 @@
 	<mvc:resources mapping="/images/**" location="/assets/images/" />
 	<mvc:resources mapping="/fonts/**" location="/assets/fonts/" />
 
+	<!--<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">-->
+		<!--<property name="proxyTargetClass" value="true"/>-->
+	<!--</bean>-->
 
-	<bean id="log" class="com.pieces.tools.log.aop.LogAspect"></bean>
-	<aop:config>
-		<aop:pointcut id="asp" expression="execution(* com.pieces.boss.controller.*.*(..))"/>
+	<!--<bean id="logAspect" class="com.pieces.tools.log.aop.LogAspect"></bean>-->
+	<!--<aop:config>-->
+		<!--<aop:pointcut id="asp" expression="execution(* com.pieces.boss.controller.*.*(..))"/>-->
 
-		<aop:aspect id="b" ref="log"><!--调用日志类-->
-			<aop:around method="doAroundMethodCall" pointcut-ref="asp" />
-		</aop:aspect>
+		<!--<aop:aspect id="b" ref="logAspect">&lt;!&ndash;调用日志类&ndash;&gt;-->
+			<!--<aop:around method="doAroundMethodCall" pointcut-ref="asp" />-->
+		<!--</aop:aspect>-->
 
-	</aop:config>
+	<!--</aop:config>-->
 
 </beans>

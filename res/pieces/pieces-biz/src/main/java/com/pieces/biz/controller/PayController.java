@@ -1,12 +1,14 @@
 package com.pieces.biz.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.enums.SessionEnum;
 import com.pieces.dao.model.*;
 import com.pieces.dao.vo.PayRecordVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.tools.log.annotation.BizLog;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,6 +49,7 @@ public class PayController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/go/{orderId}")
+    @BizLog(type = LogConstant.pay, desc = "订单支付界面")
     public String go(ModelMap modelMap,
                      @PathVariable("orderId")Integer orderId){
 
@@ -83,6 +86,7 @@ public class PayController extends BaseController{
      */
     @RequestMapping(value = "/create")
     @ResponseBody
+    @BizLog(type = LogConstant.pay, desc = "创建支付记录")
     public Result create(PayRecordVo payRecordVo,
                          String token,
                          String[] img){
@@ -109,6 +113,7 @@ public class PayController extends BaseController{
      */
     @RequestMapping(value = "/bill")
     @ResponseBody
+    @BizLog(type = LogConstant.pay, desc = "提交账单")
     public Result bill(Integer billtime,
                        Integer orderId){
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
@@ -130,6 +135,7 @@ public class PayController extends BaseController{
      * @return
      */
     @RequestMapping(value = "/record")
+    @BizLog(type = LogConstant.pay, desc = "支付记录页面")
     public String record(ModelMap modelMap,
                          Integer pageSize,
                          Integer pageNum){

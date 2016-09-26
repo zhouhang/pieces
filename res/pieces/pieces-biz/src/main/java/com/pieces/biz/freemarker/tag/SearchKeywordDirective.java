@@ -27,8 +27,11 @@ public class SearchKeywordDirective implements TemplateDirectiveModel {
     public void execute(Environment environment, Map map, TemplateModel[] templateModels, TemplateDirectiveBody templateDirectiveBody) throws TemplateException, IOException {
         List<AdVo> adVoList = adService.findByType(CodeEnum.AD_SEARCH.getId());
         StringBuffer sb = new StringBuffer();
-        for(AdVo adVo :adVoList){
-            String aTag =  " <a href='/commodity/search?keyword="+adVo.getTitle()+"'>"+adVo.getTitle()+"</a>";
+        for(int i=0;i<adVoList.size();i++ ){
+            AdVo adVo  = adVoList.get(i);
+
+            String aTag =  "<a "+(i==0?"class='hot'":"")+" href='/commodity/search?keyword="+adVo.getTitle()+"'>"+adVo.getTitle()+"</a>";
+
             sb.append(aTag);
         }
         environment.getOut().append(sb.toString());

@@ -2,12 +2,14 @@ package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.boss.commons.Configure;
+import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.model.Ad;
 import com.pieces.dao.vo.AdVo;
 import com.pieces.service.AdService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.CodeEnum;
 import com.pieces.boss.upload.AdUploadFile;
+import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -39,6 +41,7 @@ public class AdController extends BaseController{
      */
     @RequiresPermissions(value = "ad:index")
     @RequestMapping("index")
+    @BizLog(type = LogConstant.ad, desc = "广告管理列表")
     public String index(Integer pageSize,
                         Integer pageNum,
                         AdVo adVo,
@@ -61,6 +64,7 @@ public class AdController extends BaseController{
      */
     @RequiresPermissions(value = "ad:add")
     @RequestMapping("add")
+    @BizLog(type = LogConstant.ad, desc = "广告添加")
     public String add(ModelMap model){
         List<CodeEnum> adTypeList = CodeEnum.findByType(CodeEnum.Type.AD);
         model.put("typeList",adTypeList);
@@ -75,6 +79,7 @@ public class AdController extends BaseController{
      */
     @RequiresPermissions(value = "ad:edit")
     @RequestMapping("edit/{id}")
+    @BizLog(type = LogConstant.ad, desc = "广告详情")
     public String info(@PathVariable("id") Integer id,
                        ModelMap model){
         List<CodeEnum> adTypeList = CodeEnum.findByType(CodeEnum.Type.AD);
@@ -96,6 +101,7 @@ public class AdController extends BaseController{
     @RequiresPermissions(value = {"ad:add","ad:edit"},logical = Logical.OR)
     @RequestMapping("save")
     @ResponseBody
+    @BizLog(type = LogConstant.ad, desc = "广告保存")
     public Result save(Ad ad){
         String message;
         if(ad.getId()==null){
@@ -117,6 +123,7 @@ public class AdController extends BaseController{
     @RequiresPermissions(value = {"ad:add","ad:edit"},logical = Logical.OR)
     @RequestMapping("delete")
     @ResponseBody
+    @BizLog(type = LogConstant.ad, desc = "广告删除")
     public Result delete(Integer id){
         adService.deleteById(id);
         return new Result(true).info("删除成功!");

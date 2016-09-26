@@ -1,6 +1,7 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.model.Article;
 import com.pieces.dao.model.ArticleCategory;
 import com.pieces.dao.model.Member;
@@ -10,6 +11,7 @@ import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.ModelEnum;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.enums.StatusEnum;
+import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -46,6 +48,7 @@ public class CMSController extends BaseController{
      */
     @RequiresPermissions(value = {"single:index","post:index"},logical = Logical.OR)
     @RequestMapping(value = "article/index", method = RequestMethod.GET)
+    @BizLog(type = LogConstant.cms, desc = "文章列表页面")
     public String index(ArticleVo articleVo, Integer pageSize, Integer pageNum, ModelMap model){
         String url = "";
 
@@ -75,6 +78,7 @@ public class CMSController extends BaseController{
      */
     @RequiresPermissions(value = {"single:index","post:index"},logical = Logical.OR)
     @RequestMapping(value = "article/add", method = RequestMethod.GET)
+    @BizLog(type = LogConstant.cms, desc = "添加文章")
     public String add(Integer model, ModelMap modelMap){
         String url = "";
 
@@ -94,6 +98,7 @@ public class CMSController extends BaseController{
      */
     @RequiresPermissions(value = {"single:index","post:index"},logical = Logical.OR)
     @RequestMapping(value = "article/detail/{id}", method = RequestMethod.GET)
+    @BizLog(type = LogConstant.cms, desc = "文章详情")
     public String detail(@PathVariable("id") Integer id, ModelMap modelMap){
 
         Article article = articleService.findArticleById(id);
@@ -113,6 +118,7 @@ public class CMSController extends BaseController{
     @RequiresPermissions(value = {"single:index","post:index"},logical = Logical.OR)
     @RequestMapping(value = "article/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
+    @BizLog(type = LogConstant.cms, desc = "删除文章")
     public Result delete (@PathVariable("id") Integer id){
         articleService.deleteArticleById(id);
         return new Result(true).info("删除成功!");
@@ -126,6 +132,7 @@ public class CMSController extends BaseController{
     @RequiresPermissions(value = {"single:index","post:index"},logical = Logical.OR)
     @RequestMapping(value = "article/save", method = RequestMethod.POST)
     @ResponseBody
+    @BizLog(type = LogConstant.cms, desc = "保存文章")
     public Result save (Article article){
         Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         articleService.saveOrUpdateArticle(article, mem.getId());
@@ -139,6 +146,7 @@ public class CMSController extends BaseController{
      */
     @RequiresPermissions(value = {"single:category","post:category"},logical = Logical.OR)
     @RequestMapping(value = "category/index", method = RequestMethod.GET)
+    @BizLog(type = LogConstant.cms, desc = "文章列表页面")
     public String categoryIndex(ArticleCategory category, Integer pageSize, Integer pageNum, ModelMap modelMap){
 
         pageNum=pageNum==null?1:pageNum;
@@ -159,6 +167,7 @@ public class CMSController extends BaseController{
      */
     @RequiresPermissions(value = {"single:category","post:category"},logical = Logical.OR)
     @RequestMapping(value = "category/add", method = RequestMethod.GET)
+    @BizLog(type = LogConstant.cms, desc = "新增文章类别页面")
     public String addCategory(Integer model, ModelMap modelMap) {
         modelMap.put("model", model);
 
@@ -166,14 +175,15 @@ public class CMSController extends BaseController{
     }
 
 
-   /**
+    /**
      * 保存类别信息
      * @param category
      * @return
      */
-   @RequiresPermissions(value = {"single:category","post:category"},logical = Logical.OR)
-   @RequestMapping(value = "category/save", method = RequestMethod.POST)
+    @RequiresPermissions(value = {"single:category","post:category"},logical = Logical.OR)
+    @RequestMapping(value = "category/save", method = RequestMethod.POST)
     @ResponseBody
+    @BizLog(type = LogConstant.cms, desc = "保存文章类别信息")
     public Result saveCategory(ArticleCategory category) {
         Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         articleService.saveOrUpdateCategory(category, mem.getId());
@@ -186,6 +196,7 @@ public class CMSController extends BaseController{
      */
     @RequiresPermissions(value = {"single:category","post:category"},logical = Logical.OR)
     @RequestMapping(value = "category/detail/{id}", method = RequestMethod.GET)
+    @BizLog(type = LogConstant.cms, desc = "修改文章类别")
     public String categoryDetail(@PathVariable("id")Integer id, ModelMap modelMap){
         ArticleCategory category = articleService.getCategoryById(id);
         modelMap.put("category", category);
@@ -201,6 +212,7 @@ public class CMSController extends BaseController{
     @RequiresPermissions(value = {"single:category","post:category"},logical = Logical.OR)
     @RequestMapping(value = "category/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
+    @BizLog(type = LogConstant.cms, desc = "删除文章类别")
     public Result deleteCategory (@PathVariable("id") Integer id){
         articleService.deleteCategory(id);
         return new Result(true).info("删除成功!");

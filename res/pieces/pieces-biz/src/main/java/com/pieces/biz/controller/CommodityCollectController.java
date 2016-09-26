@@ -5,7 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.service.utils.ValidUtils;
+import com.pieces.tools.log.annotation.BizLog;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -40,6 +42,7 @@ public class CommodityCollectController {
 	 */
 	@RequestMapping(value = "/collect/add/{id}")
 	@ResponseBody
+	@BizLog(type = LogConstant.collect, desc = "添加商品收藏")
 	public Result addCollect(@PathVariable("id") Integer cid, ModelMap model) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		CommodityCollectVo commodityCollectVo = new CommodityCollectVo();
@@ -62,6 +65,7 @@ public class CommodityCollectController {
 	 *
 	 */
 	@RequestMapping(value = "/collect/index")
+	@BizLog(type = LogConstant.collect, desc = "商品收藏列表")
 	public String index(ModelMap model,Integer pageNum, Integer pageSize) {
 		pageNum = pageNum == null ? 1 : pageNum;
 		pageSize = pageSize == null ? 10 : pageSize;
@@ -87,6 +91,7 @@ public class CommodityCollectController {
 	 * 删除商品收藏
 	 */
 	@RequestMapping(value = "/collect/delete/{id}")
+	@BizLog(type = LogConstant.collect, desc = "删除收藏商品")
 	public String deleteCollect(@PathVariable("id") Integer cid, ModelMap model) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		CommodityCollect cc = new CommodityCollect();

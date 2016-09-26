@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.pieces.boss.commons.LogConstant;
 import com.pieces.boss.shiro.BossToken;
 import com.pieces.dao.model.Member;
 import com.pieces.dao.model.User;
@@ -11,6 +12,7 @@ import com.pieces.service.MemberService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.utils.CommonUtils;
+import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.WebUtil;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
@@ -63,6 +65,7 @@ public class HomeController extends BaseController{
      * @param password
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @BizLog(type = LogConstant.user, desc = "用户登入")
     public void loginSubmit(HttpServletRequest request,
                             HttpServletResponse response,
                             @RequestParam(required = true) String username,

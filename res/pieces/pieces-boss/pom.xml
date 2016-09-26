@@ -233,9 +233,9 @@
 		<profile>
 			<id>prod</id>
 			<properties>
-				<biz.base.url>http://www.sankobuy.com</biz.base.url>
-				<biz.upload.url>http://static.sankobuy.com/files/upload/</biz.upload.url>
-				<biz.upload.path>/opt/resources/files/upload/</biz.upload.path>
+				<boss.base.url>http://boss.sankobuy.com</boss.base.url>
+				<boss.upload.url>http://static.sankobuy.com/files/upload/</boss.upload.url>
+				<boss.upload.path>/opt/resources/files/upload/</boss.upload.path>
 			</properties>
 		</profile>
 	</profiles>

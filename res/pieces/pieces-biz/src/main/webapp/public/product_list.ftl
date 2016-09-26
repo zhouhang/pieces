@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>商品列表-上工好药</title>
+    <title>  <#if (category??&&category.name??)>${category.name!}-<#else><#if (parent??&&parent.name??)>${parent.name!}-</#if></#if>商品列表-上工好药</title>
 </head>
 
 <body>
@@ -17,7 +17,7 @@
                 </#if>
                 <#if (category??&&category.name??)>
                 <em>&gt;</em>
-                <span>${category.name }</span>
+                <span>${category.name!}</span>
                 </#if>
             </div>
 			

@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.pieces.biz.controller.commons.LogConstant;
+import com.pieces.tools.log.annotation.BizLog;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +64,7 @@ public class OrderController extends BaseController {
 
 
 	@RequestMapping(value = "/order/create")
+	@BizLog(type = LogConstant.order, desc = "创建订单页面")
 	public String orderCreate(HttpServletRequest request,
             HttpServletResponse response,
             ModelMap modelMap,
@@ -98,6 +101,7 @@ public class OrderController extends BaseController {
 	
 	@RequestMapping(value = "/address/add")
 	@ResponseBody
+	@BizLog(type = LogConstant.order, desc = "添加订单地址")
 	public Result addressAdd(HttpServletRequest request,
             HttpServletResponse response,
             ModelMap modelMap,
@@ -129,6 +133,7 @@ public class OrderController extends BaseController {
 	
 	
 	@RequestMapping(value = "/order/save")
+	@BizLog(type = LogConstant.order, desc = "保存订单")
 	public String orderSave(HttpServletRequest request,
             HttpServletResponse response,
             ModelMap modelMap,
@@ -222,6 +227,7 @@ public class OrderController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/order/detail/{id}", method = RequestMethod.GET)
+	@BizLog(type = LogConstant.order, desc = "订单详情")
     public String detail(@PathVariable("id")Integer id, ModelMap modelMap) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		OrderFormVo vo =  orderFormService.findVoById(id);
@@ -251,6 +257,7 @@ public class OrderController extends BaseController {
      */
 	@RequestMapping(value = "/order/status", method = RequestMethod.POST)
 	@ResponseBody
+	@BizLog(type = LogConstant.order, desc = "修改订单状态")
 	public Result changeStatus(Integer orderId, Integer status) {
 		return orderFormService.changeOrderStatus(orderId, status);
 	}
@@ -264,6 +271,7 @@ public class OrderController extends BaseController {
 	 */
 	@RequestMapping(value = "/order/invoice", method = RequestMethod.POST)
 	@ResponseBody
+	@BizLog(type = LogConstant.order, desc = "补开订单发票")
 	public Result invoice(Integer orderId, OrderInvoice invoice) {
 		orderFormService.saveInvoice(orderId, invoice);
 		return new Result(true).info("发票信息保存成功");

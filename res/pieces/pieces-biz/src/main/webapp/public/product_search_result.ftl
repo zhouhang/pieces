@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>搜索结果-上工好药</title>
+    <title>${keyword!}-搜索结果-上工好药</title>
 </head>
 
 <body>

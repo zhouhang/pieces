@@ -1,13 +1,14 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.model.Member;
 import com.pieces.dao.vo.AccountBillVo;
 import com.pieces.service.AccountBillService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
-import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +36,7 @@ public class AccountBillController extends BaseController{
 
     @RequiresPermissions(value = "bill:index")
     @RequestMapping(value = "index", method = RequestMethod.GET)
+    @BizLog(type = LogConstant.accountBill, desc = "账单列表页面")
     public String index(AccountBillVo vo, Integer pageNum, Integer pageSize, ModelMap modelMap) {
         PageInfo<AccountBillVo> pageInfo = accountBillService.findByParams(vo, pageNum, pageSize);
         modelMap.put("pageInfo", pageInfo);
@@ -50,6 +52,7 @@ public class AccountBillController extends BaseController{
      */
     @RequiresPermissions(value = "bill:info")
     @RequestMapping(value = "detail", method = RequestMethod.GET)
+    @BizLog(type = LogConstant.accountBill, desc = "账单详情")
     public String detail(Integer id, ModelMap modelMap) {
         AccountBillVo vo = accountBillService.findVoById(id);
         modelMap.put("vo",vo);
@@ -64,6 +67,7 @@ public class AccountBillController extends BaseController{
     @RequiresPermissions(value = "bill:edit")
     @RequestMapping(value = "success", method = RequestMethod.POST)
     @ResponseBody
+    @BizLog(type = LogConstant.accountBill, desc = "账单审核成功")
     public Result success(Integer id) {
         Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         accountBillService.auditSuccess(id, mem.getId());
@@ -78,6 +82,7 @@ public class AccountBillController extends BaseController{
     @RequiresPermissions(value = "bill:edit")
     @RequestMapping(value = "fail", method = RequestMethod.POST)
     @ResponseBody
+    @BizLog(type = LogConstant.accountBill, desc = "账单审核失败")
     public Result fail(Integer id, String msg) {
         Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         accountBillService.auditFail(id, msg, mem.getId());

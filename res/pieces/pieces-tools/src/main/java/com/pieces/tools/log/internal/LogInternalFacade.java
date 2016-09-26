@@ -80,7 +80,7 @@ public class LogInternalFacade implements ILogInternalFacade{
     }
 
 
-    private LogInfo getLogInfoForMethodCall(ProceedingJoinPoint joinPoint, Object returnValueOfMethodCall, Throwable throwable, long costTme){
+    private LogInfo getLogInfoForMethodCall(ProceedingJoinPoint joinPoint, Object returnValueOfMethodCall, Throwable throwable, long costTme) {
         LogInfo logInfo = new LogInfo();
 
 
@@ -90,7 +90,7 @@ public class LogInternalFacade implements ILogInternalFacade{
         logInfo.setAppHost(localhostIp);
 
         String globalId;
-        if(throwable != null) {
+        if (throwable != null) {
             globalId = CommonsUtils.getRawClassName(throwable);
             logInfo.setExceptionClassname(globalId);
             String exceptionDesc = CommonsUtils.getStackTrace(throwable);
@@ -107,10 +107,16 @@ public class LogInternalFacade implements ILogInternalFacade{
         String methodSignature = this.getSignatureSimpleDesc(logInfo, className, joinPoint);
         logInfo.setActionMethod(methodSignature);
         Object[] args = joinPoint.getArgs();
-        String argsAsString = this.getInParamAsString(args);
-        logInfo.setInParam(argsAsString);
-        String returnValueOfMethodCallString = this.getOutParamAsString(returnValueOfMethodCall);
+
+        if (args != null && args.length > 0) {
+            String argsAsString = this.getInParamAsString(args);
+            logInfo.setInParam(argsAsString);
+        }
+
+        if (returnValueOfMethodCall != null) {
+            String returnValueOfMethodCallString = this.getOutParamAsString(returnValueOfMethodCall);
         logInfo.setOutParam(returnValueOfMethodCallString);
+        }
 
 
         return logInfo;
@@ -151,7 +157,11 @@ public class LogInternalFacade implements ILogInternalFacade{
 
             for(int argsAsString = 0; argsAsString < argsLength; ++argsAsString) {
                 if(inParam[argsAsString] != null) {
-                    paramMap.put("param[" + argsAsString + "]", JSONUtils.toJson(inParam[argsAsString]));
+                    String name = inParam[argsAsString].getClass().toString();
+                    if (!(name.contains("Servlet") || name.contains("ModelMap"))) {
+                        paramMap.put("param[" + argsAsString + "]", JSONUtils.toJson(inParam[argsAsString]));
+                    }
+
                 } else {
                     paramMap.put("param[" + argsAsString + "]", "null");
                 }

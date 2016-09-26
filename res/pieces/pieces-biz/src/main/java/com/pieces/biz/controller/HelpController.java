@@ -1,9 +1,11 @@
 package com.pieces.biz.controller;
 
+import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.model.Article;
 import com.pieces.dao.vo.ArticleCategoryVo;
 import com.pieces.service.ArticleService;
 import com.pieces.service.enums.ModelEnum;
+import com.pieces.tools.log.annotation.BizLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,6 +25,7 @@ public class HelpController extends BaseController{
     ArticleService articleService;
 
     @RequestMapping("/{id}")
+    @BizLog(type = LogConstant.help, desc = "帮助中心页面")
     public String detail(@PathVariable("id") Integer id, ModelMap model) {
         List<ArticleCategoryVo> articleCategorylist = articleService.getCategoryListByModelId(ModelEnum.help.getValue());
         id = id == 0 ? articleCategorylist.get(0).getArticles().get(0).getId() : id;

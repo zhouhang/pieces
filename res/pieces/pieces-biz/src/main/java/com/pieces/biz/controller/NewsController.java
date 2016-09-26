@@ -2,10 +2,12 @@ package com.pieces.biz.controller;
 
 import com.github.inspektr.audit.annotation.Audit;
 import com.github.pagehelper.PageInfo;
+import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.model.Article;
 import com.pieces.dao.vo.ArticleVo;
 import com.pieces.service.ArticleService;
 import com.pieces.service.enums.ModelEnum;
+import com.pieces.tools.log.annotation.BizLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,6 +28,7 @@ public class NewsController extends BaseController {
     ArticleService articleService;
 
     @RequestMapping("/{id}")
+    @BizLog(type = LogConstant.logistics, desc = "新闻中心")
     public String detail(@PathVariable("id") Integer id, ModelMap model) {
         ArticleVo vo = new ArticleVo();
         vo.setModel(ModelEnum.news.getValue());
