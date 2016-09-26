@@ -47,7 +47,7 @@
         u.contact_name as orderUser, u.company_full_name as orderCompany,
         oform.code as order_code
         from account_bill ab
-        LEFT JOIN USER u on ab.user_id = u.id
+        LEFT JOIN user u on ab.user_id = u.id
         LEFT JOIN order_form oform on ab.order_id = oform.id
         <where>
             <if test="id != null">
@@ -157,7 +157,7 @@
          m.name as memberName
         FROM  account_bill ab
         LEFT JOIN order_form o on ab.order_id = o.id
-        LEFT JOIN USER u on ab.user_id = u.id
+        LEFT JOIN user u on ab.user_id = u.id
         LEFT JOIN member m on ab.member_id = m.id
         WHERE ab.id = #{billId}
     </select>

@@ -108,8 +108,25 @@ function throttle(func, wait, mustRun) {
 };
 
 function bindSearch() {
-	var $searchForm = $('#_search_form');
+	var $searchForm = $('#_search_form'),
+		timer, call;
 
+	if ($searchForm.length === 0) {
+		return false;
+	}
+
+	// 可以页面其他地方引入了autocomplete.js
+	if($.isFunction($.fn.autocomplete)){ 
+		call();
+	} else {
+		loadScript('js/jquery.autocomplete.min.js');
+		timer = setInterval(function() {
+			call();
+		}, 300);
+	}
+
+	call = function() {
+		timer && clearTimeout(timer);
 		$('#_search_ipt').autocomplete({
 	        serviceUrl: '/commodity/search/auto',
 	        paramName: 'keyword',
@@ -127,6 +144,7 @@ function bindSearch() {
 	            $searchForm.submit();
 	        }
 	    });
+	}
 }
 
 // 用户中心导航高亮
