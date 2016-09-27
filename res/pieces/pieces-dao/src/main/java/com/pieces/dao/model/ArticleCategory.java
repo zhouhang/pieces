@@ -1,5 +1,8 @@
 package com.pieces.dao.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,6 +14,7 @@ public class ArticleCategory  implements Serializable {
 	private Integer id;
 	
 	//类别名
+	@NotEmpty
 	private String name;
 	
 	//状态：1激活 0 禁用
@@ -20,6 +24,7 @@ public class ArticleCategory  implements Serializable {
 	private Integer sort;
 	
 	//所属模块:1 帮助中心 2 新闻模块
+	@NotNull
 	private Integer model;
 	
 	private Integer createUser;

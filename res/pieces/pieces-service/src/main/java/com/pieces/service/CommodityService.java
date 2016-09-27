@@ -55,8 +55,6 @@ public interface CommodityService extends ICommonService<Commodity>{
      */
     public CropResult cropImg(CropInfo crop);
 
-	List<Commodity> queryNoPage(CommodityVo commodity);
-
     /**
      * 商品推荐
      * 推荐规则:

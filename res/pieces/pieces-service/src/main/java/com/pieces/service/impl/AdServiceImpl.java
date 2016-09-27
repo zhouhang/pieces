@@ -1,5 +1,6 @@
 package com.pieces.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.AdDao;
 import com.pieces.dao.ICommonDao;
@@ -22,6 +23,8 @@ import java.util.List;
  */
 @Service
 public class AdServiceImpl extends AbsCommonService<Ad> implements AdService{
+
+    private String param = "pictureUrl";
 
     @Autowired
     private AdDao adDao;
@@ -57,14 +60,28 @@ public class AdServiceImpl extends AbsCommonService<Ad> implements AdService{
 
     @Override
     public PageInfo<AdVo> findByParam(AdVo adVo, int pageNum, int pageSize) {
-        PageInfo<AdVo> adVoPageInfo = adDao.findByParam(adVo,pageNum,pageSize);
-        return adVoPageInfo;
+        PageHelper.startPage(pageNum, pageSize);
+        List<AdVo> list = adDao.findByParam(adVo);
+        list = FileUtil.convertAbsolutePathToUrl(list,param);
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
     @Override
     public List<AdVo> findByType(Integer typeId) {
-        return adDao.findByType(typeId);
+        return FileUtil.convertAbsolutePathToUrl(adDao.findByType(typeId),param);
     }
 
+    @Override
+    public Ad findById(int id) {
+        return (Ad) FileUtil.convertAbsolutePathToUrl(super.findById(id), param);
+    }
 
+    @Override
+    public PageInfo<Ad> find(int pageNum, int pageSize) {
+        PageInfo<Ad> pageInfo = super.find(pageNum, pageSize);
+        List<Ad> list = pageInfo.getList();
+        pageInfo.setList(FileUtil.convertAbsolutePathToUrl(list,param));
+        return pageInfo;
+    }
 }
