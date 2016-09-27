@@ -16,4 +16,6 @@ public interface MemberDao extends ICommonDao<Member>{
 	List<Member> findByCondition(MemberVo memberVo);
 
 	List<Resources> findResourcesByUserName(String username);
+
+
 }
