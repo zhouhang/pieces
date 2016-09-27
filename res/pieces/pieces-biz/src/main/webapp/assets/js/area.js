@@ -2,7 +2,9 @@ $(function() {
 	var $province = $('#province'),
 		$city = $('#city'),
 		$area = $('#area'),
-		def1 = $province.data('value');
+		province = $province.data('value') || 0, //省份地区编码
+		city = $city.data('value') || 0, //城市地区编码
+		area = $area.data('value') || 0; //地区地区编码
 
 	var citys = {};
 
@@ -35,15 +37,19 @@ $(function() {
 
 	$province.on('change', function() {
 		var val = $(this).val();
-		getArea(val, $city);
-		getArea('9999', $area);
+		$city.find('option:gt(0)').remove();
+		$area.find('option:gt(0)').remove();
+		val &&　getArea(val, $city);
 	});
 
 	$city.on('change', function() {
 		var val = $(this).val();
-		getArea(val, $area);
+		$area.find('option:gt(0)').remove();
+		val && getArea(val, $area);
 	});
 
 	getArea('', $province);
+	city && getArea(province, $city);
+	area && getArea(city, $area);
 
 })

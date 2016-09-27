@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.vo.UserVo;
@@ -118,7 +119,7 @@ public class UserController extends  BaseController{
 	public void userSubmit(HttpServletRequest request,
 						   HttpServletResponse response,
 						   Boolean random,
-						   User user)throws Exception{
+						   @Valid User user)throws Exception{
 		String advices = "新增用户信息成功!";
 		String passWord =null;
 		//是否发送随机密码
