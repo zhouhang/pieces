@@ -91,6 +91,9 @@ public class GeneralController extends BaseController {
         defaultUploadFile.uploadFile(file.getOriginalFilename(), file.getInputStream());
     }
 
+
+
+
     /**
      * 上传图片
      * @param request
@@ -129,6 +132,15 @@ public class GeneralController extends BaseController {
         String result = GsonUtil.toJsonInclude(areaList, "id", "areaname");
         WebUtil.printJson(response, result);
     }
+
+    @RequestMapping(value = "/area/all")
+    @ResponseBody
+    public List<Area> areaAll(){
+       List<Area>  list =   areaService.findAll();
+       return list;
+    }
+
+
 
 
     /**
