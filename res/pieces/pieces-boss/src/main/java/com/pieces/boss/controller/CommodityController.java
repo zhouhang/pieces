@@ -77,8 +77,8 @@ public class CommodityController extends BaseController{
     @ResponseBody
     @BizLog(type = "商品信息", desc = "保存商品信息")
     public Result save(@Valid Commodity commodity) throws IOException {
-        commodityService.saveOrUpdate(commodity);
-        return new Result(true).data(null).info("商品信息保存成功!");
+        Integer id = commodityService.saveOrUpdate(commodity);
+        return new Result(true).data(id).info("商品信息保存成功!");
     }
 
     @RequiresPermissions(value = "commodity:delete")

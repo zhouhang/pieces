@@ -75,7 +75,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 
     @Override
     @Transactional
-    public void saveOrUpdate(Commodity commodity) throws IOException {
+    public Integer saveOrUpdate(Commodity commodity) throws IOException {
 //        commodity.setPictureUrl(commodity.getPictureUrl().replace(defaultUploadFile.getUrl(), ""));
         // 把文件从临时目录保存
         commodity.setPictureUrl(FileUtil.saveFileFromTemp(commodity.getPictureUrl(), PathEnum.COMMODITY.getValue()));
@@ -87,6 +87,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
             commodityDao.create(commodity);
         }
         commoditySearchService.save(commodity);
+        return commodity.getId();
     }
 
 

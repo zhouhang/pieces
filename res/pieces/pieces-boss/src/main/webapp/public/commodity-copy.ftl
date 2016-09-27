@@ -29,7 +29,6 @@
                     <div class="extra">
                         <a class="btn btn-gray" href="/commodity/index">返回</a>
                         <button type="button" class="btn btn-gray" onclick="window.location.reload();">重置</button>
-                        <button type="button" id="delete" class="btn btn-gray">删除</button>
                         <button type="button" id="copy" class="btn btn-gray">复制</button>
                         <button type="button" id="submit" class="btn btn-red">保存</button>
                     </div>

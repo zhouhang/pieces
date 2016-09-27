@@ -265,7 +265,13 @@ ${commodity.details}
 
 
                 $("#delete").click(function(){
-                    commodityAddPage.fn.deleteCommodity();
+                    layer.confirm('确认要删除该商品？', {
+                        title: '删除商品',
+                        btn: ['确认','取消'] //按钮
+                    }, function(index){
+                        commodityAddPage.fn.deleteCommodity();
+                        layer.close(index);
+                    });
                 })
 
                 $("#copy").click(function(){
