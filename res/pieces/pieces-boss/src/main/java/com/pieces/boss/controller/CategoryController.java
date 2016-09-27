@@ -30,6 +30,7 @@ import com.pieces.service.enums.CodeEnum;
 import com.pieces.service.utils.ValidUtils;
 import com.pieces.tools.utils.GsonUtil;
 import com.pieces.tools.utils.WebUtil;
+import javax.validation.Valid;
 
 @Controller
 public class CategoryController {
@@ -258,7 +259,7 @@ public class CategoryController {
 	@BizLog(type = LogConstant.category, desc = "保存品种")
 	public void saveBreed(HttpServletRequest request,
 							  HttpServletResponse response,
-							  BreedVo bvo,
+						      @Valid BreedVo bvo,
 							  ModelMap model){
 		Result result = new Result(true);
 		bvo.setAliases(bvo.getAliases().replace("，", ","));

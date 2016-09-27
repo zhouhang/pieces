@@ -1,14 +1,22 @@
 package com.pieces.dao.vo;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Pattern;
+
 public class BreedVo {
 	private Integer id;
 	//类别id
+	@NotEmpty
 	private Integer classifyId;
 	//类别中文
 	private String classifyName;
 	//名称
+	@NotEmpty
 	private String name;
 	//别名
+	@NotEmpty
+	@Pattern(regexp = "^[,，\\u4E00-\\u9FA5]+$")
 	private String aliases;
 
 	public Integer getId() {

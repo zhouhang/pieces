@@ -1,5 +1,8 @@
 package com.pieces.dao.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,24 +18,34 @@ public class User  implements Serializable {
 	private Integer id;
 	
 	//用户名
+	@NotEmpty
+	@Pattern(regexp = "^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$")
 	private String userName;
 	
 	//密码
+	@NotEmpty
+	@Pattern(regexp = "^[a-zA-Z0-9_]{6,20}$")
 	private String password;
 	
 	//密码盐
 	private String salt;
 	
 	//企业全称
+	@NotEmpty
+	@Pattern(regexp = "^([a-zA-Z0-9_\\(\\)-]|[\\u4e00-\\u9fa5]|[（）]){4,50}$")
 	private String companyFullName;
 	
 	//企业注册地省份
 	private Integer areaId;
 	
 	//联系人姓名
+	@NotEmpty
+	@Pattern(regexp = "^([a-zA-Z]|[\\u4e00-\\u9fa5]){2,50}$")
 	private String contactName;
 	
 	//联系人手机
+	@NotEmpty
+	@Pattern(regexp = "^1[3-9]\\d{9}$")
 	private String contactMobile;
 
 	
