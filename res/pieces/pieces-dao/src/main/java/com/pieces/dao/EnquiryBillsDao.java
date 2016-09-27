@@ -14,11 +14,9 @@ public interface EnquiryBillsDao extends ICommonDao<EnquiryBills>{
     /**
      * 根据参数查询询价列表
      * @param enquiryBillsVO
-     * @param pageNum
-     * @param pageSize
      * @return
      */
-    public PageInfo<EnquiryBillsVo> findByParam (EnquiryBillsVo enquiryBillsVO, int pageNum, int pageSize);
+    public List<EnquiryBillsVo> findByParam (EnquiryBillsVo enquiryBillsVO);
 
 
     /**
