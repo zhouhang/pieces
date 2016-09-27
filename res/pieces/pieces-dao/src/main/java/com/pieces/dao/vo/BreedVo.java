@@ -1,13 +1,13 @@
 package com.pieces.dao.vo;
 
 import org.hibernate.validator.constraints.NotEmpty;
-
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 public class BreedVo {
 	private Integer id;
 	//类别id
-	@NotEmpty
+	@NotNull
 	private Integer classifyId;
 	//类别中文
 	private String classifyName;

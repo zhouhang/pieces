@@ -2,7 +2,9 @@ package com.pieces.service.impl;
 
 import java.util.*;
 
+import com.github.pagehelper.PageHelper;
 import com.pieces.dao.ICommonDao;
+import com.pieces.dao.model.RoleMember;
 import com.pieces.dao.vo.HomeCategoryVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.enums.CategoryEnum;
@@ -32,43 +34,12 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 	@Autowired
 	private CodeDao codeDao;
 
-
-	@Override
-	public List<Category> findAll() {
-		return categoryDao.findAll();
-	}
-
-	@Override
-	public PageInfo<Category> find(int pageNum, int pageSize) {
-		return categoryDao.find(pageNum, pageSize);
-	}
-
-	@Override
-	public Category findById(int id) {
-		return categoryDao.findById(id);
-	}
-
-	@Override
-	@Transactional
-	public int deleteById(int id) {
-		return categoryDao.deleteById(id);
-	}
-
-	@Override
-	@Transactional
-	public int create(Category t) {
-		return categoryDao.create(t);
-	}
-
-	@Override
-	@Transactional
-	public int update(Category t) {
-		return categoryDao.update(t);
-	}
-
 	@Override
 	public PageInfo<Category> findClassify(CategoryVo t, int pageNum, int pageSize) {
-		return categoryDao.findClassify(t, pageNum, pageSize);
+		PageHelper.startPage(pageNum, pageSize);
+		List<Category>  list=   categoryDao.findClassify(t);
+		PageInfo page = new PageInfo(list);
+		return page;
 	}
 	
 	@Override
@@ -148,7 +119,10 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 	 */
 	@Override
 	public PageInfo<CategoryVo> findBreed(CategoryVo vo, int pageNum, int pageSize) {
-		return categoryDao.findBreed(vo, pageNum, pageSize);
+		PageHelper.startPage(pageNum, pageSize);
+		List<CategoryVo>  list=   categoryDao.findBreed(vo);
+		PageInfo page = new PageInfo(list);
+		return page;
 	}
 	
 	/**
@@ -206,7 +180,13 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 		if(StringUtils.isNotBlank(pinyin)){
 			categoryVo.setPinyins(pinyin.split(","));
 		}
-		return pageSize==null?categoryDao.findByLevelAndPinyin(categoryVo):categoryDao.findByLevelAndPinyin(categoryVo,pageSize);
+		if(pageSize==null){
+			return categoryDao.findByLevelAndPinyin(categoryVo);
+		}else{
+			PageHelper.startPage(1, pageSize);
+			List<CategoryVo>  list=   categoryDao.findByLevelAndPinyin(categoryVo);
+			return list;
+		}
 	}
 
 	@Override

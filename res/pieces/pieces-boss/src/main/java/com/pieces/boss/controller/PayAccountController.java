@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -90,7 +91,7 @@ public class PayAccountController extends BaseController{
     @BizLog(type = LogConstant.pay, desc = "保存银行账号")
     public void save(HttpServletRequest request,
                              HttpServletResponse response,
-                             PayAccount payAccount,
+                             @Valid PayAccount payAccount,
                              ModelMap model){
         Result result = new Result(true);
         if (payAccount.getId() == null) {
