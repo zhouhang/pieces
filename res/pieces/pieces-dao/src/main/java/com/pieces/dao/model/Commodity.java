@@ -21,7 +21,7 @@ public class Commodity  implements Serializable {
 	@NotEmpty
 	@Length(min = 1, max = 20)
 	private String name;
-	
+
 	//商品标题
 	@NotEmpty
 	@Length(min = 1, max = 50)

@@ -290,13 +290,13 @@
                 $("#form").validator({
                     fields: {
                         categoryId: "required",
-                        name: "required;length[2~20]",
-                        title:"required;length[2~50]",
+                        name: "required;length[1~20]",
+                        title:"required;length[1~50]",
                         spec: "required;length[1~20]",
-                        level: "required;length[2~50]",
-                        originOf: "required;length[2~20]",
+                        level: "required;length[1~50]",
+                        originOf: "required;length[1~20]",
                         executiveStandard: "required;length[1~20]",
-                        exterior: "required;length[2~100]",
+                        exterior: "required;length[1~200]",
                         pictureUrl: "required",
                         details: {
                             rule: "required",
