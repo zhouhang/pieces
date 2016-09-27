@@ -73,8 +73,10 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 
 
 	@Override
-	public List<Category> findBreedByName(String breedName) {
-		return categoryDao.findBreedByName(breedName);
+	public List<CategoryVo> findBreedByName(String breedName) {
+		CategoryVo vo = new CategoryVo();
+		vo.setName(breedName);
+		return categoryDao.findBreed(vo);
 	}
 	
 	@Override

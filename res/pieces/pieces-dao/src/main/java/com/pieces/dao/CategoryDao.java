@@ -14,9 +14,6 @@ public interface CategoryDao extends ICommonDao<Category>{
 	
 	//根据条件查询品种表
 	public List<CategoryVo> findBreed(CategoryVo vo);
-	
-	//根据条件查询分类表,分页
-	public List<Category> findBreedByName(String breedName);
 
 	public List<CategoryVo> findBreedByParentId(Integer parentId);
 
