@@ -114,7 +114,7 @@
                                 排序：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" name="sort" value="<#if ad??>${ad.sort!}</#if>" autocomplete="off" placeholder="">
+                                <input type="text" class="ipt" name="sort" value="<#if ad??>${ad.sort!}</#if>" autocomplete="off" placeholder="请输入数字，数字越大显示越靠前">
                             </div>
                         </div>
                         <div class="group">

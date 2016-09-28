@@ -61,7 +61,7 @@
                                 <i>*</i>排序：
                             </div>
                             <div class="cnt">
-                                <input type="text" id="sort" class="ipt ipt-price" name="sort" value="" autocomplete="off" placeholder="输入数字越大排在越前面">
+                                <input type="text" id="sort" class="ipt ipt-price" name="sort" value="" autocomplete="off" placeholder="请输入数字，数字越大显示越靠前">
                             </div>
                         </div>
 
