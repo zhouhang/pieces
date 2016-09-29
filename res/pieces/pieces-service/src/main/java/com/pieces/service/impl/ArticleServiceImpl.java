@@ -11,6 +11,7 @@ import com.pieces.dao.vo.ArticleCategoryVo;
 import com.pieces.dao.vo.ArticleVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.ArticleService;
+import com.pieces.service.enums.StatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -87,6 +88,9 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
     public void saveOrUpdateCategory(ArticleCategory category, Integer memberId) {
         category.setCreateTime(new Date());
         category.setCreateUser(memberId);
+        if (category.getStatus()== null) {
+            category.setStatus(StatusEnum.enable.getValue());
+        }
         if (category.getId() == null) {
             articleCategoryDao.create(category);
         } else {
@@ -122,5 +126,13 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
     @Override
     public ArticleCategory getCategoryById(Integer id) {
         return articleCategoryDao.findById(id);
+    }
+
+    @Override
+    public List<ArticleVo> getArticleByCategoryId(Integer categoryId) {
+        ArticleVo vo = new ArticleVo();
+        vo.setCategoryId(categoryId);
+
+        return articleDao.findByParam(vo);
     }
 }

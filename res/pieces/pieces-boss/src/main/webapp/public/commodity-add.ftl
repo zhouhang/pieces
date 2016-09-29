@@ -146,6 +146,16 @@
                                 <td><div class="inner"><input name="attrV_5" type="text" class="ipt" value="" data-rule="required;length[1~100]"></div></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
+                            <tr>
+                                <td><div class="inner"><input name="attrN_6" type="text" class="ipt" value="生产厂家" data-rule="required;length[1~20]"></div></td>
+                                <td><div class="inner"><input name="attrV_6" type="text" class="ipt" value="亳州市沪谯药业有限公司" data-rule="required;length[1~100]"></div></td>
+                                <td><span class="c-red">删除</span></td>
+                            </tr>
+                            <tr>
+                                <td><div class="inner"><input name="attrN_7" type="text" class="ipt" value="袋装规格" data-rule="required;length[1~20]"></div></td>
+                                <td><div class="inner"><input name="attrV_7" type="text" class="ipt" value="1公斤/袋" data-rule="required;length[1~100]"></div></td>
+                                <td><span class="c-red">删除</span></td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -227,7 +237,7 @@
     var commodityAddPage = {
         v: {
             form: null,
-            attr_index:8
+            attr_index:9
         },
         fn: {
             init: function () {

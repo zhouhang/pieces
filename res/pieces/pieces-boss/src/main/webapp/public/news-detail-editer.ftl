@@ -24,12 +24,13 @@
                     <h3><i class="fa fa-chevron-right"></i>修改文章</h3>
                     <div class="extra">
                         <a class="btn btn-gray" href="cms/article/index?model=${article.model}">返回</a>
+                        <button type="button" id="delete" class="btn btn-gray">删除</button>
                         <button type="submit" id="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
 
                 <div class="user-info">
-                    <h3>修改文章</h3>
+                    <h3>文章信息</h3>
                     <div class="fa-form">
                         <div class="group">
                             <div class="txt">
@@ -110,6 +111,8 @@ ${article.content}
 <script type="text/javascript" charset="utf-8" src="/js/umeditor1_2_2-utf8/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="/js/umeditor1_2_2-utf8/umeditor.min.js"></script>
 <script type="text/javascript" src="/js/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js"></script>
+<script src="/js/layer/layer.js"></script>
+<link type="text/css" rel="stylesheet" href="/js/layer/skin/layer.css" />
 
 <!-- footer end -->
 <script>
@@ -120,21 +123,27 @@ ${article.content}
                 this.formValidate();
                 this.dateInit();
                 $("#delete").click(function() {
-                    $.post("cms/article/delete/${article.id}", function (data) {
-                        if (data.status == "y") {
-                            $.notify({
-                                type: 'success',
-                                title: '删除成功',
-                                text: '3秒后自动跳转到文章列表',
-                                delay: 3e3,
-                                call: function () {
-                                    setTimeout(function () {
-                                        location.href = 'cms/article/index?model=${article.model}';
-                                    }, 3e3);
-                                }
-                            });
-                        }
-                    }, "json")
+                    layer.confirm('确认要删除该文章？', {
+                        title: '删除文章',
+                        btn: ['确认','取消'] //按钮
+                    }, function(index){
+                        $.post("cms/article/delete/${article.id}", function (data) {
+                            if (data.status == "y") {
+                                $.notify({
+                                    type: 'success',
+                                    title: '删除成功',
+                                    text: '3秒后自动跳转到文章列表',
+                                    delay: 3e3,
+                                    call: function () {
+                                        setTimeout(function () {
+                                            location.href = 'cms/article/index?model=${article.model}';
+                                        }, 3e3);
+                                    }
+                                });
+                            }
+                        }, "json")
+                        layer.close(index);
+                    });
                 });
             },
             dateInit: function () {

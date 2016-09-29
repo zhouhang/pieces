@@ -216,8 +216,14 @@ public class CMSController extends BaseController{
     @ResponseBody
     @BizLog(type = LogConstant.cms, desc = "删除文章类别")
     public Result deleteCategory (@PathVariable("id") Integer id){
-        articleService.deleteCategory(id);
-        return new Result(true).info("删除成功!");
+        Result result = null;
+        if (articleService.getArticleByCategoryId(id).size() > 0) {
+            result = new Result(false).info("请先删除该分类下的所有文章");
+        } else {
+            articleService.deleteCategory(id);
+            result = new Result(true).info("删除成功!");
+        }
+        return result;
     }
 
 }

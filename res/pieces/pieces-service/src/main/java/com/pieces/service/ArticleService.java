@@ -17,7 +17,7 @@ public interface ArticleService extends ICommonService<Article> {
 
 
     /**
-     * 保存文章分类信息
+     * 保存文章信息
      * @param article
      */
     public void saveOrUpdateArticle(Article article, Integer memberId);
@@ -86,5 +86,10 @@ public interface ArticleService extends ICommonService<Article> {
      * @return
      */
     public ArticleCategory getCategoryById(Integer id);
+
+    /**
+     * 根据分类id 获取文章信息
+     */
+    public List<ArticleVo> getArticleByCategoryId(Integer categoryId);
 
 }
