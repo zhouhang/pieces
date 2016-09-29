@@ -23,7 +23,7 @@ import java.util.Map;
 @Component
 public class SmsService {
 
-    private static final int SMS_EXPIRE_TIME = 30*60*1000;
+    private static final int SMS_EXPIRE_TIME = 30*60;
 
     private static final Logger logger = Logger.getLogger(SmsService.class);
 

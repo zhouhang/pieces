@@ -256,10 +256,16 @@
 							success : function(data) {
 								if (typeof data.ok === 'string') {
 								} else if (typeof data.error === 'string') {
-									$('#myform').validator('showMsg', '#mobileCode', {
-									    type: "error",
-									    msg: data.error
-									});
+                                    clearInterval(timer);
+                                    $getMobileCode.text('获取验证码').prop('disabled', false);
+
+
+                                    $('#myform').validator('showMsg', '#mobileCode', {
+                                        type: "error",
+                                        msg: data.error
+                                    });
+
+                                    timeout = 0;
 								}
 							}
 						});

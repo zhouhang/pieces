@@ -49,7 +49,7 @@
                             </div>
                             <div class="cnt">
                                 <input type="text" class="ipt" value="${category.sort}" autocomplete="off" name="sort" id="sort"
-                                       placeholder="">
+                                       placeholder="请输入数字，数字越大显示越靠前">
                             </div>
                         </div>
                     </div>

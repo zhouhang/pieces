@@ -158,7 +158,7 @@
 			            type: "POST",
 			            success: function(data){
 			            	if(data.status=="y"){
-			                    location.href="user/index?advices="+data.info
+			                    location.href="/user/index?advices="+data.info
 			                }else{
 			                    $("#error_advices").show();
 			                }

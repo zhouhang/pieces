@@ -78,7 +78,10 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     public PageInfo<EnquiryBillsVo> findByParam(EnquiryBillsVo enquiryBillsVO, Integer pageNum, Integer pageSize) {
         pageNum=pageNum==null?1:pageNum;
         pageSize=pageSize==null?10:pageSize;
-        return enquiryBillsDao.findByParam(enquiryBillsVO, pageNum, pageSize);
+        PageHelper.startPage(pageNum, pageSize);
+        List<EnquiryBillsVo> list = enquiryBillsDao.findByParam(enquiryBillsVO);
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
     @Override
