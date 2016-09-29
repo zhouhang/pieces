@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="user-info">
-                    <h3>修改文章</h3>
+                    <h3>文章信息</h3>
                     <div class="fa-form">
                         <div class="group">
                             <div class="txt">
