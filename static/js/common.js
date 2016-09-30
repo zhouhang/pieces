@@ -108,6 +108,7 @@ function throttle(func, wait, mustRun) {
 };
 
 function bindSearch() {
+	var $searchForm = $('#_search_form');
 	$('#_search_ipt').autocomplete({
         serviceUrl: '/commodity/search/auto',
         paramName: 'keyword',
@@ -122,28 +123,28 @@ function bindSearch() {
             })};
         },
         onSelect: function (suggestion) {
-            $('#_search_form').submit();
+            $searchForm.submit();
         }
     });
+	
 }
 
 // 用户中心导航高亮
 function currNav() {
 	var $side = $('.member-box').find('.side'),
-        URL = document.URL.split('#')[0].split('?')[0].toLowerCase();
+        URL = document.URL.split('#')[0].split('?')[0].toLowerCase(),
+        urlBefore = URL.split('/')[3] + URL.split('/')[4];
 
 	$side.find('a').each(function() {
-		var $href = this.href.toLowerCase();
-        if (URL === this.href.toLowerCase()) {
+		var url = this.href.toLowerCase(),
+			hrefBefore = url.split('/')[3] + url.split('/')[4];
+
+        if (URL === url) {
             $(this).addClass("curr").closest('dl').addClass('expand');
             return false; // break
-        }else{
-        	var urlBefore = URL.split('/')[3] + URL.split('/')[4];
-			var hrefBefore = $href.split('/')[3] + $href.split('/')[4];
-			if(urlBefore === hrefBefore){
-				$(this).closest('dl').addClass('expand');
-				return false; // break
-			}
+        }
+		if(urlBefore === hrefBefore){
+			$(this).closest('dl').addClass('expand');
 		}
     }) 
 

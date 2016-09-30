@@ -155,8 +155,8 @@
             <if test="publishedDate != null">
                 and DATE_FORMAT(published_date,  '%Y-%m-%d') =  DATE_FORMAT(#{publishedDate},  '%Y-%m-%d')
             </if>
-
         </where>
+        order by a.sort desc
     </select>
 
 
