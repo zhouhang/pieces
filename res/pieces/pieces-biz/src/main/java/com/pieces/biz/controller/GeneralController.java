@@ -195,12 +195,12 @@ public class GeneralController extends BaseController {
             smsService.sendSmsCaptcha(contactMobile);
         } catch (Exception e) {
             Map<String, String> result = new HashMap<String, String>();
-            result.put("error", "该手机号短信发送次数超标!");
+            result.put("error", e.getMessage());
             WebUtil.print(response,result);
             return;
         }
         Map<String, String> result = new HashMap<String, String>();
-		result.put("ok", "ok");
+		result.put("result", "ok");
         WebUtil.print(response,result);
 	}
 

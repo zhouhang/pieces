@@ -254,7 +254,11 @@
 							},
 							dataType : 'json',
 							success : function(data) {
-								if (typeof data.ok === 'string') {
+								var error = data.error;
+								if (typeof data.result === 'string') {
+                                    timeout = delay;
+                                    _clock();
+                                    $getMobileCode.text(timeout + txt).prop('disabled',true);
 								} else if (typeof data.error === 'string') {
                                     clearInterval(timer);
                                     $getMobileCode.text('获取验证码').prop('disabled', false);
@@ -262,16 +266,14 @@
 
                                     $('#myform').validator('showMsg', '#mobileCode', {
                                         type: "error",
-                                        msg: data.error
+                                        msg: error.split(",")[1]
                                     });
 
                                     timeout = 0;
 								}
 							}
 						});
-                        timeout = delay;
-                        _clock();
-                        $getMobileCode.text(timeout + txt).prop('disabled',true);
+
 					}
 
 					// 验证码
