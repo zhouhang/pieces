@@ -2,6 +2,8 @@ package com.pieces.dao.model;
 
 import com.pieces.dao.group.Biz;
 import com.pieces.dao.group.Boss;
+import com.pieces.tools.config.ValidPattern;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
@@ -29,8 +31,7 @@ public class ShippingAddress  implements Serializable {
 	
 	//手机号码
 	@NotEmpty
-	@Pattern(regexp = "^1[3-9]\\d{9}$")
-	@Pattern(regexp = ValidPattern.mobile, message = "手机格式错误")
+	@Pattern(regexp = "^1[3-9]\\d{9}$", message = "手机格式错误")
 	private String tel;
 	
 	//所在区域
