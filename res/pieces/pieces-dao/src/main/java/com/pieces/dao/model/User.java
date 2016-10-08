@@ -1,5 +1,7 @@
 package com.pieces.dao.model;
 
+import com.pieces.dao.group.Biz;
+import com.pieces.dao.group.Boss;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.Pattern;
@@ -19,7 +21,7 @@ public class User  implements Serializable {
 	
 	//用户名
 	@NotEmpty
-	@Pattern(regexp = "^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$")
+	@Pattern(regexp = "^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$", groups = {Biz.class, Boss.class})
 	private String userName;
 	
 	//密码

@@ -1,5 +1,8 @@
 package com.pieces.dao.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,11 +16,13 @@ public class ShippingAddressHistory  implements Serializable {
 	private Integer userId;
 	
 	//收货人
+	@NotEmpty
 	private String consignee;
 	
 	//手机号码
+	@NotEmpty
 	private String tel;
-
+	@NotNull
 	private Integer areaId;
 
 	private Area areaObj;
@@ -28,6 +33,7 @@ public class ShippingAddressHistory  implements Serializable {
 	private String postcode;
 
 	//详细地址
+	@NotEmpty
 	private String detail;
 	
 	private Date createTime;

@@ -1,5 +1,8 @@
 package com.pieces.dao.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 
@@ -11,6 +14,7 @@ public class OrderInvoice  implements Serializable {
 	private Integer id;
 	
 	//单位名称
+	@NotNull
 	private String name;
 	
 	//1.个人发票 2.增值税发票
@@ -23,15 +27,19 @@ public class OrderInvoice  implements Serializable {
 	private String identifier;
 	
 	//注册地址
+	@NotEmpty
 	private String registeredAddress;
 	
 	//注册电话
+	@NotEmpty
 	private String registeredTel;
 	
 	//开户银行
+	@NotEmpty
 	private String bankName;
 	
 	//银行账户
+	@NotEmpty
 	private String bankAccount;
 	
 	public OrderInvoice(){}

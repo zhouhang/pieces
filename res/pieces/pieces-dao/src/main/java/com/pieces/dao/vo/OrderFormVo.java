@@ -10,6 +10,7 @@ import com.pieces.tools.utils.SpringUtil;
 import com.pieces.tools.utils.httpclient.common.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.validation.Valid;
 import java.util.*;
 
 /**
@@ -21,12 +22,12 @@ public class OrderFormVo extends com.pieces.dao.model.OrderForm {
     private Integer orderId;
 
     // 商品列表
-    private List<OrderCommodity> commodities;
+    private@Valid List<OrderCommodity> commodities;
 
     private List<OrderCommodityVo> commodityVos;
 
     // 邮寄地址
-    private ShippingAddressHistory address;
+    private@Valid ShippingAddressHistory address;
 
     private ShippingAddress shippingAddress;
 
@@ -39,10 +40,10 @@ public class OrderFormVo extends com.pieces.dao.model.OrderForm {
     }
 
     // 发票信息
-    private OrderInvoice invoice;
+    private@Valid OrderInvoice invoice;
 
     //客户信息
-    private User user;
+    private@Valid User user;
 
     private Integer userId;
 

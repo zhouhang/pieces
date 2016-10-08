@@ -1,5 +1,8 @@
 package com.pieces.dao.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,21 +12,22 @@ public class OrderCommodity  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	
+
+	@NotEmpty
 	private String name;
-	
+	@NotEmpty
 	private String spec;
-	
+	@NotEmpty
 	private String level;
-	
+	@NotEmpty
 	private String originOf;
-	
+	@NotNull
 	private Date expectDate;
-	
+	@NotNull
 	private Integer amount;
-	
+	@NotNull
 	private Double price;
-	
+
 	private Double subtotal;
 	
 	private Integer enquiryCommodityId;
