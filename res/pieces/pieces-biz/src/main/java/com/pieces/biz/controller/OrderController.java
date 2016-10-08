@@ -105,10 +105,7 @@ public class OrderController extends BaseController {
 	@RequestMapping(value = "/address/add")
 	@ResponseBody
 	@BizLog(type = LogConstant.order, desc = "添加订单地址")
-	public Result addressAdd(HttpServletRequest request,
-            HttpServletResponse response,
-            ModelMap modelMap,
-            @Valid ShippingAddress shippingAddress){
+	public Result addressAdd(@Valid ShippingAddress shippingAddress){
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		shippingAddress.setUserId(user.getId());
 		shippingAddress.setCreateTime(new Date());
@@ -119,7 +116,7 @@ public class OrderController extends BaseController {
 		}
 
 		//修改默认地址
-		if(shippingAddress.getIsDefault()){
+		if(shippingAddress.getIsDefault()!= null && shippingAddress.getIsDefault()){
 			for(ShippingAddressVo sav : shippingAddressList){
 				if(sav.getIsDefault()!=null && sav.getIsDefault()){
 					ShippingAddress sa = new ShippingAddress();
@@ -140,7 +137,7 @@ public class OrderController extends BaseController {
 	public String orderSave(HttpServletRequest request,
             HttpServletResponse response,
             ModelMap modelMap,
-            @Validated(value = {Biz.class}) OrderFormVo orderFormVo,
+            OrderFormVo orderFormVo,
             String token){
 		if(request.getSession().getAttribute(SessionEnum.ORDER_TOKEN.getKey()) == null){
 			return "redirect:/center/enquiry/record";

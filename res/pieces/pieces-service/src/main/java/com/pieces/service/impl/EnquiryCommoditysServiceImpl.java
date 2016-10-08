@@ -82,8 +82,9 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
         enquiryBills.setStatus(1);
         enquiryBillsDao.update(enquiryBills);
 
+        // 删除空值行
+        removeNullQuoted(list);
         if(list != null && list.size()>0) {
-            removeNullQuoted(list);
             enquiryCommoditysDao.quotedUpdate(list);
             // 报价后发生短信
             EnquiryBillsVo billsVo = enquiryBillsDao.findVOById(billsId);
@@ -94,11 +95,13 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
     }
 
     private void removeNullQuoted(List<EnquiryCommoditys> list){
-        Iterator<EnquiryCommoditys> iter = list.iterator();
-        while(iter.hasNext()){
-            EnquiryCommoditys commoditys = iter.next();
-            if(commoditys.getMyPrice() == null && commoditys.getExpireDate() == null){
-                iter.remove();
+        if (list != null) {
+            Iterator<EnquiryCommoditys> iter = list.iterator();
+            while(iter.hasNext()){
+                EnquiryCommoditys commoditys = iter.next();
+                if(commoditys.getMyPrice() == null && commoditys.getExpireDate() == null){
+                    iter.remove();
+                }
             }
         }
     }

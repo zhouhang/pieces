@@ -24,11 +24,13 @@ public class ShippingAddress  implements Serializable {
 	
 	//收货人
 	@NotEmpty
+	@Length(min = 1, max = 32)
 	private String consignee;
 	
 	//手机号码
 	@NotEmpty
 	@Pattern(regexp = "^1[3-9]\\d{9}$")
+	@Pattern(regexp = ValidPattern.mobile, message = "手机格式错误")
 	private String tel;
 	
 	//所在区域
@@ -39,6 +41,7 @@ public class ShippingAddress  implements Serializable {
 
 	//详细地址
 	@NotEmpty
+	@Length(min = 1, max = 256)
 	private String detail;
 	
 	private Date createTime;
