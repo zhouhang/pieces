@@ -4,13 +4,16 @@ import com.pieces.dao.OrderFormDao;
 import com.pieces.dao.config.SystemConfig;
 import com.pieces.dao.enums.OrderEnum;
 import com.pieces.dao.event.OrderStatusEvent;
+import com.pieces.dao.group.Boss;
 import com.pieces.dao.model.*;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.SpringUtil;
 import com.pieces.tools.utils.httpclient.common.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 /**
@@ -22,7 +25,7 @@ public class OrderFormVo extends com.pieces.dao.model.OrderForm {
     private Integer orderId;
 
     // 商品列表
-    private@Valid List<OrderCommodity> commodities;
+    private @Valid List<OrderCommodity> commodities;
 
     private List<OrderCommodityVo> commodityVos;
 
@@ -40,7 +43,7 @@ public class OrderFormVo extends com.pieces.dao.model.OrderForm {
     }
 
     // 发票信息
-    private@Valid OrderInvoice invoice;
+    private OrderInvoice invoice;
 
     //客户信息
     private@Valid User user;

@@ -26,7 +26,7 @@ public class User  implements Serializable {
 	
 	//密码
 	@NotEmpty
-	@Pattern(regexp = "^[a-zA-Z0-9_]{6,20}$")
+	@Pattern(regexp = "^[a-zA-Z0-9_]{6,20}$", groups = {Biz.class, Boss.class})
 	private String password;
 	
 	//密码盐
@@ -34,7 +34,7 @@ public class User  implements Serializable {
 	
 	//企业全称
 	@NotEmpty
-	@Pattern(regexp = "^([a-zA-Z0-9_\\(\\)-]|[\\u4e00-\\u9fa5]|[（）]){4,50}$")
+	@Pattern(regexp = "^([a-zA-Z0-9_\\(\\)-]|[\\u4e00-\\u9fa5]|[（）]){4,50}$", groups = {Biz.class, Boss.class})
 	private String companyFullName;
 	
 	//企业注册地省份
@@ -42,12 +42,12 @@ public class User  implements Serializable {
 	
 	//联系人姓名
 	@NotEmpty
-	@Pattern(regexp = "^([a-zA-Z]|[\\u4e00-\\u9fa5]){2,50}$")
+	@Pattern(regexp = "^([a-zA-Z]|[\\u4e00-\\u9fa5]){2,50}$", groups = {Biz.class, Boss.class})
 	private String contactName;
 	
 	//联系人手机
 	@NotEmpty
-	@Pattern(regexp = "^1[3-9]\\d{9}$")
+	@Pattern(regexp = "^1[3-9]\\d{9}$", groups = {Biz.class, Boss.class})
 	private String contactMobile;
 
 	
