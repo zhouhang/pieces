@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.tools.log.annotation.BizLog;
@@ -102,10 +103,7 @@ public class OrderController extends BaseController {
 	@RequestMapping(value = "/address/add")
 	@ResponseBody
 	@BizLog(type = LogConstant.order, desc = "添加订单地址")
-	public Result addressAdd(HttpServletRequest request,
-            HttpServletResponse response,
-            ModelMap modelMap,
-            ShippingAddress shippingAddress){
+	public Result addressAdd(@Valid ShippingAddress shippingAddress){
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		shippingAddress.setUserId(user.getId());
 		shippingAddress.setCreateTime(new Date());
@@ -116,7 +114,7 @@ public class OrderController extends BaseController {
 		}
 
 		//修改默认地址
-		if(shippingAddress.getIsDefault()){
+		if(shippingAddress.getIsDefault()!= null && shippingAddress.getIsDefault()){
 			for(ShippingAddressVo sav : shippingAddressList){
 				if(sav.getIsDefault()!=null && sav.getIsDefault()){
 					ShippingAddress sa = new ShippingAddress();

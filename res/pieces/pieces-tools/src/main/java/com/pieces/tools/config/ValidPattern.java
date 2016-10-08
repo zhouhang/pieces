@@ -10,5 +10,7 @@ public interface ValidPattern {
     // 银行卡号
     public static String bank = "/^\\d{16}|\\d{19}$/";
 
+    // 手机号
+    public static String mobile = "^1\\d{10}$";
 
 }

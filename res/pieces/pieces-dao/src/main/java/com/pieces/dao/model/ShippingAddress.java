@@ -1,5 +1,11 @@
 package com.pieces.dao.model;
 
+import com.pieces.tools.config.ValidPattern;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,24 +15,31 @@ public class ShippingAddress  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	
+
+
 	private Integer userId;
 	
 	//是否默认地址1 默认
 	private Boolean isDefault;
 	
 	//收货人
+	@NotEmpty
+	@Length(min = 1, max = 32)
 	private String consignee;
 	
 	//手机号码
+	@Pattern(regexp = ValidPattern.mobile, message = "手机格式错误")
 	private String tel;
 	
 	//所在区域
+	@NotNull
 	private Integer areaId;
 
 	private String postcode;
 
 	//详细地址
+	@NotEmpty
+	@Length(min = 1, max = 256)
 	private String detail;
 	
 	private Date createTime;

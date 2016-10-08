@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.model.ShippingAddress;
@@ -434,7 +435,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/shippingaddress/save", method = RequestMethod.POST)
 	@ResponseBody
 	@BizLog(type = LogConstant.user, desc = "保存或者添加用户收货地址")
-	public Result saveShippingAddress(ShippingAddress address){
+	public Result saveShippingAddress(@Valid ShippingAddress address){
 		User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		shippingAddressService.saveOrUpdate(address, user);
 		return new Result(true).info("保存成功!");
