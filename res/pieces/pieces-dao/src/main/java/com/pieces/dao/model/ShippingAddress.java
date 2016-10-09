@@ -17,11 +17,10 @@ public class ShippingAddress  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	@NotNull
+
 	private Integer userId;
 	
 	//是否默认地址1 默认
-	@NotNull
 	private Boolean isDefault;
 	
 	//收货人
