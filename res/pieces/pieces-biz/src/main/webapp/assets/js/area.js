@@ -7,7 +7,7 @@
             dataType      : 'json',                     //数据库类型:'json'或'jsonp'
             provinceField : 'provinceCode',             //省份字段名
             cityField     : 'cityCode',                 //城市字段名
-            areaField     : 'countyCode',               //地区字段名
+            areaField     : 'areaId',               	//地区字段名
             province      : 0,                          //省份,可以为地区编码或者名称
             city          : 0,                          //城市,可以为地区编码或者名称
             area          : 0,                          //地区,可以为地区编码或者名称
