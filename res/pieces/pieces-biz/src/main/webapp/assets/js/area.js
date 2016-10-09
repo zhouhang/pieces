@@ -80,7 +80,8 @@
                     $.each(data, function(i, item) {
                         html.push('<option value="', item.id, '">', item.areaname, '</option>');
                     })
-                    $select.append(html.join('')).val(def);
+                    $select.append(html.join(''));
+                    def && $select.val(def)
                 }
             }
 
