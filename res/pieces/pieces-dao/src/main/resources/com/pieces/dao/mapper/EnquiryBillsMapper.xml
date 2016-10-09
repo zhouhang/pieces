@@ -92,7 +92,7 @@
                 and area_full like "%"#{areaFull}"%"
             </if>
         </where>
-        order by enquiry_bills.id DESC
+        order by create_time DESC
     </select>
 
     <select id="findVOById" parameterType="java.lang.Integer"  resultMap="EnquiryBillsVOResultMap">
