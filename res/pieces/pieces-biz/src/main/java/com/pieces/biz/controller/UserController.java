@@ -437,6 +437,12 @@ public class UserController extends BaseController {
 	@BizLog(type = LogConstant.user, desc = "保存或者添加用户收货地址")
 	public Result saveShippingAddress(@Valid ShippingAddress address){
 		User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+
+		List<ShippingAddressVo>  shippingAddressList = shippingAddressService.findByUser(user.getId());
+		if(shippingAddressList.size()>=10){
+			return new Result(false).info("收货地址不能超过10条");
+		}
+
 		shippingAddressService.saveOrUpdate(address, user);
 		return new Result(true).info("保存成功!");
 	}

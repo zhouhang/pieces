@@ -183,7 +183,7 @@
                         $.notify({
                             type: 'warn',
                             title: '警告',
-                            text: '请先收货地址后再添加!',
+                            text: '收货地址不能超过10条!',
                             delay: 3e3,
                             call: function () {
                             }
@@ -279,6 +279,13 @@
                                 if (data.status == "y") {
                                     layer.closeAll();
                                     window.location.reload();
+                                } else {
+                                    $.notify({
+                                        type: 'warn',
+                                        title: '警告',
+                                        text: data.info',
+                                        delay: 3e3
+                                    });
                                 }
                             })
                         }
