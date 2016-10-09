@@ -197,7 +197,7 @@
 
                 // 新增
                 $('.jaddConsignee').on('click', function () {
-                    var total = $("#add-body").find('tr').length();
+                    var total = $("#add-body").find('tr').length;
                     if (total >= 10) {
                         $.notify({
                             type: 'warn',

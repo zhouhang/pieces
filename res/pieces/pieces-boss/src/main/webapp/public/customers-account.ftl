@@ -11,10 +11,7 @@
     <!-- fa-floor start -->
     <div class="fa-floor">
 
-
         <div class="wrap">
-
-
             <div  style="display: none" id="error_advices" class="message">
                 <i class="fa fa-times-circle"></i>
                 <span>修改失败！</span>
@@ -58,7 +55,7 @@
                                 <div class="txt">
                                     <i>*</i>所在地区：
                                 </div>
-                                <div class="cnt">
+                                <div class="cnt" id="pickArea">
                                     <select name="province" id="province"  data-value="${userArea.provinceId}">
                                         <option value="">-省-</option>
                                     </select>

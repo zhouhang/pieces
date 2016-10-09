@@ -485,7 +485,7 @@
 
                     // 新增
                     $('.jaddConsignee').on('click', function() {
-                        var total = $('#jconsigneeList').find('li').length();
+                        var total = $('#jconsigneeList').find('li').length;
                         if (total >= 10) {
                             $.notify({
                                 type: 'warn',
