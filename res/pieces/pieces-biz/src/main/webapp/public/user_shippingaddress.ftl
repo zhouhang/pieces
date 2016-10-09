@@ -80,8 +80,7 @@
                 <span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：</span>
             </div>
             <div class="cnt">
-                <input type="text" name="consignee" id="consigneeName" class="ipt" autocomplete="off"
-                       placeholder="" data-msg-nickName="只能输入中文、英文，长度2-50" maxlength="50">
+                <input type="text" name="consignee" id="consigneeName" class="ipt" autocomplete="off" placeholder="" data-msg-nickName="只能输入中文、英文，长度2-50" maxlength="50">
                 <input type="text" style="display: none" id="id" name="id">
             </div>
         </div>
@@ -91,8 +90,7 @@
                 <span>手机号码：</span>
             </div>
             <div class="cnt">
-                <input type="text" name="tel" id="consigneeMobile" class="ipt" autocomplete="off"
-                       placeholder="">
+                <input type="text" name="tel" id="consigneeMobile" class="ipt" autocomplete="off" placeholder="">
                 <span class="error"></span>
             </div>
         </div>
@@ -101,7 +99,7 @@
             <div class="txt">
                 <span>所在地区：</span>
             </div>
-            <div class="cnt">
+            <div class="cnt" id="pickArea">
                 <select name="provinceCode" id="province">
                     <option value="">-省-</option>
                 </select>
@@ -121,8 +119,7 @@
                 <span>详细地址：</span>
             </div>
             <div class="cnt">
-                <input type="text" name="detail" id="consigneeAddress" class="ipt ipt-wide"
-                       autocomplete="off">
+                <input type="text" name="detail" id="consigneeAddress" class="ipt ipt-wide" autocomplete="off">
                 <span class="error"></span>
             </div>
         </div>
@@ -177,36 +174,13 @@
             // 新增 & 修改
             addConsignee: function () {
                 var $consigneeBox = $('#jconsigneeBox');
-                $('.jaddConsignee').on('click', function () {
-                    var total = $("#add-body tr").size();
-                    if (total >= 10) {
-                        $.notify({
-                            type: 'warn',
-                            title: '警告',
-                            text: '收货地址不能超过10条!',
-                            delay: 3e3,
-                            call: function () {
-                            }
-                        });
-                        return false;
-                    }
-                    $('.chart .ipt, .chart select').val("")
-                    $("#id").val("");
-                    layer.open({
-                        area: ['600px'],
-                        closeBtn: 1,
-                        type: 1,
-                        moveType: 1,
-                        content: $consigneeBox,
-                        title: '新建地址'
-                    });
-                })
+                var $consigneeForm = $('#consigneeForm');
                 // 关闭弹层
                 $consigneeBox.on('click', '.cancel', function () {
                     layer.closeAll();
                 })
 
-                $('#consigneeForm').validator({
+                $consigneeForm.validator({
                     fields: {
                         consignee: '收货人: required; nickName',
                         tel: '手机号码: required; mobile',
@@ -221,6 +195,30 @@
                     }
                 });
 
+                // 新增
+                $('.jaddConsignee').on('click', function () {
+                    var total = $("#add-body").find('tr').length();
+                    if (total >= 10) {
+                        $.notify({
+                            type: 'warn',
+                            title: '警告',
+                            text: '收货地址不能超过10条!',
+                            delay: 3e3
+                        });
+                        return false;
+                    }
+                    $consigneeForm[0].reset();
+                    $('#pickArea').citys(); // 地区级联
+                    layer.open({
+                        area: ['600px'],
+                        closeBtn: 1,
+                        type: 1,
+                        moveType: 1,
+                        content: $consigneeBox,
+                        title: '新建地址'
+                    });
+                })
+
                 // 修改
                 $('.fa-chart').on('click', '.jedit', function () {
                     var url = _global.v.getDetailUrl + $(this).attr("href");
@@ -232,20 +230,8 @@
                             $("#id").val(addr.id);
                             $('#consigneeName').val(addr.consignee);
                             $('#consigneeMobile').val(addr.tel);
+                            $('#pickArea').citys({code: addr.areaId}); // 地区级联，并传入默认值
 //                            $('#areaFull').val(addr.areaId);
-                            $('#province').val(addr.provinceId);
-                            $('#province').trigger("change")
-                            setTimeout(function () {
-                                $('#city').val(addr.cityId);
-                                $('#city').trigger("change")
-                            }, 500)
-
-                            setTimeout(function () {
-                                $('#area').val(addr.areaId);
-                            }, 1000)
-
-                            //getArea('', $province);
-
                             $('#consigneeAddress').val(addr.detail);
                             $('#consigneeDefault').prop('checked', addr.isDefault);
                             layer.open({
@@ -263,18 +249,17 @@
                 })
 
                 // 保存
-                $("#consigneeForm").submit(function () {
+                $consigneeForm.submit(function () {
                     var $this = $(this);
-                    $('#consigneeForm').isValid(function (v) {
-                        //console.log(v ? '表单验证通过' : '表单验证不通过');
+                    $consigneeForm.isValid(function (v) {
                         if (v) {
+                            var url = _global.v.saveUrl;
                             var data = $this.serializeObject();
                             if (data.isDefault == "1") {
                                 data.isDefault = true;
                             } else {
                                 data.isDefault = false;
                             }
-                            var url = _global.v.saveUrl;
                             $.post(url, data, function (data) {
                                 if (data.status == "y") {
                                     layer.closeAll();
@@ -283,7 +268,7 @@
                                     $.notify({
                                         type: 'warn',
                                         title: '警告',
-                                        text: data.info',
+                                        text: data.info,
                                         delay: 3e3
                                     });
                                 }
