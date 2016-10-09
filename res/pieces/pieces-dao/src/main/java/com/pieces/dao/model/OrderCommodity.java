@@ -1,5 +1,11 @@
 package com.pieces.dao.model;
 
+import com.pieces.dao.group.Biz;
+import com.pieces.dao.group.Boss;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,21 +15,22 @@ public class OrderCommodity  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	
+
+	@NotEmpty(groups = {Boss.class})
 	private String name;
-	
+	@NotEmpty(groups = {Boss.class})
 	private String spec;
-	
+	@NotEmpty(groups = {Boss.class})
 	private String level;
-	
+	@NotEmpty(groups = {Boss.class})
 	private String originOf;
-	
+	@NotNull(groups = {Boss.class})
 	private Date expectDate;
-	
+	@NotNull(groups = {Boss.class})
 	private Integer amount;
-	
+	@NotNull(groups = {Boss.class})
 	private Double price;
-	
+
 	private Double subtotal;
 	
 	private Integer enquiryCommodityId;

@@ -1,5 +1,7 @@
 package com.pieces.dao.model;
 
+import com.pieces.dao.group.Biz;
+import com.pieces.dao.group.Boss;
 import com.pieces.tools.config.ValidPattern;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -15,11 +17,11 @@ public class ShippingAddress  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-
-
+	@NotNull
 	private Integer userId;
 	
 	//是否默认地址1 默认
+	@NotNull
 	private Boolean isDefault;
 	
 	//收货人
@@ -28,7 +30,8 @@ public class ShippingAddress  implements Serializable {
 	private String consignee;
 	
 	//手机号码
-	@Pattern(regexp = ValidPattern.mobile, message = "手机格式错误")
+	@NotEmpty
+	@Pattern(regexp = "^1[3-9]\\d{9}$", message = "手机格式错误")
 	private String tel;
 	
 	//所在区域

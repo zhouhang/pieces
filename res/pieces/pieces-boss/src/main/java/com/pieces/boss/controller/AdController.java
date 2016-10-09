@@ -1,12 +1,14 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.boss.commons.Configure;
 import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.model.Ad;
 import com.pieces.dao.vo.AdVo;
 import com.pieces.service.AdService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.CodeEnum;
+import com.pieces.boss.upload.AdUploadFile;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import org.apache.shiro.authz.annotation.Logical;
@@ -15,8 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
+import javax.validation.Valid;
 
 /**
  * 广告管理
@@ -98,7 +103,7 @@ public class AdController extends BaseController{
     @RequestMapping("save")
     @ResponseBody
     @BizLog(type = LogConstant.ad, desc = "广告保存")
-    public Result save(Ad ad){
+    public Result save(@Valid Ad ad){
         String message;
         if(ad.getId()==null){
             adService.createAd(ad);

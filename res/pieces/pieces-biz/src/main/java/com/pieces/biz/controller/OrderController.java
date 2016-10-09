@@ -10,12 +10,14 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import com.pieces.biz.controller.commons.LogConstant;
+import com.pieces.dao.group.Biz;
 import com.pieces.tools.log.annotation.BizLog;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

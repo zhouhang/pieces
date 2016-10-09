@@ -1,5 +1,8 @@
 package com.pieces.dao.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,15 +14,19 @@ public class OrderRemark  implements Serializable {
 	private Integer id;
 	
 	//备注的用户
+	@NotNull
 	private Integer userId;
 	
 	//备注内容
+	@NotEmpty
 	private String content;
 	
 	//订单id
+	@NotNull
 	private Integer orderId;
 	
 	//评论时间
+	@NotNull
 	private Date createrTime;
 	
 	public OrderRemark(){}
