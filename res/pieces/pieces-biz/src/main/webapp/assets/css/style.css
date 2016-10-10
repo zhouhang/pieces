@@ -583,7 +583,7 @@ vertical-align:middle;
 .banner-slider .side-notice .brands .inner .col{position:absolute;top:0;left:0;width:190px;height:100%;display:none;overflow:hidden;}
 .banner-slider .side-notice .brands .inner .current{display:block;}
 .banner-slider .side-notice .brands .ctrl{position:absolute;top:-26px;right:0;}
-.banner-slider .side-notice .brands a{float:left;width:93px;border-bottom:1px solid #e7e7e7;border-right:1px solid #e7e7e7;}
+.banner-slider .side-notice .brands a{float:left;width:93px;height:80px;border-bottom:1px solid #e7e7e7;border-right:1px solid #e7e7e7;}
 .banner-slider .side-notice .brands i{display:inline-block;width:25px;line-height:25px;margin-left:-1px;border:1px solid #e7e7e7;cursor:pointer;font-family:arial;color:#999;}
 .banner-slider .side-notice .brands i:hover{border-color:#c3272b;background:#c3272b;color:#fff;}
 .banner-slider .side-notice .brands .disabled{cursor:default;}
