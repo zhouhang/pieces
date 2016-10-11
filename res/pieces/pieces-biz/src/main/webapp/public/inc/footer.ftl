@@ -28,15 +28,5 @@
 
 <script src="/js/jquery.min.js"></script>
 <script src="/js/jquery.autocomplete.min.js"></script>
-<script src="js/common.js"></script>
-
-
-<script>
-    var _hmt = _hmt || [];
-    (function() {
-        var hm = document.createElement("script");
-        hm.src = "//hm.baidu.com/hm.js?7de22b8301e57e4f21f07b09f4a1db76";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
+<script src="/js/common.js"></script>
+<script src="//hm.baidu.com/hm.js?7de22b8301e57e4f21f07b09f4a1db76"></script> 
