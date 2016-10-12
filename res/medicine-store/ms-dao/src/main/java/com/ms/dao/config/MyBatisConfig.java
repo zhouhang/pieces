@@ -1,4 +1,4 @@
-package com.ms.boss.config;
+package com.ms.dao.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.github.pagehelper.PageHelper;

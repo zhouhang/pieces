@@ -1,4 +1,4 @@
-package com.ms.boss.config;
+package com.ms.dao.config;
 
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
