@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ms.dao.CategoryDao">
+    <resultMap id="CategoryResultMap" type="com.ms.dao.model.Category">
+            <id column="id"  property="id" />
+            <result column="pid"  property="pid" />
+            <result column="variety"  property="variety" />
+            <result column="title"  property="title" />
+            <result column="price_desc"  property="priceDesc" />
+            <result column="sort"  property="sort" />
+            <result column="create_time"  property="createTime" />
+            <result column="picture_url"  property="pictureUrl" />
+            <result column="status"  property="status" />
+            <result column="level"  property="level" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <resultMap id="CategoryResultMapVo" type="com.ms.dao.vo.CategoryVo">
+            <id column="id"  property="id" />
+            <result column="pid"  property="pid" />
+            <result column="variety"  property="variety" />
+            <result column="title"  property="title" />
+            <result column="price_desc"  property="priceDesc" />
+            <result column="sort"  property="sort" />
+            <result column="create_time"  property="createTime" />
+            <result column="picture_url"  property="pictureUrl" />
+            <result column="status"  property="status" />
+            <result column="level"  property="level" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,pid,variety,title,price_desc,sort,create_time,picture_url,status,level,update_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="CategoryResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from category
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="CategoryResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from category
+    </select>
+
+    <select id="findByParams" resultMap="CategoryResultMapVo" parameterType="com.ms.dao.vo.CategoryVo">
+        select
+        <include refid="Base_Column_List" />
+        from category
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from category
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.Category">
+        insert into
+        category (pid,variety,title,price_desc,sort,create_time,picture_url,status,level,update_time)
+        values
+        (#{pid},#{variety},#{title},#{priceDesc},#{sort},#{createTime},#{pictureUrl},#{status},#{level},#{updateTime})
+    </insert>
+
+    <update id="update" parameterType="com.ms.dao.model.Category">
+        update category
+        <set>
+                                                        
+            <if test="pid != null">
+                pid = #{pid},
+            </if>
+                                            
+            <if test="variety != null">
+                variety = #{variety},
+            </if>
+                                            
+            <if test="title != null">
+                title = #{title},
+            </if>
+                                            
+            <if test="priceDesc != null">
+                price_desc = #{priceDesc},
+            </if>
+                                            
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="pictureUrl != null">
+                picture_url = #{pictureUrl},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                                            
+            <if test="level != null">
+                level = #{level},
+            </if>
+                                            
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
