@@ -8,6 +8,13 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>medicine-store</groupId>
+    <dependencies>
+        <dependency>
+            <groupId>medicine-store</groupId>
+            <artifactId>ms-dao</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>ms-service</artifactId>

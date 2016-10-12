@@ -1,7 +1,7 @@
 package com.ms.dao.model;
 
 import java.io.Serializable;
-
+import java.util.Date;
 
 
 public class Commodity  implements Serializable {
@@ -37,7 +37,7 @@ public class Commodity  implements Serializable {
 	private Integer sort;
 	
 	//标记是否量大价优
-	private  mark;
+	private Integer mark;
 	
 	private Date createTime;
 	
@@ -157,11 +157,11 @@ public class Commodity  implements Serializable {
 		this.sort = sort;
 	}
 	
-	public  getMark() {
+	public Integer getMark() {
 		return mark;
 	}
 
-	public void setMark( mark) {
+	public void setMark(Integer mark) {
 		this.mark = mark;
 	}
 	

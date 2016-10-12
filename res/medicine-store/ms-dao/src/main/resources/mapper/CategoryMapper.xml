@@ -16,18 +16,7 @@
         
     </resultMap>
 
-    <resultMap id="CategoryResultMapVo" type="com.ms.dao.vo.CategoryVo">
-            <id column="id"  property="id" />
-            <result column="pid"  property="pid" />
-            <result column="variety"  property="variety" />
-            <result column="title"  property="title" />
-            <result column="price_desc"  property="priceDesc" />
-            <result column="sort"  property="sort" />
-            <result column="create_time"  property="createTime" />
-            <result column="picture_url"  property="pictureUrl" />
-            <result column="status"  property="status" />
-            <result column="level"  property="level" />
-            <result column="update_time"  property="updateTime" />
+    <resultMap id="CategoryResultMapVo" type="com.ms.dao.vo.CategoryVo" extends="CategoryResultMap">
         
     </resultMap>
 

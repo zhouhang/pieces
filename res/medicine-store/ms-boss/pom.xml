@@ -15,7 +15,7 @@
 
         <dependency>
             <groupId>medicine-store</groupId>
-            <artifactId>ms-dao</artifactId>
+            <artifactId>ms-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
@@ -48,7 +48,7 @@
                 <spring.dataSource.url>jdbc:mysql://192.168.1.41:3306/medicine-store?characterEncoding=utf-8</spring.dataSource.url>
                 <spring.dataSource.username>piece</spring.dataSource.username>
                 <spring.dataSource.password>123456</spring.dataSource.password>
-                <doc.base.url>http://14.17.81.101:8080/ivf</doc.base.url>
+                <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
                 <pro.upload.path>/var/tomcat/apache-tomcat-8.5.4/webapps/files/upload/</pro.upload.path>
                 <pro.upload.url>http://127.0.0.1:8080/files/upload/</pro.upload.url>
             </properties>

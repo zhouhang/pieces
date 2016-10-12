@@ -6,7 +6,6 @@ import com.ms.dao.ICommonDao;
 import com.ms.dao.GradientDao;
 import com.ms.dao.model.Gradient;
 import com.ms.dao.vo.GradientVo;
-import com.ms.service.AbsCommonService;
 import com.ms.service.GradientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

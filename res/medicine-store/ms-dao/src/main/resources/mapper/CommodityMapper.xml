@@ -22,25 +22,8 @@
         
     </resultMap>
 
-    <resultMap id="CommodityResultMapVo" type="com.ms.dao.vo.CommodityVo">
-            <id column="id"  property="id" />
-            <result column="title"  property="title" />
-            <result column="name"  property="name" />
-            <result column="har_year"  property="harYear" />
-            <result column="origin"  property="origin" />
-            <result column="spec"  property="spec" />
-            <result column="category_id"  property="categoryId" />
-            <result column="picture_url"  property="pictureUrl" />
-            <result column="detail"  property="detail" />
-            <result column="status"  property="status" />
-            <result column="attribute"  property="attribute" />
-            <result column="price"  property="price" />
-            <result column="unit"  property="unit" />
-            <result column="sort"  property="sort" />
-            <result column="mark"  property="mark" />
-            <result column="create_time"  property="createTime" />
-            <result column="update_time"  property="updateTime" />
-        
+    <resultMap id="CommodityResultMapVo" type="com.ms.dao.vo.CommodityVo" extends="CommodityResultMap">
+
     </resultMap>
 
     <sql id="Base_Column_List">
