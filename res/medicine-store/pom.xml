@@ -10,22 +10,23 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>medicine_store</groupId>
-	<artifactId>medicine_store</artifactId>
+	<groupId>medicine-store</groupId>
+	<artifactId>medicine-store</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<distributionManagement>
 		<site>
 			<id>website</id>
-			<url>https://github.com/zhouhang/pieces/tree/master/res/medicine_store</url>
+			<url>https://github.com/zhouhang/pieces/tree/master/res/medicine-store</url>
 		</site>
 	</distributionManagement>
 
 	<properties>
-		<pieces.dao.version>0.0.1</pieces.dao.version>
-		<pieces.service.version>0.0.1</pieces.service.version>
-		<pieces.tools.version>0.0.1</pieces.tools.version>
+		<java-version>1.8</java-version>
+		<encoding>UTF-8</encoding>
+		<junit>4.12</junit>
+
 		<commons-fileupload>1.3.1</commons-fileupload>
 		<commons-io>2.4</commons-io>
 		<jetty.version>9.0.4.v20130625</jetty.version>
@@ -33,7 +34,7 @@
 		<spring-expression.version>4.2.5.RELEASE</spring-expression.version>
 		<jackson.version>1.8.4</jackson.version>
 		<apache.lang.version>2.1.0</apache.lang.version>
-		<mybatis.version>3.2.3</mybatis.version>
+		<mybatis.version>3.3.0</mybatis.version>
 		<freemarker.version>2.3.20</freemarker.version>
 		<log4j.version>1.2.17</log4j.version>
 		<shiro.version>1.2.3</shiro.version>
@@ -66,6 +67,7 @@
 		<commons-configuration>1.6</commons-configuration>
 		<mybatis-spring.version>1.2.3</mybatis-spring.version>
 		<hibernate-validator.version>5.1.3.Final</hibernate-validator.version>
+		<javax.validation>1.1.0.Final</javax.validation>
 	</properties>
 
 	<dependencyManagement>
@@ -374,26 +376,36 @@
 				<artifactId>hibernate-validator</artifactId>
 				<version>${hibernate-validator.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>javax.validation</groupId>
+				<artifactId>validation-api</artifactId>
+				<version>${javax.validation}</version>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
-
+	<!-- 公共依赖文件 -->
 	<dependencies>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
-			<version>1.1.0.Final</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.apache.tomcat.embed</groupId>
-			<artifactId>tomcat-embed-jasper</artifactId>
-			<scope>provided</scope>
-		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
@@ -404,51 +416,16 @@
 			<artifactId>commons-io</artifactId>
 			<version>${commons-io}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-loader-tools</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>${jackson.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-		<!-- Jackson JSON Mapper -->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>${jackson}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-			<version>${jackson}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.6.5</version>
-		</dependency>
-
 
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
@@ -473,28 +450,17 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi</artifactId>
-			<version>3.14</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
-		<dependency>
-			<groupId>org.apache.poi</groupId>
-			<artifactId>poi-ooxml</artifactId>
-			<version>3.14</version>
-		</dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
 			<version>4.0.0.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.12</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -503,60 +469,20 @@
 		<pluginManagement>
 			<plugins>
 				<plugin>
-					<groupId>org.mortbay.jetty</groupId>
-					<artifactId>jetty-maven-plugin</artifactId>
-					<version>8.1.8.v20121106</version>
-					<configuration>
-						<webAppConfig>
-							<contextPath>/</contextPath>
-						</webAppConfig>
-						<connectors>
-							<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
-								<port>8081</port>
-								<maxIdleTime>60000</maxIdleTime>
-							</connector>
-							<connector implementation="org.eclipse.jetty.server.ssl.SslSocketConnector">
-								<port>8443</port>
-								<maxIdleTime>60000</maxIdleTime>
-								<keystore>${project.basedir}/passport.keystore</keystore>
-								<password>123456</password>
-								<keyPassword>123456</keyPassword>
-							</connector>
-						</connectors>
-					</configuration>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-war-plugin</artifactId>
-					<configuration>
-						<warName>${project.artifactId}</warName>
-						<webResources>
-							<resource>
-								<directory>${basedir}/src/main/webapp/WEB-INF</directory>
-								<filtering>true</filtering>
-								<targetPath>WEB-INF</targetPath>
-								<includes>
-									<include>**/web.xml</include>
-								</includes>
-							</resource>
-						</webResources>
-					</configuration>
-				</plugin>
-				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.1</version>
 					<configuration>
-						<source>1.7</source>
-						<target>1.7</target>
-						<encoding>UTF-8</encoding>
+						<source>${java-version}</source>
+						<target>${java-version}</target>
+						<encoding>${encoding}</encoding>
 					</configuration>
 				</plugin>
 				<plugin>    
 				    <groupId>org.apache.maven.plugins</groupId>    
 				    <artifactId>maven-resources-plugin</artifactId>    
 				    <configuration>    
-				        <encoding>UTF-8</encoding>    
+				        <encoding>${encoding}</encoding>
 				    </configuration>    
 				</plugin>  
 			</plugins>
