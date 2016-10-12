@@ -56,7 +56,7 @@
     </profiles>
 
     <build>
-        <finalName>biz</finalName>
+        <finalName>boss</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
