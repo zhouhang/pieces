@@ -10,15 +10,15 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>medicine-store</groupId>
-	<artifactId>medicine-store</artifactId>
+	<groupId>yaoyy</groupId>
+	<artifactId>yaoyy</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<distributionManagement>
 		<site>
 			<id>website</id>
-			<url>https://github.com/zhouhang/pieces/tree/master/res/medicine-store</url>
+			<url>https://github.com/zhouhang/pieces/tree/master/res/yaoyy</url>
 		</site>
 	</distributionManagement>
 
