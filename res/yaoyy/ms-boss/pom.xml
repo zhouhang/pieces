@@ -5,24 +5,25 @@
     <parent>
         <artifactId>yaoyy</artifactId>
         <groupId>yaoyy</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${yaoyy-version}</version>
     </parent>
     <groupId>yaoyy</groupId>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ms-boss</artifactId>
     <packaging>war</packaging>
+    <version>${yaoyy-version}</version>
     <dependencies>
-
         <dependency>
             <groupId>yaoyy</groupId>
             <artifactId>ms-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${yaoyy-version}</version>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>

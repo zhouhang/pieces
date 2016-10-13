@@ -5,12 +5,13 @@
     <parent>
         <artifactId>yaoyy</artifactId>
         <groupId>yaoyy</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${yaoyy-version}</version>
     </parent>
+
     <groupId>yaoyy</groupId>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ms-dao</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${yaoyy-version}</version>
 
     <dependencies>
         <dependency>
@@ -25,13 +26,10 @@
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper</artifactId>
-            <version>${pagehelper.version}</version>
         </dependency>
-
         <dependency>
             <groupId>yaoyy</groupId>
             <artifactId>ms-tools</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
     

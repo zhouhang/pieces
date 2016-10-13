@@ -5,11 +5,11 @@
     <parent>
         <artifactId>yaoyy</artifactId>
         <groupId>yaoyy</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${yaoyy-version}</version>
     </parent>
     <groupId>yaoyy</groupId>
     <artifactId>ms-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${yaoyy-version}</version>
     <name>ms-service</name>
     <packaging>jar</packaging>
     <dependencies>
