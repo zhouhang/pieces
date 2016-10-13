@@ -19,6 +19,8 @@ import java.util.List;
 @RequestMapping("commodity/")
 public class CommodityController {
 
+    // CRUD
+
     @Autowired
     CommodityService commodityService;
 
