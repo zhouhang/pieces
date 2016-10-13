@@ -6,11 +6,11 @@
     <parent>
         <artifactId>yaoyy</artifactId>
         <groupId>yaoyy</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>${yaoyy-version}</version>
     </parent>
     <groupId>yaoyy</groupId>
     <artifactId>ms-biz</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${yaoyy-version}</version>
 
 
 </project>
