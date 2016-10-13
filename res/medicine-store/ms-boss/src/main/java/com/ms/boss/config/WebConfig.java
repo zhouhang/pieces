@@ -125,7 +125,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     private GsonHttpMessageConverter createGsonHttpMessageConverter() {
         Gson gson = new GsonBuilder()
-                .excludeFieldsWithoutExposeAnnotation()
+//                .excludeFieldsWithoutExposeAnnotation()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create();
 
