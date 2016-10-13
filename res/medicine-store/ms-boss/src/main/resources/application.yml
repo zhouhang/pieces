@@ -19,8 +19,7 @@ pro:
       url: @pro.upload.url@
 logging:
     level:
-        me.binf.ivf: DEBUG
-        org.hibernate.SQL: debug
+        com.ms: DEBUG
 
 server:
     error:

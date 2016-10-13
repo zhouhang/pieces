@@ -70,16 +70,16 @@ public class WebConfig extends WebMvcConfigurerAdapter {
      * 配置多视图
      * @return
      */
-//    @Bean
-//    public ContentNegotiatingViewResolver contentNegotiatingViewResolver(){
-//        ContentNegotiatingViewResolver viewResolver = new ContentNegotiatingViewResolver();
-//        viewResolver.setOrder(1);
-//        List<View> defaultViews  = new ArrayList<View>();
-//        defaultViews.add( new MappingJackson2JsonView());
-//        viewResolver.setDefaultViews(defaultViews);
-//        return viewResolver;
-//
-//    }
+    @Bean
+    public ContentNegotiatingViewResolver contentNegotiatingViewResolver(){
+        ContentNegotiatingViewResolver viewResolver = new ContentNegotiatingViewResolver();
+        viewResolver.setOrder(1);
+        List<View> defaultViews  = new ArrayList<View>();
+        defaultViews.add( new MappingJackson2JsonView());
+        viewResolver.setDefaultViews(defaultViews);
+        return viewResolver;
+
+    }
 
     @Bean
     public InternalResourceViewResolver defaultViewResolver() {

@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>medicine-store</groupId>
-    <artifactId>ms_biz</artifactId>
+    <artifactId>ms-biz</artifactId>
     <version>1.0-SNAPSHOT</version>
 
 
