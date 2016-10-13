@@ -12,7 +12,7 @@
 
 	<groupId>yaoyy</groupId>
 	<artifactId>yaoyy</artifactId>
-	<version>${yaoyy-version}</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<distributionManagement>
