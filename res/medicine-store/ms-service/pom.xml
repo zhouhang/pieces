@@ -8,6 +8,10 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <groupId>medicine-store</groupId>
+    <artifactId>ms-service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>ms-service</name>
+    <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>medicine-store</groupId>
@@ -17,7 +21,7 @@
     </dependencies>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>ms-service</artifactId>
+
 
 
 </project>

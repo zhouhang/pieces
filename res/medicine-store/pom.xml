@@ -47,7 +47,6 @@
 		<fastjson.version>1.2.1</fastjson.version>
 		<commons-lang.version>2.3</commons-lang.version>
 		<aspectj.version>1.8.1</aspectj.version>
-		<commons-configuration.version>1.10</commons-configuration.version>
 		<jetty-all>8.0.4.v20111024</jetty-all>
 		<cas-server.version>4.0.0</cas-server.version>
 		<logback.version>1.0.11</logback.version>
@@ -72,12 +71,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>3.8.1</version>
-				<scope>test</scope>
-			</dependency>
 			<dependency>
 				<groupId>pieces-dao</groupId>
 				<artifactId>pieces-dao</artifactId>
@@ -158,12 +151,6 @@
 				<groupId>org.mod4j.org.apache.commons</groupId>
 				<artifactId>lang</artifactId>
 				<version>${apache.lang.version}</version>
-			</dependency>
-			<!-- apache configuration -->
-			<dependency>
-				<groupId>commons-configuration</groupId>
-				<artifactId>commons-configuration</artifactId>
-				<version>${commons-configuration.version}</version>
 			</dependency>
 			<!-- mybatis -->
 			<dependency>
@@ -397,16 +384,6 @@
 	<!-- 公共依赖文件 -->
 	<dependencies>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-validator</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>javax.validation</groupId>
-			<artifactId>validation-api</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
 			<version>${commons-lang.version}</version>
@@ -415,11 +392,6 @@
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>${commons-io}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
 		</dependency>
 
 		<dependency>
@@ -463,6 +435,15 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>

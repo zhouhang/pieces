@@ -31,11 +31,6 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-tomcat</artifactId>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-loader-tools</artifactId>
         </dependency>
     </dependencies>
@@ -45,8 +40,8 @@
         <profile>
             <id>test</id>
             <properties>
-                <spring.dataSource.url>jdbc:mysql://192.168.1.41:3306/medicine-store?characterEncoding=utf-8</spring.dataSource.url>
-                <spring.dataSource.username>piece</spring.dataSource.username>
+                <spring.dataSource.url>jdbc:mysql://192.168.1.41:3306/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
+                <spring.dataSource.username>yaoyy</spring.dataSource.username>
                 <spring.dataSource.password>123456</spring.dataSource.password>
                 <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
                 <pro.upload.path>/var/tomcat/apache-tomcat-8.5.4/webapps/files/upload/</pro.upload.path>
@@ -67,20 +62,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>1.2</version>
-                <executions>
-                    <execution>
-                        <id>compile-reports</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>java</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

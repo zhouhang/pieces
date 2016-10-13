@@ -29,7 +29,6 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class MyBatisConfig implements TransactionManagementConfigurer {
 
-    @Autowired
     DataSource dataSource;
 
     @Value("${spring.dataSource.url}")
@@ -62,13 +61,16 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
         dataSource.setTestOnReturn(false);
         dataSource.setPoolPreparedStatements(false);
         dataSource.setMaxPoolPreparedStatementPerConnectionSize(20);
-
+        this.dataSource = dataSource;
         return dataSource;
     }
 
     @Bean(name = "sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactoryBean() {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        if (dataSource == null) {
+            dataSource = configureDataSource();
+        }
         bean.setDataSource(dataSource);
         bean.setTypeAliasesPackage("com.ms.dao.model");
 
@@ -103,6 +105,9 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
     @Bean
     @Override
     public PlatformTransactionManager annotationDrivenTransactionManager() {
+        if (dataSource == null) {
+            dataSource = configureDataSource();
+        }
         return new DataSourceTransactionManager(dataSource);
     }
 

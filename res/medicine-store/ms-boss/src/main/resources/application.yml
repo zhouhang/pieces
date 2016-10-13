@@ -9,9 +9,9 @@ spring:
         password: @spring.dataSource.password@
         driverClassName: com.mysql.jdbc.Driver
 
-mybatis:
-  mapperLocations: classpath:mapper/*.xml
-  typeAliasesPackage: com.ms.dao.model
+#mybatis:
+#  mapperLocations: classpath:mapper/*.xml
+#  typeAliasesPackage: com.ms.dao.model
 
 pro:
     upload:

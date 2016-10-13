@@ -1,6 +1,6 @@
 package com.ms.boss.config;
 
-import com.ms.boss.Application;
+import com.ms.Application;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
