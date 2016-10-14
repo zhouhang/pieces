@@ -3,7 +3,7 @@
 <head>
 	<meta charset="UTF-8">
   	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>商品列表-boss</title>
+    <title>寄样列表-boss</title>
     <meta name="renderer" content="webkit" />
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
   	<link rel="stylesheet" href="assets/awesome/css/font-awesome.min.css">
@@ -42,8 +42,8 @@
 	<div class="content">
 		<div class="breadcrumb">
 			<ul>
-				<li>商品管理</li>
-        		<li>商品列表</li>
+				<li>寄样服务</li>
+        		<li>寄样列表</li>
     		</ul>
 		</div>
 
@@ -52,27 +52,29 @@
 				<div class="filter">
 					<form action="">
 						<ul>
-							<li><label>品种：</label><input type="text" class="ipt" placeholder="请输入"></li>
-							<li><label>商品名称：</label><input type="text" class="ipt" placeholder="商品名称"></li>
+							<li><label>联系人：</label><input type="text" class="ipt" placeholder="请输入"></li>
+							<li><label>联系电话：</label><input type="text" class="ipt" placeholder="商品名称"></li>
+							<li><label>寄样编号：</label><input type="text" class="ipt" placeholder="商品名称"></li>
 							<li>
-								<label>上/下架：</label>
+								<label>状态：</label>
 								<select name="" class="slt">
 									<option value="">全部</option>
-									<option value="">上架</option>
-									<option value="">下架</option>
+									<option value="">未受理</option>
+									<option value="">同意寄样</option>
+									<option value="">拒绝寄样</option>
+									<option value="">客户来访</option>
+									<option value="">已寄样</option>
+									<option value="">寄样完成</option>
 								</select>
 							</li>
-							<li>
+							<li class="wide">
 								<button class="ubtn ubtn-blue">搜索</button>
 							</li>
 						</ul>
 					</form>
 				</div>
 
-				<div class="action-add">
-					<button class="ubtn ubtn-blue" id="jaddNewCat">新建商品</button>
-				</div>
-				<div class="action-length">
+				<div class="action-length pb">
 					<span>显示</span>
 					<select name="" class="slt">
 						<option value="10">10</option>
@@ -88,72 +90,93 @@
 				<table>
 					<thead>
 						<tr>
-							<th><input type="checkbox"></th>
-							<th>商品名称</th>
-							<th>品种</th>
-							<th>标题</th>
-							<th>规格等级</th>
-							<th>产地</th>
-							<th>排序</th>
-							<th width="150">创建时间</th>
-							<th width="230" class="tc">操作</th>
+							<th>寄样编号</th>
+							<th>联系人</th>
+							<th>手机号</th>
+							<th>地区</th>
+							<th>意向商品</th>
+							<th width="120">创建时间</th>
+							<th>状态</th>
+							<th width="170" class="tc">操作</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td><input type="checkbox"></td>
-							<td>三七 <em class="c-red">【量大价优】</em></td>
-							<td>三七</td>
-							<td>三七  120头</td>
-							<td>120头</td>
-							<td>河南</td>
-							<td>100</td>
+							<td>20161014001</td>
+							<td>王先生</td>
+							<td>18801285391</td>
+							<td>安徽亳州</td>
+							<td>白芍  安徽  6-8号筛</td>
 							<td>2016-05-18 15:22</td>
+							<td><em class="status-1">未受理</em></td>
 							<td class="tc">
-								<a href="goods_edit.html" class="ubtn ubtn-blue jedit">编辑</a>
-								<a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
+								<a href="sample_edit.html" class="ubtn ubtn-blue jedit">查看详情</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">废弃</a>
 							</td>
 						</tr>
 						<tr>
-							<td><input type="checkbox"></td>
-							<td>三七 <em class="c-red">【量大价优】</em></td>
-							<td>三七</td>
-							<td>三七  100头</td>
-							<td>100头</td>
-							<td>河南</td>
-							<td>20</td>
+							<td>20161014002</td>
+							<td>黄先生</td>
+							<td>18801285392</td>
+							<td>河北廊坊</td>
+							<td>白芍  安徽  6-8号筛</td>
 							<td>2016-05-18 15:22</td>
+							<td><em class="status-2">同意寄样</em></td>
 							<td class="tc">
-								<a href="goods_edit.html" class="ubtn ubtn-blue jedit">编辑</a>
-								<a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
+								<a href="sample_edit.html" class="ubtn ubtn-blue jedit">查看详情</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">废弃</a>
 							</td>
 						</tr>
 						<tr>
-							<td><input type="checkbox"></td>
-							<td>白芍</td>
-							<td>白芍</td>
-							<td>亳州白芍 选货 过8-12号筛</td>
-							<td>过8号筛</td>
-							<td>亳州</td>
-							<td>30</td>
+							<td>20161014003</td>
+							<td>张女士</td>
+							<td>18801285393</td>
+							<td>湖北蕲春</td>
+							<td>白芍  安徽  6-8号筛</td>
 							<td>2016-05-18 15:22</td>
+							<td><em class="status-3">拒绝寄样</em></td>
 							<td class="tc">
-								<a href="goods_edit.html" class="ubtn ubtn-blue jedit">编辑</a>
-								<a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
+								<a href="sample_edit.html" class="ubtn ubtn-blue jedit">查看详情</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">废弃</a>
 							</td>
 						</tr>
-						<tr class="gray">
-							<td><input type="checkbox"></td>
-							<td>黄芩</td>
-							<td>黄芩</td>
-							<td>甘肃定西黄芪 杂质少 干度好   长期供应</td>
-							<td>过10号筛</td>
-							<td>甘肃</td>
-							<td>10</td>
+						<tr>
+							<td>20161014004</td>
+							<td>王某</td>
+							<td>18801285394</td>
+							<td>安徽亳州</td>
+							<td>白芍  安徽  6-8号筛</td>
 							<td>2016-05-18 15:22</td>
+							<td><em class="status-4">客户来访</em></td>
 							<td class="tc">
-								<a href="goods_edit.html" class="ubtn ubtn-blue jedit">编辑</a>
-								<a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
+								<a href="sample_edit.html" class="ubtn ubtn-blue jedit">查看详情</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">废弃</a>
+							</td>
+						</tr>
+						<tr>
+							<td>20161014004</td>
+							<td>王某</td>
+							<td>18801285394</td>
+							<td>安徽亳州</td>
+							<td>白芍  安徽  6-8号筛</td>
+							<td>2016-05-18 15:22</td>
+							<td><em class="status-5">已寄样</em></td>
+							<td class="tc">
+								<a href="sample_edit.html" class="ubtn ubtn-blue jedit">查看详情</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">废弃</a>
+							</td>
+						</tr>
+						<tr>
+							<td>20161014004</td>
+							<td>王某</td>
+							<td>18801285394</td>
+							<td>安徽亳州</td>
+							<td>白芍  安徽  6-8号筛</td>
+							<td>2016-05-18 15:22</td>
+							<td><em class="status-6">寄样完成</em></td>
+							<td class="tc">
+								<a href="sample_edit.html" class="ubtn ubtn-blue jedit">查看详情</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">废弃</a>
 							</td>
 						</tr>
 					</tbody>

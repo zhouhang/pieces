@@ -28,11 +28,11 @@ function _aside() {
 		var url = this.href.toLowerCase(),
 			hrefBefore = url.split('/')[3] + url.split('/')[4];
         if (URL === url) {
-            $(this).addClass('current').closest('dl').addClass('expand');
+            $(this).addClass('current').closest('dl').addClass('active');
             return false; // break
         }
 		if(urlBefore === hrefBefore){
-			$(this).closest('dl').addClass('expand');
+			// $(this).closest('dl').addClass('active');
 		}
     }) 
 
