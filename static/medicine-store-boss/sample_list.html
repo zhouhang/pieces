@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>寄样列表-boss</title>
+    <meta name="renderer" content="webkit" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+  	<link rel="stylesheet" href="assets/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class='wrapper'>
+
+	<div class="header">
+		<div class="logo">
+			<a href="index.html">药优优</a>
+		</div>
+		<div class="menu">
+			<ul>
+				<li>
+					<a href="#" class="dropdown-toggle"> <i class="fa fa-question-circle"></i> 帮助 </a>
+				</li>
+				<li class="dropdown user user-menu">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-user"></i>
+						<span class="hidden-xs">王彬</span>
+					</a>
+				</li>
+				<li>
+					<a href="/logout">
+						<i class="fa fa-power-off"></i>
+						退出
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<!-- 侧栏菜单 -->
+	<div class="aside" id="jaside"></div>
+
+	<div class="content">
+		<div class="breadcrumb">
+			<ul>
+				<li>寄样服务</li>
+        		<li>寄样列表</li>
+    		</ul>
+		</div>
+
+		<div class="box">
+			<div class="tools">
+				<div class="filter">
+					<form action="">
+						<ul>
+							<li><label>联系人：</label><input type="text" class="ipt" placeholder="请输入"></li>
+							<li><label>联系电话：</label><input type="text" class="ipt" placeholder="商品名称"></li>
+							<li><label>寄样编号：</label><input type="text" class="ipt" placeholder="商品名称"></li>
+							<li>
+								<label>状态：</label>
+								<select name="" class="slt">
+									<option value="">全部</option>
+									<option value="">未受理</option>
+									<option value="">同意寄样</option>
+									<option value="">拒绝寄样</option>
+									<option value="">客户来访</option>
+									<option value="">已寄样</option>
+									<option value="">寄样完成</option>
+								</select>
+							</li>
+							<li class="wide">
+								<button class="ubtn ubtn-blue">搜索</button>
+							</li>
+						</ul>
+					</form>
+				</div>
+
+				<div class="action-length pb">
+					<span>显示</span>
+					<select name="" class="slt">
+						<option value="10">10</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
+					<span>条结果</span>
+				</div>
+			</div>
+
+			<div class="table">
+				<table>
+					<thead>
+						<tr>
+							<th>寄样编号</th>
+							<th>联系人</th>
+							<th>手机号</th>
+							<th>地区</th>
+							<th>意向商品</th>
+							<th width="120">创建时间</th>
+							<th>状态</th>
+							<th width="170" class="tc">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>20161014001</td>
+							<td>王先生</td>
+							<td>18801285391</td>
+							<td>安徽亳州</td>
+							<td>白芍  安徽  6-8号筛</td>
+							<td>2016-05-18 15:22</td>
+							<td><em class="status-1">未受理</em></td>
+							<td class="tc">
+								<a href="sample_edit.html" class="ubtn ubtn-blue jedit">查看详情</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">废弃</a>
+							</td>
+						</tr>
+						<tr>
+							<td>20161014002</td>
+							<td>黄先生</td>
+							<td>18801285392</td>
+							<td>河北廊坊</td>
+							<td>白芍  安徽  6-8号筛</td>
+							<td>2016-05-18 15:22</td>
+							<td><em class="status-2">同意寄样</em></td>
+							<td class="tc">
+								<a href="sample_edit.html" class="ubtn ubtn-blue jedit">查看详情</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">废弃</a>
+							</td>
+						</tr>
+						<tr>
+							<td>20161014003</td>
+							<td>张女士</td>
+							<td>18801285393</td>
+							<td>湖北蕲春</td>
+							<td>白芍  安徽  6-8号筛</td>
+							<td>2016-05-18 15:22</td>
+							<td><em class="status-3">拒绝寄样</em></td>
+							<td class="tc">
+								<a href="sample_edit.html" class="ubtn ubtn-blue jedit">查看详情</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">废弃</a>
+							</td>
+						</tr>
+						<tr>
+							<td>20161014004</td>
+							<td>王某</td>
+							<td>18801285394</td>
+							<td>安徽亳州</td>
+							<td>白芍  安徽  6-8号筛</td>
+							<td>2016-05-18 15:22</td>
+							<td><em class="status-4">客户来访</em></td>
+							<td class="tc">
+								<a href="sample_edit.html" class="ubtn ubtn-blue jedit">查看详情</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">废弃</a>
+							</td>
+						</tr>
+						<tr>
+							<td>20161014004</td>
+							<td>王某</td>
+							<td>18801285394</td>
+							<td>安徽亳州</td>
+							<td>白芍  安徽  6-8号筛</td>
+							<td>2016-05-18 15:22</td>
+							<td><em class="status-5">已寄样</em></td>
+							<td class="tc">
+								<a href="sample_edit.html" class="ubtn ubtn-blue jedit">查看详情</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">废弃</a>
+							</td>
+						</tr>
+						<tr>
+							<td>20161014004</td>
+							<td>王某</td>
+							<td>18801285394</td>
+							<td>安徽亳州</td>
+							<td>白芍  安徽  6-8号筛</td>
+							<td>2016-05-18 15:22</td>
+							<td><em class="status-6">寄样完成</em></td>
+							<td class="tc">
+								<a href="sample_edit.html" class="ubtn ubtn-blue jedit">查看详情</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">废弃</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="pagination">
+				<div class="pages">
+					<a href="#" class="text">上页</a>
+					<span class="curr">1</span>
+					<a href="#">2</a>
+					<a href="#">3</a>
+					<i>...</i>
+					<a href="#">8</a>
+					<a href="#">9</a>
+					<a href="#" class="text">下页</a>
+				</div>
+				<div class="info">
+					显示第 1 至 10 项结果，共 <em id="pageSize">72</em> 项
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer">
+		<div class="inner">
+			&copy; <a href="#!">速采科技（武汉）有限公司</a> 版权所有. 
+		</div>
+	</div>
+	
+
+
+<script src="assets/js/jquery191.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/croppic.min.js"></script>
+<script src="assets/plugins/layer/layer.js"></script>
+<script src="assets/plugins/validator/jquery.validator.js?local=zh-CN"></script>
+<script>
+	var _global = {
+		v: {
+			deleteUrl: ''
+		},
+		fn: {
+			init: function() {
+                this.bindEvent();
+			},
+			bindEvent: function() {
+				var $table = $('.table'),
+					$cbx = $table.find('td input:checkbox'),
+					$checkAll = $table.find('th input:checkbox'),
+					count = $cbx.length;
+
+				// 删除
+				$table.on('click', '.jdel', function() {
+					var url = _global.v.deleteUrl + $(this).attr('href');
+                    layer.confirm('确认删除此品种？', {icon: 3, title: '提示'}, function (index) {
+                        $.get(url, function (data) {
+                            if (data.status == "y") {
+                                window.location.reload();
+                            }
+                        }, "json");
+                        layer.close(index);
+                    });
+                    return false; // 阻止链接跳转
+				})
+
+				// 全选
+				$checkAll.on('click', function() {
+					var isChecked = this.checked;
+					$cbx.each(function() {
+						this.checked = isChecked;
+					})
+				})
+				// 单选
+				$cbx.on('click', function() {
+					var _count = 0;
+					$cbx.each(function() {
+						_count += this.checked ? 1 : 0;
+					})
+					$checkAll.prop('checked', _count === count);
+				})
+			}
+		}
+	}
+
+	$(function() {
+		_global.fn.init();
+	})
+</script>
+</body>
+</html>
