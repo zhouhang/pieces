@@ -244,16 +244,16 @@
 			},
             myform: function() {
 
-                // 量大价优
                 var $jsalesPrice = $('#jsalesPrice'),
                 	$jprice = $('#jprice');
 
+                // 量大价优
             	$('#jsales').on('click', function() {
                     $jsalesPrice[this.checked ? 'show' : 'hide']()
                     .find('.ipt').removeClass('n-invalid').val('').trigger("hidemsg");
                     $jprice.attr('class', 'ipt').prop('disabled', this.checked).val('').trigger("hidemsg");
                     $('#myform').data('validator').options.ignore = this.checked ? $jprice : $jsalesPrice.find('.ipt');
-            	})
+            	}).prop('checked', false);
 
             	// 添加价格
             	var idx = $jsalesPrice.find('.cnt').length;
@@ -280,7 +280,6 @@
                         imgUrl: '图片: required'
                     }
                 });
-                // $('#myform').data('validator').options.ignore = '#jsalesPrice';
             },
             // 提交事件
             submitEvent: function() {
