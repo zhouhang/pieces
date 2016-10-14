@@ -1,0 +1,27 @@
+spring:
+    mvc:
+        view:
+            prefix: /WEB-INF/jsp/
+            suffix: .jsp
+    dataSource:
+        url: @spring.dataSource.url@
+        username: @spring.dataSource.username@
+        password: @spring.dataSource.password@
+        driverClassName: com.mysql.jdbc.Driver
+
+#mybatis:
+#  mapperLocations: classpath:mapper/*.xml
+#  typeAliasesPackage: com.ms.dao.model
+
+pro:
+    upload:
+      path: @pro.upload.path@
+      url: @pro.upload.url@
+logging:
+    level:
+        com.ms: DEBUG
+
+server:
+    error:
+        whitelabel:
+            enabled: false
