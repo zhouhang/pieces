@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ms.dao.UserDetailDao">
+    <resultMap id="UserDetailResultMap" type="com.ms.dao.model.UserDetail">
+            <id column="id"  property="id" />
+            <result column="type"  property="type" />
+            <result column="contacts"  property="contacts" />
+            <result column="phone"  property="phone" />
+            <result column="area"  property="area" />
+            <result column="name"  property="name" />
+            <result column="remark"  property="remark" />
+            <result column="user_id"  property="userId" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <resultMap id="UserDetailResultMapVo" type="com.ms.dao.vo.UserDetailVo">
+            <id column="id"  property="id" />
+            <result column="type"  property="type" />
+            <result column="contacts"  property="contacts" />
+            <result column="phone"  property="phone" />
+            <result column="area"  property="area" />
+            <result column="name"  property="name" />
+            <result column="remark"  property="remark" />
+            <result column="user_id"  property="userId" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,type,contacts,phone,area,name,remark,user_id,create_time,update_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="UserDetailResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_detail
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="UserDetailResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_detail
+    </select>
+
+    <select id="findByParams" resultMap="UserDetailResultMapVo" parameterType="com.ms.dao.vo.UserDetailVo">
+        select
+        <include refid="Base_Column_List" />
+        from user_detail
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from user_detail
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.UserDetail">
+        insert into
+        user_detail (type,contacts,phone,area,name,remark,user_id,create_time,update_time)
+        values
+        (#{type},#{contacts},#{phone},#{area},#{name},#{remark},#{userId},#{createTime},#{updateTime})
+    </insert>
+
+    <update id="update" parameterType="com.ms.dao.model.UserDetail">
+        update user_detail
+        <set>
+                                                        
+            <if test="type != null">
+                type = #{type},
+            </if>
+                                            
+            <if test="contacts != null">
+                contacts = #{contacts},
+            </if>
+                                            
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+                                            
+            <if test="area != null">
+                area = #{area},
+            </if>
+                                            
+            <if test="name != null">
+                name = #{name},
+            </if>
+                                            
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+                                            
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
