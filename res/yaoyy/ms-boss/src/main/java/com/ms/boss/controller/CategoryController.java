@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -34,27 +35,14 @@ public class CategoryController {
      * 按类别名查询列表
      * @param pageNum
      * @param pageSize
-     * @param name
-     * @param  level
-     * @param pid
      * @return
      */
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     @ResponseBody
-    public Result listCategory(@RequestParam(value = "pageNum",required = true,defaultValue = "1") Integer pageNum,
-                                @RequestParam(value = "pageSize",required = true,defaultValue = "10") Integer pageSize,
-                                @RequestParam(value = "name",required = false)String name,
-                                @RequestParam(value = "level",required = true,defaultValue = "1")Integer level,
-                                @RequestParam(value = "status",required = true,defaultValue = "1")Integer status,
-                                @RequestParam(value = "status",required = true,defaultValue = "0")Integer pid
+    public Result listCategory(@Valid CategoryVo categoryVo, Integer pageNum,
+                               Integer pageSize
                        ) {
-
-        CategoryVo categoryVo=new CategoryVo();
-        categoryVo.setVariety(name);
-        categoryVo.setLevel(level);
-        categoryVo.setStatus(status);
-        categoryVo.setPid(pid);
         PageInfo<CategoryVo> list = categoryService.findByParams(categoryVo,pageNum,pageSize);
         return Result.success().data(list);
     }
