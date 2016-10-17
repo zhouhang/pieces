@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>药优优</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="ui-body">
+    <header class="ui-header">
+        <div class="logo">药优优药材商城</div>
+        <div class="abs-r">
+            <a href="search.html"><i class="fa fa-search"></i></a>
+        </div>
+    </header><!-- /ui-header -->
+
+    <footer class="ui-footer">
+        <nav class="ui-nav">
+            <ul>
+                <li>
+                    <a class="current" href="index.html">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="yaocaigou.html">
+                        <i class="fa fa-list"></i>
+                        <span>品种列表</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="center.html">
+                        <i class="fa fa-cart"></i>
+                        <span>采购单</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="center.html">
+                        <i class="fa fa-order"></i>
+                        <span>订单</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </footer>
+
+    <section class="ui-content">
+
+        <div class="ui-slide" id="slide1">
+            <ul>
+                <li><a href="#"><img src="uploads/p1.jpg" alt=""></a></li>
+                <li><a href="#"><img src="uploads/p1.jpg" alt=""></a></li>
+                <li><a href="#"><img src="uploads/p1.jpg" alt=""></a></li>
+                <li><a href="#"><img src="uploads/p1.jpg" alt=""></a></li>
+            </ul>
+        </div>
+
+        <div class="ui-floor">
+            <a href="#"><img src="uploads/p2.jpg" alt=""></a>
+        </div>
+        <div class="ui-floor">
+            <a href="#"><img src="uploads/p3.jpg" alt=""></a>
+        </div>
+        <div class="ui-floor">
+            <a href="#"><img src="uploads/p4.jpg" alt=""></a>
+        </div>
+
+    </section><!-- /ui-content -->
+
+	
+    <script src="assets/js/zepto.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+
+    var _global = {
+        fn: {
+            init: function() {
+                this.slide();
+            },
+            slide: function() {
+                var $slide = $('#slide1'),
+                    $nav,
+                    length = $slide.find('li').length;
+
+                if (length < 2) {
+                    return;
+                }
+                var nav = ['<div class="nav">'];
+                for (var i = 0 ; i < length; i++) {
+                    nav.push( i === 0 ? '<i class="current"></i>' : '<i></i>');
+                }
+                nav.push('</div>');
+                $slide.append(nav.join(''));
+                $nav = $slide.find('i');
+
+                $slide.swipeSlide({
+                    index : 0,
+                    continuousScroll : true,
+                    autoSwipe : false,
+                    lazyLoad : true,
+                    firstCallback : function(i,sum){
+                        $nav.eq(i).addClass('current').siblings().removeClass('current');
+                    },
+                    callback : function(i,sum){
+                        $nav.eq(i).addClass('current').siblings().removeClass('current');
+                    }
+                });
+            }
+        }
+    }
+
+    $(function(){
+        _global.fn.init();
+
+    });
+
+</script>
+</body>
+</html>

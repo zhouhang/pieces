@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>编辑商品-boss</title>
+    <meta name="renderer" content="webkit" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+  	<link rel="stylesheet" href="assets/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class='wrapper'>
+
+	<div class="header">
+		<div class="logo">
+			<a href="index.html">药优优</a>
+		</div>
+		<div class="menu">
+			<ul>
+				<li>
+					<a href="#" class="dropdown-toggle"> <i class="fa fa-question-circle"></i> 帮助 </a>
+				</li>
+				<li class="dropdown user user-menu">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-user"></i>
+						<span class="hidden-xs">王彬</span>
+					</a>
+				</li>
+				<li>
+					<a href="/logout">
+						<i class="fa fa-power-off"></i>
+						退出
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<!-- 侧栏菜单 -->
+	<div class="aside" id="jaside"></div>
+
+	<div class="content">
+		<div class="breadcrumb">
+			<ul>
+				<li>商品管理</li>
+        		<li>商品列表</li>
+    		</ul>
+		</div>
+
+		<form id="myform">
+			<div class="box fa-form">
+				<div class="hd">基本信息</div>
+				<div class="item">
+					<div class="txt"><i>*</i>品种：</div>
+					<div class="cnt">
+						<input type="text" name="catname" id="jcatname" class="ipt" placeholder="品种" autocomplete="off">
+						<input type="hidden" name="catNameId">
+					</div>
+				</div>
+				<div class="item">
+					<div class="txt"><i>*</i>商品名称：</div>
+					<div class="cnt">
+						<input type="text" name="name" class="ipt" placeholder="商品名称" autocomplete="off">
+					</div>
+				</div>
+				<div class="item">
+					<div class="txt"><i>*</i>标题：</div>
+					<div class="cnt">
+						<input type="text" name="title" class="ipt" placeholder="标题" autocomplete="off">
+					</div>
+				</div>
+				<div class="item" id="junitPrice">
+					<div class="txt"><i>*</i>价格：</div>
+					<div class="cnt">
+						<div class="ipt-wrap">
+							<input type="text" name="price" class="ipt" id="jprice" placeholder="价格" autocomplete="off">
+							<span class="unit">元</span>
+						</div>
+						<label class="ml"><input type="checkbox" class="cbx" id="jsales">量大价优</label>
+					</div>
+				</div>
+				<div class="item hide" id="jsalesPrice">
+					<div class="txt"><i>*</i>公斤/价格：</div>
+					<div class="cnt">
+                        <div class="ipt-wrap">
+                            <input type="text" name="minKg1" class="ipt ipt-short" placeholder="1-99999" data-rule="required; range(1~99999)" autocomplete="off">
+                        </div>
+						<em>-</em>
+                        <div class="ipt-wrap">
+    						<input type="text" name="maxKg1" class="ipt ipt-short" placeholder="1-99999" data-rule="required; range(1~99999)" autocomplete="off">
+                        </div>
+						<em>公斤</em>
+						<div class="ipt-wrap ml">
+							<input type="text" name="price1" class="ipt ipt-short" placeholder="1-9999" data-rule="required; range(1~9999)" autocomplete="off">
+							<span class="unit">元</span>
+						</div>
+						<button type="button" class="ubtn ubtn-blue ml" id="jaddNewPrice">添加一行</button>
+					</div>
+				</div>
+				<div class="item">
+					<div class="txt"><i>*</i>规格等级：</div>
+					<div class="cnt">
+						<input type="text" name="level" class="ipt" placeholder="规格等级" autocomplete="off">
+					</div>
+				</div>
+				<div class="item">
+					<div class="txt"><i>*</i>产地：</div>
+					<div class="cnt">
+						<input type="text" name="originOf" class="ipt" placeholder="产地" autocomplete="off">
+					</div>
+				</div>
+				<div class="item">
+					<div class="txt"><i>*</i>采收年份：</div>
+					<div class="cnt">
+						<input type="text" name="year" class="ipt" placeholder="采收年份" autocomplete="off">
+					</div>
+				</div>
+			</div>
+
+			<div class="box fa-form">
+				<div class="hd">商品属性</div>
+				<table id="attribute">
+                    <thead>
+                        <tr>
+                            <th width="180">属性名</th>
+                            <th>属性值</th>
+                            <th width="80">操作</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3"><a href="javascript:;" class="c-blue" id="addAttribute">+增加新属性</a></td>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr>
+                            <td><div class="ipt-wrap"><input type="text" name="attrN_1" class="ipt" value="加工方式" autocomplete="off"></div></td>
+                            <td><div class="ipt-wrap"><input type="text" name="attrV_1" class="ipt" value="趁鲜加工" autocomplete="off"></div></td>
+                            <td><button class="ubtn ubtn-red">删除</button></td>
+                        </tr>
+                        <tr>
+                            <td><div class="ipt-wrap"><input type="text" name="attrN_2" class="ipt" value="年限" autocomplete="off"></div></td>
+                            <td><div class="ipt-wrap"><input type="text" name="attrV_2" class="ipt" value="今年新货" autocomplete="off"></div></td>
+                            <td><button class="ubtn ubtn-red">删除</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+			</div>
+
+			<div class="box fa-form">
+				<div class="hd">商品图片与详情</div>
+				<div class="item">
+                    <div class="txt"><i>*</i>商品图片：</div>
+                    <div class="cnt cnt-mul">
+                        <div class="up-img">
+                            <!-- <img src="images/blank.gif"><i class="del"></i> -->
+                        </div>
+                        <input type="hidden" value="" name="imgUrl" id="imgUrl">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="txt">
+                        <i>*</i>详细信息：
+                    </div>
+                    <div class="cnt cnt-mul">
+                        <img width="700" height="400" src="uploads/editor.jpg" alt="">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="txt">排序：</div>
+                    <div class="cnt">
+                        <input type="text" name="sort" class="ipt" placeholder="数字越大越靠前" autocomplete="off">
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="txt">上/下架：</div>
+                    <div class="cnt">
+                        <select name="" id="" class="slt">
+                            <option value="">上架</option>
+                            <option value="">下架</option>
+                        </select>                          
+                    </div>
+                </div>
+				<div class="ft">
+					<button type="submit" class="ubtn ubtn-blue" id="jsubmit">保存</button>
+				</div>
+			</div>
+
+		</form>
+	</div>
+
+	<div class="footer">
+		<div class="inner">
+			&copy; <a href="#!">速采科技（武汉）有限公司</a> 版权所有. 
+		</div>
+	</div>
+	
+
+<script src="assets/js/jquery191.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/croppic.min.js"></script>
+<script src="assets/js/jquery.autocomplete.js"></script>
+<script src="assets/plugins/layer/layer.js"></script>
+<script src="assets/plugins/validator/jquery.validator.min.js"></script>
+<script>
+	var _global = {
+		v: {
+		},
+		fn: {
+			init: function() {
+                this.catname();
+                this.myform();
+                this.submitEvent();
+                this.goodsImg();
+                this.parameter();
+			},
+			// 查询品种
+			catname: function() {
+				var $jcatname = $('#jcatname');
+				$jcatname.autocomplete({
+                    serviceUrl: 'catName.json',
+                    paramName: 'name',
+                    deferRequestBy: 100,
+                    showNoSuggestionNotice: true,
+                    noSuggestionNotice: '没有该品种',
+                    transformResult: function (response) {
+                        response = JSON.parse(response);
+                        if (response.status == "y") {
+                            return {
+                                suggestions: $.map(response.data, function (dataItem) {
+                                    return {value: dataItem.name, data: dataItem.id};
+                                })
+                            };
+                        } else {
+                            return {
+                                suggestions: []
+                            }
+                        }
+                    },
+                    onSelect: function (suggestion) {
+                        $jcatname.next().val(suggestion.data); // 保存品种id到隐藏文本域
+                    }
+                });
+			},
+            myform: function() {
+
+                var $jsalesPrice = $('#jsalesPrice'),
+                	$jprice = $('#jprice');
+
+                // 量大价优
+            	$('#jsales').on('click', function() {
+                    $jsalesPrice[this.checked ? 'show' : 'hide']()
+                    .find('.ipt').removeClass('n-invalid').val('').trigger("hidemsg");
+                    $jprice.attr('class', 'ipt').prop('disabled', this.checked).val('').trigger("hidemsg");
+                    $('#myform').data('validator').options.ignore = this.checked ? $jprice : $jsalesPrice.find('.ipt');
+            	}).prop('checked', false);
+
+            	// 添加价格
+            	var idx = $jsalesPrice.find('.cnt').length;
+            	$('#jaddNewPrice').on('click', function() {
+            		$jsalesPrice.append('<div class="cnt"> \n <div class="ipt-wrap"><input type="text" name="minKg' + (++idx) + '" class="ipt ipt-short" data-rule="required; range(1~99999)" placeholder="1-99999" autocomplete="off"></div> \n <em>-</em> \n <div class="ipt-wrap"><input type="text" name="maxKg' + idx + '" class="ipt ipt-short" data-rule="required; range(1~99999)" placeholder="1-99999" autocomplete="off"></div> \n <em>公斤</em> \n <div class="ipt-wrap ml"> \n <input type="text" name="price' + idx + '" class="ipt ipt-short" placeholder="1-9999" data-rule="required; range(1~9999)" autocomplete="off"> \n <span class="unit">元</span> \n </div> \n <button type="button" class="ubtn ubtn-red ml">删除</button> \n </div>');
+            	})
+
+            	// 删除价格
+            	$jsalesPrice.on('click', '.ubtn-red', function(){
+            		$(this).parent().remove();
+            	})
+
+            	// 表单验证
+                $("#myform").validator({
+                	ignore: $jsalesPrice.find('.ipt'),
+                    fields: {
+                    	catname: '品种: required',
+                    	name: '商品名称: required; length(1~20)',
+                    	title: '标题: required; length(1~50)',
+                    	price: '价格: required; range(1~9999)',
+                    	level: '规格等级: required',
+                    	originOf: '产地: required',
+                    	year: '采收年份: required',
+                        imgUrl: '图片: required'
+                    }
+                });
+            },
+            // 提交事件
+            submitEvent: function() {
+                var self = this;
+                return this;
+                $('#jsubmit').on('click', function() {
+                    $.notify({
+                        type: 'success', 
+                        title: '保存成功',
+                        text: '3秒后自动跳转到商品详情页', 
+                        delay: 3e3, 
+                        call: function() {
+                            setTimeout(function() {
+                                location.href = 'goods_list.html';
+                            }, 3e3);
+                        }
+                    });
+                    return false;
+                })
+            },
+            // 商品图片
+            goodsImg: function() {
+                var self = this,
+                	$upImg = $('.up-img');
+
+                // 删除图片
+                $upImg.on('click', '.del', function() {
+                    var $self = $(this);
+                    layer.confirm('确认删除商品图片？', {
+                        btn: ['确认','取消'] //按钮
+                    }, function(index){
+                    	$upImg.empty().next().val('');
+                        layer.close(index);
+                    });
+                    return false;
+                })
+                // 点击图片无效
+                $upImg.on('click', 'img', function() {
+                    return false;
+                })
+
+                // 图片裁剪弹层框
+                $upImg.on('click', function() {
+                    layer.open({
+                        skin: 'layui-layer-molv', 
+                        area: ['600px'],
+                        closeBtn: 1,
+                        type: 1,
+                        moveType: 1,
+                        content: '<div class="img-upload-main"><div class="clip" id="imgCrop"></div></div>',
+                        title: '上传图片',
+                        cancel: function() {
+                            self.cropModal.destroy();
+                        }
+                    });
+
+                    self.croppic();
+                });
+            },
+            croppic: function() {
+                var options = {
+                    uploadUrl:'img_save_to_file.php',
+                    cropUrl:'img_crop_to_file.php',
+                    outputUrlId:'imgUrl',
+                    imgEyecandyOpacity:0.5,
+                    loaderHtml:'<span class="loader">正在上传图片，请稍后...</span>',
+                    onAfterImgCrop:function(response){ 
+                        $('.up-img').html('<img src="' + response.url + '" /><i class="del" title="删除"></i>');
+                        $('#imgUrl').trigger('validate');
+                        // 关闭弹层
+                        layer.closeAll();
+                    },
+                    onError:function(msg){
+                        $.notify({
+                            type: 'error', 
+                            title: msg.title,   // 不允许的文件类型
+                            text: msg.message,     //'支持 jpg、jepg、png、gif等格式图片文件', 
+                            delay: 3e3
+                        });
+                    }
+                }
+                this.cropModal = new Croppic('imgCrop', options);
+            },
+            // 商品自定义参数
+            parameter: function() {
+                var $table = $('#attribute').find('tbody'),
+                	idx = $table.find('tr').length;
+                
+                // 新增
+                $('#addAttribute').on('click', function(){
+                    var tr = '<tr> \n <td><div class="ipt-wrap"><input type="text" name="attrN_' + (++idx) + '" class="ipt" value="" autocomplete="off"></div></td> \n <td><div class="ipt-wrap"><input type="text" name="attrV_' + idx + '" class="ipt" value="" autocomplete="off"></div></td> \n <td><button class="ubtn ubtn-red">删除</button></td> \n </tr>';
+                    $table.append(tr);
+                })
+
+                // 删除
+                $table.on('click', '.ubtn-red', function() {
+                    $(this).closest('tr').remove();
+                })
+            }
+		}
+	}
+
+	$(function() {
+		_global.fn.init();
+	})
+</script>
+</body>
+</html>
