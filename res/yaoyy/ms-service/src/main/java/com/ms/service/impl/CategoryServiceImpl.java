@@ -20,6 +20,10 @@ public class CategoryServiceImpl  extends AbsCommonService<Category> implements 
 
 	@Override
 	public PageInfo<CategoryVo> findByParams(CategoryVo categoryVo,Integer pageNum,Integer pageSize) {
+		if (pageNum == null || pageSize == null) {
+			pageNum = 1;
+			pageSize = 10;
+		}
     PageHelper.startPage(pageNum, pageSize);
     	List<CategoryVo>  list = categoryDao.findByParams(categoryVo);
         PageInfo page = new PageInfo(list);

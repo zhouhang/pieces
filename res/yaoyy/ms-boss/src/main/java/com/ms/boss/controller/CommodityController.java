@@ -1,10 +1,13 @@
 package com.ms.boss.controller;
 
+import com.ms.dao.model.Admin;
 import com.ms.dao.model.Commodity;
 import com.ms.service.CommodityService;
 import com.ms.tools.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,10 +27,52 @@ public class CommodityController {
     @Autowired
     CommodityService commodityService;
 
-    @RequestMapping(value = "index", method = RequestMethod.GET)
-    @ResponseBody
-    public Result index() {
-        List<Commodity> list = commodityService.findAll();
-        return Result.success().data(list);
+    /**
+     * 商品列表页面
+     * @param commodity
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @RequestMapping(value = "list", method = RequestMethod.GET)
+    public String list(Commodity commodity, Integer pageNum, Integer pageSize, ModelMap model) {
+        return "";
     }
+
+    /**
+     * 商品详情
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
+    public String detail(@PathVariable("id") Integer id, ModelMap model) {
+        return "";
+    }
+
+
+    /**
+     * 保存
+     * @param commodity
+     * @return
+     */
+    @RequestMapping(value = "save", method = RequestMethod.POST)
+    @ResponseBody
+    public Result save(Commodity commodity) {
+        return null;
+    }
+
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "detete/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public Result delete(@PathVariable("id") Integer id) {
+        return null;
+    }
+
+
 }
