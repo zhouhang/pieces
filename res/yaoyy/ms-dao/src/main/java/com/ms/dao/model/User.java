@@ -10,14 +10,18 @@ public class User  implements Serializable {
 	
 	private Integer id;
 	
+	//1：注册用户，0：申请寄样生成的用户
 	private Integer type;
 	
+	//手机号
 	private String phone;
 	
+	//用户密码
 	private String password;
 	
 	private String salt;
 	
+	//用户公众号对应的openid
 	private String openid;
 	
 	private Date updateTime;

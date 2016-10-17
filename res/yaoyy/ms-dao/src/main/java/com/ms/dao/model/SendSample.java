@@ -10,12 +10,16 @@ public class SendSample  implements Serializable {
 	
 	private Integer id;
 	
+	//user表主键
 	private Integer userId;
 	
+	//寄样单号
 	private String code;
 	
+	//寄样商品
 	private String intention;
 	
+	//上下架状态 0：下架，1：上架
 	private Integer status;
 	
 	private Date updateTime;

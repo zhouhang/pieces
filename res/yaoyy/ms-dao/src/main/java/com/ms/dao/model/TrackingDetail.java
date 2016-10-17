@@ -10,16 +10,22 @@ public class TrackingDetail  implements Serializable {
 	
 	private Integer id;
 	
+	//1：物流信息 ，2：客户来访信息
 	private Integer type;
 	
+	//快递公司
 	private String company;
 	
+	//快递单号
 	private String trackingNo;
 	
+	//来访人
 	private String vistor;
 	
+	//来访电话
 	private String vistorPhone;
 	
+	//来访时间
 	private Date vistorTime;
 	
 	private Date createTime;

@@ -10,16 +10,22 @@ public class SampleTracking  implements Serializable {
 	
 	private Integer id;
 	
+	//操作人id
 	private Integer operator;
 	
+	//操作人名称
 	private String name;
 	
+	//0：后台人员,1:前台用户
 	private Integer type;
 	
+	//寄样单id
 	private Integer sendId;
 	
+	//追踪类型 0：申请寄样，1：同意寄样，2：拒绝寄样，3:客户预约，4：寄送样品，5：客户已收货，6：跟踪记录，7：客户留言，8：寄样单受理完成
 	private Integer recordType;
 	
+	//寄样追踪附加内容：如同意理由，等等
 	private String extra;
 	
 	private Date createTime;

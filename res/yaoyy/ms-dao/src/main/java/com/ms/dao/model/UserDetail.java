@@ -10,18 +10,25 @@ public class UserDetail  implements Serializable {
 	
 	private Integer id;
 	
+	//补全信息类型
 	private Integer type;
 	
-	private String contacts;
+	//联系人姓名
+	private String nickname;
 	
+	//联系电话
 	private String phone;
 	
+	//地区
 	private String area;
 	
+	//姓名/公司
 	private String name;
 	
+	//用户备注
 	private String remark;
 	
+	//user表id
 	private Integer userId;
 	
 	private Date createTime;
@@ -46,12 +53,12 @@ public class UserDetail  implements Serializable {
 		this.type = type;
 	}
 	
-	public String getContacts() {
-		return contacts;
+	public String getNickname() {
+		return nickname;
 	}
 
-	public void setContacts(String contacts) {
-		this.contacts = contacts;
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 	
 	public String getPhone() {

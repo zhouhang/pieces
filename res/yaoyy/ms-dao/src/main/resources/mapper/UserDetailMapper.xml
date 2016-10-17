@@ -4,7 +4,7 @@
     <resultMap id="UserDetailResultMap" type="com.ms.dao.model.UserDetail">
             <id column="id"  property="id" />
             <result column="type"  property="type" />
-            <result column="contacts"  property="contacts" />
+            <result column="nickname"  property="nickname" />
             <result column="phone"  property="phone" />
             <result column="area"  property="area" />
             <result column="name"  property="name" />
@@ -18,7 +18,7 @@
     <resultMap id="UserDetailResultMapVo" type="com.ms.dao.vo.UserDetailVo">
             <id column="id"  property="id" />
             <result column="type"  property="type" />
-            <result column="contacts"  property="contacts" />
+            <result column="nickname"  property="nickname" />
             <result column="phone"  property="phone" />
             <result column="area"  property="area" />
             <result column="name"  property="name" />
@@ -30,7 +30,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,type,contacts,phone,area,name,remark,user_id,create_time,update_time
+        id,type,nickname,phone,area,name,remark,user_id,create_time,update_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="UserDetailResultMap">
@@ -64,9 +64,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.UserDetail">
         insert into
-        user_detail (type,contacts,phone,area,name,remark,user_id,create_time,update_time)
+        user_detail (type,nickname,phone,area,name,remark,user_id,create_time,update_time)
         values
-        (#{type},#{contacts},#{phone},#{area},#{name},#{remark},#{userId},#{createTime},#{updateTime})
+        (#{type},#{nickname},#{phone},#{area},#{name},#{remark},#{userId},#{createTime},#{updateTime})
     </insert>
 
     <update id="update" parameterType="com.ms.dao.model.UserDetail">
@@ -77,8 +77,8 @@
                 type = #{type},
             </if>
                                             
-            <if test="contacts != null">
-                contacts = #{contacts},
+            <if test="nickname != null">
+                nickname = #{nickname},
             </if>
                                             
             <if test="phone != null">

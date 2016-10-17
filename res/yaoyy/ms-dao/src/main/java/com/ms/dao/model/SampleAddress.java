@@ -4,21 +4,25 @@ import java.io.Serializable;
 import java.util.Date;
 
 
-
 public class SampleAddress  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
 	
+	//收货地址
 	private String address;
 	
+	//收货人
 	private String receiver;
 	
+	//收货人电话
 	private String receiverPhone;
 	
+	//备注信息
 	private String remark;
 	
+	//寄样单id
 	private Integer sendId;
 	
 	private Date createTime;
