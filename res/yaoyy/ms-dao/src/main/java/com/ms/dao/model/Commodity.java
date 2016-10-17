@@ -13,11 +13,14 @@ public class Commodity  implements Serializable {
 	private String title;
 	
 	private String name;
-	
+
+	// 年限
 	private String harYear;
-	
+
+	// 产地
 	private String origin;
-	
+
+	//规格等级
 	private String spec;
 	
 	private Integer categoryId;
@@ -25,15 +28,20 @@ public class Commodity  implements Serializable {
 	private String pictureUrl;
 	
 	private String detail;
-	
+
+	//0：下架，1：上架
 	private Integer status;
-	
+
+	// 商品属性 JSON 串
 	private String attribute;
-	
+
+	// 价格
 	private Float price;
-	
+
+	// 单位
 	private String unit;
-	
+
+	// 排序
 	private Integer sort;
 	
 	//标记是否量大价优

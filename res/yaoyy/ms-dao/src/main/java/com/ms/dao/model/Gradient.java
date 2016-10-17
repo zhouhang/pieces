@@ -11,13 +11,17 @@ public class Gradient  implements Serializable {
 	private Integer id;
 	
 	private Integer commodityId;
-	
+
+	//起步数量
 	private Float start;
-	
+
+	// 终止数量
 	private Float end;
-	
+
+	// 价格
 	private Float price;
-	
+
+	// 单位: 斤 条 个
 	private String unit;
 	
 	private Date createTime;
