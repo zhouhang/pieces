@@ -8,6 +8,7 @@ import com.ms.service.CategoryService;
 import com.ms.tools.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -39,12 +40,11 @@ public class CategoryController {
      */
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    @ResponseBody
-    public Result listCategory(@Valid CategoryVo categoryVo, Integer pageNum,
-                               Integer pageSize
+    public String listCategory(CategoryVo categoryVo, Integer pageNum,
+                               Integer pageSize,ModelMap model
                        ) {
         PageInfo<CategoryVo> list = categoryService.findByParams(categoryVo,pageNum,pageSize);
-        return Result.success().data(list);
+        return "";
     }
 
     /**
@@ -59,7 +59,7 @@ public class CategoryController {
         category.setCreateTime(now);
         category.setUpdateTime(now);
         Integer id= categoryService.create(category);
-        return Result.success().data(id).msg("保存成功");
+        return null;
     }
 
     /**
@@ -67,13 +67,9 @@ public class CategoryController {
      * @return
      */
     @RequestMapping(value = "/all", method = RequestMethod.POST)
-    @ResponseBody
-    public Result findAllCategory(@RequestParam(value = "status",required = true,defaultValue = "1")Integer status){
-        CategoryVo categoryVo=new CategoryVo();
-        categoryVo.setLevel(1);
-        categoryVo.setStatus(status);
+    public String findAllCategory(CategoryVo categoryVo,ModelMap model){
         List<CategoryVo> categoryList= categoryService.findAllCategory(categoryVo);
-        return Result.success().data(categoryList);
+        return "";
     }
 
     /**
@@ -114,10 +110,9 @@ public class CategoryController {
      */
 
     @RequestMapping(value = "/get/{id}",method = RequestMethod.GET)
-    @ResponseBody
-    public Result getCategory(@PathVariable("id") Integer id){
+    public String getCategory(@PathVariable("id") Integer id,ModelMap model){
         Category category=categoryService.findById(id);
-        return Result.success().data(category);
+        return "";
     }
 
 
