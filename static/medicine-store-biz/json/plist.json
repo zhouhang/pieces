@@ -1,0 +1,46 @@
+{
+    "status" : "success",
+    "list" : [
+        {
+            "href" : "product_detail.html",
+            "title" : "三七",
+            "summary" : "云南文山三七120/80/60头  上等货洗净   无硫  长期供应",
+            "price" : "380-400",
+            "unit": "公斤",
+            "sales": true,
+            "pic" : "uploads/p5.jpg"
+        },{
+            "href" : "product_detail.html",
+            "title" : "天麻",
+            "summary" : "安徽天麻  无硫  统货  2015版药典标准 长期供应",
+            "price" : "110",
+            "unit": "公斤",
+            "sales": false,
+            "pic" : "uploads/p6.jpg"
+        },{
+            "href" : "product_detail.html",
+            "title" : "当归",
+            "summary" : "甘肃当归  选货  10/12号筛  包加工",
+            "price" : "400",
+            "unit": "公斤",
+            "sales": true,
+            "pic" : "uploads/p7.jpg"
+        },{
+            "href" : "product_detail.html",
+            "title" : "黄连",
+            "summary" : "甘肃定西黄连  10号筛  B级杂质少  干度 好  长期供应",
+            "price" : "80",
+            "unit": "公斤",
+            "sales": false,
+            "pic" : "uploads/p8.jpg"
+        },{
+            "href" : "product_detail.html",
+            "title" : "白芍",
+            "summary" : "安徽亳州白芍  选货  过10-12号筛 ",
+            "price" : "120",
+            "unit": "公斤",
+            "sales": true,
+            "pic" : "uploads/p9.jpg"
+        }
+    ]
+}
