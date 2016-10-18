@@ -13,7 +13,7 @@
 <body class="ui-body">
     <header class="ui-header">
         <div class="logo">药优优药材商城</div>
-        <div class="abs-r">
+        <div class="abs-r mid">
             <a href="search.html"><i class="fa fa-search"></i></a>
         </div>
     </header><!-- /ui-header -->
@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="yaocaigou.html">
+                    <a href="product_list.html">
                         <i class="fa fa-list"></i>
                         <span>品种列表</span>
                     </a>
@@ -61,13 +61,13 @@
         </div>
 
         <div class="ui-floor">
-            <a href="#"><img src="uploads/p2.jpg" alt=""></a>
+            <a href="subject.html"><img src="uploads/p2.jpg" alt=""></a>
         </div>
         <div class="ui-floor">
-            <a href="#"><img src="uploads/p3.jpg" alt=""></a>
+            <a href="subject.html"><img src="uploads/p3.jpg" alt=""></a>
         </div>
         <div class="ui-floor">
-            <a href="#"><img src="uploads/p4.jpg" alt=""></a>
+            <a href="subject.html"><img src="uploads/p4.jpg" alt=""></a>
         </div>
 
     </section><!-- /ui-content -->
@@ -99,14 +99,10 @@
                 $nav = $slide.find('i');
 
                 $slide.swipeSlide({
-                    index : 0,
-                    continuousScroll : true,
-                    autoSwipe : false,
-                    lazyLoad : true,
-                    firstCallback : function(i,sum){
+                    firstCallback : function(i){
                         $nav.eq(i).addClass('current').siblings().removeClass('current');
                     },
-                    callback : function(i,sum){
+                    callback : function(i){
                         $nav.eq(i).addClass('current').siblings().removeClass('current');
                     }
                 });
