@@ -40,10 +40,10 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
 
 
-    @Value("${spring.mvc.view.prefix}")
-    private String prefix;
-    @Value("${spring.mvc.view.suffix}")
-    private String suffix;
+//    @Value("${spring.mvc.view.prefix}")
+//    private String prefix;
+//    @Value("${spring.mvc.view.suffix}")
+//    private String suffix;
 
 
     @Override
@@ -81,15 +81,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     }
 
-    @Bean
-    public InternalResourceViewResolver defaultViewResolver() {
-        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-        viewResolver.setOrder(2);
-        viewResolver.setViewClass(JstlView.class);
-        viewResolver.setPrefix(prefix);
-        viewResolver.setSuffix(suffix);
-        return viewResolver;
-    }
+//    @Bean
+//    public InternalResourceViewResolver defaultViewResolver() {
+//        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+//        viewResolver.setOrder(2);
+//        viewResolver.setViewClass(JstlView.class);
+//        viewResolver.setPrefix(prefix);
+//        viewResolver.setSuffix(suffix);
+//        return viewResolver;
+//    }
 
     @Bean
     public DispatcherServlet dispatcherServlet() {

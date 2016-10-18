@@ -8,6 +8,10 @@ spring:
         username: @spring.dataSource.username@
         password: @spring.dataSource.password@
         driverClassName: com.mysql.jdbc.Driver
+    freemarker:
+            suffix: .ftl
+            templateEncoding: UTF-8
+            templateLoaderPath: classpath:/templates/
 
 #mybatis:
 #  mapperLocations: classpath:mapper/*.xml
