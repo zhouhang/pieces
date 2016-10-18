@@ -26,6 +26,11 @@ public class SampleTrackingServiceImpl  extends AbsCommonService<SampleTracking>
         return page;
 	}
 
+	@Override
+	public List<SampleTrackingVo> findAllByParams(SampleTrackingVo sampleTrackingVo) {
+		return sampleTrackingDao.findByParams(sampleTrackingVo);
+	}
+
 
 	@Override
 	public ICommonDao<SampleTracking> getDao() {
