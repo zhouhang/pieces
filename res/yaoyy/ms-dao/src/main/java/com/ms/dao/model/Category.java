@@ -12,24 +12,24 @@ public class Category  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-
+	//父类id
 	private Integer pid;
-
+    //商品名称
 	private String variety;
-	
+	//商品标题
 	private String title;
-	
+	//价格描述
 	private String priceDesc;
-	
+	//排序
 	private Integer sort;
-	
+
 	private Date createTime;
-	
+	//图片地址
 	private String pictureUrl;
 	
 	//0：下架，1：上架
 	private Integer status;
-	
+	//类别（商品）的等级
 	private Integer level;
 	
 	private Date updateTime;
