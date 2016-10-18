@@ -19,7 +19,7 @@ public class SendSample  implements Serializable {
 	//寄样商品
 	private String intention;
 	
-	//上下架状态 0：下架，1：上架
+	//处理状态：
 	private Integer status;
 	
 	private Date updateTime;

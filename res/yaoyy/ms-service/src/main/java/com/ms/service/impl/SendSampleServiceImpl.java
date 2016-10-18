@@ -20,7 +20,11 @@ public class SendSampleServiceImpl  extends AbsCommonService<SendSample> impleme
 
 	@Override
 	public PageInfo<SendSampleVo> findByParams(SendSampleVo sendSampleVo,Integer pageNum,Integer pageSize) {
-    PageHelper.startPage(pageNum, pageSize);
+		if (pageNum == null || pageSize == null) {
+			pageNum = 1;
+			pageSize = 10;
+		}
+        PageHelper.startPage(pageNum, pageSize);
     	List<SendSampleVo>  list = sendSampleDao.findByParams(sendSampleVo);
         PageInfo page = new PageInfo(list);
         return page;

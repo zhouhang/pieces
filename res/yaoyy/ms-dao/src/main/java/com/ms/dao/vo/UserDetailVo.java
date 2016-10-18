@@ -4,4 +4,5 @@ import com.ms.dao.model.UserDetail;
 
 public class UserDetailVo extends UserDetail{
 
+
 }

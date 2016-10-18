@@ -20,6 +20,9 @@
             <result column="status"  property="status" />
             <result column="update_time"  property="updateTime" />
             <result column="create_time"  property="createTime" />
+            <result column="nickname"  property="nickname" />
+            <result column="phone"  property="phone" />
+            <result column="area"  property="area" />
         
     </resultMap>
 
@@ -42,11 +45,22 @@
 
     <select id="findByParams" resultMap="SendSampleResultMapVo" parameterType="com.ms.dao.vo.SendSampleVo">
         select
-        <include refid="Base_Column_List" />
-        from send_sample
+        *,ud.nickname,ud.phone,ud.area
+        from send_sample ss
+        LEFT JOIN user_detail ud on ss.user_id = ud.user_id
         <where>
-            <if test="id != null">
-                id = #{id}
+            1=1
+            <if test="nickname != null">
+                and ud.nickname  like CONCAT('%','${nickname}','%' )
+            </if>
+            <if test="phone != null">
+                and ud.phone like CONCAT('%','${phone}','%' )
+            </if>
+            <if test="code != null">
+                and ss.code=#{code}
+            </if>
+            <if test="status != null">
+                and ss.status=#{status}
             </if>
         </where>
     </select>
