@@ -43,8 +43,9 @@ public class CategoryController {
     public String listCategory(CategoryVo categoryVo, Integer pageNum,
                                Integer pageSize,ModelMap model
                        ) {
-        PageInfo<CategoryVo> list = categoryService.findByParams(categoryVo,pageNum,pageSize);
-        return "";
+        PageInfo<CategoryVo> categoryList = categoryService.findByParams(categoryVo,pageNum,pageSize);
+        model.put("categoryList",categoryList);
+        return "commodity_list";
     }
 
     /**
