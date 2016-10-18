@@ -1,11 +1,9 @@
 <!-- footer start -->
 <div class="footer">
-    <div class="wrap">
-        <div class="copyright">
-            <p>上工好药电商管理系统 版本 1.0  版权所有 &copy; 2016 上工好药</p>
-        </div>
+    <div class="inner">
+        &copy; <a href="#!">速采科技（武汉）有限公司</a> 版权所有.
     </div>
 </div>
 <!-- footer end -->
-<script src="/js/jquery.form.js"></script>
-<script src="/js/common.js"></script>
+<script src="assets/js/jquery191.js"></script>
+<script src="assets/js/app.js"></script>

@@ -1,7 +1,7 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<base href="${baseUrl}"/>
-<link type="text/css" rel="stylesheet" href="/css/style.css" />
-<script src="/js/jquery.min.js"></script>
-<#--<link rel="shortcut icon" href="/assets/favicon.ico" />-->
+<meta name="renderer" content="webkit" />
+<base href="http://127.0.0.1:8080/"/>
+<link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />
+<link type="text/css" rel="stylesheet" href="assets/css/style.css" />
+<link rel="stylesheet" href="assets/awesome/css/font-awesome.min.css">

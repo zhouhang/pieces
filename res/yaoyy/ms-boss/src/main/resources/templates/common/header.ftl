@@ -1,119 +1,24 @@
-<!-- header start -->
 <div class="header">
-    <div class="wrap">
-        <div class="logo">
-            <a href="/"><em>上工好药</em>电子商务管理系统</a>
-        </div>
-        <div class="user">
-            <span>登录用户 ${member_session_boss.username }</span>
-            <i>|</i>
-            <span>${.now?string("yyyy-MM-dd EEEE")}</span>
-            <i>|</i>
-            <a href="logout">退出</a>
-        </div>
+    <div class="logo">
+        <a href="index.html">药优优</a>
     </div>
-</div>
-<!-- header end -->
-
-<!-- nav start -->
-<div class="nav">
-    <div class="wrap">
+    <div class="menu">
         <ul>
-            <li><a href="/">首页</a></li>
-            <@shiro.hasPermission name="sales:index">
-                <li>
-                    <a href="javascript:;">销售</a>
-                    <div class="subnav">
-                    <@shiro.hasPermission name="enquiry:index">
-                    <a href="/enquiry/index">询价管理</a>
-                    </@shiro.hasPermission>
-                    <@shiro.hasPermission name="order:index">
-                    <a href="/order/index">订单管理</a>
-                    </@shiro.hasPermission>
-                    <@shiro.hasPermission name="pay:index">
-                    <a href="/payment/index">支付管理</a>
-                    </@shiro.hasPermission>
-                    <@shiro.hasPermission name="bill:index">
-                    <a href="/account/bill/index">账单管理</a>
-                    </@shiro.hasPermission>
-                    <@shiro.hasPermission name="logistical:index">
-                    <a href="/logistics/index">物流管理</a>
-                    </@shiro.hasPermission>
-                    </div>
-                </li>
-            </@shiro.hasPermission>
-            <@shiro.hasPermission name="directory:index">
-                <li>
-                    <a href="javascript:;">目录</a>
-                    <div class="subnav">
-                    <@shiro.hasPermission name="commodity:index">
-                        <a href="/commodity/index">商品管理</a>
-                    </@shiro.hasPermission>
-                    <@shiro.hasPermission name="category:index">
-                        <a href="/category/list">分类管理</a>
-                    </@shiro.hasPermission>
-                    <@shiro.hasPermission name="breed:index">
-                        <a href="/breed/list">品种管理</a>
-                    </@shiro.hasPermission>
-                    </div>
-                </li>
-            </@shiro.hasPermission>
-            <@shiro.hasPermission name="customer:index">
-                <li>
-                    <a href="javascript:;">客户</a>
-                    <div class="subnav">
-                        <@shiro.hasPermission name="   customer:view">
-                        <a href="user/index">客户管理</a>
-                        </@shiro.hasPermission>
-                    </div>
-                </li>
-            </@shiro.hasPermission>
-            <@shiro.hasPermission name="promotion:index">
-                <li>
-                    <a href="javascript:;">促销</a>
-                    <div class="subnav">
-                    <@shiro.hasPermission name="ad:index">
-                        <a href="ad/index">广告管理</a>
-                    </@shiro.hasPermission>
-                    </div>
-                </li>
-            </@shiro.hasPermission>
-            <@shiro.hasPermission name="cms:index">
-                <li>
-                    <a href="javascript:;">CMS</a>
-                    <div class="subnav">
-                        <@shiro.hasPermission name="single:index">
-                            <a href="cms/article/index?model=1">单页面管理</a>
-                        </@shiro.hasPermission>
-                        <@shiro.hasPermission name="single:category">
-                            <a href="cms/category/index?model=1">单页面分类管理</a>
-                        </@shiro.hasPermission>
-                        <@shiro.hasPermission name="post:index">
-                            <a href="cms/article/index?model=2">文章管理</a>
-                        </@shiro.hasPermission>
-                        <@shiro.hasPermission name="post:category">
-                            <a href="cms/category/index?model=2">文章分类管理</a>
-                        </@shiro.hasPermission>
-                    </div>
-                </li>
-            </@shiro.hasPermission>
-            <@shiro.hasPermission name="system:index">
-                <li>
-                    <a href="javascript:;">系统</a>
-                    <div class="subnav">
-                        <@shiro.hasPermission name="member:index">
-                            <a href="member/index">用户管理</a>
-                        </@shiro.hasPermission>
-                        <@shiro.hasPermission name="role:index">
-                            <a href="role/index">角色管理</a>
-                        </@shiro.hasPermission>
-                        <@shiro.hasPermission name="bank:index">
-                            <a href="bank/index">收款账户管理</a>
-                        </@shiro.hasPermission>
-                    </div>
-                </li>
-            </@shiro.hasPermission>
+            <li>
+                <a href="#" class="dropdown-toggle"> <i class="fa fa-question-circle"></i> 帮助 </a>
+            </li>
+            <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-user"></i>
+                    <span class="hidden-xs">王彬</span>
+                </a>
+            </li>
+            <li>
+                <a href="/logout">
+                    <i class="fa fa-power-off"></i>
+                    退出
+                </a>
+            </li>
         </ul>
     </div>
 </div>
-<!-- nav end -->

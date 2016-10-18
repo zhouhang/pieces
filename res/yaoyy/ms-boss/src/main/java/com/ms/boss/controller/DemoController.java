@@ -16,6 +16,6 @@ public class DemoController {
     @RequestMapping(value = "index", method = RequestMethod.GET)
     public String index(ModelMap model) {
         model.put("user", "user");
-        return "login";
+        return "commodity_list";
     }
 }
