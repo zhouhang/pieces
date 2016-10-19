@@ -18,12 +18,16 @@
             <#elseif info.page lt 4>
                 <#--比较:> , < , >= , <= (lt , lte , gt , gte)-->
                 <#if info.pageNum - info.firstPage < 4>
-                    1-pageNum
-                    // 最少 2个
+                    <#list 1..((info.pageNum==1)?string(2,info.pageNum))?number as i>
+                        <#if i<= info.pageNum >
+                            <a href="javascript:return false;" data_index = '${i}'>${i}</a>
+                        </#if>
+                    </#list>
                 </#if>
                 <#if info.pageNum - info.firstPage gt 4>
-                    1,2
-                    ...
+                    <a href="javascript:return false;" data_index = '1'>1</a>
+                    <a href="javascript:return false;" data_index = '2'>2</a>
+                    <i>...</i>
                 </#if>
                 <#if info.lastPage-info.pageNum < 4>
                     pageNum - lastPage
@@ -34,22 +38,22 @@
                     ...
                     lastPage-1,lastPage
                 </#if>
-                <#--pageNum - firstPage < 4-->
-                    <#--1-pageNum-->
-                <#--// pageNum 当前页码-->
-                <#--pageNum - firstPage >= 4-->
-                    <#--1,2-->
-                    <#--...-->
 
-                <#--lastPage-pageNum < 4-->
-                    <#--pageNum - lastPage-->
-
-                <#--lastPage-pageNum >= 4-->
-                    <#--(pageNum-1),pageNum,(pageNum+1)-->
-                    <#--...-->
-                    <#--lastPage-1,lastPage-->
         </#if>
+    <#--pageNum - firstPage < 4-->
+    <#--1-pageNum-->
+    <#--// pageNum 当前页码-->
+    <#--pageNum - firstPage >= 4-->
+    <#--1,2-->
+    <#--...-->
 
+    <#--lastPage-pageNum < 4-->
+    <#--pageNum - lastPage-->
+
+    <#--lastPage-pageNum >= 4-->
+    <#--(pageNum-1),pageNum,(pageNum+1)-->
+    <#--...-->
+    <#--lastPage-1,lastPage-->
         <a href="javascript:return false;" class="curr">1</a>
         <a href="javascript:return false;">2</a>
         <a href="javascript:return false;">3</a>
