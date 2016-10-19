@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <#include "./inc/meta.ftl"/>
+    <#include "./common/meta.ftl"/>
     <title>编辑角色-boss-上工好药</title>
 </head>
 
 <body>
-    <#include "./inc/header.ftl">
+    <#include "./common/header.ftl">
 
 
     <!-- fa-floor start -->
@@ -69,7 +69,7 @@
     </div>
 
 
-    <#include "./inc/footer.ftl"/>
+    <#include "./common/footer.ftl"/>
 
     <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
     <script>

@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <title>角色权限-boss-上工好药</title>
-    <#include "./inc/meta.ftl"/>
+    <#include "./common/meta.ftl"/>
     <link rel="stylesheet" href="css/zTreeStyle/zTreeStyle.css" />
 
 </head>
 
 <body>
-    <#include "./inc/header.ftl">
+    <#include "./common/header.ftl">
 
     <!-- fa-floor start -->
     <div class="fa-floor">
@@ -72,7 +72,7 @@
     </div>
 
 
-    <#include "./inc/footer.ftl"/>
+    <#include "./common/footer.ftl"/>
 
 
     <script src="js/jquery.ztree.min.js"></script>

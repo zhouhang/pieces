@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <title>角色用户-boss-上工好药</title>
-    <#include "./inc/meta.ftl"/>
+    <#include "./common/meta.ftl"/>
 </head>
 
 <body>
-    <#include "./inc/header.ftl">
+    <#include "./common/header.ftl">
 
     <!-- fa-floor start -->
     <div class="fa-floor">
@@ -88,7 +88,7 @@
     </div>
 
 
-    <#include "./inc/footer.ftl"/>
+    <#include "./common/footer.ftl"/>
 
 
 </body>

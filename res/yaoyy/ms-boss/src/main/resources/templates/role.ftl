@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <#include "./inc/meta.ftl"/>
+    <#include "./common/meta.ftl"/>
     <title>角色清单-boss-上工好药</title>
 </head>
 
 <body>
-    <#include "./inc/header.ftl">
+    <#include "./common/header.ftl">
 
     <!-- fa-floor start -->
     <div class="fa-floor">
@@ -66,7 +66,7 @@
     </div>
 
 
-    <#include "./inc/footer.ftl"/>
+    <#include "./common/footer.ftl"/>
 
     <script>
     //定义根变量
