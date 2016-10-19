@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pieces.dao.RoleMemberDao">
-    <resultMap id="RoleMemberResultMap" type="com.pieces.dao.model.RoleMember">
+<mapper namespace="com.ms.dao.RoleMemberDao">
+    <resultMap id="RoleMemberResultMap" type="com.ms.dao.model.RoleMember">
             <id column="id"  property="id" />
             <result column="role_id"  property="roleId" />
             <result column="member_id"  property="memberId" />
     </resultMap>
 
 
-    <resultMap id="RoleMemberResultMap2" type="com.pieces.dao.model.RoleMember">
+    <resultMap id="RoleMemberResultMap2" type="com.ms.dao.model.RoleMember">
         <id column="id"  property="id" />
         <result column="role_id"  property="roleId" />
         <result column="member_id"  property="memberId" />
-        <association property="role" javaType="com.pieces.dao.model.Role">
+        <association property="role" javaType="com.ms.dao.model.Role">
             <id property="id" column="id"/>
             <result property="name" column="name"/>
         </association>
-        <association property="member" javaType="com.pieces.dao.model.Member">
+        <association property="member" javaType="com.ms.dao.model.Member">
             <id property="id" column="id"/>
             <result property="username" column="username"/>
             <result property="name" column="name"/>
@@ -49,14 +49,14 @@
         where id = #{id}
     </delete>
 
-    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.RoleMember">
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.RoleMember">
         insert into
         role_member (role_id,member_id)
         values
         (#{roleId},#{memberId})
     </insert>
 
-    <update id="update" parameterType="com.pieces.dao.model.RoleMember">
+    <update id="update" parameterType="com.ms.dao.model.RoleMember">
         update role_member
         <set>
             <if test="roleId != null">
@@ -80,7 +80,7 @@
         where member_id = #{memberId}
     </delete>
 
-    <select id="findByConditionAndRole" parameterType="com.pieces.dao.vo.MemberVo" resultMap="RoleMemberResultMap2">
+    <select id="findByConditionAndRole" parameterType="com.ms.dao.vo.MemberVo" resultMap="RoleMemberResultMap2">
         select  a.member_id,c.id,c.username,c.name,c.email,c.is_del
         from role_member a,member c
         where  a.member_id = c.id and a.role_id = #{roleId}
