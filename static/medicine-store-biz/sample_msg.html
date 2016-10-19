@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>留言-药优优</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+    <div class="ui-content">
+        <div class="ui-form">
+            <form action="">
+                <div class="item">
+                    <textarea name="" id="msg" class="mul" cols="30" rows="10" placeholder="留言"></textarea>
+                    <span class="error"></span>
+                </div>
+                <button type="submit" class="ubtn ubtn-primary" id="submit">提交</button>
+            </form>
+        </div>
+        <div class="ui-extra">
+            <a href="contactus.html">联系我们</a>
+        </div>
+    </div>
+
+    <script src="assets/js/zepto.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+
+    var _global = {
+        fn: {
+            init: function() {
+                this.validator();
+            },
+            validator: function() {
+                var self = this;
+                $('#submit').on('click', function() {
+                    if (self.checkMsg()) {
+                        location.href = 'sample_detail.html';
+                    } else {
+
+                    }
+                    return false;
+                })
+            },
+            checkMsg: function() {
+                var $el = $('#msg'),
+                    val = $el.val();
+
+                if (!val) {
+                    $el.next().html('留言内容不能为空！').show();
+
+                } else {
+                    $el.next().hide();
+                    return true;
+                }
+                return false;
+            }
+        }
+    }
+
+    $(function(){
+        _global.fn.init();
+
+    });
+
+</script>
+</body>
+</html>
