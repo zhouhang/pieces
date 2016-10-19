@@ -127,22 +127,8 @@
                 </tbody>
             </table>
         </div>
-
-        <div class="pagination">
-            <div class="pages">
-                <a href="#" class="text">上页</a>
-                <span class="curr">1</span>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <i>...</i>
-                <a href="#">8</a>
-                <a href="#">9</a>
-                <a href="#" class="text">下页</a>
-            </div>
-            <div class="info">
-                显示第 1 至 10 项结果，共 <em id="pageSize">72</em> 项
-            </div>
-        </div>
+    <#import "./module/pager.ftl" as pager />
+    <@pager.pager info="少的地方" url="" params="" />
     </div>
 </div>
 
