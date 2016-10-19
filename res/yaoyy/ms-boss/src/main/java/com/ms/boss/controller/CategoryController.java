@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.ms.dao.model.Category;
 import com.ms.dao.vo.CategoryVo;
 import com.ms.service.CategoryService;
+import com.ms.service.enums.CategoryEnum;
 import com.ms.tools.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,8 +25,8 @@ import java.util.List;
 public class CategoryController {
 
    //分两个 品种 和类别(根茎类 ...)
-    // 品种的 CRUD---variety
-    // 类别CRUD--category
+    // 品种的 CRUD---category
+    // 类别CRUD--variety
     // 根据类别名 模糊查询 类别
     // 主要参考上工好药 (命名不要有歧义)
 
@@ -43,9 +44,17 @@ public class CategoryController {
     public String listCategory(CategoryVo categoryVo, Integer pageNum,
                                Integer pageSize,ModelMap model
                        ) {
-        PageInfo<CategoryVo> categoryList = categoryService.findByParams(categoryVo,pageNum,pageSize);
-        model.put("categoryList",categoryList);
-        return "commodity_list";
+        //不显示一级父类
+        categoryVo.setLevel(CategoryEnum.LEVEL_BREED.getValue());
+        PageInfo<CategoryVo> categoryPage = categoryService.findByParams(categoryVo,pageNum,pageSize);
+        //取出所有的一级父类
+        CategoryVo variety=new CategoryVo();
+        variety.setLevel(CategoryEnum.LEVEL_CATEGORY.getValue());
+        List<CategoryVo> varieties= categoryService.findAllCategory(variety);
+        model.put("varieties",varieties);
+        model.put("categoryPage",categoryPage);
+        model.put("categoryVo",categoryVo);
+        return "category_list";
     }
 
     /**
@@ -59,18 +68,14 @@ public class CategoryController {
         Date now=new Date();
         category.setCreateTime(now);
         category.setUpdateTime(now);
+        if (category.getStatus()==null){
+            category.setStatus(CategoryEnum.STATUS_ON.getValue());
+        }
+        if (category.getLevel()==null){
+            category.setLevel(CategoryEnum.LEVEL_BREED.getValue());
+        }
         Integer id= categoryService.create(category);
-        return null;
-    }
-
-    /**
-     * 获取所有的一级分类
-     * @return
-     */
-    @RequestMapping(value = "/all", method = RequestMethod.POST)
-    public String findAllCategory(CategoryVo categoryVo,ModelMap model){
-        List<CategoryVo> categoryList= categoryService.findAllCategory(categoryVo);
-        return "";
+        return Result.success().data(id).msg("成功创建商品");
     }
 
     /**
@@ -110,10 +115,11 @@ public class CategoryController {
      * @return
      */
 
-    @RequestMapping(value = "/get/{id}",method = RequestMethod.GET)
-    public String getCategory(@PathVariable("id") Integer id,ModelMap model){
+    @RequestMapping(value = "/get/{id}",method = RequestMethod.POST)
+    @ResponseBody
+    public Result getCategory(@PathVariable("id") Integer id,ModelMap model){
         Category category=categoryService.findById(id);
-        return "";
+        return  Result.success().data(category);
     }
 
 
