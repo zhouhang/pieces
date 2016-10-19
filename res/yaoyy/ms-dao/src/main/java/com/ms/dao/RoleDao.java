@@ -1,6 +1,6 @@
 package com.ms.dao;
 
-import com.ms.dao.annotation.AutoMapper;
+import com.ms.dao.config.AutoMapper;
 import com.ms.dao.model.Role;
 import com.ms.dao.vo.RoleVo;
 

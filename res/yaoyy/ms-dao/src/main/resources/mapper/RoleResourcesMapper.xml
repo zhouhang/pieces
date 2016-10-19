@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pieces.dao.RoleResourcesDao">
-    <resultMap id="RoleResourcesResultMap" type="com.pieces.dao.model.RoleResources">
+<mapper namespace="com.ms.dao.RoleResourcesDao">
+    <resultMap id="RoleResourcesResultMap" type="com.ms.dao.model.RoleResources">
             <id column="id"  property="id" />
             <result column="role_id"  property="roleId" />
             <result column="resources_id"  property="resourcesId" />
@@ -30,14 +30,14 @@
         where id = #{id}
     </delete>
 
-    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.RoleResources">
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.RoleResources">
         insert into
         role_resources (role_id,resources_id)
         values
         (#{roleId},#{resourcesId})
     </insert>
 
-    <update id="update" parameterType="com.pieces.dao.model.RoleResources">
+    <update id="update" parameterType="com.ms.dao.model.RoleResources">
         update role_resources
         <set>
             <if test="roleId != null">
