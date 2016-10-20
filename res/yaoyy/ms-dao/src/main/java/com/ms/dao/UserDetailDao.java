@@ -10,4 +10,6 @@ public interface UserDetailDao extends ICommonDao<UserDetail>{
 
     public List<UserDetailVo> findByParams(UserDetailVo userDetailVo);
 
+    public UserDetailVo findByUserId(int userId);
+
 }

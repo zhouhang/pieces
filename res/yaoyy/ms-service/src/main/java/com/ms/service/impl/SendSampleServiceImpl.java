@@ -31,6 +31,11 @@ public class SendSampleServiceImpl  extends AbsCommonService<SendSample> impleme
         return page;
 	}
 
+	@Override
+	public SendSampleVo findDetailById(Integer id) {
+		return sendSampleDao.findDetailById(id);
+	}
+
 
 	@Override
 	public ICommonDao<SendSample> getDao() {

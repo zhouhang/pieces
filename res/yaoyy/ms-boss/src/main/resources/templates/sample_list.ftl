@@ -81,7 +81,7 @@
                     <td>${sendSample.createTime?string("yyyy-MM-dd HH:mm")}</td>
                     <td><em class="status-${sendSample.status+1}">${sendSample.statusText}</em></td>
                     <td class="tc">
-                        <a href="sample_info.html" class="ubtn ubtn-blue jedit">查看详情</a>
+                        <a href="/sample/detail/${sendSample.id?c}" class="ubtn ubtn-blue jedit">查看详情</a>
                         <a href="javascript:;" class="ubtn ubtn-gray jdel" sendId="${sendSample.id?c}">废弃</a>
                     </td>
                 </tr>
