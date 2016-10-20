@@ -23,8 +23,7 @@
         </dt>
         <dd>
             <a href="/category/list"><i class="fa fa-circle-o"></i>品种列表</a>
-            <a href="goods_list.html"><i class="fa fa-circle-o"></i>商品列表</a>
-            <a href="goods_edit.html"><i class="fa fa-circle-o"></i>商品详情</a>
+            <a href="/commodity/list"><i class="fa fa-circle-o"></i>商品列表</a>
         </dd>
     </dl>
 

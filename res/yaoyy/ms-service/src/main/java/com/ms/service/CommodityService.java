@@ -12,4 +12,8 @@ public interface CommodityService extends ICommonService<Commodity>{
     public PageInfo<CommodityVo> findByParams(CommodityVo commodityVo,Integer pageNum,Integer pageSize);
 
     public List<Commodity> findByIds(String ids);
+
+    public void save(CommodityVo commodity);
+
+    public CommodityVo findById(Integer id);
 }

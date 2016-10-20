@@ -92,4 +92,26 @@
         </set>
         where id = #{id}
     </update>
+
+    <!-- 批量更新 -->
+    <insert id="batchCreate" useGeneratedKeys="true"  parameterType="com.ms.dao.model.Gradient">
+        insert into
+        gradient (commodity_id,start,end,price,unit,create_time,update_time)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+            (#{item.commodityId},#{item.start},#{item.end},#{item.price},#{item.unit},#{item.createTime},#{item.updateTime})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByCommodityId" parameterType="java.lang.Integer">
+        delete from gradient
+        where commodity_id = #{id}
+    </delete>
+
+    <select id="findByCommodityId"  resultMap="GradientResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from gradient where commodity_id = #{id}
+    </select>
+
 </mapper>
