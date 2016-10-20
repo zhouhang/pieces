@@ -17,7 +17,7 @@
     </resultMap>
 
     <resultMap id="CategoryResultMapVo" type="com.ms.dao.vo.CategoryVo" extends="CategoryResultMap">
-        
+        <result column="parent_name"  property="parentName" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -39,14 +39,18 @@
 
     <select id="findByParams" resultMap="CategoryResultMapVo" parameterType="com.ms.dao.vo.CategoryVo">
         select
-        <include refid="Base_Column_List" />
-        from category
+        *,c2.variety parent_name
+        from category c1
+        LEFT JOIN  category c2  on c1.pid=c2.id
         where 1=1
         <if test="variety!= null">
-                and variety like CONCAT('%','${variety}','%' )
+                and c1.variety like CONCAT('%','${variety}','%' )
         </if>
         <if test="level!= null">
-                and level = #{level}
+                and c1.level = #{level}
+        </if>
+        <if test="status!= null">
+            and c1.status = #{status}
         </if>
     </select>
 
@@ -114,6 +118,8 @@
         <include refid="Base_Column_List" />
         from category
         where level = #{level}
-        and status=#{status}
+        <if test="status != null">
+         and   status = #{status}
+        </if>
     </select>
 </mapper>
