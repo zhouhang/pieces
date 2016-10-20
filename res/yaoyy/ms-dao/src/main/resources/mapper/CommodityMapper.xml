@@ -137,4 +137,14 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="findByIds" parameterType="java.lang.Integer" resultType="com.ms.dao.model.Commodity">
+        select   <include refid="Base_Column_List" />
+        from commodity
+        where id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
 </mapper>

@@ -10,6 +10,7 @@ import com.ms.service.CommodityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,6 +30,15 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
         List<CommodityVo> list = commodityDao.findByParams(commodityVo);
         PageInfo page = new PageInfo(list);
         return page;
+    }
+
+    @Override
+    public List<Commodity> findByIds(String ids) {
+        List<Integer> list = new ArrayList<>();
+        for(String id :ids.split(",")){
+            list.add(Integer.parseInt(id));
+        }
+        return commodityDao.findByIds(list);
     }
 
 

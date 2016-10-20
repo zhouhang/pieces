@@ -5,9 +5,9 @@
         每页
         <select name="" id="page_select" >
             <option value="10">10</option>
-            <option value="20">25</option>
-            <option value="30">50</option>
-            <option value="40">100</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
         </select>
         <a id="previous" href="javascript:return false;" class="text" data_index="${info.prePage}">上页</a>
         <#--比较:> , < , >= , <= (lt , lte , gt , gte)-->
