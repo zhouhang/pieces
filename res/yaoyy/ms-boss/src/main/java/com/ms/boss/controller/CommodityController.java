@@ -1,7 +1,9 @@
 package com.ms.boss.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.ms.dao.model.Admin;
 import com.ms.dao.model.Commodity;
+import com.ms.dao.vo.CommodityVo;
 import com.ms.service.CommodityService;
 import com.ms.tools.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +37,11 @@ public class CommodityController {
      * @return
      */
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    public String list(Commodity commodity, Integer pageNum, Integer pageSize, ModelMap model) {
-        return "";
+    public String list(CommodityVo commodity, Integer pageNum, Integer pageSize, ModelMap model) {
+        PageInfo<CommodityVo> pageInfo = commodityService.findByParams(commodity, pageNum, pageSize);
+        model.put("pageInfo", pageInfo);
+        // 参数
+        return "commodity_list";
     }
 
     /**
