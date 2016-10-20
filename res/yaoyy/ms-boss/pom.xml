@@ -78,8 +78,8 @@
                 <spring.dataSource.username>root</spring.dataSource.username>
                 <spring.dataSource.password>root</spring.dataSource.password>
                 <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
-                <pro.upload.path>/var/tomcat/apache-tomcat-8.5.4/webapps/files/upload/</pro.upload.path>
-                <pro.upload.url>http://127.0.0.1:8080/files/upload/</pro.upload.url>
+                <pro.upload.path>/Software/JAVAEE/apache-tomcat-8.0.23/webapps/ms-files/</pro.upload.path>
+                <pro.upload.url>http://127.0.0.1:8080/ms-files/</pro.upload.url>
             </properties>
         </profile>
     </profiles>

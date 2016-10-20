@@ -17,10 +17,10 @@ spring:
 #  mapperLocations: classpath:mapper/*.xml
 #  typeAliasesPackage: com.ms.dao.model
 
-pro:
-    upload:
-      path: @pro.upload.path@
-      url: @pro.upload.url@
+upload:
+    path: @pro.upload.path@
+    url: @pro.upload.url@
+
 logging:
     level:
         com.ms: DEBUG

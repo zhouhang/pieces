@@ -1,6 +1,6 @@
 package com.ms.boss.controller;
 
-import com.ms.boss.controller.editor.*;
+import com.ms.tools.editor.*;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.multipart.MultipartFile;
