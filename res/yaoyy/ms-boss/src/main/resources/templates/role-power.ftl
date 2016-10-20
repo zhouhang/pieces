@@ -4,6 +4,7 @@
     <title>角色权限-boss-上工好药</title>
     <#include "./common/meta.ftl"/>
     <link rel="stylesheet" href="css/zTreeStyle/zTreeStyle.css" />
+    <link type="text/css" rel="stylesheet" href="assets/role/style.css" />
 
 </head>
 
@@ -74,8 +75,8 @@
 
     <#include "./common/footer.ftl"/>
 
-
-    <script src="js/jquery.ztree.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.ztree.min.js"></script>
 
     <script>
         var setting = {
