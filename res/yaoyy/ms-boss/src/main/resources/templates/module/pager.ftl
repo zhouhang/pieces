@@ -5,75 +5,73 @@
         每页
         <select name="" id="page_select" >
             <option value="10">10</option>
-            <option value="20">25</option>
-            <option value="30">50</option>
-            <option value="40">100</option>
+            <option value="25">25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
         </select>
-        <a href="javascript:return false;" class="text">上页</a>
-        ${pageNum}
-
-
-        <#if info.page <= 4 >
-                //全部显示
-            <#elseif info.page lt 4>
-                <#--比较:> , < , >= , <= (lt , lte , gt , gte)-->
-                <#if info.pageNum - info.firstPage < 4>
-                    1-pageNum
-                    // 最少 2个
-                </#if>
-                <#if info.pageNum - info.firstPage gt 4>
-                    1,2
-                    ...
-                </#if>
-                <#if info.lastPage-info.pageNum < 4>
-                    pageNum - lastPage
-                    // 最少 2个
-                </#if>
-                <#if info.lastPage-info.pageNum gt 4>
-                    (pageNum-1),pageNum,(pageNum+1)
-                    ...
-                    lastPage-1,lastPage
-                </#if>
-                <#--pageNum - firstPage < 4-->
-                    <#--1-pageNum-->
-                <#--// pageNum 当前页码-->
-                <#--pageNum - firstPage >= 4-->
-                    <#--1,2-->
-                    <#--...-->
-
-                <#--lastPage-pageNum < 4-->
-                    <#--pageNum - lastPage-->
-
-                <#--lastPage-pageNum >= 4-->
-                    <#--(pageNum-1),pageNum,(pageNum+1)-->
-                    <#--...-->
-                    <#--lastPage-1,lastPage-->
+        <a id="previous" href="javascript:return false;" class="text" data_index="${info.prePage}">上页</a>
+        <#--比较:> , < , >= , <= (lt , lte , gt , gte)-->
+        <#if (info.pageNum -info.firstPage) <= 3 && (info.lastPage -info.pageNum) <= 3 >
+                <#list 1..info.pages as i>
+                    <a href="javascript:return false;" data_index = '${i}'>${i}</a>
+                </#list>
+            <#elseif  (info.pageNum -info.firstPage) <= 3 && (info.lastPage -info.pageNum) gt 3>
+                <#list 1..(info.pageNum+1) as i>
+                    <a href="javascript:return false;" data_index = '${i}'>${i}</a>
+                </#list>
+                <i>...</i>
+                <a href="javascript:return false;" data_index = '${info.lastPage-1}'>${info.lastPage-1}</a>
+                <a href="javascript:return false;" data_index = '${info.lastPage}'>${info.lastPage}</a>
+                <#--// 1- C+1 ... x-1, x-->
+            <#elseif  (info.pageNum -info.firstPage) gt 3 && (info.lastPage -info.pageNum) gt 3>
+                <a href="javascript:return false;" data_index = '1'>1</a>
+                <a href="javascript:return false;" data_index = '2'>2</a>
+                <i>...</i>
+                <a href="javascript:return false;" data_index = '${info.pageNum-1}'>${info.pageNum-1}</a>
+                <a href="javascript:return false;" data_index = '${info.pageNum}'>${info.pageNum}</a>
+                <a href="javascript:return false;" data_index = '${info.pageNum+1}'>${info.pageNum+1}</a>
+                <i>...</i>
+                <a href="javascript:return false;" data_index = '${info.lastPage-1}'>${info.lastPage-1}</a>
+                <a href="javascript:return false;" data_index = '${info.lastPage}'>${info.lastPage}</a>
+                <#--// 1,2 ... c-1,c,c+1 .. x-1,x-->
+            <#elseif  (info.pageNum -info.firstPage) gt 3 && (info.lastPage -info.pageNum) <= 3>
+                <a href="javascript:return false;" data_index = '1'>1</a>
+                <a href="javascript:return false;" data_index = '2'>2</a>
+                <i>...</i>
+                <#list (info.pageNum-1)..info.lastPage as i>
+                    <a href="javascript:return false;" data_index = '${i}'>${i}</a>
+                </#list>
+                <#--// 1,2 ... c-1 - x-->
         </#if>
-
-        <a href="javascript:return false;" class="curr">1</a>
-        <a href="javascript:return false;">2</a>
-        <a href="javascript:return false;">3</a>
-        <i>...</i>
-        <a href="javascript:return false;">8</a>
-        <a href="javascript:return false;">9</a>
-        <a href="javascript:return false;" class="text">下页</a>
+        <a id="next" href="javascript:return false;" class="text" data_index="${info.nextPage}">下页</a>
     </div>
     <div class="info">
         显示第 ${info.startRow} 至 ${info.endRow} 项结果，共 <em id="pageSize">${info.total}</em> 项
     </div>
     <script type="text/javascript">
         $(function(){
+            var currentPage = ${info.pageNum};
+
+            //class="curr"
+            $(".pagination .pages a[data_index='${info.pageNum}']").addClass("curr");
+
             //初始化分页值
-            $("#page_select").val("${pageSize}")
+            $("#page_select").val("${info.pageSize}")
+
+            $(".pagination #previous").attr("disable", ${info.isFirstPage?string("true","false")})
+            $(".pagination #next").attr("disable", ${info.isLastPage?string("true","false")})
 
             $(".pagination .pages a").click(function () {
-                $(this).attr(data);
-
+                if(!$(this).hasClass("curr")){
+                    var index = $(this).attr("data_index");
+                    location.href="${url}"+"?pageNum="+index+"&pageSize=${info.pageSize}${(params)!}"
+                }
+                return false;
             })
             //选择对应的pageSize
             $("#page_select").change(function(){
                 var pageSize = $(this).val()
-                location.href="${pageUrl}"+"?pageNum=${pageNum}&pageSize="+pageSize+"${(params)!}"
+                location.href="${url}"+"?pageNum=${info.pageNum}&pageSize="+pageSize+"${(params)!}"
             })
         })
     </script>

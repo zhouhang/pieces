@@ -12,10 +12,4 @@
     <packaging>jar</packaging>
     <artifactId>ms-tools</artifactId>
     <version>${yaoyy-version}</version>
-    <dependencies>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-        </dependency>
-    </dependencies>
 </project>

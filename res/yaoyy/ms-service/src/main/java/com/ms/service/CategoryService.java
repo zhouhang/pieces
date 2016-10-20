@@ -11,4 +11,5 @@ public interface CategoryService extends ICommonService<Category>{
     public PageInfo<CategoryVo> findByParams(CategoryVo categoryVo,Integer pageNum,Integer pageSize);
 
     List<CategoryVo> findAllCategory(CategoryVo categoryVo);
+
 }

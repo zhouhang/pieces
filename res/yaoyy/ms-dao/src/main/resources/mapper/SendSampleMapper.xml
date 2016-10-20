@@ -49,7 +49,7 @@
         from send_sample ss
         LEFT JOIN user_detail ud on ss.user_id = ud.user_id
         <where>
-            1=1
+            ss.status!=-1
             <if test="nickname != null">
                 and ud.nickname  like CONCAT('%','${nickname}','%' )
             </if>

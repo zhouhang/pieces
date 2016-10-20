@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>药优优-商品列表</title>
+    <title>药优优-商品详情</title>
 <#include "./common/meta.ftl"/>
 </head>
 <body class="wrapper">

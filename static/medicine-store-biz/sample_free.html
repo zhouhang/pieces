@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>申请免费寄样-药优优</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="ui-body-nofoot">
+    <header class="ui-header">
+        <div class="title">申请免费寄样</div>
+        <div class="abs-l mid">
+            <a href="javascript:history.back();" class="fa fa-back"></a>
+        </div>
+    </header><!-- /ui-header -->
+
+    <section class="ui-content">
+        <div class="ui-form">
+            <form action="">
+                <div class="hd">
+                    您正在申请商品<strong>“白芍  产地：安徽   规格：过6-8号筛”</strong> 的寄样服务，在填写下面信息后我们会马上与您取得联系， 感谢您的支持！
+                    <em>（若您需要多件商品的寄样服务，在客服与您取得联系后在电话里沟通即可，不需要重复申请！）</em>                
+                </div>
+                <div class="item">
+                    <input type="text" class="ipt" name="name" id="name" placeholder="姓名" autocomplete="off">
+                    <span class="error"></span>
+                </div>
+                <div class="item">
+                    <input type="tel" class="ipt" name="mobile" id="mobile" placeholder="手机号" autocomplete="off">
+                    <span class="error"></span>
+                </div>
+                <div class="item">
+                    <input type="text" class="ipt" name="region" id="region" placeholder="地区（例如：安徽亳州）" autocomplete="off">
+                    <span class="error"></span>
+                </div>
+                <div class="item">
+                    <button type="submit" class="ubtn ubtn-primary" id="submit">提交</button>
+                </div>
+            </form>
+        </div>
+    </section><!-- /ui-content -->
+
+	
+    <script src="assets/js/zepto.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/layer.js"></script>
+    <script>
+
+    var _global = {
+        fn: {
+            init: function() {
+                this.validator();
+            },
+            validator: function() {
+                var self = this;
+                $('#submit').on('click', function() {
+                    if (self.checkName() && self.checkMobile() && self.checkRegion()) {
+                        layer.open({
+                            className: 'layer-custom',
+                            content: '<div class="box"><div class="hd">您的寄样申请已提交成功！</div><div class="bd">我们会在60分钟之内与您取得联系。 注册可以跟踪您的所有寄养申请。</div></div>'
+                            ,btn: ['去注册', '返回']
+                            ,yes: function(index){
+                                location.href = 'register.html';
+                            },no: function(index) {
+                              // window.history.back(); // 返回按钮事件
+                            },shadeClose: false
+                        });
+                    } else {
+
+                    }
+                    return false;
+                })
+            },
+            checkName: function() {
+                var $el = $('#name'),
+                    val = $el.val();
+
+                if (!val) {
+                    $el.next().html('请输入您的姓名！').show();
+
+                } else {
+                    $el.next().hide();
+                    return true;
+                }
+                return false;
+            },
+            checkMobile: function() {
+                var $el = $('#mobile'),
+                    val = $el.val();
+
+                if (!val) {
+                    $el.next().html('请输入手机号码！').show();
+
+                } else if (!_YYY.verify.isMobile(val)) {
+                    $el.next().html('请输入有效的手机号！').show();
+
+                } else {
+                    $el.next().hide();
+                    return true;
+                }
+                return false;
+            },
+            checkRegion: function() {
+                var $el = $('#region'),
+                    val = $el.val();
+
+                if (!val) {
+                    $el.next().html('请输入您的所在区域（例如：安徽亳州）！').show();
+
+                } else {
+                    $el.next().hide();
+                    return true;
+                }
+                return false;
+            }
+        }
+    }
+
+    $(function(){
+        _global.fn.init();
+
+    });
+
+</script>
+</body>
+</html>
