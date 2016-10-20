@@ -91,30 +91,10 @@
             </table>
         </div>
 
-        <div class="pagination">
-            <div class="pages">
-                <a href="#" class="text">上页</a>
-                <span class="curr">1</span>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <i>...</i>
-                <a href="#">8</a>
-                <a href="#">9</a>
-                <a href="#" class="text">下页</a>
-            </div>
-            <div class="info">
-                显示第 1 至 10 项结果，共 <em id="pageSize">72</em> 项
-            </div>
-        </div>
+    <#import "./module/pager.ftl" as pager />
+    <@pager.pager info=categoryPage url="category/list" params=categoryParams/>
     </div>
 </div>
-
-<div class="footer">
-    <div class="inner">
-        &copy; <a href="#!">速采科技（武汉）有限公司</a> 版权所有.
-    </div>
-</div>
-
 
 <!-- 品种新增&编辑弹出框 -->
 <form id="myform" class="hide" method = 'post'  action = ''>

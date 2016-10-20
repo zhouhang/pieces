@@ -9,7 +9,7 @@
             </a>
         </dt>
         <dd>
-            <a href="sample_list.html"><i class="fa fa-circle-o"></i>寄样列表</a>
+            <a href="/sample/list"><i class="fa fa-circle-o"></i>寄样列表</a>
             <a href="sample_info.html"><i class="fa fa-circle-o"></i>寄样详情</a>
         </dd>
     </dl>

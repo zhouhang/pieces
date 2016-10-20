@@ -7,6 +7,7 @@ import com.ms.dao.vo.CategoryVo;
 import com.ms.service.CategoryService;
 import com.ms.service.enums.CategoryEnum;
 import com.ms.tools.entity.Result;
+import com.ms.tools.utils.Reflection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -54,6 +55,7 @@ public class CategoryController {
         model.put("varieties",varieties);
         model.put("categoryPage",categoryPage);
         model.put("categoryVo",categoryVo);
+        model.put("categoryParams", Reflection.serialize(categoryVo));
         return "category_list";
     }
 
