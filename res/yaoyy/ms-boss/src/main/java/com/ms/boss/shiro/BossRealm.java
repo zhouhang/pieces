@@ -23,7 +23,7 @@ import java.util.Set;
  * bossRealm
  *
  */
-@Service
+
 public class BossRealm extends AuthorizingRealm {
 
 	@Autowired

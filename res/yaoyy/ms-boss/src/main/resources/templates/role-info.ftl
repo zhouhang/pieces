@@ -3,6 +3,7 @@
 <head>
     <#include "./common/meta.ftl"/>
     <title>编辑角色-boss-上工好药</title>
+        <link type="text/css" rel="stylesheet" href="assets/role/style.css" />
 </head>
 
 <body>
@@ -71,7 +72,8 @@
 
     <#include "./common/footer.ftl"/>
 
-    <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/plugins/validator/jquery.validator.min.js?local=zh-CN"></script>
     <script>
         var roleAddPage = {
             v: {},

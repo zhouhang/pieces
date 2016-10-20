@@ -3,6 +3,7 @@
 <head>
     <title>角色用户-boss-上工好药</title>
     <#include "./common/meta.ftl"/>
+    <link type="text/css" rel="stylesheet" href="assets/role/style.css" />
 </head>
 
 <body>
@@ -38,7 +39,7 @@
                         <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                         <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
                     </div>
-                    <@p.pager pageInfo=roleMemberPage  pageUrl="role/list/${role.id}"  params=memberParams/>
+
                 </div>
 
                 <div class="chart">
@@ -52,10 +53,10 @@
                                 <th width="100">状态</th>
                             </tr>
                             <tr>
-                                <td><div class="ipt-wrap"><input name="id" type="text" class="ipt" value="${memberVo.id}"></div></td>
-                                <td><div class="ipt-wrap"><input name="username" type="text" class="ipt" value="${memberVo.username}"></div></td>
-                                <td><div class="ipt-wrap"><input name="name" type="text" class="ipt" value="${memberVo.name}"></div></td>
-                                <td><div class="ipt-wrap"><input name="email" type="text" class="ipt" value="${memberVo.email}"></div></td>
+                                <td><div class="ipt-wrap"><input name="id" type="text" class="ipt" value="${memberVo.id!}"></div></td>
+                                <td><div class="ipt-wrap"><input name="username" type="text" class="ipt" value="${memberVo.username!}"></div></td>
+                                <td><div class="ipt-wrap"><input name="name" type="text" class="ipt" value="${memberVo.name!}"></div></td>
+                                <td><div class="ipt-wrap"><input name="email" type="text" class="ipt" value="${memberVo.email!}"></div></td>
                                 <td>
                                     <select name="isDel" >
                                         <option <#if (!memberVo.isDel??)>selected</#if> value=""> </option>

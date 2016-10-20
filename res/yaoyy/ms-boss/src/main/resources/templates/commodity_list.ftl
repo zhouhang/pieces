@@ -77,7 +77,7 @@
                     <td>${commodity.spec}</td>
                     <td>${commodity.origin}</td>
                     <td>${commodity.sort}</td>
-                    <td><#if commodity.createrTime?exists>${commodity.createrTime?datetime}</#if>/td>
+                    <td><#if commodity.createTime?exists>${commodity.createTime?datetime}</#if></td>
                     <td class="tc">
                         <a href="goods_edit.html" class="ubtn ubtn-blue jedit">编辑</a>
                         <a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>

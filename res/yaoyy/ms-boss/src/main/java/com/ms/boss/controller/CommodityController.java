@@ -45,6 +45,16 @@ public class CommodityController {
     }
 
     /**
+     * 添加商品页面
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "add", method = RequestMethod.GET)
+    public String add(ModelMap model) {
+        return "commodity_detail";
+    }
+
+    /**
      * 商品详情
      * @param id
      * @param model
@@ -52,7 +62,7 @@ public class CommodityController {
      */
     @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable("id") Integer id, ModelMap model) {
-        return "";
+        return "commodity_detail";
     }
 
 
