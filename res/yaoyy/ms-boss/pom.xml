@@ -11,7 +11,7 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ms-boss</artifactId>
     <packaging>war</packaging>
-    <version>${yaoyy-version}</version>
+    <version>0.0.1-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>yaoyy</groupId>
@@ -92,11 +92,27 @@
     <build>
         <finalName>boss</finalName>
         <resources>
+            <!--<resource>-->
+                <!--<directory>src/main/resources</directory>-->
+                <!--<filtering>true</filtering>-->
+            <!--</resource>-->
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+                <excludes>
+                    <exclude>static/assets/awesome/fonts/**</exclude>
+                </excludes>
+            </resource>
+
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>static/assets/awesome/fonts/**</include>
+                </includes>
             </resource>
         </resources>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

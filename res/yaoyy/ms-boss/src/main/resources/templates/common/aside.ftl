@@ -26,5 +26,16 @@
             <a href="/commodity/list"><i class="fa fa-circle-o"></i>商品列表</a>
         </dd>
     </dl>
-
+    <dl>
+        <dt>
+            <a href="javascript:;">
+                <i class="fa fa-cart-plus"></i>
+                <span>用户管理</span>
+                <i class="fa fa-angle-down arrow"></i>
+            </a>
+        </dt>
+        <dd>
+            <a href="/category/list"><i class="fa fa-circle-o"></i>用户列表</a>
+        </dd>
+    </dl>
 </div>
