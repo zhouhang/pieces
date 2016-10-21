@@ -26,6 +26,11 @@ public class UserDetailServiceImpl  extends AbsCommonService<UserDetail> impleme
         return page;
 	}
 
+	@Override
+	public UserDetailVo findByUserId(Integer userId) {
+		return userDetailDao.findByUserId(userId);
+	}
+
 
 	@Override
 	public ICommonDao<UserDetail> getDao() {

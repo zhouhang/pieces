@@ -11,4 +11,5 @@ public interface CategoryDao extends ICommonDao<Category>{
     public List<CategoryVo> findByParams(CategoryVo categoryVo);
     public List<CategoryVo> findAllCategory(CategoryVo categoryVo);
 
+
 }

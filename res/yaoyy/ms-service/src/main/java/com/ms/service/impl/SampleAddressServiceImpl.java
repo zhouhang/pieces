@@ -26,6 +26,11 @@ public class SampleAddressServiceImpl  extends AbsCommonService<SampleAddress> i
         return page;
 	}
 
+	@Override
+	public SampleAddressVo findBySendId(Integer sendId) {
+		return sampleAddressDao.findBySendId(sendId);
+	}
+
 
 	@Override
 	public ICommonDao<SampleAddress> getDao() {

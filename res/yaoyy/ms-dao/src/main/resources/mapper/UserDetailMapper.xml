@@ -112,4 +112,11 @@
         </set>
         where id = #{id}
     </update>
+    <select id="findByUserId" parameterType="java.lang.Integer" resultMap="UserDetailResultMapVo">
+        select
+        <include refid="Base_Column_List" />
+        from user_detail
+        where user_id = #{userId}
+    </select>
+
 </mapper>

@@ -108,4 +108,12 @@
         </set>
         where id = #{id}
     </update>
+    <select id="findDetailById" parameterType="java.lang.Integer" resultMap="SendSampleResultMapVo">
+        select
+        *,ud.nickname,ud.phone,ud.area
+        from send_sample ss
+        LEFT JOIN user_detail ud on ss.user_id = ud.user_id
+        where ss.id = #{id}
+    </select>
+
 </mapper>
