@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>药优优-商品详情</title>
+    <title>药优优-商品修改</title>
 <#include "./common/meta.ftl"/>
 </head>
 <body class="wrapper">
@@ -21,72 +21,122 @@
             <div class="item">
                 <div class="txt"><i>*</i>品种：</div>
                 <div class="cnt">
-                    <input type="text" name="categoryName" id="jcatname" class="ipt" placeholder="品种" autocomplete="off">
-                    <input type="hidden" name="categoryId">
+                    <input type="text" name="categoryName" id="jcatname" value="${commodity.categoryName}" class="ipt" placeholder="品种" autocomplete="off">
+                    <input type="hidden" name="categoryId" value="${commodity.categoryId}">
                 </div>
             </div>
             <div class="item">
                 <div class="txt"><i>*</i>商品名称：</div>
                 <div class="cnt">
-                    <input type="text" name="name" class="ipt" placeholder="商品名称" autocomplete="off">
+                    <input type="text" name="name" class="ipt" placeholder="商品名称" value="${commodity.name}" autocomplete="off">
+                    <input type="text" name="id" value="${commodity.id}" style="display: none">
                 </div>
             </div>
             <div class="item">
                 <div class="txt"><i>*</i>标题：</div>
                 <div class="cnt">
-                    <input type="text" name="title" class="ipt" placeholder="标题" autocomplete="off">
+                    <input type="text" name="title" class="ipt" value="${commodity.title}" placeholder="标题" autocomplete="off">
                 </div>
             </div>
             <div class="item" id="junitPrice">
                 <div class="txt"><i>*</i>价格：</div>
                 <div class="cnt">
                     <div class="ipt-wrap">
-                        <input type="text" name="price" class="ipt" id="jprice" placeholder="价格" autocomplete="off">
+                        <input type="text" name="price" class="ipt" id="jprice" value="${commodity.price}" placeholder="价格" autocomplete="off">
                         <span class="unit">元</span>
                     </div>
-                    <label class="ml"><input type="checkbox" name="mark" class="cbx" id="jsales">量大价优</label>
+                    <label class="ml"><input type="checkbox"  name="mark" class="cbx" id="jsales">量大价优</label>
                 </div>
             </div>
             <div class="item hide" id="jsalesPrice">
-                <div class="txt"><i>*</i>公斤/价格：</div>
-                <div class="cnt">
-                    <div class="ipt-wrap">
-                        <input type="text" name="minKg1" class="ipt ipt-short" placeholder="1-99999"
-                               data-rule="required; range(1~99999)" autocomplete="off">
+                <div class="txt"><i>*</i>公斤/价格</div>
+            <#if commodity.gradient?exists && (commodity.gradient?size > 0)>
+                <#list commodity.gradient as gradient>
+                    <#if gradient_index == 0>
+                        <div class="cnt">
+                            <div class="ipt-wrap">
+                                <input type="text" name="minKg1" class="ipt ipt-short" placeholder="1-99999"
+                                       data-rule="required; range(1~99999)" autocomplete="off" value="${gradient.start}">
+                            </div>
+                            <em>-</em>
+                            <div class="ipt-wrap">
+                                <input type="text" name="maxKg1" class="ipt ipt-short" placeholder="1-99999"
+                                       data-rule="required; range(1~99999)" autocomplete="off" value="${gradient.end}">
+                            </div>
+                            <div class="ipt-wrap">
+                                <input type="text" name="unit1" class="ipt ipt-short" placeholder="计量单位"
+                                       data-rule="required" autocomplete="off" value="${gradient.unit}">
+                            </div>
+                            <div class="ipt-wrap ml">
+                                <input type="text" name="price1" class="ipt ipt-short" placeholder="1-9999"
+                                       data-rule="required; range(1~9999)" autocomplete="off" value="${gradient.price}">
+                                <span class="unit">元</span>
+                            </div>
+                            <button type="button" class="ubtn ubtn-blue ml" id="jaddNewPrice">添加一行</button>
+                        </div>
+                        <#else>
+                            <div class="cnt">
+                                <div class="ipt-wrap">
+                                    <input type="text" name="minKg${gradient_index+2}" class="ipt ipt-short"
+                                           data-rule="required; range(1~99999)" placeholder="1-99999" autocomplete="off" value="${gradient.start}">
+                                </div>
+                                <em>-</em>
+                                <div class="ipt-wrap">
+                                    <input type="text" name="maxKg${gradient_index+2}" class="ipt ipt-short"
+                                           data-rule="required; range(1~99999)" placeholder="1-99999" autocomplete="off" value="${gradient.end}">
+                                </div>
+                                <em>公斤</em>
+                                <div class="ipt-wrap ml">
+                                    <input type="text" name="price${gradient_index+2}" class="ipt ipt-short" placeholder="1-9999"
+                                           data-rule="required; range(1~9999)" autocomplete="off" value="${gradient.price}">
+                                    <span class="unit">元</span>
+                                </div>
+                                <button type="button" class="ubtn ubtn-red ml">删除</button>
+                            </div>
+
+                    </#if>
+                </#list>
+                <#else>
+                    <div class="cnt">
+                        <div class="ipt-wrap">
+                            <input type="text" name="minKg1" class="ipt ipt-short" placeholder="1-99999"
+                                   data-rule="required; range(1~99999)" autocomplete="off">
+                        </div>
+                        <em>-</em>
+                        <div class="ipt-wrap">
+                            <input type="text" name="maxKg1" class="ipt ipt-short" placeholder="1-99999"
+                                   data-rule="required; range(1~99999)" autocomplete="off">
+                        </div>
+                        <div class="ipt-wrap">
+                            <input type="text" name="unit1" class="ipt ipt-short" placeholder="计量单位"
+                                   data-rule="required" autocomplete="off">
+                        </div>
+                        <div class="ipt-wrap ml">
+                            <input type="text" name="price1" class="ipt ipt-short" placeholder="1-9999"
+                                   data-rule="required; range(1~9999)" autocomplete="off">
+                            <span class="unit">元</span>
+                        </div>
+                        <button type="button" class="ubtn ubtn-blue ml" id="jaddNewPrice">添加一行</button>
                     </div>
-                    <em>-</em>
-                    <div class="ipt-wrap">
-                        <input type="text" name="maxKg1" class="ipt ipt-short" placeholder="1-99999"
-                               data-rule="required; range(1~99999)" autocomplete="off">
-                    </div>
-                    <div class="ipt-wrap">
-                        <input type="text" name="unit1" class="ipt ipt-short" placeholder="计量单位"
-                               data-rule="required" autocomplete="off">
-                    </div>
-                    <div class="ipt-wrap ml">
-                        <input type="text" name="price1" class="ipt ipt-short" placeholder="1-9999"
-                               data-rule="required; range(1~9999)" autocomplete="off">
-                        <span class="unit">元</span>
-                    </div>
-                    <button type="button" class="ubtn ubtn-blue ml" id="jaddNewPrice">添加一行</button>
-                </div>
+            </#if>
+
             </div>
             <div class="item">
                 <div class="txt"><i>*</i>规格等级：</div>
                 <div class="cnt">
-                    <input type="text" name="spec" class="ipt" placeholder="规格等级" autocomplete="off">
+                    <input type="text" name="spec" class="ipt" value="${commodity.spec}" placeholder="规格等级" autocomplete="off">
                 </div>
             </div>
             <div class="item">
                 <div class="txt"><i>*</i>产地：</div>
                 <div class="cnt">
-                    <input type="text" name="origin" class="ipt" placeholder="产地" autocomplete="off">
+                    <input type="text" name="origin" class="ipt" value="${commodity.origin}" placeholder="产地" autocomplete="off">
                 </div>
             </div>
             <div class="item">
                 <div class="txt"><i>*</i>采收年份：</div>
                 <div class="cnt">
-                    <input type="text" name="harYear" class="ipt" placeholder="采收年份" autocomplete="off">
+                    <input type="text" name="harYear" class="ipt" value="${commodity.harYear}" placeholder="采收年份" autocomplete="off">
                 </div>
             </div>
         </div>
@@ -143,31 +193,31 @@
                 <div class="txt"><i>*</i>商品图片：</div>
                 <div class="cnt cnt-mul">
                     <div class="up-img">
-                        <!-- <img src="images/blank.gif"><i class="del"></i> -->
+                        <img src="${commodity.pictureUrl}"><i class="del"></i>
                     </div>
-                    <input type="hidden" value="" name="pictureUrl" id="pictureUrl">
+                    <input type="hidden" value="${commodity.pictureUrl}" name="pictureUrl" id="pictureUrl">
                 </div>
             </div>
             <div class="item">
                 <div class="txt">
                     <i>*</i>详细信息：
                 </div>
-                <div class="cnt cnt-mul" name="details" id="details"  style="width: 700px; height: 400px;">
+                <div class="cnt cnt-mul" name="detail" id="detail"  style="width: 700px; height: 400px;">
                 </div>
                 <div id="detailsError" style="padding-top: 10px;" class="clear"></div>
             </div>
             <div class="item">
                 <div class="txt">排序：</div>
                 <div class="cnt">
-                    <input type="text" name="sort" class="ipt" placeholder="数字越大越靠前" autocomplete="off">
+                    <input type="text" value="${commodity.sort}" name="sort" class="ipt" placeholder="数字越大越靠前" autocomplete="off">
                 </div>
             </div>
             <div class="item">
                 <div class="txt">上/下架：</div>
                 <div class="cnt">
                     <select name="status" id="status" class="slt">
-                        <option value="">上架</option>
-                        <option value="">下架</option>
+                        <option value="1">上架</option>
+                        <option value="0">下架</option>
                     </select>
                 </div>
             </div>
@@ -178,6 +228,11 @@
 
     </form>
 </div>
+
+<div id="umeditorContent" style="display: none;">
+${commodity.detail}
+</div>
+
 <#include "./common/footer.ftl"/>
 
 <script src="assets/plugins/layer/layer.js"></script>
@@ -202,6 +257,28 @@
                 this.submitEvent();
                 this.goodsImg();
                 this.parameter();
+                this.initAttrAndPrice();
+                // 初始化详细信息
+                var um = UM.getEditor('detail');
+                um.ready(function(){
+                    um.setContent($("#umeditorContent").html());
+                })
+
+
+            },
+            initAttrAndPrice: function () {
+            <#if commodity.attribute?exists && commodity.attribute != "">
+                var parameter = ${commodity.attribute};
+                var html = "";
+                $.each(parameter, function (k, v) {
+                    html += '<tr> \n <td><div class="inner"><input name="attrN_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="' + k + '" data-rule="required;length[1~20]"></div></td> \n ' +
+                            '<td><div class="inner"><input name="attrV_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="' + v + '" data-rule="required;length[1~100]"></div></td> \n ' +
+                            '<td><span class="c-red">删除</span></td> \n </tr>';
+                    commodityAddPage.v.attr_index += 1;
+                })
+                var $table = $('#attribute').find('tbody');
+                $table.html(html);
+            </#if>
             },
             // 查询品种
             catname: function () {
@@ -239,7 +316,7 @@
                 // 量大价优
                 $('#jsales').on('click', function () {
                     $jsalesPrice[this.checked ? 'show' : 'hide']()
-                            .find('.ipt').removeClass('n-invalid').val('').trigger("hidemsg");
+                            .find('.ipt').removeClass('n-invalid').trigger("hidemsg");
                     $jprice.attr('class', 'ipt').prop('disabled', this.checked).val('').trigger("hidemsg");
                     $('#myform').data('validator').options.ignore = this.checked ? $jprice : $jsalesPrice.find('.ipt');
                 }).prop('checked', false);
@@ -267,12 +344,16 @@
                         origin: '产地: required',
                         harYear: '采收年份: required',
                         pictureUrl: '图片: required',
-                        details: {
+                        detail: {
                             rule: "required",
                             target: "#detailsError"
                         }
                     }
                 });
+                <#if commodity.mark == 1 >
+                    $("#jsales").attr("checked",true).trigger("click");
+                </#if>
+
             },
             // 提交事件
             submitEvent: function () {
@@ -286,7 +367,7 @@
                             $.each(trs, function (k, v) {
                                 attr[$($(v).find("input")[0]).val()] = $($(v).find("input")[1]).val();
                             })
-                            var data = $("#form").serializeObject();
+                            var data = $("#myform").serializeObject();
                             $.each(data, function(k,v){
                                 if (k.match("attr")){
                                     delete data[k];
@@ -315,21 +396,30 @@
                                     }
                                 })
                                 data.gradient = gradient;
+                                data.mark = 1;
+                            } else {
+                                data.mark = 0;
                             }
-                            console.log(data);
-//                            $.post("/commodity/save", data, function (data) {
-//                                if (data.status == "y") {
-//                                    $.notify({
-//                                        type: 'success',
-//                                        title: '保存成功',
-//                                        text: '商品添加成功',
-//                                        delay: 3e3,
-//                                        call: function () {
-//                                            $("#submit").attr("disabled", "disabled");
-//                                        }
-//                                    });
-//                                }
-//                            })
+
+                            $("#jsubmit").attr("disabled", "disabled");
+                            $.ajaxSetup({
+                                contentType : 'application/json'
+                            });
+                            $.post("/commodity/save", JSON.stringify(data), function (data) {
+                                if (data.status == 200) {
+                                    $.notify({
+                                        type: 'success',
+                                        title: '保存成功',
+                                        text: '3秒后自动跳转到商品详情页',
+                                        delay: 3e3,
+                                        call: function() {
+                                            setTimeout(function() {
+                                                location.href = '/commodity/list';
+                                            }, 3e3);
+                                        }
+                                    });
+                                }
+                            })
                         }
                     });
                 })
@@ -434,7 +524,7 @@
     $(function () {
         _global.fn.init();
         //实例化编辑器
-        var um = UM.getEditor('details').setContent("");
+        var um = UM.getEditor('detail').setContent("");
     })
 </script>
 
