@@ -119,9 +119,17 @@ public class CategoryController {
 
     @RequestMapping(value = "/get/{id}",method = RequestMethod.POST)
     @ResponseBody
-    public Result getCategory(@PathVariable("id") Integer id,ModelMap model){
+    public Result getCategory(@PathVariable("id") Integer id){
         Category category=categoryService.findById(id);
         return  Result.success().data(category);
+    }
+
+    @RequestMapping(value = "/search",method = RequestMethod.POST)
+    @ResponseBody
+    public Result searchCategory(CategoryVo categoryVo){
+        categoryVo.setLevel(CategoryEnum.LEVEL_BREED.getValue());
+        List<CategoryVo> categoryVoList=categoryService.searchCategory(categoryVo);
+        return  Result.success().data(categoryVoList);
     }
 
 

@@ -7,4 +7,5 @@ import com.ms.dao.vo.SampleAddressVo;
 public interface SampleAddressService extends ICommonService<SampleAddress>{
 
     public PageInfo<SampleAddressVo> findByParams(SampleAddressVo sampleAddressVo,Integer pageNum,Integer pageSize);
+    public SampleAddressVo findBySendId(Integer sendId);
 }

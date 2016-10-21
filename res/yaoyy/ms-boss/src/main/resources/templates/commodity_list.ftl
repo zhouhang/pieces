@@ -79,8 +79,8 @@
                     <td>${commodity.sort}</td>
                     <td><#if commodity.createTime?exists>${commodity.createTime?datetime}</#if></td>
                     <td class="tc">
-                        <a href="goods_edit.html" class="ubtn ubtn-blue jedit">编辑</a>
-                        <a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
+                        <a href="/commodity/detail/${commodity.id}" class="ubtn ubtn-blue jedit">编辑</a>
+                        <a href="${commodity.id}" class="ubtn ubtn-gray jdel">删除</a>
                     </td>
                 </tr>
                 </#list>
@@ -98,13 +98,18 @@
 <script>
     var _global = {
         v: {
-            deleteUrl: ''
+            deleteUrl: '/commodity/detete/'
         },
         fn: {
             init: function() {
                 this.bindEvent();
             },
             bindEvent: function() {
+
+                $("#jaddNewCat").click(function () {
+                    location.href="/commodity/add"
+                })
+
                 var $table = $('.table'),
                         $cbx = $table.find('td input:checkbox'),
                         $checkAll = $table.find('th input:checkbox'),
@@ -114,8 +119,8 @@
                 $table.on('click', '.jdel', function() {
                     var url = _global.v.deleteUrl + $(this).attr('href');
                     layer.confirm('确认删除此品种？', {icon: 3, title: '提示'}, function (index) {
-                        $.get(url, function (data) {
-                            if (data.status == "y") {
+                        $.post(url, function (data) {
+                            if (data.status == "200") {
                                 window.location.reload();
                             }
                         }, "json");

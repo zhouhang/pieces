@@ -2,17 +2,16 @@ package com.ms.boss.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.ms.dao.model.Admin;
+import com.ms.dao.model.Category;
 import com.ms.dao.model.Commodity;
+import com.ms.dao.vo.CategoryVo;
 import com.ms.dao.vo.CommodityVo;
 import com.ms.service.CommodityService;
 import com.ms.tools.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,7 +21,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("commodity/")
-public class CommodityController {
+public class CommodityController extends BaseController{
 
     // CRUD
 
@@ -46,12 +45,11 @@ public class CommodityController {
 
     /**
      * 添加商品页面
-     * @param model
      * @return
      */
     @RequestMapping(value = "add", method = RequestMethod.GET)
-    public String add(ModelMap model) {
-        return "commodity_detail";
+    public String add() {
+        return "commodity_add";
     }
 
     /**
@@ -62,7 +60,9 @@ public class CommodityController {
      */
     @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable("id") Integer id, ModelMap model) {
-        return "commodity_detail";
+        CommodityVo vo = commodityService.findById(id);
+        model.put("commodity", vo);
+        return "commodity_editor";
     }
 
 
@@ -73,8 +73,9 @@ public class CommodityController {
      */
     @RequestMapping(value = "save", method = RequestMethod.POST)
     @ResponseBody
-    public Result save(Commodity commodity) {
-        return null;
+    public Result save(@RequestBody CommodityVo commodity) {
+        commodityService.save(commodity);
+        return Result.success("保存成功!");
     }
 
 
@@ -86,7 +87,8 @@ public class CommodityController {
     @RequestMapping(value = "detete/{id}", method = RequestMethod.POST)
     @ResponseBody
     public Result delete(@PathVariable("id") Integer id) {
-        return null;
+        commodityService.deleteById(id);
+        return Result.success("删除成功!");
     }
 
 
