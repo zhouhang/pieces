@@ -12,4 +12,6 @@ public interface CategoryService extends ICommonService<Category>{
 
     List<CategoryVo> findAllCategory(CategoryVo categoryVo);
 
+    List<CategoryVo> searchCategory(CategoryVo categoryVo);
+
 }

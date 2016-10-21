@@ -73,18 +73,18 @@
 
     <div class="box fa-form">
         <div class="hd">信息补全</div>
-        <form id="myform">
-            <input type="hidden"  class="ipt" value="${userDetail.id?default('-1')}" name="id">
+        <form id="userForm">
+            <input type="hidden"  class="ipt" value="${userDetail.id?default('')}" name="id">
             <div class="item">
                 <div class="txt">个人称呼：</div>
                 <div class="cnt">
-                    <input type="text" value="${userDetail.nickname?default('')}" name="username" class="ipt" placeholder="" autocomplete="off">
+                    <input type="text" value="${userDetail.nickname?default('')}" name="nickname" class="ipt" placeholder="" autocomplete="off">
                 </div>
             </div>
             <div class="item">
                 <div class="txt">联系电话：</div>
                 <div class="cnt">
-                    <input type="text" value="${userDetail.phone?default('')}" name="mobile" class="ipt" placeholder="" autocomplete="off">
+                    <input type="text" value="${userDetail.phone?default('')}" name="phone" class="ipt" placeholder="" autocomplete="off">
                 </div>
             </div>
             <div class="item">
@@ -115,15 +115,16 @@
                 </div>
             </div>
             <div class="ft">
-                <button type="submit" class="ubtn ubtn-blue">保存客户信息</button>
+                <button type="button" id="saveUser" class="ubtn ubtn-blue">保存客户信息</button>
             </div>
         </form>
     </div>
 
     <div class="box fa-form">
         <div class="hd">地址信息</div>
-        <form action="">
-            <input type="hidden"  class="ipt" value="${sampleAdderss.id?default('-1')}" name="id">
+        <form action="" id="addressForm">
+            <input type="hidden"  class="ipt" value="${sendSampleVo.id}" name="sendId">
+            <input type="hidden"  class="ipt" value="${sampleAdderss.id?default('')}" name="id">
             <div class="item" id="jgoosList">
                 <div class="txt">寄样商品：</div>
                 <div class="cnt">
@@ -156,7 +157,7 @@
                 </div>
             </div>
             <div class="ft">
-                <button type="submit" class="ubtn ubtn-blue">保存收货信息</button>
+                <button type="button" id="saveAddress"  class="ubtn ubtn-blue">保存收货信息</button>
             </div>
         </form>
     </div>
@@ -182,6 +183,8 @@
 <script>
     var _global = {
         v: {
+            userUpdateUrl:'/sample/userComplete/',
+            addressSaveUrl:'/sample/addressSave/'
         },
         fn: {
             init: function() {
@@ -263,6 +266,35 @@
                         console.log(text); // 输入文本
                     });
                     return false;
+                })
+
+                $("#saveUser").on('click', function() {
+                    var url = _global.v.userUpdateUrl;
+                    $.ajax({
+                        url: url,
+                        data: $("#userForm").serialize(),
+                        type: "POST",
+                        success: function(data){
+                            if (data.status == "200") {
+                                window.location.reload();
+                            }
+
+                        }
+                    });
+                })
+                $("#saveAddress").on('click', function() {
+                    var url = _global.v.addressSaveUrl;
+                    $.ajax({
+                        url: url,
+                        data: $("#addressForm").serialize(),
+                        type: "POST",
+                        success: function(data){
+                            if (data.status == "200") {
+                                window.location.reload();
+                            }
+
+                        }
+                    });
                 })
             }
         }

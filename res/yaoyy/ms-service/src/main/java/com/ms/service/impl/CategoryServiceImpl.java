@@ -35,6 +35,11 @@ public class CategoryServiceImpl  extends AbsCommonService<Category> implements 
 		return list;
 	}
 
+	@Override
+	public List<CategoryVo> searchCategory(CategoryVo categoryVo) {
+		return categoryDao.findByParams(categoryVo);
+	}
+
 
 	@Override
 	public ICommonDao<Category> getDao() {

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -107,7 +108,6 @@ public class SendSampleController {
         SampleAddressVo sampleAdderss= sampleAddressServie.findBySendId(sendSampleVo.getId());
         if(sampleAdderss==null){
             sampleAdderss=new SampleAddressVo();
-            sampleAdderss.setId(-1);
         }
 
         //寄样单跟踪状态
@@ -140,6 +140,32 @@ public class SendSampleController {
         sendSampleService.update(sendSample);
         return Result.success().msg("修改成功");
     }
+
+    @RequestMapping(value = "userComplete",method = RequestMethod.POST)
+    @ResponseBody
+    public Result userComplete(UserDetail userDetail){
+        userDetail.setUpdateTime(new Date());
+        userDetailServer.update(userDetail);
+        return Result.success().msg("保存成功");
+    }
+
+    @RequestMapping(value = "addressSave",method=RequestMethod.POST)
+    @ResponseBody
+    public Result addressSave(SampleAddress address){
+        Date now=new Date();
+        if(address.getId()==null){
+            address.setCreateTime(now);
+            address.setUpdateTime(now);
+            sampleAddressServie.create(address);
+        }
+        else{
+            address.setUpdateTime(now);
+            sampleAddressServie.update(address);
+        }
+        return Result.success().msg("保存成功");
+    }
+
+
 
 
 

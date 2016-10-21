@@ -87,6 +87,17 @@
                 <pro.upload.url>http://127.0.0.1:8080/ms-files/</pro.upload.url>
             </properties>
         </profile>
+        <profile>
+            <id>ccx</id>
+            <properties>
+                <spring.dataSource.url>jdbc:mysql://127.0.0.1:3306/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
+                <spring.dataSource.username>root</spring.dataSource.username>
+                <spring.dataSource.password>ycg20160401</spring.dataSource.password>
+                <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
+                <pro.upload.path>E:\Program Files\Apache Software Foundation\Tomcat 8.5\webapps\ms-files</pro.upload.path>
+                <pro.upload.url>http://127.0.0.1:8080/ms-files/</pro.upload.url>
+            </properties>
+        </profile>
     </profiles>
 
     <build>
