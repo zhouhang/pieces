@@ -1,5 +1,6 @@
 package com.ms.boss.shiro;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -9,18 +10,33 @@ import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.ms.service.shiro.MsShiroFilterFactoryBean;
+import org.springframework.web.filter.DelegatingFilterProxy;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ShardedJedisPool;
+
+import javax.servlet.Filter;
 
 
 @Configuration
 public class ShiroConfiguration {
 
     private static Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
+
+    @Bean
+    public FilterRegistrationBean filterRegistrationBean() {
+        FilterRegistrationBean filterRegistration = new FilterRegistrationBean();
+        filterRegistration.setFilter(new DelegatingFilterProxy("shiroFilter"));
+        //  该值缺省为false,表示生命周期由SpringApplicationContext管理,设置为true则表示由ServletContainer管理
+        filterRegistration.addInitParameter("targetFilterLifecycle", "true");
+        filterRegistration.setEnabled(true);
+        filterRegistration.addUrlPatterns("/*");
+        return filterRegistration;
+    }
 
     @Bean(name = "bossRealm")
     public BossRealm getShiroRealm() {
@@ -55,23 +71,26 @@ public class ShiroConfiguration {
         return new AuthorizationAttributeSourceAdvisor();
     }
 
+    @Bean(name = "bossAuthorizationFilter")
+    public BossAuthorizationFilter getBizAuthorizationFilter() {
+        BossAuthorizationFilter boss = new BossAuthorizationFilter();
+        return boss;
+    }
+
     @Bean(name = "shiroFilter")
     public MsShiroFilterFactoryBean getMsShiroFilterFactoryBean() {
         MsShiroFilterFactoryBean shiroFilterFactoryBean = new MsShiroFilterFactoryBean();
         shiroFilterFactoryBean
                 .setSecurityManager(getDefaultWebSecurityManager());
         shiroFilterFactoryBean.setLoginUrl("/login");
-        shiroFilterFactoryBean.setSuccessUrl("/role/index");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/login");
+        shiroFilterFactoryBean.setSuccessUrl("/commodity/list");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         shiroFilterFactoryBean.setFiltersString("bossAuthorization=bossAuthorizationFilter");
-        shiroFilterFactoryBean.setFilterChainDefinitionsString("/**=anon");
+        //Map<String, Filter> filters = new HashMap<>();
+        //filters.put("bossAuthorization", getBizAuthorizationFilter());
+        //shiroFilterFactoryBean.setFilters(filters);
+        shiroFilterFactoryBean.setFilterChainDefinitionsString("/login=anon;/logout=logout;/assets/**=anon;/error/**=anon;/role/** = bossAuthorization;/category/**=bossAuthorization;/commodity/**=bossAuthorization;");
         return shiroFilterFactoryBean;
-    }
-
-    @Bean(name = "bossAuthorizationFilter")
-    public BossAuthorizationFilter getBizAuthorizationFilter() {
-        BossAuthorizationFilter boss = new BossAuthorizationFilter();
-        return boss;
     }
 
     @Bean(name = "jedisPoolConfig")

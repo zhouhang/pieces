@@ -82,5 +82,14 @@ public class HomeController extends BaseController{
 		WebUtil.print(response, result);
     }
 
-
+    /**
+     * 退出系统
+     * @return
+     */
+    @RequestMapping(value = "/logout")
+    public String logout() {
+        // 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
+        SecurityUtils.getSubject().logout();
+        return "redirect:/login";
+    }
 }

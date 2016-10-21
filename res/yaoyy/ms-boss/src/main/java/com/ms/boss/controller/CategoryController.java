@@ -22,7 +22,7 @@ import java.util.List;
  * 10/12/16.
  */
 @Controller
-@RequestMapping("category/")
+@RequestMapping("/category/")
 public class CategoryController {
 
    //分两个 品种 和类别(根茎类 ...)
