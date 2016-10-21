@@ -144,8 +144,9 @@ a.ubtn{height:28px;}
 .pagination .skip .ipt{width:40px;height:28px;line-height:18px;margin:0 3px;padding:4px;font-size:12px;color:#333;border:1px solid #ccc;text-align:center;}
 
 /* 寄样追踪 */
-.trace{padding-left:140px;line-height:32px;}
+.trace{margin:0 0 30px 140px;line-height:32px;}
 .trace .fore{margin-bottom:20px;font-size:18px;font-weight:700;}
+.trace li span{margin-right:10px;word-break:break-all;word-wrap:break-word;}
 
 /* fa-form */
 .fa-form{font-size:12px;}
@@ -160,7 +161,7 @@ a.ubtn{height:28px;}
 .fa-form .cnt .ipt{width:350px;font-size:12px;}
 .fa-form .cnt .ipt:disabled{background:#ededed;color:#999;}
 .fa-form .cnt .ipt-short{width:80px;}
-.fa-form .cnt .ipt-mul{height:80px;}
+.fa-form .cnt .ipt-mul{height:80px;vertical-align:top;}
 .fa-form .cnt .ipt-wrap{position:relative;display:inline-block;}
 .fa-form .cnt .ipt-wrap .unit{position:absolute;top:1px;right:1px;line-height:1.5;padding:6px 9px;background:#ebebeb;color:#999;}
 .fa-form .cnt .msg-box{position:absolute;top:33px;left:5px;z-index:2;display:block;line-height:18px;padding:2px 5px;background:#c3272b;color:#fff;}
@@ -173,7 +174,7 @@ a.ubtn{height:28px;}
 .fa-form .cnt-table table{margin:0;}
 .fa-form .agreement .cnt{height:46px;}
 .fa-form .agreement a{color:#1769ff;}
-.fa-form .ft{padding:30px 0 30px 140px;}
+.fa-form .ft{margin:30px 0 30px 140px;}
 .fa-form .ft .ubtn{min-width:160px;height:40px;line-height:40px;font-size:14px;}
 .fa-form .ml{margin-left:10px;}
 .fa-form .cbxs{width:600px;margin-bottom:15px;}

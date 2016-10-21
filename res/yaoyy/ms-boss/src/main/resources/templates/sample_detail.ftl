@@ -60,7 +60,7 @@
                     <tbody>
                     <#list historySend.list as sendSample>
                     <tr>
-                        <td><a href="#">${sendSampleVo.intentionText}</a></td>
+                        <td><a href="#">${sendSample.intentionText}</a></td>
                         <td>${sendSample.createTime?string("yyyy-MM-dd HH:mm")}</td>
                         <td><span class="status-${sendSample.status+1}">${sendSample.statusText}</span></td>
                     </tr>
@@ -111,7 +111,7 @@
             <div class="item">
                 <div class="txt">用户备注：</div>
                 <div class="cnt">
-                    <textarea name="remark" value="${userDetail.remark?default('')}" id="" class="ipt ipt-mul"></textarea>
+                    <textarea   id="userRemark" class="ipt ipt-mul">${userDetail.remark?default('')}</textarea>
                 </div>
             </div>
             <div class="ft">
@@ -127,10 +127,15 @@
             <input type="hidden"  class="ipt" value="${sampleAdderss.id?default('')}" name="id">
             <div class="item" id="jgoosList">
                 <div class="txt">寄样商品：</div>
+               <#list sendSampleVo.commodityList as commodity>
                 <div class="cnt">
-                    <input type="text" name="goods1" id="goods1" class="ipt" placeholder="" autocomplete="off">
-                    <button type="button" class="ubtn ubtn-blue ml" id="jaddNewGoods">添加一行</button>
+                    <input type="text" name="intention" value="${commodity.name} ${commodity.origin} ${commodity.spec}" cid="${commodity.id}" id="goods1" class="ipt" placeholder="" autocomplete="off">
+                    <#if commodity_index==(sendSampleVo.commodityList?size)>
+                        <button type="button" class="ubtn ubtn-blue ml" id="jaddNewGoods">添加一行</button>
+                    </#if>
+
                 </div>
+               </#list>
             </div>
             <div class="item">
                 <div class="txt">收货地址：</div>
@@ -153,7 +158,7 @@
             <div class="item">
                 <div class="txt">备注信息：</div>
                 <div class="cnt">
-                    <textarea  value="${sampleAdderss.remark?default('')}" name="remark" class="ipt ipt-mul"></textarea>
+                    <textarea  id="addressRemark" class="ipt ipt-mul">${sampleAdderss.remark?default('')}</textarea>
                 </div>
             </div>
             <div class="ft">
@@ -165,7 +170,7 @@
     <div class="box fa-form">
         <div class="hd">寄样追踪</div>
         <ol class="trace">
-            <li class="fore">状态：<span class="status-1">未受理</span></li>
+            <li class="fore">状态：<span class="status-${sendSampleVo.status+1}">${sendSampleVo.statusText}</span></li>
             <li>2016年10月12日    12：30   申请寄样</li>
         </ol>
         <div class="ft">
@@ -225,7 +230,7 @@
 
                 // 添加商品
                 $('#jaddNewGoods').on('click', function() {
-                    $jgoosList.append('<div class="cnt"> \n <div class="ipt-wrap"><input type="text" name="goods' + (++idx) + '" id="goods' + (++idx) + '" class="ipt" autocomplete="off"></div> \n <button type="button" class="ubtn ubtn-red ml">删除</button> \n </div>');
+                    $jgoosList.append('<div class="cnt"> \n <div class="ipt-wrap"><input type="text" name="intention' + '" id="goods' + (++idx) + '" class="ipt" autocomplete="off"></div> \n <button type="button" class="ubtn ubtn-red ml">删除</button> \n </div>');
                     self.searchProduct($('#goods' + idx));
                 })
 
@@ -272,7 +277,7 @@
                     var url = _global.v.userUpdateUrl;
                     $.ajax({
                         url: url,
-                        data: $("#userForm").serialize(),
+                        data: $("#userForm").serialize()+"&remark="+$("#userRemark").val(),
                         type: "POST",
                         success: function(data){
                             if (data.status == "200") {
@@ -286,7 +291,7 @@
                     var url = _global.v.addressSaveUrl;
                     $.ajax({
                         url: url,
-                        data: $("#addressForm").serialize(),
+                        data: $("#addressForm").serialize()+"&remark="+$("#addressRemark").val(),
                         type: "POST",
                         success: function(data){
                             if (data.status == "200") {

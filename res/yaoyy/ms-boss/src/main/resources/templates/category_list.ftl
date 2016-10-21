@@ -290,7 +290,7 @@
                         title: '标题: required',
                         priceDesc: '价格描述: required',
                         sort: '排序: required; integer',
-                        //pictureUrl: '图片: required'
+                        pictureUrl: '图片: required'
                     },
                     valid: function (form) {
                         if ( $(form).isValid() ) {
@@ -392,7 +392,8 @@
             },
             upImg: function() {
                 var options = {
-                    uploadUrl:'img_save_to_file.php',
+                    uploadUrl: '/gen/upload',
+                    cropUrl: '/gen/clipping',
                     customUploadButtonId: 'imgCrop',
                     loaderHtml:'<span class="loader">正在上传图片，请稍后...</span>',
                     onAfterImgUpload: function(response){
