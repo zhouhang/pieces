@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pieces.dao.MemberMapper">
+<mapper namespace="com.pieces.dao.MemberDao">
     <resultMap id="MemberResultMap" type="com.pieces.dao.model.Member">
         <id column="id" property="id"/>
         <result column="username" property="username"/>
@@ -114,7 +114,7 @@
         </if>
     </select>
 
-    <select id="findResourcesByUsername" parameterType="java.lang.String" resultType="com.pieces.dao.model.Resources">
+    <select id="findResourcesByUserName" parameterType="java.lang.String" resultType="com.pieces.dao.model.Resources">
         select d.* from member a
         left join role_member b on a.id = b.member_id
         left join role_resources c on c.role_id = b.role_id

@@ -31,11 +31,6 @@ public class AreaServiceImpl extends AbsCommonService<Area> implements AreaServi
         return areaDao.findByLevel(level);
     }
 
-    @Override
-    public PageInfo<Area> findByPage(Integer level, Integer pageNum, Integer pageSize) {
-        return areaDao.findByPage(level, pageNum, pageSize);
-    }
-
     /**
      *
      * @param id
@@ -52,10 +47,6 @@ public class AreaServiceImpl extends AbsCommonService<Area> implements AreaServi
         return areaDao;
     }
 
-	@Override
-	public Area findByCode(String areacode) {
-		return areaDao.findByCode(areacode);
-	}
 
 
 

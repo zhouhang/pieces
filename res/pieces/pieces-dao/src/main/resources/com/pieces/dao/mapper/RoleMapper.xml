@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pieces.dao.RoleMapper">
+<mapper namespace="com.pieces.dao.RoleDao">
     <resultMap id="RoleResultMap" type="com.pieces.dao.model.Role">
             <id column="id"  property="id" />
             <result column="name"  property="name" />
@@ -58,13 +58,15 @@
     <!-- 条件查询User-->
     <select id="findByCondition" parameterType="com.pieces.dao.vo.RoleVo" resultMap="RoleResultMap">
         select * from role b
-        where 1=1
-        <if test="id != null " >
-            and b.id = #{id}
-        </if>
-        <if test="name != null and name != ''" >
-            and b.name like "%"#{name}"%"
-        </if>
+        <where>
+           <if test="id != null " >
+               b.id = #{id}
+           </if>
+           <if test="name != null and name != ''" >
+               and b.name like "%"#{name}"%"
+           </if>
+        </where>
+
     </select>
 
 

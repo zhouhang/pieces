@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>yaoyy</artifactId>
+        <groupId>yaoyy</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <groupId>yaoyy</groupId>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>ms-boss</artifactId>
+    <packaging>war</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>yaoyy</groupId>
+            <artifactId>ms-service</artifactId>
+            <version>${yaoyy-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-loader-tools</artifactId>
+        </dependency>
+
+        <!-- apache common lang -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
+        <!--Apache Shiro所需的jar包 -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+        </dependency>
+        <!-- redis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
+    </dependencies>
+
+
+    <profiles>
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.dataSource.url>jdbc:mysql://192.168.1.41:3306/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
+                <spring.dataSource.username>yaoyy</spring.dataSource.username>
+                <spring.dataSource.password>123456</spring.dataSource.password>
+                <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
+                <pro.upload.path>/var/tomcat/apache-tomcat-8.5.4/webapps/files/upload/</pro.upload.path>
+                <pro.upload.url>http://127.0.0.1:8080/files/upload/</pro.upload.url>
+            </properties>
+        </profile>
+        <profile>
+            <id>local</id>
+            <properties>
+                <spring.dataSource.url>jdbc:mysql://127.0.0.1:3307/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
+                <spring.dataSource.username>root</spring.dataSource.username>
+                <spring.dataSource.password>root</spring.dataSource.password>
+                <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
+                <pro.upload.path>/Software/JAVAEE/apache-tomcat-8.0.23/webapps/ms-files/</pro.upload.path>
+                <pro.upload.url>http://127.0.0.1:8080/ms-files/</pro.upload.url>
+            </properties>
+        </profile>
+        <profile>
+            <id>ccx</id>
+            <properties>
+                <spring.dataSource.url>jdbc:mysql://127.0.0.1:3306/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
+                <spring.dataSource.username>root</spring.dataSource.username>
+                <spring.dataSource.password>ycg20160401</spring.dataSource.password>
+                <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
+                <pro.upload.path>E:\Program Files\Apache Software Foundation\Tomcat 8.5\webapps\ms-files</pro.upload.path>
+                <pro.upload.url>http://127.0.0.1:8080/ms-files/</pro.upload.url>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <finalName>boss</finalName>
+        <resources>
+            <!--<resource>-->
+                <!--<directory>src/main/resources</directory>-->
+                <!--<filtering>true</filtering>-->
+            <!--</resource>-->
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <excludes>
+                    <exclude>static/assets/awesome/fonts/**</exclude>
+                </excludes>
+            </resource>
+
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>static/assets/awesome/fonts/**</include>
+                </includes>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>utf-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

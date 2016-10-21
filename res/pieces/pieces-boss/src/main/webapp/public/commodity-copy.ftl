@@ -29,7 +29,6 @@
                     <div class="extra">
                         <a class="btn btn-gray" href="/commodity/index">返回</a>
                         <button type="button" class="btn btn-gray" onclick="window.location.reload();">重置</button>
-                        <button type="button" id="delete" class="btn btn-gray">删除</button>
                         <button type="button" id="copy" class="btn btn-gray">复制</button>
                         <button type="button" id="submit" class="btn btn-red">保存</button>
                     </div>
@@ -294,13 +293,13 @@ ${commodity.details}
                 $("#form").validator({
                     fields: {
                         categoryId: "required",
-                        name: "required;length[2~20]",
-                        title:"required;length[2~50]",
+                        name: "required;length[1~20]",
+                        title:"required;length[1~50]",
                         spec: "required;length[1~20]",
-                        level: "required;length[2~50]",
-                        originOf: "required;length[2~20]",
+                        level: "required;length[1~50]",
+                        originOf: "required;length[1~20]",
                         executiveStandard: "required;length[1~20]",
-                        exterior: "required;length[2~100]",
+                        exterior: "required;length[1~200]",
                         pictureUrl: "required",
                         details: {
                             rule: "required",

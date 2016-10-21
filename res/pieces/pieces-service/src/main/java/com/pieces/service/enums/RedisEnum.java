@@ -8,6 +8,7 @@ public enum RedisEnum {
 	USER_SESSION_BIZ("user_session_biz"),
 	SITE_TAG_PINYIN_CATEGORY("site_tag_pinyin_category"),
 	KEY_MOBILE_CAPTCHA("mobile_captcha"),
+	KEY_MOBILE_CAPTCHA_INTERVAL("mobile_captcha_interval"),
 	KEY_MOBILE_TIMER("mobile_timer");
 
 	@Override

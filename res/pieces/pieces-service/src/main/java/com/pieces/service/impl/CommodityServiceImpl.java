@@ -10,7 +10,9 @@ import java.util.Set;
 
 import javax.imageio.ImageIO;
 
+import com.github.pagehelper.PageHelper;
 import com.pieces.service.utils.ValidUtils;
+import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,8 @@ import com.pieces.tools.utils.FileUtil;
 @Service
 public class CommodityServiceImpl  extends AbsCommonService<Commodity> implements CommodityService {
 
+    public final static String param = "pictureUrl";
+
     Logger logger = LoggerFactory.getLogger(CommodityServiceImpl.class);
 
     @Autowired
@@ -75,7 +79,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 
     @Override
     @Transactional
-    public void saveOrUpdate(Commodity commodity) throws IOException {
+    public Integer saveOrUpdate(Commodity commodity) throws IOException {
 //        commodity.setPictureUrl(commodity.getPictureUrl().replace(defaultUploadFile.getUrl(), ""));
         // 把文件从临时目录保存
         commodity.setPictureUrl(FileUtil.saveFileFromTemp(commodity.getPictureUrl(), PathEnum.COMMODITY.getValue()));
@@ -87,12 +91,13 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
             commodityDao.create(commodity);
         }
         commoditySearchService.save(commodity);
+        return commodity.getId();
     }
 
 
     @Override
     public PageInfo<CommodityVo> query(CommodityVo commodity, int pageNum, int pageSize) {
-        return commodityDao.findByParam(commodity, pageNum, pageSize);
+        return this.findByParam(commodity, pageNum, pageSize);
     }
 
     @Override
@@ -104,13 +109,11 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     }
 
     @Override
-    public List<Commodity> queryNoPage(CommodityVo commodity) {
-        return commodityDao.findByParamNoPage(commodity);
-    }
-
-    @Override
     public PageInfo<CommodityVo> findVoByPage(int pageNum, int pageSize) {
-        PageInfo<CommodityVo> pageInfo = commodityDao.findVoByPage(pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
+        List<CommodityVo> list = commodityDao.findVoByPage();
+        list = FileUtil.convertAbsolutePathToUrl(list,param);
+        PageInfo pageInfo = new PageInfo(list);
         return pageInfo;
     }
 
@@ -170,29 +173,34 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 
     @Override
     public CommodityVo findVoById(Integer id) {
-        CommodityVo commodity =  commodityDao.findVoById(id);
+        CommodityVo commodity =  (CommodityVo)FileUtil.convertAbsolutePathToUrl(commodityDao.findVoById(id), param);
         return commodity;
     }
 
     @Override
     public List<CommodityVo> findVoByIds(Set<Integer> ids) {
-        return commodityDao.findVoByIds(ids);
+        return FileUtil.convertAbsolutePathToUrl(commodityDao.findVoByIds(new ArrayList<Integer>(ids))
+                ,param);
     }
 
 
     @Override
     public List<CommodityVo> findCommodityByBreedId(Integer id) {
-    	return commodityDao.findCommodityByBreedId(id);
+    	return FileUtil.convertAbsolutePathToUrl(commodityDao.findCommodityByBreedId(id), param);
     }
 
     @Override
     public List<CommodityVo> findFactoryByBreedId(String ids) {
-    	return commodityDao.findFactoryByBreedId(ids);
+        CommodityVo vo = new CommodityVo();
+        vo.setBreedIds(ids);
+    	return FileUtil.convertAbsolutePathToUrl(commodityDao.findFactoryByBreedId(vo), param);
     }
 
     @Override
     public List<CommodityVo> findStandardByBreedId(String ids) {
-    	return commodityDao.findStandardByBreedId(ids);
+        CommodityVo vo = new CommodityVo();
+        vo.setBreedIds(ids);
+    	return  FileUtil.convertAbsolutePathToUrl(commodityDao.findStandardByBreedId(vo),param);
     }
 
     @Override
@@ -212,7 +220,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
                 }
 
                 ids = ids.substring(0, ids.length()-1);
-                List<CommodityVo> commodityVOs = commodityDao.findByIds(ids);
+                List<CommodityVo> commodityVOs = this.findByIds(ids);
                 list.addAll(commodityVOs);
             }
 
@@ -221,7 +229,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         if (list.size() < 5) {
             CommodityVo param = new CommodityVo();
             param.setCategoryId(breedId);
-            PageInfo<CommodityVo> pageInfo = commodityDao.findByParam(param, 1, 5-list.size());
+            PageInfo<CommodityVo> pageInfo = this.findByParam(param, 1, 5-list.size());
             list.addAll(pageInfo.getList());
         }
         if (list.size() < 5) {
@@ -240,7 +248,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
                 categoryIds = categoryIds.substring(0, categoryIds.length()-1);
                 CommodityVo commodityVO = new CommodityVo();
                 commodityVO.setCategoryIds(categoryIds);
-                List<CommodityVo> listc = commodityDao.findByParam(commodityVO, 1,5-list.size()).getList();
+                List<CommodityVo> listc = this.findByParam(commodityVO, 1,5-list.size()).getList();
                 // 整合数据
                 list.addAll(listc);
                 if(list.size() >5) {
@@ -257,7 +265,7 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         for(String id :ids.split(",")){
             list.add(Integer.parseInt(id));
         }
-        return commodityDao.findVoByIds(list);
+        return FileUtil.convertAbsolutePathToUrl(commodityDao.findVoByIds(list),param);
     }
 
     @Override
@@ -290,6 +298,33 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 	public List<CommodityVo> findDistinctName(CommodityVo commodityVO) {
 		return commodityDao.findDistinctName(commodityVO);
 	}
+
+
+    @Override
+    public Commodity findById(int id) {
+        return (Commodity)FileUtil.convertAbsolutePathToUrl(super.findById(id), param);
+    }
+
+    @Override
+    public PageInfo<Commodity> find(int pageNum, int pageSize) {
+        PageInfo pageInfo = super.find(pageNum, pageSize);
+        List<Commodity> list = pageInfo.getList();
+        list = FileUtil.convertAbsolutePathToUrl(list, param);
+        pageInfo.setList(list);
+        return pageInfo;
+    }
+
+    private PageInfo<CommodityVo> findByParam(CommodityVo commodity, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<CommodityVo> list = commodityDao.findByParam(commodity);
+        list = FileUtil.convertAbsolutePathToUrl(list, param);
+        PageInfo page = new PageInfo(list);
+        return page;
+    }
+
+    private List<CommodityVo> findByIds(String ids) {
+        return FileUtil.convertAbsolutePathToUrl(commodityDao.findByIds(ids),param);
+    }
 
 
 }

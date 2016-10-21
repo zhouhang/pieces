@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>白芍专场-药优优</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="ui-body">
+    <header class="ui-header">
+        <div class="title">白芍专场</div>
+        <div class="abs-l mid">
+            <a href="javascript:history.back();" class="fa fa-back"></a>
+        </div>
+        <div class="abs-r mid">
+            <a href="search.html"><i class="fa fa-search"></i></a>
+        </div>
+    </header><!-- /ui-header -->
+
+    <footer class="ui-footer">
+        <nav class="ui-nav">
+            <ul>
+                <li>
+                    <a href="index.html">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="product_list.html">
+                        <i class="fa fa-list"></i>
+                        <span>品种列表</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="center.html">
+                        <i class="fa fa-cart"></i>
+                        <span>采购单</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="center.html">
+                        <i class="fa fa-order"></i>
+                        <span>订单</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </footer>
+
+    <section class="ui-content">
+        <div class="ui-banner">
+            <img src="uploads/p10.jpg" alt="">
+        </div>
+        <div class="plist">
+            <ul>
+                <li>
+                    <a href="product_detail.html">
+                        <div class="cnt">
+                            <div class="title">三七</div>
+                            <div class="summary">
+                                云南文山三七120/80/60头  上等货洗净   无硫  长期供应
+                            </div>
+                            <div class="price">
+                                <i>&yen;</i>
+                                <em>380-400</em>
+                                <b>元/公斤</b>
+                                <span>量大价优</span>
+                            </div>
+                        </div>
+                        <div class="pic">
+                            <img src="uploads/p5.jpg" width="110" height="90" alt="">
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="product_detail.html">
+                        <div class="cnt">
+                            <div class="title">天麻</div>
+                            <div class="summary">
+                                安徽天麻  无硫  统货  2015版药典标准 长期供应
+                            </div>
+                            <div class="price">
+                                <i>&yen;</i>
+                                <em>120</em>
+                                <b>元/公斤</b>
+                                <span>量大价优</span>
+                            </div>
+                        </div>
+                        <div class="pic">
+                            <img src="uploads/p6.jpg" width="110" height="90" alt="">
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="product_detail.html">
+                        <div class="cnt">
+                            <div class="title">当归</div>
+                            <div class="summary">
+                                甘肃当归  选货  10/12号筛  包加工
+                            </div>
+                            <div class="price">
+                                <i>&yen;</i>
+                                <em>140</em>
+                                <b>元/公斤</b>
+                                <span>量大价优</span>
+                            </div>
+                        </div>
+                        <div class="pic">
+                            <img src="uploads/p7.jpg" width="110" height="90" alt="">
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="product_detail.html">
+                        <div class="cnt">
+                            <div class="title">黄连</div>
+                            <div class="summary">
+                                甘肃定西黄连  10号筛  B级杂质少  干度 好  长期供应
+                            </div>
+                            <div class="price">
+                                <i>&yen;</i>
+                                <em>80</em>
+                                <b>元/公斤</b>
+                                <span>量大价优</span>
+                            </div>
+                        </div>
+                        <div class="pic">
+                            <img src="uploads/p8.jpg" width="110" height="90" alt="">
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="product_detail.html">
+                        <div class="cnt">
+                            <div class="title">白芍</div>
+                            <div class="summary">
+                                安徽亳州白芍  选货  过10-12号筛 
+                            </div>
+                            <div class="price">
+                                <i>&yen;</i>
+                                <em>120</em>
+                                <b>元/公斤</b>
+                            </div>
+                        </div>
+                        <div class="pic">
+                            <img src="uploads/p9.jpg" width="110" height="90" alt="">
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </section><!-- /ui-content -->
+
+	
+    <script src="assets/js/zepto.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+
+    var _global = {
+        fn: {
+            init: function() {
+                this.loadPlist();
+            },
+            loadPlist: function() {
+                var self = this;
+                $('.plist').dropload({
+                    scrollArea : window,
+                    threshold : 50,
+                    loadUpFn : function(me){
+                        $.ajax({
+                            type: 'GET',
+                            url: 'json/plist.json',
+                            dataType: 'json',
+                            success: function(data){
+                                if (!data.list) {
+                                    return;
+                                }
+                                me.unlock();
+                                me.isDate = true;
+                                var result = self.toHtml(data.list);
+                                setTimeout(function(){
+                                    $('.plist ul').html(result);
+                                    me.resetload();
+                                }, 1e3);
+                            },
+                            error: function(xhr, type){
+                                popover('网络连接超时，请您稍后重试!');
+                                me.resetload();
+                            }
+                        });
+                    },
+                    loadDownFn : function(me){
+                        $.ajax({
+                            type: 'GET',
+                            url: 'json/plist.json',
+                            dataType: 'json',
+                            success: function(data){
+                                if (!data.list) {
+                                    return false;
+                                }
+                                var result = self.toHtml(data.list);
+
+                                if(data.status === 'nomore'){
+                                    me.lock();
+                                    me.noData();
+                                    me.resetload();
+                                    return;
+                                }
+                                setTimeout(function(){
+                                    $('.plist ul').append(result);
+                                    me.resetload();
+                                }, 1e3);
+                            },
+                            error: function(xhr, type){
+                                popover('网络连接超时，请您稍后重试!');
+                                me.resetload();
+                            }
+                        });
+                    }
+                });
+            },
+            toHtml: function(data) {
+                var html = [];
+                $.each(data, function(i, item) {
+                    html.push('<li>\n');
+                    html.push( '<a href="' + data[i].href + '">\n');
+                    html.push(     '<div class="cnt">\n');
+                    html.push(         '<div class="title">', data[i].title, '</div>\n');
+                    html.push(         '<div class="summary">', data[i].summary, '</div>\n');
+                    html.push(         '<div class="price">\n');
+                    html.push(              '<i>&yen;</i>\n');
+                    html.push(              '<em>', data[i].price, '</em>\n');
+                    html.push(              '<b>', data[i].unit, '</b>\n');
+                    html.push(              data[i].sales ? '<span>量大价优</span>\n' : '');
+                    html.push(          '</div>\n');
+                    html.push(     '</div>');
+                    html.push(     '<div class="pic"><img src="', data[i].pic, '" width="110" height="90" alt="', data[i].title, '"></div>\n');
+                    html.push( '</a>\n');
+                    html.push('</li>');
+                })
+                return html.join('');
+            }
+        }
+    }
+
+    $(function(){
+        _global.fn.init();
+    });
+
+</script>
+</body>
+</html>

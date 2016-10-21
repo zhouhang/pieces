@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.pieces.dao.exception.SmsOverException;
 import com.pieces.service.CommodityService;
 import com.pieces.service.impl.CreateHtmlService;
 import com.pieces.service.vo.CropResult;
@@ -90,6 +91,9 @@ public class GeneralController extends BaseController {
         defaultUploadFile.uploadFile(file.getOriginalFilename(), file.getInputStream());
     }
 
+
+
+
     /**
      * 上传图片
      * @param request
@@ -128,6 +132,15 @@ public class GeneralController extends BaseController {
         String result = GsonUtil.toJsonInclude(areaList, "id", "areaname");
         WebUtil.printJson(response, result);
     }
+
+    @RequestMapping(value = "/area/all")
+    @ResponseBody
+    public List<Area> areaAll(){
+       List<Area>  list =   areaService.findAll();
+       return list;
+    }
+
+
 
 
     /**
@@ -177,10 +190,17 @@ public class GeneralController extends BaseController {
 	@RequestMapping(value="/code")
 	public void getMobileCode(String contactMobile,
 						HttpServletRequest request,
-						HttpServletResponse response) throws Exception{
-		smsService.sendSmsCaptcha(contactMobile);
-		Map<String, String> result = new HashMap<String, String>();
-		result.put("ok", "ok");
+						HttpServletResponse response){
+        try {
+            smsService.sendSmsCaptcha(contactMobile);
+        } catch (Exception e) {
+            Map<String, String> result = new HashMap<String, String>();
+            result.put("error", e.getMessage());
+            WebUtil.print(response,result);
+            return;
+        }
+        Map<String, String> result = new HashMap<String, String>();
+		result.put("result", "ok");
         WebUtil.print(response,result);
 	}
 

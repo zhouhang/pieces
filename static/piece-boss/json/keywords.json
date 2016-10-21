@@ -1,0 +1,18 @@
+{
+    "status": "success",
+    "msg": "",
+    "list": [
+	    {
+	        "number": 1131,
+	        "name": "黄连"
+	    }, 
+	    {
+	        "number": 1132,
+	        "name": "黄芪"
+	    }, 
+	    {
+	        "number": 1133,
+	        "name": "黄芩"
+	    }
+    ]
+}

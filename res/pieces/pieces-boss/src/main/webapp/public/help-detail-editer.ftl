@@ -62,7 +62,7 @@
                                 <i>*</i>排序：
                             </div>
                             <div class="cnt">
-                                <input type="text" id="sort" class="ipt ipt-price" name="sort" value="${article.sort}" autocomplete="off" placeholder="输入数字越大排在越前面">
+                                <input type="text" id="sort" class="ipt ipt-price" name="sort" value="${article.sort}" autocomplete="off" placeholder="请输入数字，数字越大显示越靠前">
                             </div>
                         </div>
 
@@ -108,7 +108,8 @@ ${article.content}
 <script type="text/javascript" charset="utf-8" src="/js/umeditor1_2_2-utf8/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="/js/umeditor1_2_2-utf8/umeditor.min.js"></script>
 <script type="text/javascript" src="/js/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js"></script>
-
+<script src="/js/layer/layer.js"></script>
+<link type="text/css" rel="stylesheet" href="/js/layer/skin/layer.css" />
 <!-- footer end -->
 <script>
     var roleAddPage = {
@@ -117,21 +118,28 @@ ${article.content}
             init: function () {
                 this.formValidate();
                 $("#delete").click(function() {
-                    $.post("cms/article/delete/${article.id}", function (data) {
-                        if (data.status == "y") {
-                            $.notify({
-                                type: 'success',
-                                title: '删除成功',
-                                text: '3秒后自动跳转到单页面列表',
-                                delay: 3e3,
-                                call: function () {
-                                    setTimeout(function () {
-                                        location.href = 'cms/article/index?model=1';
-                                    }, 3e3);
-                                }
-                            });
-                        }
-                    }, "json")
+
+                    layer.confirm('确认要删除该单页面？', {
+                        title: '删除单页面',
+                        btn: ['确认','取消'] //按钮
+                    }, function(index){
+                        $.post("cms/article/delete/${article.id}", function (data) {
+                            if (data.status == "y") {
+                                $.notify({
+                                    type: 'success',
+                                    title: '删除成功',
+                                    text: '3秒后自动跳转到单页面列表',
+                                    delay: 3e3,
+                                    call: function () {
+                                        setTimeout(function () {
+                                            location.href = 'cms/article/index?model=1';
+                                        }, 3e3);
+                                    }
+                                });
+                            }
+                        }, "json")
+                        layer.close(index);
+                    });
                 });
             },
             formValidate: function () {

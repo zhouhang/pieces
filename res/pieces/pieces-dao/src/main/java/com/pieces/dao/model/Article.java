@@ -1,5 +1,10 @@
 package com.pieces.dao.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,16 +14,20 @@ public class Article  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	
+
+	@NotEmpty
 	private String title;
 	
 	//文章类别ID
+	@NotNull
 	private Integer categoryId;
 	
 	//文章状态
+	@NotNull
 	private Integer status;
 	
 	//文章内容
+	@NotEmpty
 	private String content;
 	
 	private Integer createUser;
@@ -32,6 +41,7 @@ public class Article  implements Serializable {
 	private Integer sort;
 	
 	//1 帮助中心 2 新闻模块
+	@NotNull
 	private Integer model;
 
 	// 文章发布时间

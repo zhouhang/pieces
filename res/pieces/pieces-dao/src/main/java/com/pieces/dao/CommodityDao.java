@@ -5,15 +5,17 @@ import java.util.List;
 import java.util.Set;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.annotation.AutoMapper;
 import com.pieces.dao.model.Category;
 import com.pieces.dao.model.Commodity;
 import com.pieces.dao.vo.CommodityVo;
 
+@AutoMapper
 public interface CommodityDao extends ICommonDao<Commodity>{
 
-    public PageInfo<CommodityVo> findVoByPage(int pageNum, int pageSize);
+    public List<CommodityVo> findVoByPage();
 
-    public PageInfo<CommodityVo> findByParam (CommodityVo commodity, int pageNum, int pageSize);
+    public List<CommodityVo> findByParam (CommodityVo commodity);
 
     public CommodityVo findVoById(Integer id);
 
@@ -28,11 +30,9 @@ public interface CommodityDao extends ICommonDao<Commodity>{
 
 	public List<CommodityVo> findCommodityByBreedId(Integer id);
 
-	List<CommodityVo> findStandardByBreedId(String ids);
+	List<CommodityVo> findStandardByBreedId(CommodityVo vo);
 	
-	List<CommodityVo> findFactoryByBreedId(String ids);
-
-	List<Commodity> findByParamNoPage(CommodityVo commodity);
+	List<CommodityVo> findFactoryByBreedId(CommodityVo vo);
 
 	public List<CommodityVo> findCommodityByName(CommodityVo commodityVO);
 	

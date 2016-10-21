@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ms.dao.CommodityDao">
+    <resultMap id="CommodityResultMap" type="com.ms.dao.model.Commodity">
+            <id column="id"  property="id" />
+            <result column="title"  property="title" />
+            <result column="name"  property="name" />
+            <result column="har_year"  property="harYear" />
+            <result column="origin"  property="origin" />
+            <result column="spec"  property="spec" />
+            <result column="category_id"  property="categoryId" />
+            <result column="picture_url"  property="pictureUrl" />
+            <result column="detail"  property="detail" />
+            <result column="status"  property="status" />
+            <result column="attribute"  property="attribute" />
+            <result column="price"  property="price" />
+            <result column="unit"  property="unit" />
+            <result column="sort"  property="sort" />
+            <result column="mark"  property="mark" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <resultMap id="CommodityResultMapVo" type="com.ms.dao.vo.CommodityVo" extends="CommodityResultMap">
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,title,name,har_year,origin,spec,category_id,picture_url,detail,status,attribute,price,unit,sort,mark,create_time,update_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="CommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from commodity
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="CommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from commodity
+    </select>
+
+    <select id="findByParams" resultMap="CommodityResultMapVo" parameterType="com.ms.dao.vo.CommodityVo">
+        select
+        <include refid="Base_Column_List" />
+        from commodity
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from commodity
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.Commodity">
+        insert into
+        commodity (title,name,har_year,origin,spec,category_id,picture_url,detail,status,attribute,price,unit,sort,mark,create_time,update_time)
+        values
+        (#{title},#{name},#{harYear},#{origin},#{spec},#{categoryId},#{pictureUrl},#{detail},#{status},#{attribute},#{price},#{unit},#{sort},#{mark},#{createTime},#{updateTime})
+    </insert>
+
+    <update id="update" parameterType="com.ms.dao.model.Commodity">
+        update commodity
+        <set>
+                                                        
+            <if test="title != null">
+                title = #{title},
+            </if>
+                                            
+            <if test="name != null">
+                name = #{name},
+            </if>
+                                            
+            <if test="harYear != null">
+                har_year = #{harYear},
+            </if>
+                                            
+            <if test="origin != null">
+                origin = #{origin},
+            </if>
+                                            
+            <if test="spec != null">
+                spec = #{spec},
+            </if>
+                                            
+            <if test="categoryId != null">
+                category_id = #{categoryId},
+            </if>
+                                            
+            <if test="pictureUrl != null">
+                picture_url = #{pictureUrl},
+            </if>
+                                            
+            <if test="detail != null">
+                detail = #{detail},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                                            
+            <if test="attribute != null">
+                attribute = #{attribute},
+            </if>
+                                            
+            <if test="price != null">
+                price = #{price},
+            </if>
+                                            
+            <if test="unit != null">
+                unit = #{unit},
+            </if>
+                                            
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+                                            
+            <if test="mark != null">
+                mark = #{mark},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findByIds" parameterType="java.lang.Integer" resultType="com.ms.dao.model.Commodity">
+        select   <include refid="Base_Column_List" />
+        from commodity
+        where id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+
+</mapper>

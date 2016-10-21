@@ -265,7 +265,13 @@ ${commodity.details}
 
 
                 $("#delete").click(function(){
-                    commodityAddPage.fn.deleteCommodity();
+                    layer.confirm('确认要删除该商品？', {
+                        title: '删除商品',
+                        btn: ['确认','取消'] //按钮
+                    }, function(index){
+                        commodityAddPage.fn.deleteCommodity();
+                        layer.close(index);
+                    });
                 })
 
                 $("#copy").click(function(){
@@ -291,13 +297,13 @@ ${commodity.details}
                 $("#form").validator({
                     fields: {
                         categoryId: "required",
-                        name: "required;length[2~20]",
-                        title:"required;length[2~50]",
+                        name: "required;length[1~20]",
+                        title:"required;length[1~50]",
                         spec: "required;length[1~20]",
-                        level: "required;length[2~50]",
-                        originOf: "required;length[2~20]",
+                        level: "required;length[1~50]",
+                        originOf: "required;length[1~20]",
                         executiveStandard: "required;length[1~20]",
-                        exterior: "required;length[2~100]",
+                        exterior: "required;length[1~200]",
                         pictureUrl: "required",
                         details: {
                             rule: "required",

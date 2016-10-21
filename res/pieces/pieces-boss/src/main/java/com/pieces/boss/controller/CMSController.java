@@ -18,12 +18,14 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -133,7 +135,7 @@ public class CMSController extends BaseController{
     @RequestMapping(value = "article/save", method = RequestMethod.POST)
     @ResponseBody
     @BizLog(type = LogConstant.cms, desc = "保存文章")
-    public Result save (Article article){
+    public Result save (@Valid Article article){
         Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         articleService.saveOrUpdateArticle(article, mem.getId());
         return new Result(true).info("保存成功!");
@@ -184,7 +186,7 @@ public class CMSController extends BaseController{
     @RequestMapping(value = "category/save", method = RequestMethod.POST)
     @ResponseBody
     @BizLog(type = LogConstant.cms, desc = "保存文章类别信息")
-    public Result saveCategory(ArticleCategory category) {
+    public Result saveCategory(@Valid ArticleCategory category) {
         Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         articleService.saveOrUpdateCategory(category, mem.getId());
         return new Result(true).info("保存成功");
@@ -214,8 +216,14 @@ public class CMSController extends BaseController{
     @ResponseBody
     @BizLog(type = LogConstant.cms, desc = "删除文章类别")
     public Result deleteCategory (@PathVariable("id") Integer id){
-        articleService.deleteCategory(id);
-        return new Result(true).info("删除成功!");
+        Result result = null;
+        if (articleService.getArticleByCategoryId(id).size() > 0) {
+            result = new Result(false).info("请先删除该分类下的所有文章");
+        } else {
+            articleService.deleteCategory(id);
+            result = new Result(true).info("删除成功!");
+        }
+        return result;
     }
 
 }

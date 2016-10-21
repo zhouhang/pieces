@@ -1,5 +1,8 @@
 package com.pieces.dao.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,18 +14,22 @@ public class Ad  implements Serializable {
 	private Integer id;
 	
 	//广告标题
+	@NotEmpty
 	private String title;
 	
 	//广告类型
+	@NotNull
 	private Integer typeId;
 	
 	//广告图片
 	private String pictureUrl;
 	
 	//开始时间
+	@NotNull
 	private Date startTime;
 	
 	//结束时间
+	@NotNull
 	private Date endTime;
 
 	private String color;
@@ -34,6 +41,7 @@ public class Ad  implements Serializable {
 	private String sort;
 	
 	//激活状态
+	@NotNull
 	private Boolean status;
 	
 	//创建时间

@@ -1,5 +1,6 @@
 package com.pieces.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.EnquiryBillsDao;
 import com.pieces.dao.EnquiryCommoditysDao;
@@ -52,11 +53,8 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
         enquiryCommoditysDao.deleteByBillId(billId);
         enquiryBills.setCreateTime(new Date());
         enquiryBillsDao.update(enquiryBills);
-
         //创建报价单商品
         createCommoditys(enquiryCommoditysList,user.getId(),billId);
-
-
     }
 
     @Override
@@ -80,7 +78,10 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     public PageInfo<EnquiryBillsVo> findByParam(EnquiryBillsVo enquiryBillsVO, Integer pageNum, Integer pageSize) {
         pageNum=pageNum==null?1:pageNum;
         pageSize=pageSize==null?10:pageSize;
-        return enquiryBillsDao.findByParam(enquiryBillsVO, pageNum, pageSize);
+        PageHelper.startPage(pageNum, pageSize);
+        List<EnquiryBillsVo> list = enquiryBillsDao.findByParam(enquiryBillsVO);
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
     @Override
@@ -91,7 +92,14 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     }
     @Override
     public PageInfo<EnquiryBills> findByPage(int pageNum, int pageSize,EnquiryRecordVo enquiryRecordVo) {
-        return enquiryBillsDao.findByCommoditys(pageNum,pageSize,enquiryRecordVo);
+        PageHelper.startPage(pageNum, pageSize);
+        List<EnquiryBills> list = enquiryBillsDao.findByCommoditys(enquiryRecordVo);
+        for (EnquiryBills enquiryBills : list) {
+            List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysDao.findByBillId(enquiryBills.getId(), 10);
+            enquiryBills.setEnquiryCommoditys(enquiryCommoditysList);
+        }
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
 

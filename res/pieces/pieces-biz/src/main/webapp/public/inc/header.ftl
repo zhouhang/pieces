@@ -22,7 +22,6 @@
 
 
 <!-- nav start -->
-<!-- nav start -->
 <div class="nav">
     <div class="wrap">
         <div class="cat <#if CURRENT_PAGE?? && CURRENT_PAGE=="home">cat-show</#if> ">

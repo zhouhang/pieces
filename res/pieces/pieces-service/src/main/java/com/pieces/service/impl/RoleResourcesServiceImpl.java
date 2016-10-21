@@ -54,7 +54,7 @@ public class RoleResourcesServiceImpl extends AbsCommonService<RoleResources> im
     @Override
     public List<Integer> findResourcesByRole(Integer roleId) {
         List<Integer> resourceIds = new ArrayList<>();
-        List<RoleResources> roleResourcesList = roleResourcesDao.findByRole(roleId);
+        List<RoleResources> roleResourcesList = roleResourcesDao.findByRoleId(roleId);
         for(RoleResources roleResources : roleResourcesList){
             resourceIds.add(roleResources.getResourcesId());
         }

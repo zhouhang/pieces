@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,14 +24,16 @@ import java.util.Map;
 @Component
 public class SmsService {
 
-    private static final int SMS_EXPIRE_TIME = 30*60*1000;
+    private static final int SMS_EXPIRE_TIME = 30*60;//秒
+
+    private static final int SMS_INTERVAL_TIME = 60 * 1000;//秒
 
     private static final Logger logger = Logger.getLogger(SmsService.class);
 
     @Value("${sms.apikey}")
     private String apikey;
 
-    private boolean enable = true;
+    private boolean enable = false;
 
     private final String smsUrl = "https://sms.yunpian.com/v2/sms/single_send.json";
 
@@ -45,10 +48,19 @@ public class SmsService {
      */
     public String sendSmsCaptcha(String mobile) throws Exception {
         String timerStr = redisManager.get(RedisEnum.KEY_MOBILE_TIMER.getValue()+mobile);
+        String intervalTimeStr = redisManager.get(RedisEnum.KEY_MOBILE_CAPTCHA_INTERVAL.getValue()+mobile);
         if(StringUtils.isNotBlank(timerStr)){
+            if(StringUtils.isNotBlank(intervalTimeStr)){
+                Long intervalTime =  Long.valueOf(intervalTimeStr) + SMS_INTERVAL_TIME;
+                if(new Date().getTime()<intervalTime){
+                    throw new SmsOverException("'"+mobile+"',该手机号请求短信间隔太快!");
+                }
+            }
+
+
             Integer timer =  Integer.valueOf(timerStr);
             if(timer>=3){
-                throw new SmsOverException("'"+mobile+"'该手机号短信发送次数超标!");
+                throw new SmsOverException("'"+mobile+"',该手机号短信发送次数超标!");
             }else{
                 redisManager.set(RedisEnum.KEY_MOBILE_TIMER.getValue()+mobile,(timer+1)+"",SMS_EXPIRE_TIME);
             }
@@ -65,6 +77,8 @@ public class SmsService {
         param.put("text", TextTemplateEnum.SMS_BIZ_CAPTCHA_TEMPLATE.getText("【上工好药】", code));
 
         HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+        //记录发送成功的时间
+        redisManager.set(RedisEnum.KEY_MOBILE_CAPTCHA_INTERVAL.getValue()+mobile,new Date().getTime()+"");
         //验证码存储在redis缓存里
         redisManager.set(RedisEnum.KEY_MOBILE_CAPTCHA.getValue()+mobile,code,SMS_EXPIRE_TIME);
         return code;

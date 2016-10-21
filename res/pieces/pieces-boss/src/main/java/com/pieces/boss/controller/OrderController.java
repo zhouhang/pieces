@@ -3,6 +3,7 @@ package com.pieces.boss.controller;
 import com.github.pagehelper.PageInfo;
 import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.elasticsearch.document.CommodityDoc;
+import com.pieces.dao.group.Biz;
 import com.pieces.dao.model.*;
 import com.pieces.dao.vo.*;
 import com.pieces.dao.vo.OrderFormVo;
@@ -17,11 +18,13 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -97,7 +100,7 @@ public class OrderController extends BaseController{
     @RequestMapping(value = "addComment", method = RequestMethod.POST)
     @ResponseBody
     @BizLog(type = LogConstant.order, desc = "订单添加评论")
-    public Result addComment(OrderRemark remark){
+    public Result addComment(@Valid OrderRemark remark){
         Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         remark.setUserId(mem.getId());
         remark.setCreaterTime(new Date());
@@ -212,7 +215,7 @@ public class OrderController extends BaseController{
     @RequestMapping(value = "submit")
     @ResponseBody
     @BizLog(type = LogConstant.order, desc = "提交订单")
-    public Result save(@RequestBody OrderFormVo orderFormVo){
+    public Result save(@Valid @RequestBody OrderFormVo orderFormVo){
         List<OrderCommodity> commodities = orderFormVo.getCommodities();
         //计算商品金额
         BigDecimal sum = new BigDecimal(0);

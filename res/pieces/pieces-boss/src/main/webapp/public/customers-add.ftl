@@ -64,7 +64,7 @@
                             <div class="txt">
                                 <i>*</i>所在地区：
                             </div>
-                            <div class="cnt">
+                            <div class="cnt" id="pickArea">
                                 <select name="province" id="province">
                                     <option value="">-省-</option>
                                 </select>
@@ -158,7 +158,7 @@
 			            type: "POST",
 			            success: function(data){
 			            	if(data.status=="y"){
-			                    location.href="user/index?advices="+data.info
+			                    location.href="/user/index?advices="+data.info
 			                }else{
 			                    $("#error_advices").show();
 			                }

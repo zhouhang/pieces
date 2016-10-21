@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pieces.dao.AdMapper">
+<mapper namespace="com.pieces.dao.AdDao">
     <resultMap id="AdResultMap" type="com.pieces.dao.model.Ad">
             <id column="id"  property="id" />
             <result column="title"  property="title" />
@@ -102,19 +102,21 @@
         a.id,a.title,a.type_id,a.picture_url,a.color,a.start_time,a.end_time,a.link,a.sort,a.status,a.create_time,adtype.name as typeName
         from ad a
         left join code adtype ON a.type_id = adtype.id
-        where 1=1
-        <if test="title != null and title != ''" >
-            and a.title like "%"#{title}"%"
-        </if>
-        <if test="sort != null">
-            and a.sort = #{sort}
-        </if>
-        <if test="status != null">
-            and a.status = #{status}
-        </if>
-        <if test="typeId != null">
-            and a.type_id = #{typeId}
-        </if>
+       <where>
+           <if test="title != null and title != ''" >
+               a.title like "%"#{title}"%"
+           </if>
+           <if test="sort != null">
+               and a.sort = #{sort}
+           </if>
+           <if test="status != null">
+               and a.status = #{status}
+           </if>
+           <if test="typeId != null">
+               and a.type_id = #{typeId}
+           </if>
+       </where>
+        order by a.sort desc
     </select>
 
     <select id="findByType" parameterType="java.lang.Integer"  resultMap="AdResultMapVo">

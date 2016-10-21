@@ -14,9 +14,7 @@ public interface AreaService extends ICommonService<Area>{
 
     public List<Area> findByLevel(Integer level);
     
-    public Area findByCode(String areacode);
 
-    public PageInfo<Area> findByPage(Integer level, Integer pageNum, Integer pageSize);
 
     public Area findParentsById(Integer id);
 

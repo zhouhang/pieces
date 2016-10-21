@@ -1,5 +1,6 @@
 package com.pieces.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ArticleCategoryDao;
 import com.pieces.dao.ArticleDao;
@@ -10,6 +11,7 @@ import com.pieces.dao.vo.ArticleCategoryVo;
 import com.pieces.dao.vo.ArticleVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.ArticleService;
+import com.pieces.service.enums.StatusEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +39,10 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
 
     @Override
     public PageInfo<ArticleCategory> queryCategory(ArticleCategory category, int pageNum, int pageSize) {
-        return articleCategoryDao.findByParam(category,pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
+        List<ArticleCategory> list =articleCategoryDao.findByParam(category);
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
     @Override
@@ -56,7 +61,10 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
 
     @Override
     public PageInfo<ArticleVo> queryArticle(ArticleVo articleVo, int pageNum, int pageSize) {
-        return articleDao.findByParam(articleVo,pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
+        List<ArticleVo> list = articleDao.findByParam(articleVo);
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
     @Override
@@ -80,6 +88,9 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
     public void saveOrUpdateCategory(ArticleCategory category, Integer memberId) {
         category.setCreateTime(new Date());
         category.setCreateUser(memberId);
+        if (category.getStatus()== null) {
+            category.setStatus(StatusEnum.enable.getValue());
+        }
         if (category.getId() == null) {
             articleCategoryDao.create(category);
         } else {
@@ -104,8 +115,10 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
 
     @Override
     public PageInfo<ArticleVo> findByModel(int model, int pageNum, int pageSize) {
-        PageInfo<ArticleVo> pageInfo = articleDao.findByModel(model,pageNum,pageSize);
-        return pageInfo;
+        PageHelper.startPage(pageNum, pageSize);
+        List<ArticleVo> list = articleDao.findByModel(model);
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
 
@@ -113,5 +126,13 @@ public class ArticleServiceImpl extends AbsCommonService<Article> implements Art
     @Override
     public ArticleCategory getCategoryById(Integer id) {
         return articleCategoryDao.findById(id);
+    }
+
+    @Override
+    public List<ArticleVo> getArticleByCategoryId(Integer categoryId) {
+        ArticleVo vo = new ArticleVo();
+        vo.setCategoryId(categoryId);
+
+        return articleDao.findByParam(vo);
     }
 }

@@ -120,7 +120,7 @@ vertical-align:middle;
 .header .logo a{display:block;width:200px;height:100%;text-indent:-999px;background:url(../images/logo.png) no-repeat 0 50%;}
 .header .search{width:500px;margin:0 auto;padding:30px 0 0 72px;}
 .header .search .hotwords{height:30px;line-height:30px;font-size:12px;overflow:hidden;}
-.header .search .hotwords a{margin-right:4px;color:#999;}
+.header .search .hotwords a{margin-right:10px;color:#999;}
 .header .search .hotwords .hot{color:#c3272b;}
 .header .search .form{height:40px;overflow:hidden;*zoom:1;}
 .header .search .ipt{float:left;width:376px;height:26px;padding:5px 10px;line-height:26px;border:2px solid #c3272b;}
@@ -144,7 +144,7 @@ vertical-align:middle;
 .nav .cat .bd{position:absolute;z-index:5;top:100%;left:0;width:200px;height:420px;padding:20px 0;background:url(../images/cat-bg.png);display:none;}
 .nav .cat .bd .cat-name{line-height:18px;padding:10px 30px;color:#fff;background:url(../images/cat-arrow.png) no-repeat 163px 23px;cursor:default;}
 .nav .cat .bd .cat-name em{display:block;font-weight:700;}
-.nav .cat .bd .cat-name a{color:#fff;font-size:12px;}
+.nav .cat .bd .cat-name a{margin-right:2px;color:#fff;font-size:12px;}
 .nav .cat .bd .cat-list{position:absolute;left:200px;top:0;width:760px;height:420px;padding:20px 0;background:#fff;overflow:hidden;display:none;}
 .nav .cat .bd .cat-list dl{padding:14px 30px;font:12px/24px 'Microsoft Yahei';overflow:hidden;*zoom:1;}
 .nav .cat .bd .cat-list dt{float:left;width:70px;font-size:16px;}
@@ -583,7 +583,7 @@ vertical-align:middle;
 .banner-slider .side-notice .brands .inner .col{position:absolute;top:0;left:0;width:190px;height:100%;display:none;overflow:hidden;}
 .banner-slider .side-notice .brands .inner .current{display:block;}
 .banner-slider .side-notice .brands .ctrl{position:absolute;top:-26px;right:0;}
-.banner-slider .side-notice .brands a{float:left;width:93px;border-bottom:1px solid #e7e7e7;border-right:1px solid #e7e7e7;}
+.banner-slider .side-notice .brands a{float:left;width:93px;height:80px;border-bottom:1px solid #e7e7e7;border-right:1px solid #e7e7e7;}
 .banner-slider .side-notice .brands i{display:inline-block;width:25px;line-height:25px;margin-left:-1px;border:1px solid #e7e7e7;cursor:pointer;font-family:arial;color:#999;}
 .banner-slider .side-notice .brands i:hover{border-color:#c3272b;background:#c3272b;color:#fff;}
 .banner-slider .side-notice .brands .disabled{cursor:default;}

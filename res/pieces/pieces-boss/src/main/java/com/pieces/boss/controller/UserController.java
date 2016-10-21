@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.vo.UserVo;
@@ -92,15 +93,12 @@ public class UserController extends  BaseController{
 
 	/**
 	 * 添加会员页面
-	 * @param request
-	 * @param response
      * @return
      */
 	@RequiresPermissions(value = "customer:add" )
 	@RequestMapping(value = "/add" ,method= RequestMethod.GET)
 	@BizLog(type = LogConstant.user, desc = "添加会员页面")
-	public String userAdd(HttpServletRequest request,
-						  HttpServletResponse response){
+	public String userAdd(){
 
 		return "customers-add";
 	}
@@ -118,7 +116,7 @@ public class UserController extends  BaseController{
 	public void userSubmit(HttpServletRequest request,
 						   HttpServletResponse response,
 						   Boolean random,
-						   User user)throws Exception{
+						   @Valid User user)throws Exception{
 		String advices = "新增用户信息成功!";
 		String passWord =null;
 		//是否发送随机密码
@@ -180,8 +178,6 @@ public class UserController extends  BaseController{
 
 	/**
 	 * 修改账户信息
-	 * @param request
-	 * @param response
 	 * @param id
 	 * @param model
      * @return
@@ -189,9 +185,7 @@ public class UserController extends  BaseController{
 	@RequiresPermissions(value = "customer:edit" )
 	@RequestMapping(value = "/edit/{id}" ,method= RequestMethod.GET)
 	@BizLog(type = LogConstant.user, desc = "修改会员信息页面")
-	public String edit(HttpServletRequest request,
-					   HttpServletResponse response,
-					   @PathVariable("id") Integer id,
+	public String edit(@PathVariable("id") Integer id,
 					   ModelMap model){
 		User user =	userService.findById(id);
 		Area area =  areaService.findParentsById(user.getAreaId());
@@ -199,9 +193,6 @@ public class UserController extends  BaseController{
 		model.put("userArea",area);
 		return "customers-account";
 	}
-
-
-
 
 
 

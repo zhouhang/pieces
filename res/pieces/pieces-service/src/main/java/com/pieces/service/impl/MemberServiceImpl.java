@@ -1,5 +1,6 @@
 package com.pieces.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.MemberDao;
@@ -77,7 +78,9 @@ public class MemberServiceImpl extends AbsCommonService<Member> implements Membe
 
     @Override
     public PageInfo<Member> findByCondition(MemberVo memberVo, Integer pageNum, Integer pageSize) {
-        PageInfo<Member> page =  memberDao.findByCondition(memberVo,pageNum,pageSize);
+        PageHelper.startPage(pageNum, pageSize);
+        List<Member> list =  memberDao.findByCondition(memberVo);
+        PageInfo page = new PageInfo(list);
         return page;
     }
 

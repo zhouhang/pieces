@@ -95,7 +95,7 @@
                 formValidate: function() {
                     $('#myform').validator({
                         rules: {
-                            receiveBankCard: [/^\d{12,19}$/, '银行卡号是12-19位数字']
+                            bankNumber: [/^\d{12,19}$/, '银行卡号是12-19位数字']
                         },
                         fields: {
                             receiveBank: '开户行: required',

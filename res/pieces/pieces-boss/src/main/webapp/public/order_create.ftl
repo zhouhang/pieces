@@ -181,7 +181,7 @@
                     </div>
                     <div class="group">
                         <div class="txt">所在地区：</div>
-                        <div class="cnt">
+                        <div class="cnt" id="pickArea">
                             <select name="province" id="province" data-value="<#if shippingAddressHistory??&&shippingAddressHistory.areaObj??>${shippingAddressHistory.areaObj.provinceId!}</#if>">
                                 <option value="">-省-</option>
                             </select>
@@ -291,8 +291,6 @@
                 this.myformEvent();
                 this.addGoodsToOrder();
                 this.insertArea();
-
-
 
 
                 $('#myform').validator({
@@ -685,6 +683,15 @@
                 return result;
             },
             insertArea: function() {
+
+                // 地区选择
+                $('#pickArea').citys({
+                    provinceField: 'province',
+                    cityField: 'city',
+                    areaField: 'area'
+                });
+
+                // 从已有客户地址中选择
                 $("#order_address").change(function(){
                     if(this.value){
                         var $checked = $(this).find('option:selected');
@@ -696,17 +703,12 @@
                         $(".cnt input[name='tel']").val(data[1]);
                         $(".cnt textarea[name='detail']").val(data[2]);
 
-                        $("#city").data('value', area[1]);
-                        $("#area").data('value', area[2]);
-
-                        $("#province").val(area[0]).trigger('change');
-
-                        timer = setInterval(function() {
-                            if ($('#city').val() != 0) {
-                                $("#city").trigger('change');
-                                clearInterval(timer);
-                            }
-                        }, 20);
+                        $('#pickArea').citys({
+                            provinceField: 'province',
+                            cityField: 'city',
+                            areaField: 'area',
+                            code: area[2]
+                        });
                     }
                 })
             }

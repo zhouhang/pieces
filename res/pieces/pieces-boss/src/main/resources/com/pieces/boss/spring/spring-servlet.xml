@@ -13,9 +13,10 @@
 
 	<mvc:annotation-driven />
 
-	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
-		<property name="proxyTargetClass" value="true" />
-	</bean>
+	<!-- 导致重复代理 -->
+	<!--<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">-->
+		<!--<property name="proxyTargetClass" value="true" />-->
+	<!--</bean>-->
 	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
 		<property name="securityManager" ref="securityManager"/>
 	</bean>
@@ -139,18 +140,16 @@
 	<mvc:resources mapping="/images/**" location="/assets/images/" />
 	<mvc:resources mapping="/fonts/**" location="/assets/fonts/" />
 
-	<!--<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">-->
-		<!--<property name="proxyTargetClass" value="true"/>-->
-	<!--</bean>-->
+	<aop:config proxy-target-class="false" />
 
-	<!--<bean id="logAspect" class="com.pieces.tools.log.aop.LogAspect"></bean>-->
-	<!--<aop:config>-->
-		<!--<aop:pointcut id="asp" expression="execution(* com.pieces.boss.controller.*.*(..))"/>-->
+	<bean id="logAspect" class="com.pieces.tools.log.aop.LogAspect"></bean>
+	<aop:config>
+		<aop:pointcut id="asp" expression="execution(* com.pieces.boss.controller.*.*(..))"/>
 
-		<!--<aop:aspect id="b" ref="logAspect">&lt;!&ndash;调用日志类&ndash;&gt;-->
-			<!--<aop:around method="doAroundMethodCall" pointcut-ref="asp" />-->
-		<!--</aop:aspect>-->
+		<aop:aspect id="b" ref="logAspect"><!--调用日志类-->
+			<aop:around method="doAroundMethodCall" pointcut-ref="asp" />
+		</aop:aspect>
 
-	<!--</aop:config>-->
+	</aop:config>
 
 </beans>

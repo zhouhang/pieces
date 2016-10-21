@@ -1,5 +1,6 @@
 package com.pieces.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.RoleMemberDao;
@@ -57,10 +58,6 @@ public class RoleMemberServiceImpl  extends AbsCommonService<RoleMember> impleme
         }
     }
 
-    @Override
-    public List<RoleMember> findByCondition() {
-        return roleMemberDao.findByCondition();
-    }
 
     @Override
     public List<RoleMember> findByRole(Integer roleId) {
@@ -95,8 +92,10 @@ public class RoleMemberServiceImpl  extends AbsCommonService<RoleMember> impleme
 
     @Override
     public PageInfo<RoleMember> findByConditionAndRole(MemberVo memberVo, Integer pageNum, Integer pageSize) {
-        PageInfo<RoleMember>  roleMemberPageInfo=   roleMemberDao.findByConditionAndRole(memberVo,pageNum,pageSize);
-        return roleMemberPageInfo;
+        PageHelper.startPage(pageNum, pageSize);
+        List<RoleMember>  list=   roleMemberDao.findByConditionAndRole(memberVo);
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 
 

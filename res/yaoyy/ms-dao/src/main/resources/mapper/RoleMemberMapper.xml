@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ms.dao.RoleMemberDao">
+    <resultMap id="RoleMemberResultMap" type="com.ms.dao.model.RoleMember">
+            <id column="id"  property="id" />
+            <result column="role_id"  property="roleId" />
+            <result column="member_id"  property="memberId" />
+    </resultMap>
+
+
+    <resultMap id="RoleMemberResultMap2" type="com.ms.dao.model.RoleMember">
+        <id column="id"  property="id" />
+        <result column="role_id"  property="roleId" />
+        <result column="member_id"  property="memberId" />
+        <association property="role" javaType="com.ms.dao.model.Role">
+            <id property="id" column="id"/>
+            <result property="name" column="name"/>
+        </association>
+        <association property="member" javaType="com.ms.dao.model.Member">
+            <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="name" column="name"/>
+            <result property="email" column="email"/>
+            <result property="isDel" column="is_del"/>
+        </association>
+    </resultMap>
+
+
+
+    <sql id="Base_Column_List">
+        id,role_id,member_id
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="RoleMemberResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from role_member
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="RoleMemberResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from role_member
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from role_member
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.RoleMember">
+        insert into
+        role_member (role_id,member_id)
+        values
+        (#{roleId},#{memberId})
+    </insert>
+
+    <update id="update" parameterType="com.ms.dao.model.RoleMember">
+        update role_member
+        <set>
+            <if test="roleId != null">
+                role_id = #{roleId},
+            </if>
+            <if test="memberId != null">
+                member_id = #{memberId},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="findByMember" parameterType="java.lang.Integer" resultMap="RoleMemberResultMap">
+        select <include refid="Base_Column_List" />
+        from role_member
+        where member_id = #{memberId}
+    </select>
+
+    <delete id="deleteByMember" parameterType="java.lang.Integer" >
+        delete from role_member
+        where member_id = #{memberId}
+    </delete>
+
+    <select id="findByConditionAndRole" parameterType="com.ms.dao.vo.MemberVo" resultMap="RoleMemberResultMap2">
+        select  a.member_id,c.id,c.username,c.name,c.email,c.is_del
+        from role_member a,member c
+        where  a.member_id = c.id and a.role_id = #{roleId}
+        <if test="id != null " >
+            and c.id = #{id}
+        </if>
+        <if test="username != null and username != ''" >
+            and c.username like "%"#{username}"%"
+        </if>
+        <if test="name != null and name != ''">
+            and c.name like  "%"#{name}"%"
+        </if>
+        <if test="email != null and email != ''" >
+            and c.email like "%"#{email}"%"
+        </if>
+        <if test="isDel != null ">
+            and c.is_del = #{isDel}
+        </if>
+    </select>
+
+    <select id="findByRole" parameterType="java.lang.Integer"  resultMap="RoleMemberResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from  role_member
+        where role_id = #{roleId}
+    </select>
+
+    <delete id="deleteByRole" parameterType="java.lang.Integer">
+        delete from role_member
+        where role_id = #{roleId}
+    </delete>
+
+</mapper>

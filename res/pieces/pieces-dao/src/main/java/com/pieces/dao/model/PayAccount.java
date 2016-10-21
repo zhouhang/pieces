@@ -1,5 +1,8 @@
 package com.pieces.dao.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,12 +14,17 @@ public class PayAccount  implements Serializable {
 	private Integer id;
 	
 	//收款银行
+	@NotEmpty
 	private String receiveBank;
 	
 	//收款账户
+	@NotEmpty
+	@Pattern(regexp = "^([a-zA-Z]|[\\u4e00-\\u9fa5]){2,50}$")
 	private String receiveAccount;
 	
 	//收款银行卡号
+	@NotEmpty
+	@Pattern(regexp = "^\\d{12,19}$")
 	private String receiveBankCard;
 	
 	//操作人ID

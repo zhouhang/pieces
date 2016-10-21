@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pieces.dao.ArticleMapper">
+<mapper namespace="com.pieces.dao.ArticleDao">
     <resultMap id="ArticleResultMap" type="com.pieces.dao.model.Article">
             <id column="id"  property="id" />
             <result column="title"  property="title" />
@@ -155,8 +155,8 @@
             <if test="publishedDate != null">
                 and DATE_FORMAT(published_date,  '%Y-%m-%d') =  DATE_FORMAT(#{publishedDate},  '%Y-%m-%d')
             </if>
-
         </where>
+        order by a.sort desc
     </select>
 
 

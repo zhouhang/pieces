@@ -40,6 +40,7 @@
                                 <input type="text" class="ipt" value="${category.name}" autocomplete="off" name="name" id="name"
                                        placeholder="">
                                 <input type="text" value="${category.id}" name="id" id="id" style="display: none">
+                                <input type="text" value="${category.model}" name="model" id="model" style="display: none">
                             </div>
                         </div>
                         <div class="group">
@@ -48,7 +49,7 @@
                             </div>
                             <div class="cnt">
                                 <input type="text" class="ipt" value="${category.sort}" autocomplete="off" name="sort" id="sort"
-                                       placeholder="">
+                                       placeholder="请输入数字，数字越大显示越靠前">
                             </div>
                         </div>
                     </div>
@@ -60,6 +61,8 @@
 <script src="js/jquery.min.js"></script>
 <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
 <script src="js/common.js"></script>
+<script src="/js/layer/layer.js"></script>
+<link type="text/css" rel="stylesheet" href="/js/layer/skin/layer.css" />
 
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
@@ -71,21 +74,34 @@
             init: function () {
                 this.formValidate();
                 $("#delete").click(function(){
-                    $.post("cms/category/delete/${category.id}",function(data){
-                        if(data.status == "y") {
-                            $.notify({
-                                type: 'success',
-                                title: '删除成功',
-                                text: '3秒后自动跳转到分类列表',
-                                delay: 3e3,
-                                call: function () {
-                                    setTimeout(function () {
-                                        location.href = 'cms/category/index?model=${category.model}';
-                                    }, 3e3);
-                                }
-                            });
-                        }
-                    },"json")
+                    layer.confirm('确认要删除该分类？', {
+                        title: '删除分类',
+                        btn: ['确认','取消'] //按钮
+                    }, function(index){
+                        $.post("cms/category/delete/${category.id}", function (data) {
+                            if (data.status == "y") {
+                                $.notify({
+                                    type: 'success',
+                                    title: '删除成功',
+                                    text: '3秒后自动跳转到分类列表',
+                                    delay: 3e3,
+                                    call: function () {
+                                        setTimeout(function () {
+                                            location.href = 'cms/category/index?model=${category.model}';
+                                        }, 3e3);
+                                    }
+                                });
+                            } else {
+                                $.notify({
+                                    type: 'warn',
+                                    title: '删除失败',
+                                    text: data.info,
+                                    delay: 3e3
+                                });
+                            }
+                        }, "json")
+                        layer.close(index);
+                    });
                 });
             },
             formValidate: function () {

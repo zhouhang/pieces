@@ -1,20 +1,22 @@
 package com.pieces.dao;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.annotation.AutoMapper;
 import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.vo.EnquiryBillsVo;
 import com.pieces.dao.vo.EnquiryRecordVo;
 
+import java.util.List;
+
+@AutoMapper
 public interface EnquiryBillsDao extends ICommonDao<EnquiryBills>{
 
     /**
      * 根据参数查询询价列表
      * @param enquiryBillsVO
-     * @param pageNum
-     * @param pageSize
      * @return
      */
-    public PageInfo<EnquiryBillsVo> findByParam (EnquiryBillsVo enquiryBillsVO, int pageNum, int pageSize);
+    public List<EnquiryBillsVo> findByParam (EnquiryBillsVo enquiryBillsVO);
 
 
     /**
@@ -24,5 +26,6 @@ public interface EnquiryBillsDao extends ICommonDao<EnquiryBills>{
      */
     public EnquiryBillsVo findVOById(Integer id);
 
-    public PageInfo<EnquiryBills> findByCommoditys(int pageNum, int pageSize,EnquiryRecordVo enquiryRecordVo);
+
+    public List<EnquiryBills> findByCommoditys(EnquiryRecordVo enquiryRecordVo);
 }

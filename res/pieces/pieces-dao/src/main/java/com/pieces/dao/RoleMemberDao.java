@@ -2,11 +2,13 @@ package com.pieces.dao;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.annotation.AutoMapper;
 import com.pieces.dao.model.RoleMember;
 import com.pieces.dao.vo.MemberVo;
 
 import java.util.List;
 
+@AutoMapper
 public interface RoleMemberDao extends ICommonDao<RoleMember>{
 
     List<RoleMember> findByMember(Integer memberId);
@@ -19,5 +21,5 @@ public interface RoleMemberDao extends ICommonDao<RoleMember>{
 
     int deleteByRole(Integer roleId);
 
-    PageInfo<RoleMember> findByConditionAndRole(MemberVo memberVo, Integer pageNum, Integer pageSize);
+    List<RoleMember> findByConditionAndRole(MemberVo memberVo);
 }

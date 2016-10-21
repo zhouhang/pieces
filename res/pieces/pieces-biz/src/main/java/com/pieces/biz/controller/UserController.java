@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.model.ShippingAddress;
@@ -24,7 +25,6 @@ import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,12 +67,11 @@ public class UserController extends BaseController {
 
 	/**
 	 * 进入注册页面
-	 * 
-	 * @param model
+	 *
 	 * @return
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
-	public String toRegister(Model model) {
+	public String toRegister() {
 		return "register";
 	}
 
@@ -89,7 +88,7 @@ public class UserController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public void register(Model model, User user, String mobileCode,
+	public void register(User user, String mobileCode,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		//后台验证
@@ -150,13 +149,11 @@ public class UserController extends BaseController {
 
 	/**
 	 * 验证用户名
-	 * 
-	 * @param model
-	 *            用户名
+	 * 用户名
 	 * @return
 	 */
 	@RequestMapping(value = "/checkusername")
-	public void checkUserName(Model model, HttpServletRequest request, HttpServletResponse response) {
+	public void checkUserName(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, String> result = new HashMap<String, String>();
 		String userName = request.getParameter("userName");
 		Pattern pattern = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$");
@@ -180,11 +177,10 @@ public class UserController extends BaseController {
 
 	/**
 	 * 退出系统
-	 * @param model
 	 * @return
 	 */
 	@RequestMapping(value = "/logout")
-	public String logout(ModelMap model) {
+	public String logout() {
 		// 使用权限管理工具进行用户的退出，跳出登录，给出提示信息
 		SecurityUtils.getSubject().logout();
 		return "redirect:/user/login";
@@ -192,20 +188,15 @@ public class UserController extends BaseController {
 	
 	/**
 	 * 进入登录页
-	 * 
-	 * @param model
-	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String toLogin(ModelMap model, HttpServletRequest request) {
+	public String toLogin() {
 		return "login";
 	}
 
 	/**
 	 * 登录页登录系统
-	 * 
-	 * @param model
 	 * @param userName
 	 * @param password
 	 * @param url  跳转url
@@ -214,7 +205,7 @@ public class UserController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public void login(Model model, String userName, String password, String url, HttpServletRequest request,
+	public void login(String userName, String password, String url, HttpServletRequest request,
 			HttpServletResponse response) {
 		// 登陆验证
 		Subject subject = SecurityUtils.getSubject();
@@ -242,30 +233,20 @@ public class UserController extends BaseController {
 
 	/**
 	 * 注册成功登录系统
-	 * 
-	 * @param model
-	 * @param userName
-	 * @param password
-	 * @param request
 	 * @return
-	 * @throws Exception
 	 */
 	@RequestMapping(value = "/regsuccess")
-	public String regSuccess(ModelMap model, String userName, String password, HttpServletRequest request)
-			throws Exception {
+	public String regSuccess(){
 		return "message_register";
 	}
 
 	/**
 	 * 进入修改密码页
-	 * 
-	 * @param model
-	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/findpwd/stepone", method = RequestMethod.GET)
 	@BizLog(type = LogConstant.user, desc = "修改密码页面")
-	public String toFindPassword(Model model, HttpServletRequest request) {
+	public String toFindPassword() {
 		return "find_password";
 	}
 
@@ -274,14 +255,13 @@ public class UserController extends BaseController {
 	 * 
 	 * @param request
 	 * @param response
-	 * @param model
 	 * @param username
 	 * @param mobile
 	 * @param mobileCode
 	 */
 	@RequestMapping(value = "/findpwd/stepone", method = RequestMethod.POST)
 	@BizLog(type = LogConstant.user, desc = "修改密码One")
-	public void findPasswordOne(HttpServletRequest request, HttpServletResponse response, Model model, String username,
+	public void findPasswordOne(HttpServletRequest request, HttpServletResponse response, String username,
 			String mobile, String mobileCode) {
 		User user = userService.findByUserName(username);
 
@@ -332,14 +312,13 @@ public class UserController extends BaseController {
 
 	/**
 	 * 修改密码第二步
-	 * @param model
 	 * @param pwd
 	 * @param userName
 	 * @return
 	 */
 	@RequestMapping(value = "/findpwd/steptwo", method = RequestMethod.POST)
 	@BizLog(type = LogConstant.user, desc = "修改密码Two")
-	public void findPasswordTwo(Model model, String pwd, String userName,HttpServletRequest request,HttpServletResponse response) throws Exception {
+	public void findPasswordTwo(String pwd, String userName,HttpServletRequest request,HttpServletResponse response) {
 		User user = userService.findByUserName(userName);
 		user.setPassword(pwd);
 		user.setUpdateTime(new Date());
@@ -355,14 +334,10 @@ public class UserController extends BaseController {
 	
 	/**
 	 * 修改密码成功
-	 * 
-	 * @param model
-	 * @param request
-	 * @param userName
 	 * @return
 	 */
 	@RequestMapping(value = "/findpwd/success", method = RequestMethod.GET)
-	public String findpwdSuccess(ModelMap model, HttpServletRequest request, String userName) {
+	public String findpwdSuccess() {
 		return "message_find_pwd";
 	}
 
@@ -460,8 +435,14 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/shippingaddress/save", method = RequestMethod.POST)
 	@ResponseBody
 	@BizLog(type = LogConstant.user, desc = "保存或者添加用户收货地址")
-	public Result saveShippingAddress(ShippingAddress address){
+	public Result saveShippingAddress(@Valid ShippingAddress address){
 		User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+
+		List<ShippingAddressVo>  shippingAddressList = shippingAddressService.findByUser(user.getId());
+		if(shippingAddressList.size()>=10){
+			return new Result(false).info("收货地址不能超过10条");
+		}
+
 		shippingAddressService.saveOrUpdate(address, user);
 		return new Result(true).info("保存成功!");
 	}

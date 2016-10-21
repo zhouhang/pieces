@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
+import javax.validation.Valid;
 
 /**
  * 广告管理
@@ -102,7 +103,7 @@ public class AdController extends BaseController{
     @RequestMapping("save")
     @ResponseBody
     @BizLog(type = LogConstant.ad, desc = "广告保存")
-    public Result save(Ad ad){
+    public Result save(@Valid Ad ad){
         String message;
         if(ad.getId()==null){
             adService.createAd(ad);

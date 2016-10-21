@@ -134,13 +134,13 @@
 	<mvc:resources mapping="/error/**" location="/assets/error/" />
 	<mvc:resources mapping="/favicon.ico" location="/assets/images/favicon.ico" />
 
-	<!--<bean id="log" class="com.pieces.tools.log.aop.LogAspect"></bean>-->
-	<!--<aop:config>-->
-		<!--<aop:pointcut id="asp" expression="execution(* com.pieces.biz.controller.*.*(..))"/>-->
+	<bean id="log" class="com.pieces.tools.log.aop.LogAspect"></bean>
+	<aop:config>
+		<aop:pointcut id="asp" expression="execution(* com.pieces.biz.controller.*.*(..))"/>
 
-		<!--<aop:aspect id="b" ref="log">&lt;!&ndash;调用日志类&ndash;&gt;-->
-			<!--<aop:around method="doAroundMethodCall" pointcut-ref="asp" />-->
-		<!--</aop:aspect>-->
+		<aop:aspect id="b" ref="log"><!--调用日志类-->
+			<aop:around method="doAroundMethodCall" pointcut-ref="asp" />
+		</aop:aspect>
 
-	<!--</aop:config>-->
+	</aop:config>
 </beans>

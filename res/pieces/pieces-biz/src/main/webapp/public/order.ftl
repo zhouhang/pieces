@@ -255,7 +255,7 @@
                 <div class="txt">
                     <span>所在地区：</span>
                 </div>
-                <div class="cnt">
+                <div class="cnt" id="pickArea">
                     <select name="provinceCode" id="province">
                         <option value="">-省-</option>
                     </select>
@@ -478,9 +478,25 @@
                 addConsignee: function() {
                     var $consigneeBox = $('#jconsigneeBox');
                     var $consigneeForm = $("#consigneeForm")
-                    var $addConsignee = $('#addConsignee');
+                    // 关闭弹层
+                    $consigneeBox.on('click', '.cancel', function() {
+                        layer.closeAll();
+                    })
+
+                    // 新增
                     $('.jaddConsignee').on('click', function() {
+                        var total = $('#jconsigneeList').find('li').length;
+                        if (total >= 10) {
+                            $.notify({
+                                type: 'warn',
+                                title: '警告',
+                                text: '收货地址不能超过10条!',
+                                delay: 3e3
+                            });
+                            return false;
+                        }
                     	$consigneeForm[0].reset();
+                        $('#pickArea').citys(); // 地区级联
                         layer.open({
                             area: ['600px'],
                             closeBtn: 1,
@@ -489,10 +505,6 @@
                             content: $consigneeBox,
                             title: '新建地址'
                         });
-                    })
-                    // 关闭弹层
-                    $consigneeBox.on('click', '.cancel', function() {
-                        layer.closeAll();
                     })
 
                     $('#consigneeForm').validator({

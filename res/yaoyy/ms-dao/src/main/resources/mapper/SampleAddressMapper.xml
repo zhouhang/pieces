@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ms.dao.SampleAddressDao">
+    <resultMap id="SampleAddressResultMap" type="com.ms.dao.model.SampleAddress">
+            <id column="id"  property="id" />
+            <result column="address"  property="address" />
+            <result column="receiver"  property="receiver" />
+            <result column="receiver_phone"  property="receiverPhone" />
+            <result column="remark"  property="remark" />
+            <result column="send_id"  property="sendId" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <resultMap id="SampleAddressResultMapVo" type="com.ms.dao.vo.SampleAddressVo">
+            <id column="id"  property="id" />
+            <result column="address"  property="address" />
+            <result column="receiver"  property="receiver" />
+            <result column="receiver_phone"  property="receiverPhone" />
+            <result column="remark"  property="remark" />
+            <result column="send_id"  property="sendId" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,address,receiver,receiver_phone,remark,send_id,create_time,update_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="SampleAddressResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sample_address
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="SampleAddressResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from sample_address
+    </select>
+
+    <select id="findByParams" resultMap="SampleAddressResultMapVo" parameterType="com.ms.dao.vo.SampleAddressVo">
+        select
+        <include refid="Base_Column_List" />
+        from sample_address
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from sample_address
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.SampleAddress">
+        insert into
+        sample_address (address,receiver,receiver_phone,remark,send_id,create_time,update_time)
+        values
+        (#{address},#{receiver},#{receiverPhone},#{remark},#{sendId},#{createTime},#{updateTime})
+    </insert>
+
+    <update id="update" parameterType="com.ms.dao.model.SampleAddress">
+        update sample_address
+        <set>
+                                                        
+            <if test="address != null">
+                address = #{address},
+            </if>
+                                            
+            <if test="receiver != null">
+                receiver = #{receiver},
+            </if>
+                                            
+            <if test="receiverPhone != null">
+                receiver_phone = #{receiverPhone},
+            </if>
+                                            
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+                                            
+            <if test="sendId != null">
+                send_id = #{sendId},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+    <select id="findBySendId" parameterType="java.lang.Integer" resultMap="SampleAddressResultMapVo">
+        select
+        <include refid="Base_Column_List" />
+        from sample_address
+        where send_id= #{sendId}
+    </select>
+</mapper>

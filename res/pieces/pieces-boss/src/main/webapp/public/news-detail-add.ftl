@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="user-info">
-                    <h3>单页面信息</h3>
+                    <h3>文章信息</h3>
                     <div class="fa-form">
                         <div class="group">
                             <div class="txt">

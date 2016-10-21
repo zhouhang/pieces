@@ -20,7 +20,7 @@ public interface CategoryService extends ICommonService<Category> {
 	//新增分类
 	public int addClassify(String classifyName);
 	//通过品种名称查询品种
-	public List<Category> findBreedByName(String breedName);
+	public List<CategoryVo> findBreedByName(String breedName);
 	//新增品种
 	public void addBreed(BreedVo bvo);
 	//修改品种
@@ -31,7 +31,7 @@ public interface CategoryService extends ICommonService<Category> {
 	public BreedVo getBreedById(Integer id);
 	//通过propoty查询品种属性
 	public List<Code> findCode(String propoty);
-	//public String getbreedProtity(Integer id, Integer codeType);
+
 	public List<CategoryVo> findBreedByParentId(Integer parentId);
 	
 	public List<Code> findCodeByString(String str);

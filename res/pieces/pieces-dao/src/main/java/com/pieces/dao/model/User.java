@@ -1,5 +1,10 @@
 package com.pieces.dao.model;
 
+import com.pieces.dao.group.Biz;
+import com.pieces.dao.group.Boss;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,24 +20,34 @@ public class User  implements Serializable {
 	private Integer id;
 	
 	//用户名
+	@NotEmpty
+	@Pattern(regexp = "^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$", groups = {Biz.class, Boss.class})
 	private String userName;
 	
 	//密码
+	@NotEmpty
+	@Pattern(regexp = "^[a-zA-Z0-9_]{6,20}$", groups = {Biz.class, Boss.class})
 	private String password;
 	
 	//密码盐
 	private String salt;
 	
 	//企业全称
+	@NotEmpty
+	@Pattern(regexp = "^([a-zA-Z0-9_\\(\\)-]|[\\u4e00-\\u9fa5]|[（）]){4,50}$", groups = {Biz.class, Boss.class})
 	private String companyFullName;
 	
 	//企业注册地省份
 	private Integer areaId;
 	
 	//联系人姓名
+	@NotEmpty
+	@Pattern(regexp = "^([a-zA-Z]|[\\u4e00-\\u9fa5]){2,50}$", groups = {Biz.class, Boss.class})
 	private String contactName;
 	
 	//联系人手机
+	@NotEmpty
+	@Pattern(regexp = "^1[3-9]\\d{9}$", groups = {Biz.class, Boss.class})
 	private String contactMobile;
 
 	
