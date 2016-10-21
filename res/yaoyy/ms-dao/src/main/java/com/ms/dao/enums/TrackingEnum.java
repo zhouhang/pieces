@@ -13,10 +13,8 @@ public enum TrackingEnum {
     TRACKING_ORDER(5,"客户预约"),
     TRACKING_RECORD(6,"跟踪记录"),
     TRACKING_MESSAGE(7,"用户留言"),
-    TRACKING_FINISH(8,"该寄样单受理完成"),
+    TRACKING_FINISH(8,"该寄样单受理完成");
 
-    TRACKING_ADMIN(0,"后台用户"),
-    TRACKING_USER(1,"前台用户");
 
 
 
@@ -48,9 +46,9 @@ public enum TrackingEnum {
      * @return
      */
     public static String findByValue(Integer id) {
-        for (SampleEnum sampleEnum: SampleEnum.values()) {
-            if (sampleEnum.getValue().equals(id)) {
-                return sampleEnum.getText();
+        for (TrackingEnum trackingEnum: TrackingEnum.values()) {
+            if (trackingEnum.getValue().equals(id)) {
+                return trackingEnum.getText();
             }
         }
         return null;

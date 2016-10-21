@@ -171,17 +171,20 @@
         <div class="hd">寄样追踪</div>
         <ol class="trace" id="trace">
             <li class="fore">状态：<em class="status-${sendSampleVo.status+1}">${sendSampleVo.statusText}</em></li>
-            <li><span>2016年10月12日 12:30</span><span>申请寄样</span></li>
+            <#list trackingList as tracking >
+            <li><span>${tracking.name?default('')}</span>&nbsp;&nbsp;<span>${tracking.createTime?string("yyyy年MM月dd日 HH:mm")}</span>&nbsp;&nbsp;<span>${tracking.recordTypeText}</span>&nbsp;&nbsp;<span>${tracking.extra?default('')}</span></li>
+            </#list>
         </ol>
-        <div class="ft">
+
+        <div class="ft<#if sendSampleVo.status!=0> hide</#if>">
             <button type="button" class="ubtn ubtn-blue submit1">同意寄样</button>
             <button type="button" class="ubtn ubtn-gray ml submit2">拒绝寄样</button>
         </div>
-        <div class="ft hide">
+        <div class="ft <#if sendSampleVo.status!=1> hide</#if>">
             <button type="button" class="ubtn ubtn-blue submit3">寄送样品</button>
             <button type="button" class="ubtn ubtn-gray ml submit4">客户来访查看</button>
         </div>
-        <form action="" class="hide" id="traceForm">
+        <form action="" <#if sendSampleVo.status==0||sendSampleVo.status==1 ||sendSampleVo.status==5> class="hide"</#if> id="traceForm">
             <div class="item">
                 <div class="txt">跟踪记录：</div>
                 <div class="cnt">
@@ -255,9 +258,10 @@
 <script>
     var _global = {
         v: {
-            userUpdateUrl:'/sample/userComplete/',
-            addressSaveUrl:'/sample/addressSave/',
-            searchComodityUrl:'commodity/search'
+            userUpdateUrl:'sample/userComplete/',
+            addressSaveUrl:'sample/addressSave/',
+            searchComodityUrl:'commodity/search',
+            trackingCreateUrl:'tracking/create'
         },
         fn: {
             init: function() {
@@ -459,9 +463,10 @@
                     btn: ['同意', '关闭']
                 }, function(text, index) {
                     $.ajax({
-                        url: '',
-                        data: {msg: text},
+                        url: _global.v.trackingCreateUrl,
+                        data: {sendId: ${sendSampleVo.id},recordType:1,extra:"同意理由："+text},
                         success: function(data) {
+                            /*
                             data = {
                                 operator: 'frank',
                                 date: '2016年10月20日 15:20',
@@ -470,6 +475,8 @@
                             $('#trace').append('<li><span>' + data.date + '</span><span>操作人：' + data.operator + '</span><span>同意寄样</span></li><li><span>同意理由：' + data.msg + '</span></li>');
                             $('.submit2').parent().remove();
                             $('.submit3').parent().show();
+                            */
+                            window.location.reload();
                         }
                     })
                     layer.close(index);
