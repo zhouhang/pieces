@@ -10,7 +10,6 @@
         </dt>
         <dd>
             <a href="/sample/list"><i class="fa fa-circle-o"></i>寄样列表</a>
-            <a href="sample_info.html"><i class="fa fa-circle-o"></i>寄样详情</a>
         </dd>
     </dl>
     <dl>
@@ -35,7 +34,7 @@
             </a>
         </dt>
         <dd>
-            <a href="/category/list"><i class="fa fa-circle-o"></i>用户列表</a>
+            <a href="/user/list"><i class="fa fa-circle-o"></i>用户列表</a>
         </dd>
     </dl>
     <dl>
