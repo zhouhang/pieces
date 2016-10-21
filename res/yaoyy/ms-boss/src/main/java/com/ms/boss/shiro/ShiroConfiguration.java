@@ -83,7 +83,7 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean
                 .setSecurityManager(getDefaultWebSecurityManager());
         shiroFilterFactoryBean.setLoginUrl("/login");
-        shiroFilterFactoryBean.setSuccessUrl("/commodity/list");
+        shiroFilterFactoryBean.setSuccessUrl("/403");
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         shiroFilterFactoryBean.setFiltersString("bossAuthorization=bossAuthorizationFilter");
         //Map<String, Filter> filters = new HashMap<>();
