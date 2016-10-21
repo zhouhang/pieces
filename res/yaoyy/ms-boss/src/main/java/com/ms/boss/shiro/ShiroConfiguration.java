@@ -62,8 +62,9 @@ public class ShiroConfiguration {
                 .setSecurityManager(getDefaultWebSecurityManager());
         shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setSuccessUrl("/role/index");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/login");
         shiroFilterFactoryBean.setFiltersString("bossAuthorization=bossAuthorizationFilter");
-        shiroFilterFactoryBean.setFilterChainDefinitionsString("/=anon");
+        shiroFilterFactoryBean.setFilterChainDefinitionsString("/**=anon");
         return shiroFilterFactoryBean;
     }
 
