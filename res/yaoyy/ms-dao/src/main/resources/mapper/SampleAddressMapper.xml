@@ -100,4 +100,10 @@
         </set>
         where id = #{id}
     </update>
+    <select id="findBySendId" parameterType="java.lang.Integer" resultMap="SampleAddressResultMapVo">
+        select
+        <include refid="Base_Column_List" />
+        from sample_address
+        where send_id= #{sendId}
+    </select>
 </mapper>

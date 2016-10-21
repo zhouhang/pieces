@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>分类管理-boss-上工好药</title>
+    <title>药优优-商品列表</title>
 <#include "./common/meta.ftl"/>
 </head>
 <body class="wrapper">
@@ -68,67 +68,27 @@
                 </tr>
                 </thead>
                 <tbody>
+                <#list pageInfo.list as commodity>
                 <tr>
-                    <td><input type="checkbox"></td>
-                    <td>三七 <em class="c-red">【量大价优】</em></td>
-                    <td>三七</td>
-                    <td>三七  120头</td>
-                    <td>120头</td>
-                    <td>河南</td>
-                    <td>100</td>
-                    <td>2016-05-18 15:22</td>
+                    <td><input type="checkbox" value="${commodity.id}"></td>
+                    <td>${commodity.name}<#if commodity.mark == 1 ><em class="c-red">【量大价优】</em></#if></td>
+                    <td>${commodity.categoryName}</td>
+                    <td>${commodity.title}</td>
+                    <td>${commodity.spec}</td>
+                    <td>${commodity.origin}</td>
+                    <td>${commodity.sort}</td>
+                    <td><#if commodity.createTime?exists>${commodity.createTime?datetime}</#if></td>
                     <td class="tc">
-                        <a href="goods_edit.html" class="ubtn ubtn-blue jedit">编辑</a>
-                        <a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
+                        <a href="/commodity/detail/${commodity.id}" class="ubtn ubtn-blue jedit">编辑</a>
+                        <a href="${commodity.id}" class="ubtn ubtn-gray jdel">删除</a>
                     </td>
                 </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>三七 <em class="c-red">【量大价优】</em></td>
-                    <td>三七</td>
-                    <td>三七  100头</td>
-                    <td>100头</td>
-                    <td>河南</td>
-                    <td>20</td>
-                    <td>2016-05-18 15:22</td>
-                    <td class="tc">
-                        <a href="goods_edit.html" class="ubtn ubtn-blue jedit">编辑</a>
-                        <a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox"></td>
-                    <td>白芍</td>
-                    <td>白芍</td>
-                    <td>亳州白芍 选货 过8-12号筛</td>
-                    <td>过8号筛</td>
-                    <td>亳州</td>
-                    <td>30</td>
-                    <td>2016-05-18 15:22</td>
-                    <td class="tc">
-                        <a href="goods_edit.html" class="ubtn ubtn-blue jedit">编辑</a>
-                        <a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
-                    </td>
-                </tr>
-                <tr class="gray">
-                    <td><input type="checkbox"></td>
-                    <td>黄芩</td>
-                    <td>黄芩</td>
-                    <td>甘肃定西黄芪 杂质少 干度好   长期供应</td>
-                    <td>过10号筛</td>
-                    <td>甘肃</td>
-                    <td>10</td>
-                    <td>2016-05-18 15:22</td>
-                    <td class="tc">
-                        <a href="goods_edit.html" class="ubtn ubtn-blue jedit">编辑</a>
-                        <a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
-                    </td>
-                </tr>
+                </#list>
                 </tbody>
             </table>
         </div>
     <#import "./module/pager.ftl" as pager />
-    <@pager.pager info="少的地方" url="" params="" />
+    <@pager.pager info=pageInfo url="commodity/list" params="" />
     </div>
 </div>
 
@@ -138,13 +98,18 @@
 <script>
     var _global = {
         v: {
-            deleteUrl: ''
+            deleteUrl: '/commodity/detete/'
         },
         fn: {
             init: function() {
                 this.bindEvent();
             },
             bindEvent: function() {
+
+                $("#jaddNewCat").click(function () {
+                    location.href="/commodity/add"
+                })
+
                 var $table = $('.table'),
                         $cbx = $table.find('td input:checkbox'),
                         $checkAll = $table.find('th input:checkbox'),
@@ -154,8 +119,8 @@
                 $table.on('click', '.jdel', function() {
                     var url = _global.v.deleteUrl + $(this).attr('href');
                     layer.confirm('确认删除此品种？', {icon: 3, title: '提示'}, function (index) {
-                        $.get(url, function (data) {
-                            if (data.status == "y") {
+                        $.post(url, function (data) {
+                            if (data.status == "200") {
                                 window.location.reload();
                             }
                         }, "json");

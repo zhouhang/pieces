@@ -29,21 +29,6 @@ public class SampleTrackingController {
 
     @Autowired
     TrackingDetailService trackingDetailService;
-    /**
-     * 获取寄样单跟踪记录
-     * @param sendSampleVo
-     * @param pageNum
-     * @param pageSize
-     * @param model
-     * @return
-     */
-    @RequestMapping(value = "list", method = RequestMethod.GET)
-    public String trackingList(SampleTrackingVo sendSampleVo, Integer pageNum,
-                               Integer pageSize, ModelMap model)
-    {
-        List<SampleTrackingVo> sampleTrackingVoList=sampleTrackingService.findAllByParams(sendSampleVo);
-        return "";
-    }
 
     /**
      * 创建寄样单跟踪记录

@@ -3,11 +3,12 @@
 <head>
     <#include "./common/meta.ftl"/>
     <title>角色清单-boss-上工好药</title>
+    <link type="text/css" rel="stylesheet" href="assets/role/style.css" />
 </head>
 
 <body>
     <#include "./common/header.ftl">
-
+    <#include "./role/header.ftl">
     <!-- fa-floor start -->
     <div class="fa-floor">
         <div class="wrap">
@@ -29,7 +30,7 @@
                     <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                     <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
-                <@p.pager pageInfo=rolePage  pageUrl="role/index"  params=roleParams/>
+
 
             </div>
             <div class="chart">

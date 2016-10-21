@@ -7,4 +7,6 @@ import com.ms.dao.vo.SendSampleVo;
 public interface SendSampleService extends ICommonService<SendSample>{
 
     public PageInfo<SendSampleVo> findByParams(SendSampleVo sendSampleVo,Integer pageNum,Integer pageSize);
+
+    public SendSampleVo findDetailById(Integer id);
 }

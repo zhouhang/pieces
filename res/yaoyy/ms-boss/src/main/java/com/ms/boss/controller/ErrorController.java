@@ -17,7 +17,7 @@ class BossErrorController implements ErrorController {
 
     @RequestMapping(value = ERROR_PATH)
     public String handleError() {
-        return "";
+        return "/403";
     }
 
     @Override
