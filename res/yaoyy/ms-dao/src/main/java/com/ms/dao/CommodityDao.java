@@ -14,4 +14,6 @@ public interface CommodityDao extends ICommonDao<Commodity>{
 
     public List<Commodity>  findByIds(Collection<Integer> collection);
 
+    public List<Commodity>  searchComodity(CommodityVo commodityVo);
+
 }

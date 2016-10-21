@@ -147,4 +147,15 @@
         </foreach>
     </select>
 
+    <select id="searchComodity" resultMap="CommodityResultMapVo" parameterType="com.ms.dao.model.Commodity">
+        select
+        <include refid="Base_Column_List" />
+        from commodity
+        <where>
+            <if test="name!= null">
+                name like CONCAT('%','${name}','%' )
+            </if>
+        </where>
+    </select>
+
 </mapper>

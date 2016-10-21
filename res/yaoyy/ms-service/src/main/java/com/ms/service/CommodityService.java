@@ -16,4 +16,6 @@ public interface CommodityService extends ICommonService<Commodity>{
     public void save(CommodityVo commodity);
 
     public CommodityVo findById(Integer id);
+
+    public List<Commodity>  searchComodity(CommodityVo commodityVo);
 }

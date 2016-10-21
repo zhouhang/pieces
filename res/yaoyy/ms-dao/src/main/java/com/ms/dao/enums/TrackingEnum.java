@@ -13,7 +13,12 @@ public enum TrackingEnum {
     TRACKING_ORDER(5,"客户预约"),
     TRACKING_RECORD(6,"跟踪记录"),
     TRACKING_MESSAGE(7,"用户留言"),
-    TRACKING_FINISH(8,"该寄样单受理完成");
+    TRACKING_FINISH(8,"该寄样单受理完成"),
+
+    TRACKING_ADMIN(0,"后台用户"),
+    TRACKING_USER(1,"前台用户");
+
+
 
 
     private TrackingEnum(Integer value, String text) {

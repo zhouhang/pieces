@@ -91,5 +91,18 @@ public class CommodityController extends BaseController{
         return Result.success("删除成功!");
     }
 
+    /**
+     * 按名称模糊查询商品
+     * @param commodityVo
+     * @return
+     */
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    @ResponseBody
+    public Result search(CommodityVo commodityVo) {
+        List<Commodity> commodityList=commodityService.searchComodity(commodityVo);
+        return  Result.success().data(commodityList);
+    }
+
+
 
 }

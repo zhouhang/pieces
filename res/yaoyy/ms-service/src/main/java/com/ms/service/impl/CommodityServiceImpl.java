@@ -90,6 +90,11 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
     }
 
     @Override
+    public List<Commodity> searchComodity(CommodityVo commodityVo) {
+        return commodityDao.searchComodity(commodityVo);
+    }
+
+    @Override
     @Transactional
     public int deleteById(int id) {
         gradientService.deleteByCommodityId(id);
