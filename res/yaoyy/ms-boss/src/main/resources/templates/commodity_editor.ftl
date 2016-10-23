@@ -249,7 +249,9 @@ ${commodity.detail}
 
 <script>
     var _global = {
-        v: {},
+        v: {
+            attr_index:1
+        },
         fn: {
             init: function () {
                 this.catname();
@@ -263,7 +265,7 @@ ${commodity.detail}
                 um.ready(function(){
                     um.setContent($("#umeditorContent").html());
                 })
-
+                $("#status").val(${commodity.status});
 
             },
             initAttrAndPrice: function () {
@@ -271,10 +273,10 @@ ${commodity.detail}
                 var parameter = ${commodity.attribute};
                 var html = "";
                 $.each(parameter, function (k, v) {
-                    html += '<tr> \n <td><div class="inner"><input name="attrN_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="' + k + '" data-rule="required;length[1~20]"></div></td> \n ' +
-                            '<td><div class="inner"><input name="attrV_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="' + v + '" data-rule="required;length[1~100]"></div></td> \n ' +
+                    html += '<tr> \n <td><div class="inner"><input name="attrN_'+_global.v.attr_index+'" type="text" class="ipt" value="' + k + '" data-rule="required;length[1~20]"></div></td> \n ' +
+                            '<td><div class="inner"><input name="attrV_'+_global.v.attr_index+'" type="text" class="ipt" value="' + v + '" data-rule="required;length[1~100]"></div></td> \n ' +
                             '<td><span class="c-red">删除</span></td> \n </tr>';
-                    commodityAddPage.v.attr_index += 1;
+                    _global.v.attr_index += 1;
                 })
                 var $table = $('#attribute').find('tbody');
                 $table.html(html);
@@ -523,8 +525,6 @@ ${commodity.detail}
 
     $(function () {
         _global.fn.init();
-        //实例化编辑器
-        var um = UM.getEditor('detail').setContent("");
     })
 </script>
 

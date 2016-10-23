@@ -37,7 +37,7 @@ public class PathConvert {
      * @return
      */
     public String getUrl(String path) {
-        return path.replace(path, url);
+        return path.replace(this.path, url);
     }
 
     /**
@@ -51,15 +51,16 @@ public class PathConvert {
     public String saveFileFromTemp(String url, String direct) {
         // 判断url中不包含temp 直接return null
         if (!url.contains("temp/")) {
-            url = url.replace(url, path);
+            url = url.replace(this.url, path);
             return url;
         }
 
-        File srcFile = new File(url.replace(url, path));
-        String dest = url.replace(url + "temp/", path + direct);
+        File srcFile = new File(url.replace(this.url, path));
+        String dest = url.replace(this.url + "temp/", path + direct);
         File destFile = new File(dest);
         if (srcFile.exists()) {
             try {
+                Files.createParentDirs(destFile);
                 Files.move(srcFile, destFile);
             } catch (IOException e) {
                 throw new RuntimeException("从临时文件去拷贝文件出错", e);

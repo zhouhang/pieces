@@ -8,7 +8,7 @@ import java.util.List;
 public class CommodityVo extends Commodity{
 
     // 品种名
-    private String categoryName = "";
+    private String categoryName;
 
     // 量大价优价格梯度
     private List<Gradient> gradient;
