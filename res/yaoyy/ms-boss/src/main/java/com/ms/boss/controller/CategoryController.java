@@ -124,7 +124,7 @@ public class CategoryController {
         return  Result.success().data(category);
     }
 
-    @RequestMapping(value = "/search",method = RequestMethod.POST)
+    @RequestMapping(value = "/search",method = RequestMethod.GET)
     @ResponseBody
     public Result searchCategory(CategoryVo categoryVo){
         categoryVo.setLevel(CategoryEnum.LEVEL_BREED.getValue());
