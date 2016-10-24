@@ -10,6 +10,8 @@ public class TrackingDetail  implements Serializable {
 	
 	private Integer id;
 	
+	private Integer sendId;
+	
 	//1：物流信息 ，2：客户来访信息
 	private Integer type;
 	
@@ -38,6 +40,14 @@ public class TrackingDetail  implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public Integer getSendId() {
+		return sendId;
+	}
+
+	public void setSendId(Integer sendId) {
+		this.sendId = sendId;
 	}
 	
 	public Integer getType() {

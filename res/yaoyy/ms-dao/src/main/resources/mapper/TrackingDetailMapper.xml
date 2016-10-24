@@ -3,6 +3,7 @@
 <mapper namespace="com.ms.dao.TrackingDetailDao">
     <resultMap id="TrackingDetailResultMap" type="com.ms.dao.model.TrackingDetail">
             <id column="id"  property="id" />
+            <result column="send_id"  property="sendId" />
             <result column="type"  property="type" />
             <result column="company"  property="company" />
             <result column="tracking_no"  property="trackingNo" />
@@ -15,6 +16,7 @@
 
     <resultMap id="TrackingDetailResultMapVo" type="com.ms.dao.vo.TrackingDetailVo">
             <id column="id"  property="id" />
+            <result column="send_id"  property="sendId" />
             <result column="type"  property="type" />
             <result column="company"  property="company" />
             <result column="tracking_no"  property="trackingNo" />
@@ -26,7 +28,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,type,company,tracking_no,vistor,vistor_phone,vistor_time,create_time
+        id,send_id,type,company,tracking_no,vistor,vistor_phone,vistor_time,create_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="TrackingDetailResultMap">
@@ -60,15 +62,19 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.TrackingDetail">
         insert into
-        tracking_detail (type,company,tracking_no,vistor,vistor_phone,vistor_time,create_time)
+        tracking_detail (send_id,type,company,tracking_no,vistor,vistor_phone,vistor_time,create_time)
         values
-        (#{type},#{company},#{trackingNo},#{vistor},#{vistorPhone},#{vistorTime},#{createTime})
+        (#{sendId},#{type},#{company},#{trackingNo},#{vistor},#{vistorPhone},#{vistorTime},#{createTime})
     </insert>
 
     <update id="update" parameterType="com.ms.dao.model.TrackingDetail">
         update tracking_detail
         <set>
                                                         
+            <if test="sendId != null">
+                send_id = #{sendId},
+            </if>
+                                            
             <if test="type != null">
                 type = #{type},
             </if>

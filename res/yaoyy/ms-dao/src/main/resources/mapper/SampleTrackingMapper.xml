@@ -50,6 +50,9 @@
             <if test="id != null">
                 id = #{id}
             </if>
+            <if test="sendId != null">
+            send_id = #{sendId}
+            </if>
         </where>
     </select>
 

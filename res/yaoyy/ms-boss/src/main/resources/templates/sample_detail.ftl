@@ -184,7 +184,7 @@
             <button type="button" class="ubtn ubtn-blue submit3">寄送样品</button>
             <button type="button" class="ubtn ubtn-gray ml submit4">客户来访查看</button>
         </div>
-        <form action="" <#if sendSampleVo.status==0||sendSampleVo.status==1 ||sendSampleVo.status==5> class="hide"</#if> id="traceForm">
+        <form action="" <#if sendSampleVo.status==0||sendSampleVo.status==1 ||sendSampleVo.status==5 ||sendSampleVo.status==2> class="hide"</#if> id="traceForm">
             <div class="item">
                 <div class="txt">跟踪记录：</div>
                 <div class="cnt">
@@ -205,19 +205,19 @@
         <div class="item">
             <div class="txt"><i>*</i>来访人：</div>
             <div class="cnt">
-                <input type="text" name="visitor" class="ipt" placeholder="" autocomplete="off">
+                <input type="text" name="vistor" class="ipt" placeholder="" autocomplete="off">
             </div>
         </div>
         <div class="item">
             <div class="txt"><i>*</i>来访人电话：</div>
             <div class="cnt">
-                <input type="text" name="visitorMobile" class="ipt" placeholder="" autocomplete="off">
+                <input type="text" name="vistorPhone" class="ipt" placeholder="" autocomplete="off">
             </div>
         </div>
         <div class="item">
             <div class="txt"><i>*</i>日期选择：</div>
             <div class="cnt">
-                <input type="text" name="visitorDate" id="visitorDate" class="ipt" placeholder="" autocomplete="off">
+                <input type="text" name="vistorTime" id="visitorDate" class="ipt" placeholder="" autocomplete="off">
             </div>
         </div>
         <div class="button">
@@ -233,13 +233,13 @@
         <div class="item">
             <div class="txt"><i>*</i>快递公司：</div>
             <div class="cnt">
-                <input type="text" name="express" class="ipt" placeholder="" autocomplete="off">
+                <input type="text" name="company" class="ipt" placeholder="" autocomplete="off">
             </div>
         </div>
         <div class="item">
             <div class="txt"><i>*</i>快递单号：</div>
             <div class="cnt">
-                <input type="text" name="expressNum" class="ipt" placeholder="" autocomplete="off">
+                <input type="text" name="trackingNo" class="ipt" placeholder="" autocomplete="off">
             </div>
         </div>
         <div class="button">
@@ -365,9 +365,11 @@
                 $pa.on('click', '.submit5', function(){
                     var text = $('#traceForm').find('.ipt').val();
                     $.ajax({
-                        url: '',
-                        data: {msg: text},
+                        url: _global.v.trackingCreateUrl,
+                        data: {sendId: ${sendSampleVo.id},recordType:6,extra:text},
+                        type: "POST",
                         success: function(data) {
+                            /*
                             data = {
                                 date: '2016年10月20日 15:20',
                                 operator: 'frank',
@@ -375,6 +377,8 @@
                             }
                             $('#traceForm').find('.ipt').val('');
                             self.addNewRevord(data);
+                            */
+                            window.location.reload();
                         }
                     })
                 })
@@ -384,22 +388,42 @@
                     layer.confirm('寄样完成后不能进行跟踪记录操作，是否确认', {
                         btn: ['确认','取消'] //按钮
                     }, function(index){
-                        $('#traceForm').remove();
-                        layer.close(index);
+                        $.ajax({
+                            url: _global.v.trackingCreateUrl,
+                            data: {sendId: ${sendSampleVo.id},recordType:8},
+                            type: "POST",
+                            success: function(data) {
+                                /*
+                                data = {
+                                    operator: 'frank',
+                                    date: '2016年10月20日 15:20',
+                                    msg: text
+                                }
+                                $('#trace').append('<li><span>' + data.date + '</span><span>操作人：' + data.operator + '</span><span>同意寄样</span></li><li><span>同意理由：' + data.msg + '</span></li>');
+                                $('.submit2').parent().remove();
+                                $('.submit3').parent().show();
+                                */
+                                window.location.reload();
+                            }
+                        })
+                        //$('#traceForm').remove();
+                        //layer.close(index);
                     });
                 })
 
                 // 快递信息验证
                 $expressForm.validator({
                     fields: {
-                        express: '快递公司: required',
-                        expressNum: '快递单号: required'
+                        company: '快递公司: required',
+                        trackingNo: '快递单号: required'
                     },
                     valid: function (form) {
                         $.ajax({
-                            url: '',
-                            data: $expressForm.serialize(),
+                            url: _global.v.trackingCreateUrl,
+                            data:  $.param({sendId: ${sendSampleVo.id},recordType:3}) + '&' +$expressForm.serialize(),
+                            type: "POST",
                             success: function(data) {
+                                /*
                                 data = {
                                     date: '2016年10月20日 15:20',
                                     operator: 'frank',
@@ -410,6 +434,8 @@
                                 $('.submit3').parent().remove();
                                 $('#traceForm').show();
                                 layer.closeAll();
+                                */
+                                window.location.reload();
                             }
                         })
                     }
@@ -424,9 +450,11 @@
                     },
                     valid: function (form) {
                         $.ajax({
-                            url: '',
-                            data: $visitorForm.serialize(),
+                            url: _global.v.trackingCreateUrl,
+                            data: $.param({sendId: ${sendSampleVo.id},recordType:5}) + '&' +$visitorForm.serialize(),
+                            type: "POST",
                             success: function(data) {
+                                /*
                                 data = {
                                     date: '2016年10月20日 15:20',
                                     operator: 'frank',
@@ -438,6 +466,8 @@
                                 $('.submit3').parent().remove();
                                 $('#traceForm').show();
                                 layer.closeAll();
+                                */
+                                window.location.reload();
                             }
                         })
                     }
@@ -465,6 +495,7 @@
                     $.ajax({
                         url: _global.v.trackingCreateUrl,
                         data: {sendId: ${sendSampleVo.id},recordType:1,extra:"同意理由："+text},
+                        type: "POST",
                         success: function(data) {
                             /*
                             data = {
@@ -491,9 +522,11 @@
                     btn: ['拒绝', '关闭']
                 }, function(text, index) {
                     $.ajax({
-                        url: '',
-                        data: {msg: text},
+                        url: _global.v.trackingCreateUrl,
+                        data: {sendId: ${sendSampleVo.id},recordType:2,extra:"不同意理由："+text},
+                        type: "POST",
                         success: function(data) {
+                            /*
                             data = {
                                 operator: 'frank',
                                 date: '2016年10月20日 15:20',
@@ -501,6 +534,8 @@
                             }
                             $('#trace').append('<li><span>' + data.date + '</span><span>操作人：' + data.operator + '</span><span>拒绝寄样</span></li><li><span>拒绝理由：' + data.msg + '</span></li>');
                             $('#trace').nextAll().remove();
+                            */
+                            window.location.reload();
                         }
                     })
                     layer.close(index);
