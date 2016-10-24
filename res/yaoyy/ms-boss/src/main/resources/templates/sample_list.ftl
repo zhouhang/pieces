@@ -44,6 +44,7 @@
                 </form>
             </div>
 
+            <!--
             <div class="action-length pb">
                 <span>显示</span>
                 <select id="pageSize" class="slt">
@@ -54,6 +55,7 @@
                 </select>
                 <span>条结果</span>
             </div>
+            -->
         </div>
 
         <div class="table">
@@ -170,8 +172,6 @@
                     var condition=$("#searchForm").serializeArray();
                     var conditionText="";
                     $.each(condition, function(i, field){
-                        alert(field.name);
-                        alert(field.value);
                         if(field.value!=""){
                             if(conditionText!=""){
                                 conditionText=conditionText+"&"+field.name+"="+field.value;

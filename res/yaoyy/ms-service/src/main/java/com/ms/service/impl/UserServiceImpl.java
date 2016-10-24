@@ -26,6 +26,15 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
         return page;
 	}
 
+	@Override
+	public UserVo findByPhone(UserVo userVo) {
+		List<UserVo>  list = userDao.findByParams(userVo);
+		if (list.size()!=0){
+			return list.get(0);
+		}
+		return null;
+	}
+
 
 	@Override
 	public ICommonDao<User> getDao() {

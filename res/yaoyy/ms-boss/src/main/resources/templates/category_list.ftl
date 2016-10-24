@@ -18,12 +18,12 @@
     <div class="box">
         <div class="tools">
             <div class="filter">
-                <form action="">
+                <form action="" id="serarchForm">
                     <ul>
-                        <li><label>品种：</label><input type="text" class="ipt" placeholder="请输入" id="searchName" value="${categoryVo.variety?default('')}"></li>
+                        <li><label>品种：</label><input type="text" name="variety" class="ipt" placeholder="请输入" id="searchName" value="${categoryVo.variety?default('')}"></li>
                         <li>
                             <label>上/下架：</label>
-                            <select name="" id="searchStatus" class="slt">
+                            <select class="ipt"  name="status" id="searchStatus" class="slt">
                                 <option <#if (categoryVo.status??)> selected</#if>  value="">全部</option>
                                 <option <#if categoryVo.status?exists && categoryVo.status==1> selected</#if> value="1">上架</option>
                                 <option <#if categoryVo.status?exists && categoryVo.status==0> selected</#if>value="0">下架</option>
@@ -39,6 +39,7 @@
             <div class="action-add">
                 <button class="ubtn ubtn-blue" id="jaddNewCat">新建品种</button>
             </div>
+            <!--
             <div class="action-length">
                 <span>显示</span>
                 <select name="" id="pageSize"class="slt">
@@ -49,6 +50,7 @@
                 </select>
                 <span>条结果</span>
             </div>
+            -->
         </div>
 
         <div class="table">
@@ -234,26 +236,14 @@
                     $checkAll.prop('checked', _count === count);
                 })
                 $search.on("click",function(){
-                   var variety=$("#searchName").val();
-                    var status=$("#searchStatus").val();
-                    var condition="";
-                    if(variety!=""){
-                        condition=condition+"variety="+variety;
-                    }
-                    if(status!=""){
-                        if(condition!=""){
-                            condition=condition+"&status="+status;
-                        }
-                        else{
-                            condition=condition+"status="+status;
-                        }
-
-                    }
-                   if (condition!=""){
-                       window.location.href="/category/list?"+condition;
-                   }
-
+                    var params = [];
+                    $("#serarchForm .ipt").each(function() {
+                        var val = $.trim(this.value);
+                        val && params.push($(this).attr('name') + '=' + val);
+                    })
+                    location.href=url+params.join('&');
                 })
+                /*
                 $pageSize.on("change",function(){
                     var pageSize=$(this).val();
                     var variety=$("#searchName").val();
@@ -278,6 +268,7 @@
                     window.location.href=url;
 
                 })
+                */
             },
             // 品种新建 or 编辑
             category: function() {

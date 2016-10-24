@@ -1,8 +1,10 @@
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="renderer" content="webkit" />
-<base href="http://127.0.0.1:8080/"/>
-<#--<link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" />-->
-<link type="text/css" rel="stylesheet" href="assets/css/style.css" />
-<link rel="stylesheet" href="assets/awesome/css/font-awesome.min.css">
-<script src="assets/js/jquery191.js"></script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="description" content="">
+<meta name="author" content="">
+<base href="http://127.0.0.1:8081/"/>
+
+<link rel="icon" href="favicon.ico">
+<link rel="stylesheet" href="assets/css/app.css">
+
