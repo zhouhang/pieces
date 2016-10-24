@@ -14,7 +14,7 @@
 
                 <div class="group">
                     <div class="txt">
-                        <i class="fa fa-people"></i>
+                        <i class="fa fa-user"></i>
                     </div>
                     <div class="cnt">
                         <input type="text" placeholder="用户名" id="username" name="username" autocomplete="off" value="" class="ipt">
@@ -31,7 +31,7 @@
                 </div>
 
                 <div class="button">
-                    <button id="submit" class="btn btn-red" type="button">登 录</button>
+                    <button id="submit" class="ubtn ubtn-red" type="button">登 录</button>
                 </div>
             </form>
         </div>
@@ -119,10 +119,10 @@
                 $("#loginForm").ajaxSubmit({
                     dataType: "json",
                     success: function (result) {
-                        if(result.status=="y"){
+                        if(result.status=="200"){
                             location.href="/role/index"
                         }else{
-                            loginPage.fn.showMsg(result.info)
+                            loginPage.fn.showMsg(result.msg)
                         }
                     }
                 });

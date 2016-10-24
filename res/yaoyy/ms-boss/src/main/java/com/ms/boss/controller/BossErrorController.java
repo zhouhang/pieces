@@ -2,16 +2,13 @@ package com.ms.boss.controller;
 
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Author: koabs
- * 10/12/16.
+ * Created by feng on 2016/10/24.
  */
 @Controller
-class BossErrorController implements ErrorController {
+public class BossErrorController implements ErrorController {
 
     private static final String ERROR_PATH= "/error";
 
