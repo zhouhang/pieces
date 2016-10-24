@@ -10,7 +10,7 @@ public class UserDetail  implements Serializable {
 	
 	private Integer id;
 	
-	//补全信息类型
+	//补全信息类型(身份类型)
 	private Integer type;
 	
 	//联系人姓名

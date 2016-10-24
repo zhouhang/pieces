@@ -18,7 +18,7 @@
     <div class="box">
         <div class="tools">
             <div class="filter">
-                <form action="">
+                <#--<form action="">-->
                     <ul>
                         <li><label>品种：</label><input type="text" name="categoryName" class="ipt" placeholder="请输入"></li>
                         <li><label>商品名称：</label><input name="name" type="text" class="ipt" placeholder="商品名称"></li>
@@ -31,10 +31,10 @@
                             </select>
                         </li>
                         <li>
-                            <button class="ubtn ubtn-blue">搜索</button>
+                            <button class="ubtn ubtn-blue" id="search_btn">搜索</button>
                         </li>
                     </ul>
-                </form>
+                <#--</form>-->
             </div>
             <div class="action-add">
                 <button class="ubtn ubtn-blue" id="jaddNewCat">新建商品</button>
@@ -135,10 +135,12 @@
                     })
                     $checkAll.prop('checked', _count === count);
                 })
+
+                _global.fn.filter();
             },
             // 筛选
             filter: function() {
-                var $ipts = $('.chart .ipt, .chart select');
+                var $ipts = $('.filter .ipt, .filter select');
                 var url=_global.v.listUrl+"?";
 
                 $('#search_btn').on('click', function() {

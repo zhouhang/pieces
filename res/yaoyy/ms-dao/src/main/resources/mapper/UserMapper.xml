@@ -13,20 +13,20 @@
         
     </resultMap>
 
-    <resultMap id="UserResultMapVo" type="com.ms.dao.vo.UserVo">
-            <id column="id"  property="id" />
-            <result column="type"  property="type" />
-            <result column="phone"  property="phone" />
-            <result column="password"  property="password" />
-            <result column="salt"  property="salt" />
-            <result column="openid"  property="openid" />
-            <result column="update_time"  property="updateTime" />
-            <result column="create_time"  property="createTime" />
-        
+    <resultMap id="UserResultMapVo" type="com.ms.dao.vo.UserVo" extends="UserResultMap">
+            <result column="nickname"  property="nickname" />
+            <result column="area"  property="area" />
+            <result column="name"  property="name" />
+            <result column="remark"  property="remark" />
+            <result column="identityType"  property="identityType" />
     </resultMap>
 
     <sql id="Base_Column_List">
         id,type,phone,password,salt,openid,update_time,create_time
+    </sql>
+    <sql id="Base_Column_List_Alisa">
+        u.id as id,u.type as type,u.phone as phone,u.password as password,u.salt as salt,
+        u.openid as openid,u.update_time as update_time,u.create_time as create_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="UserResultMap">
@@ -44,11 +44,22 @@
 
     <select id="findByParams" resultMap="UserResultMapVo" parameterType="com.ms.dao.vo.UserVo">
         select
-        <include refid="Base_Column_List" />
-        from user
+        <include refid="Base_Column_List_Alisa" />,
+        ud.nickname as nickname, ud.area as area,ud.name as name,ud.remark as remark, ud.type as identityType
+        from user u
+        LEFT JOIN user_detail ud on u.id = ud.user_id
         <where>
             <if test="id != null">
-                id = #{id}
+                u.id = #{id}
+            </if>
+            <if test="phone != null">
+                and u.phone = "%"#{phone}"%"
+            </if>
+            <if test="name != null">
+                and ud.name = "%"#{name}"%"
+            </if>
+            <if test="identityType != null">
+                and ud.type = #{identityType}
             </if>
             <if test="phone != null">
                 phone = #{phone}

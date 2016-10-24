@@ -9,4 +9,8 @@ public interface UserService extends ICommonService<User>{
     public PageInfo<UserVo> findByParams(UserVo userVo,Integer pageNum,Integer pageSize);
 
     public UserVo findByPhone(UserVo userVo);
+
+    public UserVo findById(Integer id);
+
+    public void disable(Integer id);
 }

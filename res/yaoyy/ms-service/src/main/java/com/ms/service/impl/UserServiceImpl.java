@@ -9,6 +9,8 @@ import com.ms.dao.vo.UserVo;
 import com.ms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -20,10 +22,14 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 
 	@Override
 	public PageInfo<UserVo> findByParams(UserVo userVo,Integer pageNum,Integer pageSize) {
-    PageHelper.startPage(pageNum, pageSize);
-    	List<UserVo>  list = userDao.findByParams(userVo);
-        PageInfo page = new PageInfo(list);
-        return page;
+		if (pageNum == null || pageSize == null) {
+			pageNum = 1;
+			pageSize = 10;
+		}
+		PageHelper.startPage(pageNum, pageSize);
+		List<UserVo> list = userDao.findByParams(userVo);
+		PageInfo page = new PageInfo(list);
+		return page;
 	}
 
 	@Override
@@ -35,6 +41,21 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 		return null;
 	}
 
+	@Override
+	public UserVo findById(Integer id) {
+		UserVo vo = new UserVo();
+		vo.setId(id);
+		return userDao.findByParams(vo).get(0);
+	}
+
+	@Override
+	@Transactional
+	public void disable(Integer id) {
+		User user =new User();
+		user.setId(id);
+		user.setType(-1);
+		userDao.update(user);
+	}
 
 	@Override
 	public ICommonDao<User> getDao() {
