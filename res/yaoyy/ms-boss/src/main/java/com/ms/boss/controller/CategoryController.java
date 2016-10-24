@@ -22,7 +22,7 @@ import java.util.List;
  * 10/12/16.
  */
 @Controller
-@RequestMapping("category/")
+@RequestMapping("/category/")
 public class CategoryController {
 
    //分两个 品种 和类别(根茎类 ...)
@@ -124,7 +124,7 @@ public class CategoryController {
         return  Result.success().data(category);
     }
 
-    @RequestMapping(value = "/search",method = RequestMethod.POST)
+    @RequestMapping(value = "/search",method = RequestMethod.GET)
     @ResponseBody
     public Result searchCategory(CategoryVo categoryVo){
         categoryVo.setLevel(CategoryEnum.LEVEL_BREED.getValue());

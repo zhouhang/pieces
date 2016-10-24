@@ -20,14 +20,14 @@
             <div class="filter">
                 <form action="">
                     <ul>
-                        <li><label>品种：</label><input type="text" class="ipt" placeholder="请输入"></li>
-                        <li><label>商品名称：</label><input type="text" class="ipt" placeholder="商品名称"></li>
+                        <li><label>品种：</label><input type="text" name="categoryName" class="ipt" placeholder="请输入"></li>
+                        <li><label>商品名称：</label><input name="name" type="text" class="ipt" placeholder="商品名称"></li>
                         <li>
                             <label>上/下架：</label>
-                            <select name="" class="slt">
+                            <select name="status" class="slt">
                                 <option value="">全部</option>
-                                <option value="">上架</option>
-                                <option value="">下架</option>
+                                <option value="1">上架</option>
+                                <option value="0">下架</option>
                             </select>
                         </li>
                         <li>
@@ -36,19 +36,8 @@
                     </ul>
                 </form>
             </div>
-
             <div class="action-add">
                 <button class="ubtn ubtn-blue" id="jaddNewCat">新建商品</button>
-            </div>
-            <div class="action-length">
-                <span>显示</span>
-                <select name="" class="slt">
-                    <option value="10">10</option>
-                    <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                </select>
-                <span>条结果</span>
             </div>
         </div>
 
@@ -98,11 +87,13 @@
 <script>
     var _global = {
         v: {
-            deleteUrl: '/commodity/detete/'
+            deleteUrl: '/commodity/detete/',
+            listUrl: '/commodity/list'
         },
         fn: {
             init: function() {
                 this.bindEvent();
+                $.fn.initByUrlParams();
             },
             bindEvent: function() {
 
@@ -118,7 +109,7 @@
                 // 删除
                 $table.on('click', '.jdel', function() {
                     var url = _global.v.deleteUrl + $(this).attr('href');
-                    layer.confirm('确认删除此品种？', {icon: 3, title: '提示'}, function (index) {
+                    layer.confirm('确认删除此商品？', {icon: 3, title: '提示'}, function (index) {
                         $.post(url, function (data) {
                             if (data.status == "200") {
                                 window.location.reload();
@@ -143,6 +134,20 @@
                         _count += this.checked ? 1 : 0;
                     })
                     $checkAll.prop('checked', _count === count);
+                })
+            },
+            // 筛选
+            filter: function() {
+                var $ipts = $('.chart .ipt, .chart select');
+                var url=_global.v.listUrl+"?";
+
+                $('#search_btn').on('click', function() {
+                    var params = [];
+                    $ipts.each(function() {
+                        var val = $.trim(this.value);
+                        val && params.push($(this).attr('name') + '=' + val);
+                    })
+                    location.href=url+params.join('&');
                 })
             }
         }

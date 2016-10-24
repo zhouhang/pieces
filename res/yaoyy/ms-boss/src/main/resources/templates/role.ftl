@@ -3,59 +3,47 @@
 <head>
     <#include "./common/meta.ftl"/>
     <title>角色清单-boss-上工好药</title>
-    <link type="text/css" rel="stylesheet" href="assets/role/style.css" />
 </head>
 
 <body>
     <#include "./common/header.ftl">
-    <#include "./role/header.ftl">
+    <#include "./common/aside.ftl"/>
     <!-- fa-floor start -->
-    <div class="fa-floor">
-        <div class="wrap">
-        <#if (advices??)>
-            <div  class="message">
-                <i class="fa fa-check-circle"></i>
-                <span>${advices}</span>
-            </div>
-        </#if>
+    <div class="content">
+        <div class="breadcrumb">
+            <ul>
+                <li>系统管理</li>
+                <li>权限列表</li>
+            </ul>
+        </div>
 
-            <div class="title title-btm">
-                <h3>角色管理</h3>
+        <div class="box">
+            <div class="tools">
+
                 <@shiro.hasPermission name="role:add">
-                    <div class="extra"><a class="btn btn-red" href="role/add"><i class="fa fa-plus"></i>增加新角色</a></div>
+                <div class="action-add">
+                    <button class="ubtn ubtn-blue" id="role_add">增加新角色</button>
+                </div>
                 </@shiro.hasPermission>
             </div>
-            <div class="pagin">
-                <div class="extra">
-                    <button class="btn btn-gray" type="button" id="reset">重置条件</button>
-                    <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
-                </div>
 
-
-            </div>
-            <div class="chart">
-                <table class="tc">
+            <div class="table">
+                <table>
                     <thead>
-                        <tr>
-                            <th width="200">编号</th>
-                            <th>角色名称</th>
-                            <th width="200">操作</th>
-                        </tr>
-                        <tr>
-                            <td><div class="ipt-wrap"><input name="id" type="text" class="ipt" value="${roleVo.id!}"></div></td>
-                            <td><div class="ipt-wrap"><input name="name" type="text" class="ipt" value="${roleVo.name!}"></div></td>
-                            <td></td>
-                        </tr>
+                    <tr>
+                        <th>编号</th>
+                        <th>角色名称</th>
+                        <th>操作</th>
+                    </tr>
                     </thead>
-                    <tfoot></tfoot>
                     <tbody>
                     <#list rolePage.list as role>
                         <tr>
                             <td>${role.id}</td>
-                            <td><div class="tl">${role.name}</div></td>
+                            <td>${role.name}</td>
                             <td>
                                 <@shiro.hasPermission name="role:edit">
-                                    <a href="role/info/${role.id}">配置</a>
+                                    <a href="role/info/${role.id}" class="ubtn ubtn-blue jedit">配置</a>
                                 </@shiro.hasPermission>
                             </td>
                         </tr>
@@ -63,11 +51,13 @@
                     </tbody>
                 </table>
             </div>
-        </div><!-- fa-floor end -->
+        <#import "./module/pager.ftl" as pager />
+        <@pager.pager info=rolePage url="role/index" params=roleParams />
     </div>
-
+</div>
 
     <#include "./common/footer.ftl"/>
+    <script src="assets/plugins/layer/layer.js"></script>
 
     <script>
     //定义根变量
@@ -91,6 +81,10 @@
 
                     $("#reset").click(function(){
                         $('.chart .ipt, .chart select').val("")
+                    })
+
+                    $("#role_add").click(function () {
+                        location.href="/role/add"
                     })
                 },
                 // 筛选

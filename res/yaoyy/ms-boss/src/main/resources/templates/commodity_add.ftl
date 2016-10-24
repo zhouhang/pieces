@@ -207,17 +207,17 @@
             catname: function () {
                 var $jcatname = $('#jcatname');
                 $jcatname.autocomplete({
-                    serviceUrl: 'catName.json',
-                    paramName: 'name',
+                    serviceUrl: '/category/search',
+                    paramName: 'variety',
                     deferRequestBy: 100,
                     showNoSuggestionNotice: true,
                     noSuggestionNotice: '没有该品种',
                     transformResult: function (response) {
                         response = JSON.parse(response);
-                        if (response.status == "y") {
+                        if (response.status == 200) {
                             return {
                                 suggestions: $.map(response.data, function (dataItem) {
-                                    return {value: dataItem.name, data: dataItem.id};
+                                    return {value: dataItem.variety, data: dataItem.id};
                                 })
                             };
                         } else {
@@ -279,7 +279,7 @@
                 $('#jsubmit').on('click', function () {
                     $('#myform').isValid(function (v) {
                         // 表单验证通过
-                        if (true) {
+                        if (v) {
                             // 序列化属性值
                             var attr = {};
                             var trs = $("#attribute>tbody tr");

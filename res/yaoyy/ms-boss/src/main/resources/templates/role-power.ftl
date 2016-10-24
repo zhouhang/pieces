@@ -10,6 +10,7 @@
 
 <body>
     <#include "./common/header.ftl">
+    <#include "./common/aside.ftl"/>
 
     <!-- fa-floor start -->
     <div class="fa-floor">

@@ -10,6 +10,7 @@ import com.ms.dao.vo.CommodityVo;
 import com.ms.service.CommodityService;
 import com.ms.service.GradientService;
 import com.ms.tools.ClazzUtil;
+import com.ms.tools.upload.PathConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,13 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
     @Autowired
     private GradientService gradientService;
 
+    @Autowired
+    private PathConvert pathConvert;
+
+    /**
+     * 商品图片保存路径
+     */
+    private String folderName = "commodity/";
 
     @Override
     public PageInfo<CommodityVo> findByParams(CommodityVo commodityVo, Integer pageNum, Integer pageSize) {
@@ -61,6 +69,8 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
     @Override
     @Transactional
     public void save(CommodityVo commodity) {
+
+        commodity.setPictureUrl(pathConvert.saveFileFromTemp(commodity.getPictureUrl(),folderName));
         if (commodity.getId() == null) {
             commodity.setCreateTime(new Date());
             commodityDao.create(commodity);
@@ -82,10 +92,11 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
     @Override
     public CommodityVo findById(Integer id) {
         CommodityVo vo = new CommodityVo();
-        Commodity commodity = super.findById(id);
+        vo.setId(id);
+        vo = commodityDao.findByParams(vo).get(0);
         List<Gradient> gradients = gradientService.findByCommodityId(id);
-        ClazzUtil.copy(commodity,vo);
         vo.setGradient(gradients);
+        vo.setPictureUrl(pathConvert.getUrl(vo.getPictureUrl()));
         return vo;
     }
 

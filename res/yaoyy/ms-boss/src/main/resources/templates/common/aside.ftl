@@ -46,6 +46,7 @@
             </a>
         </dt>
         <dd>
+            <a href="/role/index"><i class="fa fa-circle-o"></i>权限管理</a>
             <a href="/category/list"><i class="fa fa-circle-o"></i>用户列表</a>
         </dd>
     </dl>

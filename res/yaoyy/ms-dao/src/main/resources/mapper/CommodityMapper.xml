@@ -30,6 +30,13 @@
         id,title,name,har_year,origin,spec,category_id,picture_url,detail,status,attribute,price,unit,sort,mark,create_time,update_time
     </sql>
 
+    <sql id="Base_Column_List_Alisa">
+        cm.id as id,cm.title as title,cm.name as name,cm.har_year as har_year,
+        cm.origin as origin, cm.spec as spec,cm.category_id as category_id,cm.picture_url as picture_url,
+        cm.detail as detail,cm.status as status,cm.attribute as attribute,cm.price as price,
+        cm.unit as unit,cm.sort as sort, cm.mark as mark,cm.create_time as create_time,cm.update_time as update_time
+    </sql>
+
     <select id="findById" parameterType="java.lang.Integer" resultMap="CommodityResultMap">
         select
         <include refid="Base_Column_List" />
@@ -45,11 +52,22 @@
 
     <select id="findByParams" resultMap="CommodityResultMapVo" parameterType="com.ms.dao.vo.CommodityVo">
         select
-        <include refid="Base_Column_List" />
-        from commodity
+        <include refid="Base_Column_List_Alisa" />,
+        ca.variety as categoryName
+        from commodity as cm
+        LEFT JOIN category ca on cm.category_id=ca.id
         <where>
             <if test="id != null">
-                id = #{id}
+                cm.id = #{id}
+            </if>
+            <if test="categoryName != null">
+               and ca.variety like  "%"#{categoryName}"%"
+            </if>
+            <if test="name != null">
+               and cm.name = #{name}
+            </if>
+            <if test="status != null">
+               and cm.status = #{status}
             </if>
         </where>
     </select>
