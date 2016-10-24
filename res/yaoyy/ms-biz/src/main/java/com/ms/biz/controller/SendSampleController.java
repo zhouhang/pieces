@@ -1,27 +1,26 @@
 package com.ms.biz.controller;
 
 import com.ms.dao.enums.SampleEnum;
+import com.ms.dao.enums.TrackingTypeEnum;
 import com.ms.dao.enums.UserTypeEnum;
-import com.ms.dao.model.Commodity;
-import com.ms.dao.model.SendSample;
-import com.ms.dao.model.User;
-import com.ms.dao.model.UserDetail;
+import com.ms.dao.model.*;
+import com.ms.dao.vo.SampleTrackingVo;
 import com.ms.dao.vo.SendSampleVo;
 import com.ms.dao.vo.UserVo;
-import com.ms.service.CommodityService;
-import com.ms.service.SendSampleService;
-import com.ms.service.UserDetailService;
-import com.ms.service.UserService;
+import com.ms.service.*;
 import com.ms.tools.entity.Result;
 import com.ms.tools.utils.SeqNoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by xiao on 2016/10/24.
@@ -42,6 +41,9 @@ public class SendSampleController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    SampleTrackingService sampleTrackingService;
 
 
 
@@ -124,10 +126,60 @@ public class SendSampleController {
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String apply(String name,ModelMap model) {
-
+        List<Commodity> commodities=commodityService.findByName(name);
+        List<SendSampleVo> sampleList=new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
+        for(Commodity c :commodities){
+            list.add(c.getId());
+        }
+        model.put("sampleList",sampleList);
         return "sample_list";
 
     }
+
+    @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
+    public String detail(@PathVariable("id") Integer id, ModelMap model) {
+
+        SendSampleVo sendSampleVo=sendSampleService.findDetailById(id);
+        List<Commodity> commodityList = commodityService.findByIds(sendSampleVo.getIntention());
+        sendSampleVo.setCommodityList(commodityList);
+
+        SampleTrackingVo sampleTrackingVo=new SampleTrackingVo();
+        sampleTrackingVo.setSendId(sendSampleVo.getId());
+        List<SampleTrackingVo> trackingList=sampleTrackingService.findAllByParams(sampleTrackingVo);
+        //过滤点不用给用户显示的type
+
+
+        model.put("sendSampleVo",sendSampleVo);
+        model.put("trackingList",trackingList);
+        return "sample_detail";
+
+    }
+    @RequestMapping(value = "msg", method = RequestMethod.GET)
+    public String getMsg(){
+        return "sample_msg";
+    }
+
+
+    @RequestMapping(value = "msg", method = RequestMethod.POST)
+    @ResponseBody
+    public Result submitMsg(SampleTracking sampleTracking){
+        //session获取用户信息
+
+        int userId=1;
+        Date now=new Date();
+        sampleTracking.setOperator(userId);
+        sampleTracking.setName("测试肖");
+        sampleTracking.setType(TrackingTypeEnum.TYPE_USER.getValue());
+        if(sampleTracking.getExtra()==null){
+            sampleTracking.setExtra("");
+        }
+        sampleTracking.setCreateTime(now);
+
+        sampleTrackingService.create(sampleTracking);
+        return Result.success().data("提交成功");
+    }
+
 
 
 

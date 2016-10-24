@@ -116,4 +116,18 @@
         where ss.id = #{id}
     </select>
 
+
+    <select id="findByCommodityId" resultMap="SendSampleResultMapVo" parameterType="java.lang.Integer">
+        select
+        *,ud.nickname,ud.phone,ud.area
+        from send_sample ss
+        LEFT JOIN user_detail ud on ss.user_id = ud.user_id
+        <where>
+            ss.status!=-1
+            <if test="commodityId != null">
+                or FIND_IN_SET(commodityId,ss.intention)
+            </if>
+        </where>
+    </select>
+
 </mapper>

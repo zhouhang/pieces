@@ -176,4 +176,11 @@
         </where>
     </select>
 
+    <select id="findByName" parameterType="java.lang.String" resultMap="CommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from commodity
+        where name = #{name}
+    </select>
+
 </mapper>

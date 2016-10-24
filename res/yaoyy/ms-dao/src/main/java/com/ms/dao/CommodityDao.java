@@ -16,4 +16,6 @@ public interface CommodityDao extends ICommonDao<Commodity>{
 
     public List<Commodity>  searchComodity(CommodityVo commodityVo);
 
+    public  List<Commodity> findByName(String name);
+
 }

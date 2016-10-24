@@ -12,4 +12,6 @@ public interface SendSampleDao extends ICommonDao<SendSample>{
 
     public SendSampleVo findDetailById(int id);
 
+    public List<SendSampleVo> findByComdityId(int commdityId);
+
 }
