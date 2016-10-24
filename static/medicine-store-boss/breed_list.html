@@ -52,7 +52,11 @@
 				<div class="filter">
 					<form action="">
 						<ul>
-							<li><label>品种：</label><input type="text" class="ipt" placeholder="请输入"></li>
+							<li>
+								<label>品种：</label>
+								<input type="text" class="ipt" placeholder="请输入">
+							</li>
+							<li></li>
 							<li>
 								<label>上/下架：</label>
 								<select name="" class="slt">
@@ -61,7 +65,7 @@
 									<option value="">下架</option>
 								</select>
 							</li>
-							<li class="wide">
+							<li>
 								<button class="ubtn ubtn-blue">搜索</button>
 							</li>
 						</ul>
@@ -105,7 +109,7 @@
 							<td>100</td>
 							<td>2016-05-18 15:22</td>
 							<td class="tc">
-								<a href="javascript:;" class="ubtn ubtn-blue jedit">编辑</a>
+								<a href="javascript:;" class="ubtn ubtn-blue jedit" data-id="1">编辑</a>
 								<a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
 								<a href="javascript:;" class="ubtn ubtn-gray jputaway">上架</a>
 							</td>
@@ -118,7 +122,7 @@
 							<td>20</td>
 							<td>2016-05-18 15:22</td>
 							<td class="tc">
-								<a href="javascript:;" class="ubtn ubtn-blue jedit">编辑</a>
+								<a href="javascript:;" class="ubtn ubtn-blue jedit" data-id="1">编辑</a>
 								<a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
 								<a href="javascript:;" class="ubtn ubtn-gray jputaway">上架</a>
 							</td>
@@ -131,7 +135,7 @@
 							<td>30</td>
 							<td>2016-05-18 15:22</td>
 							<td class="tc">
-								<a href="javascript:;" class="ubtn ubtn-blue jedit">编辑</a>
+								<a href="javascript:;" class="ubtn ubtn-blue jedit" data-id="1">编辑</a>
 								<a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
 								<a href="javascript:;" class="ubtn ubtn-gray jputaway">上架</a>
 							</td>
@@ -144,7 +148,7 @@
 							<td>10</td>
 							<td>2016-05-18 15:22</td>
 							<td class="tc">
-								<a href="javascript:;" class="ubtn ubtn-blue jedit">编辑</a>
+								<a href="javascript:;" class="ubtn ubtn-blue jedit" data-id="1">编辑</a>
 								<a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
 								<a href="javascript:;" class="ubtn ubtn-gray jputaway">上架</a>
 							</td>
@@ -264,10 +268,10 @@
                     layer.confirm('确认删除此品种？', {icon: 3, title: '提示'}, function (index) {
                         $.get(url, function (data) {
                             if (data.status == "y") {
+                        		layer.close(index);
                                 window.location.reload();
                             }
                         }, "json");
-                        layer.close(index);
                     });
                     return false; // 阻止链接跳转
 				})
@@ -295,7 +299,8 @@
 			},
 			// 品种新建 or 编辑
 			category: function() {
-				var $carForm = $('#myform');
+				var $carForm = $('#myform'),
+					self = this;
 
                 $carForm.validator({
                     fields: {
@@ -329,38 +334,63 @@
 
 				// 编辑
 				$('.table').on('click', '.jedit', function() {
+					if (_global.v.flag) {
+						return false;
+					}
+					_global.v.flag = true;
 					$carForm[0].reset();
-					$.ajax({
-						url: '',
-						success: function(data) {
-							data = {
-								catname: '三七',
-								title: '白芍 安徽白芍 选货 过6-10号筛',
-								price: '380-400元/公斤',
-								sort: 100,
-								url: 'uploads/Koala.jpg'
-							}
-							// 如果有图片，填充图片
-							if (data.url) {
-								$('#imgCrop').hide().prev().remove().end().before('<span class="up-img"><img src="' + data.url + '" title="点击图片看大图" /><i class="del" title="删除"></i><input type="hidden" name="img" value="' + data.url + '"></span>');
-							} else {
-								$('#imgCrop').show().prev().remove();
-							}
-							$carForm.find('.ipt[name="catname"]').val(data.catname);
-							$carForm.find('.ipt[name="title"]').val(data.title);
-							$carForm.find('.ipt[name="price"]').val(data.price);
-							$carForm.find('.ipt[name="sort"]').val(data.sort);
-						} 
-					})
+					self.showinfo($(this).data('id'));
+					return false; // 阻止链接跳转
+				})
+			},
+			showinfo: function(id) {
+				var $carForm = $('#myform');
+
+				var showBox = function(data) {
+					$carForm.find('.ipt[name="catname"]').val(data.catname);
+					$carForm.find('.ipt[name="title"]').val(data.title);
+					$carForm.find('.ipt[name="price"]').val(data.price);
+					$carForm.find('.ipt[name="sort"]').val(data.sort);
+					// 如果有图片，填充图片
+					if (data.url) {
+						$('#imgCrop').hide().prev().remove().end().before('<span class="up-img"><img src="' + data.url + '" title="点击图片看大图" /><i class="del" title="删除"></i><input type="hidden" name="img" value="' + data.url + '"></span>');
+					} else {
+						$('#imgCrop').show().prev().remove();
+					}
+					layer.closeAll();
 					layer.open({
                         area: ['600px'],
                         type: 1,
                         moveType: 1,
                         content: $carForm,
-                        title: '新建品种'
+                        title: '编辑品种'
                     });
-					return false; // 阻止链接跳转
+				}
+
+				// 加载数据
+				var k = $.ajax({
+					url: 'json/breedinfo.php',
+					data: {id: id},
+					dataType: 'json',
+					success: function(data) {
+						showBox(data);
+					},
+					complete: function() {
+						_global.v.flag = false;
+					}
 				})
+
+				// loading
+				layer.open({
+					area: ['200px'],
+                    type: 1,
+                    moveType: 1,
+                    content: '<div class="layer-loading">加载中...</div>',
+                    title: '编辑品种',
+                    cancel: function() {
+						k.abort();
+                    }
+				});
 			},
             goodsImg: function() {
                 var self = this,

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>角色详情-boss</title>
+    <meta name="renderer" content="webkit" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+  	<link rel="stylesheet" href="assets/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/plugins/zTreeStyle/jquery.ztree.css" />
+</head>
+<body class='wrapper'>
+
+	<div class="header">
+		<div class="logo">
+			<a href="index.html">药优优</a>
+		</div>
+		<div class="menu">
+			<ul>
+				<li>
+					<a href="#" class="dropdown-toggle"> <i class="fa fa-question-circle"></i> 帮助 </a>
+				</li>
+				<li class="dropdown user user-menu">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-user"></i>
+						<span class="hidden-xs">王彬</span>
+					</a>
+				</li>
+				<li>
+					<a href="/logout">
+						<i class="fa fa-power-off"></i>
+						退出
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<!-- 侧栏菜单 -->
+	<div class="aside" id="jaside"></div>
+
+	<div class="content">
+		<div class="breadcrumb">
+			<ul>
+				<li>账号权限</li>
+        		<li>角色详情</li>
+    		</ul>
+		</div>
+
+		<form id="myform">
+			<div class="box fa-form">
+				<div class="hd">基本信息</div>
+                <div class="item">
+                    <div class="txt"><i>*</i>角色名称：</div>
+                    <div class="cnt">
+                        <input type="text" name="rolename" id="jrolename" class="ipt" placeholder="角色名称" autocomplete="off">
+                        <input type="hidden" name="catNameId">
+                    </div>
+                </div>
+				<div class="item">
+					<div class="txt">资源：</div>
+					<div class="cnt">
+						<ul id="powerTree" class="ztree"></ul>
+					</div>
+				</div>
+				<div class="ft">
+					<button type="submit" class="ubtn ubtn-blue" id="jsubmit">保存</button>
+				</div>
+			</div>
+
+		</form>
+	</div>
+
+	<div class="footer">
+		<div class="inner">
+			&copy; <a href="#!">速采科技（武汉）有限公司</a> 版权所有. 
+		</div>
+	</div>
+	
+
+<script src="assets/js/jquery191.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/plugins/layer/layer.js"></script>
+<script src="assets/plugins/validator/jquery.validator.min.js"></script>
+<script src="assets/plugins/zTreeStyle/jquery.ztree.min.js"></script>
+<script>
+	var _global = {
+		v: {
+		},
+		fn: {
+			init: function() {
+                this.power();
+                this.myform();
+			},
+            power: function() {
+                var setting = {
+                    check: {
+                        enable: true,
+                        chkboxType: {
+                            'Y' : 'ps', 
+                            'N' : 's' 
+                        }
+                    },
+                    data: {
+                        simpleData: {
+                            enable: true
+                        }
+                    }
+                };
+
+                var zNodes =[
+                    {id:0, "name":"全选", open:true},
+                    { id:1, pId:0, name:"销售额", open:false},
+                        { id:11, pId:1, name:"订单", open:false},
+                            { id:111, pId:11, name:"批量操作", open:false},
+                                { id:1111, pId:111, name:"等待", open:false},
+                                { id:1112, pId:111, name:"付款通知单", open:false},
+                                { id:1113, pId:111, name:"释放", open:false},
+                                { id:1114, pId:111, name:"配送", open:false},
+                                { id:1115, pId:111, name:"发送销售邮件", open:false},
+                                { id:1116, pId:111, name:"备注", open:false},
+                                { id:1117, pId:111, name:"发票", open:false},
+                                { id:1118, pId:111, name:"接受", open:false},
+                                { id:1119, pId:111, name:"发送订单邮件", open:false},
+                                { id:11110, pId:111, name:"每页", open:false},
+                                { id:11111, pId:111, name:"重新下单", open:false},
+                                { id:11112, pId:111, name:"编辑", open:false},
+                                { id:11113, pId:111, name:"接受或拒绝的付款方式", open:false},
+                                { id:11114, pId:111, name:"取消", open:false},
+                                { id:11115, pId:111, name:"创建", open:false},
+                        { id:12, pId:1, name:"发票", open:false},
+                        { id:13, pId:1, name:"货运", open:false},
+                        { id:14, pId:1, name:"付款通知单", open:false},
+                        { id:15, pId:1, name:"条款和条件", open:false},
+                        { id:16, pId:1, name:"处理", open:false},
+                            { id:161, pId:16, name:"获取", open:false}, 
+                        { id:17, pId:1, name:"定期支付", open:false},  
+                        { id:18, pId:1, name:"账单协议", open:false},  
+                            { id:181, pId:18, name:"批量操作", open:false},  
+                                { id:1811, pId:181, name:"每页", open:false},
+                                { id:1812, pId:181, name:"管理", open:false},
+                                { id:1813, pId:181, name:"使用账单协议提交订单", open:false},
+                        { id:19, pId:1, name:"税", open:false},  
+                            { id:191, pId:19, name:"客户税类型", open:false},  
+                            { id:192, pId:19, name:"商品杂费种", open:false},  
+                            { id:193, pId:19, name:"导入/导出杂费率", open:false},  
+                            { id:194, pId:19, name:"管理杂费区和杂费率", open:false},  
+                            { id:195, pId:19, name:"管理杂费规则", open:false},  
+                        { id:20, pId:1, name:"External Page Cache", open:false},  
+                        { id:21, pId:1, name:"控制台", open:false}, 
+
+                    { id:2, pId:0, name:"目录", open:false},  
+                        { id:21, pId:2, name:"评论和评分", open:false},
+                            { id:211, pId:21, name:"管理评价", open:false},
+                            { id:212, pId:21, name:"客户评论", open:false},
+                                { id:2121, pId:212, name:"等待的评论", open:false},
+                                { id:2122, pId:212, name:"所有的评论", open:false},
+                        { id:22, pId:2, name:"标签", open:false},
+                            { id:221, pId:22, name:"待审批标签", open:false},
+                            { id:222, pId:22, name:"所有的标签", open:false},
+                        { id:23, pId:2, name:"Google网站地图", open:false},
+                        { id:24, pId:2, name:"搜索关键词", open:false},
+                        { id:25, pId:2, name:"管理URL重写", open:false},
+                        { id:26, pId:2, name:"管理分类", open:false},
+                        { id:27, pId:2, name:"管理产品", open:false},
+                        { id:28, pId:2, name:"更新属性", open:false},
+                        { id:29, pId:2, name:"属性集", open:false},
+                            { id:291, pId:29, name:"管理属性集设置", open:false},
+                            { id:292, pId:29, name:"管理属性集", open:false},
+
+                    { id:3, pId:0, name:"客户", open:false},
+                        { id:31, pId:3, name:"管理客户", open:false},
+                        { id:32, pId:3, name:"客户组", open:false},
+                        { id:33, pId:3, name:"在线客户", open:false},
+
+                    { id:8, pId:0, name:"促销", open:false},
+                        { id:81, pId:8, name:"购物车价格规则", open:false},
+                        { id:82, pId:8, name:"目录价格规则", open:false},
+
+                    { id:4, pId:0, name:"电子杂志", open:false},
+                        { id:41, pId:4, name:"电子杂志模板", open:false},
+                        { id:42, pId:4, name:"电子杂志订阅者", open:false},
+                        { id:43, pId:4, name:"电子杂志列队", open:false},
+                        { id:44, pId:4, name:"邮件列表错误报告", open:false},
+
+                    { id:5, pId:0, name:"CMS", open:false},
+                        { id:51, pId:5, name:"页面", open:false},
+                            { id:511, pId:51, name:"保存页面", open:false},
+                            { id:512, pId:51, name:"删除页面", open:false},
+                        { id:52, pId:5, name:"静态块", open:false},
+                        { id:53, pId:5, name:"Widgets", open:false},
+                        { id:54, pId:5, name:"Media Gallery", open:false},
+                        { id:55, pId:5, name:"投票区", open:false},
+
+                    { id:6, pId:0, name:"报表", open:false},
+                        { id:61, pId:6, name:"标签", open:false},
+                            { id:611, pId:61, name:"商品", open:false},
+                            { id:612, pId:61, name:"受欢迎的", open:false},
+                            { id:613, pId:61, name:"客户", open:false},
+                        { id:62, pId:6, name:"搜索关键词", open:false},
+                        { id:63, pId:6, name:"统计", open:false},
+                        { id:64, pId:6, name:"评论", open:false},
+                            { id:641, pId:64, name:"产品评论", open:false},
+                            { id:642, pId:64, name:"客户评论", open:false},
+                        { id:65, pId:6, name:"客户", open:false},
+                            { id:651, pId:65, name:"根据订单数排序的客户", open:false},
+                            { id:652, pId:65, name:"根据订单总额排序的客户", open:false},
+                            { id:653, pId:65, name:"新账户", open:false},
+                        { id:66, pId:6, name:"购物车", open:false},
+                            { id:661, pId:66, name:"清空购物车", open:false},
+                            { id:662, pId:66, name:"购物车中的商品", open:false},
+                        { id:67, pId:6, name:"商品", open:false},
+                            { id:671, pId:67, name:"下载区", open:false},
+                            { id:672, pId:67, name:"低库存", open:false},
+                            { id:673, pId:67, name:"最受欢迎", open:false},
+                            { id:674, pId:67, name:"订购产品", open:false},
+                            { id:675, pId:67, name:"畅销商品", open:false},
+                        { id:68, pId:6, name:"销售额", open:false},
+                            { id:681, pId:68, name:"退款总计", open:false},
+                            { id:682, pId:68, name:"优惠价", open:false},
+                            { id:683, pId:68, name:"发票总计", open:false},
+                            { id:684, pId:68, name:"运费", open:false},
+                            { id:685, pId:68, name:"销售报表", open:false},
+                            { id:686, pId:68, name:"税", open:false},
+                            { id:687, pId:68, name:"Paypal结算报告", open:false},
+                                { id:6871, pId:687, name:"获取", open:false},
+                                { id:6872, pId:687, name:"每页", open:false},
+
+                    { id:7, pId:0, name:"系统", open:false},
+                        { id:71, pId:7, name:"导入/导出", open:false},
+                            { id:711, pId:71, name:"数据流-配置文件", open:false},
+                            { id:712, pId:71, name:"数据流-高级配置文件", open:false},
+                            { id:713, pId:71, name:"导入", open:false},
+                            { id:714, pId:71, name:"导出", open:false},
+                        { id:72, pId:7, name:"索引管理", open:false},
+                        { id:73, pId:7, name:"权限", open:false},
+                            { id:731, pId:73, name:"角色", open:false},
+                            { id:732, pId:73, name:"用户", open:false},
+                        { id:74, pId:7, name:"缓存管理", open:false},
+                        { id:75, pId:7, name:"Magento Connect", open:false},
+                            { id:753, pId:75, name:"Magento Connect管理器", open:false},
+                            { id:754, pId:75, name:"扩展包", open:false},
+                        { id:75, pId:7, name:"web服务", open:false},
+                            { id:753, pId:75, name:"SOAP/XML-RPC-Users", open:false},
+                            { id:754, pId:75, name:"OAuth Consumers", open:false},
+                                { id:7541, pId:754, name:"编辑", open:false},
+                                { id:7542, pId:754, name:"删除", open:false}
+                ];
+                
+                
+                $.fn.zTree.init($("#powerTree"), setting, zNodes);
+            },
+            // 表单
+            myform: function() {
+                // 表单验证
+                $("#myform").validator({
+                    fields: {
+                        rolename: '角色名称: required'
+                    }
+                });
+                
+            }
+		}
+	}
+
+	$(function() {
+		_global.fn.init();
+	})
+</script>
+</body>
+</html>
