@@ -53,6 +53,10 @@
         return params;
     }
 
+    /**
+     * 把url 后面的参数赋值到对应表单
+     * @returns {{}}
+     */
     $.fn.initByUrlParams=function() {
         var url = window.location.search; //获取url中"?"符后的字串
         var params = {};
