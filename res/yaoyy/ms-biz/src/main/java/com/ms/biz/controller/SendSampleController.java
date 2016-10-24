@@ -13,6 +13,7 @@ import com.ms.service.SendSampleService;
 import com.ms.service.UserDetailService;
 import com.ms.service.UserService;
 import com.ms.tools.entity.Result;
+import com.ms.tools.utils.SeqNoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -41,6 +42,7 @@ public class SendSampleController {
 
     @Autowired
     UserService userService;
+
 
 
     @RequestMapping(value = "apply", method = RequestMethod.GET)
@@ -77,31 +79,57 @@ public class SendSampleController {
 
              userInfo=userService.findByPhone(userVo);
         }
+        UserDetail userDetail=userDetailService.findById(userInfo.getId());
+        if (userDetail==null){
+            userDetail=new UserDetail();
+            userDetail.setPhone(sendSampleVo.getPhone());
+            userDetail.setNickname(sendSampleVo.getNickname());
+            userDetail.setArea(sendSampleVo.getArea());
+            userDetail.setUserId(userInfo.getId());
+            userDetail.setName("");
+            userDetail.setRemark("");
+            userDetail.setType(0);
+            userDetail.setUpdateTime(now);
+            userDetail.setCreateTime(now);
+            userDetailService.create(userDetail);
+        }
+        else{
+            userDetail.setPhone(sendSampleVo.getPhone());
+            userDetail.setNickname(sendSampleVo.getNickname());
+            userDetail.setArea(sendSampleVo.getArea());
+            userDetail.setUpdateTime(now);
+            userDetailService.update(userDetail);
+        }
 
-        UserDetail userDetail=new UserDetail();
-        userDetail.setPhone(sendSampleVo.getPhone());
-        userDetail.setNickname(sendSampleVo.getNickname());
-        userDetail.setArea(sendSampleVo.getArea());
-        userDetail.setUserId(userInfo.getId());
-        userDetail.setName("");
-        userDetail.setRemark("");
-        userDetail.setType(0);
-        userDetail.setUpdateTime(now);
-        userDetail.setCreateTime(now);
-        userDetailService.create(userDetail);
+
+
+
+
         SendSample sendSample=new SendSample();
         sendSample.setUserId(userInfo.getId());
-        sendSample.setCode("2016111112");
         sendSample.setStatus(SampleEnum.SAMPLE_NOTHANDLE.getValue());
         sendSample.setIntention(sendSampleVo.getIntention());
         sendSample.setUpdateTime(now);
         sendSample.setCreateTime(now);
+        sendSample.setCode("");
         sendSampleService.create(sendSample);
+        sendSample.setCode(SeqNoUtil.get("", sendSample.getId(), 6));
+        sendSampleService.update(sendSample);
         //获取登陆状态后设置
         userInfo.setIslogin(false);
 
         return Result.success().data(userInfo);
     }
+
+
+    @RequestMapping(value = "list", method = RequestMethod.GET)
+    public String apply(String name,ModelMap model) {
+
+        return "sample_list";
+
+    }
+
+
 
 
 
