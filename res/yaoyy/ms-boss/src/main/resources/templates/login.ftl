@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <#include "./common/meta.ftl"/>
-    <title>登录-boss-上工好药</title>
+    <title>登录-boss-药优优</title>
 </head>
 
 <body>
     <div class="login-box">
-        <div class="title"><strong>上工好药</strong>电子商务管理系统</div>
+        <div class="title"><strong>药优优</strong>电子商务管理系统</div>
         <div class="form">
             <form id="loginForm" action="/login" method="post">
                 <div id="msg" class="msg"></div>
