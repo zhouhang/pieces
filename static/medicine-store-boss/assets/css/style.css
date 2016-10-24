@@ -112,11 +112,12 @@ a.ubtn{height:28px;}
 .box .tools .pb{position:absolute;left:0;bottom:0;}
 .box .tools .action-add{margin-bottom:15px;}
 .box .tools .filter{float:right;width:530px;margin-top:-15px;}
-.box .tools .filter li{float:left;width:50%;margin-top:15px;}
+.box .tools .filter li{float:left;width:50%;min-height:32px;margin-top:15px;}
 .box .tools .filter li:nth-child(even){text-align:right;}
 .box .tools .filter label{display:inline-block;min-width:74px;text-align:right;}
 .box .tools .filter .wide{width:100%;text-align:right;}
 .box .tools .filter .ipt{width:150px;}
+.box .tools .filter .slt{width:172px;}
 .box .tools .ubtn{height:34px;line-height:34px;min-width:120px;font-size:14px;}
 
 .table{font-size:12px;}
@@ -184,6 +185,7 @@ a.ubtn{height:28px;}
 .fa-form td{height:40px;background:#fff;border:1px solid #ccc;text-align:center;}
 .fa-form td .ipt-wrap{position:relative;padding:0 10px;}
 .fa-form td .ipt{width:100%;padding:0;border:0;text-align:center;font-size:12px;}
+.fa-form-info{max-width:500px;}
 .fa-form-info .item{margin-bottom:0;}
 .Validform_checktip{position:absolute;top:30px;left:5px;z-index:2;display:block;line-height:18px;padding:2px 5px;background:#c3272b;color:#fff;display:none;}
 .Validform_checktip:after{content:"";position:absolute;top:-10px;left:10px;border:5px dashed transparent;border-bottom:5px solid #c3272b;}
@@ -278,3 +280,6 @@ a.ubtn{height:28px;}
 .autocomplete-suggestions strong{font-weight:bold;color:#000;}
 .autocomplete-group{padding:3px 5px;}
 .autocomplete-group strong{display:block;font-weight:700;font-size:16px;color:#000;border-bottom:1px solid #000;}
+
+/* layer */
+.layer-loading{width:100px;height:50px;padding-top:50px;margin:0 auto;background:url(../images/loader.gif) no-repeat 50% 25px;text-align:center;}
