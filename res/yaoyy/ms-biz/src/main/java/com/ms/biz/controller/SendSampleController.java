@@ -101,7 +101,6 @@ public class SendSampleController {
         SampleTrackingVo sampleTrackingVo=new SampleTrackingVo();
         sampleTrackingVo.setSendId(sendSampleVo.getId());
         List<SampleTrackingVo> trackingList=sampleTrackingService.findAllByParams(sampleTrackingVo);
-        //过滤点不用给用户显示的type
 
 
         model.put("sendSampleVo",sendSampleVo);
