@@ -13,4 +13,12 @@ public interface UserService extends ICommonService<User>{
     public UserVo findById(Integer id);
 
     public void disable(Integer id);
+
+    public void login(String phone, String password);
+
+    public void logout();
+
+    public void loginSms(String phone, String code);
+
+    public void register(String phone, String code, String password);
 }

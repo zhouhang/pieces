@@ -54,6 +54,26 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 	}
 
 	@Override
+	public void login(String phone, String password) {
+
+	}
+
+	@Override
+	public void logout() {
+
+	}
+
+	@Override
+	public void loginSms(String phone, String code) {
+
+	}
+
+	@Override
+	public void register(String phone, String code, String password) {
+
+	}
+
+	@Override
 	public ICommonDao<User> getDao() {
 		return userDao;
 	}

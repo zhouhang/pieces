@@ -44,7 +44,7 @@ public class FileUtil {
         }
         Files.createParentDirs(file);
         Files.write(ByteStreams.toByteArray(inputStream), file);
-
+//        inputStream.close();
         return file;
     }
 }
