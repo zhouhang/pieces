@@ -1,6 +1,7 @@
 <#macro pager info url params>
 
 <div class="pagination">
+    <#if info.total gt 0>
     <div class="pages">
         每页
         <select name="" id="page_select" >
@@ -45,6 +46,7 @@
         </#if>
         <a id="next" href="javascript:return false;" class="text" data_index="${info.nextPage}">下页</a>
     </div>
+    </#if>
     <div class="info">
         显示第 ${info.startRow} 至 ${info.endRow} 项结果，共 <em id="pageSize">${info.total}</em> 项
     </div>
