@@ -61,7 +61,6 @@
         <include refid="Base_Column_List" />
         from  role_resources
         where role_id = #{roleId}
-
     </select>
 
 </mapper>

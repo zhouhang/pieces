@@ -62,7 +62,6 @@ public class SampleTrackingController {
         //如果是用户预约或是寄送样品另外保存详细信息
         //要t通过session取后台用户id
         int userId=1;
-        Date now=new Date();
         sampleTracking.setOperator(userId);
         sampleTracking.setType(TrackingTypeEnum.TYPE_ADMIN.getValue());
         /*
@@ -71,52 +70,7 @@ public class SampleTrackingController {
         */
         sampleTracking.setName("测试肖");
 
-        List<Integer> requie=new ArrayList<Integer>();
-        requie.add(TrackingEnum.TRACKING_AGREE.getValue());
-        requie.add(TrackingEnum.TRACKING_REFUSE.getValue());
-        requie.add(TrackingEnum.TRACKING_SEND.getValue());
-        requie.add(TrackingEnum.TRACKING_ORDER.getValue());
-        requie.add(TrackingEnum.TRACKING_FINISH.getValue());
-
-        Integer recordType=sampleTracking.getRecordType();
-        if(requie.indexOf(sampleTracking.getRecordType())!=-1){
-            SendSample sendSample=new SendSample();
-            sendSample.setId(sampleTracking.getSendId());
-            if(recordType.intValue()==TrackingEnum.TRACKING_AGREE.getValue()){
-                sendSample.setStatus(SampleEnum.SAMPLE_AGREE.getValue());
-            }
-            else if(recordType.intValue()==TrackingEnum.TRACKING_REFUSE.getValue()){
-                sendSample.setStatus(SampleEnum.SAMPLE_REFUSE.getValue());
-            }
-            else if(recordType.intValue()==TrackingEnum.TRACKING_SEND.getValue()){
-                trackingDetail.setType(TrackingDetailEnum.TYPE_SEND.getValue());
-                trackingDetail.setCreateTime(now);
-                trackingDetail.setSendId(sampleTracking.getSendId());
-                trackingDetailService.create(trackingDetail);
-                sendSample.setStatus(SampleEnum.SAMPLE_SEND.getValue());
-                sampleTracking.setExtra("快递公司："+trackingDetail.getCompany()+" "+"快递单号："+trackingDetail.getTrackingNo());
-            }
-            else if(recordType.intValue()==TrackingEnum.TRACKING_ORDER.getValue()){
-                trackingDetail.setType(TrackingDetailEnum.TYPE_ORDER.getValue());
-                trackingDetail.setCreateTime(now);
-                trackingDetail.setSendId(sampleTracking.getSendId());
-                trackingDetailService.create(trackingDetail);
-                sendSample.setStatus(SampleEnum.SAMPLE_VISTE.getValue());
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm");
-                sampleTracking.setExtra("预约时间："+dateFormat.format(trackingDetail.getVistorTime())+" "+"来访人："+trackingDetail.getVistor()+" "+"电话："+trackingDetail.getVistorPhone());
-            }else{
-                sendSample.setStatus(SampleEnum.SAMPLE_FINISH.getValue());
-            }
-
-
-            sendSampleService.update(sendSample);
-        }
-        if(sampleTracking.getExtra()==null){
-            sampleTracking.setExtra("");
-        }
-        sampleTracking.setCreateTime(now);
-
-        sampleTrackingService.create(sampleTracking);
+        sampleTrackingService.save(sampleTracking,trackingDetail);
         return Result.success().data("创建成功");
     }
 

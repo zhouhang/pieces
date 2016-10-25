@@ -244,32 +244,6 @@
                     })
                     location.href=url+params.join('&');
                 })
-                /*
-                $pageSize.on("change",function(){
-                    var pageSize=$(this).val();
-                    var variety=$("#searchName").val();
-                    var status=$("#searchStatus").val();
-                    var condition="";
-                    if(variety!=""){
-                        condition=condition+"variety="+variety;
-                    }
-                    if(status!=""){
-                        if(condition!=""){
-                            condition=condition+"&status="+status;
-                        }
-                        else{
-                            condition=condition+"status="+status;
-                        }
-
-                    }
-                    var url="/category/list?pageSize="+pageSize;
-                    if (condition!=""){
-                        url=url+"&"+condition;
-                    }
-                    window.location.href=url;
-
-                })
-                */
             },
             // 品种新建 or 编辑
             category: function() {

@@ -60,7 +60,7 @@
                     <tbody>
                     <#list historySend.list as sendSample>
                     <tr>
-                        <td><a href="#">${sendSample.intentionText}</a></td>
+                        <td><a href="sample/detail/${sendSample.id?c}">${sendSample.intentionText}</a></td>
                         <td>${sendSample.createTime?string("yyyy-MM-dd HH:mm")}</td>
                         <td><span class="status-${sendSample.status+1}">${sendSample.statusText}</span></td>
                     </tr>

@@ -156,7 +156,7 @@
         where id = #{id}
     </update>
 
-    <select id="findByIds" parameterType="java.lang.Integer" resultType="com.ms.dao.model.Commodity">
+    <select id="findByIds" parameterType="java.lang.Integer" resultMap="CommodityResultMap">
         select   <include refid="Base_Column_List" />
         from commodity
         where id in

@@ -59,62 +59,8 @@ public class SendSampleController {
     @ResponseBody
     public Result applySample(SendSampleVo sendSampleVo) {
 
-        UserVo userVo=new UserVo();
-        userVo.setPhone(sendSampleVo.getPhone());
-        UserVo userInfo=userService.findByPhone(userVo);
-        //如果用户注册
-
-        Date now=new Date();
-
-        if (userInfo==null){
-             User user=new User();
-             user.setPhone(sendSampleVo.getPhone());
-             user.setType(UserTypeEnum.TYPE_APPLY_SAMPLE.getValue());
-             user.setSalt("");
-             user.setPassword("");
-             user.setOpenid("");
-             user.setUpdateTime(now);
-             user.setCreateTime(now);
-             userService.create(user);
-
-             userInfo=userService.findByPhone(userVo);
-        }
-        UserDetail userDetail=userDetailService.findById(userInfo.getId());
-        if (userDetail==null){
-            userDetail=new UserDetail();
-            userDetail.setPhone(sendSampleVo.getPhone());
-            userDetail.setNickname(sendSampleVo.getNickname());
-            userDetail.setArea(sendSampleVo.getArea());
-            userDetail.setUserId(userInfo.getId());
-            userDetail.setName("");
-            userDetail.setRemark("");
-            userDetail.setType(0);
-            userDetail.setUpdateTime(now);
-            userDetail.setCreateTime(now);
-            userDetailService.create(userDetail);
-        }
-        else{
-            userDetail.setPhone(sendSampleVo.getPhone());
-            userDetail.setNickname(sendSampleVo.getNickname());
-            userDetail.setArea(sendSampleVo.getArea());
-            userDetail.setUpdateTime(now);
-            userDetailService.update(userDetail);
-        }
-
-
-
-
-
-        SendSample sendSample=new SendSample();
-        sendSample.setUserId(userInfo.getId());
-        sendSample.setStatus(SampleEnum.SAMPLE_NOTHANDLE.getValue());
-        sendSample.setIntention(sendSampleVo.getIntention());
-        sendSample.setUpdateTime(now);
-        sendSample.setCreateTime(now);
-        sendSample.setCode("");
-        sendSampleService.create(sendSample);
-        sendSample.setCode(SeqNoUtil.get("", sendSample.getId(), 6));
-        sendSampleService.update(sendSample);
+        sendSampleService.save(sendSampleVo);
+        UserVo userInfo=userService.findByPhone(sendSampleVo.getPhone());
         //获取登陆状态后设置
         userInfo.setIslogin(false);
 
@@ -150,13 +96,11 @@ public class SendSampleController {
     public String detail(@PathVariable("id") Integer id, ModelMap model) {
 
         SendSampleVo sendSampleVo=sendSampleService.findDetailById(id);
-        List<Commodity> commodityList = commodityService.findByIds(sendSampleVo.getIntention());
-        sendSampleVo.setCommodityList(commodityList);
+
 
         SampleTrackingVo sampleTrackingVo=new SampleTrackingVo();
         sampleTrackingVo.setSendId(sendSampleVo.getId());
         List<SampleTrackingVo> trackingList=sampleTrackingService.findAllByParams(sampleTrackingVo);
-        //过滤点不用给用户显示的type
 
 
         model.put("sendSampleVo",sendSampleVo);
@@ -181,16 +125,12 @@ public class SendSampleController {
         //session获取用户信息
 
         int userId=1;
-        Date now=new Date();
         sampleTracking.setOperator(userId);
         sampleTracking.setName("测试肖");
         sampleTracking.setType(TrackingTypeEnum.TYPE_USER.getValue());
-        if(sampleTracking.getExtra()==null){
-            sampleTracking.setExtra("");
-        }
-        sampleTracking.setCreateTime(now);
 
-        sampleTrackingService.create(sampleTracking);
+
+        sampleTrackingService.save(sampleTracking,null);
         return Result.success().data("提交成功");
     }
 

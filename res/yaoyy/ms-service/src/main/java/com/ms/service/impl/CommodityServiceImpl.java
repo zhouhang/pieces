@@ -55,7 +55,11 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
         for(String id :ids.split(",")){
             list.add(Integer.parseInt(id));
         }
-        return commodityDao.findByIds(list);
+        List<Commodity> commodities= commodityDao.findByIds(list);
+        commodities.forEach(c->{
+            c.setPictureUrl(pathConvert.getUrl(c.getPictureUrl()));
+        });
+        return commodities;
     }
 
 

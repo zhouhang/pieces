@@ -66,18 +66,9 @@ public class CategoryController {
      */
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
-    public Result saveCategory(Category category){
-        Date now=new Date();
-        category.setCreateTime(now);
-        category.setUpdateTime(now);
-        if (category.getStatus()==null){
-            category.setStatus(CategoryEnum.STATUS_ON.getValue());
-        }
-        if (category.getLevel()==null){
-            category.setLevel(CategoryEnum.LEVEL_BREED.getValue());
-        }
-        Integer id= categoryService.create(category);
-        return Result.success().data(id).msg("成功创建商品");
+    public Result saveCategory(CategoryVo category){
+        categoryService.save(category);
+        return Result.success("成功创建商品");
     }
 
     /**
@@ -104,11 +95,9 @@ public class CategoryController {
      */
     @RequestMapping(value = "/update",method = RequestMethod.POST)
     @ResponseBody
-    public Result updateCategory(Category category){
-        Date now=new Date();
-        category.setUpdateTime(now);
-        categoryService.update(category);
-        return Result.success().msg("修改分类成功");
+    public Result updateCategory(CategoryVo category){
+        categoryService.save(category);
+        return Result.success("修改分类成功");
     }
 
     /**

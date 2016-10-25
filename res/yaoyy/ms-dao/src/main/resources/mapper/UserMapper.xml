@@ -61,9 +61,6 @@
             <if test="identityType != null">
                 and ud.type = #{identityType}
             </if>
-            <if test="phone != null">
-                phone = #{phone}
-            </if>
         </where>
     </select>
 
@@ -114,4 +111,11 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="findByPhone" resultMap="UserResultMapVo">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where phone= #{phone}
+    </select>
 </mapper>

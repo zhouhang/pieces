@@ -15,4 +15,6 @@ public interface SendSampleService extends ICommonService<SendSample>{
     public List<SendSampleVo> findByCommodityId(int userId,List<Integer> ids);
 
     public List<SendSampleVo> findByUserId(Integer userId);
+
+    public void save(SendSampleVo sendSampleVo);
 }

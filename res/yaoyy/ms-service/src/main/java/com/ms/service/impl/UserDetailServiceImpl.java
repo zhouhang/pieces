@@ -9,6 +9,9 @@ import com.ms.dao.vo.UserDetailVo;
 import com.ms.service.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,6 +32,21 @@ public class UserDetailServiceImpl  extends AbsCommonService<UserDetail> impleme
 	@Override
 	public UserDetailVo findByUserId(Integer userId) {
 		return userDetailDao.findByUserId(userId);
+	}
+
+	@Override
+	@Transactional
+	public void save(UserDetail userDetail) {
+		Date now=new Date();
+		if(userDetail.getId()==null){
+			userDetail.setCreateTime(now);
+			userDetail.setUpdateTime(now);
+			userDetailDao.create(userDetail);
+		}
+		else{
+			userDetail.setUpdateTime(now);
+			userDetailDao.update(userDetail);
+		}
 	}
 
 

@@ -14,4 +14,10 @@ public interface CategoryService extends ICommonService<Category>{
 
     List<CategoryVo> searchCategory(CategoryVo categoryVo);
 
+    public void save(CategoryVo categoryVo);
+
+    public Category findById(Integer id);
+
+
+
 }
