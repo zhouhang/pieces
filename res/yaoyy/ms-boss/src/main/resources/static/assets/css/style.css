@@ -185,7 +185,6 @@ a.ubtn{height:28px;}
 .fa-form td{height:40px;background:#fff;border:1px solid #ccc;text-align:center;}
 .fa-form td .ipt-wrap{position:relative;padding:0 10px;}
 .fa-form td .ipt{width:100%;padding:0;border:0;text-align:center;font-size:12px;}
-.fa-form-info{max-width:500px;}
 .fa-form-info .item{margin-bottom:0;}
 .Validform_checktip{position:absolute;top:30px;left:5px;z-index:2;display:block;line-height:18px;padding:2px 5px;background:#c3272b;color:#fff;display:none;}
 .Validform_checktip:after{content:"";position:absolute;top:-10px;left:10px;border:5px dashed transparent;border-bottom:5px solid #c3272b;}
@@ -283,3 +282,12 @@ a.ubtn{height:28px;}
 
 /* layer */
 .layer-loading{width:100px;height:50px;padding-top:50px;margin:0 auto;background:url(../images/loader.gif) no-repeat 50% 25px;text-align:center;}
+
+/* 添加商品 */
+#goodsSuggestions table{width:372px;}
+#goodsSuggestions th{height:30px;padding:0;}
+#goodsSuggestions td{height:30px;}
+#goodsSuggestions .items:hover td{background:#f0f0f0;cursor:pointer;}
+#goodsSuggestions .checked td{background:#c0c0c0;color:#777;}
+#chooseGoods span{position:relative;display:inline-block;margin:0 15px 15px 0;padding:0 10px;border:1px solid #ccc;background:#fff;}
+#chooseGoods span i{position:absolute;top:-9px;right:-9px;width:18px;height:18px;background-image:url(../images/close.png);cursor:pointer;}

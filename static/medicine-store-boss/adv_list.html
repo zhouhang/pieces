@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>广告列表-boss</title>
+    <meta name="renderer" content="webkit" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+  	<link rel="stylesheet" href="assets/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class='wrapper'>
+
+	<div class="header">
+		<div class="logo">
+			<a href="index.html">药优优</a>
+		</div>
+		<div class="menu">
+			<ul>
+				<li>
+					<a href="#" class="dropdown-toggle"> <i class="fa fa-question-circle"></i> 帮助 </a>
+				</li>
+				<li class="dropdown user user-menu">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-user"></i>
+						<span class="hidden-xs">王彬</span>
+					</a>
+				</li>
+				<li>
+					<a href="/logout">
+						<i class="fa fa-power-off"></i>
+						退出
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<!-- 侧栏菜单 -->
+	<div class="aside" id="jaside"></div>
+
+	<div class="content">
+		<div class="breadcrumb">
+			<ul>
+				<li>专场广告</li>
+        		<li>广告列表</li>
+    		</ul>
+		</div>
+
+		<div class="box">
+			<div class="tools">
+				<div class="filter">
+					<form action="">
+						<ul>
+							<li>
+								<label>类型：</label>
+								<select name="" class="slt">
+									<option value="">首页banner</option>
+									<option value="">专场广告</option>
+								</select>
+							</li>
+							<li>
+								<button class="ubtn ubtn-blue">搜索</button>
+							</li>
+						</ul>
+					</form>
+				</div>
+
+				<div class="action-add">
+					<button class="ubtn ubtn-blue" id="jaddNew">新建广告</button>
+				</div>
+				<div class="action-length">
+					<span>显示</span>
+					<select name="" class="slt">
+						<option value="10">10</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
+					<span>条结果</span>
+				</div>
+			</div>
+
+			<div class="table">
+				<table>
+					<thead>
+						<tr>
+							<th><input type="checkbox"></th>
+							<th>类型</th>
+							<th>名称</th>
+							<th>链接</th>
+							<th>排序</th>
+							<th width="100">创建时间</th>
+							<th width="230" class="tc">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>首页banner</td>
+							<td>banner1</td>
+							<td>http://www.yaoyy.c</td>
+							<td>100</td>
+							<td>2016-05-18 15:22</td>
+							<td class="tc">
+								<a href="javascript:;" class="ubtn ubtn-blue jedit" data-id="1">编辑</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jputaway">上架</a>
+							</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>专场广告</td>
+							<td>专场</td>
+							<td>http://www.yaoyy.c</td>
+							<td>100</td>
+							<td>2016-05-18 15:22</td>
+							<td class="tc">
+								<a href="javascript:;" class="ubtn ubtn-blue jedit" data-id="1">编辑</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jputaway">上架</a>
+							</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox"></td>
+							<td>首页banner</td>
+							<td>banner1</td>
+							<td>http://www.yaoyy.c</td>
+							<td>100</td>
+							<td>2016-05-18 15:22</td>
+							<td class="tc">
+								<a href="javascript:;" class="ubtn ubtn-blue jedit" data-id="1">编辑</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jputaway">上架</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div class="pagination">
+				<div class="pages">
+					<a href="#" class="text">上页</a>
+					<span class="curr">1</span>
+					<a href="#">2</a>
+					<a href="#">3</a>
+					<i>...</i>
+					<a href="#">8</a>
+					<a href="#">9</a>
+					<a href="#" class="text">下页</a>
+				</div>
+				<div class="info">
+					显示第 1 至 10 项结果，共 <em id="pageSize">72</em> 项
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer">
+		<div class="inner">
+			&copy; <a href="#!">速采科技（武汉）有限公司</a> 版权所有. 
+		</div>
+	</div>
+	
+
+	<!-- 广告新增&编辑弹出框 -->
+	<form id="myform" class="hide">
+		<div class="fa-form fa-form-layer">
+			<div class="item">
+				<div class="txt">类型：</div>
+				<div class="cnt">
+					<select name="" id="" class="slt">
+						<option value="1">首页banner</option>
+						<option value="2">专场广告</option>
+					</select>
+				</div>
+			</div>
+			<div class="item">
+				<div class="txt"><i>*</i>名称：</div>
+				<div class="cnt">
+					<input type="text" name="title" class="ipt" placeholder="名称" autocomplete="off">
+				</div>
+			</div>
+			<div class="item">
+				<div class="txt">链接：</div>
+				<div class="cnt">
+					<input type="text" name="url" class="ipt" placeholder="链接" autocomplete="off">
+				</div>
+			</div>
+			<div class="item">
+				<div class="txt"><i>*</i>排序：</div>
+				<div class="cnt">
+					<input type="text" name="sort" class="ipt" placeholder="只能输入数字" autocomplete="off" data-msg-integer="只能输入数字">
+				</div>
+			</div>
+			<div class="item">
+				<div class="txt"><i>*</i>图片：</div>
+				<div class="cnt cnt-mul">
+					<span class="up-img" id="imgCrop"></span>
+                    <input type="hidden" value="" name="imgUrl" id="imgUrl">
+				</div>
+			</div>
+
+		    <div class="button">
+		        <button type="submit" class="ubtn ubtn-blue">确认</button>
+		        <button type="button" class="ubtn ubtn-gray">关闭</button>
+		    </div>
+		</div>
+	</form>
+	
+	<!-- 上传图片文本域 -->
+	<div id="imgCropWrap"></div>
+
+<script src="assets/js/jquery191.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/croppic.min.js"></script>
+<script src="assets/plugins/layer/layer.js"></script>
+<script src="assets/plugins/validator/jquery.validator.min.js"></script>
+<script>
+	var _global = {
+		v: {
+			deleteUrl: ''
+		},
+		fn: {
+			init: function() {
+                this.bindEvent();
+				this.category();
+                this.goodsImg();
+			},
+			bindEvent: function() {
+				var $table = $('.table'),
+					$cbx = $table.find('td input:checkbox'),
+					$checkAll = $table.find('th input:checkbox'),
+					count = $cbx.length;
+
+				// 删除
+				$table.on('click', '.jdel', function() {
+					var url = _global.v.deleteUrl + $(this).attr('href');
+                    layer.confirm('确认删除此广告？', {icon: 3, title: '提示'}, function (index) {
+                        $.get(url, function (data) {
+                            if (data.status == "y") {
+                        		layer.close(index);
+                                window.location.reload();
+                            }
+                        }, "json");
+                    });
+                    return false; // 阻止链接跳转
+				})
+
+				// 上架&下架
+				$table.on('click', '.jputaway', function() {
+
+				})
+
+				// 全选
+				$checkAll.on('click', function() {
+					var isChecked = this.checked;
+					$cbx.each(function() {
+						this.checked = isChecked;
+					})
+				})
+				// 单选
+				$cbx.on('click', function() {
+					var _count = 0;
+					$cbx.each(function() {
+						_count += this.checked ? 1 : 0;
+					})
+					$checkAll.prop('checked', _count === count);
+				})
+			},
+			// 广告新建 or 编辑
+			category: function() {
+				var $advForm = $('#myform'),
+					self = this;
+
+                $advForm.validator({
+                    fields: {
+                        title: '名称: required',
+                        sort: '排序: required; integer',
+                        imgUrl: '图片: required'
+                    },
+                    valid: function (form) {
+                    }
+                });
+
+                // 关闭弹层
+                $advForm.on('click', '.ubtn-gray', function () {
+                    layer.closeAll();
+                })
+
+				// 新建
+				$('#jaddNew').on('click', function() {
+					$advForm[0].reset();
+					layer.open({
+                        area: ['600px'],
+                        type: 1,
+                        moveType: 1,
+                        content: $advForm,
+                        title: '新建广告'
+                    });
+					$('#imgCrop').show().prev().remove();
+				})
+
+				// 编辑
+				$('.table').on('click', '.jedit', function() {
+					if (_global.v.flag) {
+						return false;
+					}
+					_global.v.flag = true;
+					$advForm[0].reset();
+					self.showinfo($(this).data('id'));
+					return false; // 阻止链接跳转
+				})
+			},
+			showinfo: function(id) {
+				var $advForm = $('#myform');
+
+				var showBox = function(data) {
+					$advForm.find('.ipt[name="title"]').val(data.title);
+					$advForm.find('.ipt[name="sort"]').val(data.sort);
+					// 如果有图片，填充图片
+					if (data.url) {
+						$('#imgCrop').hide().prev().remove().end().before('<span class="up-img"><img src="' + data.url + '" title="点击图片看大图" /><i class="del" title="删除"></i><input type="hidden" name="img" value="' + data.url + '"></span>');
+					} else {
+						$('#imgCrop').show().prev().remove();
+					}
+					layer.closeAll();
+					layer.open({
+                        area: ['600px'],
+                        type: 1,
+                        moveType: 1,
+                        content: $advForm,
+                        title: '编辑广告'
+                    });
+				}
+
+				// 加载数据
+				var k = $.ajax({
+					url: 'json/breedinfo.php',
+					data: {id: id},
+					dataType: 'json',
+					success: function(data) {
+						showBox(data);
+					},
+					complete: function() {
+						_global.v.flag = false;
+					}
+				})
+
+				// loading
+				layer.open({
+					area: ['200px'],
+                    type: 1,
+                    moveType: 1,
+                    content: '<div class="layer-loading">加载中...</div>',
+                    title: '编辑广告',
+                    cancel: function() {
+						k.abort();
+                    }
+				});
+			},
+            goodsImg: function() {
+                var self = this,
+                    $myform = $('#myform');
+
+                // 删除图片
+                $myform.on('click', '.del', function() {
+                    var $self = $(this);
+                    layer.confirm('确认删除图片？', {
+                        btn: ['确认','取消'] //按钮
+                    }, function(index){
+                        $self.parent().remove();
+                        layer.close(index);
+                        $('#imgCrop').show();
+                        $('#imgUrl').val('').trigger('validate');
+                    });
+                    return false;
+                })
+                // 点击图片看大图
+                $myform.on('click', 'img', function() {
+                    var url = this.src;
+                    window.open(url);
+                    return false;
+                })
+                this.upImg();
+            },
+            upImg: function() {
+                var options = {
+                    uploadUrl:'img_save_to_file.php',
+                    customUploadButtonId: 'imgCrop',
+                    loaderHtml:'<span class="loader">正在上传图片，请稍后...</span>',
+                    onAfterImgUpload: function(response){
+                        cropModal.destroy();
+                        cropModal = new Croppic('imgCropWrap', options);
+                        $('#imgCrop').hide().before('<span class="up-img"><img src="' + response.url + '" title="点击图片看大图" /><i class="del" title="删除"></i></span>');
+                        $('#imgUrl').val(response.url).trigger('validate');
+                    },
+                    onError:function(msg){}
+                }
+                var cropModal = new Croppic('imgCropWrap', options);
+            }
+		}
+	}
+
+	$(function() {
+		_global.fn.init();
+	})
+</script>
+</body>
+</html>
