@@ -12,7 +12,7 @@
                 <textarea name="" id="msg" class="mul" cols="30" rows="10" placeholder="留言"></textarea>
                 <span class="error"></span>
             </div>
-            <button type="submit" class="ubtn ubtn-primary" id="submit">提交</button>
+            <button type="button" class="ubtn ubtn-primary" id="submit">提交</button>
         </form>
     </div>
     <div class="ui-extra">
@@ -24,6 +24,9 @@
 <script>
 
     var _global = {
+        v: {
+            trackingCreateUrl:"sample/feedBack"
+        },
         fn: {
             init: function() {
                 this.validator();
@@ -32,7 +35,15 @@
                 var self = this;
                 $('#submit').on('click', function() {
                     if (self.checkMsg()) {
-                        location.href = 'sample_detail.html';
+                        $.ajax({
+                            url: _global.v.trackingCreateUrl,
+                            data:  {sendId:${sendId?c},recordType:7,extra:$('#msg').val()},
+                            type: "POST",
+                            success: function(data) {
+                                location.href = 'sample/detail/${sendId?c}';
+                            }
+                        })
+
                     } else {
 
                     }

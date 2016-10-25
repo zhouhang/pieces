@@ -24,7 +24,7 @@
             <#list sampleList as sample>
             <li>
                 <#list sample.commodityList as commodity>
-                <a href="commodity/detail/${commodity.id?c}">
+                <a href="sample/detail/${sample.id?c}">
                     <div class="cnt">
                         <div class="title">${commodity.name}</div>
                         <div class="summary">

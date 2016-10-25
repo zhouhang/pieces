@@ -164,8 +164,9 @@ public class SendSampleController {
         return "sample_detail";
 
     }
-    @RequestMapping(value = "msg", method = RequestMethod.GET)
-    public String getMsg(){
+    @RequestMapping(value = "msg/{id}", method = RequestMethod.GET)
+    public String getMsg(@PathVariable("id") Integer id,ModelMap model){
+        model.put("sendId",id);
         return "sample_msg";
     }
 
@@ -183,6 +184,7 @@ public class SendSampleController {
         Date now=new Date();
         sampleTracking.setOperator(userId);
         sampleTracking.setName("测试肖");
+        sampleTracking.setType(TrackingTypeEnum.TYPE_USER.getValue());
         if(sampleTracking.getExtra()==null){
             sampleTracking.setExtra("");
         }
