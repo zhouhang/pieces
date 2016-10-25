@@ -69,7 +69,7 @@ public class SendSampleController {
         if (userInfo==null){
              User user=new User();
              user.setPhone(sendSampleVo.getPhone());
-             user.setType(UserTypeEnum.TYPE_APPLY_SAMPLE.getValue());
+             user.setType(UserEnum.auto.getType());
              user.setSalt("");
              user.setPassword("");
              user.setOpenid("");

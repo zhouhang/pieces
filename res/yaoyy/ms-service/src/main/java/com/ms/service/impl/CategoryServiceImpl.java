@@ -7,15 +7,28 @@ import com.ms.dao.CategoryDao;
 import com.ms.dao.model.Category;
 import com.ms.dao.vo.CategoryVo;
 import com.ms.service.CategoryService;
+import com.ms.service.enums.CategoryEnum;
+import com.ms.tools.upload.PathConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CategoryServiceImpl  extends AbsCommonService<Category> implements CategoryService{
 
 	@Autowired
 	private CategoryDao categoryDao;
+
+	@Autowired
+	private PathConvert pathConvert;
+
+	/**
+	 * 品种图片保存路径
+	 */
+	private String folderName = "category/";
 
 
 	@Override
@@ -40,10 +53,42 @@ public class CategoryServiceImpl  extends AbsCommonService<Category> implements 
 		return categoryDao.findByParams(categoryVo);
 	}
 
+	@Override
+	@Transactional
+	public void save(CategoryVo categoryVo) {
+		categoryVo.setPictureUrl(pathConvert.saveFileFromTemp(categoryVo.getPictureUrl(),folderName));
+		Date now=new Date();
+		if (categoryVo.getStatus()==null){
+			categoryVo.setStatus(CategoryEnum.STATUS_ON.getValue());
+		}
+		if (categoryVo.getLevel()==null){
+			categoryVo.setLevel(CategoryEnum.LEVEL_BREED.getValue());
+		}
+		if (categoryVo.getId()==null){
+			categoryVo.setCreateTime(now);
+			categoryVo.setUpdateTime(now);
+			categoryDao.create(categoryVo);
+		}
+		else{
+			categoryVo.setUpdateTime(now);
+			categoryDao.update(categoryVo);
+		}
+
+	}
+
+	@Override
+	public Category findById(Integer id) {
+		Category category=categoryDao.findById(id);
+		category.setPictureUrl(pathConvert.getUrl(category.getPictureUrl()));
+		return category;
+	}
+
 
 	@Override
 	public ICommonDao<Category> getDao() {
 		return categoryDao;
 	}
+
+
 
 }
