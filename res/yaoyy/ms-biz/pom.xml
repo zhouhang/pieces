@@ -10,7 +10,7 @@
     </parent>
     <groupId>yaoyy</groupId>
     <artifactId>ms-biz</artifactId>
-    <version>${yaoyy-version}</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <dependencies>
         <dependency>
@@ -118,7 +118,7 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <excludes>
-                    <exclude>static/assets/awesome/fonts/**</exclude>
+                    <exclude>static/assets/fonts/**</exclude>
                 </excludes>
             </resource>
 
@@ -126,7 +126,7 @@
                 <directory>src/main/resources</directory>
                 <filtering>false</filtering>
                 <includes>
-                    <include>static/assets/awesome/fonts/**</include>
+                    <include>static/assets/fonts/**</include>
                 </includes>
             </resource>
         </resources>
