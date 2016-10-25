@@ -8,6 +8,7 @@
         <result column="salt" property="salt"/>
         <result column="name" property="name"/>
         <result column="mobile" property="mobile"/>
+        <result column="roleName" property="roleName"/>
         <result column="is_del" property="isDel"/>
         <result column="create_date" property="createDate"/>
         <result column="update_date" property="updateDate"/>
@@ -95,22 +96,27 @@
 
     <!-- 条件查询User-->
     <select id="findByCondition" parameterType="com.ms.dao.vo.MemberVo" resultMap="MemberResultMap">
-        select * from member b
+        select m.*,r.name as roleName from member m
+        left join role_member rm on m.id = rm.member_id
+        left join role r on rm.role_id = r.id
         where 1=1
         <if test="id != null ">
-            and b.id = #{id}
+            and m.id = #{id}
         </if>
         <if test="username != null and username != ''">
-            and b.username like "%"#{username}"%"
+            and m.username like "%"#{username}"%"
         </if>
         <if test="name != null and name != ''">
-            and b.name like "%"#{name}"%"
+            and m.name like "%"#{name}"%"
         </if>
         <if test="email != null and email != ''">
-            and b.email like "%"#{email}"%"
+            and m.email like "%"#{email}"%"
         </if>
         <if test="isDel != null ">
-            and b.is_del = #{isDel}
+            and m.is_del = #{isDel}
+        </if>
+        <if test="roleId != null ">
+            and r.id = #{roleId}
         </if>
     </select>
 

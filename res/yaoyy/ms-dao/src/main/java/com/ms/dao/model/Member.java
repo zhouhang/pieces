@@ -30,6 +30,7 @@ public class Member implements Serializable {
 	
 	private Date updateDate;
 
+	private String roleName;
 
 	public Member(){}
 	
@@ -113,5 +114,11 @@ public class Member implements Serializable {
 		this.email = email;
 	}
 
+	public String getRoleName() {
+		return roleName;
+	}
 
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
 }
