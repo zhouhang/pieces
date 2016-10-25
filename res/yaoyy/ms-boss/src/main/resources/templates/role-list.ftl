@@ -45,7 +45,6 @@
 <#include "./common/footer.ftl"/>
 
 
-<script src="assets/js/jquery191.js"></script>
 <script src="assets/plugins/layer/layer.js"></script>
 <script src="assets/plugins/validator/jquery.validator.min.js"></script>
 <script src="assets/plugins/zTreeStyle/jquery.ztree.min.js"></script>
@@ -73,6 +72,65 @@
                         }
                     }
                 };
+
+                var rootTree = null;
+                //加载所有资源
+                $.ajax({
+                    url: "/role/resources",
+                    type: "POST",
+                    data:{roleId:$("#roleId").val(),name:$("#jrolename").val()},
+                    async:false,
+                    success: function(result){
+                        rootTree =  $.fn.zTree.init($("#powerTree"), setting, result);
+                    }
+                });
+
+                if(rootTree.getCheckedNodes(false).length==0){
+                    $("#allCheck").attr("checked","checked");
+                }
+
+
+                //全选
+                $("#allCheck").click(function() {
+                    rootTree.checkAllNodes(this.checked)
+                });
+
+                //保存
+                $("#submit").click(function(){
+                    save();
+                })
+
+
+                function save(){
+                    var arrIds = [];
+                    //获取所有选中的节点
+                    var checkNodes = rootTree.getCheckedNodes(true);
+                    $.each(checkNodes,function(index){
+                        arrIds.push(this.id)
+                    })
+
+                    var roleId = $("#roleId").val();
+
+                    $.ajax({
+                        url: "/role/resources/save",
+                        type: "POST",
+                        data:{roleId:roleId,resourcesIds:arrIds},
+                        success: function(result){
+                            var type = "error";
+                            var title = "操作失败";
+                            if(result.status=="y"){
+                                type="success";
+                                title="操作成功";
+                            }
+                            $.notify({
+                                type: type,
+                                title: title,
+                                text: result.info,
+                                delay: 3e3
+                            });
+                        }
+                    });
+                }
             },
             // 表单
             myform: function() {
@@ -89,65 +147,6 @@
 
     $(function() {
         _global.fn.init();
-
-            var rootTree = null;
-            //加载所有资源
-            $.ajax({
-                url: "/role/resources",
-                type: "POST",
-                data:{roleId:$("#roleId").val(),name:$("#jrolename").val()},
-                async:false,
-                success: function(result){
-                    rootTree =  $.fn.zTree.init($("#powerTree"), _global.fn.power.setting, result);
-                }
-            });
-
-            if(rootTree.getCheckedNodes(false).length==0){
-                $("#allCheck").attr("checked","checked");
-            }
-
-
-            //全选
-            $("#allCheck").click(function() {
-                rootTree.checkAllNodes(this.checked)
-            });
-
-            //保存
-            $("#submit").click(function(){
-                save();
-            })
-
-
-            function save(){
-                var arrIds = [];
-                //获取所有选中的节点
-                var checkNodes = rootTree.getCheckedNodes(true);
-                $.each(checkNodes,function(index){
-                    arrIds.push(this.id)
-                })
-
-                var roleId = $("#roleId").val();
-
-                $.ajax({
-                    url: "/role/resources/save",
-                    type: "POST",
-                    data:{roleId:roleId,resourcesIds:arrIds},
-                    success: function(result){
-                        var type = "error";
-                        var title = "操作失败";
-                        if(result.status=="y"){
-                            type="success";
-                            title="操作成功";
-                        }
-                        $.notify({
-                            type: type,
-                            title: title,
-                            text: result.info,
-                            delay: 3e3
-                        });
-                    }
-                });
-            }
     })
 </script>
 </body>

@@ -107,7 +107,7 @@
             <div class="item">
                 <div class="txt"><i>*</i>密码：</div>
                 <div class="cnt">
-                    <input type="password" name="password" class="ipt" placeholder="密码" autocomplete="off">
+                    <input type="text" name="password" class="ipt" placeholder="密码" autocomplete="off">
                 </div>
             </div>
             <div class="item">
@@ -234,7 +234,7 @@
                         $adminForm.find('.ipt[name="id"]').val(data.member.id);
                         $adminForm.find('.ipt[name="username"]').val(data.member.username);
                         $adminForm.find('.slt[name="roleId"]').val(data.member.roleId);
-                        $adminForm.find('.ipt[name="password"]').val(data.member.password);
+                        //$adminForm.find('.ipt[name="password"]').val(data.member.password);
                         $adminForm.find('.ipt[name="name"]').val(data.member.name);
                         $adminForm.find('.ipt[name="mobile"]').val(data.member.mobile);
                         $adminForm.find('.ipt[name="email"]').val(data.member.email);
