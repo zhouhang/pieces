@@ -2,7 +2,7 @@
 
 	header("Content-Type: text/html; charset=UTF-8");
 
-	sleep(2);//效果演示，该句可移除;
+	sleep(1);//效果演示，该句可移除;
 
 	$arr = array (
 		'mobile'=>"18801285391",
