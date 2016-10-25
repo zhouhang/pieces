@@ -46,8 +46,20 @@
             </a>
         </dt>
         <dd>
-            <a href="/role/index"><i class="fa fa-circle-o"></i>权限管理</a>
             <a href="/category/list"><i class="fa fa-circle-o"></i>用户列表</a>
+        </dd>
+    </dl>
+    <dl>
+        <dt>
+            <a href="javascript:;">
+                <i class="fa fa-cart-plus"></i>
+                <span>账号权限</span>
+                <i class="fa fa-angle-down arrow"></i>
+            </a>
+        </dt>
+        <dd>
+            <a href="/member/index"><i class="fa fa-circle-o"></i>管理员列表</a>
+            <a href="/role/index"><i class="fa fa-circle-o"></i>角色列表</a>
         </dd>
     </dl>
 </div>
