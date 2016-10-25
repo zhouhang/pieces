@@ -9,6 +9,9 @@ import com.ms.dao.vo.SampleAddressVo;
 import com.ms.service.SampleAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,6 +32,21 @@ public class SampleAddressServiceImpl  extends AbsCommonService<SampleAddress> i
 	@Override
 	public SampleAddressVo findBySendId(Integer sendId) {
 		return sampleAddressDao.findBySendId(sendId);
+	}
+
+	@Override
+	@Transactional
+	public void save(SampleAddress address) {
+		Date now=new Date();
+		if(address.getId()==null){
+			address.setCreateTime(now);
+			address.setUpdateTime(now);
+			sampleAddressDao.create(address);
+		}
+		else{
+			address.setUpdateTime(now);
+			sampleAddressDao.update(address);
+		}
 	}
 
 

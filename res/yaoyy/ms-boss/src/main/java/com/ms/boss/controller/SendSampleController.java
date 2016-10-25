@@ -65,13 +65,7 @@ public class SendSampleController {
                                Integer pageSize, ModelMap model
     ) {
         PageInfo<SendSampleVo> sendSampleVoPageInfo = sendSampleService.findByParams(sendSampleVo,pageNum,pageSize);
-        //意向商品转化为显示字符串
-        for(SendSampleVo s:sendSampleVoPageInfo.getList())
-        {
-            List<Commodity> commodityList = commodityService.findByIds(s.getIntention());
-            s.setCommodityList(commodityList);
 
-        }
         model.put("sendSampleVoPageInfo",sendSampleVoPageInfo);
         model.put("sendSampleVo",sendSampleVo);
         model.put("sendSampleVoParams", Reflection.serialize(sendSampleVo));
@@ -89,18 +83,13 @@ public class SendSampleController {
     {
         //寄样单信息
         SendSampleVo sendSampleVo=sendSampleService.findDetailById(id);
-        List<Commodity> commodityList = commodityService.findByIds(sendSampleVo.getIntention());
-        sendSampleVo.setCommodityList(commodityList);
+
 
         //历史寄样单信息(需指定最多多少条，显示问题)
         SendSampleVo historyParam=new SendSampleVo();
         historyParam.setPhone(sendSampleVo.getPhone());
         PageInfo<SendSampleVo> historySend = sendSampleService.findByParams(historyParam,1,10);
-        for(SendSampleVo s:historySend.getList())
-        {
-            List<Commodity> list = commodityService.findByIds(s.getIntention());
-            s.setCommodityList(list);
-        }
+
         //用户详情
         UserDetailVo userDetail=userDetailServer.findByUserId(sendSampleVo.getUserId());
 
@@ -144,24 +133,14 @@ public class SendSampleController {
     @RequestMapping(value = "userComplete",method = RequestMethod.POST)
     @ResponseBody
     public Result userComplete(UserDetail userDetail){
-        userDetail.setUpdateTime(new Date());
-        userDetailServer.update(userDetail);
+        userDetailServer.save(userDetail);
         return Result.success().msg("保存成功");
     }
 
     @RequestMapping(value = "addressSave",method=RequestMethod.POST)
     @ResponseBody
     public Result addressSave(SampleAddress address){
-        Date now=new Date();
-        if(address.getId()==null){
-            address.setCreateTime(now);
-            address.setUpdateTime(now);
-            sampleAddressServie.create(address);
-        }
-        else{
-            address.setUpdateTime(now);
-            sampleAddressServie.update(address);
-        }
+        sampleAddressServie.save(address);
         return Result.success().msg("保存成功");
     }
 

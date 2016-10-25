@@ -9,4 +9,6 @@ public interface UserDetailService extends ICommonService<UserDetail>{
     public PageInfo<UserDetailVo> findByParams(UserDetailVo userDetailVo,Integer pageNum,Integer pageSize);
 
     public UserDetailVo findByUserId(Integer userId);
+
+    public void save(UserDetail userDetail);
 }

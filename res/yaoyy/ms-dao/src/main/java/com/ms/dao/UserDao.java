@@ -10,5 +10,7 @@ public interface UserDao extends ICommonDao<User>{
 
     public List<UserVo> findByParams(UserVo userVo);
 
+    public UserVo findByPhone(String phone);
+
 
 }
