@@ -15,9 +15,9 @@
 <div class="ui-content">
     <div class="ui-form">
         <div class="logo">药优优</div>
-        <form action="">
+        <form action="/user/login" method="post">
             <div class="item">
-                <input type="tel" class="ipt" name="mobile" id="mobile" placeholder="手机号" autocomplete="off">
+                <input type="tel" class="ipt" name="phone" id="phone" placeholder="手机号" autocomplete="off">
                 <span class="error"></span>
             </div>
             <div class="item">
@@ -30,9 +30,9 @@
         </form>
 
         <div class="ui-extra">
-            <a href="login_SMS.html">短信验证码登录</a>
+            <a href="/user/loginSMS">短信验证码登录</a>
             <i>|</i>
-            <a href="register.html">快速注册</a>
+            <a href="/user/register">快速注册</a>
         </div>
     </div>
 </div>
@@ -52,7 +52,7 @@
                 })
             },
             checkMobile: function() {
-                var $el = $('#mobile'),
+                var $el = $('#phone'),
                         val = $el.val();
 
                 if (!val) {

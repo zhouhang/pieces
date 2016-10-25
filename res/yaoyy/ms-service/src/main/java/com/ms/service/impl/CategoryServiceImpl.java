@@ -7,7 +7,7 @@ import com.ms.dao.CategoryDao;
 import com.ms.dao.model.Category;
 import com.ms.dao.vo.CategoryVo;
 import com.ms.service.CategoryService;
-import com.ms.service.enums.CategoryEnum;
+import com.ms.dao.enums.CategoryEnum;
 import com.ms.tools.upload.PathConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

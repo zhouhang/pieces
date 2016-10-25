@@ -15,8 +15,10 @@ import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -57,7 +59,7 @@ public class UserController {
      * 快速注册
      * @return
      */
-    @RequestMapping(value = "regist", method = RequestMethod.GET)
+    @RequestMapping(value = "register", method = RequestMethod.GET)
     public String registerPage() {
         return "register";
     }
@@ -70,24 +72,13 @@ public class UserController {
      */
     @RequestMapping(value = "login", method = RequestMethod.POST)
     public String login(String phone, String password) {
-        Result result = null;
+
         // 登陆验证
         Subject subject = SecurityUtils.getSubject();
         BizToken token = new BizToken(phone, password, false, null, "");
-        try{
-            subject.login(token);
-        }catch(Exception e){
-            e.printStackTrace();
-            result = Result.error().msg("用户名密码错误");
-        }
+        userService.login(subject, token);
 
-        User user = userService.findByPhone(token.getUsername());
-        user.setPassword(null);
-        user.setSalt(null);
-        Session s = subject.getSession();
-        s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), user);
-
-        return "redirect:/user/login";
+        return "redirect:/index";
     }
 
     /**
@@ -96,7 +87,7 @@ public class UserController {
      */
     @RequestMapping(value = "logout", method = RequestMethod.POST)
     public String loginOut() {
-        SecurityUtils.getSubject().logout();
+        userService.logout();
         return "redirect:/user/login";
     }
 
@@ -108,8 +99,19 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "register", method = RequestMethod.POST)
-    public String register(String phone, String code, String password) {
-        return null;
+    public String register(String phone, String code, String password, ModelMap model) {
+        try {
+            userService.register(phone, code, password);
+            Subject subject = SecurityUtils.getSubject();
+            BizToken token = new BizToken(phone, password, false, null, "");
+            userService.login(subject, token);
+        } catch (Exception e) {
+            model.put("error",e.getMessage());
+            return "register";
+        }
+
+
+        return "redirect:/index";
     }
 
     /**
@@ -119,9 +121,33 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "loginSMS", method = RequestMethod.POST)
-    public String loginSMS(String phone, String code) {
-        return null;
+    public String loginSMS(String phone, String code, ModelMap model) {
+        try {
+            userService.loginSms(phone, code);
+            Subject subject = SecurityUtils.getSubject();
+            BizToken token = new BizToken(phone, null, false, null, "");
+            userService.login(subject, token);
+        } catch (Exception e) {
+            model.put("error",e.getMessage());
+            return "login_sms";
+        }
+
+        return "redirect:/index";
     }
 
+
+    @RequestMapping(value = "sendRegistSms", method = RequestMethod.POST)
+    @ResponseBody
+    public Result sendRegistSms(String phone) {
+        userService.sendRegistSms(phone);
+        return Result.success();
+    }
+
+    @RequestMapping(value = "sendLoginSms", method = RequestMethod.POST)
+    @ResponseBody
+    public Result sendLoginSms(String phone) {
+        userService.sendLoginSms(phone);
+        return Result.success();
+    }
 
 }

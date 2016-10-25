@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.ms.dao.model.Category;
 import com.ms.dao.vo.CategoryVo;
 import com.ms.service.CategoryService;
-import com.ms.service.enums.CategoryEnum;
+import com.ms.dao.enums.CategoryEnum;
 import com.ms.tools.entity.Result;
 import com.ms.tools.utils.Reflection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.util.Date;
 import java.util.List;
 
 /**

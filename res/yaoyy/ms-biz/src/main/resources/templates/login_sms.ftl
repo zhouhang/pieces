@@ -15,16 +15,17 @@
 <div class="ui-content">
     <div class="ui-form">
         <div class="logo">药优优</div>
-        <form action="">
+        <form action="/user/loginSMS" method="post">
             <div class="item">
-                <input type="tel" class="ipt" name="mobile" id="mobile" placeholder="手机号" autocomplete="off">
+                <input type="tel" class="ipt" name="phone" id="mobile" placeholder="手机号" autocomplete="off">
                 <span class="error"></span>
                 <i class="mid"></i>
                 <button type="button" class="send" id="send">发送验证码</button>
             </div>
             <div class="item">
-                <input type="text" class="ipt" name="SMSCode" id="SMSCode" placeholder="验证码" autocomplete="off">
+                <input type="text" class="ipt" name="code" id="SMSCode" placeholder="验证码" autocomplete="off">
                 <span class="error"></span>
+                <#if error?exists><span>${error}</span></#if>
             </div>
             <div class="item">
                 <button type="submit" class="ubtn ubtn-primary" id="submit">登录</button>
@@ -37,6 +38,9 @@
 <script>
 
     var _global = {
+        v:{
+            smsUrl:"/user/sendLoginSms"
+        },
         fn: {
             init: function() {
                 this.validator();
@@ -99,11 +103,12 @@
                 var sendMSM = function() {
                     popover('验证码发送中，请稍后...!');
                     $.ajax({
-                        url: 'json/getsmscode.php',
+                        url: _global.v.smsUrl,
                         dataType: 'json',
                         data: 'phone=' + $mobile.val(),
+                        type: 'POST',
                         success: function(data) {
-                            if (data.status === 'y') {
+                            if (data.status === 200) {
                                 $send.text(second + txt).prop('disabled', true);
                                 lock();
                                 popover(data.info);
