@@ -237,6 +237,7 @@
                 })
                 $search.on("click",function(){
                     var params = [];
+                    var url="/category/list?";
                     $("#serarchForm .ipt").each(function() {
                         var val = $.trim(this.value);
                         val && params.push($(this).attr('name') + '=' + val);

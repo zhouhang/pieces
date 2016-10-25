@@ -62,6 +62,9 @@
             <if test="status != null">
                 and ss.status=#{status}
             </if>
+            <if test="userId != null">
+                and ss.user_id=#{userId}
+            </if>
         </where>
     </select>
 
@@ -117,16 +120,17 @@
     </select>
 
 
-    <select id="findByCommodityId" resultMap="SendSampleResultMapVo" parameterType="java.lang.Integer">
+    <select id="findByCommodityId" resultMap="SendSampleResultMapVo">
         select
         *,ud.nickname,ud.phone,ud.area
         from send_sample ss
         LEFT JOIN user_detail ud on ss.user_id = ud.user_id
         <where>
             ss.status!=-1
-            <if test="commodityId != null">
-                or FIND_IN_SET(commodityId,ss.intention)
-            </if>
+            and ss.user_id=#{userId}
+            and ss.intention REGEXP #{ids}
+
+
         </where>
     </select>
 

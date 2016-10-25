@@ -1,8 +1,6 @@
 package com.ms.biz.controller;
 
-import com.ms.dao.enums.SampleEnum;
-import com.ms.dao.enums.TrackingTypeEnum;
-import com.ms.dao.enums.UserTypeEnum;
+import com.ms.dao.enums.*;
 import com.ms.dao.model.*;
 import com.ms.dao.vo.SampleTrackingVo;
 import com.ms.dao.vo.SendSampleVo;
@@ -126,13 +124,24 @@ public class SendSampleController {
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String apply(String name,ModelMap model) {
-        List<Commodity> commodities=commodityService.findByName(name);
-        List<SendSampleVo> sampleList=new ArrayList<>();
-        List<Integer> list = new ArrayList<>();
-        for(Commodity c :commodities){
-            list.add(c.getId());
+        //获取登陆用户userId
+        int userId=1;
+        List<SendSampleVo> sampleList = new ArrayList<>();
+        if(name!=null) {
+            List<Commodity> commodities = commodityService.findByName(name);
+            if (commodities.size() != 0) {
+                List<Integer> list = new ArrayList<>();
+                for (Commodity c : commodities) {
+                    list.add(c.getId());
+                }
+                sampleList = sendSampleService.findByCommodityId(userId,list);
+            }
+        }
+        else{
+            sampleList = sendSampleService.findByUserId(userId);
         }
         model.put("sampleList",sampleList);
+        model.put("name",name);
         return "sample_list";
 
     }
@@ -160,17 +169,20 @@ public class SendSampleController {
         return "sample_msg";
     }
 
-
-    @RequestMapping(value = "msg", method = RequestMethod.POST)
+    /**
+     * 用户留言或是确认收货
+     * @param sampleTracking
+     * @return
+     */
+    @RequestMapping(value = "feedBack", method = RequestMethod.POST)
     @ResponseBody
-    public Result submitMsg(SampleTracking sampleTracking){
+    public Result feedBack(SampleTracking sampleTracking){
         //session获取用户信息
 
         int userId=1;
         Date now=new Date();
         sampleTracking.setOperator(userId);
         sampleTracking.setName("测试肖");
-        sampleTracking.setType(TrackingTypeEnum.TYPE_USER.getValue());
         if(sampleTracking.getExtra()==null){
             sampleTracking.setExtra("");
         }

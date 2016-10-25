@@ -15,58 +15,89 @@
 <section class="ui-content">
     <div class="ui-search">
         <form action="">
-            <button type="submit" id="submit" class="fa fa-search submit mid"></button>
-            <input type="text" name="keyword" id="keyword" class="ipt" placeholder="请输入原药材品种名称" autocomplete="off">
+            <button type="button" id="submit" class="fa fa-search submit mid"></button>
+            <input type="text" name="name" value="${name?default('')}" id="keyword" class="ipt" placeholder="请输入原药材品种名称" autocomplete="off">
         </form>
     </div>
     <div class="slist">
         <ul>
+            <#list sampleList as sample>
             <li>
-                <a href="sample_detail.html">
+                <#list sample.commodityList as commodity>
+                <a href="commodity/detail/${commodity.id?c}">
                     <div class="cnt">
-                        <div class="title">天麻</div>
+                        <div class="title">${commodity.name}</div>
                         <div class="summary">
-                            安徽天麻  无硫  统货  2015版药典标准 长期供应
+                        ${commodity.title}
                         </div>
                         <div class="attr">
-                            <span>产地：安徽</span>
-                            <span>规格：统货</span>
+                            <span>产地：${commodity.origin}</span>
+                            <span>规格：${commodity.spec}</span>
                         </div>
                     </div>
                     <div class="pic">
-                        <img src="uploads/p5.jpg" width="110" height="90" alt="">
+                        <img src="${commodity.pictureUrl?default('')}" width="110" height="90" alt="">
                     </div>
                 </a>
+                </#list>
                 <div class="ft">
-                    <span class="status-5">状态：已寄样</span>
-                    <button type="button" class="btn mid">确认收货</button>
+                    <span class="status-5">状态：${sample.statusText}</span>
+                    <#if sample.status==4>
+                    <button type="button" class="btn mid" sid="${sample.id?c}">确认收货</button>
+                    </#if>
                 </div>
             </li>
-            <li>
-                <a href="sample_detail.html">
-                    <div class="cnt">
-                        <div class="title">天麻</div>
-                        <div class="summary">
-                            安徽天麻  无硫  统货  2015版药典标准 长期供应
-                        </div>
-                        <div class="attr">
-                            <span>产地：安徽</span>
-                            <span>规格：统货</span>
-                        </div>
-                    </div>
-                    <div class="pic">
-                        <img src="uploads/p5.jpg" width="110" height="90" alt="">
-                    </div>
-                </a>
-                <div class="ft">
-                    <span class="status-3">状态：拒绝寄样</span>
-                </div>
-            </li>
+            </#list>
         </ul>
     </div>
 
 </section><!-- /ui-content -->
 
 <#include  "./common/footer.ftl"/>
+<script>
+    var _global = {
+        v: {
+            trackingCreateUrl:"sample/feedBack"
+        },
+        fn: {
+            init: function () {
+                this.bindEvent();
+            },
+
+            bindEvent: function () {
+                var $search =$("#submit");
+                var $mid=$(".mid");
+                $search.on('click', function() {
+                    var url="sample/list";
+                    var name=$("#keyword").value;
+                    if($.trim(name)!=""){
+                        location.href=url+"?name="+name;
+                    }
+                    else{
+                        location.href=url;
+                    }
+
+                });
+                $mid.on('click',function(){
+                    var sendId=$(this).attr("sid");
+                    $.ajax({
+                        url: _global.v.trackingCreateUrl,
+                        data:  {sendId:sendId,recordType:4},
+                        type: "POST",
+                        success: function(data) {
+                            window.location.reload();
+                        }
+                    })
+                })
+
+
+            }
+        }
+    }
+
+    $(function() {
+        _global.fn.init();
+    })
+</script>
 </body>
 </html>
