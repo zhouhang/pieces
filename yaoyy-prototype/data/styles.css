@@ -75,8 +75,13 @@
 .checkbox {
   text-align:left;
 }
+._流程形状 {
+}
 .sticky_1 {
   text-align:left;
+}
+.marker {
+  color:#FFFFFF;
 }
 .heading_1 {
   font-family:'Arial Negreta', 'Arial Normal', 'Arial';
@@ -149,7 +154,7 @@
   font-size:24px;
   text-align:left;
 }
-._流程形状 {
+._流程形状1 {
 }
 ._形状1 {
 }
