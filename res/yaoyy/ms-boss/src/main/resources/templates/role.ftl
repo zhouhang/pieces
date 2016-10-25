@@ -5,7 +5,7 @@
     <title>角色清单-boss-上工好药</title>
 </head>
 
-<body>
+<body class="wrapper">
     <#include "./common/header.ftl">
     <#include "./common/aside.ftl"/>
     <!-- fa-floor start -->
@@ -43,7 +43,7 @@
                             <td>${role.name}</td>
                             <td>
                                 <@shiro.hasPermission name="role:edit">
-                                    <a href="role/info/${role.id}" class="ubtn ubtn-blue jedit">配置</a>
+                                    <a href="role/power/${role.id}" class="ubtn ubtn-blue jedit">配置</a>
                                 </@shiro.hasPermission>
                             </td>
                         </tr>

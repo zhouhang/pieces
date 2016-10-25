@@ -8,7 +8,7 @@ import com.ms.dao.vo.MemberVo;
 import com.ms.service.MemberService;
 import com.ms.service.RoleMemberService;
 import com.ms.service.RoleService;
-import com.ms.service.constant.bean.Result;
+import com.ms.tools.entity.Result;
 import com.ms.tools.utils.Reflection;
 import com.ms.tools.utils.WebUtil;
 import org.apache.shiro.authz.annotation.Logical;
@@ -19,6 +19,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,7 +47,6 @@ public class MemberController extends BaseController{
      * @param response
      * @return
      */
-    @RequiresPermissions(value = "member:index")
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public String index(HttpServletRequest request,
                         HttpServletResponse response,
@@ -95,8 +95,10 @@ public class MemberController extends BaseController{
                        ModelMap model,
                        @PathVariable("id") Integer id){
         if(id!=null){
-            Member member = memberService.findById(id);
-            model.put("member",member);
+            MemberVo memberVo = new MemberVo();
+            memberVo.setId(id);
+            PageInfo<Member> memberPage = memberService.findByCondition(memberVo, 0, 10);
+            model.put("member",memberPage.getList().get(0));
         }
         return "member-info";
     }
@@ -110,7 +112,8 @@ public class MemberController extends BaseController{
      */
     @RequiresPermissions(value = {"member:add","member:edit"},logical = Logical.OR)
     @RequestMapping(value = "/save",method = RequestMethod.POST)
-    public void save(HttpServletRequest request,
+    @ResponseBody
+    public Result save(HttpServletRequest request,
                      HttpServletResponse response,
                      Member member,
                      Integer roleId){
@@ -124,7 +127,26 @@ public class MemberController extends BaseController{
             advices = "修改用户信息成功!";
         }
         bossRealm.removeAuthenticationCacheInfo();
-        WebUtil.print(response,new Result(true).info(advices));
+        return Result.success().msg(advices);
+    }
+
+    /**
+     * BOSS用户删除
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/delete/{id}")
+    @ResponseBody
+    public Result delete(HttpServletRequest request,
+                                             HttpServletResponse response,
+                                             @PathVariable("id") Integer id,
+                                             ModelMap model){
+        if(id!=null){
+            roleMemberService.deleteByMember(id);
+            memberService.deleteById(id);
+        }
+        return Result.success();
     }
 
 
@@ -157,12 +179,13 @@ public class MemberController extends BaseController{
      */
     @RequiresPermissions(value = "member:role")
     @RequestMapping(value = "/role/save")
-    public void roleSave(HttpServletRequest request,
+    @ResponseBody
+    public Result roleSave(HttpServletRequest request,
                          HttpServletResponse response,
                          Integer memberId,
                          Integer[] roleIds){
         roleMemberService.createRoleMember(roleIds,memberId);
-        WebUtil.print(response,new Result(true).info("修改角色成功!"));
+        return Result.success().msg("修改角色成功!");
     }
 
 

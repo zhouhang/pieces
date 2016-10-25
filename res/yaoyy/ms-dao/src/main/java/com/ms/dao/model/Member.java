@@ -32,6 +32,8 @@ public class Member implements Serializable {
 
 	private String roleName;
 
+	private Integer roleId;
+
 	public Member(){}
 	
 	public Integer getId() {
@@ -120,5 +122,13 @@ public class Member implements Serializable {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 }

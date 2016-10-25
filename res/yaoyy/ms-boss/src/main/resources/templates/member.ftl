@@ -5,7 +5,7 @@
     <title>角色清单-boss-上工好药</title>
 </head>
 
-<body>
+<body class="wrapper">
     <#include "./common/header.ftl">
     <#include "./common/aside.ftl"/>
     <!-- fa-floor start -->
@@ -26,6 +26,7 @@
                             <li></li>
                             <li><label>角色：</label>
                             <select name="roleId" id="roleId" class="slt">
+                                <option value="">全部</option>
                                 <#list roleList as role>
                                     <option value="${role.id}">${role.name}</option>
                                 </#list>
@@ -68,10 +69,10 @@
                             <td>${member.createDate?date}</td>
                             <td>
                                 <@shiro.hasPermission name="member:edit">
-                                    <a href="javascript:;" class="ubtn ubtn-blue jedit">编辑</a>
+                                    <a class="ubtn ubtn-blue jedit" data-id="${member.id}">编辑</a>
                                 </@shiro.hasPermission>
                                 <@shiro.hasPermission name="member:edit">
-                                    <a href="member/info/${member.id}" class="ubtn ubtn-blue jedit">删除</a>
+                                    <a href="javascript:;" class="ubtn ubtn-blue jdel" data-id="${member.id}">删除</a>
                                 </@shiro.hasPermission>
                             </td>
                         </tr>
@@ -86,6 +87,7 @@
     <!-- 管理员弹出框表单 -->
     <form id="myform" class="hide">
         <div class="fa-form fa-form-layer">
+            <input type="hidden" name="id" class="ipt">
             <div class="item">
                 <div class="txt"><i>*</i>用户名：</div>
                 <div class="cnt">
@@ -136,20 +138,20 @@
 
     <#include "./common/footer.ftl"/>
     <script src="assets/js/jquery191.js"></script>
-    <script src="assets/js/app.js"></script>
     <script src="assets/plugins/layer/layer.js"></script>
     <script src="assets/plugins/validator/jquery.validator.min.js"></script>
     <script src="assets/js/jquery.form.js"></script>
 
     <script>
     //定义根变量
-    !(function($) {
-        var page = {
+        var _global = {
             //定义全局变量区
             v: {
                 id: "page",
                 pageNum:${memberPage.pageNum},
-                pageSize:${memberPage.pageSize}
+                pageSize:${memberPage.pageSize},
+                deleteUrl: '',
+                flag: false
             },
             //定义方法区
             fn: {
@@ -229,12 +231,13 @@
                     var $adminForm = $('#myform');
 
                     var showBox = function(data) {
-                        $adminForm.find('.ipt[name="username"]').val(data.username);
-                        $adminForm.find('.slt[name="role"]').val(data.role);
-                        $adminForm.find('.ipt[name="password"]').val(data.password);
-                        $adminForm.find('.ipt[name="name"]').val(data.name);
-                        $adminForm.find('.ipt[name="mobile"]').val(data.mobile);
-                        $adminForm.find('.ipt[name="email"]').val(data.email);
+                        $adminForm.find('.ipt[name="id"]').val(data.member.id);
+                        $adminForm.find('.ipt[name="username"]').val(data.member.username);
+                        $adminForm.find('.slt[name="roleId"]').val(data.member.roleId);
+                        $adminForm.find('.ipt[name="password"]').val(data.member.password);
+                        $adminForm.find('.ipt[name="name"]').val(data.member.name);
+                        $adminForm.find('.ipt[name="mobile"]').val(data.member.mobile);
+                        $adminForm.find('.ipt[name="email"]').val(data.member.email);
                         layer.closeAll();
                         layer.open({
                             area: ['600px'],
@@ -247,9 +250,7 @@
 
                     // 加载数据
                     var k = $.ajax({
-                        url: 'json/admininfo.php',
-                        data: {id: id},
-                        dataType: 'json',
+                        url: '/member/edit/'+id,
                         success: function(data) {
                             showBox(data);
                         },
@@ -275,13 +276,12 @@
                             $cbx = $table.find('td input:checkbox'),
                             $checkAll = $table.find('th input:checkbox'),
                             count = $cbx.length;
-
                     // 删除
                     $table.on('click', '.jdel', function() {
-                        var url = _global.v.deleteUrl + $(this).attr('href');
+                        var id = $(this).data('id');
                         layer.confirm('确认删除此账户？', {icon: 3, title: '提示'}, function (index) {
-                            $.get(url, function (data) {
-                                if (data.status == "y") {
+                            $.get('/member/delete/'+id, function (data) {
+                                if (data.status == "200") {
                                     layer.close(index);
                                     window.location.reload();
                                 }
@@ -310,9 +310,8 @@
         }
         //加载页面js
         $(function() {
-            page.fn.init();
+            _global.fn.init();
         });
-    })(jQuery);
 
 
     </script>
