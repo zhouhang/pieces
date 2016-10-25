@@ -25,7 +25,6 @@
                 <div class="txt"><i>*</i>角色名称：</div>
                 <div class="cnt">
                     <input type="text" name="rolename" id="jrolename" class="ipt" placeholder="角色名称" autocomplete="off">
-                    <input type="hidden" name="catNameId">
                 </div>
             </div>
             <div class="item">
@@ -96,7 +95,7 @@
                 });
 
                 //保存
-                $("#submit").click(function(){
+                $("#jsubmit").click(function(){
                     save();
                 })
 
@@ -122,12 +121,6 @@
                                 type="success";
                                 title="操作成功";
                             }
-                            $.notify({
-                                type: type,
-                                title: title,
-                                text: result.info,
-                                delay: 3e3
-                            });
                         }
                     });
                 }
@@ -137,7 +130,7 @@
                 // 表单验证
                 $("#myform").validator({
                     fields: {
-                        rolename: '角色名称: required'
+
                     }
                 });
 

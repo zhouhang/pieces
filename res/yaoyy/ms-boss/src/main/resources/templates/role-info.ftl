@@ -17,13 +17,13 @@
         </ul>
     </div>
 
-    <form id="myform">
+    <form action="/role/save" id="roleForm" method="post">
         <div class="box fa-form">
             <div class="hd">基本信息</div>
             <div class="item">
                 <div class="txt"><i>*</i>角色名称：</div>
                 <div class="cnt">
-                    <input type="text" name="rolename" id="jrolename" class="ipt" placeholder="角色名称" autocomplete="off">
+                    <input type="text" name="name" id="jname" class="ipt" placeholder="角色名称" autocomplete="off">
                     <input type="hidden" name="catNameId">
                 </div>
             </div>
@@ -48,34 +48,34 @@
         },
         fn: {
             init: function() {
-                this.power();
-                this.myform();
+                this.formValidate();
+
+
+                $("#submit").click(function(){
+                    _global.fn.save();
+                })
+
+
             },
-            power: function() {
-                var setting = {
-                    check: {
-                        enable: true,
-                        chkboxType: {
-                            'Y' : 'ps',
-                            'N' : 's'
-                        }
-                    },
-                    data: {
-                        simpleData: {
-                            enable: true
-                        }
-                    }
-                };
-            },
-            // 表单
-            myform: function() {
-                // 表单验证
-                $("#myform").validator({
+            formValidate: function() {
+                $("#roleForm").validator({
                     fields: {
-                        rolename: '角色名称: required'
+                        name: "required"
                     }
                 });
+            },
+            save:function(){
+                $("#roleForm").ajaxSubmit({
+                    success:function(result){
+                        var type = "error";
+                        var title = "操作失败";
+                        if(result.status=="y"){
+                            type="success";
+                            title="操作成功";
+                        }
 
+                    }
+                })
             }
         }
     }

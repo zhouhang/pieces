@@ -194,7 +194,7 @@ public class RoleController extends BaseController{
      */
     @RequiresPermissions(value = {"role:add","role:edit"} ,logical = Logical.OR)
     @RequestMapping(value = "/save")
-    public void save(HttpServletRequest request,
+    public String save(HttpServletRequest request,
                      HttpServletResponse response,
                      Role role){
         String message = null;
@@ -205,7 +205,7 @@ public class RoleController extends BaseController{
             message="角色修改成功!";
             roleService.update(role);
         }
-        WebUtil.print(response,new Result(true).data(role).info(message));
+        return "redirect:/role/index";
     }
 
 
