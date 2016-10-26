@@ -74,6 +74,8 @@
                 <doc.base.url>http://127.0.0.1:8188/</doc.base.url>
                 <pro.upload.path>/var/tomcat/apache-tomcat-8.5.4/webapps/files/upload/</pro.upload.path>
                 <pro.upload.url>http://127.0.0.1:8188/files/upload/</pro.upload.url>
+                <elasticsearch.host>192.168.1.41</elasticsearch.host>
+                <elasticsearch.port>9300</elasticsearch.port>
             </properties>
         </profile>
         <profile>
@@ -85,6 +87,8 @@
                 <doc.base.url>http://127.0.0.1:8188/</doc.base.url>
                 <pro.upload.path>/Software/JAVAEE/apache-tomcat-8.0.23/webapps/ms-files/</pro.upload.path>
                 <pro.upload.url>http://127.0.0.1:8188/ms-files/</pro.upload.url>
+                <elasticsearch.host>192.168.1.41</elasticsearch.host>
+                <elasticsearch.port>9300</elasticsearch.port>
             </properties>
         </profile>
         <profile>
@@ -96,6 +100,8 @@
                 <doc.base.url>http://127.0.0.1:8188/</doc.base.url>
                 <pro.upload.path>E:\Program Files\Apache Software Foundation\Tomcat 8.5\webapps\ms-files</pro.upload.path>
                 <pro.upload.url>http://127.0.0.1:8188/ms-files/</pro.upload.url>
+                <elasticsearch.host>127.0.0.1</elasticsearch.host>
+                <elasticsearch.port>9300</elasticsearch.port>
             </properties>
         </profile>
         <profile>
@@ -107,6 +113,8 @@
                 <doc.base.url>http://127.0.0.1:8188/</doc.base.url>
                 <pro.upload.path>E:/development/apache-tomcat-8.0.361/webapps/ms-files/</pro.upload.path>
                 <pro.upload.url>http://127.0.0.1:8188/ms-files/</pro.upload.url>
+                <elasticsearch.host>192.168.1.41</elasticsearch.host>
+                <elasticsearch.port>9300</elasticsearch.port>
             </properties>
         </profile>
     </profiles>
