@@ -21,4 +21,8 @@ public interface CommodityService extends ICommonService<Commodity>{
 
     public List<Commodity> findByName(String name);
 
+    public PageInfo<CommodityVo> findVoByPage(int pageSize,int pageNum);
+
+
+
 }

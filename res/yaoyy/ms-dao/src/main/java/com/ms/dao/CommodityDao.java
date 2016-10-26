@@ -18,4 +18,6 @@ public interface CommodityDao extends ICommonDao<Commodity>{
 
     public  List<Commodity> findByName(String name);
 
+    public List<CommodityVo> findVoByPage();
+
 }
