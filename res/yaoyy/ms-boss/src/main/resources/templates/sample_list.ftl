@@ -61,32 +61,32 @@
         <div class="table">
             <table>
                 <thead>
-                <tr>
-                    <th>寄样编号</th>
-                    <th>联系人</th>
-                    <th>手机号</th>
-                    <th>地区</th>
-                    <th>意向商品</th>
-                    <th width="120">创建时间</th>
-                    <th>状态</th>
-                    <th width="170" class="tc">操作</th>
-                </tr>
+                    <tr>
+                        <th>寄样编号</th>
+                        <th>联系人</th>
+                        <th>手机号</th>
+                        <th>地区</th>
+                        <th>意向商品</th>
+                        <th width="120">创建时间</th>
+                        <th>状态</th>
+                        <th width="170" class="tc">操作</th>
+                    </tr>
                 </thead>
                 <tbody>
                 <#list sendSampleVoPageInfo.list as sendSample>
-                <tr>
-                    <td>${sendSample.code}</td>
-                    <td>${sendSample.nickname}</td>
-                    <td>${sendSample.phone}</td>
-                    <td>${sendSample.area}</td>
-                    <td>${sendSample.intentionText}</td>
-                    <td>${sendSample.createTime?string("yyyy-MM-dd HH:mm")}</td>
-                    <td><em class="status-${sendSample.status+1}">${sendSample.statusText}</em></td>
-                    <td class="tc">
-                        <a href="/sample/detail/${sendSample.id?c}" class="ubtn ubtn-blue jedit">查看详情</a>
-                        <a href="javascript:;" class="ubtn ubtn-gray jdel" sendId="${sendSample.id?c}">废弃</a>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>${sendSample.code}</td>
+                        <td>${sendSample.nickname}</td>
+                        <td>${sendSample.phone}</td>
+                        <td>${sendSample.area}</td>
+                        <td>${sendSample.intentionText}</td>
+                        <td>${sendSample.createTime?string("yyyy-MM-dd HH:mm")}</td>
+                        <td><em class="status-${sendSample.status+1}">${sendSample.statusText}</em></td>
+                        <td class="tc">
+                            <a href="/sample/detail/${sendSample.id?c}" class="ubtn ubtn-blue jedit">查看详情</a>
+                            <a href="javascript:;" class="ubtn ubtn-gray jdel" sendId="${sendSample.id?c}">废弃</a>
+                        </td>
+                    </tr>
                 </#list>
                 </tbody>
             </table>
@@ -98,10 +98,8 @@
 </div>
 
 <#include "./common/footer.ftl"/>
-<script src="assets/js/jquery191.js"></script>
 <script src="assets/js/croppic.min.js"></script>
-<script src="assets/plugins/layer/layer.js"></script>
-<script src="assets/plugins/validator/jquery.validator.js?local=zh-CN"></script>
+<script src="assets/plugins/validator/jquery.validator.js"></script>
 <script>
     var _global = {
         v: {

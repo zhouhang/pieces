@@ -76,8 +76,7 @@
 
     <#include "./common/footer.ftl"/>
 
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/jquery.ztree.min.js"></script>
+   <script src="assets/plugins/zTreeStyle/jquery.ztree.min.js"></script>
 
     <script>
         var setting = {

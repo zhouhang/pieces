@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./common/meta.ftl"/>
-    <title>角色清单-boss-上工好药</title>
+    <title>管理员列表-boss-上工好药</title>
 </head>
 
 <body class="wrapper">
@@ -22,15 +22,19 @@
                 <div class="filter">
                     <form id="searchForm" action="">
                         <ul>
-                            <li><label>姓名：</label><input type="text" name="name" class="ipt" placeholder="请输入"></li>
+                            <li>
+                                <label>姓名：</label>
+                                <input type="text" name="name" class="ipt" placeholder="请输入">
+                            </li>
                             <li></li>
-                            <li><label>角色：</label>
-                            <select name="roleId" id="roleId" class="slt">
-                                <option value="">全部</option>
-                                <#list roleList as role>
-                                    <option value="${role.id}">${role.name}</option>
-                                </#list>
-                            </select>
+                            <li>
+                                <label>角色：</label>
+                                <select name="roleId" id="roleId" class="slt">
+                                    <option value="">全部</option>
+                                    <#list roleList as role>
+                                        <option value="${role.id}">${role.name}</option>
+                                    </#list>
+                                </select>
                             </li>
                             <li>
                                 <button id="search" class="ubtn ubtn-blue">搜索</button>
@@ -51,7 +55,7 @@
                     <tr>
                         <th><input type="checkbox"></th>
                         <th>姓名</th>
-                        <th>用户</th>
+                        <th>用户名</th>
                         <th>电话</th>
                         <th>角色</th>
                         <th width="150">创建时间</th>
@@ -67,12 +71,12 @@
                             <td>${member.mobile!""}</td>
                             <td>${member.roleName!""}</td>
                             <td>${member.createDate?date}</td>
-                            <td>
+                            <td class="tc">
                                 <@shiro.hasPermission name="member:edit">
                                     <a class="ubtn ubtn-blue jedit" data-id="${member.id}">编辑</a>
                                 </@shiro.hasPermission>
                                 <@shiro.hasPermission name="member:edit">
-                                    <a href="javascript:;" class="ubtn ubtn-blue jdel" data-id="${member.id}">删除</a>
+                                    <a href="javascript:;" class="ubtn ubtn-gray jdel" data-id="${member.id}">删除</a>
                                 </@shiro.hasPermission>
                             </td>
                         </tr>
@@ -137,8 +141,6 @@
     </form>
 
     <#include "./common/footer.ftl"/>
-    <script src="assets/js/jquery191.js"></script>
-    <script src="assets/plugins/layer/layer.js"></script>
     <script src="assets/plugins/validator/jquery.validator.min.js"></script>
     <script src="assets/js/jquery.form.js"></script>
 

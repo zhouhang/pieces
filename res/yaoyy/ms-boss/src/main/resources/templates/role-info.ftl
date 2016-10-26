@@ -38,8 +38,6 @@
 <#include "./common/footer.ftl"/>
 
 
-<script src="assets/js/jquery191.js"></script>
-<script src="assets/plugins/layer/layer.js"></script>
 <script src="assets/plugins/validator/jquery.validator.min.js"></script>
 <script src="assets/plugins/zTreeStyle/jquery.ztree.min.js"></script>
 <script>

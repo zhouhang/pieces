@@ -1,9 +1,13 @@
-package com.ms.boss.shiro;
+package com.ms.boss.config;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.ms.boss.shiro.BossAuthorizationFilter;
+import com.ms.boss.shiro.BossRealm;
+import com.ms.boss.shiro.RetryLimitHashedCredentialsMatcher;
+import com.ms.boss.shiro.ShiroTagFreeMarkerConfigurer;
 import com.ms.service.redis.RedisManager;
 import com.ms.service.shiro.ShiroRedisCacheManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -14,9 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import com.ms.service.shiro.MsShiroFilterFactoryBean;
 import org.springframework.web.filter.DelegatingFilterProxy;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ShardedJedisPool;
@@ -151,7 +157,7 @@ public class ShiroConfiguration {
         ShiroTagFreeMarkerConfigurer shiroTagFreeMarkerConfigurer = new ShiroTagFreeMarkerConfigurer();
         shiroTagFreeMarkerConfigurer.setTemplateLoaderPath("classpath:/templates/");
         Map<String , Object> variables = new HashMap<>();
-        variables.put("baseUrl", baseUrl);
+        variables.put("baseUrl", "http://127.0.0.1:8189/");
         shiroTagFreeMarkerConfigurer.setFreemarkerVariables(variables);
         return shiroTagFreeMarkerConfigurer;
     }
