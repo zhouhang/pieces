@@ -85,7 +85,7 @@
 
     $(function(){
         _global.fn.init();
-
+        <#if error?exists>popover('${error}');</#if>
     });
 
 </script>

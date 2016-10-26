@@ -25,7 +25,6 @@
             <div class="item">
                 <input type="text" class="ipt" name="code" id="SMSCode" placeholder="验证码" autocomplete="off">
                 <span class="error"></span>
-                <#if error?exists><span>${error}</span></#if>
             </div>
             <div class="item">
                 <button type="submit" class="ubtn ubtn-primary" id="submit">登录</button>
@@ -133,7 +132,7 @@
 
     $(function(){
         _global.fn.init();
-
+        <#if error?exists>popover('${error}');</#if>
     });
 
 </script>

@@ -29,7 +29,6 @@
             <div class="item">
                 <input type="password" class="ipt" name="password" id="password" placeholder="密码" autocomplete="off">
                 <span class="error"></span>
-                <#if error?exists><span>${error}</span></#if>
             </div>
             <div class="item">
                 <button type="submit" class="ubtn ubtn-primary" id="submit">立即注册</button>
@@ -134,9 +133,9 @@
                             if (data.status === 200) {
                                 $send.text(second + txt).prop('disabled', true);
                                 lock();
-                                popover(data.info);
+                                popover(data.msg);
                             } else {
-                                popover(data.info);
+                                popover(data.msg);
                             }
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -156,7 +155,7 @@
 
     $(function(){
         _global.fn.init();
-
+        <#if error?exists>popover('${error}');</#if>
     });
 
 </script>
