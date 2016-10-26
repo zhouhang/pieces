@@ -1,4 +1,4 @@
-package com.ms.service.enums;
+package com.ms.dao.enums;
 
 /**
  * Created by xiao on 2016/10/19.

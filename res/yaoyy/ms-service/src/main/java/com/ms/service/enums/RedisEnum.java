@@ -6,8 +6,9 @@ public enum RedisEnum {
 	KEY_PREFIX_SHIRO_REDIS_CACHE("shiro_cache:"),
 	MEMBER_SESSION_BOSS("member_session_boss"),
 	USER_SESSION_BIZ("user_session_biz"),
-	SITE_TAG_PINYIN_CATEGORY("site_tag_pinyin_category"),
-	KEY_MOBILE_CAPTCHA("mobile_captcha"),
+
+	KEY_MOBILE_CAPTCHA_REGISTER("mobile_captcha_register"),
+	KEY_MOBILE_CAPTCHA_LOGIN("mobile_captcha_login"),
 	KEY_MOBILE_CAPTCHA_INTERVAL("mobile_captcha_interval"),
 	KEY_MOBILE_TIMER("mobile_timer");
 

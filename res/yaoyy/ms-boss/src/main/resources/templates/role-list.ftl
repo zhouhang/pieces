@@ -1,147 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>角色用户-boss-上工好药</title>
-    <#include "./common/meta.ftl"/>
-    <link type="text/css" rel="stylesheet" href="assets/role/style.css" />
+    <title>角色详情-boss</title>
+<#include "./common/meta.ftl"/>
 </head>
+<body class='wrapper'>
 
-<body>
-    <#include "./common/header.ftl">
-    <#include "./common/aside.ftl"/>
+<#include "./common/header.ftl"/>
+<#include "./common/aside.ftl"/>
 
-    <!-- fa-floor start -->
-    <div class="fa-floor">
-        <div class="wrap">
-            <div  style="display: none" id="success_advices" class="message">
-                <i class="fa fa-check-circle"></i>
-                <span>编辑成功！</span>
-            </div>
-            <div class="side">
-                <dl>
-                    <dt>角色信息</dt>
-                    <dd>
-                        <a href="role/info/${role.id}">角色信息</a>
-                        <a href="role/power/${role.id}">角色权限</a>
-                        <a class="curr" href="role/list/${role.id}">角色用户</a>
-                    </dd>
-                </dl>
-            </div>
-            <div class="main">
-                <div class="title title-btm">
-                    <h3><i class="fa fa-people"></i>修改角色 “${role.name}”</h3>
-                    <div class="extra">
-                        <a  class="btn btn-gray" href="role/index">返回</a>
-                    </div>
-                </div>
-
-                <div class="pagin">
-                    <div class="extra">
-                        <button class="btn btn-gray" type="button" id="reset">重置条件</button>
-                        <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
-                    </div>
-
-                </div>
-
-                <div class="chart">
-                    <table class="tc">
-                        <thead>
-                            <tr>
-                                <th width="100">编号</th>
-                                <th>用户名</th>
-                                <th>姓名</th>
-                                <th>邮箱</th>
-                                <th width="100">状态</th>
-                            </tr>
-                            <tr>
-                                <td><div class="ipt-wrap"><input name="id" type="text" class="ipt" value="${memberVo.id!}"></div></td>
-                                <td><div class="ipt-wrap"><input name="username" type="text" class="ipt" value="${memberVo.username!}"></div></td>
-                                <td><div class="ipt-wrap"><input name="name" type="text" class="ipt" value="${memberVo.name!}"></div></td>
-                                <td><div class="ipt-wrap"><input name="email" type="text" class="ipt" value="${memberVo.email!}"></div></td>
-                                <td>
-                                    <select name="isDel" >
-                                        <option <#if (!memberVo.isDel??)>selected</#if> value=""> </option>
-                                        <option <#if (memberVo.isDel??&&!memberVo.isDel)>selected</#if> value="false">激活</option>
-                                        <option <#if (memberVo.isDel??&&memberVo.isDel)>selected</#if> value="true">禁用</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        </thead>
-                        <tfoot></tfoot>
-                        <tbody>
-                        <#list roleMemberPage.list as roleMember>
-                            <tr>
-                                <td>${roleMember.member.id}</td>
-                                <td>${roleMember.member.username}</td>
-                                <td>${roleMember.member.name}</td>
-                                <td>${roleMember.member.email}</td>
-                                <td>
-                                    <#if (roleMember.member.isDel)>禁用
-                                    <#else>激活</#if>
-                                </td>
-                            </tr>
-                        </#list>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-        </div><!-- fa-floor end -->
+<div class="content">
+    <div class="breadcrumb">
+        <ul>
+            <li>账号权限</li>
+            <li>角色详情</li>
+        </ul>
     </div>
 
+    <form id="myform">
+        <div class="box fa-form">
+            <div class="hd">基本信息</div>
+            <div class="item">
+                <input type="hidden" name="roleId" id="roleId" value="${role.id}">
+                <div class="txt"><i>*</i>角色名称：</div>
+                <div class="cnt">
+                    <input type="text" name="rolename" id="jrolename" class="ipt" placeholder="角色名称" autocomplete="off">
+                </div>
+            </div>
+            <div class="item">
+                <div class="txt">资源：</div>
+                <div class="cnt">
+                    <ul id="powerTree" class="ztree"></ul>
+                </div>
+            </div>
+            <div class="ft">
+                <button type="submit" class="ubtn ubtn-blue" id="jsubmit">保存</button>
+            </div>
+        </div>
 
-    <#include "./common/footer.ftl"/>
+    </form>
+</div>
+
+<#include "./common/footer.ftl"/>
 
 
-</body>
+<script src="assets/plugins/layer/layer.js"></script>
+<script src="assets/plugins/validator/jquery.validator.min.js"></script>
+<script src="assets/plugins/zTreeStyle/jquery.ztree.min.js"></script>
 <script>
-
-    //定义根变量
-    !(function($) {
-        var page = {
-            //定义全局变量区
-            v: {
-                id: "page",
-                pageNum:${roleMemberPage.pageNum},
-                pageSize:${roleMemberPage.pageSize}
+    var _global = {
+        v: {
+        },
+        fn: {
+            init: function() {
+                this.power();
+                this.myform();
             },
-            //定义方法区
-            fn: {
-                //初始化方法区
-                init: function () {
-                    page.fn.filter();
+            power: function() {
+                var setting = {
+                    check: {
+                        enable: true,
+                        chkboxType: {
+                            'Y' : 'ps',
+                            'N' : 's'
+                        }
+                    },
+                    data: {
+                        simpleData: {
+                            enable: true
+                        }
+                    }
+                };
 
+                var rootTree = null;
+                //加载所有资源
+                $.ajax({
+                    url: "/role/resources",
+                    type: "POST",
+                    data:{roleId:$("#roleId").val(),name:$("#jrolename").val()},
+                    async:false,
+                    success: function(result){
+                        rootTree =  $.fn.zTree.init($("#powerTree"), setting, result);
+                    }
+                });
 
-
-                    $("#reset").click(function(){
-                        $('.chart .ipt, .chart select').val("")
-                    })
-
-                },
-                // 筛选
-                filter: function() {
-                    var $ipts = $('.chart .ipt, .chart select');
-                    var url="/role/list/${role.id}?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
-
-                    $('#search_btn').on('click', function() {
-                        var params = [];
-                        $ipts.each(function() {
-                            var val = $.trim(this.value);
-                            val && params.push($(this).attr('name') + '=' + val);
-                        })
-                        location.href=url+"&"+params.join('&');
-                    })
+                if(rootTree.getCheckedNodes(false).length==0){
+                    $("#allCheck").attr("checked","checked");
                 }
 
 
+                //全选
+                $("#allCheck").click(function() {
+                    rootTree.checkAllNodes(this.checked)
+                });
+
+                //保存
+                $("#jsubmit").click(function(){
+                    save();
+                })
+
+
+                function save(){
+                    var arrIds = [];
+                    //获取所有选中的节点
+                    var checkNodes = rootTree.getCheckedNodes(true);
+                    $.each(checkNodes,function(index){
+                        arrIds.push(this.id)
+                    })
+
+                    var roleId = $("#roleId").val();
+
+                    $.ajax({
+                        url: "/role/resources/save",
+                        type: "POST",
+                        data:{roleId:roleId,resourcesIds:arrIds},
+                        success: function(result){
+                            var type = "error";
+                            var title = "操作失败";
+                            if(result.status=="y"){
+                                type="success";
+                                title="操作成功";
+                            }
+                        }
+                    });
+                }
+            },
+            // 表单
+            myform: function() {
+                // 表单验证
+                $("#myform").validator({
+                    fields: {
+
+                    }
+                });
+
             }
         }
-        //加载页面js
-        $(function() {
-            page.fn.init();
-        });
-    })(jQuery);
+    }
 
-
+    $(function() {
+        _global.fn.init();
+    })
 </script>
+</body>
 </html>

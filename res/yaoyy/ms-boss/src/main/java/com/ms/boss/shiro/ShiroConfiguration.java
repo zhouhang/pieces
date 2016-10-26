@@ -10,6 +10,8 @@ import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +22,14 @@ import redis.clients.jedis.JedisShardInfo;
 import redis.clients.jedis.ShardedJedisPool;
 
 import javax.servlet.Filter;
+import javax.validation.Valid;
 
 
 @Configuration
 public class ShiroConfiguration {
+
+    @Value("${doc.base.url}")
+    private String baseUrl;
 
     private static Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 
@@ -104,7 +110,7 @@ public class ShiroConfiguration {
 
     @Bean(name = "jedis.shardInfo")
     public JedisShardInfo getJedisShardInfo() {
-        JedisShardInfo jedisShardInfo = new JedisShardInfo("192.168.1.41",6397,"master");
+        JedisShardInfo jedisShardInfo = new JedisShardInfo("192.168.1.41",6379,"master");
         return jedisShardInfo;
     }
 
@@ -144,6 +150,9 @@ public class ShiroConfiguration {
     public ShiroTagFreeMarkerConfigurer getShiroTagFreeMarkerConfigurer() {
         ShiroTagFreeMarkerConfigurer shiroTagFreeMarkerConfigurer = new ShiroTagFreeMarkerConfigurer();
         shiroTagFreeMarkerConfigurer.setTemplateLoaderPath("classpath:/templates/");
+        Map<String , Object> variables = new HashMap<>();
+        variables.put("baseUrl", baseUrl);
+        shiroTagFreeMarkerConfigurer.setFreemarkerVariables(variables);
         return shiroTagFreeMarkerConfigurer;
     }
 

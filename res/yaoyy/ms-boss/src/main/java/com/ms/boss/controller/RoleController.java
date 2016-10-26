@@ -130,7 +130,7 @@ public class RoleController extends BaseController{
             Role role =  roleService.findById(id);
             model.put("role",role);
         }
-        return "role-power";
+        return "role-list";
     }
 
 
@@ -142,7 +142,8 @@ public class RoleController extends BaseController{
     @RequestMapping(value = "/resources")
     public void resources(HttpServletRequest request,
                           HttpServletResponse response,
-                          Integer roleId){
+                          Integer roleId,
+                            String rolename){
         List<Resources> resourcesList = resourcesService.findAll();
 
         List<Map<String,Object>> resultList = new ArrayList<>();
@@ -159,7 +160,10 @@ public class RoleController extends BaseController{
                 map.put("checked",true);
             }
 
-            resultList.add(map);
+            if(rolename == null || (rolename != null&&resources.getName().contains(rolename))){
+                resultList.add(map);
+            }
+
         }
         WebUtil.printJson(response,resultList);
     }
@@ -190,7 +194,7 @@ public class RoleController extends BaseController{
      */
     @RequiresPermissions(value = {"role:add","role:edit"} ,logical = Logical.OR)
     @RequestMapping(value = "/save")
-    public void save(HttpServletRequest request,
+    public String save(HttpServletRequest request,
                      HttpServletResponse response,
                      Role role){
         String message = null;
@@ -201,7 +205,7 @@ public class RoleController extends BaseController{
             message="角色修改成功!";
             roleService.update(role);
         }
-        WebUtil.print(response,new Result(true).data(role).info(message));
+        return "redirect:/role/index";
     }
 
 

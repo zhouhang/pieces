@@ -10,7 +10,7 @@
     </parent>
     <groupId>yaoyy</groupId>
     <artifactId>ms-biz</artifactId>
-    <version>${yaoyy-version}</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>war</packaging>
     <dependencies>
         <dependency>
@@ -43,8 +43,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
-
-
         <!--Apache Shiro所需的jar包 -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
@@ -73,9 +71,9 @@
                 <spring.dataSource.url>jdbc:mysql://192.168.1.41:3306/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
                 <spring.dataSource.username>yaoyy</spring.dataSource.username>
                 <spring.dataSource.password>123456</spring.dataSource.password>
-                <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
+                <doc.base.url>http://127.0.0.1:8188/</doc.base.url>
                 <pro.upload.path>/var/tomcat/apache-tomcat-8.5.4/webapps/files/upload/</pro.upload.path>
-                <pro.upload.url>http://127.0.0.1:8080/files/upload/</pro.upload.url>
+                <pro.upload.url>http://127.0.0.1:8188/files/upload/</pro.upload.url>
             </properties>
         </profile>
         <profile>
@@ -84,9 +82,9 @@
                 <spring.dataSource.url>jdbc:mysql://127.0.0.1:3307/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
                 <spring.dataSource.username>root</spring.dataSource.username>
                 <spring.dataSource.password>root</spring.dataSource.password>
-                <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
+                <doc.base.url>http://127.0.0.1:8188/</doc.base.url>
                 <pro.upload.path>/Software/JAVAEE/apache-tomcat-8.0.23/webapps/ms-files/</pro.upload.path>
-                <pro.upload.url>http://127.0.0.1:8080/ms-files/</pro.upload.url>
+                <pro.upload.url>http://127.0.0.1:8188/ms-files/</pro.upload.url>
             </properties>
         </profile>
         <profile>
@@ -95,11 +93,9 @@
                 <spring.dataSource.url>jdbc:mysql://127.0.0.1:3306/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
                 <spring.dataSource.username>root</spring.dataSource.username>
                 <spring.dataSource.password>ycg20160401</spring.dataSource.password>
-                <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
+                <doc.base.url>http://127.0.0.1:8188/</doc.base.url>
                 <pro.upload.path>E:\Program Files\Apache Software Foundation\Tomcat 8.5\webapps\ms-files</pro.upload.path>
-                <pro.upload.url>http://127.0.0.1:8080/ms-files/</pro.upload.url>
-                <elasticsearch.host>127.0.0.1</elasticsearch.host>
-                <elasticsearch.port>9300</elasticsearch.port>
+                <pro.upload.url>http://127.0.0.1:8188/ms-files/</pro.upload.url>
             </properties>
         </profile>
         <profile>
@@ -108,9 +104,9 @@
                 <spring.dataSource.url>jdbc:mysql://127.0.0.1:3306/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
                 <spring.dataSource.username>root</spring.dataSource.username>
                 <spring.dataSource.password>123456</spring.dataSource.password>
-                <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
+                <doc.base.url>http://127.0.0.1:8188/</doc.base.url>
                 <pro.upload.path>E:/development/apache-tomcat-8.0.361/webapps/ms-files/</pro.upload.path>
-                <pro.upload.url>http://127.0.0.1:8080/ms-files/</pro.upload.url>
+                <pro.upload.url>http://127.0.0.1:8188/ms-files/</pro.upload.url>
             </properties>
         </profile>
     </profiles>
@@ -122,7 +118,7 @@
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <excludes>
-                    <exclude>static/assets/awesome/fonts/**</exclude>
+                    <exclude>static/assets/fonts/**</exclude>
                 </excludes>
             </resource>
 
@@ -130,7 +126,7 @@
                 <directory>src/main/resources</directory>
                 <filtering>false</filtering>
                 <includes>
-                    <include>static/assets/awesome/fonts/**</include>
+                    <include>static/assets/fonts/**</include>
                 </includes>
             </resource>
         </resources>

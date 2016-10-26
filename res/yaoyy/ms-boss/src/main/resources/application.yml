@@ -1,8 +1,4 @@
 spring:
-    mvc:
-        view:
-            prefix: /WEB-INF/jsp/
-            suffix: .jsp
     dataSource:
         url: @spring.dataSource.url@
         username: @spring.dataSource.username@
@@ -16,7 +12,9 @@ spring:
 #mybatis:
 #  mapperLocations: classpath:mapper/*.xml
 #  typeAliasesPackage: com.ms.dao.model
-
+doc:
+    base:
+        url: @doc.base.url@
 upload:
     path: @pro.upload.path@
     url: @pro.upload.url@
@@ -29,3 +27,5 @@ server:
     error:
         whitelabel:
             enabled: false
+sms:
+  apikey: 49a8a3011d2eb2734a5e88938bea8c1e
