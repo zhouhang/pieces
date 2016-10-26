@@ -71,12 +71,16 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(String phone, String password) {
-
-        // 登陆验证
-        Subject subject = SecurityUtils.getSubject();
-        BizToken token = new BizToken(phone, password, false, null, "");
-        userService.login(subject, token);
+    public String login(String phone, String password, ModelMap model) {
+        try {
+            // 登陆验证
+            Subject subject = SecurityUtils.getSubject();
+            BizToken token = new BizToken(phone, password, false, null, "");
+            userService.login(subject, token);
+        } catch (Exception e) {
+            model.put("error", e.getMessage());
+            return "login";
+        }
 
         return "redirect:/index";
     }
@@ -109,8 +113,6 @@ public class UserController {
             model.put("error",e.getMessage());
             return "register";
         }
-
-
         return "redirect:/index";
     }
 
@@ -140,14 +142,14 @@ public class UserController {
     @ResponseBody
     public Result sendRegistSms(String phone) {
         userService.sendRegistSms(phone);
-        return Result.success();
+        return Result.success("验证码发送成功");
     }
 
     @RequestMapping(value = "sendLoginSms", method = RequestMethod.POST)
     @ResponseBody
     public Result sendLoginSms(String phone) {
         userService.sendLoginSms(phone);
-        return Result.success();
+        return Result.success("验证码发送成功");
     }
 
 }
