@@ -1,5 +1,6 @@
 package com.ms.dao;
 
+import com.ms.dao.config.AutoMapper;
 import com.ms.dao.model.Special;
 import com.ms.dao.vo.SpecialVo;
 

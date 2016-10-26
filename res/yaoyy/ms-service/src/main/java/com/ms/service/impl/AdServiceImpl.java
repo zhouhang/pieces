@@ -6,7 +6,6 @@ import com.ms.dao.ICommonDao;
 import com.ms.dao.AdDao;
 import com.ms.dao.model.Ad;
 import com.ms.dao.vo.AdVo;
-import com.ms.service.AbsCommonService;
 import com.ms.service.AdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
