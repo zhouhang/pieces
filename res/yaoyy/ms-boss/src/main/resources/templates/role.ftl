@@ -6,58 +6,61 @@
 </head>
 
 <body class="wrapper">
-    <#include "./common/header.ftl">
-    <#include "./common/aside.ftl"/>
-    <!-- fa-floor start -->
-    <div class="content">
-        <div class="breadcrumb">
-            <ul>
-                <li>系统管理</li>
-                <li>权限列表</li>
-            </ul>
+
+<#include "./common/header.ftl">
+<#include "./common/aside.ftl"/>
+
+<div class="content">
+    <div class="breadcrumb">
+        <ul>
+            <li>账号权限</li>
+            <li>角色列表</li>
+        </ul>
+    </div>
+
+    <div class="box">
+        <div class="tools">
+            <@shiro.hasPermission name="role:add">
+            <div class="action-add">
+                <a href="/role/add" class="ubtn ubtn-blue">新建角色</a>
+            </div>
+            </@shiro.hasPermission>
         </div>
 
-        <div class="box">
-            <div class="tools">
-
-                <@shiro.hasPermission name="role:add">
-                <div class="action-add">
-                    <button class="ubtn ubtn-blue" id="role_add">增加新角色</button>
-                </div>
-                </@shiro.hasPermission>
-            </div>
-
-            <div class="table">
-                <table>
-                    <thead>
+        <div class="table">
+            <table>
+                <thead>
                     <tr>
                         <th>编号</th>
                         <th>角色名称</th>
+                        <th>创建时间</th>
+                        <th>修改时间</th>
                         <th>操作</th>
                     </tr>
-                    </thead>
-                    <tbody>
-                    <#list rolePage.list as role>
-                        <tr>
-                            <td>${role.id}</td>
-                            <td>${role.name}</td>
-                            <td>
-                                <@shiro.hasPermission name="role:edit">
-                                    <a href="role/power/${role.id}" class="ubtn ubtn-blue jedit">配置</a>
-                                </@shiro.hasPermission>
-                            </td>
-                        </tr>
-                    </#list>
-                    </tbody>
-                </table>
-            </div>
+                </thead>
+                <tbody>
+                <#list rolePage.list as role>
+                    <tr>
+                        <td>${role.id}</td>
+                        <td>${role.name}</td>
+                        <td>${role.name}</td>
+                        <td>${role.name}</td>
+                        <td>
+                            <@shiro.hasPermission name="role:edit">
+                                <a href="role/power/${role.id}" class="ubtn ubtn-blue jedit">配置</a>
+                            </@shiro.hasPermission>
+                        </td>
+                    </tr>
+                </#list>
+                </tbody>
+            </table>
+        </div>
         <#import "./module/pager.ftl" as pager />
         <@pager.pager info=rolePage url="role/index" params=roleParams />
     </div>
 </div>
 
     <#include "./common/footer.ftl"/>
-    <script src="assets/plugins/layer/layer.js"></script>
 
     <script>
     //定义根变量
@@ -76,15 +79,6 @@
                     page.fn.filter();
                     $("#search_btn").click(function(){
                         page.fn.filter();
-                    })
-
-
-                    $("#reset").click(function(){
-                        $('.chart .ipt, .chart select').val("")
-                    })
-
-                    $("#role_add").click(function () {
-                        location.href="/role/add"
                     })
                 },
                 // 筛选

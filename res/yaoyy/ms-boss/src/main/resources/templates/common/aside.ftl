@@ -3,6 +3,32 @@
     <dl>
         <dt>
             <a href="javascript:;">
+                <i class="fa fa-star"></i>
+                <span>专场广告</span>
+                <i class="fa fa-angle-down arrow"></i>
+            </a>
+        </dt>
+        <dd>
+            <a href="subject_list.html"><i class="fa fa-circle-o"></i>专场列表</a>
+            <a href="subject_edit.html"><i class="fa fa-circle-o"></i>专场详情</a>
+            <a href="adv_list.html"><i class="fa fa-circle-o"></i>广告列表</a>
+        </dd>
+    </dl>
+    <dl>
+        <dt>
+            <a href="javascript:;">
+                <i class="fa fa-user"></i>
+                <span>用户管理</span>
+                <i class="fa fa-angle-down arrow"></i>
+            </a>
+        </dt>
+        <dd>
+            <a href="/user/list"><i class="fa fa-circle-o"></i>用户列表</a>
+        </dd>
+    </dl>
+    <dl>
+        <dt>
+            <a href="javascript:;">
                 <i class="fa fa-truck"></i>
                 <span>寄样服务</span>
                 <i class="fa fa-angle-down arrow"></i>
@@ -28,32 +54,8 @@
     <dl>
         <dt>
             <a href="javascript:;">
-                <i class="fa fa-cart-plus"></i>
-                <span>用户管理</span>
-                <i class="fa fa-angle-down arrow"></i>
-            </a>
-        </dt>
-        <dd>
-            <a href="/user/list"><i class="fa fa-circle-o"></i>用户列表</a>
-        </dd>
-    </dl>
-    <dl>
-        <dt>
-            <a href="javascript:;">
-                <i class="fa fa-cart-plus"></i>
-                <span>系统管理</span>
-                <i class="fa fa-angle-down arrow"></i>
-            </a>
-        </dt>
-        <dd>
-            <a href="/category/list"><i class="fa fa-circle-o"></i>用户列表</a>
-        </dd>
-    </dl>
-    <dl>
-        <dt>
-            <a href="javascript:;">
-                <i class="fa fa-cart-plus"></i>
-                <span>账号权限</span>
+                <i class="fa fa-list"></i>
+                <span>后台管理员</span>
                 <i class="fa fa-angle-down arrow"></i>
             </a>
         </dt>

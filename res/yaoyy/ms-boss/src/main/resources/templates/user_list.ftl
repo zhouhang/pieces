@@ -84,7 +84,6 @@
     </div>
 </div>
 <#include "./common/footer.ftl"/>
-<script src="assets/plugins/layer/layer.js"></script>
 <script>
     var _global = {
         v: {
