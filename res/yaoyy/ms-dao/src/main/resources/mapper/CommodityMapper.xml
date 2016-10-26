@@ -193,6 +193,16 @@
     </select>
 
 
+    <select id="findByCategoryId" resultMap="CommodityResultMapVo" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List_Alisa" />,
+        ca.variety as categoryName
+        from commodity as cm
+        LEFT JOIN category ca on cm.category_id=ca.id
+        where cm.category_id = #{id} and cm.status !=0
+    </select>
+
+
 
 
 </mapper>

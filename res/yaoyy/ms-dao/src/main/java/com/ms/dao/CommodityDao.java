@@ -20,4 +20,6 @@ public interface CommodityDao extends ICommonDao<Commodity>{
 
     public List<CommodityVo> findVoByPage();
 
+    public List<CommodityVo> findByCategoryId(Integer id);
+
 }
