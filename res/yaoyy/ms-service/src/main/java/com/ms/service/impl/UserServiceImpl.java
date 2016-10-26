@@ -116,6 +116,7 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 		}
 
 		String rcode = redisManager.get(RedisEnum.KEY_MOBILE_CAPTCHA_REGISTER.getValue()+phone);
+
 		if (!code.equalsIgnoreCase(rcode)) {
 			throw new RuntimeException("验证码错误");
 		}

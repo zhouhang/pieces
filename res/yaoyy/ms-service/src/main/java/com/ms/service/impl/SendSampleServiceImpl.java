@@ -117,7 +117,7 @@ public class SendSampleServiceImpl  extends AbsCommonService<SendSample> impleme
 		else{
 			useId=userVo.getId();
 		}
-		UserDetail userDetail=userDetailDao.findById(useId);
+		UserDetail userDetail=userDetailDao.findByUserId(useId);
 		if (userDetail==null){
 			userDetail=new UserDetail();
 			userDetail.setPhone(sendSampleVo.getPhone());

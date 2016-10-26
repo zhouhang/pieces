@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="description" content="">
 <meta name="author" content="">
-<base href="http://127.0.0.1:8081/"/>
+<base href="http://127.0.0.1:8188/"/>
 
 <link rel="icon" href="favicon.ico">
 <link rel="stylesheet" href="assets/css/app.css">

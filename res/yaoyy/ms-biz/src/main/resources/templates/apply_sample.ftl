@@ -66,13 +66,13 @@
                             success: function (result) {
                                 if(result.status=="200"){
                                     var user=result.data;
-                                    if(user.type==0){
+                                    if(user.type==1){
                                         layer.open({
                                             className: 'layer-custom',
                                             content: '<div class="box"><div class="hd">您的寄样申请已提交成功！</div><div class="bd">我们会在60分钟之内与您取得联系。 注册可以跟踪您的所有寄养申请。</div></div>'
                                             ,btn: ['去注册', '返回']
                                             ,yes: function(index){
-                                                location.href = '/register';
+                                                location.href = '/user/register';
                                             },no: function(index) {
                                                 // window.history.back(); // 返回按钮事件
                                             },shadeClose: false
@@ -85,14 +85,14 @@
                                                 content: '<div class="box"><div class="hd">您的寄样申请已提交成功！</div><div class="bd">我们会在60分钟之内与您取得联系。登录可以跟踪您的所有寄养申请。</div></div>'
                                                 ,btn: ['去登录', '返回']
                                                 ,yes: function(index){
-                                                    location.href = '/login';
+                                                    location.href = '/user/login';
                                                 },no: function(index) {
                                                     // window.history.back(); // 返回按钮事件
                                                 },shadeClose: false
                                             });
                                         }
                                         else{
-                                              if(isWeixinBrowser()&&user.openid==""){
+                                              if(_global.fn.isWeixinBrowser()&&user.openid==""){
                                                   location.href = '/bind';
                                               }
                                               else{

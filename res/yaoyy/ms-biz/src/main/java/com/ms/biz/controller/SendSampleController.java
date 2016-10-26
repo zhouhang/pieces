@@ -6,6 +6,7 @@ import com.ms.dao.vo.SampleTrackingVo;
 import com.ms.dao.vo.SendSampleVo;
 import com.ms.dao.vo.UserVo;
 import com.ms.service.*;
+import com.ms.service.enums.RedisEnum;
 import com.ms.tools.entity.Result;
 import com.ms.tools.utils.SeqNoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +43,12 @@ public class SendSampleController {
     @Autowired
     SampleTrackingService sampleTrackingService;
 
+    @Autowired
+    private HttpSession httpSession;
+
+    @Autowired
+    private UserDetailService userDetailService;
+
 
 
     @RequestMapping(value = "apply", method = RequestMethod.GET)
@@ -57,10 +65,18 @@ public class SendSampleController {
     @ResponseBody
     public Result applySample(SendSampleVo sendSampleVo) {
 
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+
         sendSampleService.save(sendSampleVo);
         UserVo userInfo=userService.findByPhone(sendSampleVo.getPhone());
-        //获取登陆状态后设置
-        userInfo.setIslogin(false);
+
+        if(user==null){
+            userInfo.setIslogin(false);
+        }
+        else{
+            userInfo.setIslogin(true);
+        }
+
 
         return Result.success().data(userInfo);
     }
@@ -69,7 +85,8 @@ public class SendSampleController {
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String apply(String name,ModelMap model) {
         //获取登陆用户userId
-        int userId=1;
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        int userId=user.getId();
         List<SendSampleVo> sampleList = new ArrayList<>();
         if(name!=null) {
             List<Commodity> commodities = commodityService.findByName(name);
@@ -121,10 +138,16 @@ public class SendSampleController {
     @ResponseBody
     public Result feedBack(SampleTracking sampleTracking){
         //session获取用户信息
-
-        int userId=1;
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        int userId=user.getId();
+        UserDetail userDetail=userDetailService.findByUserId(userId);
         sampleTracking.setOperator(userId);
-        sampleTracking.setName("测试肖");
+        if (userDetail!=null){
+            sampleTracking.setName(userDetail.getNickname());
+        }
+        else{
+            sampleTracking.setName("");
+        }
         sampleTracking.setType(TrackingTypeEnum.TYPE_USER.getValue());
 
 
