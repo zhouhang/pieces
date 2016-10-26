@@ -67,7 +67,7 @@
                     <td><input type="checkbox"></td>
                     <td>${category.variety}</td>
                     <td>${category.title}</td>
-                    <td>${category.priceDesc}</td>
+                    <td>${category.priceDesc}元/${category.unit}</td>
                     <td>${category.sort}</td>
                     <td>${category.parentName}</td>
                     <td>${category.createTime?string("yyyy-MM-dd HH:mm")}  </td>
@@ -121,7 +121,17 @@
         <div class="item">
             <div class="txt"><i>*</i>价格描述：</div>
             <div class="cnt">
-                <input type="text" name="priceDesc" class="ipt" placeholder="价格描述" autocomplete="off">
+                <input type="text" name="priceDesc" class="ipt" placeholder="价格描述" autocomplete="off">元
+            </div>
+        </div>
+        <div class="item">
+            <div class="txt"><i>*</i>单位：</div>
+            <div class="cnt">
+                <select name="unit" class="slt">
+                <#list codeVos as code>
+                    <option value="${code.name}">${code.name}</option>
+                </#list>
+                </select>
             </div>
         </div>
         <div class="item">

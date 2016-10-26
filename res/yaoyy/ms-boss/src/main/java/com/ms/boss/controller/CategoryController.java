@@ -2,10 +2,14 @@ package com.ms.boss.controller;
 
 
 import com.github.pagehelper.PageInfo;
+import com.ms.dao.enums.CodeEnum;
 import com.ms.dao.model.Category;
+import com.ms.dao.model.Code;
 import com.ms.dao.vo.CategoryVo;
+import com.ms.dao.vo.CodeVo;
 import com.ms.service.CategoryService;
 import com.ms.dao.enums.CategoryEnum;
+import com.ms.service.CodeService;
 import com.ms.tools.entity.Result;
 import com.ms.tools.utils.Reflection;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +36,9 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
+    @Autowired
+    CodeService codeService;
+
     /**
      * 按类别名查询列表
      * @param pageNum
@@ -50,9 +57,15 @@ public class CategoryController {
         CategoryVo variety=new CategoryVo();
         variety.setLevel(CategoryEnum.LEVEL_CATEGORY.getValue());
         List<CategoryVo> varieties= categoryService.findAllCategory(variety);
+        CodeVo codeVo=new CodeVo();
+        //取出所有单位
+        codeVo.setName(CodeEnum.CODE_UNIT.getValue());
+        List<CodeVo> codeVos=codeService.findAllByParams(codeVo);
+
         model.put("varieties",varieties);
         model.put("categoryPage",categoryPage);
         model.put("categoryVo",categoryVo);
+        model.put("codeVos",codeVos);
         model.put("categoryParams", Reflection.serialize(categoryVo));
         return "category_list";
     }

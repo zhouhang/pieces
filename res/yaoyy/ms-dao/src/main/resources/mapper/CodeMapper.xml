@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ms.dao.CodeDao">
+    <resultMap id="CodeResultMap" type="com.ms.dao.model.Code">
+            <id column="id"  property="id" />
+            <result column="code"  property="code" />
+            <result column="name"  property="name" />
+            <result column="create_time"  property="createTime" />
+        
+    </resultMap>
+
+    <resultMap id="CodeResultMapVo" type="com.ms.dao.vo.CodeVo">
+            <id column="id"  property="id" />
+            <result column="code"  property="code" />
+            <result column="name"  property="name" />
+            <result column="create_time"  property="createTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,code,name,create_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="CodeResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from code
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="CodeResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from code
+    </select>
+
+    <select id="findByParams" resultMap="CodeResultMapVo" parameterType="com.ms.dao.vo.CodeVo">
+        select
+        <include refid="Base_Column_List" />
+        from code
+        <where>
+            <if test="code != null">
+                code = #{code}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from code
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.Code">
+        insert into
+        code (code,name,create_time)
+        values
+        (#{code},#{name},#{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.ms.dao.model.Code">
+        update code
+        <set>
+                                                        
+            <if test="code != null">
+                code = #{code},
+            </if>
+                                            
+            <if test="name != null">
+                name = #{name},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

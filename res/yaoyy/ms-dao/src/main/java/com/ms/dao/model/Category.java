@@ -1,8 +1,5 @@
 package com.ms.dao.model;
 
-import org.hibernate.validator.constraints.Length;
-
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,24 +9,31 @@ public class Category  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	
 	//父类id
 	private Integer pid;
-    //商品名称
+	
+	//品种名
 	private String variety;
-	//商品标题
+	
+	//标题
 	private String title;
+	
 	//价格描述
 	private String priceDesc;
-	//排序
+	
+	//价格单位
+	private String unit;
+	
 	private Integer sort;
-
+	
 	private Date createTime;
-	//图片地址
+	
 	private String pictureUrl;
 	
-	//0：下架，1：上架
+	//上下架状态
 	private Integer status;
-	//类别（商品）的等级
+	
 	private Integer level;
 	
 	private Date updateTime;
@@ -74,6 +78,14 @@ public class Category  implements Serializable {
 
 	public void setPriceDesc(String priceDesc) {
 		this.priceDesc = priceDesc;
+	}
+	
+	public String getUnit() {
+		return unit;
+	}
+
+	public void setUnit(String unit) {
+		this.unit = unit;
 	}
 	
 	public Integer getSort() {
