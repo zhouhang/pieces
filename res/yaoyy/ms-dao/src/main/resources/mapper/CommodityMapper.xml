@@ -183,4 +183,16 @@
         where name = #{name}
     </select>
 
+
+    <select id="findVoByPage" resultMap="CommodityResultMapVo" >
+        select
+        <include refid="Base_Column_List_Alisa" />,
+        ca.variety as categoryName
+        from commodity as cm
+        LEFT JOIN category ca on cm.category_id=ca.id
+    </select>
+
+
+
+
 </mapper>

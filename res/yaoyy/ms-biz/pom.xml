@@ -43,6 +43,8 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
+
+
         <!--Apache Shiro所需的jar包 -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
@@ -96,6 +98,8 @@
                 <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
                 <pro.upload.path>E:\Program Files\Apache Software Foundation\Tomcat 8.5\webapps\ms-files</pro.upload.path>
                 <pro.upload.url>http://127.0.0.1:8080/ms-files/</pro.upload.url>
+                <elasticsearch.host>127.0.0.1</elasticsearch.host>
+                <elasticsearch.port>9300</elasticsearch.port>
             </properties>
         </profile>
         <profile>

@@ -115,6 +115,17 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
     }
 
     @Override
+    public PageInfo<CommodityVo> findVoByPage(int pageSize, int pageNum) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<CommodityVo> list = commodityDao.findVoByPage();
+        list.forEach(c->{
+            c.setPictureUrl(pathConvert.getUrl(c.getPictureUrl()));
+        });
+        PageInfo pageInfo = new PageInfo(list);
+        return pageInfo;
+    }
+
+    @Override
     @Transactional
     public int deleteById(int id) {
         gradientService.deleteByCommodityId(id);

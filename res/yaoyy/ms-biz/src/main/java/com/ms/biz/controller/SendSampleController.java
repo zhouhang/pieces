@@ -31,8 +31,6 @@ public class SendSampleController {
     @Autowired
     CommodityService commodityService;
 
-    @Autowired
-    UserDetailService userDetailService;
 
     @Autowired
     SendSampleService sendSampleService;

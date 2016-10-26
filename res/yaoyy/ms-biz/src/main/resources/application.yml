@@ -12,6 +12,9 @@ spring:
 #mybatis:
 #  mapperLocations: classpath:mapper/*.xml
 #  typeAliasesPackage: com.ms.dao.model
+elasticsearch:
+         host: @elasticsearch.host@
+         port: @elasticsearch.port@
 
 upload:
     path: @pro.upload.path@
