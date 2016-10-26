@@ -19,21 +19,15 @@
         <div class="tools">
             <div class="filter">
                 <#--<form action="">-->
-                    <ul>
-                        <li><label>品种：</label><input type="text" name="categoryName" class="ipt" placeholder="请输入"></li>
-                        <li><label>商品名称：</label><input name="name" type="text" class="ipt" placeholder="商品名称"></li>
-                        <li>
-                            <label>上/下架：</label>
-                            <select name="status" class="slt">
-                                <option value="">全部</option>
-                                <option value="1">上架</option>
-                                <option value="0">下架</option>
-                            </select>
-                        </li>
-                        <li>
-                            <button class="ubtn ubtn-blue" id="search_btn">搜索</button>
-                        </li>
-                    </ul>
+                    <label>品种：</label><input type="text" name="categoryName" class="ipt" placeholder="请输入">
+                    <label>商品名称：</label><input name="name" type="text" class="ipt" placeholder="商品名称">
+                    <label>上/下架：</label>
+                    <select name="status" class="slt">
+                        <option value="">全部</option>
+                        <option value="1">上架</option>
+                        <option value="0">下架</option>
+                    </select>
+                    <button type="button" class="ubtn ubtn-blue" id="search_btn">搜索</button>
                 <#--</form>-->
             </div>
             <div class="action-add">

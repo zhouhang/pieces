@@ -21,29 +21,20 @@
             <div class="tools">
                 <div class="filter">
                     <form id="searchForm" action="">
-                        <ul>
-                            <li>
-                                <label>姓名：</label>
-                                <input type="text" name="name" class="ipt" placeholder="请输入">
-                            </li>
-                            <li></li>
-                            <li>
-                                <label>角色：</label>
-                                <select name="roleId" id="roleId" class="slt">
-                                    <option value="">全部</option>
-                                    <#list roleList as role>
-                                        <option value="${role.id}">${role.name}</option>
-                                    </#list>
-                                </select>
-                            </li>
-                            <li>
-                                <button id="search" class="ubtn ubtn-blue">搜索</button>
-                            </li>
-                        </ul>
+                        <label>姓名：</label>
+                        <input type="text" name="name" class="ipt" placeholder="请输入">
+                        <label>角色：</label>
+                        <select name="roleId" id="roleId" class="slt">
+                            <option value="">全部</option>
+                            <#list roleList as role>
+                                <option value="${role.id}">${role.name}</option>
+                            </#list>
+                        </select>
+                        <button id="search" class="ubtn ubtn-blue">搜索</button>
                     </form>
                 </div>
                 <@shiro.hasPermission name="member:add">
-                <div class="action-add">
+                <div class="action-add pb">
                     <button class="ubtn ubtn-blue" id="jaddNewAdmin">新建管理员</button>
                 </div>
                 </@shiro.hasPermission>
