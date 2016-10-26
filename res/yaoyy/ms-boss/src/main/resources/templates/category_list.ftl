@@ -19,20 +19,14 @@
         <div class="tools">
             <div class="filter">
                 <form action="" id="serarchForm">
-                    <ul>
-                        <li><label>品种：</label><input type="text" name="variety" class="ipt" placeholder="请输入" id="searchName" value="${categoryVo.variety?default('')}"></li>
-                        <li>
-                            <label>上/下架：</label>
-                            <select class="ipt"  name="status" id="searchStatus" class="slt">
-                                <option <#if (categoryVo.status??)> selected</#if>  value="">全部</option>
-                                <option <#if categoryVo.status?exists && categoryVo.status==1> selected</#if> value="1">上架</option>
-                                <option <#if categoryVo.status?exists && categoryVo.status==0> selected</#if>value="0">下架</option>
-                            </select>
-                        </li>
-                        <li class="wide">
-                            <button type="button" class="ubtn ubtn-blue" id="search">搜索</button>
-                        </li>
-                    </ul>
+                    <label>品种：</label><input type="text" name="variety" class="ipt" placeholder="请输入" id="searchName" value="${categoryVo.variety?default('')}">
+                    <label>上/下架：</label>
+                    <select class="ipt"  name="status" id="searchStatus" class="slt">
+                        <option <#if (categoryVo.status??)> selected</#if>  value="">全部</option>
+                        <option <#if categoryVo.status?exists && categoryVo.status==1> selected</#if> value="1">上架</option>
+                        <option <#if categoryVo.status?exists && categoryVo.status==0> selected</#if>value="0">下架</option>
+                    </select>
+                    <button type="button" class="ubtn ubtn-blue" id="search">搜索</button>
                 </form>
             </div>
 

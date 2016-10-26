@@ -51,33 +51,17 @@
 			<div class="tools">
 				<div class="filter">
 					<form action="">
-						<ul>
-							<li>
-								<label>类型：</label>
-								<select name="" class="slt">
-									<option value="">首页banner</option>
-									<option value="">专场广告</option>
-								</select>
-							</li>
-							<li>
-								<button class="ubtn ubtn-blue">搜索</button>
-							</li>
-						</ul>
+						<label>类型：</label>
+						<select name="" class="slt">
+							<option value="">首页banner</option>
+							<option value="">专场广告</option>
+						</select>
+						<button class="ubtn ubtn-blue">搜索</button>
 					</form>
 				</div>
 
 				<div class="action-add">
 					<button class="ubtn ubtn-blue" id="jaddNew">新建广告</button>
-				</div>
-				<div class="action-length">
-					<span>显示</span>
-					<select name="" class="slt">
-						<option value="10">10</option>
-						<option value="25">25</option>
-						<option value="50">50</option>
-						<option value="100">100</option>
-					</select>
-					<span>条结果</span>
 				</div>
 			</div>
 
@@ -134,12 +118,32 @@
 								<a href="javascript:;" class="ubtn ubtn-gray jputaway">上架</a>
 							</td>
 						</tr>
+						<tr class="gray">
+							<td><input type="checkbox"></td>
+							<td>首页banner</td>
+							<td>banner1</td>
+							<td>http://www.yaoyy.c</td>
+							<td>100</td>
+							<td>2016-05-18 15:22</td>
+							<td class="tc">
+								<a href="subject_edit.html" class="ubtn ubtn-blue jedit">编辑</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jdel">删除</a>
+								<a href="javascript:;" class="ubtn ubtn-gray jputaway">上架</a>
+							</td>
+						</tr>
 					</tbody>
 				</table>
 			</div>
 
 			<div class="pagination">
 				<div class="pages">
+					每页
+					<select name="" class="slt">
+						<option value="10">10</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
 					<a href="#" class="text">上页</a>
 					<span class="curr">1</span>
 					<a href="#">2</a>
@@ -212,7 +216,7 @@
 	<div id="imgCropWrap"></div>
 
 <script src="assets/js/jquery191.js"></script>
-<script src="assets/js/app.js"></script>
+<script src="assets/js/common.js"></script>
 <script src="assets/js/croppic.min.js"></script>
 <script src="assets/plugins/layer/layer.js"></script>
 <script src="assets/plugins/validator/jquery.validator.min.js"></script>

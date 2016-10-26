@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <#include "./common/meta.ftl"/>
     <title>用户列表-药优优</title>
-<#include "./common/meta.ftl"/>
 </head>
 <body class='wrapper'>
 <#include "./common/header.ftl"/>
@@ -19,29 +19,23 @@
         <div class="tools">
             <div class="filter">
                 <#--<form action="">-->
-                    <ul>
-                        <li><label>手机：</label><input name="phone" type="text" class="ipt" placeholder="请输入"></li>
-                        <li><label>姓名/单位：</label><input name="name" type="text" class="ipt" placeholder="商品名称"></li>
-                        <li>
-                            <label>身份类型：</label>
-                            <select name="identityType" class="slt">
-                                <option value="">全部</option>
-                                <option value="1">饮片厂</option>
-                                <option value="2">药厂</option>
-                                <option value="3">药材经营公司</option>
-                                <option value="4">个体经营户</option>
-                                <option value="5">合作社</option>
-                                <option value="6">种植基地</option>
-                                <option value="8">个人经营</option>
-                                <option value="9">采购经理</option>
-                                <option value="10">销售经理</option>
-                                <option value="7">其他</option>
-                            </select>
-                        </li>
-                        <li>
-                            <button class="ubtn ubtn-blue" id="search_btn">搜索</button>
-                        </li>
-                    </ul>
+                    <label>手机：</label><input name="phone" type="text" class="ipt" placeholder="请输入">
+                    <label>姓名/单位：</label><input name="name" type="text" class="ipt" placeholder="商品名称">
+                    <label>身份类型：</label>
+                    <select name="identityType" class="slt">
+                        <option value="">全部</option>
+                        <option value="1">饮片厂</option>
+                        <option value="2">药厂</option>
+                        <option value="3">药材经营公司</option>
+                        <option value="4">个体经营户</option>
+                        <option value="5">合作社</option>
+                        <option value="6">种植基地</option>
+                        <option value="8">个人经营</option>
+                        <option value="9">采购经理</option>
+                        <option value="10">销售经理</option>
+                        <option value="7">其他</option>
+                    </select>
+                    <button type="button" class="ubtn ubtn-blue" id="search_btn">搜索</button>
                 <#--</form>-->
             </div>
         </div>

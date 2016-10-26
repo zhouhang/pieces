@@ -51,30 +51,14 @@
 			<div class="tools">
 				<div class="filter">
 					<form action="">
-						<ul>
-							<li>
 								<label>标题：</label>
 								<input type="text" class="ipt" placeholder="请输入">
-							</li>
-							<li>
 								<button class="ubtn ubtn-blue">搜索</button>
-							</li>
-						</ul>
 					</form>
 				</div>
 
 				<div class="action-add">
 					<a href="subject_edit.html" class="ubtn ubtn-blue">新建专场</a>
-				</div>
-				<div class="action-length">
-					<span>显示</span>
-					<select name="" class="slt">
-						<option value="10">10</option>
-						<option value="25">25</option>
-						<option value="50">50</option>
-						<option value="100">100</option>
-					</select>
-					<span>条结果</span>
 				</div>
 			</div>
 
@@ -145,6 +129,13 @@
 
 			<div class="pagination">
 				<div class="pages">
+					每页
+					<select name="" class="slt">
+						<option value="10">10</option>
+						<option value="25">25</option>
+						<option value="50">50</option>
+						<option value="100">100</option>
+					</select>
 					<a href="#" class="text">上页</a>
 					<span class="curr">1</span>
 					<a href="#">2</a>
@@ -169,7 +160,7 @@
 	
 
 <script src="assets/js/jquery191.js"></script>
-<script src="assets/js/app.js"></script>
+<script src="assets/js/common.js"></script>
 <script src="assets/plugins/layer/layer.js"></script>
 <script>
 	var _global = {
