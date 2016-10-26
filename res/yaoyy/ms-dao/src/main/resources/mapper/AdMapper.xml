@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ms.dao.AdDao">
+    <resultMap id="AdResultMap" type="com.ms.dao.model.Ad">
+            <id column="id"  property="id" />
+            <result column="type_id"  property="typeId" />
+            <result column="name"  property="name" />
+            <result column="href"  property="href" />
+            <result column="sort"  property="sort" />
+            <result column="picture_url"  property="pictureUrl" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_time"  property="updateTime" />
+            <result column="create_mem"  property="createMem" />
+            <result column="update_mem"  property="updateMem" />
+        
+    </resultMap>
+
+    <resultMap id="AdResultMapVo" type="com.ms.dao.vo.AdVo">
+            <id column="id"  property="id" />
+            <result column="type_id"  property="typeId" />
+            <result column="name"  property="name" />
+            <result column="href"  property="href" />
+            <result column="sort"  property="sort" />
+            <result column="picture_url"  property="pictureUrl" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_time"  property="updateTime" />
+            <result column="create_mem"  property="createMem" />
+            <result column="update_mem"  property="updateMem" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,type_id,name,href,sort,picture_url,create_time,update_time,create_mem,update_mem
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="AdResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ad
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="AdResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from ad
+    </select>
+
+    <select id="findByParams" resultMap="AdResultMapVo" parameterType="com.ms.dao.vo.AdVo">
+        select
+        <include refid="Base_Column_List" />
+        from ad
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from ad
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.Ad">
+        insert into
+        ad (type_id,name,href,sort,picture_url,create_time,update_time,create_mem,update_mem)
+        values
+        (#{typeId},#{name},#{href},#{sort},#{pictureUrl},#{createTime},#{updateTime},#{createMem},#{updateMem})
+    </insert>
+
+    <update id="update" parameterType="com.ms.dao.model.Ad">
+        update ad
+        <set>
+                                                        
+            <if test="typeId != null">
+                type_id = #{typeId},
+            </if>
+                                            
+            <if test="name != null">
+                name = #{name},
+            </if>
+                                            
+            <if test="href != null">
+                href = #{href},
+            </if>
+                                            
+            <if test="sort != null">
+                sort = #{sort},
+            </if>
+                                            
+            <if test="pictureUrl != null">
+                picture_url = #{pictureUrl},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+                                            
+            <if test="createMem != null">
+                create_mem = #{createMem},
+            </if>
+                                            
+            <if test="updateMem != null">
+                update_mem = #{updateMem},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
