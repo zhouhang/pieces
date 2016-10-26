@@ -9,6 +9,7 @@ import com.ms.dao.vo.CommodityVo;
 import com.ms.service.CommodityService;
 import com.ms.tools.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -71,7 +72,7 @@ public class CommodityController extends BaseController{
      * @param commodity
      * @return
      */
-    @RequestMapping(value = "save", method = RequestMethod.POST)
+    @RequestMapping(value = "save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Result save(@RequestBody CommodityVo commodity) {
         commodityService.save(commodity);
