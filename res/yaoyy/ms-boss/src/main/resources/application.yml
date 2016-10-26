@@ -12,9 +12,11 @@ spring:
 #mybatis:
 #  mapperLocations: classpath:mapper/*.xml
 #  typeAliasesPackage: com.ms.dao.model
+
 doc:
     base:
         url: @doc.base.url@
+
 upload:
     path: @pro.upload.path@
     url: @pro.upload.url@
