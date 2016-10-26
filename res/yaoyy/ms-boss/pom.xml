@@ -71,9 +71,9 @@
                 <spring.dataSource.url>jdbc:mysql://192.168.1.41:3306/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
                 <spring.dataSource.username>yaoyy</spring.dataSource.username>
                 <spring.dataSource.password>123456</spring.dataSource.password>
-                <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
+                <doc.base.url>http://127.0.0.1:8189/</doc.base.url>
                 <pro.upload.path>/var/tomcat/apache-tomcat-8.5.4/webapps/files/upload/</pro.upload.path>
-                <pro.upload.url>http://127.0.0.1:8080/files/upload/</pro.upload.url>
+                <pro.upload.url>http://127.0.0.1:8189/files/upload/</pro.upload.url>
             </properties>
         </profile>
         <profile>
@@ -82,9 +82,9 @@
                 <spring.dataSource.url>jdbc:mysql://127.0.0.1:3307/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
                 <spring.dataSource.username>root</spring.dataSource.username>
                 <spring.dataSource.password>root</spring.dataSource.password>
-                <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
+                <doc.base.url>http://127.0.0.1:8189/</doc.base.url>
                 <pro.upload.path>/Software/JAVAEE/apache-tomcat-8.0.23/webapps/ms-files/</pro.upload.path>
-                <pro.upload.url>http://127.0.0.1:8080/ms-files/</pro.upload.url>
+                <pro.upload.url>http://127.0.0.1:8189/ms-files/</pro.upload.url>
             </properties>
         </profile>
         <profile>
@@ -93,9 +93,9 @@
                 <spring.dataSource.url>jdbc:mysql://127.0.0.1:3306/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
                 <spring.dataSource.username>root</spring.dataSource.username>
                 <spring.dataSource.password>ycg20160401</spring.dataSource.password>
-                <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
+                <doc.base.url>http://127.0.0.1:8189/</doc.base.url>
                 <pro.upload.path>E:\Program Files\Apache Software Foundation\Tomcat 8.5\webapps\ms-files\</pro.upload.path>
-                <pro.upload.url>http://127.0.0.1:8080/ms-files/</pro.upload.url>
+                <pro.upload.url>http://127.0.0.1:8189/ms-files/</pro.upload.url>
             </properties>
         </profile>
         <profile>
@@ -104,9 +104,9 @@
                 <spring.dataSource.url>jdbc:mysql://127.0.0.1:3306/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
                 <spring.dataSource.username>root</spring.dataSource.username>
                 <spring.dataSource.password>123456</spring.dataSource.password>
-                <doc.base.url>http://127.0.0.1:8080/</doc.base.url>
+                <doc.base.url>http://127.0.0.1:8189/</doc.base.url>
                 <pro.upload.path>E:/development/apache-tomcat-8.0.361/webapps/ms-files/</pro.upload.path>
-                <pro.upload.url>http://127.0.0.1:8080/ms-files/</pro.upload.url>
+                <pro.upload.url>http://127.0.0.1:8189/ms-files/</pro.upload.url>
             </properties>
         </profile>
     </profiles>
