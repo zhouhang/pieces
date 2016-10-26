@@ -48,7 +48,7 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     public void createAllCommodityDoc() {
         List<CommodityDoc> commodityDocList = new ArrayList<>();
         for(int i=1;;i++){
-            PageInfo<CommodityVo> commodityVoPageInfo = commodityService.findVoByPage(i,50);
+            PageInfo<CommodityVo> commodityVoPageInfo = commodityService.findVoByPage(50,i);
             for(CommodityVo commodityVO : commodityVoPageInfo.getList()){
                 CommodityDoc commodityDoc = vo2doc(commodityVO);
                 commodityDocList.add(commodityDoc);

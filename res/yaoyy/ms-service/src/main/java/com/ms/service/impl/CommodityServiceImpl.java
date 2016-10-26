@@ -7,6 +7,7 @@ import com.ms.dao.CommodityDao;
 import com.ms.dao.model.Commodity;
 import com.ms.dao.model.Gradient;
 import com.ms.dao.vo.CommodityVo;
+import com.ms.service.CommoditySearchService;
 import com.ms.service.CommodityService;
 import com.ms.service.GradientService;
 import com.ms.tools.ClazzUtil;
@@ -31,6 +32,9 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
 
     @Autowired
     private PathConvert pathConvert;
+
+    @Autowired
+    private CommoditySearchService commoditySearchService;
 
     /**
      * 商品图片保存路径
@@ -91,6 +95,7 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
             });
             gradientService.update(commodity.getGradient());
         }
+        commoditySearchService.save(commodity);
     }
 
     @Override
@@ -129,6 +134,7 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
     @Transactional
     public int deleteById(int id) {
         gradientService.deleteByCommodityId(id);
+        commoditySearchService.deleteByCommodityId(id);
         return super.deleteById(id);
     }
 
