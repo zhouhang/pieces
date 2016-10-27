@@ -6,6 +6,7 @@ import com.ms.dao.ICommonDao;
 import com.ms.dao.CategoryDao;
 import com.ms.dao.model.Category;
 import com.ms.dao.vo.CategoryVo;
+import com.ms.service.CategorySearchService;
 import com.ms.service.CategoryService;
 import com.ms.dao.enums.CategoryEnum;
 import com.ms.tools.upload.PathConvert;
@@ -24,6 +25,10 @@ public class CategoryServiceImpl  extends AbsCommonService<Category> implements 
 
 	@Autowired
 	private PathConvert pathConvert;
+
+
+	@Autowired
+	private CategorySearchService categorySearchService;
 
 	/**
 	 * 品种图片保存路径
@@ -73,6 +78,7 @@ public class CategoryServiceImpl  extends AbsCommonService<Category> implements 
 			categoryVo.setUpdateTime(now);
 			categoryDao.update(categoryVo);
 		}
+		categorySearchService.save(categoryVo);
 
 	}
 
@@ -83,12 +89,31 @@ public class CategoryServiceImpl  extends AbsCommonService<Category> implements 
 		return category;
 	}
 
+	@Override
+	public CategoryVo getVoById(Integer id) {
+		return categoryDao.getVoById(id);
+	}
+
+	@Override
+	public PageInfo<CategoryVo> findVoByPage(int pageSize, int pageNum) {
+		PageHelper.startPage(pageNum, pageSize);
+		List<CategoryVo>  list = categoryDao.findVoByPage();
+		PageInfo page = new PageInfo(list);
+		return page;
+
+	}
+
 
 	@Override
 	public ICommonDao<Category> getDao() {
 		return categoryDao;
 	}
 
-
+	@Override
+	@Transactional
+	public int deleteById(int id) {
+		categorySearchService.deleteByCategoryId(id);
+		return super.deleteById(id);
+	}
 
 }

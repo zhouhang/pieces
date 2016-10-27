@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.ms.dao.model.Category;
 import com.ms.dao.vo.CategoryVo;
 
+
 import java.util.List;
 
 public interface CategoryService extends ICommonService<Category>{
@@ -17,6 +18,10 @@ public interface CategoryService extends ICommonService<Category>{
     public void save(CategoryVo categoryVo);
 
     public Category findById(Integer id);
+
+    public CategoryVo getVoById(Integer id);
+
+    public PageInfo<CategoryVo> findVoByPage(int pageSize, int pageNum);
 
 
 

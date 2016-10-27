@@ -16,16 +16,6 @@ public interface CommoditySearchService {
      */
     public CommodityDoc save(Commodity commodity);
 
-    /**
-     * 搜索名称和类别名
-     * @param pageNum
-     * @param pageSize
-     * @param field
-     * @return
-     */
-    public Page<CommodityDoc> findByNameOrCategoryName(Integer pageNum, Integer pageSize, String field);
-
-
 
     /**
      * 搜索索引名称
