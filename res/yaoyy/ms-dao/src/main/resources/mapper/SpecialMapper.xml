@@ -54,6 +54,9 @@
             <if test="id != null">
                 id = #{id}
             </if>
+            <if test="title != null">
+                title like CONCAT('%','${title}','%' )
+            </if>
         </where>
     </select>
 

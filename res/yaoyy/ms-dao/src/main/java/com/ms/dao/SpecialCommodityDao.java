@@ -10,4 +10,6 @@ public interface SpecialCommodityDao extends ICommonDao<SpecialCommodity>{
 
     public List<SpecialCommodityVo> findByParams(SpecialCommodityVo specialCommodityVo);
 
+    public void deleteBySpecialId(Integer specialId);
+
 }

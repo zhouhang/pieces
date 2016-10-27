@@ -7,6 +7,7 @@ import com.ms.dao.SpecialCommodityDao;
 import com.ms.dao.SpecialDao;
 import com.ms.dao.model.Commodity;
 import com.ms.dao.model.Special;
+import com.ms.dao.model.SpecialCommodity;
 import com.ms.dao.vo.CommodityVo;
 import com.ms.dao.vo.SpecialCommodityVo;
 import com.ms.dao.vo.SpecialVo;
@@ -15,8 +16,10 @@ import com.ms.service.GradientService;
 import com.ms.service.SpecialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -92,6 +95,35 @@ public class SpecialServiceImpl  extends AbsCommonService<Special> implements Sp
 			}
 		});
 		return commodities;
+	}
+
+	@Override
+	@Transactional
+	public void save(SpecialVo specialVo) {
+		Date now=new Date();
+		List<Integer> list = new ArrayList<>();
+		for(String id :specialVo.getCommodities().split(",")){
+			list.add(Integer.parseInt(id));
+		}
+		if (specialVo.getId()==null){
+			specialVo.setCreateTime(now);
+			specialVo.setUpdateTime(now);
+			specialDao.create(specialVo);
+
+		}
+		else{
+			 specialVo.setUpdateTime(now);
+             specialDao.update(specialVo);
+			 specialCommodityDao.deleteBySpecialId(specialVo.getId());
+
+		}
+		list.forEach(s->{
+			SpecialCommodity specialCommodity=new SpecialCommodity();
+			specialCommodity.setCommodityId(s);
+			specialCommodity.setSpecialId(specialVo.getId());
+			specialCommodityDao.create(specialCommodity);
+		});
+
 	}
 
 	@Override

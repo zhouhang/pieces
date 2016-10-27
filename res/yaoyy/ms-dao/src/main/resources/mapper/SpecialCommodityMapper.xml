@@ -73,4 +73,9 @@
         </set>
         where id = #{id}
     </update>
+
+    <delete id="deleteBySpecialId" parameterType="java.lang.Integer">
+        delete from special_commodity
+        where special_id = #{specialId}
+    </delete>
 </mapper>

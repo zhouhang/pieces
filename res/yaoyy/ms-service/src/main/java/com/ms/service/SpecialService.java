@@ -22,4 +22,6 @@ public interface SpecialService extends ICommonService<Special>{
     public PageInfo<CommodityVo> findCommodity(Integer specId, Integer pageNum,Integer pageSize );
 
     public List<Commodity> findCommodity(Integer specId);
+
+    public void save(SpecialVo specialVo);
 }
