@@ -26,6 +26,13 @@ public class AdServiceImpl  extends AbsCommonService<Ad> implements AdService{
         return page;
 	}
 
+	@Override
+	public List<AdVo> findByType(Integer typeId) {
+		AdVo vo = new AdVo();
+		vo.setTypeId(typeId);
+		vo.setStatus(1);
+		return adDao.findByParams(vo);
+	}
 
 	@Override
 	public ICommonDao<Ad> getDao() {

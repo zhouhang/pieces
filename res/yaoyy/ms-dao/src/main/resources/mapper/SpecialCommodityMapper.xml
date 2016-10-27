@@ -40,6 +40,9 @@
             <if test="id != null">
                 id = #{id}
             </if>
+            <if test="specialId != null">
+                and special_id = #{specialId}
+            </if>
         </where>
     </select>
 

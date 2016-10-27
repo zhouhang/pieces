@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.ms.dao.ICommonDao;
 import com.ms.dao.SpecialDao;
 import com.ms.dao.model.Special;
+import com.ms.dao.vo.CommodityVo;
 import com.ms.dao.vo.SpecialVo;
 import com.ms.service.SpecialService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,10 @@ public class SpecialServiceImpl  extends AbsCommonService<Special> implements Sp
         return page;
 	}
 
+	@Override
+	public PageInfo<CommodityVo> findCommodity(Integer specId, Integer pageNum, Integer pageSize) {
+		return null;
+	}
 
 	@Override
 	public ICommonDao<Special> getDao() {
