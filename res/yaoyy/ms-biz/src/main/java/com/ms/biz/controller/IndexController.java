@@ -19,8 +19,16 @@ public class IndexController {
     @Autowired
     CommoditySearchService commoditySearchService;
 
+    /**
+     * 首页广告
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(ModelMap model) {
+        // 首页banner 广告
+        // 专场广告
+
         return "index";
     }
 
