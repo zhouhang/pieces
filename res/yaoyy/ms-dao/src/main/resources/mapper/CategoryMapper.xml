@@ -123,4 +123,19 @@
          and   status = #{status}
         </if>
     </select>
+
+    <select id="getVoById" resultMap="CategoryResultMapVo" parameterType="java.lang.Integer">
+        select
+        *,c2.variety parent_name
+        from category c1
+        LEFT JOIN  category c2  on c1.pid=c2.id
+        where c1.id=#{id}
+    </select>
+
+    <select id="findVoByPage" resultMap="CategoryResultMapVo">
+        select
+        *,c2.variety parent_name
+        from category c1
+        LEFT JOIN  category c2  on c1.pid=c2.id
+    </select>
 </mapper>

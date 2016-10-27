@@ -68,18 +68,6 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     }
 
 
-    public Page<CommodityDoc> findByNameOrCategoryName(Integer pageNum, Integer pageSize, String field){
-        SearchQuery searchQuery =null;
-        if(StringUtils.isBlank(field)){
-            searchQuery = new NativeSearchQueryBuilder()
-                            .withQuery(matchAllQuery())
-                            .withPageable(new PageRequest(pageNum-1,pageSize))
-                            .build();
-        }
-
-        Page<CommodityDoc> result = esTemplate.queryForPage(searchQuery, CommodityDoc.class);
-        return result;
-    }
 
 
 
