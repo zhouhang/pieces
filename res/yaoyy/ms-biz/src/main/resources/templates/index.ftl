@@ -47,22 +47,18 @@
 
     <div class="ui-slide" id="slide1">
         <ul>
-            <li><a href="#"><img src="uploads/p1.jpg" alt=""></a></li>
-            <li><a href="#"><img src="uploads/p1.jpg" alt=""></a></li>
-            <li><a href="#"><img src="uploads/p1.jpg" alt=""></a></li>
-            <li><a href="#"><img src="uploads/p1.jpg" alt=""></a></li>
+            <#list banners as banner>
+                <li><a href="${banner.href!}"><img src="${banner.pictureUrl!}" alt="${banner.name!}"></a></li>
+            </#list>
         </ul>
     </div>
 
-    <div class="ui-floor">
-        <a href="subject.html"><img src="uploads/p2.jpg" alt=""></a>
-    </div>
-    <div class="ui-floor">
-        <a href="subject.html"><img src="uploads/p3.jpg" alt=""></a>
-    </div>
-    <div class="ui-floor">
-        <a href="subject.html"><img src="uploads/p4.jpg" alt=""></a>
-    </div>
+    <#list specials as special>
+        <div class="ui-floor">
+            <a href="${special.href!}"><img src="${special.pictureUrl!}" alt="${special.name!}"></a>
+        </div>
+    </#list>
+
 
 </section><!-- /ui-content -->
 

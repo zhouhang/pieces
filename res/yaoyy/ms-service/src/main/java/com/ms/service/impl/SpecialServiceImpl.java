@@ -11,6 +11,7 @@ import com.ms.dao.vo.CommodityVo;
 import com.ms.dao.vo.SpecialCommodityVo;
 import com.ms.dao.vo.SpecialVo;
 import com.ms.service.CommodityService;
+import com.ms.service.GradientService;
 import com.ms.service.SpecialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,9 @@ public class SpecialServiceImpl  extends AbsCommonService<Special> implements Sp
 
 	@Autowired
 	private CommodityService commodityService;
+
+	@Autowired
+	private GradientService gradientService;
 
 
 	@Override
@@ -77,6 +81,14 @@ public class SpecialServiceImpl  extends AbsCommonService<Special> implements Sp
 			});
 		}
 		List<Commodity> commodities = commodityService.findByIds(ids.substring(0,ids.length()-1));
+		// 如果标识为量大价优 策去价格梯度表获取价格范围
+		commodities.forEach(commodity -> {
+			if (commodity.getMark() == 1){
+				commodity.setDetail(gradientService.getCommodityPrice(commodity.getId()));
+			} else {
+				commodity.setDetail(null);
+			}
+		});
 		return commodities;
 	}
 
