@@ -65,6 +65,22 @@ public class SpecialServiceImpl  extends AbsCommonService<Special> implements Sp
 	}
 
 	@Override
+	public List<Commodity> findCommodity(Integer specId) {
+		SpecialCommodityVo vo = new SpecialCommodityVo();
+		vo.setSpecialId(specId);
+
+		List<SpecialCommodityVo> list = specialCommodityDao.findByParams(vo);
+		StringBuilder ids = new StringBuilder();
+		if (list != null && list.size() >0){
+			list.forEach(sc ->{
+				ids.append(sc.getCommodityId()).append(",");
+			});
+		}
+		List<Commodity> commodities = commodityService.findByIds(ids.substring(0,ids.length()-1));
+		return commodities;
+	}
+
+	@Override
 	public ICommonDao<Special> getDao() {
 		return specialDao;
 	}

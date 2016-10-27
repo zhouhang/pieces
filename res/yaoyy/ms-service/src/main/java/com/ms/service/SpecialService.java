@@ -1,6 +1,7 @@
 package com.ms.service;
 
 import com.github.pagehelper.PageInfo;
+import com.ms.dao.model.Commodity;
 import com.ms.dao.model.Special;
 import com.ms.dao.vo.CommodityVo;
 import com.ms.dao.vo.SpecialVo;
@@ -19,4 +20,6 @@ public interface SpecialService extends ICommonService<Special>{
      * @return
      */
     public PageInfo<CommodityVo> findCommodity(Integer specId, Integer pageNum,Integer pageSize );
+
+    public List<Commodity> findCommodity(Integer specId);
 }
