@@ -53,13 +53,10 @@
             </div>
             <div class="price">
                 <i>&yen;</i>
+                <em>${commodityVo.price}</em>
+                <b>${commodityVo.unit}</b>
                 <#if commodityVo.mark!=0>
-                    <em>${commodityVo.price}</em>
-                    <b>${commodityVo.unit}</b>
                     <span>量大价优</span>
-                <#else>
-                    <em>${commodityVo.price}</em>
-                    <b>${commodityVo.unit}</b>
                 </#if>
 
 

@@ -30,6 +30,9 @@ public class CommodityController {
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public String commodityDetail(@PathVariable("id") Integer id,ModelMap model) {
         CommodityVo commodityVo=commodityService.findById(id);
+        if(commodityVo.getMark()==1){
+            commodityVo.setPrice(commodityVo.getGradient().get(0).getPrice());
+        }
 
         List<CommodityVo> commodityVoList=commodityService.findByCategoryId(commodityVo.getCategoryId());
         model.put("commodityVo",commodityVo);
