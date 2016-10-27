@@ -53,7 +53,7 @@ public class SendSampleController {
 
 
     /**
-     * 根据查询条件获取寄样列表，历史寄样也可以从这里获取
+     * 根据查询条件获取寄样列表
      * @param sendSampleVo
      * @param pageNum
      * @param pageSize

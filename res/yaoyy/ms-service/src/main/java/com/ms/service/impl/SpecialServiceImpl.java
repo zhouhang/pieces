@@ -20,7 +20,9 @@ public class SpecialServiceImpl  extends AbsCommonService<Special> implements Sp
 
 	@Override
 	public PageInfo<SpecialVo> findByParams(SpecialVo specialVo,Integer pageNum,Integer pageSize) {
-    PageHelper.startPage(pageNum, pageSize);
+		pageNum = pageNum==null?1:pageNum;
+		pageSize = pageSize==null?10:pageSize;
+        PageHelper.startPage(pageNum, pageSize);
     	List<SpecialVo>  list = specialDao.findByParams(specialVo);
         PageInfo page = new PageInfo(list);
         return page;

@@ -43,9 +43,9 @@
         *,c2.variety parent_name
         from category c1
         LEFT JOIN  category c2  on c1.pid=c2.id
-        where 1=1
+        <where>
         <if test="variety!= null">
-                and c1.variety like CONCAT('%','${variety}','%' )
+                 c1.variety like CONCAT('%','${variety}','%' )
         </if>
         <if test="level!= null">
                 and c1.level = #{level}
@@ -53,6 +53,7 @@
         <if test="status!= null">
             and c1.status = #{status}
         </if>
+        </where>
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
