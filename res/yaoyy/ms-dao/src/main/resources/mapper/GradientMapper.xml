@@ -111,7 +111,7 @@
     <select id="findByCommodityId"  resultMap="GradientResultMap">
         select
         <include refid="Base_Column_List" />
-        from gradient where commodity_id = #{id}
+        from gradient where commodity_id = #{id} ORDER BY price ASC
     </select>
 
 </mapper>

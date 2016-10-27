@@ -54,4 +54,14 @@ public class GradientServiceImpl  extends AbsCommonService<Gradient> implements 
 	public void deleteByCommodityId(Integer id) {
 		gradientDao.deleteByCommodityId(id);
 	}
+
+	@Override
+	public String getCommodityPrice(Integer id) {
+		String price = null;
+		List<Gradient> list = findByCommodityId(id);
+		if (list != null && list.size()>0) {
+			price = "" + list.get(0).getPrice() + list.get(list.size()-1).getPrice();
+		}
+		return price;
+	}
 }

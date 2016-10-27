@@ -31,6 +31,8 @@ public class Ad  implements Serializable {
 	private Integer createMem;
 	
 	private Integer updateMem;
+
+	private Integer status;
 	
 	public Ad(){}
 	
@@ -113,5 +115,12 @@ public class Ad  implements Serializable {
 	public void setUpdateMem(Integer updateMem) {
 		this.updateMem = updateMem;
 	}
-	
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 }

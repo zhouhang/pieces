@@ -23,4 +23,10 @@ public interface GradientService extends ICommonService<Gradient>{
 
     public void deleteByCommodityId(Integer id);
 
+    /**
+     * 根据商品id 获取商品价格范围
+     * @param id
+     * @return
+     */
+    public String getCommodityPrice(Integer id);
 }
