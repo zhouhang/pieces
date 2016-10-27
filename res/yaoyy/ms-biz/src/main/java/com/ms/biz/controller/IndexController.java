@@ -1,6 +1,5 @@
 package com.ms.biz.controller;
 
-import com.ms.service.CategorySearchService;
 import com.ms.service.CommoditySearchService;
 import com.ms.tools.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,25 +19,23 @@ public class IndexController {
     @Autowired
     CommoditySearchService commoditySearchService;
 
-    @Autowired
-    CategorySearchService categorySearchService;
-
+    /**
+     * 首页广告
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(ModelMap model) {
+        // 首页banner 广告
+        // 专场广告
+
         return "index";
     }
 
-    /*
     @RequestMapping(value = "/create/commodity/index",method = RequestMethod.GET)
     @ResponseBody
     public Result createIndex(){
         commoditySearchService.createAllCommodityDoc();
         return Result.success("索引创建成功");
     }
-    @RequestMapping(value = "/create/category/index",method = RequestMethod.GET)
-    @ResponseBody
-    public Result createCategoryIndex(){
-        categorySearchService.createAllCategoryDoc();
-        return Result.success("索引创建成功");
-    }*/
 }
