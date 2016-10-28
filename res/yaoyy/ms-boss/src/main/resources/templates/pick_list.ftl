@@ -20,18 +20,18 @@
             <div class="filter">
                 <form action="">
                     <label>采购单编号：</label>
-                    <input type="text" class="ipt" placeholder="请输入">
+                    <input type="text" name="code"class="ipt" placeholder="请输入">
                     <label>电话：</label>
-                    <input type="text" class="ipt" placeholder="商品名称">
+                    <input type="text" name="phone" class="ipt" placeholder="电话">
                     <label>状态：</label>
-                    <select name="" class="slt">
+                    <select name="status" class="slt">
                         <option value="">全部</option>
-                        <option value="">未处理</option>
-                        <option value="">已处理</option>
-                        <option value="">已发货</option>
-                        <option value="">已完成</option>
+                        <option value="0">未处理</option>
+                        <option value="1">已处理</option>
+                        <option value="2">已发货</option>
+                        <option value="3">已完成</option>
                     </select>
-                    <button class="ubtn ubtn-blue">搜索</button>
+                    <button type="button" id="search" class="ubtn ubtn-blue">搜索</button>
                 </form>
             </div>
 
@@ -51,61 +51,26 @@
                 </tr>
                 </thead>
                 <tbody>
+                <#list pickVoPageInfo.list as pick>
                 <tr>
                     <td><input type="checkbox" class="cbx"></td>
-                    <td>2016102511</td>
-                    <td>王先生</td>
-                    <td>18801285391</td>
-                    <td><em>未受理</em></td>
-                    <td>2016-05-18 15:22</td>
+                    <td>${pick.code}</td>
+                    <td>${pick.nickname}</td>
+                    <td>${pick.phone}</td>
+                    <td><em>${pick.statusText}</em></td>
+                    <td>${pick.createTime?string("yyyy-MM-dd HH:mm")}</td>
                     <td class="tc">
-                        <a href="pick_info.html" class="ubtn ubtn-blue jedit">查看详情</a>
-                        <a href="javascript:;" class="ubtn ubtn-gray jdel">废弃</a>
+                        <a href="pick/detail/${pick.id}" class="ubtn ubtn-blue jedit">查看详情</a>
+                        <a href="javascript:;" pid="${pick.id}"class="ubtn ubtn-gray jdel">废弃</a>
                     </td>
                 </tr>
-                <tr>
-                    <td><input type="checkbox" class="cbx"></td>
-                    <td>2016102511</td>
-                    <td>王先生</td>
-                    <td>18801285391</td>
-                    <td><em>未受理</em></td>
-                    <td>2016-05-18 15:22</td>
-                    <td class="tc">
-                        <a href="pick_info.html" class="ubtn ubtn-blue jedit">查看详情</a>
-                        <a href="javascript:;" class="ubtn ubtn-gray jdel">废弃</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="checkbox" class="cbx"></td>
-                    <td>2016102511</td>
-                    <td>王先生</td>
-                    <td>18801285391</td>
-                    <td><em>交易未完成</em></td>
-                    <td>2016-05-18 15:22</td>
-                    <td class="tc">
-                        <a href="pick_info.html" class="ubtn ubtn-blue jedit">查看详情</a>
-                        <a href="javascript:;" class="ubtn ubtn-gray jdel">废弃</a>
-                    </td>
-                </tr>
+                </#list>
                 </tbody>
             </table>
         </div>
 
-        <div class="pagination">
-            <div class="pages">
-                <a href="#" class="text">上页</a>
-                <span class="curr">1</span>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <i>...</i>
-                <a href="#">8</a>
-                <a href="#">9</a>
-                <a href="#" class="text">下页</a>
-            </div>
-            <div class="info">
-                显示第 1 至 10 项结果，共 <em id="pageSize">72</em> 项
-            </div>
-        </div>
+    <#import "./module/pager.ftl" as pager />
+    <@pager.pager info=pickVoPageInfo url="pick/list" params="" />
     </div>
 </div>
 
@@ -116,11 +81,13 @@
 <script>
     var _global = {
         v: {
-            deleteUrl: ''
+            deleteUrl: 'pick/delete/',
+            listUrl:'pick/list'
         },
         fn: {
             init: function() {
                 this.bindEvent();
+                $.fn.initByUrlParams();
             },
             bindEvent: function() {
                 var $table = $('.table'),
@@ -130,13 +97,13 @@
 
                 // 删除
                 $table.on('click', '.jdel', function() {
-                    var url = _global.v.deleteUrl + $(this).attr('href');
+                    var url = _global.v.deleteUrl + $(this).attr('pid');
                     layer.confirm('确认删除此品种？', {icon: 3, title: '提示'}, function (index) {
-                        $.get(url, function (data) {
-                            if (data.status == "y") {
+                        $.post(url, function (data) {
+                            if (data.status == "200") {
                                 window.location.reload();
                             }
-                        }, "json");
+                        });
                         layer.close(index);
                     });
                     return false; // 阻止链接跳转
@@ -156,6 +123,16 @@
                         _count += this.checked ? 1 : 0;
                     })
                     $checkAll.prop('checked', _count === count);
+                })
+                $("#search").on('click',function () {
+                    var $ipts = $('.filter .ipt, .filter select');
+                    var url=_global.v.listUrl+"?";
+                    var params = [];
+                    $ipts.each(function() {
+                        var val = $.trim(this.value);
+                        val && params.push($(this).attr('name') + '=' + val);
+                    })
+                    location.href=url+params.join('&');
                 })
             }
         }

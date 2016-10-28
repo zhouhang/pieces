@@ -18,11 +18,17 @@
             <result column="status"  property="status" />
             <result column="create_time"  property="createTime" />
             <result column="update_time"  property="updateTime" />
+            <result column="nickname"  property="nickname" />
+            <result column="phone"  property="phone" />
         
     </resultMap>
 
     <sql id="Base_Column_List">
         id,user_id,code,status,create_time,update_time
+    </sql>
+    <sql id="Join_Detail_Column_List">
+        p.id as id,p.user_id as user_id,p.code as code,p.status as status,ud.nickname as nickname,
+        ud.phone as phone,p.create_time as create_time,p.update_time as update_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="PickResultMap">
@@ -40,11 +46,19 @@
 
     <select id="findByParams" resultMap="PickResultMapVo" parameterType="com.ms.dao.vo.PickVo">
         select
-        <include refid="Base_Column_List" />
-        from pick
+        <include refid="Join_Detail_Column_List" />
+        from pick p
+        LEFT JOIN user_detail ud on p.user_id = ud.user_id
         <where>
-            <if test="id != null">
-                id = #{id}
+            p.status!=-1
+            <if test="code != null">
+               and  p.code = #{code}
+            </if>
+            <if test="phone!= null">
+               and  ud.phone = #{phone}
+            </if>
+            <if test="status!= null">
+                and  p.status= #{status}
             </if>
         </where>
     </select>

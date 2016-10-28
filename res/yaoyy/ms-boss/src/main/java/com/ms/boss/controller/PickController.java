@@ -1,13 +1,21 @@
 package com.ms.boss.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.ms.dao.model.Pick;
 import com.ms.dao.vo.PickVo;
+import com.ms.service.PickCommodityService;
 import com.ms.service.PickService;
+import com.ms.service.PickTrackingService;
+import com.ms.service.UserDetailService;
+import com.ms.tools.entity.Result;
+import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by xiao on 2016/10/28.
@@ -19,8 +27,19 @@ public class PickController {
     @Autowired
     private PickService pickService ;
 
+    @Autowired
+    private PickCommodityService pickCommodityService;
+
+    @Autowired
+    private PickTrackingService pickTrackingService;
+
+    @Autowired
+    private UserDetailService userDetailService;
+
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    private String list(PickVo pickVo, ModelMap model){
+    private String list(PickVo pickVo,Integer pageNum, Integer pageSize, ModelMap model){
+        PageInfo<PickVo> pickVoPageInfo = pickService.findByParams(pickVo, pageNum, pageSize);
+        model.put("pickVoPageInfo", pickVoPageInfo);
         return "pick_list";
     }
 
@@ -28,6 +47,17 @@ public class PickController {
     private String list(@PathVariable("id") Integer id,  ModelMap model){
         return "pick_detail";
     }
+
+    @RequestMapping(value="delete/{id}",method = RequestMethod.POST)
+    @ResponseBody
+    private Result delete(@PathVariable("id") Integer id){
+        Pick pick=new Pick();
+        pick.setId(id);
+        pick.setStatus(-1);
+        pickService.update(pick);
+        return Result.success().msg("操作成功");
+    }
+
 
 
 }
