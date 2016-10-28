@@ -98,7 +98,7 @@
                 <spring.dataSource.username>root</spring.dataSource.username>
                 <spring.dataSource.password>ycg20160401</spring.dataSource.password>
                 <doc.base.url>http://127.0.0.1:8189/</doc.base.url>
-                <pro.upload.path>E:\Program Files\Apache Software Foundation\Tomcat 8.5\webapps\ms-files\</pro.upload.path>
+                <pro.upload.path>E:/Program Files/Apache Software Foundation/Tomcat 8.5/webapps/ms-files/</pro.upload.path>
                 <pro.upload.url>http://127.0.0.1:8189/ms-files/</pro.upload.url>
                 <elasticsearch.host>127.0.0.1</elasticsearch.host>
                 <elasticsearch.port>9300</elasticsearch.port>
