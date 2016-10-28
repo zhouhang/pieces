@@ -55,7 +55,14 @@
                     <td class="tc">
                         <a href="special/edit/${special.id?c}" class="ubtn ubtn-blue jedit">编辑</a>
                         <a href="#" class="ubtn ubtn-gray jdel" sid="${special.id?c}">删除</a>
-                        <a href="#" class="ubtn ubtn-gray jputaway" sid="${special.id?c}" status="${special.status}">上架</a>
+                        <a href="#" class="ubtn ubtn-gray jputaway" sid="${special.id?c}" status="${special.status}">
+                            <#if special.status==0>
+                                上架
+                            <#else>
+                                下架
+                            </#if>
+
+                        </a>
                     </td>
                 </tr>
                 </#list>
@@ -78,7 +85,7 @@
         v: {
             deleteUrl: 'special/delete/',
             listUrl:'special/list',
-            updateUrl:'special/save'
+            updateUrl:'special/updateStatus'
         },
         fn: {
             init: function() {
@@ -96,7 +103,7 @@
                     var url = _global.v.deleteUrl+$(this).attr("sid");
                     layer.confirm('确认删除此品种？', {icon: 3, title: '提示'}, function (index) {
                         $.post(url, function (data) {
-                            if (data.status == "y") {
+                            if (data.status == "200") {
                                 layer.close(index);
                                 window.location.reload();
                             }
@@ -107,7 +114,7 @@
 
                 // 上架&下架
                 $table.on('click', '.jputaway', function() {
-                   var sid=$(this).attr("sid");
+                    var sid=$(this).attr("sid");
                     var status = $(this).attr("status");
                     var setStatus = 1;
                     if (status == 1) {
@@ -121,10 +128,9 @@
                             if (data.status == "200") {
                                 window.location.reload();
                             }
-                            layer.close(index);
                         }
                     });
-
+                    return false; // 阻止链接跳转
                 })
                 $search.on('click',function () {
                     var params = [];
@@ -132,7 +138,7 @@
                         var val = $.trim(this.value);
                         val && params.push($(this).attr('name') + '=' + val);
                     })
-                    location.href=_global.v.listUrl+params.join('&');
+                    location.href=_global.v.listUrl+'?'+params.join('&');
                 })
 
                 // 全选

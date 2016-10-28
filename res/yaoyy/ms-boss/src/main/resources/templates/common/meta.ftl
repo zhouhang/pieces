@@ -9,3 +9,4 @@
 <script src="assets/js/jquery191.js"></script>
 <script src="assets/plugins/layer/layer.js"></script>
 <script src="assets/js/common.js"></script>
+<#setting number_format="#">

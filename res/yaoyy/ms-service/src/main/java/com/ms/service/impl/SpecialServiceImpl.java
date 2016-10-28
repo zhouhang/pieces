@@ -14,6 +14,7 @@ import com.ms.dao.vo.SpecialVo;
 import com.ms.service.CommodityService;
 import com.ms.service.GradientService;
 import com.ms.service.SpecialService;
+import com.ms.tools.upload.PathConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +37,11 @@ public class SpecialServiceImpl  extends AbsCommonService<Special> implements Sp
 
 	@Autowired
 	private GradientService gradientService;
+
+	@Autowired
+	private PathConvert pathConvert;
+
+	private String folderName = "special/";
 
 
 	@Override
@@ -105,6 +111,16 @@ public class SpecialServiceImpl  extends AbsCommonService<Special> implements Sp
 		for(String id :specialVo.getCommodities().split(",")){
 			list.add(Integer.parseInt(id));
 		}
+		if(specialVo.getDescription()==null){
+			specialVo.setDescription("");
+		}
+		if (specialVo.getStatus()==null){
+			specialVo.setStatus(0);
+		}
+		specialVo.setPictuerUrl(pathConvert.saveFileFromTemp(specialVo.getPictuerUrl(),folderName));
+		if(specialVo.getSort()==null){
+			specialVo.setSort(0);
+		}
 		if (specialVo.getId()==null){
 			specialVo.setCreateTime(now);
 			specialVo.setUpdateTime(now);
@@ -129,6 +145,20 @@ public class SpecialServiceImpl  extends AbsCommonService<Special> implements Sp
 	@Override
 	public ICommonDao<Special> getDao() {
 		return specialDao;
+	}
+
+	@Override
+	@Transactional
+	public int deleteById(int id) {
+		specialCommodityDao.deleteBySpecialId(id);
+		return super.deleteById(id);
+	}
+
+	@Override
+	public Special findById(int id){
+		Special special=specialDao.findById(id);
+		special.setPictuerUrl(pathConvert.getUrl(special.getPictuerUrl()));
+		return special;
 	}
 
 }

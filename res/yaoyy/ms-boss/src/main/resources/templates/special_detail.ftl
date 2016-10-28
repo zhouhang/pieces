@@ -17,29 +17,40 @@
         </ul>
     </div>
 
-    <form action="" id="myform">
+    <form action="special/save" id="myform" method="post">
+        <input type="hidden"  class="ipt" value="${special.id?default('')}" name="id" id="cId">
         <div class="box fa-form">
             <div class="item">
                 <div class="txt"><i>*</i>标题：</div>
                 <div class="cnt">
-                    <input type="text" name="title" class="ipt" placeholder="标题" autocomplete="off">
+                    <input type="text" name="title" value="${special.title?default('')}" class="ipt" placeholder="标题" autocomplete="off">
                 </div>
             </div>
             <div class="item">
                 <div class="txt"><i>*</i>专场图片：</div>
                 <div class="cnt cnt-mul">
                     <div class="up-img" id="">
+                        <#if special.pictuerUrl??>
+                            <img src="${special.pictuerUrl?default('')}"><i class="del">
+                        </#if>
                         <!-- <img src="images/blank.gif"><i class="del"></i> -->
                     </div>
-                    <input type="hidden" value="" name="imgUrl" id="imgUrl">
+                    <input type="hidden" value="${special.pictuerUrl?default('')}" name="pictuerUrl" id="imgUrl">
                 </div>
             </div>
             <div class="item">
                 <div class="txt"><i>*</i>添加商品：</div>
                 <div class="cnt">
-                    <div id="chooseGoods"><!-- <span>紫藤叶过56号筛 一等品<i></i></span> --></div>
+                    <div id="chooseGoods">
+                      <#if commodities??>
+                        <#list commodities as commodity>
+                            <span>${commodity.name}  ${commodity.spec}<i></i></span>
+                        </#list>
+                      </#if>
+
+                    </div>
                     <input type="text" name="search" id="searchGoods" class="ipt" placeholder="商品名称" autocomplete="off">
-                    <input type="hidden" name="goodsName" id="goodsName">
+                    <input type="hidden" name="commodities" id="goodsName" value="${ids?default('')}">
                     <div class="cnt-table hide" id="goodsSuggestions">
                         <table>
                             <thead>
@@ -55,7 +66,7 @@
                 </div>
             </div>
             <div class="ft">
-                <button type="submit" class="ubtn ubtn-blue" id="jsubmit">保存</button>
+                <button type="button" class="ubtn ubtn-blue" id="jsubmit">保存</button>
             </div>
         </div>
     </form>
@@ -72,7 +83,8 @@
 <script>
     var _global = {
         v: {
-            deleteUrl: ''
+            searchComodityUrl:'commodity/search',
+            saveUrl:'special/save'
         },
         fn: {
             init: function() {
@@ -120,8 +132,8 @@
             },
             croppic: function() {
                 var options = {
-                    uploadUrl:'img_save_to_file.php',
-                    cropUrl:'img_crop_to_file.php',
+                    uploadUrl: '/gen/upload',
+                    cropUrl: '/gen/clipping',
                     outputUrlId:'imgUrl',
                     imgEyecandyOpacity:0.5,
                     loaderHtml:'<span class="loader">正在上传图片，请稍后...</span>',
@@ -147,15 +159,15 @@
                 $("#myform").validator({
                     fields: {
                         title: '标题: required',
-                        imgUrl: '专场图片: required',
-                        goodsName: '商品: required'
+                        pictuerUrl: '专场图片: required',
+                        commodities: '商品: required'
                     }
                 });
             },
             // 查询商品
             searchGoods: function() {
                 var self = this;
-                vals = [],
+                vals = [${ids?default('')}],
                         timer = 0,
                         $goodsSuggestions = $('#goodsSuggestions');
 
@@ -163,14 +175,15 @@
                     timer && clearTimeout(timer);
                     timer = setTimeout(function() {
                         $.ajax({
-                            url: 'json/goods.json',
+                            url: _global.v.searchComodityUrl,
                             data: {name: val},
+                            type:"POST",
                             success: function(response) {
                                 var html = [''];
-                                if (response && response.status === 'y') {
+                                if (response && response.status == '200') {
                                     $.each(response.data, function(i, item) {
                                         var className = self.inArray(item.id, vals) ? 'checked' : 'items'
-                                        html.push('<tr class="' + className + '" data-pname="' + (item.name + item.norms) + '"data-id="' + item.id + '"><td>' + item.name + '</td><td>' + item.norms + '</td><td>' + item.price + '</td></tr>');
+                                        html.push('<tr class="' + className + '" data-pname="' + (item.name + item.spec) + '"data-id="' + item.id + '"><td>' + item.name + '</td><td>' + item.spec + '</td><td>' + item.price + '</td></tr>');
                                     })
                                 } else {
                                     html.push('<tr><td colspan="3">未查询到商品，请重新输入</td></tr>');
@@ -195,6 +208,19 @@
 
                 $('body').on('click', function() {
                     $goodsSuggestions.hide();
+                })
+
+                $("#jsubmit").on('click',function(){
+                    $.ajax({
+                        url: _global.v.saveUrl,
+                        type: "POST",
+                        data: $("#myform").serialize(),
+                        success: function(data) {
+                            if (data.status == "200") {
+                                location.href="special/list"
+                            }
+                        }
+                    })
                 })
 
                 // 添加商品
