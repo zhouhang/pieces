@@ -119,7 +119,7 @@ public class SendSampleController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "detete/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
     @ResponseBody
     public Result delete(@PathVariable("id") Integer id) {
         SendSample sendSample=new SendSample();
