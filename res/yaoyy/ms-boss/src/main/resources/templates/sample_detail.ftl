@@ -127,15 +127,27 @@
             <input type="hidden"  class="ipt" value="${sampleAdderss.id?default('')}" name="id">
             <div class="item" id="jgoosList">
                 <div class="txt">寄样商品：</div>
-               <#list sendSampleVo.commodityList as commodity>
                 <div class="cnt">
-                    <input type="text" name="intention" value="${commodity.name} ${commodity.origin} ${commodity.spec}" cid="${commodity.id}" id="goods1" class="ipt" placeholder="" autocomplete="off">
-                    <#if commodity_index==(sendSampleVo.commodityList?size-1)>
-                        <button type="button" class="ubtn ubtn-blue ml" id="jaddNewGoods">添加一行</button>
-                    </#if>
-
+                    <div id="chooseGoods">
+                        <#list sendSampleVo.commodityList  as commodity>
+                            <span>${commodity.name} ${commodity.origin} ${commodity.spec}<i data-id="${commodity.id}"></i></span>
+                        </#list>
+                    </div>
+                    <input type="text" name="search" id="searchGoods" class="ipt" placeholder="商品名称" autocomplete="off">
+                    <input type="hidden" name="intention" id="goodsName" value="${sendSampleVo.intention?default('')}">
+                    <div class="cnt-table hide" id="goodsSuggestions">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>名称</th>
+                                <th>产地</th>
+                                <th>规格</th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
                 </div>
-               </#list>
             </div>
             <div class="item">
                 <div class="txt">收货地址：</div>
@@ -267,52 +279,94 @@
                 this.submitEvent();
             },
             // 查询品种
-            searchProduct: function($ele) {
-                $ele.autocomplete({
-                    serviceUrl:_global.v.searchComodityUrl,
-                    paramName: 'name',
-                    type:'POST',
-                    deferRequestBy: 100,
-                    showNoSuggestionNotice: true,
-                    noSuggestionNotice: '没有该品种',
-                    transformResult: function (response) {
-                        response = JSON.parse(response);
-                        if (response.status == "200") {
-                            return {
-                                suggestions: $.map(response.data, function (dataItem) {
-                                    return {value: dataItem.name+" "+dataItem.origin+" "+dataItem.spec, data: dataItem.id};
-                                })
-                            };
-                        } else {
-                            return {
-                                suggestions: []
-                            }
-                        }
-                    },
-                    onSelect: function (suggestion) {
-                    }
-                });
-            },
             myform: function() {
 
-                var self = this,
-                        $jgoosList = $('#jgoosList'),
-                        idx = $jgoosList.find('.cnt').length;
+                var self = this;
+                vals = [${sendSampleVo.intention?default('')}],
+                        timer = 0,
+                        $goodsSuggestions = $('#goodsSuggestions');
+
+                var ajaxSearch = function(val) {
+                    timer && clearTimeout(timer);
+                    timer = setTimeout(function() {
+                        $.ajax({
+                            url: _global.v.searchComodityUrl,
+                            data: {name: val},
+                            type:"POST",
+                            success: function(response) {
+                                var html = [''];
+                                if (response && response.status == '200') {
+                                    $.each(response.data, function(i, item) {
+                                        var className = self.inArray(item.id, vals) ? 'checked' : 'items'
+                                        html.push('<tr class="' + className + '" data-pname="' + (item.name +' '+item.origin+' '+ item.spec) + '"data-id="' + item.id + '"><td>' + item.name + '</td><td>' + item.origin + '</td><td>' + item.spec+ '</td></tr>');
+                                    })
+                                } else {
+                                    html.push('<tr><td colspan="3">未查询到商品，请重新输入</td></tr>');
+                                }
+                                $goodsSuggestions.show().find('tbody').html(html.join(''));
+                            },
+                            error: function() {
+                                $goodsSuggestions.show().find('tbody').html('<tr><td colspan="3">网络错误</td></tr>');
+                            }
+                        })
+                    }, 300);
+                }
+
+                $('#searchGoods').on('input', function() {
+                    var val = this.value;
+                    if (val) {
+                        ajaxSearch(val);
+                    } else {
+                        $goodsSuggestions.hide();
+                    }
+                })
+
+                $('body').on('click', function() {
+                    $goodsSuggestions.hide();
+                })
+
 
                 // 添加商品
-                $('#jaddNewGoods').on('click', function() {
-                    $jgoosList.append('<div class="cnt"> \n <div class="ipt-wrap"><input type="text" name="intention' + '" id="goods' + (++idx) + '" class="ipt" autocomplete="off"></div> \n <button type="button" class="ubtn ubtn-red ml">删除</button> \n </div>');
-                    self.searchProduct($('#goods' + idx));
+                $goodsSuggestions.on('click', '.items', function() {
+                    var pname = $(this).data('pname'),
+                            id = $(this).data('id');
+
+                    if (self.inArray(id, vals)) {
+                        $.notify({
+                            type: 'error',
+                            title: '商品添加失败',
+                            text: '此商品已在添加列表',
+                            delay: 3e3
+                        });
+                    } else {
+                        vals.push(id);
+                        $('#chooseGoods').show().append('<span>' + pname + '<i data-id="' + id + '"></i></span>');
+                        $('#goodsName').val(vals.join(','));
+                        $('#searchGoods').val(''); // 清空输入框
+                        $goodsSuggestions.hide();
+                    }
+                }).on('click', 'table', function() {
+                    return false;
                 })
 
-                // 删除价格
-                $jgoosList.on('click', '.ubtn-red', function(){
-                    $(this).prev().find('.ipt').autocomplete('dispose');
+                // 删除商品
+                $('#chooseGoods').on('click', 'i', function() {
+                    var id = $(this).data('id');
                     $(this).parent().remove();
+                    self.inArray(id, vals, true); // 删除当前id
+                    $('#goodsName').val(vals.join(','));
                 })
-
-                self.searchProduct($('#goods1'));
-
+            },
+            inArray: function(needle, array, del) {
+                if (typeof needle == 'string' || typeof needle == 'number') {
+                    for (var i in array) {
+                        if (array[i] == needle) {
+                            del && array.splice(i, 1);
+                            return true;
+                        }
+                    }
+                }
+                return false;
             },
             // 提交事件
             submitEvent: function() {

@@ -23,6 +23,8 @@ public class SendSampleVo extends SendSample{
     //寄样商品列表
     private List<Commodity> commodityList;
 
+    private String intentionText;
+
     public String getIntentionText() {
         intentionText="";
         if (commodityList!=null) {
@@ -37,7 +39,7 @@ public class SendSampleVo extends SendSample{
         this.intentionText = intentionText;
     }
 
-    private String intentionText;
+
 
 
     public List<Commodity> getCommodityList() {

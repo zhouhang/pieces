@@ -44,7 +44,7 @@
                     <div id="chooseGoods">
                       <#if commodities??>
                         <#list commodities as commodity>
-                            <span>${commodity.name}  ${commodity.spec}<i></i></span>
+                            <span>${commodity.name}  ${commodity.spec}<i data-id="${commodity.id}"></i></span>
                         </#list>
                       </#if>
 

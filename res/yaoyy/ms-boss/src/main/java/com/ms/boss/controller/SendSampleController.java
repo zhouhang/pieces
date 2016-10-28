@@ -139,8 +139,12 @@ public class SendSampleController {
 
     @RequestMapping(value = "addressSave",method=RequestMethod.POST)
     @ResponseBody
-    public Result addressSave(SampleAddress address){
+    public Result addressSave(SampleAddress address,String intention){
         sampleAddressServie.save(address);
+        SendSample sendSample=new SendSample();
+        sendSample.setId(address.getSendId());
+        sendSample.setIntention(intention);
+        sendSampleService.update(sendSample);
         return Result.success().msg("保存成功");
     }
 
