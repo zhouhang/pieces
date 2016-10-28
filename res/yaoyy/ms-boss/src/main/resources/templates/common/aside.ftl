@@ -40,6 +40,18 @@
     <dl>
         <dt>
             <a href="javascript:;">
+                <i class="fa fa-truck"></i>
+                <span>选货单管理</span>
+                <i class="fa fa-angle-down arrow"></i>
+            </a>
+        </dt>
+        <dd>
+            <a href="/pick/list"><i class="fa fa-circle-o"></i>选货单列表</a>
+        </dd>
+    </dl>
+    <dl>
+        <dt>
+            <a href="javascript:;">
                 <i class="fa fa-cart-plus"></i>
                 <span>商品管理</span>
                 <i class="fa fa-angle-down arrow"></i>
