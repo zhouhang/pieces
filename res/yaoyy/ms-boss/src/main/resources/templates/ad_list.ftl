@@ -21,6 +21,7 @@
                 <form action="">
                     <label>类型：</label>
                     <select name="typeId" class="slt">
+                        <option value="">全部</option>
                         <#list types as type>
                             <option value="${type.id}">${type.name}</option>
                         </#list>
