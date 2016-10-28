@@ -46,4 +46,10 @@ public class CategoryController {
         // 参数
         return Result.success().data(pageInfo);
     }
+    @RequestMapping(value = "search", method = RequestMethod.GET)
+    public String searchPage() {
+        return "category_search";
+    }
+
+
 }

@@ -43,6 +43,9 @@ public class CategoryServiceImpl  extends AbsCommonService<Category> implements 
 		pageSize = pageSize==null?10:pageSize;
     	PageHelper.startPage(pageNum, pageSize);
     	List<CategoryVo>  list = categoryDao.findByParams(categoryVo);
+		list.forEach(category->{
+			category.setPictureUrl(pathConvert.getUrl(category.getPictureUrl()));
+		});
         PageInfo page = new PageInfo(list);
         return page;
 	}
@@ -55,7 +58,11 @@ public class CategoryServiceImpl  extends AbsCommonService<Category> implements 
 
 	@Override
 	public List<CategoryVo> searchCategory(CategoryVo categoryVo) {
-		return categoryDao.findByParams(categoryVo);
+		List<CategoryVo> categoryVoList=categoryDao.findByParams(categoryVo);
+		categoryVoList.forEach(category->{
+			category.setPictureUrl(pathConvert.getUrl(category.getPictureUrl()));
+		});
+		return categoryVoList ;
 	}
 
 	@Override
