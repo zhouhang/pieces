@@ -22,7 +22,8 @@ upload:
 
 logging:
     level:
-        com.ms: DEBUG
+        com:
+          ms: DEBUG
 
 server:
     error:
@@ -31,3 +32,10 @@ server:
 
 sms:
   apikey: 49a8a3011d2eb2734a5e88938bea8c1e
+
+
+wechat:
+    mp:
+      appid: wxa7f10cbf0dc060b9
+      secret: fe68a821107c34bf9863348831e26755
+      token: E10ADC3949BA59ABBE56E057F20F883E

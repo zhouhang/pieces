@@ -44,4 +44,21 @@ public class WebUtil {
         }
     }
 
+
+    public static void print(HttpServletResponse response,String data){
+        try {
+            // 设置响应头
+            response.setContentType("text/html"); // 指定内容类型为 JSON 格式
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.setCharacterEncoding(ENCODING); // 防止中文乱码
+            // 向响应中写入数据
+            PrintWriter writer = response.getWriter();
+            writer.write(data); // 转为 JSON 字符串
+            writer.flush();
+            writer.close();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
