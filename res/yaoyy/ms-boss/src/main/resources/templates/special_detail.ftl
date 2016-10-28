@@ -65,6 +65,21 @@
                     </div>
                 </div>
             </div>
+            <div class="item">
+                <div class="txt">排序：</div>
+                <div class="cnt">
+                    <input type="text" value="${special.sort?default('')}" name="sort" class="ipt" placeholder="数字越大越靠前" autocomplete="off">
+                </div>
+            </div>
+            <div class="item">
+                <div class="txt">上/下架：</div>
+                <div class="cnt">
+                    <select name="status" id="status" class="slt">
+                        <option value="1"<#if special.status??&&special.status==1 >selected</#if>>上架</option>
+                        <option value="0" <#if special.status??&&special.status==0 >selected</#if>>下架</option>
+                    </select>
+                </div>
+            </div>
             <div class="ft">
                 <button type="button" class="ubtn ubtn-blue" id="jsubmit">保存</button>
             </div>
