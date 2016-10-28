@@ -10,7 +10,7 @@
         </dt>
         <dd>
             <a href="special/list"><i class="fa fa-circle-o"></i>专场列表</a>
-            <a href="adv_list.html"><i class="fa fa-circle-o"></i>广告列表</a>
+            <a href="ad/list"><i class="fa fa-circle-o"></i>广告列表</a>
         </dd>
     </dl>
     <dl>
