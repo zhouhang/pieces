@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ms.dao.PickCommodityDao">
+    <resultMap id="PickCommodityResultMap" type="com.ms.dao.model.PickCommodity">
+            <id column="id"  property="id" />
+            <result column="order_id"  property="orderId" />
+            <result column="commodity_id"  property="commodityId" />
+            <result column="num"  property="num" />
+            <result column="unit"  property="unit" />
+            <result column="total"  property="total" />
+            <result column="create_time"  property="createTime" />
+        
+    </resultMap>
+
+    <resultMap id="PickCommodityResultMapVo" type="com.ms.dao.vo.PickCommodityVo">
+            <id column="id"  property="id" />
+            <result column="order_id"  property="orderId" />
+            <result column="commodity_id"  property="commodityId" />
+            <result column="num"  property="num" />
+            <result column="unit"  property="unit" />
+            <result column="total"  property="total" />
+            <result column="create_time"  property="createTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,order_id,commodity_id,num,unit,total,create_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="PickCommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from pick_commodity
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="PickCommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from pick_commodity
+    </select>
+
+    <select id="findByParams" resultMap="PickCommodityResultMapVo" parameterType="com.ms.dao.vo.PickCommodityVo">
+        select
+        <include refid="Base_Column_List" />
+        from pick_commodity
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from pick_commodity
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.PickCommodity">
+        insert into
+        pick_commodity (order_id,commodity_id,num,unit,total,create_time)
+        values
+        (#{orderId},#{commodityId},#{num},#{unit},#{total},#{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.ms.dao.model.PickCommodity">
+        update pick_commodity
+        <set>
+                                                        
+            <if test="orderId != null">
+                order_id = #{orderId},
+            </if>
+                                            
+            <if test="commodityId != null">
+                commodity_id = #{commodityId},
+            </if>
+                                            
+            <if test="num != null">
+                num = #{num},
+            </if>
+                                            
+            <if test="unit != null">
+                unit = #{unit},
+            </if>
+                                            
+            <if test="total != null">
+                total = #{total},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

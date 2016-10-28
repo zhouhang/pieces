@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ms.dao.ArticleDao">
+    <resultMap id="ArticleResultMap" type="com.ms.dao.model.Article">
+            <id column="id"  property="id" />
+            <result column="title"  property="title" />
+            <result column="content"  property="content" />
+            <result column="url"  property="url" />
+            <result column="status"  property="status" />
+            <result column="create_mem"  property="createMem" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_mem"  property="updateMem" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <resultMap id="ArticleResultMapVo" type="com.ms.dao.vo.ArticleVo">
+            <id column="id"  property="id" />
+            <result column="title"  property="title" />
+            <result column="content"  property="content" />
+            <result column="url"  property="url" />
+            <result column="status"  property="status" />
+            <result column="create_mem"  property="createMem" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_mem"  property="updateMem" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,title,content,url,status,create_mem,create_time,update_mem,update_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="ArticleResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from article
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="ArticleResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from article
+    </select>
+
+    <select id="findByParams" resultMap="ArticleResultMapVo" parameterType="com.ms.dao.vo.ArticleVo">
+        select
+        <include refid="Base_Column_List" />
+        from article
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from article
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.Article">
+        insert into
+        article (title,content,url,status,create_mem,create_time,update_mem,update_time)
+        values
+        (#{title},#{content},#{url},#{status},#{createMem},#{createTime},#{updateMem},#{updateTime})
+    </insert>
+
+    <update id="update" parameterType="com.ms.dao.model.Article">
+        update article
+        <set>
+                                                        
+            <if test="title != null">
+                title = #{title},
+            </if>
+                                            
+            <if test="content != null">
+                content = #{content},
+            </if>
+                                            
+            <if test="url != null">
+                url = #{url},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                                            
+            <if test="createMem != null">
+                create_mem = #{createMem},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="updateMem != null">
+                update_mem = #{updateMem},
+            </if>
+                                            
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

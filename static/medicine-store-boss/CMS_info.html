@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>文章详情-boss</title>
+    <meta name="renderer" content="webkit" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+  	<link rel="stylesheet" href="assets/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class='wrapper'>
+
+	<div class="header">
+		<div class="logo">
+			<a href="index.html">药优优</a>
+		</div>
+		<div class="menu">
+			<ul>
+				<li>
+					<a href="#" class="dropdown-toggle"> <i class="fa fa-question-circle"></i> 帮助 </a>
+				</li>
+				<li class="dropdown user user-menu">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-user"></i>
+						<span class="hidden-xs">王彬</span>
+					</a>
+				</li>
+				<li>
+					<a href="/logout">
+						<i class="fa fa-power-off"></i>
+						退出
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<!-- 侧栏菜单 -->
+	<div class="aside" id="jaside"></div>
+
+	<div class="content">
+		<div class="breadcrumb">
+			<ul>
+                <li>CMS管理</li>
+                <li>文章详情</li>
+    		</ul>
+		</div>
+		
+		<form action="" id="myform">
+			<div class="box fa-form">
+				<div class="item">
+					<div class="txt"><i>*</i>标题：</div>
+					<div class="cnt">
+						<input type="text" name="title" class="ipt" placeholder="标题" autocomplete="off">
+					</div>
+				</div>
+                <div class="item">
+                    <div class="txt">
+                        <i>*</i>详细信息：
+                    </div>
+                    <div class="cnt cnt-mul">
+                        <img width="700" height="400" src="uploads/editor.jpg" alt="">
+                    </div>
+                </div>
+				<div class="ft">
+					<button type="submit" class="ubtn ubtn-blue" id="jsubmit">保存</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<div class="footer">
+		<div class="inner">
+			&copy; <a href="#!">速采科技（武汉）有限公司</a> 版权所有. 
+		</div>
+	</div>
+	
+<script src="assets/js/jquery191.js"></script>
+<script src="assets/js/common.js"></script>
+<script src="assets/plugins/layer/layer.js"></script>
+<script src="assets/plugins/validator/jquery.validator.min.js"></script>
+<script>
+	var _global = {
+		v: {
+			deleteUrl: ''
+		},
+		fn: {
+			init: function() {
+                this.validator();
+			},
+            validator: function() {
+            	// 表单验证
+                $("#myform").validator({
+                    fields: {
+                    	title: '标题: required',
+                    	imgUrl: '专场图片: required',
+                    	goodsName: '商品: required'
+                    }
+                });
+            }
+		}
+	}
+
+	$(function() {
+		_global.fn.init();
+	})
+</script>
+</body>
+</html>

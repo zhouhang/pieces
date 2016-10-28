@@ -39,7 +39,9 @@ public class UploadServiceImpl implements UploadService {
         } else {
             try {
                 FileBo fileBo = tempUploadFile.uploadFile(img.getOriginalFilename(), img.getInputStream());
-                BufferedImage sourceImg = ImageIO.read(new FileInputStream(fileBo.getFile()));
+                FileInputStream fs=new FileInputStream(fileBo.getFile());
+                BufferedImage sourceImg = ImageIO.read(fs);
+                fs.close();
                 cropResult = CropResult.success(fileBo.getUrl(),sourceImg.getWidth(),sourceImg.getHeight());
             } catch (Exception e) {
                 logger.error(e.getMessage());

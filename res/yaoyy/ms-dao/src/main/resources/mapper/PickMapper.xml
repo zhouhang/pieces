@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ms.dao.PickDao">
+    <resultMap id="PickResultMap" type="com.ms.dao.model.Pick">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="code"  property="code" />
+            <result column="status"  property="status" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <resultMap id="PickResultMapVo" type="com.ms.dao.vo.PickVo">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="code"  property="code" />
+            <result column="status"  property="status" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,code,status,create_time,update_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="PickResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from pick
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="PickResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from pick
+    </select>
+
+    <select id="findByParams" resultMap="PickResultMapVo" parameterType="com.ms.dao.vo.PickVo">
+        select
+        <include refid="Base_Column_List" />
+        from pick
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from pick
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.Pick">
+        insert into
+        pick (user_id,code,status,create_time,update_time)
+        values
+        (#{userId},#{code},#{status},#{createTime},#{updateTime})
+    </insert>
+
+    <update id="update" parameterType="com.ms.dao.model.Pick">
+        update pick
+        <set>
+                                                        
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+                                            
+            <if test="code != null">
+                code = #{code},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

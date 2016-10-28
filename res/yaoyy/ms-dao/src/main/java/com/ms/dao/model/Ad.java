@@ -32,6 +32,7 @@ public class Ad  implements Serializable {
 	
 	private Integer updateMem;
 
+	// 0 禁用 1启用
 	private Integer status;
 	
 	public Ad(){}

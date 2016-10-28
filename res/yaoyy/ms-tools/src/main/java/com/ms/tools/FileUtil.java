@@ -5,9 +5,7 @@ import com.google.common.io.Files;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * 文件工具类
@@ -42,6 +40,8 @@ public class FileUtil {
         if (file.exists()) {
             throw new RuntimeException("该文件已存在!");
         }
+        OutputStream out = new FileOutputStream(file);
+        // TODO:资源保存后会出现资源诶JAVA虚拟机占用的情况
         Files.createParentDirs(file);
         Files.write(ByteStreams.toByteArray(inputStream), file);
 //        inputStream.close();

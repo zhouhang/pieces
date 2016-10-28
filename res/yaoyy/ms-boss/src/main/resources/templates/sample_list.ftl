@@ -97,7 +97,7 @@
 <script>
     var _global = {
         v: {
-            deleteUrl: '/sample/detete/',
+            deleteUrl: '/sample/delete/',
         },
         fn: {
             init: function() {
