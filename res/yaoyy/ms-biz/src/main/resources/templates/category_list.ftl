@@ -74,6 +74,7 @@
                         $.ajax({
                             type: 'POST',
                             url: _global.v.dataUrl,
+                            data:{variety:'${variety?default('')}'},
                             dataType: 'json',
                             success: function(data){
                                 if (!data.data.list) {
@@ -105,7 +106,7 @@
                         $.ajax({
                             type: 'POST',
                             url: _global.v.dataUrl,
-                            data:{pageNum:pageNum},
+                            data:{pageNum:pageNum,variety:'${variety?default('')}'},
                             dataType: 'json',
                             success: function(data){
                                 if (!data.data.list) {

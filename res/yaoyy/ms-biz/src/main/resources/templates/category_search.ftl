@@ -11,7 +11,7 @@
             <a href="javascript:history.back();" class="fa fa-back"></a>
         </div>
         <div class="form">
-            <form action="categroy/list">
+            <form action="category/list">
                 <input type="text" name="variety" id="keyword" class="ipt" placeholder="请输入原药材品种名称" autocomplete="off">
                 <button type="submit" id="submit" class="fa fa-search submit mid"></button>
             </form>

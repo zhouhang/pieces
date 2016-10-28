@@ -26,7 +26,8 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    public String listPage() {
+    public String listPage(String variety,ModelMap model) {
+        model.put("variety",variety);
         return "category_list";
     }
 
