@@ -35,8 +35,10 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     @Autowired
     private ElasticsearchTemplate esTemplate;
 
+    private boolean debug = true;
     @Override
     public CommodityDoc save(Commodity commodity) {
+        if (debug) return null;
         CommodityVo commodityVO = commodityService.findById(commodity.getId());
         CommodityDoc commodityDoc =  vo2doc(commodityVO);
         commoditySearchRepository.save(commodityDoc);
@@ -46,6 +48,7 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
 
     @Override
     public void createAllCommodityDoc() {
+        if (debug) return;
         List<CommodityDoc> commodityDocList = new ArrayList<>();
         for(int i=1;;i++){
             PageInfo<CommodityVo> commodityVoPageInfo = commodityService.findVoByPage(50,i);
@@ -64,6 +67,7 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
 
     @Override
     public void deleteByCommodityId(Integer commodityId) {
+        if (debug) return;
         commoditySearchRepository.delete(commodityId);
     }
 
@@ -73,6 +77,7 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
 
     @Override
     public List<CommodityDoc> findByCommodityName(String commodityName) {
+        if (debug) return null;
         SearchQuery nameSearchQuery = new NativeSearchQueryBuilder()
                 .withQuery(matchQuery("name",commodityName))
                 .withPageable(new PageRequest(0,10)).build();
