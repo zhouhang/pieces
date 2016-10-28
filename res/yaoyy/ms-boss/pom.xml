@@ -146,7 +146,6 @@
                     <exclude>static/assets/awesome/fonts/**</exclude>
                 </excludes>
             </resource>
-
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>false</filtering>

@@ -1558,3 +1558,33 @@
   width:73px;
   white-space:nowrap;
 }
+#u4482_div {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:57px;
+  height:16px;
+  background:inherit;
+  background-color:rgba(255, 255, 255, 0);
+  border:none;
+  border-radius:0px;
+  -moz-box-shadow:none;
+  -webkit-box-shadow:none;
+  box-shadow:none;
+  color:#FF0000;
+}
+#u4482 {
+  position:absolute;
+  left:82px;
+  top:300px;
+  width:57px;
+  height:16px;
+  color:#FF0000;
+}
+#u4483 {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:57px;
+  white-space:nowrap;
+}

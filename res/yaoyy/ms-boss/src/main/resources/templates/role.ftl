@@ -31,6 +31,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th><input type="checkbox"></th>
                         <th>编号</th>
                         <th>角色名称</th>
                         <th>创建时间</th>
@@ -41,13 +42,15 @@
                 <tbody>
                 <#list rolePage.list as role>
                     <tr>
+                        <td><input type="checkbox" value="${role.id}"></td>
                         <td>${role.id}</td>
                         <td>${role.name}</td>
                         <td>${role.name}</td>
                         <td>${role.name}</td>
-                        <td>
+                        <td class="tc">
                             <@shiro.hasPermission name="role:edit">
                                 <a href="role/power/${role.id}" class="ubtn ubtn-blue jedit">配置</a>
+                                <a href="javascript:;"  class="ubtn ubtn-gray jdel" roleId="${role.id}">删除</a>
                             </@shiro.hasPermission>
                         </td>
                     </tr>
@@ -63,47 +66,56 @@
     <#include "./common/footer.ftl"/>
 
     <script>
-    //定义根变量
-    !(function($) {
-        var page = {
-            //定义全局变量区
+        var _global = {
             v: {
-                id: "page",
-                pageNum:${rolePage.pageNum},
-                pageSize:${rolePage.pageSize}
+                deleteUrl: '/role/delete/',
             },
-            //定义方法区
             fn: {
-                //初始化方法区
-                init: function () {
-                    page.fn.filter();
-                    $("#search_btn").click(function(){
-                        page.fn.filter();
-                    })
+                init: function() {
+                    this.bindEvent();
                 },
-                // 筛选
-                filter: function() {
-                    var $ipts = $('.chart .ipt, .chart select');
-                    var url="/role/index?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
+                bindEvent: function() {
+                    var $table = $('.table'),
+                            $cbx = $table.find('td input:checkbox'),
+                            $checkAll = $table.find('th input:checkbox'),
+                            count = $cbx.length;
 
-                    $('#search_btn').on('click', function() {
-                        var params = [];
-                        $ipts.each(function() {
-                            var val = $.trim(this.value);
-                            val && params.push($(this).attr('name') + '=' + val);
+                    // 删除
+                    $table.on('click', '.jdel', function() {
+                        var url = _global.v.deleteUrl + $(this).attr('roleId');
+                        layer.confirm('确认删除此账户？', {icon: 3, title: '提示'}, function (index) {
+                            $.get(url, function (data) {
+                                if (data.status == 200) {
+                                    window.location.reload();
+                                }
+                            }, "json");
+                            layer.close(index);
+                        });
+                        return false; // 阻止链接跳转
+                    })
+
+                    // 全选
+                    $checkAll.on('click', function() {
+                        var isChecked = this.checked;
+                        $cbx.each(function() {
+                            this.checked = isChecked;
                         })
-                        location.href=url+"&"+params.join('&');
+                    })
+                    // 单选
+                    $cbx.on('click', function() {
+                        var _count = 0;
+                        $cbx.each(function() {
+                            _count += this.checked ? 1 : 0;
+                        })
+                        $checkAll.prop('checked', _count === count);
                     })
                 }
             }
         }
-        //加载页面js
-        $(function() {
-            page.fn.init();
-        });
-    })(jQuery);
 
-        
+        $(function() {
+            _global.fn.init();
+        })
     </script>
 </body>
 </html>

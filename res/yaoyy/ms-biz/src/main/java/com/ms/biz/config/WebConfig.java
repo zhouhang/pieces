@@ -64,6 +64,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
 
 
+
     /**
      * 配置多视图
      * @return

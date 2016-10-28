@@ -8,10 +8,9 @@ import com.ms.dao.model.RoleMember;
 import com.ms.dao.vo.MemberVo;
 import com.ms.dao.vo.RoleVo;
 import com.ms.service.*;
-import com.ms.service.constant.bean.Result;
+import com.ms.tools.entity.Result;
 import com.ms.tools.utils.Reflection;
 import com.ms.tools.utils.WebUtil;
-import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +18,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -75,27 +75,7 @@ public class RoleController extends BaseController{
         return "role";
     }
 
-    /**
-     * 角色编辑
-     * @param request
-     * @param response
-     * @param id
-     * @param model
-     * @return
-     */
-    @RequiresPermissions(value = "role:edit")
-    @RequestMapping(value = "/info/{id}")
-    public String info(HttpServletRequest request,
-                       HttpServletResponse response,
-                       @PathVariable("id") Integer id,
-                       ModelMap model){
 
-        if(id!=null){
-            Role role =  roleService.findById(id);
-            model.put("role",role);
-        }
-        return "role-info";
-    }
 
     /**
      * 新增角色
@@ -109,7 +89,7 @@ public class RoleController extends BaseController{
     public String add(HttpServletRequest request,
                       HttpServletResponse response,
                       ModelMap model){
-        return "role-info";
+        return "role-list";
     }
 
     /**
@@ -140,16 +120,14 @@ public class RoleController extends BaseController{
      * @param response
      */
     @RequestMapping(value = "/resources")
-    public void resources(HttpServletRequest request,
+    @ResponseBody
+    public List resources(HttpServletRequest request,
                           HttpServletResponse response,
                           Integer roleId,
-                            String rolename){
+                          String rolename){
         List<Resources> resourcesList = resourcesService.findAll();
-
         List<Map<String,Object>> resultList = new ArrayList<>();
-
         List<Integer> resourcesIds = roleResourcesService.findResourcesByRole(roleId);
-
         for(Resources resources : resourcesList){
             Map<String,Object> map = new HashMap<>();
             map.put("id",resources.getId());
@@ -159,13 +137,12 @@ public class RoleController extends BaseController{
             if(resourcesIds.contains(resources.getId())){
                 map.put("checked",true);
             }
-
-            if(rolename == null || (rolename != null&&resources.getName().contains(rolename))){
+            if(rolename == null || (resources.getName().contains(rolename))){
                 resultList.add(map);
             }
-
         }
-        WebUtil.printJson(response,resultList);
+
+        return resultList;
     }
 
 
@@ -178,56 +155,19 @@ public class RoleController extends BaseController{
      */
     @RequiresPermissions(value = "role:power")
     @RequestMapping(value = "/resources/save")
-    public void resourcesSave(HttpServletRequest request,
-                              HttpServletResponse response,
-                              Integer roleId,
-                              @RequestParam(value="resourcesIds[]",required = false)Integer[] resourcesIds){
-        roleResourcesService.updateRoleResources(roleId,resourcesIds);
+    @ResponseBody
+    public Result resourcesSave(HttpServletRequest request,
+                                HttpServletResponse response,
+                                Integer roleId,
+                                String roleName,
+                                @RequestParam(value="resourcesIds[]",required = false)Integer[] resourcesIds){
+        roleResourcesService.updateRoleResources(roleId,resourcesIds,roleName);
         bossRealm.removeAuthorizationCacheInfo();
-        WebUtil.print(response,new Result(true).info("权限保存成功!"));
-    }
-
-    /**
-     * 保存角色信息
-     * @param request
-     * @param response
-     */
-    @RequiresPermissions(value = {"role:add","role:edit"} ,logical = Logical.OR)
-    @RequestMapping(value = "/save")
-    public String save(HttpServletRequest request,
-                     HttpServletResponse response,
-                     Role role){
-        String message = null;
-        if(role.getId()==null){
-            message="角色添加成功!";
-            roleService.add(role);
-        }else{
-            message="角色修改成功!";
-            roleService.update(role);
-        }
-        return "redirect:/role/index";
+        return Result.success("权限保存成功!").data(roleId);
     }
 
 
-    /**
-     * 用户拥有那些角色
-     * @param request
-     * @param response
-     */
-    @RequestMapping(value = "/member")
-    public void roleAll(HttpServletRequest request,
-                        HttpServletResponse response,
-                        Integer memberId){
 
-        List<RoleMember> roleMemberList= roleMemberService.findByMemberId(memberId);
-        List<Map<String,Object>> mapList = new ArrayList<>();
-        for(RoleMember roleMember : roleMemberList){
-            Map<String,Object> map = new HashMap<>();
-            map.put("id",roleMember.getRoleId());
-            mapList.add(map);
-        }
-        WebUtil.print(response,mapList);
-    }
 
 
     /**
@@ -267,14 +207,14 @@ public class RoleController extends BaseController{
      * @return
      */
     @RequiresPermissions(value = "role:delete")
-    @RequestMapping(value = "delete")
-    public String delete(HttpServletRequest request,
+    @RequestMapping(value = "delete/{roleId}")
+    @ResponseBody
+    public Result delete(HttpServletRequest request,
                          HttpServletResponse response,
                          ModelMap model,
-                         Integer roleId){
+                         @PathVariable("roleId") Integer roleId){
         roleService.deleteRole(roleId);
-        model.put("advices","删除角色成功");
-        return "redirect:/role/index";
+        return Result.success();
     }
 
 
