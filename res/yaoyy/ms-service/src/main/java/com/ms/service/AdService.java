@@ -17,4 +17,13 @@ public interface AdService extends ICommonService<Ad>{
      * @return
      */
     public List<AdVo> findByType(Integer typeId);
+
+    public void save(Ad ad);
+
+    /**
+     * 改变广告状态
+     * @param id
+     * @param status
+     */
+    public void changeStatus(Integer id, Integer status);
 }

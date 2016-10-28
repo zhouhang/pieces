@@ -37,7 +37,10 @@ public class PathConvert {
      * @return
      */
     public String getUrl(String path) {
-        return path.replace(this.path, url);
+        if (path != null) {
+            path = path.replace(this.path, url);
+        }
+        return path;
     }
 
     /**
@@ -49,6 +52,10 @@ public class PathConvert {
      * @throws IOException
      */
     public String saveFileFromTemp(String url, String direct) {
+        if (url == null) {
+            return null;
+        }
+
         // 判断url中不包含temp 直接return null
         if (!url.contains("temp/")) {
             url = url.replace(this.url, path);

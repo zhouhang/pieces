@@ -16,11 +16,18 @@
     </resultMap>
 
     <resultMap id="AdResultMapVo" type="com.ms.dao.vo.AdVo" extends="AdResultMap">
-
+        <result column="adTypeName"  property="adTypeName" />
     </resultMap>
 
     <sql id="Base_Column_List">
         id,type_id,name,href,sort,picture_url,create_time,update_time,create_mem,update_mem,status
+    </sql>
+
+    <sql id="Base_Column_List_Alisa">
+        ad.id as id,ad.type_id as type_id, ad.name as name,ad.href as href,
+        ad.sort as sort, ad.picture_url as picture_url,ad.create_time as create_time,
+        ad.update_time as update_time, ad.create_mem as create_mem,ad.update_mem as update_mem,
+        ad.status as status
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="AdResultMap">
@@ -38,17 +45,19 @@
 
     <select id="findByParams" resultMap="AdResultMapVo" parameterType="com.ms.dao.vo.AdVo">
         select
-        <include refid="Base_Column_List" />
-        from ad
+        <include refid="Base_Column_List_Alisa" />,
+        adt.name as adTypeName
+        from ad as ad
+        LEFT JOIN ad_type adt ON ad.type_id = adt.id
         <where>
             <if test="id != null">
-                id = #{id}
+                ad.id = #{id}
             </if>
             <if test="status != null">
-                and status = #{status}
+                and ad.status = #{status}
             </if>
             <if test="typeId != null">
-                and type_id = #{typeId}
+                and ad.type_id = #{typeId}
             </if>
         </where>
         ORDER BY sort DESC
