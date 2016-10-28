@@ -10,7 +10,7 @@
             <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-user"></i>
-                    <span class="hidden-xs">${member_session_boss.username }</span>
+                    <span class="hidden-xs">${member_session_boss.username}</span>
                 </a>
             </li>
             <li>

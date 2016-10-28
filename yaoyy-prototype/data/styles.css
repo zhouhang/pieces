@@ -64,6 +64,8 @@
 }
 .line {
 }
+.arrow {
+}
 .text_field {
   color:#000000;
   text-align:left;
@@ -78,6 +80,9 @@
 ._流程形状 {
 }
 .sticky_1 {
+  text-align:left;
+}
+.sticky_2 {
   text-align:left;
 }
 .marker {
@@ -102,6 +107,8 @@
 .shape {
 }
 .box_1 {
+}
+.box_3 {
 }
 .box_2 {
 }
