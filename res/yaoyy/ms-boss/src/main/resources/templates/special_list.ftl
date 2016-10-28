@@ -77,9 +77,6 @@
 
 <#include "./common/footer.ftl"/>
 
-<script src="assets/js/jquery191.js"></script>
-<script src="assets/js/common.js"></script>
-<script src="assets/plugins/layer/layer.js"></script>
 <script>
     var _global = {
         v: {
