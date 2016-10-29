@@ -1,5 +1,6 @@
 package com.ms.biz.controller;
 
+import com.ms.tools.utils.WebUtil;
 import me.chanjar.weixin.mp.api.WxMpService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -24,9 +25,9 @@ public class WechatController {
     @Autowired
     private WxMpService wxService;
 
-    @RequestMapping(path ="init" ,method = RequestMethod.GET ,produces = "text/html;charset=utf-8")
+    @RequestMapping(path ="init" ,method = RequestMethod.GET )
     @ResponseBody
-    public String authGet(HttpServletResponse response,
+    public void authGet(HttpServletResponse response,
             @RequestParam(name = "signature", required = false) String signature,
             @RequestParam(name = "timestamp", required = false) String timestamp,
             @RequestParam(name = "nonce", required = false) String nonce,
@@ -36,19 +37,21 @@ public class WechatController {
             throw new IllegalArgumentException("请求参数非法，请核实~");
         }
         if (this.wxService.checkSignature(timestamp, nonce, signature)) {
-            return echostr;
+            WebUtil.print(response,echostr);
         }
+        WebUtil.print(response,"非法请求");
 
-        return "非法请求";
     }
 
 
-    @RequestMapping(path ="info" ,method = RequestMethod.GET ,produces = "text/html;charset=utf-8")
-    @ResponseBody
-    public String authGet(HttpServletResponse response) {
-
-
-        return "hao123";
+    @RequestMapping("login")
+    public String testLogin(){
+        return "testweichat";
     }
+
+
+
+
+
 
 }

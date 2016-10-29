@@ -16,6 +16,10 @@ elasticsearch:
          host: @elasticsearch.host@
          port: @elasticsearch.port@
 
+doc:
+   base:
+       url: @doc.base.url@
+
 upload:
     path: @pro.upload.path@
     url: @pro.upload.url@
