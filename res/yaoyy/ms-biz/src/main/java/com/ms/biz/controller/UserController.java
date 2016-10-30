@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -71,7 +73,8 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "login", method = RequestMethod.POST)
-    public String login(String phone, String password, ModelMap model) {
+    public String login(String phone, String password, ModelMap model, HttpServletRequest request) {
+        String url = "/";
         try {
             // 登陆验证
             Subject subject = SecurityUtils.getSubject();
@@ -79,10 +82,14 @@ public class UserController {
             userService.login(subject, token);
         } catch (Exception e) {
             model.put("error", e.getMessage());
-            return "login";
+            url =  "login";
         }
+        String preUrl = WebUtils.getSavedRequest(request).getRequestUrl();
 
-        return "redirect:/index";
+        if (preUrl != null) {
+            url = preUrl;
+        }
+        return "redirect:" +url;
     }
 
     /**

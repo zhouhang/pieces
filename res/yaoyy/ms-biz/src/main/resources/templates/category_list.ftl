@@ -15,36 +15,7 @@
     </div>
 </header><!-- /ui-header -->
 
-<footer class="ui-footer">
-    <nav class="ui-nav">
-        <ul>
-            <li>
-                <a href="/index">
-                    <i class="fa fa-home"></i>
-                    <span>首页</span>
-                </a>
-            </li>
-            <li>
-                <a class="current" href="category/list">
-                    <i class="fa fa-list"></i>
-                    <span>品种列表</span>
-                </a>
-            </li>
-            <li>
-                <a href="center.html">
-                    <i class="fa fa-cart"></i>
-                    <span>采购单</span>
-                </a>
-            </li>
-            <li>
-                <a href="center.html">
-                    <i class="fa fa-order"></i>
-                    <span>订单</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</footer>
+<#include "./common/navigation.ftl">
 
 <section class="ui-content">
     <div class="plist" id="categroyList">
@@ -137,7 +108,7 @@
                 var html = [];
                 $.each(data, function(i, item) {
                     html.push('<li>\n');
-                    html.push( '<a href="' + "product_detail.html" + '">\n');
+                    html.push( '<a href="/commodity/detail/' + data[i].id + '">\n');
                     html.push(     '<div class="cnt">\n');
                     html.push(         '<div class="title">', data[i].variety, '</div>\n');
                     html.push(         '<div class="summary">', data[i].title, '</div>\n');
