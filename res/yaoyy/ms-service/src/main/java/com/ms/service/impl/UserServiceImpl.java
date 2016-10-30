@@ -6,7 +6,9 @@ import com.ms.dao.ICommonDao;
 import com.ms.dao.UserDao;
 import com.ms.dao.enums.UserEnum;
 import com.ms.dao.model.User;
+import com.ms.dao.model.UserDetail;
 import com.ms.dao.vo.UserVo;
+import com.ms.service.UserDetailService;
 import com.ms.service.UserService;
 import com.ms.service.enums.RedisEnum;
 import com.ms.service.redis.RedisManager;
@@ -20,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,6 +30,9 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private UserDetailService userDetailService;
+
 
 	@Autowired
 	private SmsUtil smsUtil;
@@ -50,6 +56,10 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 	@Override
 	public UserVo findByPhone(String phone) {
             return userDao.findByPhone(phone);
+	}
+
+	public UserVo findByOpenId(String openId){
+		return userDao.findByOpenId(openId);
 	}
 
 	@Override
@@ -126,6 +136,27 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 		user.setType(UserEnum.enable.getType());
 		create(user);
 	}
+
+	@Override
+	@Transactional
+	public User registerWechat(String phone, String openId, String nickname, String headImgUrl) {
+		User user = new User();
+		user.setPhone(phone);
+		user.setOpenid(openId);
+		user.setType(UserEnum.enable.getType());
+		user.setCreateTime(new Date());
+		user.setUpdateTime(new Date());
+		create(user);
+		UserDetail userDetail = new UserDetail();
+		userDetail.setUserId(user.getId());
+		userDetail.setPhone(phone);
+		userDetail.setNickname(nickname);
+		userDetail.setType(UserEnum.enable.getType());
+		userDetailService.save(userDetail);
+
+		return user;
+	}
+
 
 	@Override
 	public void sendRegistSms(String phone) {

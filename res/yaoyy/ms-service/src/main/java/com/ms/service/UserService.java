@@ -8,9 +8,13 @@ import org.apache.shiro.subject.Subject;
 
 public interface UserService extends ICommonService<User>{
 
+
+    String DEF_PASSWORD = "yaoyy98744";
+
     public PageInfo<UserVo> findByParams(UserVo userVo,Integer pageNum,Integer pageSize);
 
     public UserVo findByPhone(String phone);
+    public UserVo findByOpenId(String openId);
 
     public UserVo findById(Integer id);
 
@@ -24,8 +28,13 @@ public interface UserService extends ICommonService<User>{
 
     public void register(String phone, String code, String password);
 
+
+    public User registerWechat(String phone,String openId,String nickname,String headImgUrl);
+
     public void sendRegistSms(String phone);
 
     public void sendLoginSms(String phone);
+
+
 
 }

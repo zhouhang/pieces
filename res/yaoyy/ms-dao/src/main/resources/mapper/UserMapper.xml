@@ -118,4 +118,11 @@
         from user
         where phone= #{phone}
     </select>
+
+    <select id="findByOpenId" resultMap="UserResultMapVo">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where openId= #{openId}
+    </select>
 </mapper>

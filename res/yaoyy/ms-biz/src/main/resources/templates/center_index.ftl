@@ -41,13 +41,10 @@
 </footer>
 
 <section class="ui-content">
-    ${baseUrl}
     <ul>
         <li>
-            <a id="wechatLogin" class="current" href="javascript:;"       >
-                <i class="fa fa-home"></i>
-                <span>登陆按钮</span>
-            </a>
+
+            <h1>用户中心</h1>
         </li>
     </ul>
 
@@ -63,9 +60,6 @@
                 this.slide();
 
 
-                $("#wechatLogin").click(function(){
-                    alert("is:"+is_weixin());
-                })
 
             },
             slide: function() {

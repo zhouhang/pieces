@@ -23,7 +23,7 @@ public class UserDetailServiceImpl  extends AbsCommonService<UserDetail> impleme
 
 	@Override
 	public PageInfo<UserDetailVo> findByParams(UserDetailVo userDetailVo,Integer pageNum,Integer pageSize) {
-    PageHelper.startPage(pageNum, pageSize);
+    	PageHelper.startPage(pageNum, pageSize);
     	List<UserDetailVo>  list = userDetailDao.findByParams(userDetailVo);
         PageInfo page = new PageInfo(list);
         return page;

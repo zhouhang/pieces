@@ -12,5 +12,7 @@ public interface UserDao extends ICommonDao<User>{
 
     public UserVo findByPhone(String phone);
 
+    public UserVo findByOpenId(String openId);
+
 
 }
