@@ -6,7 +6,6 @@
 </head>
 
 <body>
-    403
-
+    无权限访问
 </body>
 </html>

@@ -3,7 +3,6 @@ package com.ms.biz.shiro;
 import com.ms.service.redis.RedisManager;
 import com.ms.service.shiro.MsShiroFilterFactoryBean;
 import com.ms.service.shiro.ShiroRedisCacheManager;
-import me.chanjar.weixin.mp.api.WxMpService;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -23,10 +22,6 @@ import java.util.Map;
 @Configuration
 @AutoConfigureAfter(RedisConfig.class)
 public class ShiroConfiguration {
-
-
-
-
 
     private static Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
 
@@ -78,8 +73,6 @@ public class ShiroConfiguration {
         BizAuthorizationFilter biz = new BizAuthorizationFilter();
         return biz;
     }
-
-
 
     @Bean(name = "shiroFilter")
     public MsShiroFilterFactoryBean getMsShiroFilterFactoryBean() {
