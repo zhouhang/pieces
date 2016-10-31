@@ -134,6 +134,7 @@ public class UserController {
             User user = userService.loginSms(phone, code);
             Subject subject = SecurityUtils.getSubject();
             BizToken token = new BizToken(phone, user.getPassword(), false, null, "");
+            token.setValidationCode(code);
             userService.login(subject, token);
         } catch (Exception e) {
             model.put("error",e.getMessage());

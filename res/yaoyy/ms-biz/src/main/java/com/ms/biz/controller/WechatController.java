@@ -77,17 +77,13 @@ public class WechatController {
 
     /**
      * 跳转到微信登陆页面（绑定微信和手机号）
-     * @param request
-     * @param response
      * @param call
      * @param code
      * @param model
      * @return
      */
     @RequestMapping("login")
-    public String login(HttpServletRequest request,
-                        HttpServletResponse response,
-                        String call,
+    public String login(String call,
                         String code,
                         ModelMap model){
         try {
@@ -95,7 +91,7 @@ public class WechatController {
             WxMpUser wxMpUser = wxService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
             User user = userService.findByOpenId(wxMpUser.getOpenId());
             if(user!=null){
-                autoLogin(request,response,user);
+                autoLogin(user);
                 return "redirect:"+call;
             }
             model.put("headImgUrl",wxMpUser.getHeadImgUrl());
@@ -111,8 +107,6 @@ public class WechatController {
 
     /**
      * 通过页面表单信息注册用户并登陆
-     * @param response
-     * @param request
      * @param callUrl
      * @param phone
      * @param code
@@ -123,36 +117,27 @@ public class WechatController {
      * @throws Exception
      */
     @RequestMapping("bind")
-    public String bindPhone(HttpServletResponse response,
-                            HttpServletRequest request,
-                            String callUrl,
+    public String bindPhone(String callUrl,
                             String phone,
                             String code,
                             String openId,
                             String nickname,
                             String headImgUrl)throws Exception{
         User user =userService.registerWechat(phone, openId, nickname, headImgUrl);
-        autoLogin(request,response,user);
+        autoLogin(user);
         return "redirect:"+callUrl;
     }
 
 
     /**
      * 实现shiro自动登录(并未绑定到redis)
-     * @param request
-     * @param response
      * @param user
      */
-    public void autoLogin(HttpServletRequest request,
-                          HttpServletResponse response,
-                          User user){
-        PrincipalCollection principals = new SimplePrincipalCollection(
-                user.getId(), "MobileRealm");
-        WebSubject.Builder builder = new WebSubject.Builder(request, response);
-        builder.principals(principals);
-        builder.authenticated(true);
-        WebSubject subject = builder.buildWebSubject();
-        ThreadContext.bind(subject);
+    public void autoLogin(User user){
+        Subject subject = SecurityUtils.getSubject();
+        BizToken token = new BizToken(user.getPhone(), user.getPassword(), false, null, "");
+        token.setOpenId(user.getOpenid());
+        userService.login(subject, token);
     }
 
 

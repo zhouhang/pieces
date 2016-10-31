@@ -3,7 +3,11 @@ package com.ms.biz.shiro;
 import com.ms.dao.model.User;
 import com.ms.dao.vo.UserVo;
 import com.ms.service.UserService;
+import com.ms.service.dto.Password;
+import com.ms.service.enums.RedisEnum;
+import com.ms.service.redis.RedisManager;
 import com.ms.service.shiro.SerializableSimpleAuthenticationInfo;
+import com.ms.service.utils.EncryptUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -27,6 +31,9 @@ public class BizRealm extends AuthorizingRealm {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private RedisManager redisManager;
 	
 	private Set<Permission> addCommonPermissions(Set<Permission> permissions){
 		
@@ -52,12 +59,19 @@ public class BizRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authToken) throws AuthenticationException {
 		BizToken token = (BizToken) authToken;
-		User user = null;
+
+		User user = userService.findByPhone(token.getUsername());
 		if(token.getOpenId()!=null){
-			user = userService.findByOpenId(token.getOpenId());
-		}else{
-			user = userService.findByPhone(token.getUsername());
+			Password pass = EncryptUtil.PiecesEncode(user.getOpenid());
+			user.setPassword(pass.getPassword());
+			user.setSalt(pass.getSalt());
+		} else if (token.getValidationCode() != null ){
+			String code = redisManager.get(RedisEnum.KEY_MOBILE_CAPTCHA_LOGIN.getValue()+user.getPhone());
+			Password pass = EncryptUtil.PiecesEncode(code);
+			user.setPassword(pass.getPassword());
+			user.setSalt(pass.getSalt());
 		}
+		// 从session 中取出验证码
 
 		if(user == null){
 			throw new AuthenticationException();

@@ -81,6 +81,13 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
      * @return
      */
     private boolean match(AuthenticationToken token, AuthenticationInfo info){
+        if (token instanceof BizToken) {
+            BizToken bizToken = (BizToken)token;
+           if (bizToken.getValidationCode() != null || bizToken.getOpenId() != null){
+               return true;
+           }
+        }
+
     	String salt = "";
         if(info instanceof SaltedAuthenticationInfo){
         	ByteSource bs = ((SaltedAuthenticationInfo)info).getCredentialsSalt();
@@ -90,6 +97,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
                 e.printStackTrace();
             }
         }
+
         Password passObj = EncryptUtil.PiecesEncode(new String((char[])token.getCredentials()), salt);
         String tokenHashedCredentials = passObj.getPassword();
         String infoHashCredentials = (String)info.getCredentials();
