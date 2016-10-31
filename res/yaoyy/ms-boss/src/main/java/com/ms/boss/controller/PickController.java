@@ -2,11 +2,11 @@ package com.ms.boss.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.ms.dao.model.Pick;
+import com.ms.dao.model.UserDetail;
+import com.ms.dao.vo.CommodityVo;
+import com.ms.dao.vo.PickCommodityVo;
 import com.ms.dao.vo.PickVo;
-import com.ms.service.PickCommodityService;
-import com.ms.service.PickService;
-import com.ms.service.PickTrackingService;
-import com.ms.service.UserDetailService;
+import com.ms.service.*;
 import com.ms.tools.entity.Result;
 import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by xiao on 2016/10/28.
@@ -36,6 +39,9 @@ public class PickController {
     @Autowired
     private UserDetailService userDetailService;
 
+    @Autowired
+    private CommodityService commodityService;
+
     @RequestMapping(value = "list", method = RequestMethod.GET)
     private String list(PickVo pickVo,Integer pageNum, Integer pageSize, ModelMap model){
         PageInfo<PickVo> pickVoPageInfo = pickService.findByParams(pickVo, pageNum, pageSize);
@@ -45,6 +51,18 @@ public class PickController {
 
     @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
     private String list(@PathVariable("id") Integer id,  ModelMap model){
+        PickVo pickVo=pickService.findVoById(id);
+        List<PickCommodityVo> pickCommodityVos=pickCommodityService.findByPickId(id);
+        StringBuilder ids = new StringBuilder();
+        pickCommodityVos.forEach(p->{
+            ids.append(p.getCommodityId()).append(",");
+        });
+        pickVo.setCommodityList(commodityService.findByIds(ids.substring(0,ids.length()-1)));
+        UserDetail userDetail=userDetailService.findByUserId(pickVo.getUserId());
+
+        
+        model.put("pickVo",pickVo);
+        model.put("userDetail",userDetail);
         return "pick_detail";
     }
 
@@ -53,6 +71,7 @@ public class PickController {
     private Result delete(@PathVariable("id") Integer id){
         Pick pick=new Pick();
         pick.setId(id);
+        //废弃
         pick.setStatus(-1);
         pickService.update(pick);
         return Result.success().msg("操作成功");

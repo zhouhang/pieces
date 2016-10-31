@@ -26,6 +26,13 @@ public class PickCommodityServiceImpl  extends AbsCommonService<PickCommodity> i
         return page;
 	}
 
+	@Override
+	public List<PickCommodityVo> findByPickId(Integer pickId) {
+		PickCommodityVo pickCommodityVo=new PickCommodityVo();
+		pickCommodityVo.setPickId(pickId);
+		return pickCommodityDao.findByParams(pickCommodityVo);
+	}
+
 
 	@Override
 	public ICommonDao<PickCommodity> getDao() {

@@ -7,4 +7,6 @@ import com.ms.dao.vo.PickVo;
 public interface PickService extends ICommonService<Pick>{
 
     public PageInfo<PickVo> findByParams(PickVo pickVo,Integer pageNum,Integer pageSize);
+
+    public PickVo findVoById(Integer id);
 }

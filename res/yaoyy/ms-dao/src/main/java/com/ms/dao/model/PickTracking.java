@@ -19,7 +19,7 @@ public class PickTracking  implements Serializable {
 	//记录类型，同意/拒绝/记录/完成
 	private Integer recordType;
 	
-	private Integer orderId;
+	private Integer pickId;
 	
 	//同意理由，拒绝理由，记录内容等附加内容
 	private String extra;
@@ -61,15 +61,16 @@ public class PickTracking  implements Serializable {
 	public void setRecordType(Integer recordType) {
 		this.recordType = recordType;
 	}
-	
-	public Integer getOrderId() {
-		return orderId;
+
+
+	public Integer getPickId() {
+		return pickId;
 	}
 
-	public void setOrderId(Integer orderId) {
-		this.orderId = orderId;
+	public void setPickId(Integer pickId) {
+		this.pickId = pickId;
 	}
-	
+
 	public String getExtra() {
 		return extra;
 	}

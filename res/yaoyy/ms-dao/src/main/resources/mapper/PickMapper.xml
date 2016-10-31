@@ -20,6 +20,7 @@
             <result column="update_time"  property="updateTime" />
             <result column="nickname"  property="nickname" />
             <result column="phone"  property="phone" />
+            <result column="area"  property="area" />
         
     </resultMap>
 
@@ -28,7 +29,7 @@
     </sql>
     <sql id="Join_Detail_Column_List">
         p.id as id,p.user_id as user_id,p.code as code,p.status as status,ud.nickname as nickname,
-        ud.phone as phone,p.create_time as create_time,p.update_time as update_time
+        ud.phone as phone,ud.area as area,p.create_time as create_time,p.update_time as update_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="PickResultMap">
@@ -102,4 +103,12 @@
         </set>
         where id = #{id}
     </update>
+    <select id="findVoById" parameterType="java.lang.Integer" resultMap="PickResultMapVo">
+        select
+        <include refid="Join_Detail_Column_List" />
+        from pick p
+        LEFT JOIN user_detail ud on p.user_id = ud.user_id
+        where p.id = #{id}
+    </select>
+
 </mapper>

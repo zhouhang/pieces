@@ -10,4 +10,6 @@ public interface PickDao extends ICommonDao<Pick>{
 
     public List<PickVo> findByParams(PickVo pickVo);
 
+    public PickVo findVoById(Integer id);
+
 }

@@ -10,7 +10,7 @@ public class PickCommodity  implements Serializable {
 	
 	private Integer id;
 	
-	private Integer orderId;
+	private Integer pickId;
 	
 	private Integer commodityId;
 	
@@ -31,15 +31,15 @@ public class PickCommodity  implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	public Integer getOrderId() {
-		return orderId;
+
+	public Integer getPickId() {
+		return pickId;
 	}
 
-	public void setOrderId(Integer orderId) {
-		this.orderId = orderId;
+	public void setPickId(Integer pickId) {
+		this.pickId = pickId;
 	}
-	
+
 	public Integer getCommodityId() {
 		return commodityId;
 	}

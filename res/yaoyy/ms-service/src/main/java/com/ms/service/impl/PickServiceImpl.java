@@ -31,6 +31,11 @@ public class PickServiceImpl  extends AbsCommonService<Pick> implements PickServ
         return page;
 	}
 
+	@Override
+	public PickVo findVoById(Integer id) {
+		return pickDao.findVoById(id);
+	}
+
 
 	@Override
 	public ICommonDao<Pick> getDao() {
