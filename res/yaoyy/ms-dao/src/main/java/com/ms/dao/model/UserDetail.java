@@ -30,7 +30,9 @@ public class UserDetail  implements Serializable {
 	
 	//user表id
 	private Integer userId;
-	
+
+	private String headImgUrl;
+
 	private Date createTime;
 	
 	private Date updateTime;
@@ -116,5 +118,12 @@ public class UserDetail  implements Serializable {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	
+
+	public String getHeadImgUrl() {
+		return headImgUrl;
+	}
+
+	public void setHeadImgUrl(String headImgUrl) {
+		this.headImgUrl = headImgUrl;
+	}
 }

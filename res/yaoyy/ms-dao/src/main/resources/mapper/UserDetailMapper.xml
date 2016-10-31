@@ -10,6 +10,7 @@
             <result column="name"  property="name" />
             <result column="remark"  property="remark" />
             <result column="user_id"  property="userId" />
+            <result column="head_img_url"  property="headImgUrl" />
             <result column="create_time"  property="createTime" />
             <result column="update_time"  property="updateTime" />
         
@@ -23,14 +24,14 @@
             <result column="area"  property="area" />
             <result column="name"  property="name" />
             <result column="remark"  property="remark" />
+            <result column="head_img_url"  property="headImgUrl" />
             <result column="user_id"  property="userId" />
             <result column="create_time"  property="createTime" />
             <result column="update_time"  property="updateTime" />
-        
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,type,nickname,phone,area,name,remark,user_id,create_time,update_time
+        id,type,nickname,phone,area,name,head_img_url,remark,user_id,create_time,update_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="UserDetailResultMap">
@@ -64,9 +65,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.UserDetail">
         insert into
-        user_detail (type,nickname,phone,area,name,remark,user_id,create_time,update_time)
+        user_detail (type,nickname,phone,area,name,head_img_url,remark,user_id,create_time,update_time)
         values
-        (#{type},#{nickname},#{phone},#{area},#{name},#{remark},#{userId},#{createTime},#{updateTime})
+        (#{type},#{nickname},#{phone},#{area},#{name},${headImgUrl},#{remark},#{userId},#{createTime},#{updateTime})
     </insert>
 
     <update id="update" parameterType="com.ms.dao.model.UserDetail">
@@ -92,9 +93,13 @@
             <if test="name != null">
                 name = #{name},
             </if>
-                                            
-            <if test="remark != null">
-                remark = #{remark},
+
+            <if test="name != null">
+                name = #{name},
+            </if>
+
+            <if test="headImgUrl != null">
+                head_img_url = #{remark},
             </if>
                                             
             <if test="userId != null">
