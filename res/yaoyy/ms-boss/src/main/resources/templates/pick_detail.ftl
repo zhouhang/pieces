@@ -18,28 +18,28 @@
     <div class="box fa-form fa-form-info">
         <div class="hd">用户信息</div>
         <div class="item">
-            <div class="txt">20161014001</div>
-            <div class="val">20161014001</div>
+            <div class="txt">送货单编号</div>
+            <div class="val">${pickVo.code}</div>
         </div>
         <div class="item">
             <div class="txt">用户姓名：</div>
-            <div class="val">王先生</div>
+            <div class="val">${pickVo.nickname}</div>
         </div>
         <div class="item">
             <div class="txt">手机号：</div>
-            <div class="val">18801285391</div>
+            <div class="val">${pickVo.phone}</div>
         </div>
         <div class="item">
             <div class="txt">地区：</div>
-            <div class="val">安徽亳州</div>
+            <div class="val">${pickVo.area}</div>
         </div>
         <div class="item">
             <div class="txt">申请时间：</div>
-            <div class="val">2016-05-18 15:22</div>
+            <div class="val">${(pickVo.createTime?datetime)!}</div>
         </div>
         <div class="item">
             <div class="txt">状态：</div>
-            <div class="val status-1">未受理</div>
+            <div class="val status-${pickVo.status+1}">${pickVo.statusText}</div>
         </div>
     </div>
 
@@ -58,26 +58,20 @@
             </tr>
             </thead>
             <tbody>
+            <#list pickVo.pickCommodityVoList as pickCommodityVo >
             <tr>
-                <td>茯苓</td>
-                <td>云南</td>
-                <td>2级货，过4号筛，直径0.8cm以内</td>
-                <td>10公斤</td>
-                <td>50元/公斤</td>
-                <td>500元</td>
+                <td>${pickCommodityVo.name}</td>
+                <td>${pickCommodityVo.origin}</td>
+                <td>${pickCommodityVo.spec}</td>
+                <td>${pickCommodityVo.num}</td>
+                <td>${pickCommodityVo.price}</td>
+                <td>${pickCommodityVo.total}</td>
             </tr>
-            <tr>
-                <td>茯苓</td>
-                <td>云南</td>
-                <td>2级货，过4号筛，直径0.8cm以内</td>
-                <td>10公斤</td>
-                <td>50元/公斤</td>
-                <td>500元</td>
-            </tr>
+            </#list>
             </tbody>
             <tfoot>
             <td colspan="6">
-                <div class="total">合计：<em>800元</em></div>
+                <div class="total">合计：<em>${pickVo.total}元</em></div>
             </td>
             </tfoot>
         </table>
@@ -87,53 +81,54 @@
     <div class="box fa-form">
         <div class="hd">客户信息</div>
         <form id="myform">
+            <input type="hidden"  class="ipt" value="${userDetail.id?default('')}" name="id">
             <div class="item">
                 <div class="txt">个人称呼：</div>
                 <div class="cnt">
-                    <input type="text" name="username" class="ipt" placeholder="" autocomplete="off">
+                    <input type="text" value="${userDetail.nickname?default('')}" name="nicknam" class="ipt" placeholder="" autocomplete="off">
                 </div>
             </div>
             <div class="item">
                 <div class="txt">联系电话：</div>
                 <div class="cnt">
-                    <input type="text" name="mobile" class="ipt" placeholder="" autocomplete="off">
+                    <input type="text"  value="${userDetail.phone?default('')}" name="phone" class="ipt" placeholder="" autocomplete="off">
                 </div>
             </div>
             <div class="item">
                 <div class="txt">地区：</div>
                 <div class="cnt">
-                    <input type="text" name="region" class="ipt" placeholder="" autocomplete="off">
+                    <input type="text"  value="${userDetail.area?default('')}"  name="area" class="ipt" placeholder="" autocomplete="off">
                 </div>
             </div>
             <div class="item">
                 <div class="txt">身份类型：</div>
                 <div class="cnt cbxs">
-                    <label><input type="radio" name="type" class="cbx">饮片厂</label>
-                    <label><input type="radio" name="type" class="cbx">药厂</label>
-                    <label><input type="radio" name="type" class="cbx">药材经营公司</label>
-                    <label><input type="radio" name="type" class="cbx">个体经营户</label>
-                    <label><input type="radio" name="type" class="cbx">合作社</label>
-                    <label><input type="radio" name="type" class="cbx">种植基地</label>
-                    <label><input type="radio" name="type" class="cbx">其他</label>
-                    <label><input type="radio" name="type" class="cbx">个人经营</label>
-                    <label><input type="radio" name="type" class="cbx">采购经理</label>
-                    <label><input type="radio" name="type" class="cbx">销售经理</label>
+                    <label><input type="radio" name="type" class="cbx" value="1" <#if userDetail.type?exists && userDetail.type==1> checked</#if> >饮片厂</label>
+                    <label><input type="radio" name="type" class="cbx" value="2" <#if userDetail.type?exists && userDetail.type==2> checked</#if>>药厂</label>
+                    <label><input type="radio" name="type" class="cbx" value="3" <#if userDetail.type?exists && userDetail.type==3> checked</#if>>药材经营公司</label>
+                    <label><input type="radio" name="type" class="cbx" value="4" <#if userDetail.type?exists && userDetail.type==4> checked</#if>>个体经营户</label>
+                    <label><input type="radio" name="type" class="cbx" value="5" <#if userDetail.type?exists && userDetail.type==5> checked</#if>>合作社</label>
+                    <label><input type="radio" name="type" class="cbx" value="6" <#if userDetail.type?exists && userDetail.type==6> checked</#if>>种植基地</label>
+                    <label><input type="radio" name="type" class="cbx" value="7" <#if userDetail.type?exists && userDetail.type==7> checked</#if>>其他</label>
+                    <label><input type="radio" name="type" class="cbx" value="8" <#if userDetail.type?exists && userDetail.type==8> checked</#if>>个人经营</label>
+                    <label><input type="radio" name="type" class="cbx" value="9" <#if userDetail.type?exists && userDetail.type==9> checked</#if>>采购经理</label>
+                    <label><input type="radio" name="type" class="cbx" value="10" <#if userDetail.type?exists && userDetail.type==10> checked</#if>>销售经理</label>
                 </div>
             </div>
             <div class="item">
                 <div class="txt">姓名/单位：</div>
                 <div class="cnt">
-                    <input type="text" name="company" class="ipt" placeholder="姓名/单位" autocomplete="off">
+                    <input type="text"  value="${userDetail.name?default('')}" name="name" class="ipt" placeholder="姓名/单位" autocomplete="off">
                 </div>
             </div>
             <div class="item">
                 <div class="txt">用户备注：</div>
                 <div class="cnt">
-                    <textarea name="" id="" class="ipt ipt-mul"></textarea>
+                    <textarea id="userRemark" class="ipt ipt-mul">${userDetail.remark?default('')}</textarea>
                 </div>
             </div>
             <div class="ft">
-                <button type="submit" class="ubtn ubtn-blue">保存客户信息</button>
+                <button type="button" id="saveUser" class="ubtn ubtn-blue">保存客户信息</button>
             </div>
         </form>
     </div>
@@ -141,14 +136,16 @@
     <div class="box fa-form">
         <div class="hd">采购单追踪</div>
         <ol class="trace" id="trace">
-            <li class="fore">状态：<em class="status-1">未受理</em></li>
-            <li><span>2016年10月12日 12:30</span><span>用户提交采购单</span></li>
+            <li class="fore">状态：<em class="status-${pickVo.status+1}">${pickVo.statusText}</em></li>
+            <#list pickTrackingVos as tracking>
+            <li><span>${tracking.name?default('')}</span>&nbsp;&nbsp;<span>${tracking.createTime?string("yyyy年MM月dd日 HH:mm")}</span>&nbsp;&nbsp;<span>${tracking.recordTypeText}</span>&nbsp;&nbsp;<span>${tracking.extra?default('')}</span></li>
+            </#list>
         </ol>
-        <div class="ft">
+        <div class="ft <#if pickVo.status!=0>hide</#if>">
             <button type="button" class="ubtn ubtn-blue submit1">同意受理</button>
             <button type="button" class="ubtn ubtn-gray ml submit2">拒绝受理</button>
         </div>
-        <form action="" class="hide" id="traceForm">
+        <form action=""  <#if pickVo.status==0> class="hide"</#if> id="traceForm">
             <div class="item">
                 <div class="txt">跟踪记录：</div>
                 <div class="cnt">
@@ -163,6 +160,7 @@
                 <button type="button" class="ubtn ubtn-gray ml submit5">交易未完成</button>
             </div>
         </form>
+
     </div>
 </div>
 
@@ -177,58 +175,11 @@
 <script>
     var _global = {
         v: {
+            userUpdateUrl:'sample/userComplete/',
         },
         fn: {
             init: function() {
-                this.userinfo();
                 this.submitEvent();
-            },
-            // 补全信息
-            userinfo: function() {
-                var self = this,
-                        $jgoosList = $('#jgoosList'),
-                        idx = $jgoosList.find('.cnt').length;
-
-                // 添加商品
-                $('#jaddNewGoods').on('click', function() {
-                    $jgoosList.append('<div class="cnt"> \n <div class="ipt-wrap"><input type="text" name="goods' + (++idx) + '" id="goods' + (++idx) + '" class="ipt" autocomplete="off"></div> \n <button type="button" class="ubtn ubtn-red ml">删除</button> \n </div>');
-                    self.searchProduct($('#goods' + idx));
-                })
-
-                // 删除价格
-                $jgoosList.on('click', '.ubtn-red', function(){
-                    $(this).prev().find('.ipt').autocomplete('dispose');
-                    $(this).parent().remove();
-                })
-
-                self.searchProduct($('#goods1'));
-
-            },
-            // 查询品种
-            searchProduct: function($ele) {
-                $ele.autocomplete({
-                    serviceUrl: 'json/catName.json',
-                    paramName: 'name',
-                    deferRequestBy: 100,
-                    showNoSuggestionNotice: true,
-                    noSuggestionNotice: '没有该品种',
-                    transformResult: function (response) {
-                        response = JSON.parse(response);
-                        if (response.status == "y") {
-                            return {
-                                suggestions: $.map(response.data, function (dataItem) {
-                                    return {value: dataItem.name, data: dataItem.id};
-                                })
-                            };
-                        } else {
-                            return {
-                                suggestions: []
-                            }
-                        }
-                    },
-                    onSelect: function (suggestion) {
-                    }
-                });
             },
             // 提交事件
             submitEvent: function() {
@@ -368,6 +319,20 @@
 
     $(function() {
         _global.fn.init();
+        $("#saveUser").on('click', function() {
+            var url = _global.v.userUpdateUrl;
+            $.ajax({
+                url: url,
+                data: $("#userForm").serialize()+"&remark="+$("#userRemark").val(),
+                type: "POST",
+                success: function(data){
+                    if (data.status == "200") {
+                        window.location.reload();
+                    }
+
+                }
+            });
+        });
     })
 </script>
 </body>

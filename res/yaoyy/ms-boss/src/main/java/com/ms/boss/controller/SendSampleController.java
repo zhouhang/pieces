@@ -92,6 +92,9 @@ public class SendSampleController {
 
         //用户详情
         UserDetailVo userDetail=userDetailServer.findByUserId(sendSampleVo.getUserId());
+        if(userDetail==null){
+            userDetail=new UserDetailVo();
+        }
 
         //地址信息
         SampleAddressVo sampleAdderss= sampleAddressServie.findBySendId(sendSampleVo.getId());

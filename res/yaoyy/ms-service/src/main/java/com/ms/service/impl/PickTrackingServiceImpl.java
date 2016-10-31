@@ -26,6 +26,13 @@ public class PickTrackingServiceImpl  extends AbsCommonService<PickTracking> imp
         return page;
 	}
 
+	@Override
+	public List<PickTrackingVo> findByPickId(Integer pickId) {
+		PickTrackingVo pickTrackingVo=new PickTrackingVo();
+		pickTrackingVo.setPickId(pickId);
+		return pickTrackingDao.findByParams(pickTrackingVo);
+	}
+
 
 	@Override
 	public ICommonDao<PickTracking> getDao() {

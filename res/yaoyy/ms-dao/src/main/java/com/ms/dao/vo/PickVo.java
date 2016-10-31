@@ -17,14 +17,24 @@ public class PickVo extends Pick{
 
     private String area;
 
-    private List<Commodity> commodityList;
+    private List<PickCommodityVo> pickCommodityVoList;
 
-    public List<Commodity> getCommodityList() {
-        return commodityList;
+    private float total;
+
+    public float getTotal() {
+        return total;
     }
 
-    public void setCommodityList(List<Commodity> commodityList) {
-        this.commodityList = commodityList;
+    public void setTotal(float total) {
+        this.total = total;
+    }
+
+    public List<PickCommodityVo> getPickCommodityVoList() {
+        return pickCommodityVoList;
+    }
+
+    public void setPickCommodityVoList(List<PickCommodityVo> pickCommodityVoList) {
+        this.pickCommodityVoList = pickCommodityVoList;
     }
 
     public String getArea() {
