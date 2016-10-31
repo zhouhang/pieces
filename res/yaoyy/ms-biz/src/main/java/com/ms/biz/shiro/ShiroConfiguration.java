@@ -69,7 +69,7 @@ public class ShiroConfiguration {
     }
 
     @Bean(name = "bizAuthorizationFilter")
-    public AuthorizationFilter getBizAuthorizationFilter() {
+    public BizAuthorizationFilter bizAuthorizationFilter(){
         BizAuthorizationFilter biz = new BizAuthorizationFilter();
         return biz;
     }
@@ -84,8 +84,14 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         shiroFilterFactoryBean.setFiltersString("bizAuthorization=bizAuthorizationFilter");
 
-        shiroFilterFactoryBean.setFilterChainDefinitionsString("/login=anon;/logout=logout;/assets/**=anon;/error/**=anon;" +
-                "/role/** = bizAuthorization;/category/**=bizAuthorization;/commodity/**=bizAuthorization;");
+        shiroFilterFactoryBean.setFilterChainDefinitionsString("/user/login=anon;" +
+                "/user/logout=logout;" +
+                "/assets/**=anon;" +
+                "/error/**=anon;" +
+                "/sample/** = bizAuthorization;" +
+                "/category/**=anon;" +
+                "/commodity/**=anon;" +
+                "/**=anon;");
         return shiroFilterFactoryBean;
     }
 

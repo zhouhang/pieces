@@ -113,7 +113,6 @@
             <div class="txt"><i>*</i>图片：</div>
             <div class="cnt cnt-mul">
                 <span class="up-img" id="imgCrop"></span>
-                <input type="hidden" value="" name="pictureUrl" id="pictureUrl">
             </div>
         </div>
 
@@ -293,7 +292,7 @@
 
                     // 如果有图片，填充图片
                     if (data.pictureUrl) {
-                        $('#imgCrop').hide().prev().remove().end().before('<span class="up-img"><img src="' + data.pictureUrl + '" title="点击图片看大图" /><i class="del" title="删除"></i><input type="hidden" name="img" value="' + data.pictureUrl + '"></span>');
+                        $('#imgCrop').hide().prev().remove().end().before('<span class="up-img"><img src="' + data.pictureUrl + '" title="点击图片看大图" /><i class="del" title="删除"></i><input type="hidden" name="pictureUrl" value="' + data.pictureUrl + '"></span>');
                     } else {
                         $('#imgCrop').show().prev().remove();
                     }
