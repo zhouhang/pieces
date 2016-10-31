@@ -6,14 +6,17 @@ import com.ms.dao.ICommonDao;
 import com.ms.dao.CategoryDao;
 import com.ms.dao.model.Category;
 import com.ms.dao.vo.CategoryVo;
+import com.ms.dao.vo.CommodityVo;
 import com.ms.service.CategorySearchService;
 import com.ms.service.CategoryService;
 import com.ms.dao.enums.CategoryEnum;
+import com.ms.service.CommodityService;
 import com.ms.tools.upload.PathConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +28,9 @@ public class CategoryServiceImpl  extends AbsCommonService<Category> implements 
 
 	@Autowired
 	private PathConvert pathConvert;
+
+	@Autowired
+	private CommodityService commodityService;
 
 
 	@Autowired
@@ -123,4 +129,23 @@ public class CategoryServiceImpl  extends AbsCommonService<Category> implements 
 		return super.deleteById(id);
 	}
 
+	@Override
+	public PageInfo<CategoryVo> findByParamsBiz(CategoryVo categoryVo, Integer pageNum, Integer pageSize) {
+		PageInfo<CategoryVo> pageInfo = findByParams(categoryVo,pageNum,pageSize);
+
+		List<CategoryVo>  list = pageInfo.getList();
+		Iterator<CategoryVo> iter = list.iterator();
+		while(iter.hasNext()){
+			CategoryVo vo = iter.next();
+			List<CommodityVo> commoditys = commodityService.findByCategoryId(vo.getId());
+
+			if (commoditys!= null && commoditys.size()>0){
+				vo.setDefaultCommodityId(commoditys.get(0).getId());
+			} else {
+				iter.remove();
+			}
+		}
+		pageInfo.setList(list);
+		return pageInfo;
+	}
 }

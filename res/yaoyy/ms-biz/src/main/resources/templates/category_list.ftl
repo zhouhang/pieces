@@ -108,7 +108,7 @@
                 var html = [];
                 $.each(data, function(i, item) {
                     html.push('<li>\n');
-                    html.push( '<a href="/commodity/detail/' + data[i].id + '">\n');
+                    html.push( '<a href="/commodity/detail/' + data[i].defaultCommodityId + '">\n');
                     html.push(     '<div class="cnt">\n');
                     html.push(         '<div class="title">', data[i].variety, '</div>\n');
                     html.push(         '<div class="summary">', data[i].title, '</div>\n');

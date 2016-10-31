@@ -43,7 +43,8 @@ public class CategoryController {
     public Result list(CategoryVo categoryVo, Integer pageNum, Integer pageSize, ModelMap model) {
         //不显示一级父类
         categoryVo.setLevel(CategoryEnum.LEVEL_BREED.getValue());
-        PageInfo<CategoryVo> pageInfo = categoryService.findByParams(categoryVo,pageNum,pageSize);
+        categoryVo.setStatus(1);
+        PageInfo<CategoryVo> pageInfo = categoryService.findByParamsBiz(categoryVo,pageNum,pageSize);
         // 参数
         return Result.success().data(pageInfo);
     }

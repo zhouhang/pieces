@@ -52,7 +52,7 @@ public class SmsUtil {
         Map<String, Object> param = new HashMap<>();
         param.put("apikey", apikey);
         param.put("mobile", mobile);
-        param.put("text", TextTemplateEnum.SMS_BIZ_CAPTCHA_LOGIN.getText("【上工好药】", code));
+        param.put("text", TextTemplateEnum.SMS_BIZ_CAPTCHA_LOGIN.getText("【药优优】", code));
 
         HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
         //记录发送成功的时间
@@ -76,7 +76,7 @@ public class SmsUtil {
         Map<String, Object> param = new HashMap<>();
         param.put("apikey", apikey);
         param.put("mobile", mobile);
-        param.put("text", TextTemplateEnum.SMS_BIZ_CAPTCHA_REGISTER.getText("【上工好药】", code));
+        param.put("text", TextTemplateEnum.SMS_BIZ_CAPTCHA_REGISTER.getText("【药优优】", code));
 
         HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
         //记录发送成功的时间

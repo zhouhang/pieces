@@ -23,6 +23,15 @@ public interface CategoryService extends ICommonService<Category>{
 
     public PageInfo<CategoryVo> findVoByPage(int pageSize, int pageNum);
 
-
+    /**
+     * 前台查询品种方法
+     * 1.只显示有商品的品种
+     * 2.添加一个商品id
+     * @param categoryVo
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public PageInfo<CategoryVo> findByParamsBiz(CategoryVo categoryVo,Integer pageNum,Integer pageSize);
 
 }

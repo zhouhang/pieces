@@ -68,8 +68,12 @@ public class BizRealm extends AuthorizingRealm {
 				getName()); // realm name
 		return authenticationInfo;
 	}
-	
-	
+
+	@Override
+	protected void assertCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) throws AuthenticationException {
+		super.assertCredentialsMatch(token, info);
+	}
+
 	/**
 	 * 自定义获取authenticationInfo缓存key,此时为用户名
 	 */
