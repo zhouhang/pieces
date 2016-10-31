@@ -26,9 +26,6 @@ public class CommodityController {
     @Autowired
     private CommodityService commodityService;
 
-    // 需添加方法传进来的是品种id 根据品种id 来获取商品id 重定向到
-    // 指定的商品. 或许定向到商品不存在页面
-
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public String commodityDetail(@PathVariable("id") Integer id,ModelMap model) {
 

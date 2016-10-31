@@ -1,12 +1,17 @@
 package com.ms.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.ms.dao.enums.TrackingTypeEnum;
+import com.ms.dao.model.Member;
 import com.ms.dao.model.Pick;
+import com.ms.dao.model.PickTracking;
 import com.ms.dao.model.UserDetail;
 import com.ms.dao.vo.CommodityVo;
 import com.ms.dao.vo.PickCommodityVo;
+import com.ms.dao.vo.PickTrackingVo;
 import com.ms.dao.vo.PickVo;
 import com.ms.service.*;
+import com.ms.service.enums.RedisEnum;
 import com.ms.tools.entity.Result;
 import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +45,9 @@ public class PickController {
     @Autowired
     private UserDetailService userDetailService;
 
+
     @Autowired
-    private CommodityService commodityService;
+    HttpSession httpSession;
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     private String list(PickVo pickVo,Integer pageNum, Integer pageSize, ModelMap model){
@@ -53,16 +60,23 @@ public class PickController {
     private String list(@PathVariable("id") Integer id,  ModelMap model){
         PickVo pickVo=pickService.findVoById(id);
         List<PickCommodityVo> pickCommodityVos=pickCommodityService.findByPickId(id);
-        StringBuilder ids = new StringBuilder();
-        pickCommodityVos.forEach(p->{
-            ids.append(p.getCommodityId()).append(",");
-        });
-        pickVo.setCommodityList(commodityService.findByIds(ids.substring(0,ids.length()-1)));
-        UserDetail userDetail=userDetailService.findByUserId(pickVo.getUserId());
+        float total=0;
 
-        
+        for(PickCommodityVo vo :pickCommodityVos){
+            total+=vo.getTotal();
+        }
+        pickVo.setTotal(total);
+
+        pickVo.setPickCommodityVoList(pickCommodityVos);
+        UserDetail userDetail=userDetailService.findByUserId(pickVo.getUserId());
+        if(userDetail==null){
+            userDetail=new UserDetail();
+        }
+
+        List<PickTrackingVo> pickTrackingVos=pickTrackingService.findByPickId(id);
         model.put("pickVo",pickVo);
         model.put("userDetail",userDetail);
+        model.put("pickTrackingVos",pickTrackingVos);
         return "pick_detail";
     }
 
@@ -76,6 +90,22 @@ public class PickController {
         pickService.update(pick);
         return Result.success().msg("操作成功");
     }
+    @RequestMapping(value="trackingSave",method=RequestMethod.POST)
+    @ResponseBody
+    private Result save(PickTrackingVo pickTrackingVo){
+
+        Member mem= (Member) httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
+        pickTrackingVo.setOperator(mem.getId());
+        pickTrackingVo.setOpType(TrackingTypeEnum.TYPE_ADMIN.getValue());
+        pickTrackingVo.setName(mem.getName());
+        pickTrackingService.save(pickTrackingVo);
+
+        return Result.success().msg("保存成功");
+    }
+
+
+
+
 
 
 

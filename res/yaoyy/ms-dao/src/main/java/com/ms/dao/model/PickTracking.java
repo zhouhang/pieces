@@ -23,13 +23,23 @@ public class PickTracking  implements Serializable {
 	
 	//同意理由，拒绝理由，记录内容等附加内容
 	private String extra;
+
+	private String name;
 	
 	private Date createTime;
 	
 	private Date updateTime;
 	
 	public PickTracking(){}
-	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public Integer getId() {
 		return id;
 	}

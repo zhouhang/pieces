@@ -10,9 +10,11 @@ import com.ms.dao.model.UserDetail;
 import com.ms.dao.vo.UserVo;
 import com.ms.service.UserDetailService;
 import com.ms.service.UserService;
+import com.ms.service.dto.Password;
 import com.ms.service.enums.RedisEnum;
 import com.ms.service.redis.RedisManager;
 import com.ms.service.sms.SmsUtil;
+import com.ms.service.utils.EncryptUtil;
 import com.ms.tools.entity.Result;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -102,7 +104,7 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 
 	@Override
 	@Transactional
-	public void loginSms(String phone, String code) {
+	public User loginSms(String phone, String code) {
 		String rcode = redisManager.get(RedisEnum.KEY_MOBILE_CAPTCHA_LOGIN.getValue()+phone);
 		if (!code.equalsIgnoreCase(rcode)) {
 			throw new RuntimeException("验证码错误");
@@ -113,8 +115,15 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 			user = new User();
 			user.setPhone(phone);
 			user.setType(UserEnum.auto.getType());
+			user.setCreateTime(new Date());
+			user.setUpdateTime(new Date());
+			Password pass = EncryptUtil.PiecesEncode(DEF_PASSWORD);
+			user.setPassword(pass.getPassword());
+			user.setSalt(pass.getSalt());
 			create(user);
 		}
+
+		return user;
 	}
 
 	@Override
@@ -132,8 +141,12 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 		}
 		User user = new User();
 		user.setPhone(phone);
-		user.setPassword(password);
 		user.setType(UserEnum.enable.getType());
+		user.setCreateTime(new Date());
+		user.setUpdateTime(new Date());
+		Password pass = EncryptUtil.PiecesEncode(password);
+		user.setPassword(pass.getPassword());
+		user.setSalt(pass.getSalt());
 		create(user);
 	}
 

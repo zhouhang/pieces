@@ -20,12 +20,24 @@
             <result column="unit"  property="unit" />
             <result column="total"  property="total" />
             <result column="create_time"  property="createTime" />
+            <result column="name"  property="name" />
+            <result column="origin"  property="origin" />
+            <result column="spec"  property="spec" />
+            <result column="price"  property="price" />
         
     </resultMap>
 
     <sql id="Base_Column_List">
         id,pick_id,commodity_id,num,unit,total,create_time
     </sql>
+
+    <sql id="Join_Commodity_Column_List">
+        pc.id as id,pc.pick_id as pick_id,pc.commodity_id as commodity_id,pc.num as num,
+        pc.unit as unit,pc.total as total,pc.create_time as create_time,
+        c.name as name,c.origin as origin,c.spec as spec,c.price as price
+    </sql>
+
+
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="PickCommodityResultMap">
         select
@@ -42,11 +54,15 @@
 
     <select id="findByParams" resultMap="PickCommodityResultMapVo" parameterType="com.ms.dao.vo.PickCommodityVo">
         select
-        <include refid="Base_Column_List" />
-        from pick_commodity
+        <include refid="Join_Commodity_Column_List" />
+        from pick_commodity pc
+        LEFT JOIN commodity c on pc.commodity_id=c.id
         <where>
             <if test="id != null">
-                id = #{id}
+                pc.id = #{id}
+            </if>
+            <if test="pickId != null">
+                pc.pick_id = #{pickId}
             </if>
         </where>
     </select>

@@ -31,7 +31,7 @@ public class Category  implements Serializable {
 	
 	private String pictureUrl;
 	
-	//上下架状态
+	//上下架状态 0下架 1上架
 	private Integer status;
 	
 	private Integer level;

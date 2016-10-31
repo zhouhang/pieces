@@ -1,19 +1,25 @@
 package com.ms.dao.enums;
 
 /**
- * Created by xiao on 2016/10/28.
+ * Created by xiao on 2016/10/31.
  */
-public enum PickEnum {
-
-    PICK_NOTHANDLE(0,"未处理"),
-    PICK_HANDING(1,"处理中"),
-    PICK_NOTFINISH(2,"未完成"),
-    PICK_FINISH(3,"已完成");
+public enum PickTrackingTypeEnum {
 
 
+    PICK_APPLY(0,"提交选货单"),
+    PICK_AGREE(1,"同意受理选货单"),
+    TPICK_REFUSE(2,"拒绝受理选货单"),
+    PICK_RECORD(3,"跟踪记录"),
+    PICK_NOT_FINISH(4,"该选货单未完成"),
+    PICK_FINISH(5,"该选货单交易完成");
 
 
-    private PickEnum (Integer value, String text) {
+
+
+
+
+
+    private PickTrackingTypeEnum(Integer value, String text) {
         this.value = value;
         this.text = text;
     }
@@ -40,11 +46,12 @@ public enum PickEnum {
      * @return
      */
     public static String findByValue(Integer id) {
-        for (PickEnum  pickEnum: PickEnum.values()) {
-            if (pickEnum.getValue().equals(id)) {
-                return pickEnum.getText();
+        for (PickTrackingTypeEnum trackingEnum: PickTrackingTypeEnum.values()) {
+            if (trackingEnum.getValue().equals(id)) {
+                return trackingEnum.getText();
             }
         }
         return null;
     }
+
 }

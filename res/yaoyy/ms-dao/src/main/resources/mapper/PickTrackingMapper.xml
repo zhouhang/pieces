@@ -5,6 +5,7 @@
             <id column="id"  property="id" />
             <result column="op_type"  property="opType" />
             <result column="operator"  property="operator" />
+            <result column="name"  property="name" />
             <result column="record_type"  property="recordType" />
             <result column="pick_id"  property="pickId" />
             <result column="extra"  property="extra" />
@@ -17,6 +18,7 @@
             <id column="id"  property="id" />
             <result column="op_type"  property="opType" />
             <result column="operator"  property="operator" />
+            <result column="name"  property="name" />
             <result column="record_type"  property="recordType" />
             <result column="pick_id"  property="pickId" />
             <result column="extra"  property="extra" />
@@ -26,7 +28,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,op_type,operator,record_type,pick_id,extra,create_time,update_time
+        id,op_type,operator,name,record_type,pick_id,extra,create_time,update_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="PickTrackingResultMap">
@@ -60,9 +62,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.PickTracking">
         insert into
-        pick_tracking (op_type,operator,record_type,pick_id,extra,create_time,update_time)
+        pick_tracking (op_type,operator,name,record_type,pick_id,extra,create_time,update_time)
         values
-        (#{opType},#{operator},#{recordType},#{pickId},#{extra},#{createTime},#{updateTime})
+        (#{opType},#{operator},#{name},#{recordType},#{pickId},#{extra},#{createTime},#{updateTime})
     </insert>
 
     <update id="update" parameterType="com.ms.dao.model.PickTracking">
@@ -75,6 +77,10 @@
                                             
             <if test="operator != null">
                 operator = #{operator},
+            </if>
+
+            <if test="name != null">
+                name= #{name},
             </if>
                                             
             <if test="recordType != null">
