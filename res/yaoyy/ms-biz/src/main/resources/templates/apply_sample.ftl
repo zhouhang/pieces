@@ -60,7 +60,7 @@
             validator: function() {
                 var self = this;
                 $('#submit').on('click', function() {
-                    if (self.checkName() && self.checkMobile() && self.checkRegion()) {
+                    if (self.checkName()  <#if  !Session.user_session_biz?exists> && self.checkMobile()</#if> && self.checkRegion()) {
                         $.ajax({
                             url: _global.v.applyUrl,
                             type: "POST",
