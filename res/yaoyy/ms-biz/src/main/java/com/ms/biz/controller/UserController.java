@@ -84,10 +84,9 @@ public class UserController {
             model.put("error", e.getMessage());
             url =  "login";
         }
-        String preUrl = WebUtils.getSavedRequest(request).getRequestUrl();
 
-        if (preUrl != null) {
-            url = preUrl;
+        if ( WebUtils.getSavedRequest(request) != null) {
+            url =  WebUtils.getSavedRequest(request).getRequestUrl();;
         }
         return "redirect:" +url;
     }
@@ -120,7 +119,7 @@ public class UserController {
             model.put("error",e.getMessage());
             return "register";
         }
-        return "redirect:/index";
+        return "redirect:/";
     }
 
     /**
@@ -132,16 +131,16 @@ public class UserController {
     @RequestMapping(value = "loginSMS", method = RequestMethod.POST)
     public String loginSMS(String phone, String code, ModelMap model) {
         try {
-            userService.loginSms(phone, code);
+            User user = userService.loginSms(phone, code);
             Subject subject = SecurityUtils.getSubject();
-            BizToken token = new BizToken(phone, null, false, null, "");
+            BizToken token = new BizToken(phone, user.getPassword(), false, null, "");
             userService.login(subject, token);
         } catch (Exception e) {
             model.put("error",e.getMessage());
             return "login_sms";
         }
 
-        return "redirect:/index";
+        return "redirect:/";
     }
 
 

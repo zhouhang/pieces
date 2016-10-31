@@ -24,7 +24,7 @@ public interface UserService extends ICommonService<User>{
 
     public void logout();
 
-    public void loginSms(String phone, String code);
+    public User loginSms(String phone, String code);
 
     public void register(String phone, String code, String password);
 

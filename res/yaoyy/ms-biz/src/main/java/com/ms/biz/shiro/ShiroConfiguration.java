@@ -36,10 +36,27 @@ public class ShiroConfiguration {
         return filterRegistration;
     }
 
+    @Bean(name = "cacheManager")
+    public ShiroRedisCacheManager getCacheManager(RedisManager redisManager) {
+        ShiroRedisCacheManager shiroRedisCacheManager = new ShiroRedisCacheManager();
+        shiroRedisCacheManager.setRedisManager(redisManager);
+        shiroRedisCacheManager.setApplicationPrefix("biz:");
+        shiroRedisCacheManager.setExpire(3600);
+        return shiroRedisCacheManager;
+    }
+
+    @Bean(name = "credentialsMatcher")
+    public RetryLimitHashedCredentialsMatcher getCredentialsMatcher(ShiroRedisCacheManager cacheManager) {
+        RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher(cacheManager);
+        retryLimitHashedCredentialsMatcher.setRetryCounterCacheName("retryCounter");
+        return retryLimitHashedCredentialsMatcher;
+    }
+
     @Bean(name = "realm")
-    public AuthorizingRealm getShiroRealm() {
-        BizRealm bossRealm =  new BizRealm();
-        return bossRealm;
+    public AuthorizingRealm getShiroRealm(RetryLimitHashedCredentialsMatcher credentialsMatcher) {
+        BizRealm realm =  new BizRealm();
+        realm.setCredentialsMatcher(credentialsMatcher);
+        return realm;
     }
 
     @Bean(name = "lifecycleBeanPostProcessor")
@@ -55,16 +72,16 @@ public class ShiroConfiguration {
     }
 
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager() {
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(AuthorizingRealm realm) {
         DefaultWebSecurityManager dwsm = new DefaultWebSecurityManager();
-        dwsm.setRealm(getShiroRealm());
+        dwsm.setRealm(realm);
         return dwsm;
     }
 
     @Bean
-    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor() {
+    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(DefaultWebSecurityManager defaultWebSecurityManager) {
         AuthorizationAttributeSourceAdvisor aasa = new AuthorizationAttributeSourceAdvisor();
-        aasa.setSecurityManager(getDefaultWebSecurityManager());
+        aasa.setSecurityManager(defaultWebSecurityManager);
         return new AuthorizationAttributeSourceAdvisor();
     }
 
@@ -75,10 +92,10 @@ public class ShiroConfiguration {
     }
 
     @Bean(name = "shiroFilter")
-    public MsShiroFilterFactoryBean getMsShiroFilterFactoryBean() {
+    public MsShiroFilterFactoryBean getMsShiroFilterFactoryBean(DefaultWebSecurityManager defaultWebSecurityManager) {
         MsShiroFilterFactoryBean shiroFilterFactoryBean = new MsShiroFilterFactoryBean();
         shiroFilterFactoryBean
-                .setSecurityManager(getDefaultWebSecurityManager());
+                .setSecurityManager(defaultWebSecurityManager);
         shiroFilterFactoryBean.setLoginUrl("/user/login");
         shiroFilterFactoryBean.setSuccessUrl("/403");
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
@@ -95,14 +112,4 @@ public class ShiroConfiguration {
         return shiroFilterFactoryBean;
     }
 
-
-
-    @Bean(name = "cacheManager")
-    public ShiroRedisCacheManager getCacheManager(RedisManager redisManager) {
-        ShiroRedisCacheManager shiroRedisCacheManager = new ShiroRedisCacheManager();
-        shiroRedisCacheManager.setRedisManager(redisManager);
-        shiroRedisCacheManager.setApplicationPrefix("biz:");
-        shiroRedisCacheManager.setExpire(3600);
-        return shiroRedisCacheManager;
-    }
 }
