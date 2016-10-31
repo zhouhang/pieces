@@ -106,8 +106,7 @@ public class ShiroConfiguration {
                 "/assets/**=anon;" +
                 "/error/**=anon;" +
                 "/sample/** = bizAuthorization;" +
-                "/category/**=anon;" +
-                "/commodity/**=anon;" +
+                "/center/**=bizAuthorization;" +
                 "/**=anon;");
         return shiroFilterFactoryBean;
     }

@@ -8,7 +8,7 @@ import org.apache.shiro.subject.Subject;
 
 public interface UserService extends ICommonService<User>{
 
-
+    String DEF_PASSWORD = "yaoyy72314";
 
     public PageInfo<UserVo> findByParams(UserVo userVo,Integer pageNum,Integer pageSize);
 
