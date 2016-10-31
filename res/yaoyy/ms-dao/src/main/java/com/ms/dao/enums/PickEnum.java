@@ -7,7 +7,7 @@ public enum PickEnum {
 
     PICK_NOTHANDLE(0,"未处理"),
     PICK_HANDING(1,"处理中"),
-    PICK_SEND(2,"已发货"),
+    PICK_NOTFINISH(2,"未完成"),
     PICK_FINISH(3,"已完成");
 
 

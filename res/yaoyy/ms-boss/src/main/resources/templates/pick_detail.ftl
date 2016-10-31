@@ -80,7 +80,7 @@
 
     <div class="box fa-form">
         <div class="hd">客户信息</div>
-        <form id="myform">
+        <form id="userForm">
             <input type="hidden"  class="ipt" value="${userDetail.id?default('')}" name="id">
             <div class="item">
                 <div class="txt">个人称呼：</div>
@@ -145,7 +145,7 @@
             <button type="button" class="ubtn ubtn-blue submit1">同意受理</button>
             <button type="button" class="ubtn ubtn-gray ml submit2">拒绝受理</button>
         </div>
-        <form action=""  <#if pickVo.status==0> class="hide"</#if> id="traceForm">
+        <form action=""  <#if pickVo.status==0||pickVo.status==2||pickVo.status=3||pickVo.status=3> class="hide"</#if> id="traceForm">
             <div class="item">
                 <div class="txt">跟踪记录：</div>
                 <div class="cnt">
@@ -176,6 +176,7 @@
     var _global = {
         v: {
             userUpdateUrl:'sample/userComplete/',
+            trackingCreateUrl:'pick/trackingSave'
         },
         fn: {
             init: function() {
@@ -203,9 +204,11 @@
                 $pa.on('click', '.submit3', function(){
                     var text = $('#traceForm').find('.ipt').val();
                     $.ajax({
-                        url: '',
-                        data: {msg: text},
+                        url: _global.v.trackingCreateUrl,
+                        data: {pickId: ${pickVo.id},recordType:3,extra:text},
+                        type: "POST",
                         success: function(data) {
+                            /*
                             data = {
                                 date: '2016年10月20日 15:20',
                                 operator: 'frank',
@@ -213,17 +216,37 @@
                             }
                             $('#traceForm').find('.ipt').val('');
                             self.addNewRevord(data);
+                            */
+                            window.location.reload();
                         }
                     })
                 })
 
                 // 交易完成
                 $pa.on('click', '.submit4', function() {
-                    layer.confirm('寄样完成后不能进行跟踪记录操作，是否确认', {
+                    layer.confirm('选货单完成后不能进行跟踪记录操作，是否确认', {
                         btn: ['确认','取消'] //按钮
                     }, function(index){
-                        $('#traceForm').remove();
-                        layer.close(index);
+                        $.ajax({
+                            url: _global.v.trackingCreateUrl,
+                            data: {pickId: ${pickVo.id},recordType:5},
+                            type: "POST",
+                            success: function(data) {
+                                /*
+                                data = {
+                                    operator: 'frank',
+                                    date: '2016年10月20日 15:20',
+                                    msg: text
+                                }
+                                $('#trace').append('<li><span>' + data.date + '</span><span>操作人：' + data.operator + '</span><span>同意寄样</span></li><li><span>同意理由：' + data.msg + '</span></li>');
+                                $('.submit2').parent().remove();
+                                $('.submit3').parent().show();
+                                */
+                                window.location.reload();
+                            }
+                        })
+                        //$('#traceForm').remove();
+                        //layer.close(index);
                     });
                 })
                 // 交易未完成
@@ -235,9 +258,11 @@
             // 同意受理
             submit1: function() {
                 $.ajax({
-                    url: '',
-                    // data: {},
+                    url: _global.v.trackingCreateUrl,
+                    data: {pickId: ${pickVo.id},recordType:1},
+                    type: "POST",
                     success: function(data) {
+                        /*
                         data = {
                             operator: 'frank',
                             date: '2016年10月20日 15:20'
@@ -245,6 +270,9 @@
                         $('#trace').append('<li><span>' + data.date + '</span><span>操作人：' + data.operator + '</span><span>同意受理该采购单</span></li>');
                         $('.submit2').parent().remove();
                         $('#traceForm').show();
+                        */
+                        window.location.reload();
+
                     }
                 })
             },
@@ -257,9 +285,11 @@
                     btn: ['拒绝', '关闭']
                 }, function(text, index) {
                     $.ajax({
-                        url: '',
-                        data: {msg: text},
+                        url: _global.v.trackingCreateUrl,
+                        data: {pickId: ${pickVo.id},recordType:2,extra:"不同意理由："+text},
+                        type: "POST",
                         success: function(data) {
+                            /*
                             data = {
                                 operator: 'frank',
                                 date: '2016年10月20日 15:20',
@@ -267,6 +297,8 @@
                             }
                             $('#trace').append('<li><span>' + data.date + '</span><span>操作人：' + data.operator + '</span><span>拒绝受理该采购单</span></li><li><span>拒绝理由：' + data.msg + '</span></li>');
                             $('#trace').nextAll().remove();
+                            */
+                            window.location.reload();
                         }
                     })
                     layer.close(index);
@@ -281,9 +313,11 @@
                     btn: ['确认', '关闭']
                 }, function(text, index) {
                     $.ajax({
-                        url: '',
-                        data: {msg: text},
+                        url: _global.v.trackingCreateUrl,
+                        data: {pickId: ${pickVo.id},recordType:4,extra:"原因："+text},
+                        type: "POST",
                         success: function(data) {
+                            /*
                             data = {
                                 operator: 'frank',
                                 date: '2016年10月20日 15:20',
@@ -291,6 +325,8 @@
                             }
                             $('#trace').append('<li><span>' + data.date + '</span><span>操作人：' + data.operator + '</span><span>交易未完成</span></li><li><span>原因：' + data.msg + '</span></li>');
                             $('#trace').nextAll().remove();
+                            */
+                            window.location.reload();
                         }
                     })
                     layer.close(index);

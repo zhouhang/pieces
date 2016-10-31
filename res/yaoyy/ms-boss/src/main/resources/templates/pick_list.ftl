@@ -19,7 +19,7 @@
         <div class="tools">
             <div class="filter">
                 <form action="">
-                    <label>采购单编号：</label>
+                    <label>选货单编号：</label>
                     <input type="text" name="code"class="ipt" placeholder="请输入">
                     <label>电话：</label>
                     <input type="text" name="phone" class="ipt" placeholder="电话">
@@ -28,7 +28,7 @@
                         <option value="">全部</option>
                         <option value="0">未处理</option>
                         <option value="1">已处理</option>
-                        <option value="2">已发货</option>
+                        <option value="2">未完成</option>
                         <option value="3">已完成</option>
                     </select>
                     <button type="button" id="search" class="ubtn ubtn-blue">搜索</button>

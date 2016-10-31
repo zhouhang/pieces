@@ -11,4 +11,6 @@ public interface PickTrackingService extends ICommonService<PickTracking>{
     public PageInfo<PickTrackingVo> findByParams(PickTrackingVo pickTrackingVo,Integer pageNum,Integer pageSize);
 
     public List<PickTrackingVo> findByPickId(Integer pickId);
+
+    public void save(PickTrackingVo pickTrackingVo);
 }
