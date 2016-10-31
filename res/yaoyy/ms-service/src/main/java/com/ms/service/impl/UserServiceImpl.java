@@ -109,6 +109,7 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 		if (!code.equalsIgnoreCase(rcode)) {
 			throw new RuntimeException("验证码错误");
 		}
+
 		User user =  findByPhone(phone);
 
 		if (user == null) {
@@ -117,9 +118,9 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 			user.setType(UserEnum.auto.getType());
 			user.setCreateTime(new Date());
 			user.setUpdateTime(new Date());
-			Password pass = EncryptUtil.PiecesEncode(DEF_PASSWORD);
-			user.setPassword(pass.getPassword());
-			user.setSalt(pass.getSalt());
+//			Password pass = EncryptUtil.PiecesEncode(DEF_PASSWORD);
+//			user.setPassword(pass.getPassword());
+//			user.setSalt(pass.getSalt());
 			create(user);
 		}
 

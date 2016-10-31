@@ -4,8 +4,6 @@ import com.ms.biz.shiro.BizToken;
 import com.ms.dao.model.User;
 import com.ms.service.UserService;
 import com.ms.service.enums.RedisEnum;
-import com.ms.service.redis.RedisManager;
-import com.ms.tools.entity.Result;
 import com.ms.tools.utils.WebUtil;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
@@ -133,8 +131,7 @@ public class WechatController {
      * @throws Exception
      */
     @RequestMapping("bind")
-    @ResponseBody
-    public Result bindPhone(HttpServletResponse response,
+    public String bindPhone(HttpServletResponse response,
                             HttpServletRequest request,
                             String callUrl,
                             String phone,
@@ -148,11 +145,7 @@ public class WechatController {
         }
         User user =userService.registerWechat(phone, openId, nickname, headImgUrl);
         autoLogin(request,response,user);
-        if(StringUtils.isBlank(callUrl)){
-            callUrl = "/center/index";
-        }
-
-        return Result.success("绑定手机号成功!").data(callUrl);
+        return "redirect:"+callUrl;
     }
 
 
@@ -162,16 +155,11 @@ public class WechatController {
      * @param response
      * @param user
      */
-    public void autoLogin(HttpServletRequest request,
-                          HttpServletResponse response,
-                          User user){
-        PrincipalCollection principals = new SimplePrincipalCollection(
-                user.getId(), "MobileRealm");
-        WebSubject.Builder builder = new WebSubject.Builder(request, response);
-        builder.principals(principals);
-        builder.authenticated(true);
-        WebSubject subject = builder.buildWebSubject();
-        ThreadContext.bind(subject);
+    public void autoLogin(User user){
+        Subject subject = SecurityUtils.getSubject();
+        BizToken token = new BizToken(user.getPhone(), user.getPassword(), false, null, "");
+        token.setOpenId(user.getOpenid());
+        userService.login(subject, token);
     }
 
 

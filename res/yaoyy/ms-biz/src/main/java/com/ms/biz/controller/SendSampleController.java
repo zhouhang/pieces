@@ -66,7 +66,9 @@ public class SendSampleController {
     public Result applySample(SendSampleVo sendSampleVo) {
 
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-
+        if(user!=null){
+            sendSampleVo.setPhone(user.getPhone());
+        }
         sendSampleService.save(sendSampleVo);
         UserVo userInfo=userService.findByPhone(sendSampleVo.getPhone());
 
