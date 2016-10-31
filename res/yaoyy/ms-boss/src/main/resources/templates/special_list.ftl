@@ -49,9 +49,9 @@
                 <tr>
                     <td><input type="checkbox"></td>
                     <td>${special.title}</td>
-                    <td>${special.createTime?string("yyyy-MM-dd HH:mm")}</td>
-                    <td>${special.updateTime?string("yyyy-MM-dd HH:mm")}</td>
-                    <td>${special.sort}</td>
+                    <td>${(special.createTime?datetime)!}</td>
+                    <td>${(special.updateTime?datetime)!}</td>
+                    <td>${special.sort!}</td>
                     <td class="tc">
                         <a href="special/edit/${special.id?c}" class="ubtn ubtn-blue jedit">编辑</a>
                         <a href="#" class="ubtn ubtn-gray jdel" sid="${special.id?c}">删除</a>

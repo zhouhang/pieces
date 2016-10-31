@@ -84,7 +84,14 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         shiroFilterFactoryBean.setFiltersString("bizAuthorization=bizAuthorizationFilter");
 
-        shiroFilterFactoryBean.setFilterChainDefinitionsString("/user/login=anon;/user/logout=logout;/assets/**=anon;/center/**=bizAuthorization;/**=anon;");
+        shiroFilterFactoryBean.setFilterChainDefinitionsString("/user/login=anon;" +
+                "/user/logout=logout;" +
+                "/assets/**=anon;" +
+                "/error/**=anon;" +
+                "/sample/** = bizAuthorization;" +
+                "/category/**=anon;" +
+                "/commodity/**=anon;" +
+                "/**=anon;");
         return shiroFilterFactoryBean;
     }
 
