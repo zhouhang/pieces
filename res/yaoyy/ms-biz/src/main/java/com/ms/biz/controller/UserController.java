@@ -84,10 +84,9 @@ public class UserController {
             model.put("error", e.getMessage());
             url =  "login";
         }
-        String preUrl = WebUtils.getSavedRequest(request).getRequestUrl();
 
-        if (preUrl != null) {
-            url = preUrl;
+        if ( WebUtils.getSavedRequest(request) != null) {
+            url =  WebUtils.getSavedRequest(request).getRequestUrl();;
         }
         return "redirect:" +url;
     }
