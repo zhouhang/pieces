@@ -4,6 +4,8 @@ import com.ms.biz.shiro.BizToken;
 import com.ms.dao.model.User;
 import com.ms.service.UserService;
 import com.ms.service.enums.RedisEnum;
+import com.ms.service.redis.RedisManager;
+import com.ms.tools.entity.Result;
 import com.ms.tools.utils.WebUtil;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
@@ -99,7 +101,7 @@ public class WechatController {
             WxMpUser wxMpUser = wxService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
             User user = userService.findByOpenId(wxMpUser.getOpenId());
             if(user!=null){
-                autoLogin(request,response,user);
+                autoLogin(user);
                 if(StringUtils.isNotBlank(call)){
                     return "redirect:"+call;
                 }else{
@@ -131,7 +133,7 @@ public class WechatController {
      * @throws Exception
      */
     @RequestMapping("bind")
-    public String bindPhone(HttpServletResponse response,
+    public Result bindPhone(HttpServletResponse response,
                             HttpServletRequest request,
                             String callUrl,
                             String phone,
@@ -144,8 +146,9 @@ public class WechatController {
             return Result.error().msg("验证码错误!");
         }
         User user =userService.registerWechat(phone, openId, nickname, headImgUrl);
-        autoLogin(request,response,user);
-        return "redirect:"+callUrl;
+        autoLogin(user);
+
+        return Result.success("绑定成功");
     }
 
 
