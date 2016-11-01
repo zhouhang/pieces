@@ -157,7 +157,7 @@ public class ShiroConfiguration {
         ShiroTagFreeMarkerConfigurer shiroTagFreeMarkerConfigurer = new ShiroTagFreeMarkerConfigurer();
         shiroTagFreeMarkerConfigurer.setTemplateLoaderPath("classpath:/templates/");
         Map<String , Object> variables = new HashMap<>();
-        variables.put("baseUrl", "http://127.0.0.1:8189/");
+        variables.put("baseUrl",baseUrl);
         shiroTagFreeMarkerConfigurer.setFreemarkerVariables(variables);
         return shiroTagFreeMarkerConfigurer;
     }

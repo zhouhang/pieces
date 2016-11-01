@@ -64,8 +64,11 @@
 
                 $("#wechatLogin").click(function(){
                     alert("is:"+is_weixin());
-
-                    location.href="/center/index?source=WECHAT"
+                    var url = "/center/index";
+                    if(is_weixin()){
+                        url+="?source=WECHAT";
+                    }
+                    location.href=url;
                 })
 
             },

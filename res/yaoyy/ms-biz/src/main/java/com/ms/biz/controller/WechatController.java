@@ -13,7 +13,12 @@ import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.util.ThreadContext;
+import org.apache.shiro.web.subject.WebSubject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -128,7 +133,8 @@ public class WechatController {
      * @throws Exception
      */
     @RequestMapping("bind")
-    public String bindPhone(HttpServletResponse response,
+    @ResponseBody
+    public Result bindPhone(HttpServletResponse response,
                             HttpServletRequest request,
                             String callUrl,
                             String phone,
@@ -138,11 +144,12 @@ public class WechatController {
                             String headImgUrl)throws Exception{
         String rcode = redisManager.get(RedisEnum.KEY_MOBILE_CAPTCHA_REGISTER.getValue()+phone);
         if (!code.equalsIgnoreCase(rcode)) {
-//            return Result.error().msg("验证码错误!");
+            return Result.error().msg("验证码错误!");
         }
         User user =userService.registerWechat(phone, openId, nickname, headImgUrl);
         autoLogin(user);
-        return "redirect:"+callUrl;
+
+        return Result.success("绑定成功").data(callUrl);
     }
 
 

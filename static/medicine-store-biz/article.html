@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>文章详情-药优优</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="ui-body-nofoot">
+    <header class="ui-header">
+        <div class="title">联系我们</div>
+        <div class="abs-l mid">
+            <a href="javascript:history.back();" class="fa fa-back"></a>
+        </div>
+    </header><!-- /ui-header -->
+
+
+    <section class="ui-content">
+        <div class="article">
+            <p><strong>联系我们</strong></p>
+            <p><strong>客服热线：</strong>188-7145-3634</p>
+        </div>
+    </section><!-- /ui-content -->
+
+	
+    <script src="assets/js/zepto.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+
+    var _global = {
+        fn: {
+            init: function() {
+                this.slide();
+            },
+            slide: function() {
+                var $slide = $('#slide1'),
+                    $nav,
+                    length = $slide.find('li').length;
+
+                if (length < 2) {
+                    return;
+                }
+                var nav = ['<div class="nav">'];
+                for (var i = 0 ; i < length; i++) {
+                    nav.push( i === 0 ? '<i class="current"></i>' : '<i></i>');
+                }
+                nav.push('</div>');
+                $slide.append(nav.join(''));
+                $nav = $slide.find('i');
+
+                $slide.swipeSlide({
+                    firstCallback : function(i){
+                        $nav.eq(i).addClass('current').siblings().removeClass('current');
+                    },
+                    callback : function(i){
+                        $nav.eq(i).addClass('current').siblings().removeClass('current');
+                    }
+                });
+            }
+        }
+    }
+
+    $(function(){
+        _global.fn.init();
+
+    });
+
+</script>
+</body>
+</html>
