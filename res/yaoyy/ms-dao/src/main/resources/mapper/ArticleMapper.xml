@@ -52,6 +52,9 @@
             <if test="id != null">
                 id = #{id}
             </if>
+            <if test="title != null">
+                and title LIKE "%"#{title}"%"
+            </if>
         </where>
     </select>
 
