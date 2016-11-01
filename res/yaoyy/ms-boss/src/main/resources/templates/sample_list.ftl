@@ -74,7 +74,7 @@
                         <td>${sendSample.phone}</td>
                         <td>${sendSample.area}</td>
                         <td>${sendSample.intentionText}</td>
-                        <td>${sendSample.createTime?string("yyyy-MM-dd HH:mm")}</td>
+                        <td>${(sendSample.createTime?datetime)!}</td>
                         <td><em class="status-${sendSample.status+1}">${sendSample.statusText}</em></td>
                         <td class="tc">
                             <a href="/sample/detail/${sendSample.id?c}" class="ubtn ubtn-blue jedit">查看详情</a>

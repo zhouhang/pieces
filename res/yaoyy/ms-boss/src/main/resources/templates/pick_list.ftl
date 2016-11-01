@@ -58,7 +58,7 @@
                     <td>${pick.nickname}</td>
                     <td>${pick.phone}</td>
                     <td><em>${pick.statusText}</em></td>
-                    <td>${pick.createTime?string("yyyy-MM-dd HH:mm")}</td>
+                    <td>${(pick.createTime?datetime)!}</td>
                     <td class="tc">
                         <a href="pick/detail/${pick.id}" class="ubtn ubtn-blue jedit">查看详情</a>
                         <a href="javascript:;" pid="${pick.id}"class="ubtn ubtn-gray jdel">废弃</a>

@@ -36,7 +36,7 @@
         </div>
         <div class="item">
             <div class="txt">申请时间：</div>
-            <div class="val">${sendSampleVo.createTime?string("yyyy-MM-dd HH:mm")}</div>
+            <div class="val">${(sendSampleVo.createTime?datetime)!}</div>
         </div>
         <div class="item">
             <div class="txt">申请商品：</div>
@@ -61,7 +61,7 @@
                     <#list historySend.list as sendSample>
                     <tr>
                         <td><a href="sample/detail/${sendSample.id?c}">${sendSample.intentionText}</a></td>
-                        <td>${sendSample.createTime?string("yyyy-MM-dd HH:mm")}</td>
+                        <td>${(sendSample.createTime?datetime)!}</td>
                         <td><span class="status-${sendSample.status+1}">${sendSample.statusText}</span></td>
                     </tr>
                     </#list>

@@ -70,7 +70,7 @@
                     <td>${category.priceDesc}元/${category.unit}</td>
                     <td>${category.sort}</td>
                     <td>${category.parentName}</td>
-                    <td>${category.createTime?string("yyyy-MM-dd HH:mm")}  </td>
+                    <td>${(category.createTime?datetime)!}  </td>
                     <td class="tc">
                         <a href="javascript:;" class="ubtn ubtn-blue jedit" categoryId="${category.id?c}">编辑</a>
                         <a href="javascript:;" class="ubtn ubtn-gray jdel"  categoryId="${category.id?c}">删除</a>

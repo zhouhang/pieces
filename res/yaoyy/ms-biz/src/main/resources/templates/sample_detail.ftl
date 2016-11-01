@@ -18,13 +18,13 @@
             <ul class="info">
                 <li>寄样状态：${sendSampleVo.statusText}</li>
                 <li>寄样单号：${sendSampleVo.code}</li>
-                <li>申请时间：${sendSampleVo.createTime?string("yyyy-MM-dd HH:mm")}</li>
+                <li>申请时间：${(sendSampleVo.createTime?datetime)!}</li>
             </ul>
             <ul class="time">
                 <#list trackingList as tracking >
                     <#if tracking.recordType!=6&&tracking.recordType!=7>
                 <li>
-                    <time>${tracking.createTime?string("yyyy-MM-dd HH:mm")}</time>
+                    <time>${(tracking.createTime?datetime)!}</time>
                     <span>${tracking.recordTypeText}&nbsp;&nbsp;${tracking.extra?default('')}</span>
                 </li>
                     </#if>
@@ -47,7 +47,7 @@
                 <#list trackingList as tracking >
                     <#if tracking.recordType==7>
                     <li>
-                        <time>${tracking.createTime?string("yyyy-MM-dd HH:mm")}</time>
+                        <time>${(tracking.createTime?datetime)!}</time>
                         <span>${tracking.extra?default('')}</span>
                     </li>
                     </#if>
