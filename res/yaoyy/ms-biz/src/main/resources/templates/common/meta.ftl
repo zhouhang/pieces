@@ -7,4 +7,5 @@
 
 <link rel="icon" href="favicon.ico">
 <link rel="stylesheet" href="assets/css/app.css">
+<#setting number_format="#">
 

@@ -18,6 +18,9 @@ elasticsearch:
 doc:
     base:
         url: @doc.base.url@
+biz:
+    base:
+         url: @biz.base.url@
 upload:
     path: @pro.upload.path@
     url: @pro.upload.url@

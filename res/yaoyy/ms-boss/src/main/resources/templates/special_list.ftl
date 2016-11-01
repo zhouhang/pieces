@@ -38,6 +38,7 @@
                 <tr>
                     <th><input type="checkbox"></th>
                     <th>标题</th>
+                    <th>链接</th>
                     <th>创建时间</th>
                     <th>修改时间</th>
                     <th>排序</th>
@@ -49,6 +50,7 @@
                 <tr>
                     <td><input type="checkbox"></td>
                     <td>${special.title}</td>
+                    <td>${bizBaseUrl}special/${special.id}</td>
                     <td>${(special.createTime?datetime)!}</td>
                     <td>${(special.updateTime?datetime)!}</td>
                     <td>${special.sort!}</td>
