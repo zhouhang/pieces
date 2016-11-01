@@ -4,6 +4,8 @@ import com.ms.biz.shiro.BizToken;
 import com.ms.dao.model.User;
 import com.ms.service.UserService;
 import com.ms.service.enums.RedisEnum;
+import com.ms.service.redis.RedisManager;
+import com.ms.tools.entity.Result;
 import com.ms.tools.utils.WebUtil;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
@@ -11,12 +13,7 @@ import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.ThreadContext;
-import org.apache.shiro.web.subject.WebSubject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -99,7 +96,7 @@ public class WechatController {
             WxMpUser wxMpUser = wxService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
             User user = userService.findByOpenId(wxMpUser.getOpenId());
             if(user!=null){
-                autoLogin(request,response,user);
+                autoLogin(user);
                 if(StringUtils.isNotBlank(call)){
                     return "redirect:"+call;
                 }else{
@@ -141,18 +138,16 @@ public class WechatController {
                             String headImgUrl)throws Exception{
         String rcode = redisManager.get(RedisEnum.KEY_MOBILE_CAPTCHA_REGISTER.getValue()+phone);
         if (!code.equalsIgnoreCase(rcode)) {
-            return Result.error().msg("验证码错误!");
+//            return Result.error().msg("验证码错误!");
         }
         User user =userService.registerWechat(phone, openId, nickname, headImgUrl);
-        autoLogin(request,response,user);
+        autoLogin(user);
         return "redirect:"+callUrl;
     }
 
 
     /**
      * 实现shiro自动登录(并未绑定到redis)
-     * @param request
-     * @param response
      * @param user
      */
     public void autoLogin(User user){
