@@ -9,6 +9,7 @@ import com.ms.dao.vo.ArticleVo;
 import com.ms.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -22,13 +23,18 @@ public class ArticleServiceImpl  extends AbsCommonService<Article> implements Ar
 
 	@Override
 	public PageInfo<ArticleVo> findByParams(ArticleVo articleVo,Integer pageNum,Integer pageSize) {
-    PageHelper.startPage(pageNum, pageSize);
+		if (pageNum == null || pageSize == null){
+			pageNum = 1;
+			pageSize = 10;
+		}
+    	PageHelper.startPage(pageNum, pageSize);
     	List<ArticleVo>  list = articleDao.findByParams(articleVo);
         PageInfo page = new PageInfo(list);
         return page;
 	}
 
 	@Override
+	@Transactional
 	public void changeStatus(Integer id, Integer status) {
 		Article article  = new Article();
 		article.setId(id);
@@ -37,9 +43,13 @@ public class ArticleServiceImpl  extends AbsCommonService<Article> implements Ar
 	}
 
 	@Override
+	@Transactional
 	public void save(Article article) {
+		if (article.getStatus() == null) {
+			article.setStatus(1);
+		}
+		article.setUpdateTime(new Date());
 		if (article.getId() != null) {
-			article.setUpdateTime(new Date());
 			update(article);
 		} else {
 			article.setCreateTime(new Date());

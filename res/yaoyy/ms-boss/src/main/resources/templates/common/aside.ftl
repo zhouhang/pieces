@@ -16,6 +16,18 @@
     <dl>
         <dt>
             <a href="javascript:;">
+                <i class="fa fa-star"></i>
+                <span>CMS管理</span>
+                <i class="fa fa-angle-down arrow"></i>
+            </a>
+        </dt>
+        <dd>
+            <a href="cms/list"><i class="fa fa-circle-o"></i>CMS管理</a>
+        </dd>
+    </dl>
+    <dl>
+        <dt>
+            <a href="javascript:;">
                 <i class="fa fa-user"></i>
                 <span>用户管理</span>
                 <i class="fa fa-angle-down arrow"></i>
