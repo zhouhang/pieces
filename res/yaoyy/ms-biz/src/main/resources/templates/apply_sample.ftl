@@ -95,7 +95,7 @@
                                         }
                                         else{
                                               if(_global.fn.isWeixinBrowser()&&user.openid==""){
-                                                  location.href = 'wechat/login';
+                                                  location.href = '/sample/list?source=WECHAT';
                                               }
                                               else{
                                                   location.href ='/sample/list';
