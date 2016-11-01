@@ -74,9 +74,11 @@
                             type:'POST',
                             dataType: 'json',
                             data: $("#wechatLoginForm").serialize(),
+
                             success: function(data) {
+                                console.log(data)
                                 if (data.status === '200') {
-                                    lock();
+                                    popover(data.msg);
                                     location.href=data.data;
                                 } else {
                                     popover(data.msg);

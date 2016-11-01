@@ -133,22 +133,5 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         return gsonConverter;
     }
 
-//    /**
-//     * Filter 的声明和注册
-//     */
-//    @Bean
-//    public Filter shiroFilter() {
-//        DelegatingFilterProxy delegatingFilterProxy = new DelegatingFilterProxy();
-//        delegatingFilterProxy.setBeanName("shiroFilter");
-//        return delegatingFilterProxy;
-//    }
-//
-//    @Bean
-//    public FilterRegistrationBean myFilter() {
-//        FilterRegistrationBean registration = new FilterRegistrationBean();
-//        registration.setFilter(shiroFilter());
-//        registration.addUrlPatterns("/*");
-//        return registration;
-//    }
 
 }

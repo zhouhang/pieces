@@ -133,6 +133,7 @@ public class WechatController {
      * @throws Exception
      */
     @RequestMapping("bind")
+    @ResponseBody
     public Result bindPhone(HttpServletResponse response,
                             HttpServletRequest request,
                             String callUrl,
@@ -148,14 +149,12 @@ public class WechatController {
         User user =userService.registerWechat(phone, openId, nickname, headImgUrl);
         autoLogin(user);
 
-        return Result.success("绑定成功");
+        return Result.success("绑定成功").data(callUrl);
     }
 
 
     /**
      * 实现shiro自动登录(并未绑定到redis)
-     * @param request
-     * @param response
      * @param user
      */
     public void autoLogin(User user){
