@@ -2,7 +2,7 @@
  * Created by kevin1 on 10/20/16.
  * 常用工具代码
  */
-(function($) {
+!(function($) {
     /**
      * 表单序列化为对象
      * @returns {{}}
@@ -71,58 +71,9 @@
         return params;
     }
 
-}(jQuery));
+})(jQuery);
 
-
-// 页面布局
-function _fix() {
-    $window = $(window);
-    var sidebar_height =  $('.aside').height();
-
-    var fix = function() {
-        $('.wrapper').css('min-height', Math.max($window.height(), sidebar_height));
-    }
-
-    $window.on('resize', fix);
-    fix();
-}
-
-// 侧栏导航
-function _aside() {
-    var $aside = $('#jaside'),
-        URL = document.URL.split('#')[0].split('?')[0].toLowerCase(),
-        urlBefore = URL.split('/')[3] + URL.split('/')[4];
-
-    $aside.on('click', 'dt', function() {
-        $(this).next().slideToggle().parent().toggleClass('extend');
-        $(this).parent().siblings().find('dd').slideUp().parent().removeClass('extend');
-    })
-    .find('.active').addClass('extend');
-
-    // 导航高亮
-    $aside.find('a').each(function() {
-        var url = this.href.toLowerCase(),
-            hrefBefore = url.split('/')[3] + url.split('/')[4];
-        if (URL === url) {
-            $(this).addClass('current').closest('dl').addClass('active');
-            return false; // break
-        }
-        if(urlBefore === hrefBefore){
-            // $(this).closest('dl').addClass('active');
-        }
-    }) 
-
-    // 以下代码本地专用
-    $aside.html() === '' && $.ajax({
-        url: 'inc/aside.html',
-        success: function(innerHtml) {
-            $aside.off().html(innerHtml);
-            _aside();
-        }
-    })
-}
-
-;(function($){
+!(function($){
     var defaults = {
         clickToHide: true   // 点击关闭
         ,delay: 5e3         // 5秒后自动关闭，为0时不关闭
@@ -137,7 +88,7 @@ function _aside() {
         ,success: '<i class="fa fa-check-circle"></i>'
         ,warn: '<i class="fa fa-prompt"></i>'
     }
-    var $wrapper = $('<div class="notify-wrapper" />').appendTo($('body'));
+    var $wrapper;
 
     $.notify = function(options) {
         var settings = $.extend({}, defaults, options);
@@ -155,6 +106,9 @@ function _aside() {
         modal.push('</div>');
 
         var $modal = $(modal.join(''));
+        if (typeof $wrapper === 'undefined') {
+            $wrapper = $('<div class="notify-wrapper"></div>').appendTo($('body'));
+        }
         $wrapper.prepend($modal);
         if (settings.delay === 0) {
             $modal.slideDown(400);
@@ -174,7 +128,47 @@ function _aside() {
             $self.remove();
         });
     })
-})(jQuery)
+})(jQuery);
+
+// 页面布局
+function _fix() {
+    $window = $(window);
+    var sidebar_height =  $('.aside').height();
+
+    var fix = function() {
+        $('.wrapper').css('min-height', Math.max($window.height(), sidebar_height));
+    }
+
+    $window.on('resize', fix);
+    fix();
+}
+
+// 侧栏导航
+function _aside() {
+    var $aside = $('#jaside'),
+        URL = document.URL.split('#')[0].split('?')[0].toLowerCase(),
+        urlBefore = URL.split('/')[3];
+
+    $aside.on('click', 'dt', function() {
+        $(this).next().slideToggle()
+        .parent().toggleClass('expand').siblings().removeClass('expand')
+        .find('dd').slideUp();
+    })
+    .find('.active').addClass('extend');
+
+    // 导航高亮
+    $aside.find('a').each(function() {
+        var url = this.href.toLowerCase(),
+            hrefBefore = url.split('/')[3];
+        if (URL === url) {
+            $(this).addClass('current').closest('dl').addClass('active');
+            return false; // break
+        }
+        if(urlBefore === hrefBefore){
+            $(this).closest('dl').addClass('active');
+        }
+    }) 
+}
 
 
 $(function() {
