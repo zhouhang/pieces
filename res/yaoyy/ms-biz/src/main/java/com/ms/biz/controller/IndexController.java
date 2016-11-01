@@ -1,12 +1,15 @@
 package com.ms.biz.controller;
 
+import com.ms.dao.model.Article;
 import com.ms.dao.vo.AdVo;
 import com.ms.service.AdService;
+import com.ms.service.ArticleService;
 import com.ms.service.CommoditySearchService;
 import com.ms.tools.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +30,10 @@ public class IndexController {
 
     @Autowired
     private AdService adService;
+
+    @Autowired
+    private ArticleService articleService;
+
     /**
      * 首页广告
      * @param model
@@ -49,4 +56,12 @@ public class IndexController {
         commoditySearchService.createAllCommodityDoc();
         return Result.success("索引创建成功");
     }
+
+    @RequestMapping(value = "/article/{id}", method = RequestMethod.GET)
+    public String article(@PathVariable("id") Integer id, ModelMap modelMap) {
+        Article article = articleService.findById(id);
+        modelMap.put("article", article);
+        return "article";
+    }
+
 }

@@ -4,16 +4,16 @@ import com.github.pagehelper.PageInfo;
 import com.ms.dao.enums.TrackingTypeEnum;
 import com.ms.dao.model.Member;
 import com.ms.dao.model.Pick;
-import com.ms.dao.model.PickTracking;
 import com.ms.dao.model.UserDetail;
-import com.ms.dao.vo.CommodityVo;
 import com.ms.dao.vo.PickCommodityVo;
 import com.ms.dao.vo.PickTrackingVo;
 import com.ms.dao.vo.PickVo;
-import com.ms.service.*;
+import com.ms.service.PickCommodityService;
+import com.ms.service.PickService;
+import com.ms.service.PickTrackingService;
+import com.ms.service.UserDetailService;
 import com.ms.service.enums.RedisEnum;
 import com.ms.tools.entity.Result;
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
