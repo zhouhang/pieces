@@ -310,7 +310,7 @@
                             //console.log(category.variety);
                             // 如果有图片，填充图片
                             if (category.pictureUrl!="") {
-                                $('#imgCrop').hide().prev().remove().end().before('<span class="up-img"><img src="' + category.pictureUrl + '" title="点击图片看大图" /><i class="del" title="删除"></i><input type="hidden" name="img" value="' + category.pictureUrl + '"></span>');
+                                $('#imgCrop').hide().prev().remove().end().before('<span class="up-img"><img src="' + category.pictureUrl + '" title="点击图片看大图" /><i class="del" title="删除"></i><input type="hidden" name="pictureUrl" value="' + category.pictureUrl + '"></span>');
                             } else {
                                 $('#imgCrop').show().prev().remove();
                             }
