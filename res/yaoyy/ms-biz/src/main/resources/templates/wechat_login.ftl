@@ -17,7 +17,7 @@
         通过绑定手机号可以查询您的寄样跟踪信息和采购单等业务！
     </div>
     <div class="ui-form">
-        <form action="/wechat/bind">
+        <form id="wechatLoginForm" method="post" action="/wechat/bind">
             <div class="weinxin">
                 <span>微信号：</span>
                 <img src="${headImgUrl!}" width="30" height="30" alt="">
@@ -39,7 +39,7 @@
             </div>
 
             <div class="item">
-                <button type="submit" class="ubtn ubtn-primary" id="submit">绑定</button>
+                <a  href="javascript:;" class="ubtn ubtn-primary" id="submit">绑定</a>
             </div>
         </form>
 
@@ -54,14 +54,41 @@
 <script>
 
     var _global = {
+        v:{
+            smsUrl:"/user/sendRegistSms"
+        },
         fn: {
             init: function() {
                 this.validator();
+
+
+
             },
             validator: function() {
                 var self = this;
                 $('#submit').on('click', function() {
-                    return self.checkMobile() && self.checkSMSCode();
+                    if(self.checkMobile() && self.checkSMSCode()){
+
+                        $.ajax({
+                            url: "/wechat/bind",
+                            type:'POST',
+                            dataType: 'json',
+                            data: $("#wechatLoginForm").serialize(),
+                            success: function(data) {
+                                if (data.status === '200') {
+                                    lock();
+                                    location.href=data.data;
+                                } else {
+                                    popover(data.msg);
+                                }
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                popover('网络连接超时，请您稍后重试!');
+                            }
+                        })
+
+
+                    }
                 })
 
                 self.SMSCodeEvent();
@@ -116,11 +143,12 @@
                 var sendMSM = function() {
                     popover('验证码发送中，请稍后...!');
                     $.ajax({
-                        url: 'json/getsmscode.php',
+                        url: _global.v.smsUrl,
+                        type:'POST',
                         dataType: 'json',
                         data: 'phone=' + $mobile.val(),
                         success: function(data) {
-                            if (data.status === 'y') {
+                            if (data.status === '200') {
                                 $send.text(second + txt).prop('disabled', true);
                                 lock();
                                 popover(data.info);

@@ -4,6 +4,8 @@ import com.ms.biz.shiro.BizToken;
 import com.ms.dao.model.User;
 import com.ms.service.UserService;
 import com.ms.service.enums.RedisEnum;
+import com.ms.service.redis.RedisManager;
+import com.ms.tools.entity.Result;
 import com.ms.tools.utils.WebUtil;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
@@ -11,12 +13,7 @@ import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
-import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.ThreadContext;
-import org.apache.shiro.web.subject.WebSubject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -36,6 +33,10 @@ import javax.servlet.http.HttpServletResponse;
 public class WechatController {
 
     private static final Logger logger = Logger.getLogger(WechatController.class);
+
+    @Autowired
+    private RedisManager redisManager;
+
 
     @Autowired
     private WxMpService wxService;
@@ -77,13 +78,17 @@ public class WechatController {
 
     /**
      * 跳转到微信登陆页面（绑定微信和手机号）
+     * @param request
+     * @param response
      * @param call
      * @param code
      * @param model
      * @return
      */
     @RequestMapping("login")
-    public String login(String call,
+    public String login(HttpServletRequest request,
+                        HttpServletResponse response,
+                        String call,
                         String code,
                         ModelMap model){
         try {
@@ -92,7 +97,11 @@ public class WechatController {
             User user = userService.findByOpenId(wxMpUser.getOpenId());
             if(user!=null){
                 autoLogin(user);
-                return "redirect:"+call;
+                if(StringUtils.isNotBlank(call)){
+                    return "redirect:"+call;
+                }else{
+                    return "redirect:/center/index";
+                }
             }
             model.put("headImgUrl",wxMpUser.getHeadImgUrl());
             model.put("nickname",wxMpUser.getNickname());
@@ -107,6 +116,8 @@ public class WechatController {
 
     /**
      * 通过页面表单信息注册用户并登陆
+     * @param response
+     * @param request
      * @param callUrl
      * @param phone
      * @param code
@@ -117,12 +128,18 @@ public class WechatController {
      * @throws Exception
      */
     @RequestMapping("bind")
-    public String bindPhone(String callUrl,
+    public String bindPhone(HttpServletResponse response,
+                            HttpServletRequest request,
+                            String callUrl,
                             String phone,
                             String code,
                             String openId,
                             String nickname,
                             String headImgUrl)throws Exception{
+        String rcode = redisManager.get(RedisEnum.KEY_MOBILE_CAPTCHA_REGISTER.getValue()+phone);
+        if (!code.equalsIgnoreCase(rcode)) {
+//            return Result.error().msg("验证码错误!");
+        }
         User user =userService.registerWechat(phone, openId, nickname, headImgUrl);
         autoLogin(user);
         return "redirect:"+callUrl;

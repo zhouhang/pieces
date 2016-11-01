@@ -9,6 +9,8 @@ import com.ms.dao.vo.ArticleVo;
 import com.ms.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -26,6 +28,24 @@ public class ArticleServiceImpl  extends AbsCommonService<Article> implements Ar
         return page;
 	}
 
+	@Override
+	public void changeStatus(Integer id, Integer status) {
+		Article article  = new Article();
+		article.setId(id);
+		article.setStatus(status);
+		update(article);
+	}
+
+	@Override
+	public void save(Article article) {
+		if (article.getId() != null) {
+			article.setUpdateTime(new Date());
+			update(article);
+		} else {
+			article.setCreateTime(new Date());
+			create(article);
+		}
+	}
 
 	@Override
 	public ICommonDao<Article> getDao() {

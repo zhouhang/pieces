@@ -165,7 +165,7 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 		userDetail.setUserId(user.getId());
 		userDetail.setPhone(phone);
 		userDetail.setNickname(nickname);
-		userDetail.setHeadImgUrl(headImgUrl);
+		userDetail.setHeadImgUrl("");
 		userDetail.setType(UserEnum.enable.getType());
 		userDetailService.save(userDetail);
 		return user;

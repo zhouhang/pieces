@@ -67,7 +67,7 @@
         insert into
         user_detail (type,nickname,phone,area,name,head_img_url,remark,user_id,create_time,update_time)
         values
-        (#{type},#{nickname},#{phone},#{area},#{name},${headImgUrl},#{remark},#{userId},#{createTime},#{updateTime})
+        (#{type},#{nickname},#{phone},#{area},#{name},#{headImgUrl},#{remark},#{userId},#{createTime},#{updateTime})
     </insert>
 
     <update id="update" parameterType="com.ms.dao.model.UserDetail">
@@ -99,7 +99,7 @@
             </if>
 
             <if test="headImgUrl != null">
-                head_img_url = #{remark},
+                head_img_url = #{headImgUrl},
             </if>
                                             
             <if test="userId != null">
