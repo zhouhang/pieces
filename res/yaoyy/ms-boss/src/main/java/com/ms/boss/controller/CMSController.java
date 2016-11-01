@@ -46,11 +46,10 @@ public class CMSController {
 
     /**
      * 添加文章页面
-     * @param model
      * @return
      */
     @RequestMapping(value="create",method= RequestMethod.GET)
-    public String createSpecial(ModelMap model){
+    public String createArticle(){
         return "article_add";
     }
 
@@ -78,26 +77,25 @@ public class CMSController {
         return Result.success().msg("修改成功");
     }
 
-    @RequestMapping(value="updateStatus",method = RequestMethod.POST)
+    @RequestMapping(value="enable/{id}",method = RequestMethod.POST)
     @ResponseBody
-    public Result disable(Integer id){
-        articleService.changeStatus(id, 0);
-        return Result.success().msg("修改成功");
-    }
-
-    @RequestMapping(value="updateStatus",method = RequestMethod.POST)
-    @ResponseBody
-    public Result enable(Integer id){
+    public Result enable(@PathVariable("id") Integer id){
         articleService.changeStatus(id, 1);
         return Result.success().msg("修改成功");
     }
 
-    @RequestMapping(value="edit/{id}",method = RequestMethod.GET)
+    @RequestMapping(value="disable/{id}",method = RequestMethod.POST)
+    @ResponseBody
+    public Result disable(@PathVariable("id") Integer id){
+        articleService.changeStatus(id, 0);
+        return Result.success().msg("修改成功");
+    }
+
+    @RequestMapping(value="editor/{id}",method = RequestMethod.GET)
     public String edit(@PathVariable("id") Integer id,ModelMap model){
         Article article = articleService.findById(id);
         model.put("article", article);
-
-        return "article_detail";
+        return "article_editor";
     }
 
 

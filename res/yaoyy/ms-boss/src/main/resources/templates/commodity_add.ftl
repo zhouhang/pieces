@@ -325,7 +325,7 @@
                                     $.notify({
                                         type: 'success',
                                         title: '保存成功',
-                                        text: '3秒后自动跳转到商品详情页',
+                                        text: '3秒后自动跳转到商品列表页',
                                         delay: 3e3,
                                         call: function() {
                                             setTimeout(function() {

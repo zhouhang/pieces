@@ -142,6 +142,7 @@
                 this.bindEvent();
                 this.category();
                 this.goodsImg();
+                this.filter();
             },
             // 筛选
             filter: function() {
