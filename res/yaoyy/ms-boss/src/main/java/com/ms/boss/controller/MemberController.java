@@ -120,10 +120,9 @@ public class MemberController extends BaseController{
         String advices = "新增用户信息成功!";
         if(member.getId()==null){
             member.setIsDel(false);
-            Integer memberId = memberService.addMember(member);
-            roleMemberService.createRoleMember(new Integer[]{roleId},memberId);
+            memberService.addMember(member,roleId);
         }else{
-            memberService.updateMember(member);
+            memberService.updateMember(member,roleId);
             advices = "修改用户信息成功!";
         }
         bossRealm.removeAuthenticationCacheInfo();

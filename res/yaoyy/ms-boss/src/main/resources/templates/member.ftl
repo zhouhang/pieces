@@ -33,11 +33,9 @@
                         <button id="search" class="ubtn ubtn-blue">搜索</button>
                     </form>
                 </div>
-                <@shiro.hasPermission name="member:add">
                 <div class="action-add pb">
                     <button class="ubtn ubtn-blue" id="jaddNewAdmin">新建管理员</button>
                 </div>
-                </@shiro.hasPermission>
             </div>
 
             <div class="table">
@@ -61,14 +59,10 @@
                             <td>${member.username}</td>
                             <td>${member.mobile!""}</td>
                             <td>${member.roleName!""}</td>
-                            <td>${member.createDate?date}</td>
+                            <td>${member.createDate?datetime}</td>
                             <td class="tc">
-                                <@shiro.hasPermission name="member:edit">
                                     <a class="ubtn ubtn-blue jedit" data-id="${member.id}">编辑</a>
-                                </@shiro.hasPermission>
-                                <@shiro.hasPermission name="member:edit">
                                     <a href="javascript:;" class="ubtn ubtn-gray jdel" data-id="${member.id}">删除</a>
-                                </@shiro.hasPermission>
                             </td>
                         </tr>
                     </#list>
@@ -100,9 +94,9 @@
                 </div>
             </div>
             <div class="item">
-                <div class="txt"><i>*</i>密码：</div>
+                <div class="txt">密码：</div>
                 <div class="cnt">
-                    <input type="text" name="password" class="ipt" placeholder="密码" autocomplete="off">
+                    <input type="text" name="password" class="ipt" placeholder="密码(修改密码时为空即不修改)" autocomplete="off">
                 </div>
             </div>
             <div class="item">
@@ -161,7 +155,6 @@
                     $adminForm.validator({
                         fields: {
                             username: '用户名: required',
-                            password: '密码: required',
                             name: '姓名: required',
                             mobile: '电话: required; mobile',
                             email: '邮箱: required; email'
@@ -172,8 +165,22 @@
                                     url: "/member/save",
                                     data: $adminForm.formSerialize(),
                                     type: "POST",
-                                    success: function(data){
-                                        location.href = "/member/index";
+                                    success: function(result){
+                                        layer.closeAll();
+                                        if (result.status == "200") {
+                                            $.notify({
+                                                type: 'success',
+                                                title: '保存成功',
+                                                text: result.msg,
+                                                delay: 3e3,
+                                                call: function() {
+                                                    setTimeout(function() {
+                                                        location.href = "/member/index";
+                                                    }, 3e3);
+                                                }
+                                            });
+                                            return false;
+                                        }
                                     }
                                 });
                             }

@@ -122,7 +122,7 @@
                             data:{roleId:roleId,resourcesIds:arrIds,roleName:roleName},
                             success: function(result){
                                 $("#roleId").val(result.data)
-                                if (result.status == 200) {
+                                if (result.status == "200") {
                                     $.notify({
                                         type: 'success',
                                         title: '保存成功',
@@ -134,6 +134,7 @@
                                             }, 3e3);
                                         }
                                     });
+                                    return false;
                                 }
                             }
 

@@ -64,15 +64,29 @@ public class MemberServiceImpl extends AbsCommonService<Member> implements Membe
 
     @Override
     @Transactional
-    public int updateMember(Member member) {
+    public int addMember(Member member, Integer roleId) {
+        Password pass = EncryptUtil.PiecesEncode(member.getPassword());
+        member.setPassword(pass.getPassword());
+        member.setSalt(pass.getSalt());
+        member.setCreateDate(new Date());
+        create(member);
+        roleMemberService.createRoleMember(new Integer[]{roleId},member.getId());
+        return member.getId();
+    }
+
+    @Override
+    public int updateMember(Member member, Integer roleId) {
         if (StringUtils.isNotBlank(member.getPassword())) {
             Password pass = EncryptUtil.PiecesEncode(member.getPassword());
             member.setPassword(pass.getPassword());
             member.setSalt(pass.getSalt());
         }
         member.setUpdateDate(new Date());
+        roleMemberService.createRoleMember(new Integer[]{roleId},member.getId());
         return this.update(member);
     }
+
+
 
     @Override
     public PageInfo<Member> findByCondition(MemberVo memberVo, Integer pageNum, Integer pageSize) {
