@@ -18,7 +18,9 @@ public interface MemberService extends ICommonService<Member>{
 
     int addMember(Member member);
 
-    int updateMember(Member member);
+    int addMember(Member member,Integer roleId);
+
+    int updateMember(Member member,Integer roleId);
 
     PageInfo<Member> findByCondition(MemberVo memberVo, Integer pageNum, Integer pageSize);
 

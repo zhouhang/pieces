@@ -57,7 +57,7 @@ public class RoleController extends BaseController{
      * @param model
      * @return
      */
-    @RequiresPermissions(value = "role:index")
+    @RequiresPermissions(value = "role:list")
     @RequestMapping(value = "/index")
     public String index(HttpServletRequest request,
                         HttpServletResponse response,
@@ -84,12 +84,12 @@ public class RoleController extends BaseController{
      * @param model
      * @return
      */
-    @RequiresPermissions(value = "role:add")
+    @RequiresPermissions(value = "role:edit")
     @RequestMapping(value = "/add")
     public String add(HttpServletRequest request,
                       HttpServletResponse response,
                       ModelMap model){
-        return "role-list";
+        return "role_power";
     }
 
     /**
@@ -100,7 +100,7 @@ public class RoleController extends BaseController{
      * @param model
      * @return
      */
-    @RequiresPermissions(value = "role:power")
+    @RequiresPermissions(value = "role:edit")
     @RequestMapping(value = "/power/{id}")
     public String power(HttpServletRequest request,
                         HttpServletResponse response,
@@ -110,7 +110,7 @@ public class RoleController extends BaseController{
             Role role =  roleService.findById(id);
             model.put("role",role);
         }
-        return "role-list";
+        return "role_power";
     }
 
 
@@ -153,7 +153,7 @@ public class RoleController extends BaseController{
      * @param roleId
      * @param resourcesIds
      */
-    @RequiresPermissions(value = "role:power")
+    @RequiresPermissions(value = "role:edit")
     @RequestMapping(value = "/resources/save")
     @ResponseBody
     public Result resourcesSave(HttpServletRequest request,
@@ -194,7 +194,7 @@ public class RoleController extends BaseController{
         PageInfo<RoleMember> roleMemberPage =roleMemberService.findByConditionAndRole(memberVo, pageNum, pageSize);
         model.put("roleMemberPage",roleMemberPage);
         model.put("memberParams",memberVo.toString());
-        return "role-list";
+        return "role_power";
     }
 
 
@@ -206,7 +206,7 @@ public class RoleController extends BaseController{
      * @param roleId
      * @return
      */
-    @RequiresPermissions(value = "role:delete")
+    @RequiresPermissions(value = "role:edit")
     @RequestMapping(value = "delete/{roleId}")
     @ResponseBody
     public Result delete(HttpServletRequest request,

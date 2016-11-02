@@ -48,10 +48,8 @@
                         <td>${role.name}</td>
                         <td>${role.name}</td>
                         <td class="tc">
-                            <@shiro.hasPermission name="role:edit">
                                 <a href="role/power/${role.id}" class="ubtn ubtn-blue jedit">配置</a>
                                 <a href="javascript:;"  class="ubtn ubtn-gray jdel" roleId="${role.id}">删除</a>
-                            </@shiro.hasPermission>
                         </td>
                     </tr>
                 </#list>

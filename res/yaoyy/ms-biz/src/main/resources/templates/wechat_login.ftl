@@ -74,11 +74,9 @@
                             type:'POST',
                             dataType: 'json',
                             data: $("#wechatLoginForm").serialize(),
-
                             success: function(data) {
-                                console.log(data)
-                                if (data.status === '200') {
-                                    popover(data.msg);
+                                if (data.status == '200') {
+//                                    popover(data.msg);
                                     location.href=data.data;
                                 } else {
                                     popover(data.msg);
@@ -150,7 +148,7 @@
                         dataType: 'json',
                         data: 'phone=' + $mobile.val(),
                         success: function(data) {
-                            if (data.status === '200') {
+                            if (data.status == '200') {
                                 $send.text(second + txt).prop('disabled', true);
                                 lock();
                                 popover(data.info);
