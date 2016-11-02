@@ -24,6 +24,7 @@
             <result column="origin"  property="origin" />
             <result column="spec"  property="spec" />
             <result column="price"  property="price" />
+             <result column="price_unit"  property="priceUnit" />
         
     </resultMap>
 
@@ -34,7 +35,7 @@
     <sql id="Join_Commodity_Column_List">
         pc.id as id,pc.pick_id as pick_id,pc.commodity_id as commodity_id,pc.num as num,
         pc.unit as unit,pc.total as total,pc.create_time as create_time,
-        c.name as name,c.origin as origin,c.spec as spec,c.price as price
+        c.name as name,c.origin as origin,c.spec as spec,c.price as price,c.unit as price_unit
     </sql>
 
 

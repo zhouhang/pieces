@@ -108,6 +108,7 @@ public class ShiroConfiguration {
                 "/error/**=anon;" +
                 "/sample/** = bizAuthorization;" +
                 "/center/**=bizAuthorization;" +
+                "/pick/**=bizAuthorization;" +
                 "/**=anon;");
         return shiroFilterFactoryBean;
     }

@@ -60,18 +60,24 @@ public class PickController {
 
     /**
      * 选货单列表
-     * @param model
      * @return
      */
     @RequestMapping(value="list",method= RequestMethod.GET)
-    public String list(Integer pageNum, Integer pageSize,ModelMap model){
+    public String list(){
+        return "pick_list";
+    }
+
+    @RequestMapping(value="list",method= RequestMethod.POST)
+    @ResponseBody
+    public Result list(Integer pageNum, Integer pageSize){
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         PickVo pickVo=new PickVo();
         pickVo.setUserId(user.getId());
         PageInfo<PickVo> pickVoPageInfo=pickService.findByParams(pickVo,pageNum,pageSize);
-        model.put("pickVoPageInfo",pickVoPageInfo);
-
-        return "pick_list";
+        pickVoPageInfo.getList().forEach(p->{
+            p.setStatusText(p.getStatusText());
+        });
+        return Result.success().data(pickVoPageInfo);
     }
 
     /**
@@ -83,17 +89,6 @@ public class PickController {
     @RequestMapping(value="detail/{id}",method=RequestMethod.GET)
     public String detail(@PathVariable("id") Integer id, ModelMap model){
         PickVo pickVo=pickService.findVoById(id);
-        List<PickCommodityVo> pickCommodityVos=pickCommodityService.findByPickId(id);
-        float total=0;
-
-        for(PickCommodityVo vo :pickCommodityVos){
-            total+=vo.getTotal();
-        }
-        pickVo.setTotal(total);
-
-        pickVo.setPickCommodityVoList(pickCommodityVos);
-
-
         List<PickTrackingVo> pickTrackingVos=pickTrackingService.findByPickId(id);
 
         model.put("pickVo",pickVo);

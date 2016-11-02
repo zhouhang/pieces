@@ -64,7 +64,7 @@
                 <td>${pickCommodityVo.origin}</td>
                 <td>${pickCommodityVo.spec}</td>
                 <td>${pickCommodityVo.num}</td>
-                <td>${pickCommodityVo.price}</td>
+                <td>${pickCommodityVo.price}元/${pickCommodityVo.priceUnit}</td>
                 <td>${pickCommodityVo.total}</td>
             </tr>
             </#list>

@@ -58,15 +58,6 @@ public class PickController {
     @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
     private String list(@PathVariable("id") Integer id,  ModelMap model){
         PickVo pickVo=pickService.findVoById(id);
-        List<PickCommodityVo> pickCommodityVos=pickCommodityService.findByPickId(id);
-        float total=0;
-
-        for(PickCommodityVo vo :pickCommodityVos){
-            total+=vo.getTotal();
-        }
-        pickVo.setTotal(total);
-
-        pickVo.setPickCommodityVoList(pickCommodityVos);
         UserDetail userDetail=userDetailService.findByUserId(pickVo.getUserId());
         if(userDetail==null){
             userDetail=new UserDetail();

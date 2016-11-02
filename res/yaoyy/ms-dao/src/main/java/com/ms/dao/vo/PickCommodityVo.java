@@ -12,6 +12,16 @@ public class PickCommodityVo extends PickCommodity{
 
     private Float price;
 
+    private String priceUnit;
+
+    public String getPriceUnit() {
+        return priceUnit;
+    }
+
+    public void setPriceUnit(String priceUnit) {
+        this.priceUnit = priceUnit;
+    }
+
     public Float getPrice() {
         return price;
     }
