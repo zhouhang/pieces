@@ -78,7 +78,7 @@
         <dt>
             <a href="javascript:;">
                 <i class="fa fa-list"></i>
-                <span>后台管理员</span>
+                <span>账号权限</span>
                 <i class="fa fa-angle-down arrow"></i>
             </a>
         </dt>
