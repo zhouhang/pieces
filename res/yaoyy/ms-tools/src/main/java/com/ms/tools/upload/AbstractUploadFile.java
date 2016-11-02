@@ -40,6 +40,7 @@ public abstract class AbstractUploadFile {
             InputStream is = addWatermark(inputStream, ext);
 
             File file = FileUtil.save(is ,path,fileName);
+            is.close();
             FileBo fileBo = new FileBo(file,file.getName(),
                     url + fileName,path+fileName,ext);
             return fileBo;

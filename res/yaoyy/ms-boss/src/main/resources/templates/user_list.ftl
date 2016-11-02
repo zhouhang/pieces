@@ -59,10 +59,10 @@
                 <tr>
                     <td><input type="checkbox"></td>
                     <td>${user.phone}</td>
-                    <td>${user.nickname}</td>
-                    <td>${user.identityTypeName}</td>
-                    <td>${user.name}</td>
-                    <td>${user.typeName}</td>
+                    <td>${user.nickname?default("")}</td>
+                    <td>${user.identityTypeName?default("")}</td>
+                    <td>${user.name?default("")}</td>
+                    <td>${user.typeName?default("")}</td>
                     <td>${user.createTime?datetime}</td>
                     <td class="tc">
                         <a href="javascript:;" class="ubtn ubtn-blue jedit" data-id="${user.id}">查看详情</a>
