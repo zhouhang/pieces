@@ -25,6 +25,8 @@ public interface CommodityService extends ICommonService<Commodity>{
 
     public List<CommodityVo> findByCategoryId(Integer id);
 
+    public void updateStatusByCategoryId(Commodity commodity);
+
 
 
 

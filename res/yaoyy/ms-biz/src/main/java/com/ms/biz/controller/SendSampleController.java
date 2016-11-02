@@ -51,38 +51,6 @@ public class SendSampleController {
 
 
 
-    @RequestMapping(value = "apply", method = RequestMethod.GET)
-    public String apply(Integer commdityId,ModelMap model) {
-
-        Commodity commodity=commodityService.findById(commdityId);
-
-        model.put("commodity", commodity);
-        return "apply_sample";
-    }
-
-
-    @RequestMapping(value = "apply", method = RequestMethod.POST)
-    @ResponseBody
-    public Result applySample(SendSampleVo sendSampleVo) {
-
-        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-        if(user!=null){
-            sendSampleVo.setPhone(user.getPhone());
-        }
-        sendSampleService.save(sendSampleVo);
-        UserVo userInfo=userService.findByPhone(sendSampleVo.getPhone());
-
-        if(user==null){
-            userInfo.setIslogin(false);
-        }
-        else{
-            userInfo.setIslogin(true);
-        }
-
-
-        return Result.success().data(userInfo);
-    }
-
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String apply(String name,ModelMap model) {

@@ -22,4 +22,6 @@ public interface CommodityDao extends ICommonDao<Commodity>{
 
     public List<CommodityVo> findByCategoryId(Integer id);
 
+    public void updateStatusByCategoryId(Commodity commodity);
+
 }

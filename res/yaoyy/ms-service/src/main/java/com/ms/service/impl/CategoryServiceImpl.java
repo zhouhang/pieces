@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.ms.dao.ICommonDao;
 import com.ms.dao.CategoryDao;
 import com.ms.dao.model.Category;
+import com.ms.dao.model.Commodity;
 import com.ms.dao.vo.CategoryVo;
 import com.ms.dao.vo.CommodityVo;
 import com.ms.service.CategorySearchService;
@@ -90,6 +91,12 @@ public class CategoryServiceImpl  extends AbsCommonService<Category> implements 
 		else{
 			categoryVo.setUpdateTime(now);
 			categoryDao.update(categoryVo);
+			//如果下架品种对应所有商品进行下架处理
+
+			Commodity commodity=new Commodity();
+			commodity.setCategoryId(categoryVo.getId());
+			commodity.setStatus(categoryVo.getStatus());
+			commodityService.updateStatusByCategoryId(commodity);
 		}
 		categorySearchService.save(categoryVo);
 

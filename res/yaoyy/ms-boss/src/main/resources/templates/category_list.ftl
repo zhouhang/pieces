@@ -329,7 +329,7 @@
                         type: 1,
                         moveType: 1,
                         content: $carForm,
-                        title: '新建品种'
+                        title: '编辑品种'
                     });
                     return false; // 阻止链接跳转
                 })
