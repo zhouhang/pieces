@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>选货单列表-药优优</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="ui-body-nofoot body-gray">
+    <header class="ui-header">
+        <div class="title">选货单列表</div>
+        <div class="abs-l mid">
+            <a href="javascript:history.back();" class="fa fa-back"></a>
+        </div>
+    </header><!-- /ui-header -->
+
+    <section class="ui-content">
+        <div class="pick-list">
+            <div class="item">
+                <dl>
+                    <dt>
+                        状态：<em>选货单已提交  客服马上与您联系</em>
+                        <time>2017-06-20  10:30</time> 
+                    </dt>
+                    <dd>
+                        <a href="pick_detail.html"><em>茯苓</em><span>云南  2级货  过4号筛  直径0.8cm以内  10公斤</span></a>
+                    </dd>
+                    <dd>
+                        <a href="pick_detail.html"><em>茯苓</em><span>云南  2级货  过4号筛  直径0.8cm以内  10公斤</span></a>
+                    </dd>
+                    <dd>
+                        <a href="pick_detail.html"><em>茯苓</em><span>云南  2级货  过4号筛  直径0.8cm以内  10公斤</span></a>
+                    </dd>
+                    <dd>
+                        <a href="pick_detail.html"><em>茯苓</em><span>云南  2级货  过4号筛  直径0.8cm以内  10公斤</span></a>
+                    </dd>
+                    <dd>
+                        <a href="pick_detail.html"><em>茯苓</em><span>云南  2级货  过4号筛  直径0.8cm以内  10公斤</span></a>
+                    </dd>
+                </dl>
+                <div class="more">更多</div>
+            </div>
+            <div class="item">
+                <dl>
+                    <dt>
+                        状态：<em>审核失败</em>
+                        <time>2017-06-20  10:30</time> 
+                    </dt>
+                    <dd>
+                        <a href="pick_detail.html"><em>茯苓</em><span>云南  2级货  过4号筛  直径0.8cm以内  10公斤</span></a>
+                    </dd>
+                    <dd>
+                        <a href="pick_detail.html"><em>茯苓</em><span>云南  2级货  过4号筛  直径0.8cm以内  10公斤</span></a>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+
+    </section><!-- /ui-content -->
+
+	
+    <script src="assets/js/zepto.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script>
+
+    var _global = {
+        fn: {
+            init: function() {
+                this.loadPlist();
+            },
+            loadPlist: function() {
+                var self = this;
+                $('.ui-content').dropload({
+                    scrollArea : window,
+                    threshold : 50,
+                    loadUpFn : function(me){
+                        $.ajax({
+                            type: 'GET',
+                            url: 'json/pick-list.json',
+                            dataType: 'json',
+                            success: function(data){
+                                if (!data.list) {
+                                    return;
+                                }
+                                me.unlock();
+                                me.isDate = true;
+                                var result = self.toHtml(data.list);
+                                setTimeout(function(){
+                                    $('.pick-list').html(result);
+                                    me.resetload();
+                                }, 1e3);
+                            },
+                            error: function(xhr, type){
+                                popover('网络连接超时，请您稍后重试!');
+                                me.resetload();
+                            }
+                        });
+                    },
+                    loadDownFn : function(me){
+                        $.ajax({
+                            type: 'GET',
+                            url: 'json/pick-list.json',
+                            dataType: 'json',
+                            success: function(data){
+                                if (!data.list) {
+                                    return false;
+                                }
+                                var result = self.toHtml(data.list);
+
+                                if(data.status === 'nomore'){
+                                    me.lock();
+                                    me.noData();
+                                    me.resetload();
+                                    return;
+                                }
+                                setTimeout(function(){
+                                    $('.pick-list').append(result);
+                                    me.resetload();
+                                }, 1e3);
+                            },
+                            error: function(xhr, type){
+                                popover('网络连接超时，请您稍后重试!');
+                                me.resetload();
+                            }
+                        });
+                    }
+                });
+            },
+            toHtml: function(data) {
+                var html = [];
+                $.each(data, function(i, item) {
+                    html.push('<div class="item">\n <dl>');
+                    html.push(     '<dt>\n');
+                    html.push(         '状态：<em>', item.status, '</em>\n');
+                    html.push(         '<time>', item.date, '</time>\n');
+                    html.push(     '</dt>\n');
+
+                    $.each(item.lists, function(j, list) {
+                        if (j > 4) {
+                            return false; 
+                        }
+                        html.push(     '<dd>\n');
+                        html.push(         '<a href="pick_detail.html?id="', item.id, '"><em>', list.name, '</em><span>', list.norms, '</span></a>\n');
+                        html.push(     '</dd>\n');
+                    })
+
+                    html.push('</dl> \n');
+                    item.lists.length > 5 && html.push('<div class="more">更多</div>'); // 选货单超过5条显示更多按钮
+
+                    html.push('</div>');
+                })
+                return html.join('');
+            }
+        }
+    }
+
+    $(function(){
+        _global.fn.init();
+    });
+
+</script>
+</body>
+</html>

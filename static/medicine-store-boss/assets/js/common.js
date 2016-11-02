@@ -164,10 +164,15 @@ function _aside() {
             $(this).addClass('current').closest('dl').addClass('active');
             return false; // break
         }
-        if(urlBefore === hrefBefore){
-            $(this).closest('dl').addClass('active');
-        }
     }) 
+    // 以下代码本地专用
+    $aside.html() === '' && $.ajax({
+        url: 'inc/aside.html',
+        success: function(innerHtml) {
+            $aside.off().html(innerHtml);
+            _aside();
+        }
+    })
 }
 
 

@@ -6,40 +6,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>登录-药优优</title>
+    <title>个人中心-药优优</title>
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="assets/css/app.css">
 </head>
-<body class="ui-body-nofoot">
+<body class="ui-body body-gray">
     <header class="ui-header">
-        <div class="title">登录</div>
+        <div class="title">个人中心</div>
         <div class="abs-l mid">
             <a href="javascript:history.back();" class="fa fa-back"></a>
         </div>
     </header><!-- /ui-header -->
+
+
+    <footer class="ui-footer">
+        <nav class="ui-nav">
+            <ul>
+                <li>
+                    <a href="index.html">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                        <b>12</b>
+                    </a>
+                </li>
+                <li>
+                    <a href="product_list.html">
+                        <i class="fa fa-list"></i>
+                        <span>品种列表</span>
+                        <b>2</b>
+                    </a>
+                </li>
+                <li>
+                    <a href="center.html">
+                        <i class="fa fa-cart"></i>
+                        <span>采购单</span>
+                        <b>99</b>
+                    </a>
+                </li>
+                <li>
+                    <a class="current" href="center.html">
+                        <i class="fa fa-user"></i>
+                        <span>个人中心</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </footer>
     
     <div class="ui-content">
-        <div class="ui-form">
-            <div class="logo">药优优</div>
-            <form action="">
-                <div class="item">
-                    <input type="tel" class="ipt" name="mobile" id="mobile" placeholder="手机号" autocomplete="off">
-                    <span class="error"></span>
-                </div>
-                <div class="item">
-                    <input type="password" class="ipt" name="password" id="password" placeholder="密码" autocomplete="off">
-                    <span class="error"></span>
-                </div>
-                <div class="item">
-                    <button type="submit" class="ubtn ubtn-primary" id="submit">登录</button>
-                </div>
-            </form>
-                
-            <div class="ui-extra">
-                <a href="login_SMS.html">短信验证码登录</a>
-                <i>|</i>
-                <a href="register.html">快速注册</a>
+        <div class="uinfo">
+            <div class="inner mid">
+                <img class="avatar" src="assets/images/avatar.png" alt="">
+                <span class="myname">frank</span>
             </div>
+        </div>
+        <div class="umenu">
+            <a href="pick_list.html">
+                <i class="fa fa-cart"></i>
+                <span>我的选货单</span>
+            </a>
+            <a href="sample_list.html">
+                <i class="fa fa-order"></i>
+                <span>我的寄样单</span>
+            </a>
+            <a href="find_password.html">
+                <i class="fa fa-lock"></i>
+                <span>修改密码</span>
+            </a>
         </div>
     </div>
 
