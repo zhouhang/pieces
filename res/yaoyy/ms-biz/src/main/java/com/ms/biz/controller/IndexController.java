@@ -1,15 +1,12 @@
 package com.ms.biz.controller;
 
-import com.ms.dao.model.Article;
 import com.ms.dao.vo.AdVo;
 import com.ms.service.AdService;
-import com.ms.service.ArticleService;
 import com.ms.service.CommoditySearchService;
 import com.ms.tools.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,11 +22,22 @@ import java.util.List;
 @Controller
 @RequestMapping()
 public class IndexController {
-    @Autowired
-    CommoditySearchService commoditySearchService;
 
     @Autowired
     private AdService adService;
+
+    @Autowired
+    CommodityService commodityService;
+
+
+    @Autowired
+    SendSampleService sendSampleService;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    private HttpSession httpSession;
 
     @Autowired
     private ArticleService articleService;
@@ -50,11 +58,36 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping(value = "/create/commodity/index",method = RequestMethod.GET)
+    @RequestMapping(value = "apply/sample", method = RequestMethod.GET)
+    public String apply(Integer commdityId,ModelMap model) {
+
+        Commodity commodity=commodityService.findById(commdityId);
+
+        model.put("commodity", commodity);
+        return "apply_sample";
+    }
+
+
+    @RequestMapping(value = "apply/sample", method = RequestMethod.POST)
     @ResponseBody
-    public Result createIndex(){
-        commoditySearchService.createAllCommodityDoc();
-        return Result.success("索引创建成功");
+    public Result applySample(SendSampleVo sendSampleVo) {
+
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        if(user!=null){
+            sendSampleVo.setPhone(user.getPhone());
+        }
+        sendSampleService.save(sendSampleVo);
+        UserVo userInfo=userService.findByPhone(sendSampleVo.getPhone());
+
+        if(user==null){
+            userInfo.setIslogin(false);
+        }
+        else{
+            userInfo.setIslogin(true);
+        }
+
+
+        return Result.success().data(userInfo);
     }
 
     @RequestMapping(value = "/article/{id}", method = RequestMethod.GET)

@@ -52,6 +52,7 @@
                 <table>
                     <thead>
                     <tr>
+                        <th>寄样单编号</th>
                         <th>申请商品</th>
                         <th>申请时间</th>
                         <th>状态</th>
@@ -60,6 +61,7 @@
                     <tbody>
                     <#list historySend.list as sendSample>
                     <tr>
+                        <td>${sendSample.code}</td>
                         <td><a href="sample/detail/${sendSample.id?c}">${sendSample.intentionText}</a></td>
                         <td>${(sendSample.createTime?datetime)!}</td>
                         <td><span class="status-${sendSample.status+1}">${sendSample.statusText}</span></td>
@@ -626,7 +628,17 @@
                 type: "POST",
                 success: function(data){
                     if (data.status == "200") {
-                        window.location.reload();
+                        $.notify({
+                            type: 'success',
+                            title: '保存成功',
+                            text: '3秒后自动刷新页面',
+                            delay: 3e3,
+                            call: function() {
+                                setTimeout(function() {
+                                    window.location.reload();
+                                }, 3e3);
+                            }
+                        });
                     }
 
                 }
@@ -640,7 +652,17 @@
                 type: "POST",
                 success: function(data){
                     if (data.status == "200") {
-                        window.location.reload();
+                        $.notify({
+                            type: 'success',
+                            title: '保存成功',
+                            text: '3秒后自动刷新页面',
+                            delay: 3e3,
+                            call: function() {
+                                setTimeout(function() {
+                                    window.location.reload();
+                                }, 3e3);
+                            }
+                        });
                     }
 
                 }

@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li class="wide">
-                    <a class="sample" href="sample/apply">免费寄样</a>
+                    <a class="sample" href="apply/sample">免费寄样</a>
                 </li>
                 <li class="wide">
                     <a class="cart" href="center.html">加入采购单</a>
@@ -157,9 +157,13 @@
                 })
             },
             initAttr: function () {
+                var html = "";
+                //品种，切制规格和产地
+                html=html+"<dl><dt>品种</dt><dd>${commodityVo.categoryName}</dd></dl>";
+                html=html+"<dl><dt>切制规格</dt><dd>${commodityVo.spec}</dd></dl>";
+                html=html+"<dl><dt>产地</dt><dd>${commodityVo.origin}</dd></dl>";
             <#if commodityVo.attribute?exists && commodityVo.attribute != "">
                 var parameter = ${commodityVo.attribute};
-                var html = "";
                 $.each(parameter, function (k, v) {
                    html=html+"<dl><dt>"+k+"</dt> <dd>"+v+"</dd> </dl>"
                 })

@@ -144,7 +144,7 @@
             <div class="txt"><i>*</i>图片：</div>
             <div class="cnt cnt-mul">
                 <span class="up-img" id="imgCrop"></span>
-                <input type="hidden" value="" name="pictureUrl" id="imgUrl">
+                <!--<input type="hidden" value="" name="pictureUrl" id="imgUrl">-->
             </div>
         </div>
 
@@ -329,7 +329,7 @@
                         type: 1,
                         moveType: 1,
                         content: $carForm,
-                        title: '新建品种'
+                        title: '编辑品种'
                     });
                     return false; // 阻止链接跳转
                 })

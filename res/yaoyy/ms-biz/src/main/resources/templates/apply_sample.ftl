@@ -47,7 +47,7 @@
 
     var _global = {
         v: {
-            applyUrl: '/sample/apply/',
+            applyUrl: '/apply/sample',
         },
         fn: {
             init: function() {

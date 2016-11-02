@@ -103,7 +103,7 @@ public class ShiroConfiguration {
 
         shiroFilterFactoryBean.setFilterChainDefinitionsString("/user/login=anon;" +
                 "/user/logout=logout;" +
-                "/sample/apply=anon;"  +
+                "/apply/sample=anon;"  +
                 "/assets/**=anon;" +
                 "/error/**=anon;" +
                 "/sample/** = bizAuthorization;" +

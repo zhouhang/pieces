@@ -202,6 +202,18 @@
         where cm.category_id = #{id} and cm.status !=0
     </select>
 
+    <update id="updateStatusByCategoryId" parameterType="com.ms.dao.model.Commodity">
+
+        update commodity
+        <set>
+        <if test="status != null">
+            status = #{status},
+        </if>
+        </set>
+        where category_id=#{categoryId}
+
+    </update>
+
 
 
 

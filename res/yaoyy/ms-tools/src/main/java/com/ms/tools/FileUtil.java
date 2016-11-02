@@ -40,7 +40,7 @@ public class FileUtil {
         if (file.exists()) {
             throw new RuntimeException("该文件已存在!");
         }
-        OutputStream out = new FileOutputStream(file);
+        //OutputStream out = new FileOutputStream(file);
         // TODO:资源保存后会出现资源诶JAVA虚拟机占用的情况
         Files.createParentDirs(file);
         Files.write(ByteStreams.toByteArray(inputStream), file);
