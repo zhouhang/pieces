@@ -1,18 +1,24 @@
 package com.ms.biz.controller;
 
+import com.ms.dao.model.Article;
+import com.ms.dao.model.Commodity;
+import com.ms.dao.model.User;
 import com.ms.dao.vo.AdVo;
-import com.ms.service.AdService;
-import com.ms.service.CommoditySearchService;
+import com.ms.dao.vo.SendSampleVo;
+import com.ms.dao.vo.UserVo;
+import com.ms.service.*;
+import com.ms.service.enums.RedisEnum;
 import com.ms.tools.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -94,6 +100,29 @@ public class IndexController {
     public String article(@PathVariable("id") Integer id, ModelMap modelMap) {
         Article article = articleService.findById(id);
         modelMap.put("article", article);
+        return "article";
+    }
+
+
+
+    @RequestMapping(value = "/assets/test", method = RequestMethod.GET)
+    @ResponseBody
+    @Transactional
+    public String article() {
+        Article article = new Article();
+        article.setTitle("111");
+        article.setContent("1111C");
+        article.setStatus(1);
+        articleService.save(article);
+        if (true) {
+            throw new RuntimeException("失败");
+        }
+        Article article2 = new Article();
+        article2.setTitle("222");
+        article2.setContent("222C");
+        article2.setStatus(1);
+        articleService.create(article2);
+
         return "article";
     }
 
