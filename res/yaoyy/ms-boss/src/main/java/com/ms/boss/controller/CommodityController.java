@@ -50,6 +50,7 @@ public class CommodityController extends BaseController{
      */
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add() {
+        // 获取单位信息
         return "commodity_add";
     }
 
@@ -61,6 +62,7 @@ public class CommodityController extends BaseController{
      */
     @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable("id") Integer id, ModelMap model) {
+        // 获取单位信息
         CommodityVo vo = commodityService.findById(id);
         model.put("commodity", vo);
         return "commodity_editor";
@@ -72,7 +74,7 @@ public class CommodityController extends BaseController{
      * @param commodity
      * @return
      */
-    @RequestMapping(value = "save", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "save", method = RequestMethod.POST)
     @ResponseBody
     public Result save(@RequestBody CommodityVo commodity) {
         commodityService.save(commodity);

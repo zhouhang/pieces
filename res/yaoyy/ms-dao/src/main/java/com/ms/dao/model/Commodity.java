@@ -39,7 +39,13 @@ public class Commodity  implements Serializable {
 	private Float price;
 
 	// 单位
-	private String unit;
+	private Integer unit;
+
+	//起购数量
+	private Integer minimumQuantity;
+
+	//商品标语
+	private String slogan;
 
 	// 排序
 	private Integer sort;
@@ -149,11 +155,11 @@ public class Commodity  implements Serializable {
 		this.price = price;
 	}
 	
-	public String getUnit() {
+	public Integer getUnit() {
 		return unit;
 	}
 
-	public void setUnit(String unit) {
+	public void setUnit(Integer unit) {
 		this.unit = unit;
 	}
 	
@@ -188,5 +194,20 @@ public class Commodity  implements Serializable {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	
+
+	public Integer getMinimumQuantity() {
+		return minimumQuantity;
+	}
+
+	public void setMinimumQuantity(Integer minimumQuantity) {
+		this.minimumQuantity = minimumQuantity;
+	}
+
+	public String getSlogan() {
+		return slogan;
+	}
+
+	public void setSlogan(String slogan) {
+		this.slogan = slogan;
+	}
 }

@@ -81,6 +81,7 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
         commodity.setPictureUrl(pathConvert.saveFileFromTemp(commodity.getPictureUrl(),folderName));
         if (commodity.getId() == null) {
             commodity.setCreateTime(new Date());
+            commodity.setUpdateTime(new Date());
             commodityDao.create(commodity);
         } else {
             commodity.setUpdateTime(new Date());
