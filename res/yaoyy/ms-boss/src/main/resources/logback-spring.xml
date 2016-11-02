@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <include resource="org/springframework/boot/logging/logback/base.xml" />
-    <!--<logger name="org.springframework.web" level="INFO"/>-->
+    <logger name="org.springframework.web" level="INFO"/>
     <!--&lt;!&ndash;<logger name="com.ms" level="ERROR" />&ndash;&gt;-->
     <!--&lt;!&ndash; 日志输出到控制台 &ndash;&gt;-->
     <!--<appender name="console" class="ch.qos.logback.core.ConsoleAppender">-->
@@ -24,10 +24,15 @@
                 <MaxFileSize>5MB</MaxFileSize>
             </TimeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
-        <layout class="ch.qos.logback.classic.PatternLayout">
-            <pattern>[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n
-            </pattern>
-        </layout>
+        <!--<layout class="ch.qos.logback.classic.PatternLayout">-->
+            <!--<pattern>-->
+                <!--[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n-->
+            <!--</pattern>-->
+        <!--</layout>-->
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d %p (%file:%line\)- %m%n</pattern>
+        </encoder>
     </appender>
 
     <!-- 日志级别 -->
