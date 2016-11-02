@@ -113,6 +113,7 @@
             <div class="txt"><i>*</i>图片：</div>
             <div class="cnt cnt-mul">
                 <span class="up-img" id="imgCrop"></span>
+                <input id="pictureUrl" name="pictureUrl" style="display: none">
             </div>
         </div>
 
