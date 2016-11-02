@@ -159,14 +159,23 @@ function _aside() {
     // 导航高亮
     $aside.find('a').each(function() {
         var url = this.href.toLowerCase(),
-            hrefBefore = url.split('/')[3];
+            hrefBefore = url.split('/')[3],
+            prefix=$(this).attr("prefix");
+
+
+
         if (URL === url) {
+            $(this).addClass('current').closest('dl').addClass('active');
+            return false; // break
+        }
+        if(URL.indexOf(prefix)>=0){
             $(this).addClass('current').closest('dl').addClass('active');
             return false; // break
         }
         if(urlBefore === hrefBefore){
             $(this).closest('dl').addClass('active');
         }
+
     }) 
 }
 
