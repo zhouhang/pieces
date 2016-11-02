@@ -24,7 +24,8 @@
     </resultMap>
 
     <resultMap id="CommodityResultMapVo" type="com.ms.dao.vo.CommodityVo" extends="CommodityResultMap">
-
+        <result column="unitName"  property="unitName" />
+        <result column="categoryName"  property="categoryName" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -56,9 +57,11 @@
     <select id="findByParams" resultMap="CommodityResultMapVo" parameterType="com.ms.dao.vo.CommodityVo">
         select
         <include refid="Base_Column_List_Alisa" />,
-        ca.variety as categoryName
+        ca.variety as categoryName,
+        cd.name as unitName
         from commodity as cm
         LEFT JOIN category ca on cm.category_id=ca.id
+        LEFT JOIN code cd on cm.unit = cd.id
         <where>
             <if test="id != null">
                 cm.id = #{id}
