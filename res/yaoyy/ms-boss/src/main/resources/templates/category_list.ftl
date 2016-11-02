@@ -368,7 +368,7 @@
                     onAfterImgUpload: function(response){
                         cropModal.destroy();
                         cropModal = new Croppic('imgCropWrap', options);
-                        $('#imgCrop').hide().before('<span class="up-img"><img src="' + response.url + '" title="点击图片看大图" /><i class="del" title="删除"></i></span>');
+                        $('#imgCrop').hide().before('<span class="up-img"><img src="' + response.url + '" title="点击图片看大图" /><i class="del" title="删除"></i></span><input type="hidden" name="pictureUrl" value="' + response.url + '"></span>');
                         $('#imgUrl').val(response.url).trigger('validate');
                     },
                     onError:function(msg){}
