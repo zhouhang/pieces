@@ -169,6 +169,7 @@ a.ubtn{height:28px;}
 .fa-form .cnt .msg-box:after{content:"";position:absolute;top:-10px;left:10px;border:5px dashed transparent;border-bottom:5px solid #c3272b;}
 .fa-form .cnt .msg-box .error{color:#fff;}
 .fa-form .cnt .n-invalid{border-color:#c3272b;}
+.fa-form .cnt .tips{margin-left:10px;color:#999;}
 .fa-form .cnt-mul{margin-bottom:15px;}
 .fa-form .cnt-mul .msg-box{top:96%;}
 .fa-form .cnt-table{padding-top:10px;}
