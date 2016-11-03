@@ -18,6 +18,7 @@ import com.ms.tools.utils.CookieUtils;
 import com.ms.tools.utils.GsonUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -52,10 +53,6 @@ public class PickController {
 
     @Autowired
     private CommodityService commodityService;
-
-    private static final int COOKIE_EXPIRE = 3600;
-
-    private static final String  PICK_COMMODITY_COOKIES="pick_commodity_cookies";
 
 
     /**
@@ -104,79 +101,7 @@ public class PickController {
      */
     @RequestMapping(value="commodityList",method=RequestMethod.GET)
     public String commodityList(HttpServletRequest request, HttpServletResponse response,ModelMap model) throws Exception {
-        List<PickCommodityVo> cookieList=null;
-
-        String cookieValue = CookieUtils.getCookieValue(request, PICK_COMMODITY_COOKIES);
-        if(StringUtils.isBlank(cookieValue)){
-            cookieList = new ArrayList<>();
-        }else{
-            cookieList= GsonUtil.jsonToEntity(cookieValue,List.class);
-        }
-        cookieList.forEach(c->{
-                  Commodity commodity=commodityService.findById(c.getCommodityId());
-                  c.setName(commodity.getName());
-                  c.setOrigin(commodity.getOrigin());
-                  c.setPrice(commodity.getPrice());
-                  c.setSpec(commodity.getSpec());
-                }
-        );
-        model.put("commodityList",cookieList);
-
-        CookieUtils.setCookie(response, PICK_COMMODITY_COOKIES, GsonUtil.toJson(cookieList),COOKIE_EXPIRE);
         return "pick_commodity";
-    }
-
-
-    /**
-     * 未提交选货单 增加商品
-     * @param pickCommodityVo
-     * @return
-     */
-
-    @RequestMapping(value="add",method=RequestMethod.POST)
-    @ResponseBody
-    public Result addCommodity(HttpServletRequest request, HttpServletResponse response,PickCommodityVo pickCommodityVo) throws Exception {
-        List<PickCommodityVo> cookieList=null;
-        String cookieValue = CookieUtils.getCookieValue(request, PICK_COMMODITY_COOKIES);
-        if(StringUtils.isBlank(cookieValue)){
-            cookieList = new ArrayList<>();
-        }else{
-            cookieList= GsonUtil.jsonToEntity(cookieValue,List.class);
-        }
-        for(int i=0;i<cookieList.size();i++){
-            if(pickCommodityVo.getCommodityId()==cookieList.get(i).getCommodityId()){
-                //不用重复添加
-                return Result.success().data("添加成功");
-            }
-        }
-        cookieList.add(pickCommodityVo);
-        CookieUtils.setCookie(response, PICK_COMMODITY_COOKIES, GsonUtil.toJson(cookieList),COOKIE_EXPIRE);
-        return Result.success().data("添加成功");
-    }
-
-    /**
-     * 未提交选货单 删除商品
-     * @param pickCommodityVo
-     * @return
-     */
-    @RequestMapping(value="delete",method=RequestMethod.POST)
-    @ResponseBody
-    public Result deleteCommodity(HttpServletRequest request, HttpServletResponse response,PickCommodityVo pickCommodityVo) throws Exception {
-        List<PickCommodityVo> cookieList=null;
-        String cookieValue = CookieUtils.getCookieValue(request, PICK_COMMODITY_COOKIES);
-        if(StringUtils.isBlank(cookieValue)){
-            cookieList = new ArrayList<>();
-        }else{
-            cookieList= GsonUtil.jsonToEntity(cookieValue,List.class);
-        }
-        for(int i=0;i<cookieList.size();i++){
-            if(pickCommodityVo.getCommodityId()==cookieList.get(i).getCommodityId()){
-                cookieList.remove(i);
-            }
-        }
-
-        CookieUtils.setCookie(response, PICK_COMMODITY_COOKIES, GsonUtil.toJson(cookieList),COOKIE_EXPIRE);
-        return Result.success().data("删除成功");
     }
 
 

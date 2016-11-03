@@ -22,7 +22,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="center.html">
+                    <a href="/pick/commodityList">
                         <i class="fa fa-cart"></i>
                         <span>采购单</span>
                     </a>
@@ -31,7 +31,7 @@
                     <a class="sample" href="apply/sample">免费寄样</a>
                 </li>
                 <li class="wide">
-                    <a class="cart" href="center.html">加入采购单</a>
+                    <a class="cart" href="javascript:;" id="addCommodity">加入采购单</a>
                 </li>
             </ul>
         </nav>
@@ -62,7 +62,7 @@
 
                 <div class="ui-quantity" id="quantity">
                     <button type="button" class="fa fa-reduce op"></button>
-                    <input type="tel" class="ipt" value="1" autocomplete="off" data-price="{1-499:140,500-999:120,1000:100}">
+                    <input id="num"type="tel" class="ipt" value="1" autocomplete="off" data-price="{1-499:140,500-999:120,1000:100}">
                     <button type="button" class="fa fa-plus op"></button>
                     <b>公斤</b>
                 </div>
@@ -109,6 +109,8 @@
                 this.tab();
                 this.quantity();
                 this.initAttr();
+                this.addCommodity();
+                this.showCartNum();
             },
             slide: function() {
                 var $slide = $('#slide1'),
@@ -169,7 +171,24 @@
                 })
                 $("#attributeItem").html(html);
             </#if>
+            },
+            showCartNum:function(){
+                var count=getCommodityCount();
+                if(count!=0){
+                    $(".fa-cart").append("<b>"+count+"</b>");
+                }
+
+            },
+            addCommodity:function(){
+                var self=this;
+                $("#addCommodity").click(function () {
+                    var id=${commodityVo.id};
+                    var num=$("#num").val();
+                    pickCommodity(id,num);
+                    self.showCartNum();
+                })
             }
+
         }
     }
 

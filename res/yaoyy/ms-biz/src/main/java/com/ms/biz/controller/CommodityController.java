@@ -6,12 +6,10 @@ import com.ms.dao.vo.CommodityVo;
 import com.ms.service.CommodityService;
 import com.ms.tools.entity.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,4 +38,21 @@ public class CommodityController {
 
         return "commodity_detail";
     }
+    @RequestMapping(value="/getDetail",method=RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public Result getDetail(@RequestBody List<Integer> list){
+        StringBuilder ids = new StringBuilder();
+        if (list != null && list.size() >0){
+            list.forEach(sc ->{
+                ids.append(sc).append(",");
+            });
+        }
+        List<Commodity> commodities = commodityService.findByIds(ids.substring(0,ids.length()-1));
+        return Result.success().data(commodities);
+    }
+
+
+
+
+
 }
