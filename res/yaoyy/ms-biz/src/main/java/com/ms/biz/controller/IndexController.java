@@ -90,6 +90,7 @@ public class IndexController {
         }
         else{
             userInfo.setIslogin(true);
+            userInfo.setOpenid(user.getOpenid());
         }
 
 

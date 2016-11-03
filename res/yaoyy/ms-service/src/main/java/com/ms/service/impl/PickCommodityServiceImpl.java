@@ -5,10 +5,15 @@ import com.github.pagehelper.PageInfo;
 import com.ms.dao.ICommonDao;
 import com.ms.dao.PickCommodityDao;
 import com.ms.dao.model.PickCommodity;
+import com.ms.dao.vo.CommodityVo;
 import com.ms.dao.vo.PickCommodityVo;
+import com.ms.service.CommodityService;
 import com.ms.service.PickCommodityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -16,6 +21,9 @@ public class PickCommodityServiceImpl  extends AbsCommonService<PickCommodity> i
 
 	@Autowired
 	private PickCommodityDao pickCommodityDao;
+
+	@Autowired
+	private CommodityService commodityService;
 
 
 	@Override
@@ -31,6 +39,20 @@ public class PickCommodityServiceImpl  extends AbsCommonService<PickCommodity> i
 		PickCommodityVo pickCommodityVo=new PickCommodityVo();
 		pickCommodityVo.setPickId(pickId);
 		return pickCommodityDao.findByParams(pickCommodityVo);
+	}
+
+	@Override
+	@Transactional
+	public void saveList(List<PickCommodity> pickCommodities) {
+		Date now=new Date();
+        pickCommodities.forEach(p->{
+			CommodityVo commodityVo=commodityService.findById(p.getCommodityId());
+			float total=(commodityVo.getPrice())*(p.getNum());
+			p.setTotal(total);
+			p.setUnit(commodityVo.getUnitName());
+		    p.setCreateTime(now);
+		    pickCommodityDao.create(p);
+	  });
 	}
 
 

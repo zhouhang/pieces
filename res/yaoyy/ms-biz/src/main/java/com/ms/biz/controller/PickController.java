@@ -48,11 +48,7 @@ public class PickController {
     @Autowired
     private PickTrackingService pickTrackingService;
 
-    @Autowired
-    private PickCommodityService pickCommodityService;
 
-    @Autowired
-    private CommodityService commodityService;
 
 
     /**
@@ -94,31 +90,7 @@ public class PickController {
         return "pick_detail";
     }
 
-    /**
-     * 未提交选货单之前的商品列表
-     * @param model
-     * @return
-     */
-    @RequestMapping(value="commodityList",method=RequestMethod.GET)
-    public String commodityList(HttpServletRequest request, HttpServletResponse response,ModelMap model) throws Exception {
-        return "pick_commodity";
-    }
 
-
-    /**
-     * 提交选货单
-     * @param list
-     * @param model
-     * @return
-     */
-    @RequestMapping(value="submit",method=RequestMethod.POST)
-    @ResponseBody
-    public Result deleteCommodity(@RequestBody List<PickCommodity> list, ModelMap model){
-
-        //没注册应该引导输入手机号后台生成用户
-
-        return Result.success().data("提交成功");
-    }
 
 
 

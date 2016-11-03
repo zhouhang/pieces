@@ -18,72 +18,6 @@
     </div>
     <div class="pick-form">
         <form action="" id="pick_commodity">
-            <div class="item">
-                <div class="hd">
-                    <em>茯苓</em>
-                    <span>云南  2级货  过4号筛  直径0.8cm以内  20元</span>
-                </div>
-                <div class="price">
-                    <i>&yen;</i> <b>200</b> 元
-                </div>
-
-                <div class="ui-quantity cale">
-                    <button type="button" class="fa fa-reduce op"></button>
-                    <input type="tel" class="ipt" value="1" autocomplete="off" data-price="{1-499:140,500-999:120,1000:100}">
-                    <button type="button" class="fa fa-plus op"></button>
-                </div>
-                <div class="cale">公斤</div>
-
-                <div class="del">
-                    <button type="button" class="fa fa-remove"></button>
-                </div>
-            </div>
-            <div class="item">
-                <div class="hd">
-                    <em>三七</em>
-                    <span>云南  2级货  过4号筛  直径0.8cm以内  60元</span>
-                </div>
-                <div class="price">
-                    <i>&yen;</i> <b>200</b> 元
-                </div>
-
-                <div class="ui-quantity cale">
-                    <button type="button" class="fa fa-reduce op"></button>
-                    <input type="tel" class="ipt" value="1" autocomplete="off" data-price="{1-499:140,500-999:120,1000:100}">
-                    <button type="button" class="fa fa-plus op"></button>
-                </div>
-                <div class="cale">公斤</div>
-
-                <div class="del">
-                    <button type="button" class="fa fa-remove"></button>
-                </div>
-            </div>
-            <div class="item">
-                <div class="hd">
-                    <em>麦冬</em>
-                    <span>云南  2级货  过4号筛  直径0.8cm以内</span>
-                </div>
-                <div class="price">
-                    <i>&yen;</i> <b>200</b> 元
-                </div>
-
-                <div class="ui-quantity cale">
-                    <button type="button" class="fa fa-reduce op"></button>
-                    <input type="tel" class="ipt" value="1" autocomplete="off" data-price="{1-499:140,500-999:120,1000:100}">
-                    <button type="button" class="fa fa-plus op"></button>
-                </div>
-                <div class="cale">公斤</div>
-
-                <div class="del">
-                    <button type="button" class="fa fa-remove"></button>
-                </div>
-            </div>
-            <div class="tel">
-                <button type="button" class="fa fa-tel"></button>
-            </div>
-            <div class="button">
-                <button type="button" class="ubtn ubtn-primary" id="submit">提交</button>
-            </div>
         </form>
     </div>
 </section><!-- /ui-content -->
@@ -96,7 +30,8 @@
 
     var _global = {
         v: {
-            commoditySearchUrl:"commodity/getDetail"
+            commoditySearchUrl:"commodity/getDetail",
+            saveUrl:"pickCommodity/save",
         },
         fn: {
             init: function() {
@@ -152,7 +87,7 @@
                            + "</div> <div class='ui-quantity cale'> <button type='button' class='fa fa-reduce op'></button>"
                            + "<input type='tel' class='ipt' value='1' cid='"+commodity.id+"'autocomplete='off' data-price='{1-499:140,500-999:120,1000:100}'>"
                             +"<button type='button' class='fa fa-plus op'></button> </div>"
-                            +"<div class='cale'>"+commodity.unitName+"</div>"
+                            +"<div class='cale unitName'>"+commodity.unitName+"</div>"
                             +"<div class='del'> <button type='button' class='fa fa-remove' cid='"+commodity.id+"'></button> </div> </div>"
 
                 }
@@ -248,12 +183,87 @@
                             });
                         }
 
-                $('#submit, .fa-tel').on('click', function() {
+                $('#submit').on('click', function() {
                     if (!flag) {
                         form();
                         return false;
                     }
-                    return self.checkName() && self.checkMobile();
+                    if(self.checkName() && self.checkMobile()){
+                        var pickVo={};
+                        pickVo.phone= $('#mobile').val();
+                        pickVo.nickname=$('#username').val();
+                        var list=[];
+                        $("#pick_commodity .ipt").each(function(){
+                            var commodity={};
+                            commodity.commodityId=$(this).attr("cid");
+                            commodity.num=$(this).val();
+                            list.push(commodity);
+                        })
+                        pickVo.pickCommodityVoList=list;
+                        $.ajax({
+                            url: _global.v.saveUrl,
+                            data: JSON.stringify(pickVo),
+                            type: "POST",
+                            contentType : 'application/json',
+                            success: function(result) {
+                                if(result.status=="200"){
+                                    //清空选货单
+                                    localStorage.removeItem(CARTNAME);
+                                    var user=result.data;
+                                    <#if  Session.user_session_biz?exists>
+                                        var login=true;
+                                    <#else>
+                                        var login=false;
+                                    </#if>
+                                    if(user.type==1&&!login){
+                                        layer.open({
+                                            className: 'layer-custom',
+                                            content: '<div class="box"><div class="hd">您的选货单已提交成功！</div><div class="bd">我们会在30分钟之内与您取得联系。 注册可以跟踪您的所有选货单申请。</div></div>'
+                                            ,btn: ['去注册', '返回']
+                                            ,yes: function(index){
+                                                location.href = '/user/register';
+                                            },no: function(index) {
+                                                // window.history.back(); // 返回按钮事件
+                                            },shadeClose: false
+                                        });
+                                    }
+                                    else{
+                                        if(!login){
+                                            layer.open({
+                                                className: 'layer-custom',
+                                                content: '<div class="box"><div class="hd">您的选货单已提交成功！</div><div class="bd">我们会在30分钟之内与您取得联系。登录可以跟踪您的所有选货单申请。</div></div>'
+                                                ,btn: ['去登录', '返回']
+                                                ,yes: function(index){
+                                                    location.href = '/user/login';
+                                                },no: function(index) {
+                                                    // window.history.back(); // 返回按钮事件
+                                                },shadeClose: false
+                                            });
+                                        }
+                                        else{
+                                            if(is_weixin()&&user.openid==""){
+                                                location.href = '/pick/list?source=WECHAT';
+                                            }
+                                            else{
+                                                location.href ='/pick/list';
+                                            }
+                                        }
+                                    }
+
+                                }
+                            }
+                        })
+                    }
+                })
+                $('.fa-tel').on('click', function() {
+                    if (!flag) {
+                        form();
+                        $(this).addClass('active')
+                    } else {
+                        flag = false;
+                        $('.layui-m-close').trigger('click');
+                        $(this).removeClass('active')
+                    }
                 })
             }
         }

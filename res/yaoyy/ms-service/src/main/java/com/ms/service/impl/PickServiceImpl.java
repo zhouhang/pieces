@@ -2,17 +2,19 @@ package com.ms.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.ms.dao.ICommonDao;
-import com.ms.dao.PickDao;
-import com.ms.dao.model.Pick;
-import com.ms.dao.vo.PickCommodityVo;
-import com.ms.dao.vo.PickVo;
+import com.ms.dao.*;
+import com.ms.dao.enums.*;
+import com.ms.dao.model.*;
+import com.ms.dao.vo.*;
+import com.ms.service.CommodityService;
 import com.ms.service.PickCommodityService;
 import com.ms.service.PickService;
+import com.ms.tools.utils.SeqNoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,6 +26,23 @@ public class PickServiceImpl  extends AbsCommonService<Pick> implements PickServ
 
 	@Autowired
 	private PickCommodityService pickCommodityService;
+
+
+	@Autowired
+	private UserDao userDao;
+
+	@Autowired
+	private UserDetailDao userDetailDao;
+
+
+	@Autowired
+	private PickTrackingDao pickTrackingDao;
+
+	@Autowired
+	private CommodityService commodityService;
+
+	private CodeDao codeDao;
+
 
 
 
@@ -62,6 +81,94 @@ public class PickServiceImpl  extends AbsCommonService<Pick> implements PickServ
 		pickVo.setPickCommodityVoList(pickCommodityVos);
 
 		return pickVo;
+	}
+
+	@Override
+	@Transactional
+	public void save(PickVo pickVo) {
+		UserVo userVo=userDao.findByPhone(pickVo.getPhone());
+		//如果用户注册
+		Date now=new Date();
+
+		int useId;
+		if (userVo==null){
+			User user=new User();
+			user.setPhone(pickVo.getPhone());
+			user.setType(UserEnum.auto.getType());
+			user.setSalt("");
+			user.setPassword("");
+			user.setOpenid("");
+			user.setUpdateTime(now);
+			user.setCreateTime(now);
+			userDao.create(user);
+
+			useId=user.getId();
+		}
+		else{
+			useId=userVo.getId();
+		}
+		UserDetail userDetail=userDetailDao.findByUserId(useId);
+		if (userDetail==null){
+			userDetail=new UserDetail();
+			userDetail.setPhone(pickVo.getPhone());
+			userDetail.setNickname(pickVo.getNickname());
+			userDetail.setArea("");
+			userDetail.setUserId(useId);
+			userDetail.setName("");
+			userDetail.setRemark("");
+			userDetail.setType(0);
+			userDetail.setUpdateTime(now);
+			userDetail.setCreateTime(now);
+			userDetailDao.create(userDetail);
+		}
+		else{
+			userDetail.setPhone(pickVo.getPhone());
+			userDetail.setNickname(pickVo.getNickname());
+			userDetail.setUpdateTime(now);
+			userDetailDao.update(userDetail);
+		}
+
+
+
+
+		Pick pick=new Pick();
+		pick.setUserId(useId);
+		pick.setStatus(PickEnum.PICK_NOTHANDLE.getValue());
+		pick.setUpdateTime(now);
+		pick.setCreateTime(now);
+		pick.setCode("");
+		pickDao.create(pick);
+		pick.setCode(SeqNoUtil.get("", pick.getId(), 6));
+		pickDao.update(pick);
+
+		pickVo.getPickCommodityVoList().forEach(p->{
+					p.setPickId(pick.getId());
+					CommodityVo commodityVo=commodityService.findById(p.getCommodityId());
+					float total=(commodityVo.getPrice())*(p.getNum());
+					p.setTotal(total);
+					p.setUnit(commodityVo.getUnitName());
+					p.setCreateTime(now);
+					pickCommodityService.create(p);
+				}
+
+		);
+
+
+
+
+
+		PickTracking pickTracking=new PickTracking();
+		pickTracking.setName(pickVo.getNickname());
+		pickTracking.setOpType(TrackingTypeEnum.TYPE_USER.getValue());
+		pickTracking.setOperator(useId);
+		pickTracking.setExtra("");
+		pickTracking.setCreateTime(now);
+		pickTracking.setPickId(pickVo.getId());
+		pickTracking.setRecordType(PickTrackingTypeEnum.PICK_APPLY.getValue());
+		pickTrackingDao.create(pickTracking);
+
+
+
 	}
 
 

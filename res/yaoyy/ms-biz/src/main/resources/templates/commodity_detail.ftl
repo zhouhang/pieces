@@ -22,7 +22,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/pick/commodityList">
+                    <a href="/pickCommodity/list">
                         <i class="fa fa-cart"></i>
                         <span>采购单</span>
                     </a>

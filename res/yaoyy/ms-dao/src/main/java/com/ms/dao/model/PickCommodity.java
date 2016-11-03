@@ -18,7 +18,7 @@ public class PickCommodity  implements Serializable {
 	
 	private String unit;
 	
-	private Integer total;
+	private Float total;
 	
 	private Date createTime;
 	
@@ -63,15 +63,15 @@ public class PickCommodity  implements Serializable {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-	
-	public Integer getTotal() {
+
+	public Float getTotal() {
 		return total;
 	}
 
-	public void setTotal(Integer total) {
+	public void setTotal(Float total) {
 		this.total = total;
 	}
-	
+
 	public Date getCreateTime() {
 		return createTime;
 	}

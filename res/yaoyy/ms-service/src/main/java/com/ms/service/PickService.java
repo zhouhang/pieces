@@ -9,4 +9,6 @@ public interface PickService extends ICommonService<Pick>{
     public PageInfo<PickVo> findByParams(PickVo pickVo,Integer pageNum,Integer pageSize);
 
     public PickVo findVoById(Integer id);
+
+    public void save(PickVo pickVo);
 }
