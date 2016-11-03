@@ -10,6 +10,7 @@ public enum RedisEnum {
 	KEY_MOBILE_CAPTCHA_REGISTER("mobile_captcha_register"),
 	KEY_MOBILE_CAPTCHA_LOGIN("mobile_captcha_login"),
 	KEY_MOBILE_CAPTCHA_INTERVAL("mobile_captcha_interval"),
+	KEY_MOBILE_RESET_PASSWORD("mobile_reset_password"),
 	KEY_MOBILE_TIMER("mobile_timer");
 
 	@Override
