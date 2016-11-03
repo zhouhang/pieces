@@ -21,7 +21,7 @@ public class SendSampleVo extends SendSample{
     private String statusText;
 
     //寄样商品列表
-    private List<Commodity> commodityList;
+    private List<CommodityVo> commodityList;
 
     private String intentionText;
 
@@ -42,11 +42,11 @@ public class SendSampleVo extends SendSample{
 
 
 
-    public List<Commodity> getCommodityList() {
+    public List<CommodityVo> getCommodityList() {
         return commodityList;
     }
 
-    public void setCommodityList(List<Commodity> commodityList) {
+    public void setCommodityList(List<CommodityVo> commodityList) {
         this.commodityList = commodityList;
     }
 

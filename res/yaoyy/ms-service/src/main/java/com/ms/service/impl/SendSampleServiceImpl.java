@@ -8,6 +8,7 @@ import com.ms.dao.enums.TrackingEnum;
 import com.ms.dao.enums.TrackingTypeEnum;
 import com.ms.dao.enums.UserEnum;
 import com.ms.dao.model.*;
+import com.ms.dao.vo.CommodityVo;
 import com.ms.dao.vo.SendSampleVo;
 import com.ms.dao.vo.UserVo;
 import com.ms.service.CommodityService;
@@ -51,7 +52,7 @@ public class SendSampleServiceImpl  extends AbsCommonService<SendSample> impleme
     	List<SendSampleVo>  list = sendSampleDao.findByParams(sendSampleVo);
 		//意向商品转化为显示字符串
 		list.forEach(s->{
-			List<Commodity> commodityList = commodityService.findByIds(s.getIntention());
+			List<CommodityVo> commodityList = commodityService.findByIds(s.getIntention());
 			s.setCommodityList(commodityList);
 		});
         PageInfo page = new PageInfo(list);
@@ -61,7 +62,7 @@ public class SendSampleServiceImpl  extends AbsCommonService<SendSample> impleme
 	@Override
 	public SendSampleVo findDetailById(Integer id) {
 		SendSampleVo sendSampleVo=sendSampleDao.findDetailById(id);
-		List<Commodity> commodityList = commodityService.findByIds(sendSampleVo.getIntention());
+		List<CommodityVo> commodityList = commodityService.findByIds(sendSampleVo.getIntention());
 		sendSampleVo.setCommodityList(commodityList);
 		return sendSampleVo ;
 	}
@@ -72,7 +73,7 @@ public class SendSampleServiceImpl  extends AbsCommonService<SendSample> impleme
 		List<SendSampleVo> sendSampleVos= sendSampleDao.findByCommodityId(userId,idstr);
 		for(SendSampleVo s:sendSampleVos)
 		{
-			List<Commodity> commodityList =commodityService.findByIds(s.getIntention());
+			List<CommodityVo> commodityList =commodityService.findByIds(s.getIntention());
 			s.setCommodityList(commodityList);
 
 		}
@@ -86,7 +87,7 @@ public class SendSampleServiceImpl  extends AbsCommonService<SendSample> impleme
 		List<SendSampleVo>  list = sendSampleDao.findByParams(sendSampleVo);
 		for(SendSampleVo s:list)
 		{
-			List<Commodity> commodityList =commodityService.findByIds(s.getIntention());
+			List<CommodityVo> commodityList =commodityService.findByIds(s.getIntention());
 			s.setCommodityList(commodityList);
 
 		}

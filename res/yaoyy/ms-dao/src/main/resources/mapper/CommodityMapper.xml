@@ -172,8 +172,11 @@
     </update>
 
     <select id="findByIds" parameterType="java.lang.Integer" resultMap="CommodityResultMap">
-        select   <include refid="Base_Column_List" />
+        select
+        <include refid="Base_Column_List_Alisa" />,
+        cd.name as unitName
         from commodity
+        LEFT JOIN code cd on cm.unit = cd.id
         where id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
             #{item}

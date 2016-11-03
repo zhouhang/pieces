@@ -2,6 +2,7 @@ package com.ms.biz.controller;
 
 import com.ms.dao.model.Commodity;
 import com.ms.dao.model.Special;
+import com.ms.dao.vo.CommodityVo;
 import com.ms.service.SpecialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,7 @@ public class SpecialController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public String detail(@PathVariable("id")Integer id, ModelMap model) {
         Special vo = specialService.findById(id);
-        List<Commodity> commodities = specialService.findCommodity(id);
+        List<CommodityVo> commodities = specialService.findCommodity(id);
         model.put("special", vo);
         model.put("commodities", commodities);
         // 根据id查询专场信息
