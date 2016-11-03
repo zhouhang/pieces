@@ -94,7 +94,6 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 		user.setSalt(null);
 		Session s = subject.getSession();
 		s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), user);
-
 	}
 
 	@Override
@@ -165,7 +164,7 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 		userDetail.setUserId(user.getId());
 		userDetail.setPhone(phone);
 		userDetail.setNickname(nickname);
-		userDetail.setHeadImgUrl("");
+		userDetail.setHeadImgUrl(headImgUrl);
 		userDetail.setType(UserEnum.enable.getType());
 		userDetailService.save(userDetail);
 		return user;
@@ -192,8 +191,36 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 	}
 
 	@Override
+	@Transactional
+	public void transactionalTest(String phone) {
+		User user = new User();
+		user.setPhone(phone);
+		user.setType(UserEnum.enable.getType());
+		user.setCreateTime(new Date());
+		user.setUpdateTime(new Date());
+		create(user);
+
+		if(true){
+			throw  new RuntimeException("xxxxx");
+		}
+
+
+		UserDetail userDetail = new UserDetail();
+		userDetail.setUserId(user.getId());
+		userDetail.setPhone(phone);
+		userDetail.setNickname(phone);
+		userDetail.setType(UserEnum.enable.getType());
+		userDetailService.save(userDetail);
+
+
+	}
+
+	@Override
 	public ICommonDao<User> getDao() {
 		return userDao;
 	}
+
+
+
 
 }

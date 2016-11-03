@@ -41,11 +41,8 @@ public class WechatController {
 
     @Autowired
     private RedisManager redisManager;
-
-
     @Autowired
     private WxMpService wxService;
-
     @Autowired
     private UserService userService;
 
@@ -77,7 +74,10 @@ public class WechatController {
 
 
     @RequestMapping("test")
-    public String test(){
+    public String test(String phone){
+
+        userService.transactionalTest(phone);
+
         return "wechat_test";
     }
 
@@ -163,6 +163,9 @@ public class WechatController {
         token.setOpenId(user.getOpenid());
         userService.login(subject, token);
     }
+
+
+
 
 
 
