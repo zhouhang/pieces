@@ -108,7 +108,7 @@ public class SendSampleServiceImpl  extends AbsCommonService<SendSample> impleme
 			user.setType(UserEnum.auto.getType());
 			user.setSalt("");
 			user.setPassword("");
-			user.setOpenid("");
+			//user.setOpenid("");
 			user.setUpdateTime(now);
 			user.setCreateTime(now);
 			userDao.create(user);

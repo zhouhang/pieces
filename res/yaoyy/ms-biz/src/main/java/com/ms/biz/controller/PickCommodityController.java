@@ -64,7 +64,10 @@ public class PickCommodityController {
         pickService.save(pickVo);
 
         UserVo userInfo=userService.findByPhone(pickVo.getPhone());
-        userInfo.setOpenid(user.getOpenid());
+        if(user!=null){
+            userInfo.setOpenid(user.getOpenid());
+        }
+
 
         return Result.success().data(userInfo);
     }
