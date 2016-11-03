@@ -175,7 +175,7 @@
         select
         <include refid="Base_Column_List_Alisa" />,
         cd.name as unitName
-        from commodity
+        from commodity cm
         LEFT JOIN code cd on cm.unit = cd.id
         where id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
