@@ -34,6 +34,6 @@ public interface UserService extends ICommonService<User>{
 
     public void sendLoginSms(String phone);
 
-
+    public void transactionalTest(String phone);
 
 }
