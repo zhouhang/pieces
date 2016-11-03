@@ -102,7 +102,6 @@
             init: function() {
                 this.iniCart();
                 this.quantity();
-                this.submit();
             },
             iniCart:function(){
                 var self = this;
@@ -122,6 +121,7 @@
                             contentType : 'application/json',
                             success: function(data) {
                                 self.tohtml(data.data,pick_obj);
+                                self.submit();
                             }
                         })
                     }
@@ -152,7 +152,7 @@
                            + "</div> <div class='ui-quantity cale'> <button type='button' class='fa fa-reduce op'></button>"
                            + "<input type='tel' class='ipt' value='1' cid='"+commodity.id+"'autocomplete='off' data-price='{1-499:140,500-999:120,1000:100}'>"
                             +"<button type='button' class='fa fa-plus op'></button> </div>"
-                            +"<div class='cale'>"+commodity.unit+"</div>"
+                            +"<div class='cale'>"+commodity.unitName+"</div>"
                             +"<div class='del'> <button type='button' class='fa fa-remove' cid='"+commodity.id+"'></button> </div> </div>"
 
                 }
