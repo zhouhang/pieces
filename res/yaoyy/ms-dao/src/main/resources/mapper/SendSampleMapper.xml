@@ -7,27 +7,31 @@
             <result column="code"  property="code" />
             <result column="intention"  property="intention" />
             <result column="status"  property="status" />
+            <result column="nickname"  property="nickname" />
+            <result column="phone"  property="phone" />
+            <result column="area"  property="area" />
             <result column="update_time"  property="updateTime" />
             <result column="create_time"  property="createTime" />
         
     </resultMap>
 
     <resultMap id="SendSampleResultMapVo" type="com.ms.dao.vo.SendSampleVo">
-            <id column="id"  property="id" />
-            <result column="user_id"  property="userId" />
-            <result column="code"  property="code" />
-            <result column="intention"  property="intention" />
-            <result column="status"  property="status" />
-            <result column="update_time"  property="updateTime" />
-            <result column="create_time"  property="createTime" />
-            <result column="nickname"  property="nickname" />
-            <result column="phone"  property="phone" />
-            <result column="area"  property="area" />
+        <id column="id"  property="id" />
+        <result column="user_id"  property="userId" />
+        <result column="code"  property="code" />
+        <result column="intention"  property="intention" />
+        <result column="status"  property="status" />
+        <result column="nickname"  property="nickname" />
+        <result column="phone"  property="phone" />
+        <result column="area"  property="area" />
+        <result column="update_time"  property="updateTime" />
+        <result column="create_time"  property="createTime" />
+
         
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,code,intention,status,update_time,create_time
+        id,user_id,code,nickname,phone,area,intention,status,update_time,create_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="SendSampleResultMap">
@@ -45,25 +49,24 @@
 
     <select id="findByParams" resultMap="SendSampleResultMapVo" parameterType="com.ms.dao.vo.SendSampleVo">
         select
-        *,ud.nickname,ud.phone,ud.area
-        from send_sample ss
-        LEFT JOIN user_detail ud on ss.user_id = ud.user_id
+        <include refid="Base_Column_List" />
+        from send_sample
         <where>
-            ss.status!=-1
+            status!=-1
             <if test="nickname != null">
-                and ud.nickname  like CONCAT('%','${nickname}','%' )
+                and nickname  like CONCAT('%','${nickname}','%' )
             </if>
             <if test="phone != null">
-                and ud.phone like CONCAT('%','${phone}','%' )
+                and phone like CONCAT('%','${phone}','%' )
             </if>
             <if test="code != null">
-                and ss.code=#{code}
+                and code=#{code}
             </if>
             <if test="status != null">
-                and ss.status=#{status}
+                and status=#{status}
             </if>
             <if test="userId != null">
-                and ss.user_id=#{userId}
+                and user_id=#{userId}
             </if>
         </where>
     </select>
@@ -75,9 +78,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.SendSample">
         insert into
-        send_sample (user_id,code,intention,status,update_time,create_time)
+        send_sample (user_id,code,nickname,phone,area,intention,status,update_time,create_time)
         values
-        (#{userId},#{code},#{intention},#{status},#{updateTime},#{createTime})
+        (#{userId},#{code},#{nickname},#{phone},#{area},#{intention},#{status},#{updateTime},#{createTime})
     </insert>
 
     <update id="update" parameterType="com.ms.dao.model.SendSample">
@@ -90,6 +93,16 @@
                                             
             <if test="code != null">
                 code = #{code},
+            </if>
+
+            <if test="nickname != null">
+                nickname = #{nickname},
+            </if>
+            <if test="area != null">
+                area= #{area},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
             </if>
                                             
             <if test="intention != null">
@@ -113,24 +126,20 @@
     </update>
     <select id="findDetailById" parameterType="java.lang.Integer" resultMap="SendSampleResultMapVo">
         select
-        *,ud.nickname,ud.phone,ud.area
-        from send_sample ss
-        LEFT JOIN user_detail ud on ss.user_id = ud.user_id
-        where ss.id = #{id}
+        <include refid="Base_Column_List" />
+        from send_sample
+        where id = #{id}
     </select>
 
 
     <select id="findByCommodityId" resultMap="SendSampleResultMapVo">
         select
-        *,ud.nickname,ud.phone,ud.area
-        from send_sample ss
-        LEFT JOIN user_detail ud on ss.user_id = ud.user_id
+        <include refid="Base_Column_List" />
+        from send_sample
         <where>
-            ss.status!=-1
-            and ss.user_id=#{userId}
-            and ss.intention REGEXP #{ids}
-
-
+            status!=-1
+            and user_id=#{userId}
+            and intention REGEXP #{ids}
         </where>
     </select>
 

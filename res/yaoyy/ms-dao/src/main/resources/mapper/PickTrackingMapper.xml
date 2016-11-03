@@ -52,6 +52,9 @@
             <if test="id != null">
                 id = #{id}
             </if>
+            <if test="pickId != null">
+                pick_id= #{pickId}
+            </if>
         </where>
     </select>
 

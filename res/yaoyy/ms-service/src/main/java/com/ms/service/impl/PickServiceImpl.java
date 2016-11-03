@@ -133,6 +133,8 @@ public class PickServiceImpl  extends AbsCommonService<Pick> implements PickServ
 
 		Pick pick=new Pick();
 		pick.setUserId(useId);
+		pick.setNickname(pickVo.getNickname());
+		pick.setPhone(pickVo.getPhone());
 		pick.setStatus(PickEnum.PICK_NOTHANDLE.getValue());
 		pick.setUpdateTime(now);
 		pick.setCreateTime(now);
@@ -163,7 +165,8 @@ public class PickServiceImpl  extends AbsCommonService<Pick> implements PickServ
 		pickTracking.setOperator(useId);
 		pickTracking.setExtra("");
 		pickTracking.setCreateTime(now);
-		pickTracking.setPickId(pickVo.getId());
+		pickTracking.setUpdateTime(now);
+		pickTracking.setPickId(pick.getId());
 		pickTracking.setRecordType(PickTrackingTypeEnum.PICK_APPLY.getValue());
 		pickTrackingDao.create(pickTracking);
 

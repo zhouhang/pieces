@@ -29,10 +29,12 @@
             <div class="txt">手机号：</div>
             <div class="val">${pickVo.phone}</div>
         </div>
+        <!--
         <div class="item">
             <div class="txt">地区：</div>
-            <div class="val">${pickVo.area}</div>
+            <div class="val">${(pickVo.area)!}</div>
         </div>
+        -->
         <div class="item">
             <div class="txt">申请时间：</div>
             <div class="val">${(pickVo.createTime?datetime)!}</div>
@@ -64,7 +66,7 @@
                 <td>${pickCommodityVo.origin}</td>
                 <td>${pickCommodityVo.spec}</td>
                 <td>${pickCommodityVo.num}</td>
-                <td>${pickCommodityVo.price}元/${pickCommodityVo.priceUnit}</td>
+                <td>${pickCommodityVo.price}元/${pickCommodityVo.unit}</td>
                 <td>${pickCommodityVo.total}</td>
             </tr>
             </#list>

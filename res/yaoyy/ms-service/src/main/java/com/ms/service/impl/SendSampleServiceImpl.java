@@ -146,6 +146,9 @@ public class SendSampleServiceImpl  extends AbsCommonService<SendSample> impleme
 
 		SendSample sendSample=new SendSample();
 		sendSample.setUserId(useId);
+		sendSample.setNickname(sendSampleVo.getNickname());
+		sendSample.setPhone(sendSampleVo.getPhone());
+		sendSample.setArea(sendSampleVo.getArea());
 		sendSample.setStatus(SampleEnum.SAMPLE_NOTHANDLE.getValue());
 		sendSample.setIntention(sendSampleVo.getIntention());
 		sendSample.setUpdateTime(now);
