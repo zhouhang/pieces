@@ -316,7 +316,7 @@ em,i{font-style:normal;}
 .pick-form .del .fa:active{color:#d74141;}
 .pick-form .tel{padding:12px;text-align:right;}
 .pick-form .tel .fa{width:45px;height:45px;color:#fff;border:none;background:#cfd0d0;-webkit-border-radius:100%;border-radius:100%;}
-.pick-form .tel .fa:active{background:#d74141;}
+.pick-form .tel .active{background:#5c92cf;}
 .pick-form .button{padding:20px 12px;text-align:center;}
 .pick-form-layer{padding:0;-webkit-box-shadow:0 0 15px rgba(0,0,0,.2);box-shadow:0 0 15px rgba(0,0,0,.2);}
 .pick-form-layer .layui-m-layercont{padding:0 20px;}

@@ -174,12 +174,22 @@
                         });
                     }
 
-                $('#submit, .fa-tel').on('click', function() {
+                $('#submit').on('click', function() {
                     if (!flag) {
                         form();
                         return false;
                     }
                     return self.checkName() && self.checkMobile();
+                })
+                $('.fa-tel').on('click', function() {
+                    if (!flag) {
+                        form();
+                        $(this).addClass('active')
+                    } else {
+                        flag = false;
+                        $('.layui-m-close').trigger('click');
+                        $(this).removeClass('active')
+                    }
                 })
 
             }
