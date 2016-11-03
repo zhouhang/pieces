@@ -54,12 +54,12 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
     }
 
     @Override
-    public List<Commodity> findByIds(String ids) {
+    public List<CommodityVo> findByIds(String ids) {
         List<Integer> list = new ArrayList<>();
         for(String id :ids.split(",")){
             list.add(Integer.parseInt(id));
         }
-        List<Commodity> commodities= commodityDao.findByIds(list);
+        List<CommodityVo> commodities= commodityDao.findByIds(list);
         commodities.forEach(c->{
             c.setPictureUrl(pathConvert.getUrl(c.getPictureUrl()));
         });
@@ -81,6 +81,7 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
         commodity.setPictureUrl(pathConvert.saveFileFromTemp(commodity.getPictureUrl(),folderName));
         if (commodity.getId() == null) {
             commodity.setCreateTime(new Date());
+            commodity.setUpdateTime(new Date());
             commodityDao.create(commodity);
         } else {
             commodity.setUpdateTime(new Date());

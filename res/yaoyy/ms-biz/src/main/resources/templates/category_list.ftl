@@ -112,8 +112,8 @@
                     html.push(     '<div class="cnt">\n');
                     html.push(         '<div class="title">', data[i].variety, '</div>\n');
                     html.push(         '<div class="summary">', data[i].title, '</div>\n');
-                    html.push(         '<div class="price">\n');
-                    html.push(              data[i].priceDesc,'元/', data[i].unit);
+                    html.push(         '<div class="price"><i>¥</i>\n<em>');
+                    html.push(              data[i].priceDesc,'</em>元/', data[i].unit);
                     html.push(          '</div>\n');
                     html.push(     '</div>');
                     html.push(     '<div class="pic"><img src="', data[i].pictureUrl, '" width="110" height="90" alt="', data[i].variety, '"></div>\n');

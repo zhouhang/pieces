@@ -73,14 +73,14 @@ public class SpecialServiceImpl  extends AbsCommonService<Special> implements Sp
 				ids.append(sc.getCommodityId()).append(",");
 			});
 		}
-		List<Commodity> commodities = commodityService.findByIds(ids.substring(0,ids.length()-1));
+		List<CommodityVo> commodities = commodityService.findByIds(ids.substring(0,ids.length()-1));
 		pageInfo.setList(commodities);
 
 		return pageInfo;
 	}
 
 	@Override
-	public List<Commodity> findCommodity(Integer specId) {
+	public List<CommodityVo> findCommodity(Integer specId) {
 		SpecialCommodityVo vo = new SpecialCommodityVo();
 		vo.setSpecialId(specId);
 
@@ -91,7 +91,7 @@ public class SpecialServiceImpl  extends AbsCommonService<Special> implements Sp
 				ids.append(sc.getCommodityId()).append(",");
 			});
 		}
-		List<Commodity> commodities = commodityService.findByIds(ids.substring(0,ids.length()-1));
+		List<CommodityVo> commodities = commodityService.findByIds(ids.substring(0,ids.length()-1));
 		// 如果标识为量大价优 策去价格梯度表获取价格范围
 		commodities.forEach(commodity -> {
 			if (commodity.getMark() == 1){

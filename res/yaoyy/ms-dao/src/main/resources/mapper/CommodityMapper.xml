@@ -19,22 +19,26 @@
             <result column="mark"  property="mark" />
             <result column="create_time"  property="createTime" />
             <result column="update_time"  property="updateTime" />
-        
+            <result column="minimum_quantity"  property="minimumQuantity" />
+            <result column="slogan"  property="slogan" />
     </resultMap>
 
     <resultMap id="CommodityResultMapVo" type="com.ms.dao.vo.CommodityVo" extends="CommodityResultMap">
-
+        <result column="unitName"  property="unitName" />
+        <result column="categoryName"  property="categoryName" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,title,name,har_year,origin,spec,category_id,picture_url,detail,status,attribute,price,unit,sort,mark,create_time,update_time
+        id,title,name,har_year,origin,spec,category_id,picture_url,detail,
+        status,attribute,price,unit,sort,mark,create_time,update_time,minimum_quantity,slogan
     </sql>
 
     <sql id="Base_Column_List_Alisa">
         cm.id as id,cm.title as title,cm.name as name,cm.har_year as har_year,
         cm.origin as origin, cm.spec as spec,cm.category_id as category_id,cm.picture_url as picture_url,
         cm.detail as detail,cm.status as status,cm.attribute as attribute,cm.price as price,
-        cm.unit as unit,cm.sort as sort, cm.mark as mark,cm.create_time as create_time,cm.update_time as update_time
+        cm.unit as unit,cm.sort as sort, cm.mark as mark,cm.create_time as create_time,cm.update_time as update_time,
+        cm.minimum_quantity as minimum_quantity,cm.slogan as slogan
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="CommodityResultMap">
@@ -53,9 +57,11 @@
     <select id="findByParams" resultMap="CommodityResultMapVo" parameterType="com.ms.dao.vo.CommodityVo">
         select
         <include refid="Base_Column_List_Alisa" />,
-        ca.variety as categoryName
+        ca.variety as categoryName,
+        cd.name as unitName
         from commodity as cm
         LEFT JOIN category ca on cm.category_id=ca.id
+        LEFT JOIN code cd on cm.unit = cd.id
         <where>
             <if test="id != null">
                 cm.id = #{id}
@@ -79,9 +85,10 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.Commodity">
         insert into
-        commodity (title,name,har_year,origin,spec,category_id,picture_url,detail,status,attribute,price,unit,sort,mark,create_time,update_time)
+        commodity (title,name,har_year,origin,spec,category_id,picture_url,detail,status,attribute,price,unit,sort,mark,create_time,update_time,minimum_quantity,slogan)
         values
-        (#{title},#{name},#{harYear},#{origin},#{spec},#{categoryId},#{pictureUrl},#{detail},#{status},#{attribute},#{price},#{unit},#{sort},#{mark},#{createTime},#{updateTime})
+        (#{title},#{name},#{harYear},#{origin},#{spec},#{categoryId},#{pictureUrl},
+        #{detail},#{status},#{attribute},#{price},#{unit},#{sort},#{mark},#{createTime},#{updateTime},#{minimumQuantity},#{slogan})
     </insert>
 
     <update id="update" parameterType="com.ms.dao.model.Commodity">
@@ -151,14 +158,25 @@
             <if test="updateTime != null">
                 update_time = #{updateTime},
             </if>
+
+            <if test="minimumQuantity != null">
+                minimum_quantity = #{minimumQuantity},
+            </if>
+
+            <if test="slogan != null">
+                slogan = #{slogan},
+            </if>
                             
         </set>
         where id = #{id}
     </update>
 
     <select id="findByIds" parameterType="java.lang.Integer" resultMap="CommodityResultMap">
-        select   <include refid="Base_Column_List" />
+        select
+        <include refid="Base_Column_List_Alisa" />,
+        cd.name as unitName
         from commodity
+        LEFT JOIN code cd on cm.unit = cd.id
         where id in
         <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
             #{item}

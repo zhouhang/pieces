@@ -12,7 +12,7 @@ public interface CommodityDao extends ICommonDao<Commodity>{
 
     public List<CommodityVo> findByParams(CommodityVo commodityVo);
 
-    public List<Commodity>  findByIds(Collection<Integer> collection);
+    public List<CommodityVo>  findByIds(Collection<Integer> collection);
 
     public List<Commodity>  searchComodity(CommodityVo commodityVo);
 

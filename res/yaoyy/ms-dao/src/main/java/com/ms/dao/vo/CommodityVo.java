@@ -10,6 +10,9 @@ public class CommodityVo extends Commodity{
     // 品种名
     private String categoryName;
 
+    // 单位名称
+    private String unitName;
+
     // 量大价优价格梯度
     private List<Gradient> gradient;
 
@@ -27,5 +30,13 @@ public class CommodityVo extends Commodity{
 
     public void setGradient(List<Gradient> gradient) {
         this.gradient = gradient;
+    }
+
+    public String getUnitName() {
+        return unitName;
+    }
+
+    public void setUnitName(String unitName) {
+        this.unitName = unitName;
     }
 }

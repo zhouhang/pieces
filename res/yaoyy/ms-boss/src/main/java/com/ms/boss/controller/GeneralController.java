@@ -1,15 +1,17 @@
 package com.ms.boss.controller;
 
+import com.ms.dao.model.Code;
+import com.ms.dao.vo.CodeVo;
+import com.ms.service.CodeService;
+import com.ms.tools.entity.Result;
 import com.ms.tools.ueditor.CropInfo;
 import com.ms.tools.ueditor.CropResult;
 import com.ms.tools.ueditor.UEditorResult;
 import com.ms.tools.upload.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -22,6 +24,9 @@ public class GeneralController {
 
     @Autowired
     UploadService uploadService;
+
+    @Autowired
+    CodeService codeService;
 
     /**
      * 上传商品图片信息
@@ -58,5 +63,17 @@ public class GeneralController {
         return UEditorResult.success(upfile.getOriginalFilename(),upfile.getOriginalFilename(),cropResult.getUrl() );
     }
 
+    /**
+     *返回 code
+     * @param code
+     * @return
+     */
+    @RequestMapping(value = "/code/{code}", method = RequestMethod.POST)
+    @ResponseBody
+    public Result code(@PathVariable("code") String code) {
+        CodeVo vo = new CodeVo();
+        vo.setCode(code);
 
+        return Result.success("code").data(codeService.findAllByParams(vo));
+    }
 }

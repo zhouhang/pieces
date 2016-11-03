@@ -39,7 +39,7 @@
                                 <em>${commodity.price!}</em>
                             </#if>
 
-                            <b>元/${commodity.unit!}</b>
+                            <b>元/${commodity.unitName!}</b>
                             <#if commodity.mark == 1 >
                                 <span>量大价优</span>
                             </#if>

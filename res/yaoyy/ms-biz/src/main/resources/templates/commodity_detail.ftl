@@ -54,7 +54,7 @@
             <div class="price">
                 <i>&yen;</i>
                 <em>${commodityVo.price}</em>
-                <b>${commodityVo.unit}</b>
+                <b>${commodityVo.unitName!}</b>
                 <#if commodityVo.mark!=0>
                     <span>量大价优</span>
                 </#if>
@@ -70,8 +70,8 @@
             <div class="sales">
                 <#list commodityVo.gradient as gradient>
                 <dl>
-                    <dt>${gradient.start}-${gradient.end}公斤</dt>
-                    <dd>${gradient.price}${gradient.unit}</dd>
+                    <dt>${gradient.start}-${gradient.end}${commodityVo.unitName!}</dt>
+                    <dd>${gradient.price}元/${commodityVo.unitName!}</dd>
                 </dl>
                 </#list>
             </div>

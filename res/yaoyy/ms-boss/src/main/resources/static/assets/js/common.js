@@ -71,6 +71,29 @@
         return params;
     }
 
+    /**
+     *
+     */
+    $.fn.code = function (code, val, call) {
+        $that = $(this);
+        $that.html("");
+        $.post("/gen/code/"+code, function (result) {
+            if (result.status == 200) {
+                var html = "";
+                $.each(result.data, function (k, v) {
+                    html += '<option value="' + v.id + '">' + v.name + '</option>';
+                })
+                $that.html(html);
+                if (val) {
+                    $that.val(val);
+                }
+                if (call){
+                    call();
+                }
+            }
+        })
+    }
+
 })(jQuery);
 
 !(function($){

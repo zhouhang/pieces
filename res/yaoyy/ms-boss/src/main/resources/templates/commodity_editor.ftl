@@ -42,10 +42,18 @@
                 <div class="txt"><i>*</i>价格：</div>
                 <div class="cnt">
                     <div class="ipt-wrap">
-                        <input type="text" name="price" class="ipt" id="jprice" value="${commodity.price}" placeholder="价格" autocomplete="off">
+                        <input type="text" name="price" class="ipt" id="jprice" value="${commodity.price!}" placeholder="价格" autocomplete="off">
                         <span class="unit">元</span>
                     </div>
                     <label class="ml"><input type="checkbox"  name="mark" class="cbx" id="jsales">量大价优</label>
+                </div>
+            </div>
+            <div class="item">
+                <div class="txt"><i>*</i>单位：</div>
+                <div class="cnt">
+                    <select id="unit" name="unit" class="slt">
+                        <option value="1">吨</option>
+                    </select>
                 </div>
             </div>
             <div class="item hide" id="jsalesPrice">
@@ -63,10 +71,7 @@
                                 <input type="text" name="maxKg1" class="ipt ipt-short" placeholder="1-99999"
                                        data-rule="required; range(1~99999)" autocomplete="off" value="${gradient.end}">
                             </div>
-                            <div class="ipt-wrap">
-                                <input type="text" name="unit1" class="ipt ipt-short" placeholder="计量单位"
-                                       data-rule="required" autocomplete="off" value="${gradient.unit}">
-                            </div>
+                            <em name="unitD"></em>
                             <div class="ipt-wrap ml">
                                 <input type="text" name="price1" class="ipt ipt-short" placeholder="1-9999"
                                        data-rule="required; range(1~9999)" autocomplete="off" value="${gradient.price}">
@@ -85,7 +90,7 @@
                                     <input type="text" name="maxKg${gradient_index+2}" class="ipt ipt-short"
                                            data-rule="required; range(1~99999)" placeholder="1-99999" autocomplete="off" value="${gradient.end}">
                                 </div>
-                                <em>公斤</em>
+                                <em name="unitD"></em>
                                 <div class="ipt-wrap ml">
                                     <input type="text" name="price${gradient_index+2}" class="ipt ipt-short" placeholder="1-9999"
                                            data-rule="required; range(1~9999)" autocomplete="off" value="${gradient.price}">
@@ -107,10 +112,7 @@
                             <input type="text" name="maxKg1" class="ipt ipt-short" placeholder="1-99999"
                                    data-rule="required; range(1~99999)" autocomplete="off">
                         </div>
-                        <div class="ipt-wrap">
-                            <input type="text" name="unit1" class="ipt ipt-short" placeholder="计量单位"
-                                   data-rule="required" autocomplete="off">
-                        </div>
+                        <em name="unitD"></em>
                         <div class="ipt-wrap ml">
                             <input type="text" name="price1" class="ipt ipt-short" placeholder="1-9999"
                                    data-rule="required; range(1~9999)" autocomplete="off">
@@ -137,6 +139,18 @@
                 <div class="txt"><i>*</i>采收年份：</div>
                 <div class="cnt">
                     <input type="text" name="harYear" class="ipt" value="${commodity.harYear}" placeholder="采收年份" autocomplete="off">
+                </div>
+            </div>
+            <div class="item">
+                <div class="txt">起购数量：</div>
+                <div class="cnt">
+                    <input type="text" name="minimumQuantity" class="ipt" value="${commodity.minimumQuantity!}" placeholder="起购数量" autocomplete="off">
+                </div>
+            </div>
+            <div class="item">
+                <div class="txt">商品标语：</div>
+                <div class="cnt">
+                    <input type="text" name="slogan" class="ipt" value="${commodity.slogan!}" placeholder="商品标语" autocomplete="off">
                 </div>
             </div>
         </div>
@@ -265,6 +279,11 @@ ${commodity.detail}
                 })
                 $("#status").val(${commodity.status});
 
+                $("#unit").code("UNIT", ${commodity.unit}, function () {
+                    $("em[name=unitD]").html($("#unit").find("option:selected").text());
+                });
+
+
             },
             initAttrAndPrice: function () {
             <#if commodity.attribute?exists && commodity.attribute != "">
@@ -319,12 +338,23 @@ ${commodity.detail}
                             .find('.ipt').removeClass('n-invalid').trigger("hidemsg");
                     $jprice.attr('class', 'ipt').prop('disabled', this.checked).val('').trigger("hidemsg");
                     $('#myform').data('validator').options.ignore = this.checked ? $jprice : $jsalesPrice.find('.ipt');
+                    $("em[name=unitD]").html($("#unit").find("option:selected").text())
                 }).prop('checked', false);
 
                 // 添加价格
                 var idx = $jsalesPrice.find('.cnt').length;
                 $('#jaddNewPrice').on('click', function () {
-                    $jsalesPrice.append('<div class="cnt"> \n <div class="ipt-wrap"><input type="text" name="minKg' + (++idx) + '" class="ipt ipt-short" data-rule="required; range(1~99999)" placeholder="1-99999" autocomplete="off"></div> \n <em>-</em> \n <div class="ipt-wrap"><input type="text" name="maxKg' + idx + '" class="ipt ipt-short" data-rule="required; range(1~99999)" placeholder="1-99999" autocomplete="off"></div> \n <em>公斤</em> \n <div class="ipt-wrap ml"> \n <input type="text" name="price' + idx + '" class="ipt ipt-short" placeholder="1-9999" data-rule="required; range(1~9999)" autocomplete="off"> \n <span class="unit">元</span> \n </div> \n <button type="button" class="ubtn ubtn-red ml">删除</button> \n </div>');
+                    $jsalesPrice.append('<div class="cnt"> \n <div class="ipt-wrap">' +
+                            '<input type="text" name="minKg' + (++idx) + '" class="ipt ipt-short" data-rule="required; range(1~99999)" placeholder="1-99999" autocomplete="off">' +
+                            '</div> \n <em>-</em> \n <div class="ipt-wrap"><input type="text" name="maxKg' + idx + '" class="ipt ipt-short" data-rule="required; range(1~99999)" ' +
+                            'placeholder="1-99999" autocomplete="off"></div> \n <em name="unitD"></em> \n <div class="ipt-wrap ml"> \n ' +
+                            '<input type="text" name="price' + idx + '" class="ipt ipt-short" placeholder="1-9999" data-rule="required; range(1~9999)" autocomplete="off"> \n' +
+                            ' <span class="unit">元</span> \n </div> \n <button type="button" class="ubtn ubtn-red ml">删除</button> \n </div>');
+                    $("em[name=unitD]").html($("#unit").find("option:selected").text())
+                })
+
+                $("#unit").on("change", function () {
+                    $("em[name=unitD]").html($("#unit").find("option:selected").text());
                 })
 
                 // 删除价格
@@ -380,20 +410,11 @@ ${commodity.detail}
                                 // 量大价优按钮被选中
                                 var divs = $("#jsalesPrice > .cnt ");
                                 $.each(divs, function (k, v) {
-                                    if (k == 0) {
-                                        gradient.push({
-                                            start:$($(v).find("input")[0]).val(),
-                                              end:$($(v).find("input")[1]).val(),
-                                            price:$($(v).find("input")[3]).val(),
-                                             unit:$($(v).find("input")[2]).val()
-                                        });
-                                    } else {
-                                        gradient.push({
-                                            start:$($(v).find("input")[0]).val(),
-                                              end:$($(v).find("input")[1]).val(),
-                                            price:$($(v).find("input")[2]).val()
-                                        });
-                                    }
+                                    gradient.push({
+                                        start: $($(v).find("input")[0]).val(),
+                                        end: $($(v).find("input")[1]).val(),
+                                        price: $($(v).find("input")[2]).val()
+                                    });
                                 })
                                 data.gradient = gradient;
                                 data.mark = 1;
