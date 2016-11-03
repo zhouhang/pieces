@@ -243,7 +243,7 @@ function pickCommodity(id,num){
         //遍历所有对象。如果id相同，让该商品数量递增 ;
         for(var attr in arr){
             if(arr[attr].commodityId == id){
-                arr[attr].num = arr[attr].num + num;  //让json结构中num自增。
+                arr[attr].num =  num;
                 var cookieStr = JSON.stringify(arr);//将json对象转换成字符串.
                 localStorage.setItem(CARTNAME,cookieStr);
                 same = true;
