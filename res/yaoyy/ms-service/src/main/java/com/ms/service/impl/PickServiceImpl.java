@@ -87,6 +87,8 @@ public class PickServiceImpl  extends AbsCommonService<Pick> implements PickServ
 	@Transactional
 	public void save(PickVo pickVo) {
 		UserVo userVo=userDao.findByPhone(pickVo.getPhone());
+
+		Integer nowLogin=pickVo.getUserId();//现在登录的userid
 		//如果用户注册
 		Date now=new Date();
 
@@ -132,7 +134,12 @@ public class PickServiceImpl  extends AbsCommonService<Pick> implements PickServ
 
 
 		Pick pick=new Pick();
-		pick.setUserId(useId);
+		if(nowLogin==null){
+			pick.setUserId(useId);
+		}
+		else{
+			pick.setUserId(nowLogin);
+		}
 		pick.setNickname(pickVo.getNickname());
 		pick.setPhone(pickVo.getPhone());
 		pick.setStatus(PickEnum.PICK_NOTHANDLE.getValue());
@@ -162,7 +169,12 @@ public class PickServiceImpl  extends AbsCommonService<Pick> implements PickServ
 		PickTracking pickTracking=new PickTracking();
 		pickTracking.setName(pickVo.getNickname());
 		pickTracking.setOpType(TrackingTypeEnum.TYPE_USER.getValue());
-		pickTracking.setOperator(useId);
+		if(nowLogin==null){
+			pickTracking.setOperator(useId);
+		}
+		else{
+			pickTracking.setOperator(nowLogin);
+		}
 		pickTracking.setExtra("");
 		pickTracking.setCreateTime(now);
 		pickTracking.setUpdateTime(now);
