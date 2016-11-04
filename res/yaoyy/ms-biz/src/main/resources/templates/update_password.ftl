@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>找回密码-药优优</title>
+    <title>修改密码-药优优</title>
 <#include "./common/meta.ftl"/>
 </head>
 <body class="ui-body-nofoot">
 <header class="ui-header">
-    <div class="title">找回密码</div>
+    <div class="title">修改密码</div>
     <div class="abs-l mid">
         <a href="javascript:history.back();" class="fa fa-back"></a>
     </div>

@@ -171,12 +171,12 @@ public class UserController {
      * 修改密码
      * @return
      */
-    @RequestMapping(value = "findPassword", method = RequestMethod.GET)
+    @RequestMapping(value = "updatePassword", method = RequestMethod.GET)
     public String findPassword(ModelMap modelMap){
         //获取登陆用户userId
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         modelMap.put("phone", user.getPhone());
-        return "find_password";
+        return "update_password";
     }
 
     @RequestMapping(value = "resetPassword", method = RequestMethod.POST)

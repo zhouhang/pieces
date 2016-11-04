@@ -28,7 +28,7 @@
             <i class="fa fa-order"></i>
             <span>我的寄样单</span>
         </a>
-        <a href="/user/findPassword">
+        <a href="/user/updatePassword">
             <i class="fa fa-lock"></i>
             <span>修改密码</span>
         </a>
