@@ -81,7 +81,9 @@ public class SendSampleController {
     public String detail(@PathVariable("id") Integer id, ModelMap model) {
 
         SendSampleVo sendSampleVo=sendSampleService.findDetailById(id);
-
+        if(id==null|| sendSampleVo==null){
+            return "redirect:error/404";
+        }
 
         SampleTrackingVo sampleTrackingVo=new SampleTrackingVo();
         sampleTrackingVo.setSendId(sendSampleVo.getId());
@@ -95,6 +97,9 @@ public class SendSampleController {
     }
     @RequestMapping(value = "msg/{id}", method = RequestMethod.GET)
     public String getMsg(@PathVariable("id") Integer id,ModelMap model){
+        if(id==null||sendSampleService.findById(id)==null){
+            return "redirect:error/404";
+        }
         model.put("sendId",id);
         return "sample_msg";
     }
