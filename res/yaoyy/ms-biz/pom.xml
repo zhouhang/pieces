@@ -71,9 +71,9 @@
                 <spring.dataSource.url>jdbc:mysql://192.168.1.41:3306/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
                 <spring.dataSource.username>yaoyy</spring.dataSource.username>
                 <spring.dataSource.password>123456</spring.dataSource.password>
-                <doc.base.url>http://127.0.0.1:8188</doc.base.url>
-                <pro.upload.path>/var/tomcat/apache-tomcat-8.5.4/webapps/files/upload/</pro.upload.path>
-                <pro.upload.url>http://127.0.0.1:8188/files/upload/</pro.upload.url>
+                <doc.base.url>http://www.yaobest.com</doc.base.url>
+                <pro.upload.path>E:\uploadfiles\yaobest\</pro.upload.path>
+                <pro.upload.url>http://static.yaobest.com/files/upload/</pro.upload.url>
                 <elasticsearch.host>192.168.1.41</elasticsearch.host>
                 <elasticsearch.port>9300</elasticsearch.port>
             </properties>

@@ -47,7 +47,7 @@
                 <tr>
                     <td><input type="checkbox" class="cbx"></td>
                     <td>${article.title}</td>
-                    <td>${article.url!}</td>
+                    <td>${bizBaseUrl}/article/${article.id}</td>
                     <td>${(article.createTime?datetime)!}</td>
                     <td>${(article.updateTime?datetime)!}</td>
                     <td class="tc">
