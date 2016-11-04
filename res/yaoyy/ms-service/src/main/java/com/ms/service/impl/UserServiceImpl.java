@@ -15,7 +15,6 @@ import com.ms.service.enums.RedisEnum;
 import com.ms.service.redis.RedisManager;
 import com.ms.service.sms.SmsUtil;
 import com.ms.service.utils.EncryptUtil;
-import com.ms.tools.entity.Result;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
@@ -191,15 +190,41 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 	}
 
 	@Override
+	public void sendResetPasswordSms(String phone) {
+		try {
+			smsUtil.sendResetPasswordSms(phone);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
 	@Transactional
+	public void resetPassword(String phone, String code, String password) {
+		String rcode = redisManager.get(RedisEnum.KEY_MOBILE_RESET_PASSWORD.getValue()+phone);
+
+		if (!code.equalsIgnoreCase(rcode)) {
+			throw new RuntimeException("验证码错误");
+		}
+
+		User user = findByPhone(phone);
+		Password pass = EncryptUtil.PiecesEncode(password);
+		user.setPassword(pass.getPassword());
+		user.setSalt(pass.getSalt());
+		user.setUpdateTime(new Date());
+		userDao.update(user);
+	}
+
+	@Override
+	@Transactional(rollbackFor = RuntimeException.class)
 	public void transactionalTest(String phone) {
 		User user = new User();
 		user.setPhone(phone);
 		user.setType(UserEnum.enable.getType());
 		user.setCreateTime(new Date());
 		user.setUpdateTime(new Date());
-		create(user);
-
+//		create(user);
+		userDao.create(user);
 		if(true){
 			throw  new RuntimeException("xxxxx");
 		}
@@ -211,7 +236,6 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 		userDetail.setNickname(phone);
 		userDetail.setType(UserEnum.enable.getType());
 		userDetailService.save(userDetail);
-
 
 	}
 

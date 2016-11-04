@@ -86,6 +86,30 @@ public class SmsUtil {
         return code;
     }
 
+    /**
+     * 重设密码短信
+     * @param mobile
+     * @return
+     * @throws Exception
+     */
+    public String sendResetPasswordSms(String mobile) throws Exception {
+
+        //生成并发送验证码
+        String code = SeqNoUtil.getRandomNum(5);
+
+        Map<String, Object> param = new HashMap<>();
+        param.put("apikey", apikey);
+        param.put("mobile", mobile);
+        param.put("text", TextTemplateEnum.SMS_BIZ_RESET_PASSWORD.getText("【药优优】", code));
+
+        HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+        //记录发送成功的时间
+        redisManager.set(RedisEnum.KEY_MOBILE_CAPTCHA_INTERVAL.getValue()+mobile,new Date().getTime()+"");
+        //验证码存储在redis缓存里
+        redisManager.set(RedisEnum.KEY_MOBILE_RESET_PASSWORD.getValue()+mobile,code,SMS_EXPIRE_TIME);
+        return code;
+    }
+
 
     /**
      * 一个手机号一分钟之内只能发送1条短信；

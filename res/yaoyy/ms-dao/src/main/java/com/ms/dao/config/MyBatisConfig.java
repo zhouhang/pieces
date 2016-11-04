@@ -17,6 +17,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -26,10 +27,8 @@ import java.util.Properties;
  * mybatis 基础配置
  */
 @Configuration
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass=true)
 public class MyBatisConfig implements TransactionManagementConfigurer {
-
-    DataSource dataSource;
 
     @Value("${spring.dataSource.url}")
     private String url;
@@ -42,7 +41,10 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
     private String driver;
 
 
-    @Bean
+    @Autowired
+    private PlatformTransactionManager txManager;
+
+    @Bean(name = "dataSource")
     public DataSource configureDataSource() {
 
         DruidDataSource dataSource = new DruidDataSource();
@@ -61,16 +63,12 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
         dataSource.setTestOnReturn(false);
         dataSource.setPoolPreparedStatements(false);
         dataSource.setMaxPoolPreparedStatementPerConnectionSize(20);
-        this.dataSource = dataSource;
         return dataSource;
     }
 
     @Bean(name = "sqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactoryBean() {
+    public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource) {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-        if (dataSource == null) {
-            dataSource = configureDataSource();
-        }
         bean.setDataSource(dataSource);
         bean.setTypeAliasesPackage("com.ms.dao.model");
 
@@ -102,13 +100,14 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
 
-    @Bean
+    @Bean(name = "txManager")
+    public PlatformTransactionManager txManager2(DataSource dataSource) {
+        return new DataSourceTransactionManager(dataSource);
+    }
+
     @Override
     public PlatformTransactionManager annotationDrivenTransactionManager() {
-        if (dataSource == null) {
-            dataSource = configureDataSource();
-        }
-        return new DataSourceTransactionManager(dataSource);
+        return txManager;
     }
 
 }

@@ -34,6 +34,10 @@ public interface UserService extends ICommonService<User>{
 
     public void sendLoginSms(String phone);
 
+    public void sendResetPasswordSms(String phone);
+
+    public void resetPassword(String phone, String code, String password);
+
     public void transactionalTest(String phone);
 
 }

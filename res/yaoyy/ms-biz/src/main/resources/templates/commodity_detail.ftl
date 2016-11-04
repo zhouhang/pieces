@@ -24,14 +24,14 @@
                 <li>
                     <a href="/pickCommodity/list">
                         <i class="fa fa-cart"></i>
-                        <span>采购单</span>
+                        <span>选货单</span>
                     </a>
                 </li>
                 <li class="wide">
                     <a class="sample" href="apply/sample/${commodityVo.id}">免费寄样</a>
                 </li>
                 <li class="wide">
-                    <a class="cart" href="javascript:;" id="addCommodity">加入采购单</a>
+                    <a class="cart" href="javascript:;" id="addCommodity">加入选货单</a>
                 </li>
             </ul>
         </nav>

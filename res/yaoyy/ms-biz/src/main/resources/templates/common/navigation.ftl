@@ -16,13 +16,13 @@
             <li>
                 <a href="/pickCommodity/list">
                     <i class="fa fa-cart"></i>
-                    <span>采购单</span>
+                    <span>选货单</span>
                 </a>
             </li>
             <li>
-                <a href="center.html">
-                    <i class="fa fa-order"></i>
-                    <span>订单</span>
+                <a class="current" href="/center/index">
+                    <i class="fa fa-user"></i>
+                    <span>个人中心</span>
                 </a>
             </li>
         </ul>
