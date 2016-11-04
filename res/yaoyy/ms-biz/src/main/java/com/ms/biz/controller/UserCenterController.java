@@ -27,14 +27,20 @@ public class UserCenterController {
 
     @RequestMapping("index")
     public String index(ModelMap modelMap){
+        String nickname = null;
         //获取登陆用户userId
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         if (user != null) {
             UserDetailVo detailVo = userDetailService.findByUserId(user.getId());
             if (detailVo != null){
-                modelMap.put("nickname", detailVo.getNickname());
+                if (detailVo.getNickname() != null) {
+                    nickname = detailVo.getNickname();
+                } else {
+                    nickname = "";
+                }
             }
         }
+        modelMap.put("nickname", nickname);
         return "user_center";
     }
 
