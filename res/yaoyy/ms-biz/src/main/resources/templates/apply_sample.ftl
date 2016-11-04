@@ -70,7 +70,11 @@
                         userinfo.phone=$("#mobile").val();
                         userinfo.area=$("#region").val();
                         saveAppyinfo(userinfo);
-
+                        <#if  Session.user_session_biz?exists>
+                          var login=true;
+                        <#else>
+                           var login=false;
+                        </#if>
                         $.ajax({
                             url: _global.v.applyUrl,
                             type: "POST",
@@ -78,7 +82,7 @@
                             success: function (result) {
                                 if(result.status=="200"){
                                     var user=result.data;
-                                    if(user.type==1){
+                                    if(user.type==1&&!login){
                                         layer.open({
                                             className: 'layer-custom',
                                             content: '<div class="box"><div class="hd">您的寄样申请已提交成功！</div><div class="bd">我们会在60分钟之内与您取得联系。 注册可以跟踪您的所有寄养申请。</div></div>'
@@ -91,7 +95,7 @@
                                         });
                                     }
                                     else{
-                                        if(user.islogin==false){
+                                        if(!login){
                                             layer.open({
                                                 className: 'layer-custom',
                                                 content: '<div class="box"><div class="hd">您的寄样申请已提交成功！</div><div class="bd">我们会在60分钟之内与您取得联系。登录可以跟踪您的所有寄养申请。</div></div>'
