@@ -48,6 +48,12 @@ public class IndexController {
     @Autowired
     private ArticleService articleService;
 
+    //@Autowired
+    //private CategorySearchService categorySearchService;
+
+    //@Autowired
+    //private CommoditySearchService commoditySearchService;
+
     /**
      * 首页广告
      * @param model
@@ -120,5 +126,14 @@ public class IndexController {
 
         return "article";
     }
+    /*
+    @RequestMapping(value = "/create/index", method = RequestMethod.GET)
+    @ResponseBody
+    public Result createIndex(){
+        categorySearchService.createAllCategoryDoc();
+        commoditySearchService.createAllCommodityDoc();
+        return Result.success("创建索引成功");
+    }
+    */
 
 }

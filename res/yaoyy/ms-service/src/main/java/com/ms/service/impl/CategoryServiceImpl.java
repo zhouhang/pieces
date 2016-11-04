@@ -34,8 +34,8 @@ public class CategoryServiceImpl  extends AbsCommonService<Category> implements 
 	private CommodityService commodityService;
 
 
-	@Autowired
-	private CategorySearchService categorySearchService;
+	//@Autowired
+	//private CategorySearchService categorySearchService;
 
 	/**
 	 * 品种图片保存路径
@@ -98,7 +98,7 @@ public class CategoryServiceImpl  extends AbsCommonService<Category> implements 
 			commodity.setStatus(categoryVo.getStatus());
 			commodityService.updateStatusByCategoryId(commodity);
 		}
-		categorySearchService.save(categoryVo);
+		//categorySearchService.save(categoryVo);
 
 	}
 
@@ -132,7 +132,7 @@ public class CategoryServiceImpl  extends AbsCommonService<Category> implements 
 	@Override
 	@Transactional
 	public int deleteById(int id) {
-		categorySearchService.deleteByCategoryId(id);
+		//categorySearchService.deleteByCategoryId(id);
 		return super.deleteById(id);
 	}
 

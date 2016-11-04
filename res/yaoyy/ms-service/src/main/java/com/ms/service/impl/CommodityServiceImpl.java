@@ -33,8 +33,8 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
     @Autowired
     private PathConvert pathConvert;
 
-    @Autowired
-    private CommoditySearchService commoditySearchService;
+    //@Autowired
+    //private CommoditySearchService commoditySearchService;
 
     /**
      * 商品图片保存路径
@@ -101,7 +101,7 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
             });
             gradientService.update(commodity.getGradient());
         }
-        commoditySearchService.save(commodity);
+        //commoditySearchService.save(commodity);
     }
 
     @Override
@@ -151,7 +151,7 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
     @Transactional
     public int deleteById(int id) {
         gradientService.deleteByCommodityId(id);
-        commoditySearchService.deleteByCommodityId(id);
+        //commoditySearchService.deleteByCommodityId(id);
         return super.deleteById(id);
     }
 

@@ -14,6 +14,7 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 /**
  * Created by xiao on 2016/10/26.
  */
+/*
 @Configuration
 @EnableElasticsearchRepositories(basePackages = "com.ms.dao.elasticsearch.repository")
 public class ElasticsearchConfig {
@@ -35,5 +36,6 @@ public class ElasticsearchConfig {
         return new ElasticsearchTemplate(client());
     }
 }
+*/
 
 
