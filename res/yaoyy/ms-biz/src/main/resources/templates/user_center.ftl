@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="umenu">
-        <a href="/pickCommodity/list">
+        <a href="/pick/list">
             <i class="fa fa-cart"></i>
             <span>我的选货单</span>
         </a>
