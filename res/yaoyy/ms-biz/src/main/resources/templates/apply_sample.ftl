@@ -90,7 +90,7 @@
                                             ,yes: function(index){
                                                 location.href = '/user/register';
                                             },no: function(index) {
-                                                // window.history.back(); // 返回按钮事件
+                                                 window.history.back(); // 返回按钮事件
                                             },shadeClose: false
                                         });
                                     }
@@ -103,7 +103,7 @@
                                                 ,yes: function(index){
                                                     location.href = '/user/login';
                                                 },no: function(index) {
-                                                    // window.history.back(); // 返回按钮事件
+                                                     window.history.back(); // 返回按钮事件
                                                 },shadeClose: false
                                             });
                                         }

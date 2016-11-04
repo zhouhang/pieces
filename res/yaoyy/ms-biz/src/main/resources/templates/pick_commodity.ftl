@@ -181,24 +181,41 @@
             submit: function() {
                 var flag = false,
                         self = this,
+                        userinfo=getAppyInfo(),
                         form = function() {
+                            var phone="";
+                            var nickname="";
+                            var show=true;
+                            if(userinfo){
+                                phone=userinfo.phone;
+                                nickname=userinfo.nickname;
+                            }
                             flag = true;
                             layer.open({
-                                className: 'pick-form-layer ui-form'
-                                ,content: '<div class="item"><input type="text" class="ipt" id="username" placeholder="姓名"><span class="error"></span></div>\n <div class="item"><input type="tel" class="ipt" id="mobile" placeholder="手机号"><span class="error"></span></div>'
-                                ,shade: false
-                            });
+                                    className: 'pick-form-layer ui-form'
+                                    ,content: '<div class="item"><input type="text" class="ipt" id="username" placeholder="姓名"><span class="error"></span></div>\n <div class="item"><input type="tel" class="ipt" id="mobile" placeholder="手机号"><span class="error"></span></div>'
+                                    ,shade:false
+                                });
+                            $("#username").val(nickname);
+                            $("#mobile").val(phone);
                         }
 
                 $('#submit').on('click', function() {
-                    if (!flag) {
+                    if (!flag&&!userinfo) {
                         form();
                         return false;
                     }
-                    if(self.checkName() && self.checkMobile()){
+                    if((self.checkName() && self.checkMobile())||(!flag&&userinfo)){
                         var pickVo={};
-                        pickVo.phone= $('#mobile').val();
-                        pickVo.nickname=$('#username').val();
+                        if($('#mobile').val()&&$('#mobile').val()){
+                            pickVo.phone= $('#mobile').val();
+                            pickVo.nickname=$('#username').val();
+                        }
+                        else{
+                            pickVo.phone= userinfo.phone;
+                            pickVo.nickname=userinfo.nickname;
+                        }
+
                         var list=[];
                         $("#pick_commodity .ipt").each(function(){
                             var commodity={};
@@ -207,6 +224,10 @@
                             list.push(commodity);
                         })
                         pickVo.pickCommodityVoList=list;
+                        var userinfo={};
+                        userinfo.nickname=pickVo.nickname;
+                        userinfo.phone=pickVo.phone;
+                        saveAppyinfo(userinfo);
                         $.ajax({
                             url: _global.v.saveUrl,
                             data: JSON.stringify(pickVo),
@@ -230,7 +251,7 @@
                                             ,yes: function(index){
                                                 location.href = '/user/register';
                                             },no: function(index) {
-                                                // window.history.back(); // 返回按钮事件
+                                                window.history.back(); // 返回按钮事件
                                             },shadeClose: false
                                         });
                                     }
@@ -243,7 +264,7 @@
                                                 ,yes: function(index){
                                                     location.href = '/user/login';
                                                 },no: function(index) {
-                                                    // window.history.back(); // 返回按钮事件
+                                                    window.history.back(); // 返回按钮事件
                                                 },shadeClose: false
                                             });
                                         }
