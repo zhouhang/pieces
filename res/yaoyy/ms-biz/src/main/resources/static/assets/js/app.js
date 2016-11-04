@@ -321,5 +321,8 @@ function deleteInfo() {
 
 
 $(function(){
-	
+    var count=getCommodityCount();
+    if(count!=0){
+        $("#commodityCart").append("<b>"+count+"</b>");
+    }
 });
