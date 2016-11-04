@@ -36,7 +36,6 @@
         fn: {
             init: function() {
                 this.iniCart();
-                this.quantity();
             },
             iniCart:function(){
                 var self = this;
@@ -57,6 +56,7 @@
                             success: function(data) {
                                 self.tohtml(data.data,pick_obj);
                                 self.submit();
+                                self.quantity();
                             }
                         })
                     }
@@ -85,7 +85,7 @@
                            +  "</div> <div class='price'>"
                            + "<i>&yen;</i> <b>"+commodity.price+"</b> 元"
                            + "</div> <div class='ui-quantity cale'> <button type='button' class='fa fa-reduce op'></button>"
-                           + "<input type='tel' class='ipt' value='1' cid='"+commodity.id+"'autocomplete='off' data-price='{1-499:140,500-999:120,1000:100}'>"
+                           + "<input type='tel' class='ipt num-input' value='1' cid='"+commodity.id+"'autocomplete='off' data-price='{1-499:140,500-999:120,1000:100}'>"
                             +"<button type='button' class='fa fa-plus op'></button> </div>"
                             +"<div class='cale unitName'>"+commodity.unitName+"</div>"
                             +"<div class='del'> <button type='button' class='fa fa-remove' cid='"+commodity.id+"'></button> </div> </div>"
@@ -112,6 +112,13 @@
             quantity: function() {
                 var $quantity = $('.pick-form');
                 //删除品种
+
+                $quantity.on('change', '.num-input', function() {
+                    var commodityId=$(this).attr("cid");
+                    var num=$(this).val();
+                    updateCommodity(commodityId,num);
+                })
+
                 $quantity.on('click', '.fa-remove', function() {
                     deleteCommodity($(this).attr("cid"));
                     window.location.reload();
@@ -174,24 +181,41 @@
             submit: function() {
                 var flag = false,
                         self = this,
+                        userinfo=getAppyInfo(),
                         form = function() {
+                            var phone="";
+                            var nickname="";
+                            var show=true;
+                            if(userinfo){
+                                phone=userinfo.phone;
+                                nickname=userinfo.nickname;
+                            }
                             flag = true;
                             layer.open({
-                                className: 'pick-form-layer ui-form'
-                                ,content: '<div class="item"><input type="text" class="ipt" id="username" placeholder="姓名"><span class="error"></span></div>\n <div class="item"><input type="tel" class="ipt" id="mobile" placeholder="手机号"><span class="error"></span></div>'
-                                ,shade: false
-                            });
+                                    className: 'pick-form-layer ui-form'
+                                    ,content: '<div class="item"><input type="text" class="ipt" id="username" placeholder="姓名"><span class="error"></span></div>\n <div class="item"><input type="tel" class="ipt" id="mobile" placeholder="手机号"><span class="error"></span></div>'
+                                    ,shade:false
+                                });
+                            $("#username").val(nickname);
+                            $("#mobile").val(phone);
                         }
 
                 $('#submit').on('click', function() {
-                    if (!flag) {
+                    if (!flag&&!userinfo) {
                         form();
                         return false;
                     }
-                    if(self.checkName() && self.checkMobile()){
+                    if((self.checkName() && self.checkMobile())||(!flag&&userinfo)){
                         var pickVo={};
-                        pickVo.phone= $('#mobile').val();
-                        pickVo.nickname=$('#username').val();
+                        if($('#mobile').val()&&$('#mobile').val()){
+                            pickVo.phone= $('#mobile').val();
+                            pickVo.nickname=$('#username').val();
+                        }
+                        else{
+                            pickVo.phone= userinfo.phone;
+                            pickVo.nickname=userinfo.nickname;
+                        }
+
                         var list=[];
                         $("#pick_commodity .ipt").each(function(){
                             var commodity={};
@@ -200,6 +224,10 @@
                             list.push(commodity);
                         })
                         pickVo.pickCommodityVoList=list;
+                        var userinfo={};
+                        userinfo.nickname=pickVo.nickname;
+                        userinfo.phone=pickVo.phone;
+                        saveAppyinfo(userinfo);
                         $.ajax({
                             url: _global.v.saveUrl,
                             data: JSON.stringify(pickVo),
@@ -223,7 +251,7 @@
                                             ,yes: function(index){
                                                 location.href = '/user/register';
                                             },no: function(index) {
-                                                // window.history.back(); // 返回按钮事件
+                                                window.history.back(); // 返回按钮事件
                                             },shadeClose: false
                                         });
                                     }
@@ -236,12 +264,12 @@
                                                 ,yes: function(index){
                                                     location.href = '/user/login';
                                                 },no: function(index) {
-                                                    // window.history.back(); // 返回按钮事件
+                                                    window.history.back(); // 返回按钮事件
                                                 },shadeClose: false
                                             });
                                         }
                                         else{
-                                            if(is_weixin()&&user.openid==""){
+                                            if(is_weixin()){
                                                 location.href = '/pick/list?source=WECHAT';
                                             }
                                             else{

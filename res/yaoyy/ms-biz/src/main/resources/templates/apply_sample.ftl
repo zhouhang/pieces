@@ -23,12 +23,10 @@
                 <input type="text" class="ipt" name="nickname" id="name" placeholder="姓名" autocomplete="off">
                 <span class="error"></span>
             </div>
-            <#if  !Session.user_session_biz?exists>
             <div class="item">
-                <input type="tel" class="ipt" name="phone" id="mobile" placeholder="手机号" autocomplete="off">
+                <input type="tel" value="${(phone)!}" class="ipt" name="phone" id="mobile" placeholder="手机号" autocomplete="off">
                 <span class="error"></span>
             </div>
-            </#if>
             <div class="item">
                 <input type="text" class="ipt" name="area" id="region" placeholder="地区（例如：安徽亳州）" autocomplete="off">
                 <span class="error"></span>
@@ -52,15 +50,31 @@
         fn: {
             init: function() {
                 this.validator();
+                this.loadInfo();
+
             },
-            isWeixinBrowser:function(){
-                var ua = navigator.userAgent.toLowerCase();
-                return (/micromessenger/.test(ua)) ? true : false ;
+            loadInfo:function(){
+                  var userinfo=getAppyInfo();
+                  if(userinfo){
+                       $("#name").val(userinfo.nickname);
+                       $("#mobile").val(userinfo.phone);
+                       $("#region").val(userinfo.area);
+                  }
             },
             validator: function() {
                 var self = this;
                 $('#submit').on('click', function() {
                     if (self.checkName()  <#if  !Session.user_session_biz?exists> && self.checkMobile()</#if> && self.checkRegion()) {
+                        var userinfo={};
+                        userinfo.nickname=$("#name").val();
+                        userinfo.phone=$("#mobile").val();
+                        userinfo.area=$("#region").val();
+                        saveAppyinfo(userinfo);
+                        <#if  Session.user_session_biz?exists>
+                          var login=true;
+                        <#else>
+                           var login=false;
+                        </#if>
                         $.ajax({
                             url: _global.v.applyUrl,
                             type: "POST",
@@ -68,7 +82,7 @@
                             success: function (result) {
                                 if(result.status=="200"){
                                     var user=result.data;
-                                    if(user.type==1){
+                                    if(user.type==1&&!login){
                                         layer.open({
                                             className: 'layer-custom',
                                             content: '<div class="box"><div class="hd">您的寄样申请已提交成功！</div><div class="bd">我们会在60分钟之内与您取得联系。 注册可以跟踪您的所有寄养申请。</div></div>'
@@ -76,12 +90,12 @@
                                             ,yes: function(index){
                                                 location.href = '/user/register';
                                             },no: function(index) {
-                                                // window.history.back(); // 返回按钮事件
+                                                 window.history.back(); // 返回按钮事件
                                             },shadeClose: false
                                         });
                                     }
                                     else{
-                                        if(user.islogin==false){
+                                        if(!login){
                                             layer.open({
                                                 className: 'layer-custom',
                                                 content: '<div class="box"><div class="hd">您的寄样申请已提交成功！</div><div class="bd">我们会在60分钟之内与您取得联系。登录可以跟踪您的所有寄养申请。</div></div>'
@@ -89,12 +103,12 @@
                                                 ,yes: function(index){
                                                     location.href = '/user/login';
                                                 },no: function(index) {
-                                                    // window.history.back(); // 返回按钮事件
+                                                     window.history.back(); // 返回按钮事件
                                                 },shadeClose: false
                                             });
                                         }
                                         else{
-                                              if(_global.fn.isWeixinBrowser()&&user.openid==""){
+                                              if(is_weixin()){
                                                   location.href = '/sample/list?source=WECHAT';
                                               }
                                               else{

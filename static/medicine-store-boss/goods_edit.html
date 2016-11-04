@@ -149,13 +149,24 @@
 
 			<div class="box fa-form">
 				<div class="hd">商品图片与详情</div>
+                <div class="item">
+                    <div class="txt"><i>*</i>商品缩略图：</div>
+                    <div class="cnt cnt-mul">
+                        <div class="up-img">
+                            <!-- <img src="images/blank.gif"><i class="del"></i> -->
+                        </div>
+                        <input type="hidden" value="" name="imgUrl1" id="imgUrl1">
+                        <span class="tips">图片尺寸：220 X 180</span>
+                    </div>
+                </div>
 				<div class="item">
                     <div class="txt"><i>*</i>商品图片：</div>
                     <div class="cnt cnt-mul">
                         <div class="up-img">
                             <!-- <img src="images/blank.gif"><i class="del"></i> -->
                         </div>
-                        <input type="hidden" value="" name="imgUrl" id="imgUrl">
+                        <input type="hidden" value="" name="imgUrl2" id="imgUrl2">
+                        <span class="tips">图片尺寸：220 X 180</span>
                     </div>
                 </div>
                 <div class="item">
@@ -277,7 +288,8 @@
                     	level: '规格等级: required',
                     	originOf: '产地: required',
                     	year: '采收年份: required',
-                        imgUrl: '图片: required'
+                        imgUrl1: '商品缩略图: required',
+                        imgUrl2: '商品图片: required'
                     }
                 });
             },
@@ -311,7 +323,7 @@
                     layer.confirm('确认删除商品图片？', {
                         btn: ['确认','取消'] //按钮
                     }, function(index){
-                    	$upImg.empty().next().val('');
+                    	$self.parent().empty().next().val('');
                         layer.close(index);
                     });
                     return false;
@@ -336,19 +348,18 @@
                         }
                     });
 
-                    self.croppic();
+                    self.croppic($(this));
                 });
             },
-            croppic: function() {
+            croppic: function($el) {
                 var options = {
                     uploadUrl:'img_save_to_file.php',
                     cropUrl:'img_crop_to_file.php',
-                    outputUrlId:'imgUrl',
                     imgEyecandyOpacity:0.5,
                     loaderHtml:'<span class="loader">正在上传图片，请稍后...</span>',
                     onAfterImgCrop:function(response){ 
-                        $('.up-img').html('<img src="' + response.url + '" /><i class="del" title="删除"></i>');
-                        $('#imgUrl').trigger('validate');
+                        $el.html('<img src="' + response.url + '" /><i class="del" title="删除"></i>');
+                        $el.next('input:hidden').val(response.url).trigger('validate');
                         // 关闭弹层
                         layer.closeAll();
                     },

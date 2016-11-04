@@ -64,11 +64,14 @@ public class IndexController {
         return "index";
     }
 
-    @RequestMapping(value = "apply/sample", method = RequestMethod.GET)
-    public String apply(Integer commdityId,ModelMap model) {
+    @RequestMapping(value = "apply/sample/{id}", method = RequestMethod.GET)
+    public String apply(@PathVariable("id")Integer commdityId,ModelMap model) {
 
         Commodity commodity=commodityService.findById(commdityId);
-
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        if(user!=null){
+            model.put("phone", user.getPhone());
+        }
         model.put("commodity", commodity);
         return "apply_sample";
     }
@@ -80,19 +83,10 @@ public class IndexController {
 
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         if(user!=null){
-            sendSampleVo.setPhone(user.getPhone());
+            sendSampleVo.setUserId(user.getId());
         }
         sendSampleService.save(sendSampleVo);
         UserVo userInfo=userService.findByPhone(sendSampleVo.getPhone());
-
-        if(user==null){
-            userInfo.setIslogin(false);
-        }
-        else{
-            userInfo.setIslogin(true);
-            userInfo.setOpenid(user.getOpenid());
-        }
-
 
         return Result.success().data(userInfo);
     }

@@ -48,6 +48,7 @@ public class CommodityController {
             });
         }
         List<CommodityVo> commodities = commodityService.findByIds(ids.substring(0,ids.length()-1));
+
         return Result.success().data(commodities);
     }
 

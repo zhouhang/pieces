@@ -21,6 +21,10 @@ public class Pick  implements Serializable {
 	private Date createTime;
 	
 	private Date updateTime;
+
+	private String nickname;
+
+	private String phone;
 	
 	public Pick(){}
 	
@@ -70,6 +74,22 @@ public class Pick  implements Serializable {
 
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 	
 }

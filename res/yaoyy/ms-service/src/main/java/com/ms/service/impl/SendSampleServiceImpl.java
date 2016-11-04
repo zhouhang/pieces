@@ -99,16 +99,17 @@ public class SendSampleServiceImpl  extends AbsCommonService<SendSample> impleme
 	public void save(SendSampleVo sendSampleVo) {
 
 		UserVo userVo=userDao.findByPhone(sendSampleVo.getPhone());
-		//如果用户注册
+		Integer nowLogin=sendSampleVo.getUserId();//现在登录的userid
+		//如果所给的手机号已经注册
 		Date now=new Date();
-		int useId;
+		int useId;//现在的userid
 		if (userVo==null){
 			User user=new User();
 			user.setPhone(sendSampleVo.getPhone());
 			user.setType(UserEnum.auto.getType());
 			user.setSalt("");
 			user.setPassword("");
-			user.setOpenid("");
+			//user.setOpenid("");
 			user.setUpdateTime(now);
 			user.setCreateTime(now);
 			userDao.create(user);
@@ -145,7 +146,16 @@ public class SendSampleServiceImpl  extends AbsCommonService<SendSample> impleme
 
 
 		SendSample sendSample=new SendSample();
-		sendSample.setUserId(useId);
+		if(nowLogin==null){
+			sendSample.setUserId(useId);
+		}
+		else{
+			sendSample.setUserId(nowLogin);
+		}
+
+		sendSample.setNickname(sendSampleVo.getNickname());
+		sendSample.setPhone(sendSampleVo.getPhone());
+		sendSample.setArea(sendSampleVo.getArea());
 		sendSample.setStatus(SampleEnum.SAMPLE_NOTHANDLE.getValue());
 		sendSample.setIntention(sendSampleVo.getIntention());
 		sendSample.setUpdateTime(now);
@@ -159,7 +169,13 @@ public class SendSampleServiceImpl  extends AbsCommonService<SendSample> impleme
 		SampleTracking sampleTracking=new SampleTracking();
 		sampleTracking.setName(sendSampleVo.getNickname());
 		sampleTracking.setType(TrackingTypeEnum.TYPE_USER.getValue());
-		sampleTracking.setOperator(useId);
+		if(nowLogin==null){
+			sampleTracking.setOperator(useId);
+		}
+		else{
+			sampleTracking.setOperator(nowLogin);
+		}
+
 		sampleTracking.setExtra("");
 		sampleTracking.setCreateTime(now);
 		sampleTracking.setSendId(sendSample.getId());

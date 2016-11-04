@@ -47,7 +47,7 @@
         </dt>
         <dd>
             <a href="/sample/list"><i class="fa fa-circle-o"></i>寄样列表</a>
-            <a href="javascript:;" prefix="/sample/detail/"><i class="fa fa-circle-o"></i>选货单详情</a>
+            <a href="javascript:;" prefix="/sample/detail/"><i class="fa fa-circle-o"></i>寄样单详情</a>
         </dd>
     </dl>
     <dl>

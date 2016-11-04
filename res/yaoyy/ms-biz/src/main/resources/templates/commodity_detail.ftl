@@ -24,14 +24,14 @@
                 <li>
                     <a href="/pickCommodity/list">
                         <i class="fa fa-cart"></i>
-                        <span>采购单</span>
+                        <span>选货单</span>
                     </a>
                 </li>
                 <li class="wide">
-                    <a class="sample" href="apply/sample">免费寄样</a>
+                    <a class="sample" href="apply/sample/${commodityVo.id}">免费寄样</a>
                 </li>
                 <li class="wide">
-                    <a class="cart" href="javascript:;" id="addCommodity">加入采购单</a>
+                    <a class="cart" href="javascript:;" id="addCommodity">加入选货单</a>
                 </li>
             </ul>
         </nav>
@@ -45,7 +45,11 @@
         </div>
 
         <div class="pinfo">
-            <h1 class="title">${commodityVo.title}</h1>
+            <h1 class="title">
+                ${commodityVo.title}
+                <#if commodityVo.minimumQuantity?exists><em>${commodityVo.minimumQuantity!}公斤起购</em></#if>
+            </h1>
+            <div class="tag">${commodityVo.slogan!}</div>
             <div class="norms">
                 <#list commodityVoList as commodity>
                 <a href="commodity/detail/${commodity.id?c}" <#if commodity.id==commodityVo.id>class="current"</#if>>${commodity.spec}</a>
@@ -64,7 +68,7 @@
                     <button type="button" class="fa fa-reduce op"></button>
                     <input id="num"type="tel" class="ipt" value="1" autocomplete="off" data-price="{1-499:140,500-999:120,1000:100}">
                     <button type="button" class="fa fa-plus op"></button>
-                    <b>公斤</b>
+                    <b>${commodityVo.unitName!}</b>
                 </div>
             </div>
             <div class="sales">

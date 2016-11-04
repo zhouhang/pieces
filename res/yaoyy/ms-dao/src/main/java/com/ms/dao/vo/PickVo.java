@@ -9,13 +9,10 @@ import java.util.List;
 
 public class PickVo extends Pick{
 
-    private String nickname;
 
-    private String phone;
 
     private String statusText;
 
-    private String area;
 
     private List<PickCommodityVo> pickCommodityVoList;
 
@@ -37,13 +34,6 @@ public class PickVo extends Pick{
         this.pickCommodityVoList = pickCommodityVoList;
     }
 
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
 
     public String getStatusText() {
         return PickEnum.findByValue(getStatus());
@@ -53,19 +43,5 @@ public class PickVo extends Pick{
         this.statusText = statusText;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 }

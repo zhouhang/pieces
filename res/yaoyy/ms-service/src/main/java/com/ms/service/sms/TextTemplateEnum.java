@@ -9,7 +9,9 @@ import org.apache.commons.lang.ArrayUtils;
 public enum TextTemplateEnum {
 
     SMS_BIZ_CAPTCHA_REGISTER("{1}您的注册验证码是{2},该验证码在30分钟内有效."),
-    SMS_BIZ_CAPTCHA_LOGIN("{1}您的密码是{2},该密码在30分钟内有效.");
+    SMS_BIZ_CAPTCHA_LOGIN("{1}您的密码是{2},该密码在30分钟内有效."),
+    SMS_BIZ_RESET_PASSWORD("{1}您的验证码是{2},该密码在30分钟内有效.");
+
     private String value;
 
     TextTemplateEnum(String value){
