@@ -49,7 +49,7 @@
     <div class="uinfo">
         <div class="inner mid">
             <img class="avatar" src="assets/images/avatar.png" alt="">
-            <span class="myname">${nickname!}</span>
+            <span class="myname">${nickname?string("未登入")}</span>
         </div>
     </div>
     <div class="umenu">

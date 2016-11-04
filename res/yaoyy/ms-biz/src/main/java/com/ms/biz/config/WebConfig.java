@@ -9,6 +9,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.GsonHttpMessageConverter;
+import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.View;
@@ -27,9 +31,14 @@ import java.util.List;
  * Author: koabs
  * 10/12/16.
  */
-@EnableWebMvc
-@ComponentScan
 @Configuration
+@ComponentScan(
+        basePackages = "com.ms",
+        useDefaultFilters = false,
+//        excludeFilters = {@ComponentScan.Filter(classes = {Service.class})},
+        includeFilters = {@ComponentScan.Filter(classes = {Controller.class})}
+)
+@EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
 
 
@@ -134,6 +143,17 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
         return gsonConverter;
     }
+
+//    //显示声明CommonsMultipartResolver为mutipartResolver
+//    @Bean(name = "multipartResolver")
+//    public MultipartResolver multipartResolver(){
+//        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+//        resolver.setDefaultEncoding("UTF-8");
+//        resolver.setResolveLazily(true);//resolveLazily属性启用是为了推迟文件解析，以在在UploadAction中捕获文件大小异常
+//        resolver.setMaxInMemorySize(40960);
+//        resolver.setMaxUploadSize(50*1024*1024);//上传文件大小 50M 50*1024*1024
+//        return resolver;
+//    }
 
 //    /**
 //     * Filter 的声明和注册

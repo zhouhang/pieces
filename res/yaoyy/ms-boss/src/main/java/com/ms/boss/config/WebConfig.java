@@ -28,7 +28,6 @@ import java.util.List;
  * 10/12/16.
  */
 @EnableWebMvc
-@ComponentScan
 @Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
 
