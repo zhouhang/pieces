@@ -32,12 +32,10 @@ public class UserCenterController {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         if (user != null) {
             UserDetailVo detailVo = userDetailService.findByUserId(user.getId());
-            if (detailVo != null){
-                if (detailVo.getNickname() != null) {
-                    nickname = detailVo.getNickname();
-                } else {
-                    nickname = "";
-                }
+            if (detailVo != null && detailVo.getNickname() != null){
+                nickname = detailVo.getNickname();
+            } else {
+                nickname = "";
             }
         }
         modelMap.put("nickname", nickname);

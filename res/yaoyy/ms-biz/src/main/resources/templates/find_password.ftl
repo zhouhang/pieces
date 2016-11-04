@@ -43,7 +43,7 @@
         v:{
             sendSMSUrl:"/user/sendResetPasswordSms",
             resetPasswordUrl:"/user/resetPassword"
-        }
+        },
         fn: {
             init: function() {
                 this.validator();
@@ -57,12 +57,12 @@
                         $.ajax({
                             url: _global.v.resetPasswordUrl,
                             dataType: 'json',
+                            type:"post",
                             data:{code:code,password:password},
                             success: function(data) {
                                 if (data.status === 200) {
-                                    $send.text(second + txt).prop('disabled', true);
-                                    lock();
                                     popover(data.info);
+                                    //TODO: 跳转到那个页面
                                 } else {
                                     popover(data.info);
                                 }
@@ -124,6 +124,7 @@
                     $.ajax({
                         url: _global.v.sendSMSUrl,
                         dataType: 'json',
+                        type:"post",
                         success: function(data) {
                             if (data.status === 200) {
                                 $send.text(second + txt).prop('disabled', true);

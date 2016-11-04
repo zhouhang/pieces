@@ -168,7 +168,7 @@ public class UserController {
     }
 
     /**
-     * 找回密码
+     * 修改密码
      * @return
      */
     @RequestMapping(value = "findPassword", method = RequestMethod.GET)
@@ -179,7 +179,7 @@ public class UserController {
         return "find_password";
     }
 
-    @RequestMapping(value = "resetPassword", method = RequestMethod.GET)
+    @RequestMapping(value = "resetPassword", method = RequestMethod.POST)
     @ResponseBody
     public Result resetPassword(String code, String password){
         //获取登陆用户userId
