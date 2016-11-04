@@ -269,7 +269,7 @@
                                             });
                                         }
                                         else{
-                                            if(is_weixin()&&user.openid==""){
+                                            if(is_weixin()){
                                                 location.href = '/pick/list?source=WECHAT';
                                             }
                                             else{

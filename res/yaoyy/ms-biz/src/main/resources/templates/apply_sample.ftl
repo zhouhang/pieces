@@ -108,7 +108,7 @@
                                             });
                                         }
                                         else{
-                                              if(is_weixin()&&user.openid==""){
+                                              if(is_weixin()){
                                                   location.href = '/sample/list?source=WECHAT';
                                               }
                                               else{

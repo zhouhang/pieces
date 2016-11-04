@@ -88,15 +88,6 @@ public class IndexController {
         sendSampleService.save(sendSampleVo);
         UserVo userInfo=userService.findByPhone(sendSampleVo.getPhone());
 
-        if(user==null){
-            userInfo.setIslogin(false);
-        }
-        else{
-            userInfo.setIslogin(true);
-            userInfo.setOpenid(user.getOpenid());
-        }
-
-
         return Result.success().data(userInfo);
     }
 
