@@ -37,8 +37,11 @@ public class UserDetailServiceImpl  extends AbsCommonService<UserDetail> impleme
 	@Override
 	public UserDetailVo findByUserId(Integer userId) {
 		UserDetailVo userDetailVo=userDetailDao.findByUserId(userId);
-		User user=userDao.findById(userDetailVo.getUserId());
-		userDetailVo.setUserType(user.getType());
+		User user = null;
+		if (userDetailVo != null) {
+			user = userDao.findById(userDetailVo.getUserId());
+			userDetailVo.setUserType(user.getType());
+		}
 		return userDetailVo;
 	}
 

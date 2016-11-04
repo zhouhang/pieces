@@ -11,53 +11,20 @@
         <a href="javascript:history.back();" class="fa fa-back"></a>
     </div>
 </header><!-- /ui-header -->
-<footer class="ui-footer">
-    <nav class="ui-nav">
-        <ul>
-            <li>
-                <a href="index.html">
-                    <i class="fa fa-home"></i>
-                    <span>首页</span>
-                    <b>12</b>
-                </a>
-            </li>
-            <li>
-                <a href="product_list.html">
-                    <i class="fa fa-list"></i>
-                    <span>品种列表</span>
-                    <b>2</b>
-                </a>
-            </li>
-            <li>
-                <a href="center.html">
-                    <i class="fa fa-cart"></i>
-                    <span>采购单</span>
-                    <b>99</b>
-                </a>
-            </li>
-            <li>
-                <a class="current" href="center.html">
-                    <i class="fa fa-user"></i>
-                    <span>个人中心</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
-</footer>
-
+<#include "./common/navigation.ftl">
 <div class="ui-content">
     <div class="uinfo">
         <div class="inner mid">
             <img class="avatar" src="assets/images/avatar.png" alt="">
-            <span class="myname">${nickname?string("未登入")}</span>
+            <span class="myname">${nickname?default("未登入")}</span>
         </div>
     </div>
     <div class="umenu">
-        <a href="pick_list.html">
+        <a href="/pickCommodity/list">
             <i class="fa fa-cart"></i>
             <span>我的选货单</span>
         </a>
-        <a href="sample_list.html">
+        <a href="/sample/list">
             <i class="fa fa-order"></i>
             <span>我的寄样单</span>
         </a>
