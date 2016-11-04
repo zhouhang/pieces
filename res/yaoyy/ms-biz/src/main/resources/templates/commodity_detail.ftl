@@ -28,7 +28,7 @@
                     </a>
                 </li>
                 <li class="wide">
-                    <a class="sample" href="apply/sample">免费寄样</a>
+                    <a class="sample" href="apply/sample/${commodityVo.id}">免费寄样</a>
                 </li>
                 <li class="wide">
                     <a class="cart" href="javascript:;" id="addCommodity">加入采购单</a>
@@ -64,7 +64,7 @@
                     <button type="button" class="fa fa-reduce op"></button>
                     <input id="num"type="tel" class="ipt" value="1" autocomplete="off" data-price="{1-499:140,500-999:120,1000:100}">
                     <button type="button" class="fa fa-plus op"></button>
-                    <b>公斤</b>
+                    <b>${commodityVo.unitName!}</b>
                 </div>
             </div>
             <div class="sales">

@@ -14,7 +14,7 @@
                 </a>
             </li>
             <li>
-                <a href="/sample/list">
+                <a href="/pickCommodity/list">
                     <i class="fa fa-cart"></i>
                     <span>采购单</span>
                 </a>

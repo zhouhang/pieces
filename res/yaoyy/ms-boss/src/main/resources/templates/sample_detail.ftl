@@ -86,7 +86,8 @@
             <div class="item">
                 <div class="txt">联系电话：</div>
                 <div class="cnt">
-                    <input type="text" value="${userDetail.phone?default('')}" name="phone" class="ipt" placeholder="" autocomplete="off">
+
+                    <input type="text" value="${userDetail.phone?default('')}" name="phone" class="ipt" placeholder="" autocomplete="off" <#if userDetail.userType!=1>disabled</#if>>
                 </div>
             </div>
             <div class="item">

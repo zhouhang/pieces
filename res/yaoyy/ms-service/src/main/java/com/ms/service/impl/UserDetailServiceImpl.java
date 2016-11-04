@@ -3,7 +3,9 @@ package com.ms.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ms.dao.ICommonDao;
+import com.ms.dao.UserDao;
 import com.ms.dao.UserDetailDao;
+import com.ms.dao.model.User;
 import com.ms.dao.model.UserDetail;
 import com.ms.dao.vo.UserDetailVo;
 import com.ms.service.UserDetailService;
@@ -20,6 +22,9 @@ public class UserDetailServiceImpl  extends AbsCommonService<UserDetail> impleme
 	@Autowired
 	private UserDetailDao userDetailDao;
 
+	@Autowired
+	private UserDao userDao;
+
 
 	@Override
 	public PageInfo<UserDetailVo> findByParams(UserDetailVo userDetailVo,Integer pageNum,Integer pageSize) {
@@ -31,7 +36,10 @@ public class UserDetailServiceImpl  extends AbsCommonService<UserDetail> impleme
 
 	@Override
 	public UserDetailVo findByUserId(Integer userId) {
-		return userDetailDao.findByUserId(userId);
+		UserDetailVo userDetailVo=userDetailDao.findByUserId(userId);
+		User user=userDao.findById(userDetailVo.getUserId());
+		userDetailVo.setUserType(user.getType());
+		return userDetailVo;
 	}
 
 	@Override

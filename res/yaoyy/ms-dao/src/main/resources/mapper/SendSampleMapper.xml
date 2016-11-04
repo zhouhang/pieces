@@ -69,6 +69,7 @@
                 and user_id=#{userId}
             </if>
         </where>
+        order by create_time desc
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">

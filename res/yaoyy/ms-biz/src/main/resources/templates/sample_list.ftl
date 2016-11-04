@@ -16,7 +16,7 @@
     <div class="ui-search">
         <form action="">
             <button type="button" id="submit" class="fa fa-search submit mid"></button>
-            <input type="text" name="name" value="${name?default('')}" id="keyword" class="ipt" placeholder="请输入原药材品种名称" autocomplete="off">
+            <input type="text" name="name" value="${name?default('')}" id="keyword" class="ipt" placeholder="请输入商品名称" autocomplete="off">
         </form>
     </div>
     <div class="slist">

@@ -23,12 +23,10 @@
                 <input type="text" class="ipt" name="nickname" id="name" placeholder="姓名" autocomplete="off">
                 <span class="error"></span>
             </div>
-            <#if  !Session.user_session_biz?exists>
             <div class="item">
-                <input type="tel" class="ipt" name="phone" id="mobile" placeholder="手机号" autocomplete="off">
+                <input type="tel" value="${(phone)!}" class="ipt" name="phone" id="mobile" placeholder="手机号" autocomplete="off">
                 <span class="error"></span>
             </div>
-            </#if>
             <div class="item">
                 <input type="text" class="ipt" name="area" id="region" placeholder="地区（例如：安徽亳州）" autocomplete="off">
                 <span class="error"></span>

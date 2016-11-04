@@ -217,7 +217,7 @@
         ca.variety as categoryName
         from commodity as cm
         LEFT JOIN category ca on cm.category_id=ca.id
-        where cm.category_id = #{id} and cm.status !=0
+        where cm.category_id = #{id}
     </select>
 
     <update id="updateStatusByCategoryId" parameterType="com.ms.dao.model.Commodity">
