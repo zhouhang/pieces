@@ -73,7 +73,7 @@
                 <spring.dataSource.password>123456</spring.dataSource.password>
                 <doc.base.url>http://www.yaobest.com</doc.base.url>
                 <pro.upload.path>E:\uploadfiles\yaobest\</pro.upload.path>
-                <pro.upload.url>http://static.yaobest.com/files/upload/</pro.upload.url>
+                <pro.upload.url>http://static.yaobest.com/</pro.upload.url>
                 <elasticsearch.host>192.168.1.41</elasticsearch.host>
                 <elasticsearch.port>9300</elasticsearch.port>
             </properties>
