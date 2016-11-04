@@ -8,6 +8,7 @@ import com.ms.dao.model.Article;
 import com.ms.dao.vo.ArticleVo;
 import com.ms.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,9 @@ public class ArticleServiceImpl  extends AbsCommonService<Article> implements Ar
 	@Autowired
 	private ArticleDao articleDao;
 
+	@Value("${biz.base.url}")
+	private String baseUrl;
+
 
 	@Override
 	public PageInfo<ArticleVo> findByParams(ArticleVo articleVo,Integer pageNum,Integer pageSize) {
@@ -29,6 +33,9 @@ public class ArticleServiceImpl  extends AbsCommonService<Article> implements Ar
 		}
     	PageHelper.startPage(pageNum, pageSize);
     	List<ArticleVo>  list = articleDao.findByParams(articleVo);
+		list.forEach(article ->{
+			article.setUrl(baseUrl +"/article/" + article.getId());
+		});
         PageInfo page = new PageInfo(list);
         return page;
 	}

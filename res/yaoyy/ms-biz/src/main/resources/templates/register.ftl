@@ -38,7 +38,7 @@
         <div class="ui-extra">
             <a href="/user/login">已有账号，直接登录</a>
             <i>|</i>
-            <a href="contactus.html">联系我们</a>
+            <a href="/article/1">联系我们</a>
         </div>
 
     </div>
