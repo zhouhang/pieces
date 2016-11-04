@@ -50,15 +50,27 @@
         fn: {
             init: function() {
                 this.validator();
+                this.loadInfo();
+
             },
-            isWeixinBrowser:function(){
-                var ua = navigator.userAgent.toLowerCase();
-                return (/micromessenger/.test(ua)) ? true : false ;
+            loadInfo:function(){
+                  var userinfo=getAppyInfo();
+                  if(userinfo){
+                       $("#name").val(userinfo.nickname);
+                       $("#mobile").val(userinfo.phone);
+                       $("#region").val(userinfo.area);
+                  }
             },
             validator: function() {
                 var self = this;
                 $('#submit').on('click', function() {
                     if (self.checkName()  <#if  !Session.user_session_biz?exists> && self.checkMobile()</#if> && self.checkRegion()) {
+                        var userinfo={};
+                        userinfo.nickname=$("#name").val();
+                        userinfo.phone=$("#mobile").val();
+                        userinfo.area=$("#region").val();
+                        saveAppyinfo(userinfo);
+
                         $.ajax({
                             url: _global.v.applyUrl,
                             type: "POST",
@@ -92,7 +104,7 @@
                                             });
                                         }
                                         else{
-                                              if(_global.fn.isWeixinBrowser()&&user.openid==""){
+                                              if(is_weixin()&&user.openid==""){
                                                   location.href = '/sample/list?source=WECHAT';
                                               }
                                               else{
