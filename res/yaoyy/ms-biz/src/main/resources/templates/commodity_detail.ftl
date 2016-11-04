@@ -45,7 +45,11 @@
         </div>
 
         <div class="pinfo">
-            <h1 class="title">${commodityVo.title}</h1>
+            <h1 class="title">
+                ${commodityVo.title}
+                <#if commodityVo.minimumQuantity?exists><em>${commodityVo.minimumQuantity!}公斤起购</em></#if>
+            </h1>
+            <div class="tag">${commodityVo.slogan!}</div>
             <div class="norms">
                 <#list commodityVoList as commodity>
                 <a href="commodity/detail/${commodity.id?c}" <#if commodity.id==commodityVo.id>class="current"</#if>>${commodity.spec}</a>
