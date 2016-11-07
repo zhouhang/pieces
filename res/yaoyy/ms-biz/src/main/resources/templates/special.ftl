@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class="pic">
-                        <img src="${commodity.pictureUrl!}" width="110" height="90" alt="">
+                        <img src="${commodity.thumbnailUrl!}" width="110" height="90" alt="">
                     </div>
                 </a>
             </li>

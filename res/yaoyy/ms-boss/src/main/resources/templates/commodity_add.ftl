@@ -160,7 +160,7 @@
                 <div class="txt"><i>*</i>商品缩略图：</div>
                 <div class="cnt cnt-mul">
                     <span class="up-img x4" id="jpic1"></span>
-                    <input type="hidden" value="" name="pictureUrl" id="pictureUrl">
+                    <input type="hidden" value="" name="thumbnailUrl" id="thumbnailUrl">
                     <span class="tips">图片尺寸：220 X 180</span>
                 </div>
             </div>
@@ -168,7 +168,7 @@
                 <div class="txt"><i>*</i>商品图片：</div>
                 <div class="cnt cnt-mul">
                     <span class="up-img x3" id="jpic2"></span>
-                    <input type="hidden" value="" name="pictureUrl2" id="pictureUrl2">
+                    <input type="hidden" value="" name="pictureUrl" id="pictureUrl">
                     <span class="tips">图片尺寸：750 X 400</span>
                 </div>
             </div>
@@ -302,8 +302,8 @@
                         spec: '规格等级: required',
                         origin: '产地: required',
                         harYear: '采收年份: required',
-                        pictureUrl: '商品缩略图: required',
-                        pictureUrl2: '商品图片: required',
+                        thumbnailUrl: '商品缩略图: required',
+                        pictureUrl: '商品图片: required',
                         minimumQuantity:'起购数量: range(0~9999)',
                         detail: {
                             rule: "required",

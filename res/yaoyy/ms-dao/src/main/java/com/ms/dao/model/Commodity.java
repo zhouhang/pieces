@@ -24,9 +24,13 @@ public class Commodity  implements Serializable {
 	private String spec;
 	
 	private Integer categoryId;
-	
+
+	// 商品图片
 	private String pictureUrl;
-	
+
+	// 商品缩略图
+	private String thumbnailUrl;
+
 	private String detail;
 
 	//0：下架，1：上架
@@ -209,5 +213,13 @@ public class Commodity  implements Serializable {
 
 	public void setSlogan(String slogan) {
 		this.slogan = slogan;
+	}
+
+	public String getThumbnailUrl() {
+		return thumbnailUrl;
+	}
+
+	public void setThumbnailUrl(String thumbnailUrl) {
+		this.thumbnailUrl = thumbnailUrl;
 	}
 }

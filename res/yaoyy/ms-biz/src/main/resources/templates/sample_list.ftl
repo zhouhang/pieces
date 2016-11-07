@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <div class="pic">
-                        <img src="${commodity.pictureUrl?default('')}" width="110" height="90" alt="">
+                        <img src="${commodity.thumbnailUrl?default('')}" width="110" height="90" alt="">
                     </div>
                 </a>
                 </#list>
