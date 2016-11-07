@@ -17,7 +17,7 @@
 
     <div class="box">
         <div class="tools">
-            <div class="filter">
+            <div class="filter" id="filterForm">
                 <#--<form action="">-->
                     <label>手机：</label><input name="phone" type="text" class="ipt" placeholder="请输入">
                     <label>姓名/单位：</label><input name="name" type="text" class="ipt" placeholder="商品名称">
@@ -94,7 +94,7 @@
         fn: {
             init: function() {
                 this.bindEvent();
-                $.fn.initByUrlParams();
+                $("#filterForm").initByUrlParams();
             },
             bindEvent: function() {
                 var $table = $('.table'),

@@ -17,7 +17,7 @@
 
     <div class="box">
         <div class="tools">
-            <div class="filter">
+            <div class="filter" id="filterForm">
                 <form action="">
                     <label>选货单编号：</label>
                     <input type="text" name="code"class="ipt" placeholder="请输入">
@@ -84,7 +84,7 @@
         fn: {
             init: function() {
                 this.bindEvent();
-                $.fn.initByUrlParams();
+                $("#filterForm").initByUrlParams();
             },
             bindEvent: function() {
                 var $table = $('.table'),
