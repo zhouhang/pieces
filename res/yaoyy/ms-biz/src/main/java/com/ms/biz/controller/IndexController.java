@@ -127,14 +127,14 @@ public class IndexController {
 
         return "article";
     }
-
+   /*
     @RequestMapping(value = "/create/index", method = RequestMethod.GET)
     @ResponseBody
     public Result createIndex(){
         categorySearchService.createAllCategoryDoc();
         commoditySearchService.createAllCommodityDoc();
         return Result.success("创建索引成功");
-    }
+    }*/
 
 
 
