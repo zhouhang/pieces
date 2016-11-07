@@ -294,7 +294,8 @@
 
                     // 如果有图片，填充图片
                     if (data.pictureUrl) {
-                        $('#imgCrop').hide().prev().remove().end().before('<span class="up-img"><img src="' + data.pictureUrl + '" title="点击图片看大图" /><i class="del" title="删除"></i><input type="hidden" name="pictureUrl" value="' + data.pictureUrl + '"></span>');
+                        $('#imgCrop').hide().prev().remove().end().before('<span class="up-img"><img src="' + data.pictureUrl + '" title="点击图片看大图" /><i class="del" title="删除"></i></span>');
+                        $("#pictureUrl").val(data.pictureUrl);
                     } else {
                         $('#imgCrop').show().prev().remove();
                     }
