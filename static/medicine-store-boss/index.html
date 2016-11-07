@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>首页-boss</title>
+    <meta name="renderer" content="webkit" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+  	<link rel="stylesheet" href="assets/awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class='wrapper'>
+
+	<div class="header">
+		<div class="logo">
+			<a href="index.html">药优优</a>
+		</div>
+		<div class="menu">
+			<ul>
+				<li><a href="#"> <i class="fa fa-envelope"></i> 消息 <sup>4</sup></a></li>
+				<li>
+					<a href="#" class="dropdown-toggle"> <i class="fa fa-question-circle"></i> 帮助 </a>
+				</li>
+				<li class="dropdown user user-menu">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-user"></i>
+						<span class="hidden-xs">王彬</span>
+					</a>
+				</li>
+				<li>
+					<a href="/logout">
+						<i class="fa fa-power-off"></i>
+						退出
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+	<!-- 侧栏菜单 -->
+	<div class="aside" id="jaside"></div>
+
+	<div class="content">
+		<div class="breadcrumb">
+			<ul>
+				<li>控制面板</li>
+    		</ul>
+		</div>
+
+		<div class="box">
+			<ul class="q-list">
+				<li class="bg-aqua"><a href="sample_list.html"><i class="fa fa-truck"></i> 寄样列表 <sup>4</sup></a></li>
+				<li class="bg-green"><a href="pick_list.html"><i class="fa fa-shopping-bag"></i> 选货单列表</a></li>
+				<li class="bg-yellow"><a href="goods_list.html"><i class="fa fa-cart-plus"></i> 商品列表</a></li>
+				<li class="bg-red"><a href="subject_list.html"><i class="fa fa-star"></i> 专场列表</a></li>
+				<li class="bg-purple"><a href="adv_list.html"><i class="fa fa-star"></i> 广告列表</a></li>
+				<li class="bg-maroon"><a href="CMS_list.html"><i class="fa fa-file-text"></i> CMS列表</a></li>
+			</ul>
+			
+			<div class="box-hd">消息列表</div>
+			<ol class="msg-list">
+				<li><time>2016年10月12日 12:30</time><span>申请寄样</span></li>
+				<li><time>2016年10月12日 12:30</time><span>申请寄样</span></li>
+				<li><time>2016年10月12日 12:30</time><span>申请寄样</span></li>
+				<li><time>2016年10月12日 12:30</time><span>申请寄样</span></li>
+			</ol>
+		</div>
+	</div>
+
+	<div class="footer">
+		<div class="inner">
+			&copy; <a href="#!">速采科技（武汉）有限公司</a> 版权所有. 
+		</div>
+	</div>
+	
+
+
+<script src="assets/js/jquery191.js"></script>
+<script src="assets/js/common.js"></script>
+<script>
+	var _global = {
+		v: {
+			deleteUrl: '',
+			flag: false
+		},
+		fn: {
+			init: function() {
+			}
+		}
+	}
+
+	$(function() {
+		_global.fn.init();
+	})
+</script>
+</body>
+</html>
