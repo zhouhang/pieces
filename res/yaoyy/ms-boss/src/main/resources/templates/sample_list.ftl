@@ -34,6 +34,11 @@
                         <option value="4">已寄样</option>
                         <option value="5">寄样完成</option>
                     </select>
+                    <label>是否废弃</label>
+                    <select name="abandon" class="slt">
+                        <option value="0">正常</option>
+                        <option value="1">废弃</option>
+                    </select>
                     <button type="button" class="ubtn ubtn-blue" id="search">搜索</button>
                 </form>
             </div>
@@ -78,7 +83,13 @@
                         <td><em class="status-${sendSample.status+1}">${sendSample.statusText}</em></td>
                         <td class="tc">
                             <a href="/sample/detail/${sendSample.id?c}" class="ubtn ubtn-blue jedit">查看详情</a>
-                            <a href="javascript:;" class="ubtn ubtn-gray jdel" sendId="${sendSample.id?c}">废弃</a>
+                            <a href="javascript:;" class="ubtn ubtn-gray jdel" abandon="${sendSample.abandon}" sendId="${sendSample.id?c}">
+                                <#if sendSample.abandon==0>
+                                    废弃
+                                <#else >
+                                    恢复
+                                </#if>
+                            </a>
                         </td>
                     </tr>
                 </#list>
@@ -114,14 +125,28 @@
 
                 // 删除
                 $table.on('click', '.jdel', function() {
-                    var url = _global.v.deleteUrl + $(this).attr('sendId');
-                    layer.confirm('确认废弃此寄样单？', {icon: 3, title: '提示'}, function (index) {
-                        $.post(url, function (data) {
-                            if (data.status == "200") {
-                                window.location.reload();
+                    var sendId=$(this).attr('sendId');
+                    var abandon=$(this).attr('abandon');
+                    var setAbandon=1;
+                    var showMsg="确认废弃此寄样单？";
+                    if(abandon==1){
+                        setAbandon=0;
+                        var showMsg="确认恢复此寄样单？";
+                    }
+
+                    layer.confirm(showMsg, {icon: 3, title: '提示'}, function (index) {
+                        $.ajax({
+                            url: _global.v.deleteUrl,
+                            data: {"id": sendId, "abandon": setAbandon},
+                            type: "POST",
+                            success: function (data) {
+                                if (data.status == "200") {
+                                    window.location.reload();
+                                }
+                                layer.close(index);
                             }
-                            layer.close(index);
                         });
+
                     });
                     return false; // 阻止链接跳转
                 })

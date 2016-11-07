@@ -7,6 +7,7 @@
             <result column="code"  property="code" />
             <result column="intention"  property="intention" />
             <result column="status"  property="status" />
+            <result column="abandon"  property="abandon" />
             <result column="nickname"  property="nickname" />
             <result column="phone"  property="phone" />
             <result column="area"  property="area" />
@@ -21,6 +22,7 @@
         <result column="code"  property="code" />
         <result column="intention"  property="intention" />
         <result column="status"  property="status" />
+        <result column="abandon"  property="abandon" />
         <result column="nickname"  property="nickname" />
         <result column="phone"  property="phone" />
         <result column="area"  property="area" />
@@ -31,7 +33,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,code,nickname,phone,area,intention,status,update_time,create_time
+        id,user_id,code,nickname,phone,area,intention,status,abandon,update_time,create_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="SendSampleResultMap">
@@ -64,6 +66,9 @@
             </if>
             <if test="status != null">
                 and status=#{status}
+            </if>
+            <if test="abandon != null">
+                and abandon=#{abandon}
             </if>
             <if test="userId != null">
                 and user_id=#{userId}
@@ -113,6 +118,10 @@
             <if test="status != null">
                 status = #{status},
             </if>
+
+            <if test="abandon != null">
+                abandon = #{abandon},
+            </if>
                                             
             <if test="updateTime != null">
                 update_time = #{updateTime},
@@ -138,7 +147,7 @@
         <include refid="Base_Column_List" />
         from send_sample
         <where>
-            status!=-1
+            abandon!=1
             and user_id=#{userId}
             and intention REGEXP #{ids}
         </where>

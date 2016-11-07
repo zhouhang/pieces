@@ -17,6 +17,9 @@ public class Pick  implements Serializable {
 	
 	//送货单状态
 	private Integer status;
+
+	//是否废弃
+	private Integer abandon;
 	
 	private Date createTime;
 	
@@ -27,7 +30,15 @@ public class Pick  implements Serializable {
 	private String phone;
 	
 	public Pick(){}
-	
+
+	public Integer getAbandon() {
+		return abandon;
+	}
+
+	public void setAbandon(Integer abandon) {
+		this.abandon = abandon;
+	}
+
 	public Integer getId() {
 		return id;
 	}

@@ -31,6 +31,11 @@
                         <option value="2">未完成</option>
                         <option value="3">已完成</option>
                     </select>
+                    <label>是否废弃</label>
+                    <select name="abandon" class="slt">
+                        <option value="0">正常</option>
+                        <option value="1">废弃</option>
+                    </select>
                     <button type="button" id="search" class="ubtn ubtn-blue">搜索</button>
                 </form>
             </div>
@@ -61,7 +66,13 @@
                     <td>${(pick.createTime?datetime)!}</td>
                     <td class="tc">
                         <a href="pick/detail/${pick.id}" class="ubtn ubtn-blue jedit">查看详情</a>
-                        <a href="javascript:;" pid="${pick.id}"class="ubtn ubtn-gray jdel">废弃</a>
+                        <a href="javascript:;" pid="${pick.id}" abandon="${pick.abandon}"class="ubtn ubtn-gray jdel">
+                            <#if pick.abandon==0>
+                                废弃
+                            <#else >
+                                恢复
+                            </#if>
+                        </a>
                     </td>
                 </tr>
                 </#list>
@@ -94,14 +105,27 @@
 
                 // 删除
                 $table.on('click', '.jdel', function() {
-                    var url = _global.v.deleteUrl + $(this).attr('pid');
-                    layer.confirm('确认删除此品种？', {icon: 3, title: '提示'}, function (index) {
-                        $.post(url, function (data) {
-                            if (data.status == "200") {
-                                window.location.reload();
+                    var pId=$(this).attr('pId');
+                    var abandon=$(this).attr('abandon');
+                    var setAbandon=1;
+                    var showMsg="确认废弃此选货单？";
+                    if(abandon==1){
+                        setAbandon=0;
+                        var showMsg="确认恢复此选货单？";
+                    }
+
+                    layer.confirm(showMsg, {icon: 3, title: '提示'}, function (index) {
+                        $.ajax({
+                            url: _global.v.deleteUrl,
+                            data: {"id": pId, "abandon": setAbandon},
+                            type: "POST",
+                            success: function (data) {
+                                if (data.status == "200") {
+                                    window.location.reload();
+                                }
+                                layer.close(index);
                             }
                         });
-                        layer.close(index);
                     });
                     return false; // 阻止链接跳转
                 })

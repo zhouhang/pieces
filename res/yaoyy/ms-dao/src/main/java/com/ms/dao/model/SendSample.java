@@ -22,6 +22,9 @@ public class SendSample  implements Serializable {
 	//处理状态：
 	private Integer status;
 
+	//是否废弃
+	private Integer abandon;
+
 	//联系人姓名
 	private String nickname;
 
@@ -36,7 +39,15 @@ public class SendSample  implements Serializable {
 	private Date createTime;
 	
 	public SendSample(){}
-	
+
+	public Integer getAbandon() {
+		return abandon;
+	}
+
+	public void setAbandon(Integer abandon) {
+		this.abandon = abandon;
+	}
+
 	public Integer getId() {
 		return id;
 	}

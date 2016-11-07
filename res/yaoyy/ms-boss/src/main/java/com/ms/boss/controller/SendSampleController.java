@@ -64,6 +64,9 @@ public class SendSampleController {
     public String listSample(SendSampleVo sendSampleVo, Integer pageNum,
                                Integer pageSize, ModelMap model
     ) {
+        if(sendSampleVo.getAbandon()==null){
+            sendSampleVo.setAbandon(0);
+        }
         PageInfo<SendSampleVo> sendSampleVoPageInfo = sendSampleService.findByParams(sendSampleVo,pageNum,pageSize);
 
         model.put("sendSampleVoPageInfo",sendSampleVoPageInfo);
@@ -118,17 +121,12 @@ public class SendSampleController {
     }
 
     /**
-     * 废弃
-     * @param id
+     * 废弃或恢复
      * @return
      */
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "delete", method = RequestMethod.POST)
     @ResponseBody
-    public Result delete(@PathVariable("id") Integer id) {
-        SendSample sendSample=new SendSample();
-        sendSample.setId(id);
-        //设置状态
-        sendSample.setStatus(SampleEnum.SAMPLE_DELETED.getValue());
+    public Result delete(SendSample sendSample) {
         sendSampleService.update(sendSample);
         return Result.success().msg("修改成功");
     }

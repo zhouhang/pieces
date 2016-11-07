@@ -50,6 +50,9 @@ public class PickController {
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
     private String list(PickVo pickVo,Integer pageNum, Integer pageSize, ModelMap model){
+        if(pickVo.getAbandon()==null){
+            pickVo.setAbandon(0);
+        }
         PageInfo<PickVo> pickVoPageInfo = pickService.findByParams(pickVo, pageNum, pageSize);
         model.put("pickVoPageInfo", pickVoPageInfo);
         return "pick_list";
@@ -70,13 +73,10 @@ public class PickController {
         return "pick_detail";
     }
 
-    @RequestMapping(value="delete/{id}",method = RequestMethod.POST)
+    //删除和恢复
+    @RequestMapping(value="delete",method = RequestMethod.POST)
     @ResponseBody
-    private Result delete(@PathVariable("id") Integer id){
-        Pick pick=new Pick();
-        pick.setId(id);
-        //废弃
-        pick.setStatus(-1);
+    private Result delete(Pick pick){
         pickService.update(pick);
         return Result.success().msg("操作成功");
     }

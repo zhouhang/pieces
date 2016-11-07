@@ -66,6 +66,7 @@ public class PickController {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         PickVo pickVo=new PickVo();
         pickVo.setUserId(user.getId());
+        pickVo.setAbandon(0);
         PageInfo<PickVo> pickVoPageInfo=pickService.findByParams(pickVo,pageNum,pageSize);
         pickVoPageInfo.getList().forEach(p->{
             p.setStatusText(p.getStatusText());

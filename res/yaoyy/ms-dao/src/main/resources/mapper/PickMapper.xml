@@ -6,6 +6,7 @@
             <result column="user_id"  property="userId" />
             <result column="code"  property="code" />
             <result column="status"  property="status" />
+            <result column="abandon"  property="abandon" />
             <result column="create_time"  property="createTime" />
             <result column="update_time"  property="updateTime" />
             <result column="nickname"  property="nickname" />
@@ -18,6 +19,7 @@
             <result column="user_id"  property="userId" />
             <result column="code"  property="code" />
             <result column="status"  property="status" />
+            <result column="abandon"  property="abandon" />
             <result column="create_time"  property="createTime" />
             <result column="update_time"  property="updateTime" />
             <result column="nickname"  property="nickname" />
@@ -26,7 +28,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,code,nickname,phone,status,create_time,update_time
+        id,user_id,code,nickname,phone,status,abandon,create_time,update_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="PickResultMap">
@@ -56,6 +58,9 @@
             </if>
             <if test="status!= null">
                 and  status= #{status}
+            </if>
+            <if test="abandon != null">
+                and abandon=#{abandon}
             </if>
             <if test="userId!= null">
                 and  user_id= #{userId}
@@ -97,6 +102,10 @@
                                             
             <if test="status != null">
                 status = #{status},
+            </if>
+
+            <if test="abandon != null">
+                abandon = #{abandon},
             </if>
                                             
             <if test="createTime != null">
