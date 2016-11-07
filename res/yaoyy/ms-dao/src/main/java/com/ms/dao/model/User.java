@@ -10,7 +10,7 @@ public class User  implements Serializable {
 	
 	private Integer id;
 	
-	//1：注册用户，0：申请寄样生成的用户 -1 禁用用户
+	//0：注册用户，1：申请寄样生成的用户 -1 禁用用户
 	private Integer type;
 	
 	//手机号

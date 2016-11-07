@@ -75,7 +75,7 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 	public void disable(Integer id) {
 		User user =new User();
 		user.setId(id);
-		user.setType(-1);
+		user.setType(UserEnum.disable.getType());
 		userDao.update(user);
 	}
 
@@ -84,7 +84,7 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 	public void enable(Integer id) {
 		User user =new User();
 		user.setId(id);
-		user.setType(1);
+		user.setType(UserEnum.enable.getType());
 		userDao.update(user);
 	}
 
