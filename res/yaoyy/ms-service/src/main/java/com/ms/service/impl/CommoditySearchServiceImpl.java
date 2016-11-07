@@ -48,7 +48,6 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
 
     @Override
     public void createAllCommodityDoc() {
-        if (debug) return;
         List<CommodityDoc> commodityDocList = new ArrayList<>();
         for(int i=1;;i++){
             PageInfo<CommodityVo> commodityVoPageInfo = commodityService.findVoByPage(50,i);

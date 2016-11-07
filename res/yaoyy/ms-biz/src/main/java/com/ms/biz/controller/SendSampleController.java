@@ -8,6 +8,7 @@ import com.ms.dao.vo.UserVo;
 import com.ms.service.*;
 import com.ms.service.enums.RedisEnum;
 import com.ms.tools.entity.Result;
+import com.ms.tools.exception.NotFoundException;
 import com.ms.tools.utils.SeqNoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -82,7 +83,7 @@ public class SendSampleController {
 
         SendSampleVo sendSampleVo=sendSampleService.findDetailById(id);
         if(id==null|| sendSampleVo==null){
-            return "redirect:error/404";
+            throw new NotFoundException("找不到该寄样单");
         }
 
         SampleTrackingVo sampleTrackingVo=new SampleTrackingVo();
@@ -98,7 +99,7 @@ public class SendSampleController {
     @RequestMapping(value = "msg/{id}", method = RequestMethod.GET)
     public String getMsg(@PathVariable("id") Integer id,ModelMap model){
         if(id==null||sendSampleService.findById(id)==null){
-            return "redirect:error/404";
+            throw new NotFoundException("提交信息页面找不到");
         }
         model.put("sendId",id);
         return "sample_msg";

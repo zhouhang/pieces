@@ -62,6 +62,9 @@ public class SendSampleServiceImpl  extends AbsCommonService<SendSample> impleme
 	@Override
 	public SendSampleVo findDetailById(Integer id) {
 		SendSampleVo sendSampleVo=sendSampleDao.findDetailById(id);
+		if(sendSampleVo==null){
+			return null;
+		}
 		List<CommodityVo> commodityList = commodityService.findByIds(sendSampleVo.getIntention());
 		sendSampleVo.setCommodityList(commodityList);
 		return sendSampleVo ;
