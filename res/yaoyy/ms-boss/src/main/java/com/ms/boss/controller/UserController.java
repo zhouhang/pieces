@@ -50,4 +50,16 @@ public class UserController {
         return Result.success("禁用成功!");
     }
 
+    /**
+     * 启用账号
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "enable/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Result enable(@PathVariable("id")Integer id) {
+        userService.enable(id);
+        return Result.success("启用成功!");
+    }
+
 }

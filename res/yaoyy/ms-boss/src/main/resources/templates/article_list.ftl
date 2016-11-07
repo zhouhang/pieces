@@ -44,7 +44,7 @@
                 </thead>
                 <tbody>
                 <#list pageInfo.list as article>
-                <tr>
+                <tr <#if article.status==0>class="gray"</#if>>
                     <td><input type="checkbox" class="cbx"></td>
                     <td>${article.title}</td>
                     <td>${bizBaseUrl}/article/${article.id}</td>

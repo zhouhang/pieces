@@ -9,6 +9,7 @@ import com.ms.dao.vo.UserVo;
 import com.ms.service.*;
 import com.ms.service.enums.RedisEnum;
 import com.ms.tools.entity.Result;
+import com.ms.tools.exception.ControllerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -133,6 +134,17 @@ public class IndexController {
         categorySearchService.createAllCategoryDoc();
         commoditySearchService.createAllCommodityDoc();
         return Result.success("创建索引成功");
+    }
+
+
+
+
+    @RequestMapping(value = "/create/index", method = RequestMethod.GET)
+    @ResponseBody
+    public Result createIndex(){
+        if (true)
+        throw new ControllerException("sss");
+       return Result.error();
     }
 
 

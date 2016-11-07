@@ -80,6 +80,15 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 	}
 
 	@Override
+	@Transactional
+	public void enable(Integer id) {
+		User user =new User();
+		user.setId(id);
+		user.setType(1);
+		userDao.update(user);
+	}
+
+	@Override
 	public void login(Subject subject, UsernamePasswordToken token) {
 		try{
 			subject.login(token);

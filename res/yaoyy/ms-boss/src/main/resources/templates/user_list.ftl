@@ -56,7 +56,7 @@
                 </thead>
                 <tbody>
                 <#list pageInfo.list as user>
-                <tr>
+                <tr <#if user.type==-1>class="gray"</#if>>
                     <td><input type="checkbox"></td>
                     <td>${user.phone}</td>
                     <td>${user.nickname?default("")}</td>
@@ -66,7 +66,12 @@
                     <td>${user.createTime?datetime}</td>
                     <td class="tc">
                         <a href="javascript:;" class="ubtn ubtn-blue jedit" data-id="${user.id}">查看详情</a>
-                        <a href="javascript:;" class="ubtn ubtn-gray jdel" data-id="${user.id}">禁用账号</a>
+                        <#if user.type==1 || user.type==0>
+                            <a href="javascript:;" class="ubtn ubtn-gray jdel" data-id="${user.id}">禁用账号</a>
+                        <#else>
+                            <a href="javascript:;" class="ubtn ubtn-gray jenable" data-id="${user.id}">启用账号</a>
+                        </#if>
+
                     </td>
                 </tr>
                 </#list>
@@ -82,6 +87,7 @@
     var _global = {
         v: {
             disableUrl: '/user/disable/',
+            enableUrl: '/user/enable/',
             listUrl:'/user/list',
             flag: false
         },
@@ -96,6 +102,20 @@
                         $checkAll = $table.find('th input:checkbox'),
                         count = $cbx.length,
                         self = this;
+
+                // 启用
+                $table.on('click', '.jenable', function() {
+                    var url = _global.v.enableUrl + $(this).attr('data-id');
+                    layer.confirm('确认启用此账户？', {icon: 3, title: '提示'}, function (index) {
+                        $.get(url, function (data) {
+                            if (data.status == 200) {
+                                layer.close(index);
+                                window.location.reload();
+                            }
+                        }, "json");
+                    });
+                    return false; // 阻止链接跳转
+                })
 
                 // 禁用
                 $table.on('click', '.jdel', function() {
