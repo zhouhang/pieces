@@ -103,7 +103,6 @@
 </div>
 
 <#include "./common/footer.ftl"/>
-<script src="assets/js/croppic.min.js"></script>
 <script src="assets/plugins/validator/jquery.validator.js"></script>
 <script>
     var _global = {

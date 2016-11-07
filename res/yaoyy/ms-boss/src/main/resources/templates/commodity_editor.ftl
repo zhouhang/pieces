@@ -204,14 +204,22 @@
         <div class="box fa-form">
             <div class="hd">商品图片与详情</div>
             <div class="item">
-                <div class="txt"><i>*</i>商品图片：</div>
+                <div class="txt"><i>*</i>商品缩略图：</div>
                 <div class="cnt cnt-mul">
-                    <div class="up-img">
-                        <img src="${commodity.pictureUrl}"><i class="del"></i>
-                    </div>
+                    <span class="up-img x4" id="jpic1"><img src="${commodity.pictureUrl}"><i class="del"></i></span>
                     <input type="hidden" value="${commodity.pictureUrl}" name="pictureUrl" id="pictureUrl">
+                    <span class="tips">图片尺寸：220 X 180</span>
                 </div>
             </div>
+            <div class="item">
+                <div class="txt"><i>*</i>商品图片：</div>
+                <div class="cnt cnt-mul">
+                    <span class="up-img x3" id="jpic2"></span>
+                    <input type="hidden" value="" name="pictureUrl2" id="pictureUrl2">
+                    <span class="tips">图片尺寸：750 X 400</span>
+                </div>
+            </div>
+
             <div class="item">
                 <div class="txt">
                     <i>*</i>详细信息：
@@ -373,7 +381,9 @@ ${commodity.detail}
                         spec: '规格等级: required',
                         origin: '产地: required',
                         harYear: '采收年份: required',
-                        pictureUrl: '图片: required',
+                        pictureUrl: '商品缩略图: required',
+                        pictureUrl2: '商品图片: required',
+                        minimumQuantity:'起购数量: range(0~9999)',
                         detail: {
                             rule: "required",
                             target: "#detailsError"
@@ -381,7 +391,7 @@ ${commodity.detail}
                     }
                 });
                 <#if commodity.mark == 1 >
-                    $("#jsales").attr("checked",true).trigger("click");
+                    $("#jsales").prop("checked",true).trigger("click");
                 </#if>
 
             },
@@ -448,7 +458,7 @@ ${commodity.detail}
             // 商品图片
             goodsImg: function () {
                 var self = this,
-                        $upImg = $('.up-img');
+                    $upImg = $('.up-img');
 
                 // 删除图片
                 $upImg.on('click', '.del', function () {
@@ -456,56 +466,75 @@ ${commodity.detail}
                     layer.confirm('确认删除商品图片？', {
                         btn: ['确认', '取消'] //按钮
                     }, function (index) {
-                        $upImg.empty().next().val('');
+                        $self.parent().empty().next('input:hidden').val('');
                         layer.close(index);
                     });
                     return false;
                 })
-                // 点击图片无效
+
+                // 点击图片看大图
                 $upImg.on('click', 'img', function () {
+                    _showImg(this.src);
                     return false;
                 })
 
-                // 图片裁剪弹层框
-                $upImg.on('click', function () {
+                // 缩略图
+                $('#jpic1').on('click', function() {
                     layer.open({
                         skin: 'layui-layer-molv',
-                        area: ['600px'],
+                        area: ['500px'],
                         closeBtn: 1,
                         type: 1,
                         moveType: 1,
-                        content: '<div class="img-upload-main"><div class="clip" id="imgCrop"></div></div>',
-                        title: '上传图片',
+                        content: '<div class="img-upload-main"><div class="clip clip-x4" id="imgCrop"></div></div>',
+                        title: '上传商品缩略图片',
                         cancel: function () {
                             self.cropModal.destroy();
                         }
                     });
 
-                    self.croppic();
-                });
+                    self.croppic($(this));
+                })
+
+                // 商品图
+                $('#jpic2').on('click', function() {
+                    layer.open({
+                        skin: 'layui-layer-molv',
+                        area: ['810px'],
+                        closeBtn: 1,
+                        type: 1,
+                        moveType: 1,
+                        content: '<div class="img-upload-main"><div class="clip clip-x3" id="imgCrop"></div></div>',
+                        title: '上传商品图片',
+                        cancel: function () {
+                            self.cropModal.destroy();
+                        }
+                    });
+
+                    self.croppic($(this));
+                })
             },
-            croppic: function () {
+            croppic: function ($el) {
+                var self = this;
                 var options = {
                     uploadUrl: '/gen/upload',
                     cropUrl: '/gen/clipping',
-                    outputUrlId: 'pictureUrl',
                     imgEyecandyOpacity: 0.5,
                     loaderHtml: '<span class="loader">正在上传图片，请稍后...</span>',
                     onAfterImgCrop: function (response) {
-                        $('.up-img').html('<img src="' + response.url + '" /><i class="del" title="删除"></i>');
-                        $('#imgUrl').trigger('validate');
+                        $el.html('<img src="' + response.url + '" /><i class="del" title="删除"></i>');
+                        $el.next('input:hidden').val(response.url).trigger('validate');
                         // 关闭弹层
                         layer.closeAll();
                     },
                     onBeforeImgUpload: function () {
-
                         // 检查图片大小
                         var size = $("#imgCrop_imgUploadField")[0].files[0].size;
                         if (size && size / (1024 * 1024) > 2) {
                             $.notify({
                                 type: 'error',
-                                title: "提示消息",   // 不允许的文件类型
-                                text: "上传的图片大小不能超过2M.",     //'支持 jpg、jepg、png、gif等格式图片文件',
+                                title: "提示消息",
+                                text: "上传的图片大小不能超过2M",
                                 delay: 3e3
                             });
                             self.cropModal.reset();
@@ -521,7 +550,7 @@ ${commodity.detail}
                         });
                     }
                 }
-                this.cropModal = new Croppic('imgCrop', options);
+                self.cropModal = new Croppic('imgCrop', options);
             },
             // 商品自定义参数
             parameter: function () {

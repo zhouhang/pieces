@@ -71,7 +71,6 @@
         }
         return params;
     }
-
     /**
      *
      */
@@ -94,7 +93,6 @@
             }
         })
     }
-
 })(jQuery);
 
 !(function($){
@@ -180,29 +178,31 @@ function _aside() {
     })
     .find('.active').addClass('extend');
 
+
     // 导航高亮
     $aside.find('a').each(function() {
         var url = this.href.toLowerCase(),
-            hrefBefore = url.split('/')[3],
-            prefix=$(this).attr("prefix");
-
-
+            hrefBefore = url.split('/')[3];
 
         if (URL === url) {
-            $(this).addClass('current').closest('dl').addClass('active');
-            return false; // break
-        }
-        if(URL.indexOf(prefix)>=0){
             $(this).addClass('current').closest('dl').addClass('active');
             return false; // break
         }
         if(urlBefore === hrefBefore){
             $(this).closest('dl').addClass('active');
         }
-
     }) 
 }
 
+// 相册弹层
+function _showImg(url) {
+    url && layer.open({
+        type: 1,
+        shade: .5,
+        title: false, //不显示标题
+        content: '<img src="' + url + '" alt="" />'
+    });
+}
 
 $(function() {
     _fix();

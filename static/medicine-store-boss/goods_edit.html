@@ -152,8 +152,8 @@
                 <div class="item">
                     <div class="txt"><i>*</i>商品缩略图：</div>
                     <div class="cnt cnt-mul">
-                        <div class="up-img">
-                            <!-- <img src="images/blank.gif"><i class="del"></i> -->
+                        <div class="up-img x4" id="jpic1">
+                            <img src="uploads/croppedImg_9428.jpeg"><i class="del"></i>
                         </div>
                         <input type="hidden" value="" name="imgUrl1" id="imgUrl1">
                         <span class="tips">图片尺寸：220 X 180</span>
@@ -162,11 +162,11 @@
 				<div class="item">
                     <div class="txt"><i>*</i>商品图片：</div>
                     <div class="cnt cnt-mul">
-                        <div class="up-img">
+                        <div class="up-img x3" id="jpic2">
                             <!-- <img src="images/blank.gif"><i class="del"></i> -->
                         </div>
                         <input type="hidden" value="" name="imgUrl2" id="imgUrl2">
-                        <span class="tips">图片尺寸：220 X 180</span>
+                        <span class="tips">图片尺寸：750 X 400</span>
                     </div>
                 </div>
                 <div class="item">
@@ -330,26 +330,45 @@
                 })
                 // 点击图片无效
                 $upImg.on('click', 'img', function() {
+                    _showImg(this.src);
                     return false;
                 })
 
-                // 图片裁剪弹层框
-                $upImg.on('click', function() {
+                // 缩略图
+                $('#jpic1').on('click', function() {
                     layer.open({
-                        skin: 'layui-layer-molv', 
-                        area: ['600px'],
+                        skin: 'layui-layer-molv',
+                        area: ['500px'],
                         closeBtn: 1,
                         type: 1,
                         moveType: 1,
-                        content: '<div class="img-upload-main"><div class="clip" id="imgCrop"></div></div>',
-                        title: '上传图片',
-                        cancel: function() {
+                        content: '<div class="img-upload-main"><div class="clip clip-x4" id="imgCrop"></div></div>',
+                        title: '上传商品缩略图片',
+                        cancel: function () {
                             self.cropModal.destroy();
                         }
                     });
 
                     self.croppic($(this));
-                });
+                })
+
+                // 商品图
+                $('#jpic2').on('click', function() {
+                    layer.open({
+                        skin: 'layui-layer-molv',
+                        area: ['810px'],
+                        closeBtn: 1,
+                        type: 1,
+                        moveType: 1,
+                        content: '<div class="img-upload-main"><div class="clip clip-x3" id="imgCrop"></div></div>',
+                        title: '上传商品图片',
+                        cancel: function () {
+                            self.cropModal.destroy();
+                        }
+                    });
+
+                    self.croppic($(this));
+                })
             },
             croppic: function($el) {
                 var options = {

@@ -121,7 +121,8 @@
         <div class="item">
             <div class="txt"><i>*</i>价格描述：</div>
             <div class="cnt">
-                <input type="text" name="priceDesc" class="ipt" placeholder="价格描述" autocomplete="off">元
+                <input type="text" name="priceDesc" class="ipt" placeholder="价格描述" autocomplete="off">
+                <span class="tips">元</span>
             </div>
         </div>
         <div class="item">
@@ -143,8 +144,9 @@
         <div class="item">
             <div class="txt"><i>*</i>图片：</div>
             <div class="cnt cnt-mul">
-                <span class="up-img" id="imgCrop"></span>
-                <!--<input type="hidden" value="" name="pictureUrl" id="imgUrl">-->
+                <span class="up-img x4" id="imgCrop"></span>
+                <input type="hidden" value="" name="pictureUrl" id="pictureUrl">
+                <span class="tips">图片尺寸：220 X 180</span>
             </div>
         </div>
 
@@ -167,6 +169,7 @@
             updateUrl:'/category/update/',
             getUrl:'/category/get/',
             saveUrl:'/category/save/',
+            flag: false
         },
         fn: {
             init: function() {
@@ -250,8 +253,8 @@
             },
             // 品种新建 or 编辑
             category: function() {
-                var $carForm = $('#myform');
-
+                var $carForm = $('#myform'),
+                    self = this;
 
                 $carForm.validator({
                     fields: {
@@ -285,8 +288,11 @@
 
                 // 新建
                 $('#jaddNewCat').on('click', function() {
+                    $('#imgCrop').empty();
+                    $('#pictureUrl').val('');
                     $carForm[0].reset();
                     $carForm.attr("action",_global.v.saveUrl);
+                    self.upImg();
                     layer.open({
                         area: ['600px'],
                         type: 1,
@@ -294,36 +300,42 @@
                         content: $carForm,
                         title: '新建品种'
                     });
-                    $('#imgCrop').show().prev().remove();
                 })
 
                 // 编辑
                 $('.table').on('click', '.jedit', function() {
+                    if (_global.v.flag) {
+                        return false;
+                    }
+                    _global.v.flag = true;
                     $carForm[0].reset();
                     $carForm.attr("action",_global.v.updateUrl);
-                    var url = _global.v.getUrl + $(this).attr('categoryId');
-                    $.ajax({
-                        url: url,
-                        type: "POST",
-                        success: function(data) {
-                            var category=data.data;
-                            //console.log(category.variety);
-                            // 如果有图片，填充图片
-                            if (category.pictureUrl!="") {
-                                $('#imgCrop').hide().prev().remove().end().before('<span class="up-img"><img src="' + category.pictureUrl + '" title="点击图片看大图" /><i class="del" title="删除"></i><input type="hidden" name="pictureUrl" value="' + category.pictureUrl + '"></span>');
-                            } else {
-                                $('#imgCrop').show().prev().remove();
-                            }
-                            $carForm.find('.ipt[name="variety"]').val(category.variety);
-                            $carForm.find('.ipt[name="title"]').val(category.title);
-                            $carForm.find('.ipt[name="priceDesc"]').val(category.priceDesc);
-                            $carForm.find('.ipt[name="sort"]').val(category.sort);
-                            $carForm.find('.ipt[name="id"]').val(category.id);
+                    self.showinfo($(this).attr('categoryId'));
+                    return false;
+                })
+            },
+            showinfo: function(id) {
+                var self = this,
+                    $carForm = $('#myform');
 
-                            $("#varieties").val(category.pid);
+                var showBox = function(data) {
+                    $carForm.find('.ipt[name="variety"]').val(data.variety);
+                    $carForm.find('.ipt[name="title"]').val(data.title);
+                    $carForm.find('.ipt[name="priceDesc"]').val(data.priceDesc);
+                    $carForm.find('.ipt[name="sort"]').val(data.sort);
+                    $carForm.find('.ipt[name="id"]').val(data.id);
+                    $("#varieties").val(data.pid);
 
-                        }
-                    })
+                    // 如果有图片，填充图片
+                    if (data.pictureUrl) {
+                        $('#imgCrop').html('<img src="' + data.pictureUrl + '" title="点击图片看大图" /><i class="del" title="删除"></i>');
+                        self.cropModal && self.cropModal.destroy();
+                    } else {
+                        $('#imgCrop').empty();
+                        self.upImg();
+                    }
+                    $('#pictureUrl').val(data.pictureUrl);
+                    layer.closeAll();
                     layer.open({
                         area: ['600px'],
                         type: 1,
@@ -331,12 +343,37 @@
                         content: $carForm,
                         title: '编辑品种'
                     });
-                    return false; // 阻止链接跳转
+                }
+
+                // 加载数据
+                var k = $.ajax({
+                    url: _global.v.getUrl+id,
+                    type: 'POST',
+                    data: {id: id},
+                    dataType: 'json',
+                    success: function(data) {
+                        data.status == 200 && showBox(data.data);
+                    },
+                    complete: function() {
+                        _global.v.flag = false;
+                    }
                 })
+
+                // loading
+                layer.open({
+                    area: ['200px'],
+                    type: 1,
+                    moveType: 1,
+                    content: '<div class="layer-loading">加载中...</div>',
+                    title: '编辑品种',
+                    cancel: function() {
+                        k.abort();
+                    }
+                });
             },
             goodsImg: function() {
                 var self = this,
-                        $myform = $('#myform');
+                    $myform = $('#myform');
 
                 // 删除图片
                 $myform.on('click', '.del', function() {
@@ -344,36 +381,35 @@
                     layer.confirm('确认删除图片？', {
                         btn: ['确认','取消'] //按钮
                     }, function(index){
-                        $self.parent().remove();
                         layer.close(index);
-                        $('#imgCrop').show();
-                        $('#imgUrl').val('').trigger('validate');
+                        $('#imgCrop').empty();
+                        $('#pictureUrl').val('');
+                        self.upImg();
                     });
                     return false;
                 })
                 // 点击图片看大图
                 $myform.on('click', 'img', function() {
-                    var url = this.src;
-                    window.open(url);
+                    _showImg(this.src);
                     return false;
                 })
-                this.upImg();
             },
             upImg: function() {
+                var self = this;
                 var options = {
                     uploadUrl: '/gen/upload',
                     cropUrl: '/gen/clipping',
                     customUploadButtonId: 'imgCrop',
                     loaderHtml:'<span class="loader">正在上传图片，请稍后...</span>',
                     onAfterImgUpload: function(response){
-                        cropModal.destroy();
-                        cropModal = new Croppic('imgCropWrap', options);
-                        $('#imgCrop').hide().before('<span class="up-img"><img src="' + response.url + '" title="点击图片看大图" /><i class="del" title="删除"></i></span><input type="hidden" name="pictureUrl" value="' + response.url + '"></span>');
-                        $('#imgUrl').val(response.url).trigger('validate');
-                    },
-                    onError:function(msg){}
+                        self.cropModal && self.cropModal.destroy();
+                        $('#imgCrop').show().html('<img src="' + response.url + '" title="点击图片看大图" /><i class="del" title="删除"></i>');
+                        $('#pictureUrl').val(response.url).trigger('validate');
+                    }
                 }
-                var cropModal = new Croppic('imgCropWrap', options);
+
+                self.cropModal && self.cropModal.destroy();
+                self.cropModal = new Croppic('imgCropWrap', options);
             }
         }
     }

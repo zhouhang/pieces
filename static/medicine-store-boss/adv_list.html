@@ -173,9 +173,9 @@
 			<div class="item">
 				<div class="txt">类型：</div>
 				<div class="cnt">
-					<select name="" id="" class="slt">
-						<option value="1">首页banner</option>
-						<option value="2">专场广告</option>
+					<select name="typeId" id="typeId" class="slt">
+						<option value="1" data-tips="图片尺寸：750 X 350">首页banner</option>
+						<option value="2" data-tips="图片尺寸：750 X 400">专场广告</option>
 					</select>
 				</div>
 			</div>
@@ -200,8 +200,9 @@
 			<div class="item">
 				<div class="txt"><i>*</i>图片：</div>
 				<div class="cnt cnt-mul">
-					<span class="up-img" id="imgCrop"></span>
-                    <input type="hidden" value="" name="imgUrl" id="imgUrl">
+					<span class="up-img x1" id="imgCrop"></span>
+                    <input type="hidden" value="" name="pictureUrl" id="pictureUrl">
+                    <span class="tips">图片尺寸：750 X 350</span>
 				</div>
 			</div>
 
@@ -281,7 +282,7 @@
                     fields: {
                         title: '名称: required',
                         sort: '排序: required; integer',
-                        imgUrl: '图片: required'
+                        pictureUrl: '图片: required'
                     },
                     valid: function (form) {
                     }
@@ -294,7 +295,11 @@
 
 				// 新建
 				$('#jaddNew').on('click', function() {
+                    $('#imgCrop').empty();
+					$('#pictureUrl').val('');
 					$advForm[0].reset();
+                    $advForm.find('.slt[name="typeId"]').trigger('change');
+                    self.upImg();
 					layer.open({
                         area: ['600px'],
                         type: 1,
@@ -302,7 +307,6 @@
                         content: $advForm,
                         title: '新建广告'
                     });
-					$('#imgCrop').show().prev().remove();
 				})
 
 				// 编辑
@@ -317,17 +321,21 @@
 				})
 			},
 			showinfo: function(id) {
-				var $advForm = $('#myform');
+                var self = this,
+                    $advForm = $('#myform');
 
 				var showBox = function(data) {
 					$advForm.find('.ipt[name="title"]').val(data.title);
 					$advForm.find('.ipt[name="sort"]').val(data.sort);
 					// 如果有图片，填充图片
-					if (data.url) {
-						$('#imgCrop').hide().prev().remove().end().before('<span class="up-img"><img src="' + data.url + '" title="点击图片看大图" /><i class="del" title="删除"></i><input type="hidden" name="img" value="' + data.url + '"></span>');
+					if (data.pictureUrl) {
+						$('#imgCrop').html('<img src="' + data.pictureUrl + '" title="点击图片看大图" /><i class="del" title="删除"></i>');
+						self.cropModal && self.cropModal.destroy();
 					} else {
-						$('#imgCrop').show().prev().remove();
+						$('#imgCrop').empty();
+                        self.upImg();
 					}
+					$('#pictureUrl').val(data.pictureUrl);
 					layer.closeAll();
 					layer.open({
                         area: ['600px'],
@@ -373,35 +381,43 @@
                     layer.confirm('确认删除图片？', {
                         btn: ['确认','取消'] //按钮
                     }, function(index){
-                        $self.parent().remove();
                         layer.close(index);
-                        $('#imgCrop').show();
-                        $('#imgUrl').val('').trigger('validate');
+                        $('#imgCrop').empty();
+                        $('#pictureUrl').val('');
+                        self.upImg();
                     });
                     return false;
                 })
+
                 // 点击图片看大图
                 $myform.on('click', 'img', function() {
                     var url = this.src;
                     window.open(url);
                     return false;
                 })
-                this.upImg();
+
+                // 切换上传图片的尺寸
+                $('#typeId').on('change', function() {
+                	var tips = this.value === 1 ? '图片尺寸：750 X 350' : '图片尺寸：750 X 400';
+                	$('#imgCrop').attr('class', 'up-img x' + this.value)
+                	.nextAll('.tips').html(tips);
+                })
             },
             upImg: function() {
+            	var self = this;
                 var options = {
                     uploadUrl:'img_save_to_file.php',
                     customUploadButtonId: 'imgCrop',
                     loaderHtml:'<span class="loader">正在上传图片，请稍后...</span>',
                     onAfterImgUpload: function(response){
-                        cropModal.destroy();
-                        cropModal = new Croppic('imgCropWrap', options);
-                        $('#imgCrop').hide().before('<span class="up-img"><img src="' + response.url + '" title="点击图片看大图" /><i class="del" title="删除"></i></span>');
-                        $('#imgUrl').val(response.url).trigger('validate');
-                    },
-                    onError:function(msg){}
+                        self.cropModal && self.cropModal.destroy();
+                        $('#imgCrop').show().html('<img src="' + response.url + '" title="点击图片看大图" /><i class="del" title="删除"></i>');
+                        $('#pictureUrl').val(response.url).trigger('validate');
+                    }
                 }
-                var cropModal = new Croppic('imgCropWrap', options);
+                
+                self.cropModal && self.cropModal.destroy();
+                self.cropModal = new Croppic('imgCropWrap', options);
             }
 		}
 	}

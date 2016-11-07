@@ -168,10 +168,7 @@
 
 <#include "./common/footer.ftl"/>
 
-<script src="assets/js/jquery191.js"></script>
-<script src="assets/js/common.js"></script>
 <script src="assets/js/jquery.autocomplete.js"></script>
-<script src="assets/plugins/layer/layer.js"></script>
 <script src="assets/plugins/laydate/laydate.js"></script>
 <script src="assets/plugins/validator/jquery.validator.min.js"></script>
 <script>

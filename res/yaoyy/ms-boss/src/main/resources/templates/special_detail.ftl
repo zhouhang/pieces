@@ -29,13 +29,14 @@
             <div class="item">
                 <div class="txt"><i>*</i>专场图片：</div>
                 <div class="cnt cnt-mul">
-                    <div class="up-img" id="">
+                    <div class="up-img x3">
                         <#if special.pictuerUrl??>
-                            <img src="${special.pictuerUrl?default('')}"><i class="del">
+                            <img src="${special.pictuerUrl?default('')}" /><i class="del"></i>
                         </#if>
                         <!-- <img src="images/blank.gif"><i class="del"></i> -->
                     </div>
-                    <input type="hidden" value="${special.pictuerUrl?default('')}" name="pictuerUrl" id="imgUrl">
+                    <input type="hidden" value="${special.pictuerUrl?default('')}" name="pictuerUrl" id="pictuerUrl">
+                    <span class="tips">图片尺寸：750 X 400</span>
                 </div>
             </div>
             <div class="item">
@@ -114,13 +115,16 @@
                     layer.confirm('确认删除商品图片？', {
                         btn: ['确认','取消'] //按钮
                     }, function(index){
-                        $upImg.empty().next().val('');
+                        $upImg.empty();
+                        $('#pictuerUrl').val('');
                         layer.close(index);
                     });
                     return false;
                 })
-                // 点击图片无效
+
+                // 点击图片看大图
                 $upImg.on('click', 'img', function() {
+                    _showImg(this.src);
                     return false;
                 })
 
@@ -128,11 +132,11 @@
                 $upImg.on('click', function() {
                     layer.open({
                         skin: 'layui-layer-molv',
-                        area: ['600px'],
+                        area: ['810px'],
                         closeBtn: 1,
                         type: 1,
                         moveType: 1,
-                        content: '<div class="img-upload-main"><div class="clip" id="imgCrop"></div></div>',
+                        content: '<div class="img-upload-main"><div class="clip clip-x3" id="imgCrop"></div></div>',
                         title: '上传图片',
                         cancel: function() {
                             self.cropModal.destroy();
@@ -146,12 +150,11 @@
                 var options = {
                     uploadUrl: '/gen/upload',
                     cropUrl: '/gen/clipping',
-                    outputUrlId:'imgUrl',
                     imgEyecandyOpacity:0.5,
                     loaderHtml:'<span class="loader">正在上传图片，请稍后...</span>',
                     onAfterImgCrop:function(response){
                         $('.up-img').html('<img src="' + response.url + '" /><i class="del" title="删除"></i>');
-                        $('#imgUrl').trigger('validate');
+                        $('#pictuerUrl').val(response.url).trigger('validate');
                         // 关闭弹层
                         layer.closeAll();
                     },
