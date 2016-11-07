@@ -17,12 +17,10 @@
 
     <div class="box">
         <div class="tools">
-            <div class="filter">
-                <form action="">
+            <div class="filter" id="filterForm">
                     <label>标题：</label>
                     <input type="text" name="title" class="ipt" placeholder="请输入">
-                    <button class="ubtn ubtn-blue">搜索</button>
-                </form>
+                    <button id="search_btn" class="ubtn ubtn-blue">搜索</button>
             </div>
 
             <div class="action-add">
@@ -44,7 +42,7 @@
                 </thead>
                 <tbody>
                 <#list pageInfo.list as article>
-                <tr>
+                <tr <#if article.status==0>class="gray"</#if>>
                     <td><input type="checkbox" class="cbx"></td>
                     <td>${article.title}</td>
                     <td>${bizBaseUrl}/article/${article.id}</td>
@@ -80,7 +78,7 @@
         },
         fn: {
             init: function() {
-                $.fn.initByUrlParams();
+                $("#filterForm").initByUrlParams();
                 this.bindEvent();
                 this.filter();
             },

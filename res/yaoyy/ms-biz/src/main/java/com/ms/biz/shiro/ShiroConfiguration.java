@@ -97,8 +97,8 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean
                 .setSecurityManager(defaultWebSecurityManager);
         shiroFilterFactoryBean.setLoginUrl("/user/login");
-        shiroFilterFactoryBean.setSuccessUrl("/403");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        shiroFilterFactoryBean.setSuccessUrl("/");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/error/403");
         shiroFilterFactoryBean.setFiltersString("bizAuthorization=bizAuthorizationFilter");
 
         shiroFilterFactoryBean.setFilterChainDefinitionsString("/user/login=anon;" +
@@ -107,7 +107,7 @@ public class ShiroConfiguration {
                 "/assets/**=anon;" +
                 "/error/**=anon;" +
                 "/sample/** = bizAuthorization;" +
-                "/center/**=bizAuthorization;" +
+                "/center/**=anon;" +
                 "/pick/**=bizAuthorization;" +
                 "/**=anon;");
         return shiroFilterFactoryBean;

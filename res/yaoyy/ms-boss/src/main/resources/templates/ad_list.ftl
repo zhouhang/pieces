@@ -18,7 +18,7 @@
     <div class="box">
         <div class="tools">
             <div class="filter">
-                <form action="">
+                <form id="filterForm" action="">
                     <label>类型：</label>
                     <select name="typeId" class="slt">
                         <option value="">全部</option>
@@ -50,7 +50,7 @@
                 </thead>
                 <tbody>
                 <#list pageInfo.list as ad>
-                <tr>
+                <tr <#if ad.status==0>class="gray"</#if>>
                     <td><input type="checkbox"></td>
                     <td>${ad.adTypeName!}</td>
                     <td>${ad.name!}</td>
@@ -144,6 +144,7 @@
                 this.category();
                 this.goodsImg();
                 this.filter();
+                $("#filterForm").initByUrlParams();
             },
             // 筛选
             filter: function() {
@@ -294,7 +295,8 @@
 
                     // 如果有图片，填充图片
                     if (data.pictureUrl) {
-                        $('#imgCrop').hide().prev().remove().end().before('<span class="up-img"><img src="' + data.pictureUrl + '" title="点击图片看大图" /><i class="del" title="删除"></i><input type="hidden" name="pictureUrl" value="' + data.pictureUrl + '"></span>');
+                        $('#imgCrop').hide().prev().remove().end().before('<span class="up-img"><img src="' + data.pictureUrl + '" title="点击图片看大图" /><i class="del" title="删除"></i></span>');
+                        $("#pictureUrl").val(data.pictureUrl);
                     } else {
                         $('#imgCrop').show().prev().remove();
                     }

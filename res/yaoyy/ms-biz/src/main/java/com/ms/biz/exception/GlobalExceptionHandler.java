@@ -36,6 +36,6 @@ public class GlobalExceptionHandler  extends BaseGlobalExceptionHandler{
     public ModelAndView handleViewError(HttpServletRequest req, HttpServletResponse rsp,
                                         Exception e) {
         rsp.setStatus(404);
-        return new ModelAndView("error/500", null);
+        return new ModelAndView("error/404", null);
     }
 }

@@ -6,6 +6,6 @@
 </head>
 
 <body>
-    错误
+    页面找不到
 </body>
 </html>
