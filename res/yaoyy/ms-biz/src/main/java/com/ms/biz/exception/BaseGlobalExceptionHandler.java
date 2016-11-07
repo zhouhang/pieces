@@ -1,6 +1,8 @@
 package com.ms.biz.exception;
 
 import com.google.common.base.Throwables;
+import com.ms.tools.entity.Result;
+import com.ms.tools.exception.ControllerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.AnnotationUtils;
@@ -25,48 +27,30 @@ public class BaseGlobalExceptionHandler {
 
     private boolean debug = true;
 
-    protected static final Logger logger = null;
-
-    public Logger getLogger() {
-        return LoggerFactory.getLogger(BaseGlobalExceptionHandler.class);
-    }
+    protected static final Logger logger = LoggerFactory.getLogger(BaseGlobalExceptionHandler.class);
 
     protected static final String DEFAULT_ERROR_MESSAGE = "系统忙，请稍后再试";
 
 
-    protected ModelAndView handleError(HttpServletRequest req, HttpServletResponse rsp, Exception e, String viewName, HttpStatus status) throws Exception {
-        if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null){
-            throw e;
-        }
-
+    protected Result handleError(HttpServletRequest req, HttpServletResponse rsp, Exception e) {
         String errorMsg =  DEFAULT_ERROR_MESSAGE;
         String errorStack = Throwables.getStackTraceAsString(e);
-
-        getLogger().error("Request: {} raised {}", req.getRequestURI(), errorStack);
-        if (isAjaxRequest(req)) {
-            return handleAjaxError(rsp, e);
+        logger.error("Request: {} raised {}", req.getRequestURI(), errorStack);
+        if (e instanceof ControllerException) {
+            throw (ControllerException)e;
         }
-        return handleViewError(req.getRequestURL().toString(), errorStack, errorMsg, viewName);
+        return handleAjaxError(errorStack, e);
     }
 
-    protected ModelAndView handleViewError(String url, String errorStack, String errorMessage, String viewName) {
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("exception", errorStack);
-        mav.addObject("url", url);
-        mav.addObject("message", errorMessage);
-        mav.addObject("timestamp", new Date());
-        mav.setViewName(viewName);
-        return mav;
-    }
 
-    protected ModelAndView handleAjaxError(HttpServletResponse rsp, Exception e) {
-        String msg = DEFAULT_ERROR_MESSAGE;
-//        if (isValidAndBindException(e)) {
-//            WebUtil.print(rsp,new Result(false).data(formatVaildAndBindError(e)));
-//        } else {
-//            WebUtil.print(rsp,new Result(false).info(msg));
-//        }
-        return null;
+    protected Result handleAjaxError(String errorStack, Exception e) {
+        Result result;
+        if (isValidAndBindException(e)) {
+            result = Result.failVerification().data(formatVaildAndBindError(e));
+        } else {
+            result = Result.error().data(debug?errorStack:DEFAULT_ERROR_MESSAGE);
+        }
+        return result;
     }
 
 

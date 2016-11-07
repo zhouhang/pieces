@@ -60,6 +60,12 @@ public class Result implements Serializable {
         return result;
     }
 
+    public static Result failVerification() {
+        Result result = new Result();
+        result.setStatus(ResultStatus.ERROR_VERIFICATION);
+        return result;
+    }
+
     public Object getData() {
         return data;
     }
