@@ -21,18 +21,18 @@
         <div class="tools">
             <div class="filter">
                 <form action="" id="searchForm">
-                    <label>联系人：</label><input name="nickname" type="text" class="ipt" placeholder="请输入" value="${sendSampleVo.nickname?default('')}">
-                    <label>联系电话：</label><input name="phone" type="text" class="ipt" placeholder="联系电话" value="${sendSampleVo.phone?default('')}">
-                    <label>寄样编号：</label><input name="code" type="text" class="ipt" placeholder="寄样编号" value="${sendSampleVo.code?default('')}">
+                    <label>联系人：</label><input name="nickname" type="text" class="ipt" placeholder="请输入" value="">
+                    <label>联系电话：</label><input name="phone" type="text" class="ipt" placeholder="联系电话" value="">
+                    <label>寄样编号：</label><input name="code" type="text" class="ipt" placeholder="寄样编号" value="">
                     <label>状态：</label>
                     <select name="status" class="slt">
-                        <option <#if (sendSampleVo.status??)> selected</#if> value="">全部</option>
-                        <option <#if sendSampleVo.status?exists && sendSampleVo.status==0> selected</#if> value="0">未受理</option>
-                        <option <#if sendSampleVo.status?exists && sendSampleVo.status==1> selected</#if>value="1">同意寄样</option>
-                        <option <#if sendSampleVo.status?exists && sendSampleVo.status==2> selected</#if>value="2">拒绝寄样</option>
-                        <option <#if sendSampleVo.status?exists && sendSampleVo.status==3> selected</#if>value="3">客户来访</option>
-                        <option <#if sendSampleVo.status?exists && sendSampleVo.status==4> selected</#if>value="4">已寄样</option>
-                        <option <#if sendSampleVo.status?exists && sendSampleVo.status==5> selected</#if>value="5">寄样完成</option>
+                        <option value="">全部</option>
+                        <option value="0">未受理</option>
+                        <option value="1">同意寄样</option>
+                        <option value="2">拒绝寄样</option>
+                        <option value="3">客户来访</option>
+                        <option value="4">已寄样</option>
+                        <option value="5">寄样完成</option>
                     </select>
                     <button type="button" class="ubtn ubtn-blue" id="search">搜索</button>
                 </form>
@@ -102,6 +102,7 @@
         fn: {
             init: function() {
                 this.bindEvent();
+                $("#searchForm").initByUrlParams();
             },
             bindEvent: function() {
                 var $table = $('.table'),
