@@ -17,7 +17,7 @@
 
     <div class="box">
         <div class="tools">
-            <div class="filter">
+            <div class="filter" id="filterForm">
                 <#--<form action="">-->
                     <label>品种：</label><input type="text" name="categoryName" class="ipt" placeholder="请输入">
                     <label>商品名称：</label><input name="name" type="text" class="ipt" placeholder="商品名称">
@@ -86,7 +86,7 @@
         fn: {
             init: function() {
                 this.bindEvent();
-                $.fn.initByUrlParams();
+                $("#filterForm").initByUrlParams();
             },
             bindEvent: function() {
 

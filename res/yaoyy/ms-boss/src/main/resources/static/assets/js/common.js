@@ -57,6 +57,7 @@
      * @returns {{}}
      */
     $.fn.initByUrlParams=function() {
+        $this = this;
         var url = window.location.search; //获取url中"?"符后的字串
         var params = {};
         if (url.indexOf("?") != -1) {
@@ -65,7 +66,7 @@
             for(var i = 0; i < strs.length; i ++) {
                 var name = strs[i].split("=")[0];
                 var value = decodeURI(strs[i].split("=")[1]);
-                $("[name="+name+"]").val(value);
+                $($this).find("[name="+name+"]").val(value);
             }
         }
         return params;

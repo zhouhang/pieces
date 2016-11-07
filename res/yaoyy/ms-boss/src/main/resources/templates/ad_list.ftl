@@ -18,7 +18,7 @@
     <div class="box">
         <div class="tools">
             <div class="filter">
-                <form action="">
+                <form id="filterForm" action="">
                     <label>类型：</label>
                     <select name="typeId" class="slt">
                         <option value="">全部</option>
@@ -144,6 +144,7 @@
                 this.category();
                 this.goodsImg();
                 this.filter();
+                $("#filterForm").initByUrlParams();
             },
             // 筛选
             filter: function() {
