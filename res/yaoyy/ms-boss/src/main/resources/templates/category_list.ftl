@@ -63,7 +63,7 @@
                 </thead>
                 <tbody>
                 <#list categoryPage.list as category>
-                <tr>
+                <tr <#if category.status==0>class="gray"</#if>>
                     <td><input type="checkbox"></td>
                     <td>${category.variety}</td>
                     <td>${category.title}</td>

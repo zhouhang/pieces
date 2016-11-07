@@ -50,7 +50,7 @@
                 </thead>
                 <tbody>
                 <#list pageInfo.list as ad>
-                <tr>
+                <tr <#if ad.status==0>class="gray"</#if>>
                     <td><input type="checkbox"></td>
                     <td>${ad.adTypeName!}</td>
                     <td>${ad.name!}</td>

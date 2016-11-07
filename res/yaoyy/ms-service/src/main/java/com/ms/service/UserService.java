@@ -19,6 +19,8 @@ public interface UserService extends ICommonService<User>{
 
     public void disable(Integer id);
 
+    public void enable(Integer id);
+
     public void login(Subject subject, UsernamePasswordToken token);
 
     public void logout();

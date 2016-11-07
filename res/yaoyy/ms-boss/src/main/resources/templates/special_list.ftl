@@ -47,7 +47,7 @@
                 </thead>
                 <tbody>
                 <#list  specialVoPageInfo.list as special>
-                <tr>
+                <tr <#if special.status==0>class="gray"</#if>>
                     <td><input type="checkbox"></td>
                     <td>${special.title}</td>
                     <td>${bizBaseUrl}special/${special.id}</td>
