@@ -11,7 +11,7 @@
     <div class="breadcrumb">
         <ul>
             <li>商品管理</li>
-            <li>商品列表</li>
+            <li>商品新增</li>
         </ul>
     </div>
 
@@ -98,7 +98,7 @@
             <div class="item">
                 <div class="txt">起购数量：</div>
                 <div class="cnt">
-                    <input type="text" name="minimumQuantity" class="ipt" placeholder="起购数量" autocomplete="off">
+                    <input type="text" name="minimumQuantity" value="0" class="ipt" placeholder="起购数量" autocomplete="off">
                 </div>
             </div>
             <div class="item">
@@ -177,7 +177,7 @@
             <div class="item">
                 <div class="txt">排序：</div>
                 <div class="cnt">
-                    <input type="text" name="sort" class="ipt" placeholder="数字越大越靠前" autocomplete="off">
+                    <input type="text" name="sort" class="ipt" value="0" placeholder="数字越大越靠前" autocomplete="off">
                 </div>
             </div>
             <div class="item">
@@ -297,6 +297,7 @@
                         origin: '产地: required',
                         harYear: '采收年份: required',
                         pictureUrl: '图片: required',
+                        minimumQuantity:'起购数量: range(1~9999)',
                         detail: {
                             rule: "required",
                             target: "#detailsError"

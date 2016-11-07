@@ -11,7 +11,7 @@
     <div class="breadcrumb">
         <ul>
             <li>商品管理</li>
-            <li>商品列表</li>
+            <li>商品详情</li>
         </ul>
     </div>
 
