@@ -315,14 +315,25 @@ function saveAppyinfo(info){
 function deleteInfo() {
     localStorage.removeItem(APPLYINFO);
 }
+function navigationActive(){
+    var $nav = $('#foot-nav'),
+        URL = document.URL.split('#')[0].split('?')[0].toLowerCase();
+
+    $nav.find('a').each(function() {
+        var url = this.href.toLowerCase();
 
 
-
-
+        if (URL === url) {
+            $(this).addClass('current');
+            return false; // break
+        }
+    })
+}
 
 $(function(){
     var count=getCommodityCount();
     if(count!=0){
         $("#commodityCart").append("<b>"+count+"</b>");
     }
+    navigationActive();
 });

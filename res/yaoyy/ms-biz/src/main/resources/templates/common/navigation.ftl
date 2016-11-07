@@ -1,8 +1,8 @@
 <footer class="ui-footer">
-    <nav class="ui-nav">
+    <nav class="ui-nav" id="foot-nav">
         <ul>
             <li>
-                <a class="current" href="/">
+                <a  href="/">
                     <i class="fa fa-home"></i>
                     <span>首页</span>
                 </a>
@@ -20,7 +20,7 @@
                 </a>
             </li>
             <li>
-                <a class="current" href="/center/index">
+                <a  href="/center/index">
                     <i class="fa fa-user"></i>
                     <span>个人中心</span>
                 </a>
