@@ -47,6 +47,15 @@ public class ExceptionController implements ErrorController {
         this.errorAttributes = errorAttributes;
     }
 
+    @RequestMapping(value = "403")
+    public ModelAndView errorHtml403(HttpServletRequest request,
+                                     HttpServletResponse response) {
+        response.setStatus(getStatus(request).value());
+        Map<String, Object> model = getErrorAttributes(request,
+                isIncludeStackTrace(request, MediaType.TEXT_HTML));
+        return new ModelAndView("error/403", model);
+    }
+
 
     /**
      * 定义404的ModelAndView

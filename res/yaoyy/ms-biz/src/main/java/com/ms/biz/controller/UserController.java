@@ -174,6 +174,7 @@ public class UserController {
     @RequestMapping(value = "updatePassword", method = RequestMethod.GET)
     public String findPassword(ModelMap modelMap){
         //获取登陆用户userId
+        // 用户未登入请求用户登入
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         modelMap.put("phone", user.getPhone());
         return "update_password";
