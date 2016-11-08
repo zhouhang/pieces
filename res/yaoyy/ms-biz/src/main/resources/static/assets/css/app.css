@@ -93,7 +93,7 @@ em,i{font-style:normal;}
 .ui-footer .ui-nav a.current{color:#b9a060;}
 .ui-footer .ui-nav span{display:block;margin-top:2px;}
 .ui-footer .ui-nav i{position:relative;}
-.ui-footer .ui-nav b{position:absolute;top:3px;left:50%;min-width:16px;line-height:16px;margin-left:.6rem;background:#d74141;color:#fff;font-weight:400;-webkit-border-radius:100%;border-radius:100%;}
+.ui-footer .ui-nav b{position:absolute;top:2px;left:50%;min-width:16px;line-height:16px;margin-left:.2rem;background:#d74141;color:#fff;font-weight:400;-webkit-border-radius:100%;border-radius:100%;}
 .ui-footer .ui-nav .two li{width:50%;}
 .ui-footer .extra li{width:20%;}
 .ui-footer .extra li.wide{width:30%;}
@@ -323,3 +323,11 @@ em,i{font-style:normal;}
 .pick-form-layer .layui-m-close{display:none;}
 .pick-form-layer .item{margin:20px 0;}
 .pick-form-layer .ipt{height:42px;padding:0;text-indent:20px;}
+
+.error-page{padding-top:90px;text-align:center;}
+.error-page .headline{height:0;padding-top:50px;margin-bottom:20px;background:no-repeat 50% 50%;background-size:auto 50px;overflow:hidden;}
+.error-page .i404{background-image:url(../images/404.png);}
+.error-page .i500{background-image:url(../images/500.png);}
+.error-page .cnt{display:inline-block;text-align:left;font-size:1.2rem;}
+.error-page .button{width:175px;margin:50px auto 0;}
+.error-page .button .ubtn{font-size:1.6rem;}

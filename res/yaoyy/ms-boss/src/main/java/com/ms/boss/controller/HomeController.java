@@ -93,4 +93,13 @@ public class HomeController extends BaseController{
         SecurityUtils.getSubject().logout();
         return "redirect:/login";
     }
+
+    /**
+     * 控制台首页
+     * @return
+     */
+    @RequestMapping(value = "/index")
+    public String index() {
+        return "index";
+    }
 }

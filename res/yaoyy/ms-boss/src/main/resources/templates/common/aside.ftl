@@ -4,6 +4,18 @@
         <dt>
             <a href="javascript:;">
                 <i class="fa fa-star"></i>
+                <span>控制面板</span>
+                <i class="fa fa-angle-down arrow"></i>
+            </a>
+        </dt>
+        <dd>
+            <a href="index"><i class="fa fa-circle-o"></i>控制面板</a>
+        </dd>
+    </dl>
+    <dl>
+        <dt>
+            <a href="javascript:;">
+                <i class="fa fa-star"></i>
                 <span>专场广告</span>
                 <i class="fa fa-angle-down arrow"></i>
             </a>

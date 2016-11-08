@@ -111,7 +111,7 @@
                         dataType: "json",
                         success: function (result) {
                             if(result.status=="200"){
-                                location.href="/role/index"
+                                location.href="/index"
                             }else{
                                 self.showMsg(result.msg)
                             }
