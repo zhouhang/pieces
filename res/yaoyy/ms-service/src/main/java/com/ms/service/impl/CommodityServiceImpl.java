@@ -108,7 +108,11 @@ public class CommodityServiceImpl extends AbsCommonService<Commodity> implements
     public CommodityVo findById(Integer id) {
         CommodityVo vo = new CommodityVo();
         vo.setId(id);
-        vo = commodityDao.findByParams(vo).get(0);
+        List<CommodityVo> commodityVos=commodityDao.findByParams(vo);
+        if(commodityVos.size()==0){
+            return null;
+        }
+        vo = commodityVos.get(0);
         List<Gradient> gradients = gradientService.findByCommodityId(id);
         vo.setGradient(gradients);
         vo.setPictureUrl(pathConvert.getUrl(vo.getPictureUrl()));

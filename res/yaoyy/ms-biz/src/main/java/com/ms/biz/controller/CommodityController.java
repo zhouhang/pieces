@@ -5,6 +5,7 @@ import com.ms.dao.model.Commodity;
 import com.ms.dao.vo.CommodityVo;
 import com.ms.service.CommodityService;
 import com.ms.tools.entity.Result;
+import com.ms.tools.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,9 @@ public class CommodityController {
     public String commodityDetail(@PathVariable("id") Integer id,ModelMap model) {
 
         CommodityVo commodityVo=commodityService.findById(id);
+        if(commodityVo==null){
+            throw new NotFoundException("找不到该商品");
+        }
         if(commodityVo.getMark()==1){
             commodityVo.setPrice(commodityVo.getGradient().get(0).getPrice());
         }
