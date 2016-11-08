@@ -18,11 +18,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 
 @SpringBootApplication
-@ComponentScan(
-        basePackages = "com.ms",
-        useDefaultFilters = true,
-        excludeFilters = {@ComponentScan.Filter(classes = {Controller.class})}
-)
+//@ComponentScan(
+//        basePackages = "com.ms",
+//        useDefaultFilters = true,
+//        excludeFilters = {@ComponentScan.Filter(classes = {Controller.class})}
+//)
 public class Application extends SpringBootServletInitializer implements EmbeddedServletContainerCustomizer {
 
 
