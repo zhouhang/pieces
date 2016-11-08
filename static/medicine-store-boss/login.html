@@ -10,30 +10,21 @@
     <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
-<body>
+<body class="bg-gray">
     
-    <div class="login-box">
+    <div class="login-box2">
         <div class="title"><strong>药优优</strong>电子商务管理系统</div>
         <div class="form">
             <form id="myform" action="">
                 <div id="msg" class="msg"></div>
-
                 <div class="group">
-                    <div class="txt">
-                        <i class="fa fa-user"></i>
-                    </div>
-                    <div class="cnt">
-                        <input type="text" placeholder="用户名" id="username" name="username" autocomplete="off" value="" class="ipt">
-                    </div>
+                    <input type="text" placeholder="用户名" id="username" name="username" autocomplete="off" value="" class="ipt">
+                    <i class="fa fa-user"></i>
                 </div>
 
                 <div class="group">
-                    <div class="txt">
-                        <i class="fa fa-lock"></i>
-                    </div>
-                    <div class="cnt">
-                        <input type="password" placeholder="密码" id="pwd" name="pwd" autocomplete="off" value="" class="ipt">
-                    </div>
+                    <input type="password" placeholder="密码" id="pwd" name="pwd" autocomplete="off" value="" class="ipt">
+                    <i class="fa fa-lock"></i>
                 </div>
 
                 <div class="button">
@@ -59,7 +50,7 @@
             // 错误提示
             showMsg: function(msg) {
                 if (msg) {
-                    loginPage.v.$msg.html('<i class="fa fa-prompt"></i> ' + msg);
+                    loginPage.v.$msg.html('<i class="fa fa-exclamation-circle"></i> ' + msg);
                 } else {
                     loginPage.v.$msg.html('');
                 }                
@@ -67,11 +58,13 @@
             checkUsername: function() {
                 var msg = loginPage.v.$username.val() ? '' : '请输入用户名';
                 this.showMsg(msg);
+                msg && loginPage.v.$username.focus();
                 return msg;
             },
             checkPassword: function() {
                 var msg = loginPage.v.$pwd.val() ? '' : '请输入密码';
                 this.showMsg(msg);
+                msg && loginPage.v.$pwd.focus();
                 return msg;
             },
             checkForm: function() {
@@ -88,17 +81,15 @@
             bindEvent: function() {
                 var self = this;
                 loginPage.v.$username.on('blur', function() {
-                    self.checkUsername();
-                    $(this).closest('.group').removeClass('on');
+                    $(this).parent('.group').removeClass('on');
                 }).on('focus', function() {
-                    $(this).closest('.group').addClass('on');
+                    $(this).parent('.group').addClass('on');
                 });
 
                 loginPage.v.$pwd.on('blur', function() {
-                    self.checkPassword();
-                    $(this).closest('.group').removeClass('on');
+                    $(this).parent('.group').removeClass('on');
                 }).on('focus', function() {
-                    $(this).closest('.group').addClass('on');
+                    $(this).parent('.group').addClass('on');
                 });
 
                 loginPage.v.$submit.on('click', function() {
