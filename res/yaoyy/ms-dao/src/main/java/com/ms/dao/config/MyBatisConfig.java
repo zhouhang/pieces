@@ -27,7 +27,7 @@ import java.util.Properties;
  * mybatis 基础配置
  */
 @Configuration
-@EnableTransactionManagement(proxyTargetClass=true)
+@EnableTransactionManagement
 public class MyBatisConfig implements TransactionManagementConfigurer {
 
     @Value("${spring.dataSource.url}")
@@ -101,7 +101,7 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
     }
 
     @Bean(name = "txManager")
-    public PlatformTransactionManager txManager2(DataSource dataSource) {
+    public PlatformTransactionManager txManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
     }
 

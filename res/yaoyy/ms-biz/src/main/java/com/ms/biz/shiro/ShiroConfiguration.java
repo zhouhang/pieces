@@ -1,26 +1,27 @@
 package com.ms.biz.shiro;
 
+import com.ms.biz.config.WebConfig;
+import com.ms.dao.config.MyBatisConfig;
 import com.ms.service.redis.RedisManager;
 import com.ms.service.shiro.MsShiroFilterFactoryBean;
 import com.ms.service.shiro.ShiroRedisCacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
-import org.apache.shiro.web.filter.authz.AuthorizationFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.DelegatingFilterProxy;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 
 @Configuration
-@AutoConfigureAfter(RedisConfig.class)
+@AutoConfigureAfter({RedisConfig.class, WebConfig.class, MyBatisConfig.class})
 public class ShiroConfiguration {
 
     private static Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();

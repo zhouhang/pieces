@@ -1,5 +1,6 @@
 package com.ms.biz.shiro;
 
+import com.ms.dao.UserDao;
 import com.ms.dao.model.User;
 import com.ms.dao.vo.UserVo;
 import com.ms.service.UserService;
@@ -30,7 +31,7 @@ import java.util.Set;
 public class BizRealm extends AuthorizingRealm {
 
 	@Autowired
-	private UserService userService;
+	private UserDao userDao;
 
 	@Autowired
 	private RedisManager redisManager;
@@ -60,7 +61,7 @@ public class BizRealm extends AuthorizingRealm {
 			AuthenticationToken authToken) throws AuthenticationException {
 		BizToken token = (BizToken) authToken;
 
-		User user = userService.findByPhone(token.getUsername());
+		User user = userDao.findByPhone(token.getUsername());
 		if(token.getOpenId()!=null){
 			Password pass = EncryptUtil.PiecesEncode(user.getOpenid());
 			user.setPassword(pass.getPassword());
@@ -125,5 +126,5 @@ public class BizRealm extends AuthorizingRealm {
 	public void removeAuthorizationCacheInfo(){
 		clearCachedAuthorizationInfo(SecurityUtils.getSubject().getPrincipals());
 	}
-	
+
 }

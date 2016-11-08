@@ -32,12 +32,12 @@ import java.util.List;
  * 10/12/16.
  */
 @Configuration
-@ComponentScan(
-        basePackages = "com.ms",
-        useDefaultFilters = false,
-//        excludeFilters = {@ComponentScan.Filter(classes = {Service.class})},
-        includeFilters = {@ComponentScan.Filter(classes = {Controller.class})}
-)
+//@ComponentScan(
+//        basePackages = "com.ms",
+//        useDefaultFilters = false,
+////        excludeFilters = {@ComponentScan.Filter(classes = {Service.class})},
+//        includeFilters = {@ComponentScan.Filter(classes = {Controller.class})}
+//)
 @EnableWebMvc
 public class WebConfig extends WebMvcConfigurerAdapter {
 
