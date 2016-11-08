@@ -62,7 +62,7 @@
                     <td>${pick.code}</td>
                     <td>${pick.nickname}</td>
                     <td>${pick.phone}</td>
-                    <td><em>${pick.statusText}</em></td>
+                    <td><em class="status-${pick.status+1}">${pick.statusText}</em></td>
                     <td>${(pick.createTime?datetime)!}</td>
                     <td class="tc">
                         <a href="pick/detail/${pick.id}" class="ubtn ubtn-blue jedit">查看详情</a>
