@@ -233,8 +233,8 @@
 		<profile>
 			<id>prod</id>
 			<properties>
-				<boss.base.url>http://boss.sankobuy.com</boss.base.url>
-				<boss.upload.url>http://static.sankobuy.com/files/upload/</boss.upload.url>
+				<boss.base.url>http://boss.sghaoyao.com</boss.base.url>
+				<boss.upload.url>http://static.sghaoyao.com/files/upload/</boss.upload.url>
 				<boss.upload.path>/opt/resources/files/upload/</boss.upload.path>
 			</properties>
 		</profile>
