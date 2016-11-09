@@ -259,12 +259,12 @@ ${commodity.detail}
 
 <script src="assets/js/croppic.min.js"></script>
 <script src="assets/js/jquery.autocomplete.js"></script>
-<script src="assets/plugins/validator/jquery.validator.min.js"></script>
+<script src="assets/plugins/validator/jquery.validator.js"></script>
 
 <!-- 编辑器相关 -->
 <link href="assets/plugins/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" charset="utf-8" src="assets/plugins/umeditor/umeditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="assets/plugins/umeditor/umeditor.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="assets/plugins/umeditor/umeditor.js"></script>
 <script type="text/javascript" src="assets/plugins/umeditor/lang/zh-cn/zh-cn.js"></script>
 
 <script>
@@ -398,9 +398,8 @@ ${commodity.detail}
             // 提交事件
             submitEvent: function () {
                 $('#jsubmit').on('click', function () {
-                    $('#myform').isValid(function (v) {
-                        // 表单验证通过
-                        if (v) {
+                    if($('#myform').isValid()) {
+
                             // 序列化属性值
                             var attr = {};
                             var trs = $("#attribute>tbody tr");
@@ -453,7 +452,6 @@ ${commodity.detail}
                             })
                         }
                     });
-                })
             },
             // 商品图片
             goodsImg: function () {

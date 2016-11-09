@@ -159,33 +159,4 @@ public class UserController {
         return Result.success("验证码发送成功");
     }
 
-    @RequestMapping(value = "sendResetPasswordSms", method = RequestMethod.POST)
-    @ResponseBody
-    public Result sendResetPasswordSms() {
-        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-        userService.sendResetPasswordSms(user.getPhone());
-        return Result.success("验证码发送成功");
-    }
-
-    /**
-     * 修改密码
-     * @return
-     */
-    @RequestMapping(value = "updatePassword", method = RequestMethod.GET)
-    public String findPassword(ModelMap modelMap){
-        //获取登陆用户userId
-        // 用户未登入请求用户登入
-        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-        modelMap.put("phone", user.getPhone());
-        return "update_password";
-    }
-
-    @RequestMapping(value = "resetPassword", method = RequestMethod.POST)
-    @ResponseBody
-    public Result resetPassword(String code, String password){
-        //获取登陆用户userId
-        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-        userService.resetPassword(user.getPhone(), code, password);
-        return Result.success("密码重置成功");
-    }
 }

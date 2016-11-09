@@ -41,8 +41,8 @@
 
     var _global = {
         v:{
-            sendSMSUrl:"/user/sendResetPasswordSms",
-            resetPasswordUrl:"/user/resetPassword"
+            sendSMSUrl:"/center/sendResetPasswordSms",
+            resetPasswordUrl:"/center/resetPassword"
         },
         fn: {
             init: function() {
