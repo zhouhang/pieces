@@ -16,7 +16,7 @@
     <div class="sinfo">
         <div class="item">
             <ul class="info">
-                <li>选货单状态：${pickVo.statusText}</li>
+                <li>选货单状态：${pickVo.bizStatusText}</li>
                 <li>寄样单号：${pickVo.code}</li>
                 <li>申请时间：${(pickVo.createTime?datetime)!}</li>
             </ul>

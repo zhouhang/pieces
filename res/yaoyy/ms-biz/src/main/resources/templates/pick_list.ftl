@@ -102,7 +102,7 @@
                 $.each(data, function(i, item) {
                     html.push('<div class="item">\n <dl>');
                     html.push(     '<dt>\n');
-                    html.push(         '状态：<em>', item.statusText, '</em>\n');
+                    html.push(         '状态：<em>', item.bizStatusText, '</em>\n');
                     html.push(         '<time>', item.createTime, '</time>\n');
                     html.push(     '</dt>\n');
 

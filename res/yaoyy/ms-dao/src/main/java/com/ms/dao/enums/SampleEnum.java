@@ -6,7 +6,7 @@ package com.ms.dao.enums;
 public enum  SampleEnum {
 
     SAMPLE_DELETED(-1,"废弃"),
-    SAMPLE_NOTHANDLE(0,"未处理"),
+    SAMPLE_NOTHANDLE(0,"未受理"),
     SAMPLE_AGREE(1,"同意寄样"),
     SAMPLE_REFUSE(2,"拒绝寄样"),
     SAMPLE_VISTE(3,"客户来访"),
