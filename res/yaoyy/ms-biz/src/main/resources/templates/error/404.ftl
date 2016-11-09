@@ -21,7 +21,7 @@
             <i class="fa fa-frown-o"></i> 从前有座山，山里有座庙<br>庙里有个页面，现在找不到...
         </div>
         <div class="button">
-            <a href="index.html" class="ubtn ubtn-primary">返回首页</a>
+            <a href="/" class="ubtn ubtn-primary">返回首页</a>
         </div>
 
     </div>

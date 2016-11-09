@@ -21,7 +21,7 @@
             <i class="fa fa-frown-o"></i> 对不起，页面出错了！<br>我们已经派人在抢修啦...
         </div>
         <div class="button">
-            <a href="index.html" class="ubtn ubtn-primary">返回首页</a>
+            <a href="/" class="ubtn ubtn-primary">返回首页</a>
         </div>
 
     </div>

@@ -10,6 +10,7 @@ import com.ms.service.*;
 import com.ms.service.enums.RedisEnum;
 import com.ms.tools.entity.Result;
 import com.ms.tools.exception.ControllerException;
+import com.ms.tools.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,6 +76,9 @@ public class IndexController {
     public String apply(@PathVariable("id")Integer commdityId,ModelMap model) {
 
         Commodity commodity=commodityService.findById(commdityId);
+        if (commodity==null){
+            throw new NotFoundException("找不到该商品");
+        }
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         if(user!=null){
             model.put("phone", user.getPhone());
@@ -88,6 +92,9 @@ public class IndexController {
     @ResponseBody
     public Result applySample(SendSampleVo sendSampleVo) {
 
+        if(sendSampleVo.getIntention()==null){
+            return Result.error();
+        }
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         if(user!=null){
             sendSampleVo.setUserId(user.getId());
