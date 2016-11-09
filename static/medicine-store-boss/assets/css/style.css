@@ -7,8 +7,8 @@ body,button,input,select,textarea{background:#fff;font:14px/1.5 arial,tahoma,'Mi
 body{background:#ecf0f5;}
 h1,h2,h3,h4{font-size:100%;font-weight:400;}
 ul,ol{list-style:none;}
-a{color:#333;text-decoration:none;outline:none;}
-a:hover{color:#fa5468;text-decoration:underline}
+a{color:#333;text-decoration:none;outline:none;transition:color 0.3s;}
+a:hover{color:#fa5468;text-decoration:underline;}
 button,input,select,textarea{border:1px solid #ccc;outline:none;resize:none;}
 button::-moz-focus-inner,input::-moz-focus-inner{padding:0;border:0}
 fieldset,img{vertical-align:top;border:none}
@@ -369,5 +369,5 @@ a.ubtn{height:28px;}
 .q-list li span .fa-star{color:#dd4b39;}
 .q-list li span .fa-audio-description{color:#605ca8;}
 .q-list li span .fa-file-text{color:#d81b60;}
-.q-list li .cnt{margin:15px;padding:0 15px;}
+.q-list li .cnt{margin:15px;padding:0 15px;transition:background 0.2s;}
 
