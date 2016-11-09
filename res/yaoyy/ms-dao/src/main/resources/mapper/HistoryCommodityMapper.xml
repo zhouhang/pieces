@@ -127,4 +127,12 @@
             #{item}
         </foreach>
     </select>
+
+    <select id="findByCommodityId" parameterType="java.lang.Integer" resultMap="HistoryCommodityResultMapVo">
+        select
+        <include refid="Base_Column_List" />
+        from history_commodity
+        where commodity_id = #{commodityId}
+    </select>
+
 </mapper>

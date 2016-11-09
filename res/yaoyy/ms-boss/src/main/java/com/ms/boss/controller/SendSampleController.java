@@ -2,17 +2,12 @@ package com.ms.boss.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.ms.dao.enums.SampleEnum;
-import com.ms.dao.model.Commodity;
-import com.ms.dao.model.SampleAddress;
-import com.ms.dao.model.SendSample;
-import com.ms.dao.model.UserDetail;
-import com.ms.dao.vo.SampleAddressVo;
-import com.ms.dao.vo.SampleTrackingVo;
-import com.ms.dao.vo.SendSampleVo;
-import com.ms.dao.vo.UserDetailVo;
+import com.ms.dao.model.*;
+import com.ms.dao.vo.*;
 import com.ms.service.*;
 import com.ms.tools.entity.Result;
 import com.ms.tools.utils.Reflection;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
@@ -50,6 +46,9 @@ public class SendSampleController {
 
     @Autowired
     UserDetailService userDetailServer;
+
+    @Autowired
+    HistoryCommodityService historyCommodityService;
 
 
     /**
@@ -144,7 +143,17 @@ public class SendSampleController {
         sampleAddressServie.save(address);
         SendSample sendSample=new SendSample();
         sendSample.setId(address.getSendId());
-        sendSample.setIntention(intention);
+
+        List<CommodityVo> commodityList =commodityService.findByIds(intention);
+
+        List<Integer> ids=new ArrayList<>();
+
+        commodityList.forEach(c->{
+            HistoryCommodity historyCommodity=historyCommodityService.saveCommodity(c);
+            ids.add(historyCommodity.getId());
+        });
+
+        sendSample.setIntention(StringUtils.join(ids,","));
         sendSampleService.update(sendSample);
         return Result.success().msg("保存成功");
     }

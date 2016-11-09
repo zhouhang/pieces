@@ -52,18 +52,22 @@ public class HistoryCommodityServiceImpl  extends AbsCommonService<HistoryCommod
 	@Override
 	@Transactional
 	public HistoryCommodity saveCommodity(CommodityVo commodityVo) {
-		HistoryCommodity historyCommodity=new HistoryCommodityVo();
-		historyCommodity.setName(commodityVo.getName());
-		historyCommodity.setCommodityId(commodityVo.getId());
-		historyCommodity.setTitle(commodityVo.getTitle());
-		historyCommodity.setOrigin(commodityVo.getOrigin());
-		historyCommodity.setPictureUrl(commodityVo.getPictureUrl());
-		historyCommodity.setThumbnailUrl(commodityVo.getThumbnailUrl());
-		historyCommodity.setSpec(commodityVo.getSpec());
-		historyCommodity.setUnit(commodityVo.getUnitName());
-		historyCommodity.setPrice(commodityVo.getPrice());
-		historyCommodity.setCreateTime(new Date());
-		historyCommodityDao.create(historyCommodity);
+		HistoryCommodityVo historyCommodity;
+		historyCommodity=historyCommodityDao.findByCommodityId(commodityVo.getId());
+		if(historyCommodity==null){
+			historyCommodity=new HistoryCommodityVo();
+			historyCommodity.setName(commodityVo.getName());
+			historyCommodity.setCommodityId(commodityVo.getId());
+			historyCommodity.setTitle(commodityVo.getTitle());
+			historyCommodity.setOrigin(commodityVo.getOrigin());
+			historyCommodity.setPictureUrl(commodityVo.getPictureUrl());
+			historyCommodity.setThumbnailUrl(commodityVo.getThumbnailUrl());
+			historyCommodity.setSpec(commodityVo.getSpec());
+			historyCommodity.setUnit(commodityVo.getUnitName());
+			historyCommodity.setPrice(commodityVo.getPrice());
+			historyCommodity.setCreateTime(new Date());
+			historyCommodityDao.create(historyCommodity);
+		}
 		return historyCommodity;
 	}
 
