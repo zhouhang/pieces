@@ -15,6 +15,8 @@ public interface HistoryCommodityDao extends ICommonDao<HistoryCommodity>{
 
     public HistoryCommodityVo findByCommodityId(Integer commodityId);
 
+    public  List<HistoryCommodity> findByName(String name);
+
 
 
 }

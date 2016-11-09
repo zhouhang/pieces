@@ -43,7 +43,7 @@
                 <div class="ft">
                     <span class="status-5">状态：${sample.statusText}</span>
                     <#if sample.status==4>
-                    <button type="button" class="btn mid" sid="${sample.id?c}">确认收货</button>
+                    <button type="button" class="btn mid receipt"  sid="${sample.id?c}">确认收货</button>
                     </#if>
                 </div>
             </li>
@@ -66,10 +66,10 @@
 
             bindEvent: function () {
                 var $search =$("#submit");
-                var $mid=$(".mid");
+                var $mid=$(".receipt");
                 $search.on('click', function() {
                     var url="sample/list";
-                    var name=$("#keyword").value;
+                    var name=$("#keyword").val();
                     if($.trim(name)!=""){
                         location.href=url+"?name="+name;
                     }
