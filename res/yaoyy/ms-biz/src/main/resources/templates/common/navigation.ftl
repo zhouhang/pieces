@@ -20,7 +20,7 @@
                 </a>
             </li>
             <li>
-                <a  href="/center/index">
+                <a id="center"  href="/center/index">
                     <i class="fa fa-user"></i>
                     <span>个人中心</span>
                 </a>
@@ -30,12 +30,8 @@
 </footer>
 <script>
     window.onload = function () {
-
         if (is_weixin()) {
-            var a = $(".ui-nav a");
-            $(a, function (k, v) {
-                $(v).attr("href", $(v).attr("href") + "?source=WECHAT")
-            })
+            $("#center").attr("href", $("#center").attr("href") + "?source=WECHAT")
         }
     }
 </script>
