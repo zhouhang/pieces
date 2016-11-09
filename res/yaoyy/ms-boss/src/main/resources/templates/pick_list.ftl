@@ -27,7 +27,7 @@
                     <select name="status" class="slt">
                         <option value="">全部</option>
                         <option value="0">未处理</option>
-                        <option value="1">已处理</option>
+                        <option value="1">处理中</option>
                         <option value="2">未完成</option>
                         <option value="3">已完成</option>
                     </select>
