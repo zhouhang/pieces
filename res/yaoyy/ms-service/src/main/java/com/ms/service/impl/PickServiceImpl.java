@@ -150,19 +150,10 @@ public class PickServiceImpl  extends AbsCommonService<Pick> implements PickServ
 		pick.setCode(SeqNoUtil.get("", pick.getId(), 6));
 		pickDao.update(pick);
 
-		pickVo.getPickCommodityVoList().forEach(p->{
-					p.setPickId(pick.getId());
-					CommodityVo commodityVo=commodityService.findById(p.getCommodityId());
-					float total=(commodityVo.getPrice())*(p.getNum());
-					p.setTotal(total);
-					p.setUnit(commodityVo.getUnitName());
-					p.setCreateTime(now);
-					pickCommodityService.create(p);
-				}
-
-		);
-
-
+		pickVo.getPickCommodityVoList().forEach(c->{
+			c.setPickId(pick.getId());
+		});
+		pickCommodityService.saveList(pickVo.getPickCommodityVoList());
 
 
 

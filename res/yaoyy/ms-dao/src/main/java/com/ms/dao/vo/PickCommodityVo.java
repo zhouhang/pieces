@@ -14,6 +14,16 @@ public class PickCommodityVo extends PickCommodity{
 
     private String priceUnit;
 
+    private Integer realCommodityId;//商品表中的Id
+
+    public Integer getRealCommodityId() {
+        return realCommodityId;
+    }
+
+    public void setRealCommodityId(Integer realCommodityId) {
+        this.realCommodityId = realCommodityId;
+    }
+
     public String getPriceUnit() {
         return priceUnit;
     }

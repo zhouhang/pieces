@@ -16,6 +16,7 @@
             <id column="id"  property="id" />
             <result column="pick_id"  property="pickId" />
             <result column="commodity_id"  property="commodityId" />
+            <result column="real_commodityId"  property="realCommodityId" />
             <result column="num"  property="num" />
             <result column="unit"  property="unit" />
             <result column="total"  property="total" />
@@ -35,7 +36,7 @@
     <sql id="Join_Commodity_Column_List">
         pc.id as id,pc.pick_id as pick_id,pc.commodity_id as commodity_id,pc.num as num,
         pc.unit as unit,pc.total as total,pc.create_time as create_time,
-        c.name as name,c.origin as origin,c.spec as spec,c.price as price,c.unit as price_unit
+        c.name as name,c.origin as origin,c.spec as spec,c.price as price,c.unit as price_unit,c.commodity_id as real_commodityId
     </sql>
 
 
@@ -57,7 +58,7 @@
         select
         <include refid="Join_Commodity_Column_List" />
         from pick_commodity pc
-        LEFT JOIN commodity c on pc.commodity_id=c.id
+        LEFT JOIN history_commodity c on pc.commodity_id=c.id
         <where>
             <if test="id != null">
                 pc.id = #{id}
