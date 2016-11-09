@@ -4,10 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.ms.dao.ICommonDao;
 import com.ms.dao.PickCommodityDao;
+import com.ms.dao.model.HistoryCommodity;
 import com.ms.dao.model.PickCommodity;
 import com.ms.dao.vo.CommodityVo;
+import com.ms.dao.vo.HistoryCommodityVo;
 import com.ms.dao.vo.PickCommodityVo;
 import com.ms.service.CommodityService;
+import com.ms.service.HistoryCommodityService;
 import com.ms.service.PickCommodityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,9 @@ public class PickCommodityServiceImpl  extends AbsCommonService<PickCommodity> i
 
 	@Autowired
 	private CommodityService commodityService;
+
+	@Autowired
+	private HistoryCommodityService historyCommodityService;
 
 
 	@Override
@@ -43,10 +49,12 @@ public class PickCommodityServiceImpl  extends AbsCommonService<PickCommodity> i
 
 	@Override
 	@Transactional
-	public void saveList(List<PickCommodity> pickCommodities) {
+	public void saveList(List<PickCommodityVo> pickCommodities) {
 		Date now=new Date();
         pickCommodities.forEach(p->{
 			CommodityVo commodityVo=commodityService.findById(p.getCommodityId());
+			HistoryCommodity historyCommodity=historyCommodityService.saveCommodity(commodityVo);
+			p.setCommodityId(historyCommodity.getId());
 			float total=(commodityVo.getPrice())*(p.getNum());
 			p.setTotal(total);
 			p.setUnit(commodityVo.getUnitName());

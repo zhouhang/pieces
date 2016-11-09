@@ -3,7 +3,10 @@ package com.ms.dao.vo;
 import com.ms.dao.model.Commodity;
 import com.ms.dao.model.SendSample;
 import com.ms.dao.enums.SampleEnum;
+import org.apache.commons.lang.StringUtils;
 
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class SendSampleVo extends SendSample{
@@ -14,14 +17,33 @@ public class SendSampleVo extends SendSample{
     private String statusText;
 
     //寄样商品列表
-    private List<CommodityVo> commodityList;
+    private List<HistoryCommodityVo> commodityList;
 
     private String intentionText;
+
+
+    private String intentCommodityIds;
+
+    public String getIntentCommodityIds() {
+        List<Integer> ids = new ArrayList<>();
+        if (commodityList != null) {
+            commodityList.forEach(c -> {
+                ids.add(c.getCommodityId());
+            });
+            return StringUtils.join(ids,',');
+        }
+
+        return null;
+    }
+
+    public void setIntentCommodityIds(String intentCommodityIds) {
+        this.intentCommodityIds = intentCommodityIds;
+    }
 
     public String getIntentionText() {
         intentionText="";
         if (commodityList!=null) {
-            for (Commodity commodity : commodityList) {
+            for (HistoryCommodityVo commodity : commodityList) {
                 intentionText = intentionText + commodity.getName() + ' ' + commodity.getOrigin() + ' ' + commodity.getSpec() + "<br>";
             }
         }
@@ -32,14 +54,11 @@ public class SendSampleVo extends SendSample{
         this.intentionText = intentionText;
     }
 
-
-
-
-    public List<CommodityVo> getCommodityList() {
+    public List<HistoryCommodityVo> getCommodityList() {
         return commodityList;
     }
 
-    public void setCommodityList(List<CommodityVo> commodityList) {
+    public void setCommodityList(List<HistoryCommodityVo> commodityList) {
         this.commodityList = commodityList;
     }
 

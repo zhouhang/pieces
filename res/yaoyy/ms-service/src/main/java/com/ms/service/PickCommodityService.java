@@ -10,6 +10,6 @@ public interface PickCommodityService extends ICommonService<PickCommodity>{
 
     public PageInfo<PickCommodityVo> findByParams(PickCommodityVo pickCommodityVo,Integer pageNum,Integer pageSize);
     public List<PickCommodityVo> findByPickId(Integer pickId);
-    public void saveList(List<PickCommodity> pickCommodities);
+    public void saveList(List<PickCommodityVo> pickCommodities);
 
 }

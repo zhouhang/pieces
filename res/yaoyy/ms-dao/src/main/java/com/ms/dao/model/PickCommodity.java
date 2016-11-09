@@ -11,6 +11,8 @@ public class PickCommodity  implements Serializable {
 	private Integer id;
 	
 	private Integer pickId;
+
+	//历史表中的商品id
 	
 	private Integer commodityId;
 	
