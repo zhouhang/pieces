@@ -61,7 +61,7 @@
                         })
                     }
                     else{
-                        $(".ui-notice").html("选货单还没有商品，去商品详情页面可以添加商品到选货单！");
+                        $(".ui-notice").html("选货单还没有商品，去商品详情页面可以添加商品到选货单！<a style='color:blue;text-decoration:underline' href='/'>返回首页</a>");
                         $("#pick_commodity").empty();
                     }
 
@@ -69,7 +69,7 @@
 
                 }
                 else{
-                    $(".ui-notice").html("选货单还没有商品，去商品详情页面可以添加商品到选货单！");
+                    $(".ui-notice").html("选货单还没有商品，去商品详情页面可以添加商品到选货单！<a style='color:blue;text-decoration:underline' href='/'>返回首页</a>");
                     $("#pick_commodity").empty();
                 }
 

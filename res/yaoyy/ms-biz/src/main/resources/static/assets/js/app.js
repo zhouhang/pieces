@@ -244,7 +244,7 @@ function pickCommodity(id,num){
         //遍历所有对象。如果id相同，让该商品数量递增 ;
         for(var attr in arr){
             if(arr[attr].commodityId == id){
-                arr[attr].num =  num;
+                arr[attr].num =  parseInt(arr[attr].num)+parseInt(num);
                 var cookieStr = JSON.stringify(arr);//将json对象转换成字符串.
                 localStorage.setItem(CARTNAME,cookieStr);
                 same = true;
@@ -294,7 +294,14 @@ function deleteCommodity(id){
 function getCommodityCount(){
     var str = localStorage.getItem(CARTNAME);
     var arr = eval(str);
-    return arr?arr.length:0;
+    var total=0
+    if (arr){
+        for(var attr in arr){
+                total=  parseInt(arr[attr].num)+total;
+        }
+    }
+
+    return total;
 }
 
 
