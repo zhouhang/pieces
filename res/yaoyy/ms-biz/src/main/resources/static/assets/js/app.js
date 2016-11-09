@@ -316,6 +316,14 @@ function getAppyInfo(){
     }
 }
 function saveAppyinfo(info){
+    var userinfo=localStorage.getItem(APPLYINFO);
+    var infojson;
+    if (userinfo){
+        infojson= eval("(" + userinfo + ")");
+        if(!info.area&&infojson.area){
+            info.area=infojson.area;
+        }
+    }
     var cookieStr = JSON.stringify(info);//将json对象转换成字符串.
     localStorage.setItem(APPLYINFO,cookieStr);
 }

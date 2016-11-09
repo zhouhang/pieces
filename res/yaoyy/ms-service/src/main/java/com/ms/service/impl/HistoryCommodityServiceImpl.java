@@ -71,6 +71,11 @@ public class HistoryCommodityServiceImpl  extends AbsCommonService<HistoryCommod
 		return historyCommodity;
 	}
 
+	@Override
+	public List<HistoryCommodity> findByName(String name) {
+		return historyCommodityDao.findByName(name);
+	}
+
 
 	@Override
 	public ICommonDao<HistoryCommodity> getDao() {

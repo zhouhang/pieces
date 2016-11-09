@@ -135,4 +135,11 @@
         where commodity_id = #{commodityId}
     </select>
 
+    <select id="findByName" parameterType="java.lang.String" resultMap="HistoryCommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from history_commodity
+        where name like CONCAT('%', #{name},'%' )
+    </select>
+
 </mapper>

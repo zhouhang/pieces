@@ -181,11 +181,11 @@
             submit: function() {
                 var flag = false,
                         self = this,
-                        userinfo=getAppyInfo(),
                         form = function() {
                             var phone="";
                             var nickname="";
                             var show=true;
+                            var userinfo=getAppyInfo();
                             if(userinfo){
                                 phone=userinfo.phone;
                                 nickname=userinfo.nickname;
@@ -208,7 +208,7 @@
                     }
                     if((self.checkName() && self.checkMobile())||(!flag&&userinfo)){
                         var pickVo={};
-                        if($('#mobile').val()&&$('#mobile').val()){
+                        if($('#mobile').val()&&$('#username').val()){
                             pickVo.phone= $('#mobile').val();
                             pickVo.nickname=$('#username').val();
                         }
@@ -265,6 +265,10 @@
                         $(this).addClass('active')
                     } else {
                         flag = false;
+                        var userinfo={};
+                        userinfo.nickname=$('#username').val();
+                        userinfo.phone=$('#mobile').val();
+                        saveAppyinfo(userinfo);
                         $('.layui-m-close').trigger('click');
                         $(this).removeClass('active')
                     }

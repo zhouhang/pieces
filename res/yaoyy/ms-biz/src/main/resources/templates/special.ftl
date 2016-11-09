@@ -11,7 +11,7 @@
         <a href="javascript:history.back();" class="fa fa-back"></a>
     </div>
     <div class="abs-r mid">
-        <a href="search.html"><i class="fa fa-search"></i></a>
+        <a href="category/search"><i class="fa fa-search"></i></a>
     </div>
 </header><!-- /ui-header -->
 

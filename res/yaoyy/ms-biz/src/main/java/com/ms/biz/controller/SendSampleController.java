@@ -50,6 +50,9 @@ public class SendSampleController {
     @Autowired
     private UserDetailService userDetailService;
 
+    @Autowired
+    private HistoryCommodityService historyCommodityService;
+
 
 
 
@@ -60,10 +63,10 @@ public class SendSampleController {
         int userId=user.getId();
         List<SendSampleVo> sampleList = new ArrayList<>();
         if(name!=null) {
-            List<Commodity> commodities = commodityService.findByName(name);
+            List<HistoryCommodity> commodities = historyCommodityService.findByName(name);
             if (commodities.size() != 0) {
                 List<Integer> list = new ArrayList<>();
-                for (Commodity c : commodities) {
+                for (HistoryCommodity c : commodities) {
                     list.add(c.getId());
                 }
                 sampleList = sendSampleService.findByCommodityId(userId,list);
