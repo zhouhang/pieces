@@ -46,6 +46,8 @@ public class SmsUtil {
      */
     public String sendLoginCaptcha(String mobile) throws Exception {
 
+        check(mobile);
+
         //生成并发送验证码
         String code = SeqNoUtil.getRandomNum(5);
 
@@ -69,6 +71,7 @@ public class SmsUtil {
      * @throws Exception
      */
     public String sendRegistCaptcha(String mobile) throws Exception {
+        check(mobile);
 
         //生成并发送验证码
         String code = SeqNoUtil.getRandomNum(5);
@@ -93,6 +96,8 @@ public class SmsUtil {
      * @throws Exception
      */
     public String sendResetPasswordSms(String mobile) throws Exception {
+
+        check(mobile);
 
         //生成并发送验证码
         String code = SeqNoUtil.getRandomNum(5);
