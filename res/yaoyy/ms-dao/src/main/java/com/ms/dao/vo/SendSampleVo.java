@@ -24,6 +24,16 @@ public class SendSampleVo extends SendSample{
 
     private String intentCommodityIds;
 
+    private Integer  getSample;//标记是否确认收货
+
+    public Integer getGetSample() {
+        return getSample;
+    }
+
+    public void setGetSample(Integer getSample) {
+        this.getSample = getSample;
+    }
+
     public String getIntentCommodityIds() {
         List<Integer> ids = new ArrayList<>();
         if (commodityList != null) {
