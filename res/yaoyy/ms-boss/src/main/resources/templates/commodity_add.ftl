@@ -176,9 +176,10 @@
                 <div class="txt">
                     <i>*</i>详细信息：
                 </div>
-                <div class="cnt cnt-mul" name="detail" id="detail"  style="width: 700px; height: 400px;">
+                <div class="cnt cnt-mul">
+                    <script id="detail" name="detail" type="text/plain"></script>
+                    <span id="detailsError"></span>
                 </div>
-                <div id="detailsError" style="padding-top: 10px;" class="clear"></div>
             </div>
             <div class="item">
                 <div class="txt">排序：</div>
@@ -209,10 +210,10 @@
 <script src="assets/plugins/validator/jquery.validator.min.js"></script>
 
 <!-- 编辑器相关 -->
-<link href="assets/plugins/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" charset="utf-8" src="assets/plugins/umeditor/umeditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="assets/plugins/umeditor/umeditor.min.js"></script>
-<script type="text/javascript" src="assets/plugins/umeditor/lang/zh-cn/zh-cn.js"></script>
+<link href="assets/plugins/umeditor/themes/default/css/umeditor.css" rel="stylesheet">
+<script src="assets/plugins/umeditor/umeditor.config.js"></script>
+<script src="assets/plugins/umeditor/umeditor.min.js"></script>
+<script src="assets/plugins/umeditor/lang/zh-cn/zh-cn.js"></script>
 
 <script>
     var _global = {
@@ -221,11 +222,8 @@
             init: function () {
                 this.catname();
                 this.myform();
-                this.submitEvent();
                 this.goodsImg();
                 this.parameter();
-
-                $("#unit").code("UNIT");
             },
             // 查询品种
             catname: function () {
@@ -251,40 +249,40 @@
                         }
                     },
                     onSelect: function (suggestion) {
-                        $jcatname.next().val(suggestion.data); // 保存品种id到隐藏文本域
+                        $jcatname.next().val(suggestion.data).trigger('hidemsg'); // 保存品种id到隐藏文本域
                     }
                 });
             },
             myform: function () {
+                var self = this,
+                    $jsalesPrice = $('#jsalesPrice'),
+                    $jprice = $('#jprice'),
+                    idx = $jsalesPrice.find('.cnt').length,
+                    _unit = $('#unit').find('option:selected').text();
 
-                var $jsalesPrice = $('#jsalesPrice'),
-                        $jprice = $('#jprice');
-
-                // 量大价优
-                $('#jsales').on('click', function () {
-                    $jsalesPrice[this.checked ? 'show' : 'hide']()
-                            .find('.ipt').removeClass('n-invalid').val('').trigger("hidemsg");
-                    $jprice.attr('class', 'ipt').prop('disabled', this.checked).val('').trigger("hidemsg");
-                    $('#myform').data('validator').options.ignore = this.checked ? $jprice : $jsalesPrice.find('.ipt');
-                    $("em[name=unitD]").html($("#unit").find("option:selected").text())
-                }).prop('checked', false);
 
                 // 添加价格
-                var idx = $jsalesPrice.find('.cnt').length;
                 $('#jaddNewPrice').on('click', function () {
                     $jsalesPrice.append('<div class="cnt"> \n <div class="ipt-wrap">' +
                             '<input type="text" name="minKg' + (++idx) + '" class="ipt ipt-short" data-rule="required; range(1~99999)" placeholder="1-99999" autocomplete="off">' +
                             '</div> \n <em>-</em> \n <div class="ipt-wrap"><input type="text" name="maxKg' + idx + '" class="ipt ipt-short" data-rule="required; range(1~99999)" ' +
-                            'placeholder="1-99999" autocomplete="off"></div> \n <em name="unitD"></em> \n <div class="ipt-wrap ml"> \n ' +
+                            'placeholder="1-99999" autocomplete="off"></div> \n <em name="unitD">' + _unit + '</em> \n <div class="ipt-wrap ml"> \n ' +
                             '<input type="text" name="price' + idx + '" class="ipt ipt-short" placeholder="1-9999" data-rule="required; range(1~9999)" autocomplete="off"> \n' +
                             ' <span class="unit">元</span> \n </div> \n <button type="button" class="ubtn ubtn-red ml">删除</button> \n </div>');
-
-                    $("em[name=unitD]").html($("#unit").find("option:selected").text())
+                })
+                
+                // 单位
+                $('#unit').code('UNIT');
+                $('#unit').on('change', function () {
+                    _unit = $(this).find('option:selected').text();
+                    $('em[name=unitD]').html(_unit);
                 })
 
-                $("#unit").on("change", function () {
-                    $("em[name=unitD]").html($("#unit").find("option:selected").text());
-                })
+                //实例化编辑器
+                var um = UM.getEditor('detail', {
+                    initialFrameWidth: 700,
+                    initialFrameHeight: 400
+                }).setContent('');
 
                 // 删除价格
                 $jsalesPrice.on('click', '.ubtn-red', function () {
@@ -293,7 +291,7 @@
 
                 // 表单验证
                 $("#myform").validator({
-                    ignore: $jsalesPrice.find('.ipt'),
+                    ignore: $('#jsalesPrice .ipt, .edui-image-searchTxt'),
                     fields: {
                         categoryId: '品种: required',
                         name: '商品名称: required; length(1~20)',
@@ -306,70 +304,78 @@
                         pictureUrl: '商品图片: required',
                         minimumQuantity:'起购数量: range(0~9999)',
                         detail: {
-                            rule: "required",
-                            target: "#detailsError"
+                            rule: '商品详情: required',
+                            target: '#detailsError'
                         }
+                    },
+                    valid: function() {
+                        self.submitForm();
+                    },
+                    invalid: function() {
+                        console.log('error')
                     }
                 });
+
+                // 量大价优
+                $('#jsales').on('click', function () {
+                    $jsalesPrice[this.checked ? 'show' : 'hide']()
+                            .find('.ipt').removeClass('n-invalid').val('').trigger("hidemsg");
+                    $jprice.attr('class', 'ipt').prop('disabled', this.checked).val('').trigger("hidemsg");
+                    $('#myform').data('validator').options.ignore = this.checked ? $('#jprice, .edui-image-searchTxt') : $('#jsalesPrice .ipt, .edui-image-searchTxt');
+                    $("em[name=unitD]").html(_unit);
+                }).prop('checked', false);
             },
             // 提交事件
-            submitEvent: function () {
-                $('#jsubmit').on('click', function () {
-                    $('#myform').isValid(function (v) {
-                        // 表单验证通过
-                        if (v) {
-                            // 序列化属性值
-                            var attr = {};
-                            var trs = $("#attribute>tbody tr");
-                            $.each(trs, function (k, v) {
-                                attr[$($(v).find("input")[0]).val()] = $($(v).find("input")[1]).val();
-                            })
-                            var data = $("#myform").serializeObject();
-                            $.each(data, function(k,v){
-                                if (k.match("attr")){
-                                    delete data[k];
-                                }
-                            })
-                            data.attribute = JSON.stringify(attr);
+            submitForm: function () {
+                // 序列化属性值
+                var attr = {};
+                var trs = $("#attribute>tbody tr");
+                $.each(trs, function (k, v) {
+                    attr[$($(v).find("input")[0]).val()] = $($(v).find("input")[1]).val();
+                })
+                var data = $("#myform").serializeObject();
+                $.each(data, function(k,v){
+                    if (k.match("attr")){
+                        delete data[k];
+                    }
+                })
+                data.attribute = JSON.stringify(attr);
 
-                            if ($("input[name='mark']").is(':checked')){
-                                var gradient = new Array();
-                                // 量大价优按钮被选中
-                                var divs = $("#jsalesPrice > .cnt ");
-                                $.each(divs, function (k, v) {
-                                    gradient.push({
-                                        start: $($(v).find("input")[0]).val(),
-                                        end: $($(v).find("input")[1]).val(),
-                                        price: $($(v).find("input")[2]).val()
-                                    });
-                                })
-                                data.gradient = gradient;
-                                data.mark = 1;
-                            } else {
-                                data.mark = 0;
+                if ($("input[name='mark']").is(':checked')){
+                    var gradient = new Array();
+                    // 量大价优按钮被选中
+                    var divs = $("#jsalesPrice > .cnt ");
+                    $.each(divs, function (k, v) {
+                        gradient.push({
+                            start: $($(v).find("input")[0]).val(),
+                            end: $($(v).find("input")[1]).val(),
+                            price: $($(v).find("input")[2]).val()
+                        });
+                    })
+                    data.gradient = gradient;
+                    data.mark = 1;
+                } else {
+                    data.mark = 0;
+                }
+
+                $("#jsubmit").attr("disabled", "disabled");
+                $.ajaxSetup({
+                    contentType : 'application/json'
+                });
+                $.post("/commodity/save", JSON.stringify(data), function (data) {
+                    if (data.status == 200) {
+                        $.notify({
+                            type: 'success',
+                            title: '保存成功',
+                            text: '3秒后自动跳转到商品列表页',
+                            delay: 3e3,
+                            call: function() {
+                                setTimeout(function() {
+                                    location.href = '/commodity/list';
+                                }, 3e3);
                             }
-
-                            $("#jsubmit").attr("disabled", "disabled");
-                            $.ajaxSetup({
-                                contentType : 'application/json'
-                            });
-                            $.post("/commodity/save", JSON.stringify(data), function (data) {
-                                if (data.status == 200) {
-                                    $.notify({
-                                        type: 'success',
-                                        title: '保存成功',
-                                        text: '3秒后自动跳转到商品列表页',
-                                        delay: 3e3,
-                                        call: function() {
-                                            setTimeout(function() {
-                                                location.href = '/commodity/list';
-                                            }, 3e3);
-                                        }
-                                    });
-                                }
-                            })
-                        }
-                    });
+                        });
+                    }
                 })
             },
             // 商品图片
@@ -490,8 +496,6 @@
 
     $(function () {
         _global.fn.init();
-        //实例化编辑器
-        var um = UM.getEditor('detail').setContent("");
     })
 </script>
 

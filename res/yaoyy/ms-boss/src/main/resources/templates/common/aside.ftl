@@ -2,7 +2,7 @@
 <div class="aside" id="jaside">
     <dl>
         <dt>
-            <a href="index"><i class="fa fa-circle-o"></i>控制面板</a>
+            <a href="index"><i class="fa fa-dashboard"></i>控制面板</a>
         </dt>
     </dl>
     <dl>

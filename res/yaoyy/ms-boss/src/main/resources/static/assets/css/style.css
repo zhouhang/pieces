@@ -185,15 +185,15 @@ a.ubtn{height:28px;}
 .fa-form .cnt .ipt:disabled{background:#ededed;color:#999;}
 .fa-form .cnt .ipt-short{width:80px;}
 .fa-form .cnt .ipt-mul{height:80px;vertical-align:top;}
-.fa-form .cnt .ipt-wrap{position:relative;display:inline-block;}
-.fa-form .cnt .ipt-wrap .unit{position:absolute;top:1px;right:1px;line-height:1.5;padding:6px 9px;background:#ebebeb;color:#999;}
-.fa-form .cnt .msg-box{position:absolute;top:33px;left:5px;z-index:2;display:block;line-height:18px;padding:2px 5px;background:#d74141;color:#fff;}
-.fa-form .cnt .msg-box:after{content:"";position:absolute;top:-10px;left:10px;border:5px dashed transparent;border-bottom:5px solid #d74141;}
-.fa-form .cnt .msg-box .error{color:#fff;}
-.fa-form .cnt .n-invalid{border-color:#d74141;}
+.fa-form .ipt-wrap{position:relative;display:inline-block;}
+.fa-form .ipt-wrap .unit{position:absolute;top:1px;right:1px;line-height:1.5;padding:6px 9px;background:#ebebeb;color:#999;}
+.fa-form .msg-box{position:absolute;top:33px;left:5px;z-index:9999;display:block;line-height:18px;padding:2px 5px;background:#d74141;color:#fff;}
+.fa-form .msg-box:after{content:"";position:absolute;top:-10px;left:10px;border:5px dashed transparent;border-bottom:5px solid #d74141;}
+.fa-form .msg-box .error{color:#fff;}
 .fa-form .cnt .tips{margin-left:10px;color:#999;}
 .fa-form .cnt-mul{margin-bottom:15px;}
-.fa-form .cnt-mul .msg-box{top:96%;}
+.fa-form .cnt-mul .up-img{vertical-align:top;}
+.fa-form .cnt-mul .msg-box{top:auto;bottom:-23px;}
 .fa-form .cnt-table{padding-top:10px;}
 .fa-form .cnt-table table{margin:0;}
 .fa-form .agreement .cnt{height:46px;}
@@ -214,6 +214,10 @@ a.ubtn{height:28px;}
 .Validform_checktip{position:absolute;top:30px;left:5px;z-index:2;display:block;line-height:18px;padding:2px 5px;background:#d74141;color:#fff;display:none;}
 .Validform_checktip:after{content:"";position:absolute;top:-10px;left:10px;border:5px dashed transparent;border-bottom:5px solid #d74141;}
 .Validform_wrong{display:block;}
+ /*文本编辑器*/ 
+.fa-form .edui-modal{line-height:normal;}
+.fa-form .edui-modal table{width:auto;margin:0;line-height:normal;}
+.fa-form .edui-modal td{height:auto;border:none;text-align:left;}
 /* 弹层表单 */
 .fa-form-layer{padding:30px 40px;max-height:100%;}
 .fa-form-layer .item{padding-left:100px;}
