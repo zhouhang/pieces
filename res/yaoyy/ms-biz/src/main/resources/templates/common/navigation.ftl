@@ -29,12 +29,13 @@
     </nav>
 </footer>
 <script>
-    $(function(){
-        if(is_weixin()) {
+    window.onload = function () {
+
+        if (is_weixin()) {
             var a = $(".ui-nav a");
             $(a, function (k, v) {
-                $(v).attr("href", $(v).attr("href")+"?source=WECHAT")
+                $(v).attr("href", $(v).attr("href") + "?source=WECHAT")
             })
         }
-    })
+    }
 </script>
