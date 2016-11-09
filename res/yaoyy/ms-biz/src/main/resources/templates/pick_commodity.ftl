@@ -238,47 +238,22 @@
                                 if(result.status=="200"){
                                     //清空选货单
                                     localStorage.removeItem(CARTNAME);
-                                    var user=result.data;
-                                    <#if  Session.user_session_biz?exists>
-                                        var login=true;
-                                    <#else>
-                                        var login=false;
-                                    </#if>
-                                    if(user.type==1&&!login){
-                                        layer.open({
-                                            className: 'layer-custom',
-                                            content: '<div class="box"><div class="hd">您的选货单已提交成功！</div><div class="bd">我们会在30分钟之内与您取得联系。 注册可以跟踪您的所有选货单申请。</div></div>'
-                                            ,btn: ['去注册', '返回']
-                                            ,yes: function(index){
-                                                location.href = '/user/register';
-                                            },no: function(index) {
-                                                window.history.back(); // 返回按钮事件
-                                            },shadeClose: false
-                                        });
-                                    }
-                                    else{
-                                        if(!login){
-                                            layer.open({
-                                                className: 'layer-custom',
-                                                content: '<div class="box"><div class="hd">您的选货单已提交成功！</div><div class="bd">我们会在30分钟之内与您取得联系。登录可以跟踪您的所有选货单申请。</div></div>'
-                                                ,btn: ['去登录', '返回']
-                                                ,yes: function(index){
-                                                    location.href = '/user/login';
-                                                },no: function(index) {
-                                                    window.history.back(); // 返回按钮事件
-                                                },shadeClose: false
-                                            });
-                                        }
-                                        else{
+
+                                    layer.open({
+                                        className: 'layer-custom',
+                                        content: '<div class="box"><div class="hd">您的选货单已提交成功！</div><div class="bd">我们会在30分钟之内与您取得联系。登录可以跟踪您的所有选货单申请。</div></div>'
+                                        ,btn: ['历史选货单', '返回']
+                                        ,yes: function(index){
                                             if(is_weixin()){
                                                 location.href = '/pick/list?source=WECHAT';
                                             }
                                             else{
                                                 location.href ='/pick/list';
                                             }
-                                        }
-                                    }
-
+                                        },no: function(index) {
+                                            window.history.back(); // 返回按钮事件
+                                        },shadeClose: false
+                                    });
                                 }
                             }
                         })

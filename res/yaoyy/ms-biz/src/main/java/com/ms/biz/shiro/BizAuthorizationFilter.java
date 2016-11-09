@@ -39,8 +39,6 @@ public class BizAuthorizationFilter extends AuthorizationFilter {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-
-
 		Subject subject = getSubject(request, response);
 		// 先判断是否需要重新登录
 		if (subject.getPrincipal() == null) {

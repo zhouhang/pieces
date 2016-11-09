@@ -125,7 +125,7 @@
                 <spring.dataSource.password>123456</spring.dataSource.password>
                 <doc.base.url>http://yb647.free.natapp.cc</doc.base.url>
                 <pro.upload.path>E:/development/apache-tomcat-8.0.361/webapps/ms-files/</pro.upload.path>
-                <pro.upload.url>http://127.0.0.1:8188/ms-files/</pro.upload.url>
+                <pro.upload.url>http://static.yaobest.com/</pro.upload.url>
                 <elasticsearch.host>192.168.1.41</elasticsearch.host>
                 <elasticsearch.port>9300</elasticsearch.port>
             </properties>
