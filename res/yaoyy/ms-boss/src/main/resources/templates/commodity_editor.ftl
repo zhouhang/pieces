@@ -375,7 +375,7 @@
                 // 量大价优
                 $('#jsales').on('click', function () {
                     $jsalesPrice[this.checked ? 'show' : 'hide']()
-                            .find('.ipt').removeClass('n-invalid').val('').trigger("hidemsg");
+                            .find('.ipt').removeClass('n-invalid').trigger("hidemsg");
                     $jprice.attr('class', 'ipt').prop('disabled', this.checked).val('').trigger("hidemsg");
                     $('#myform').data('validator').options.ignore = this.checked ? $('#jprice, .edui-image-searchTxt') : $('#jsalesPrice .ipt, .edui-image-searchTxt');
                     $("em[name=unitD]").html(_unit);
