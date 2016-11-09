@@ -1,8 +1,10 @@
 package com.ms.biz.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.ms.dao.model.Article;
 import com.ms.dao.model.Commodity;
 import com.ms.dao.vo.CommodityVo;
+import com.ms.service.ArticleService;
 import com.ms.service.CommodityService;
 import com.ms.tools.entity.Result;
 import com.ms.tools.exception.NotFoundException;
@@ -25,6 +27,9 @@ public class CommodityController {
     @Autowired
     private CommodityService commodityService;
 
+    @Autowired
+    private ArticleService articleService;
+
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     public String commodityDetail(@PathVariable("id") Integer id,ModelMap model) {
 
@@ -39,6 +44,12 @@ public class CommodityController {
         List<CommodityVo> commodityVoList=commodityService.findByCategoryId(commodityVo.getCategoryId());
         model.put("commodityVo",commodityVo);
         model.put("commodityVoList",commodityVoList);
+
+        // 质量保证
+        Article article = articleService.findById(2);
+        if (article!= null) {
+            model.put("article", article.getContent());
+        }
 
         return "commodity_detail";
     }

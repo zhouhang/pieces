@@ -95,7 +95,9 @@
                 </div>
                 <div class="item" id="attributeItem">
                 </div>
-                <div class="item"></div>
+                <div class="item">
+                    ${article!}
+                </div>
             </div>
         </div>
 
