@@ -201,6 +201,7 @@
                         }
 
                 $('#submit').on('click', function() {
+                    var userinfo=getAppyInfo();
                     if (!flag&&!userinfo) {
                         form();
                         return false;
