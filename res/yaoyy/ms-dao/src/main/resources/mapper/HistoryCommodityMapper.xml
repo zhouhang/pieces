@@ -118,4 +118,13 @@
         </set>
         where id = #{id}
     </update>
+    <select id="findByIds" parameterType="java.lang.Integer" resultMap="HistoryCommodityResultMapVo">
+        select
+        <include refid="Base_Column_List" />
+        from history_commodity
+        where id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
 </mapper>

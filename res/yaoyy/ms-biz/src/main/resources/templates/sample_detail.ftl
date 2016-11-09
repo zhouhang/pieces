@@ -36,7 +36,7 @@
             <div class="hd">寄样商品：</div>
             <ul class="list">
                <#list sendSampleVo.commodityList as commodity >
-                <li><a href="commodity/detail/${commodity.id?c}">${commodity.name}  ${commodity.origin}  ${commodity.spec}</a></li>
+                <li><a href="commodity/detail/${commodity.commodityId?c}">${commodity.name}  ${commodity.origin}  ${commodity.spec}</a></li>
                </#list>
             </ul>
         </div>

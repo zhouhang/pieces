@@ -133,11 +133,11 @@
                 <div class="cnt">
                     <div id="chooseGoods">
                         <#list sendSampleVo.commodityList  as commodity>
-                            <span>${commodity.name} ${commodity.origin} ${commodity.spec}<i data-id="${commodity.id}"></i></span>
+                            <span>${commodity.name} ${commodity.origin} ${commodity.spec}<i data-id="${commodity.commodityId}"></i></span>
                         </#list>
                     </div>
                     <input type="text" name="search" id="searchGoods" class="ipt" placeholder="商品名称" autocomplete="off">
-                    <input type="hidden" name="intention" id="goodsName" value="${sendSampleVo.intention?default('')}">
+                    <input type="hidden" name="intention" id="goodsName" value="${sendSampleVo.intentCommodityIds?default('')}">
                     <div class="cnt-table hide" id="goodsSuggestions">
                         <table>
                             <thead>
@@ -285,7 +285,7 @@
             myform: function() {
 
                 var self = this;
-                vals = [${sendSampleVo.intention?default('')}],
+                vals = [${sendSampleVo.intentCommodityIds?default('')}],
                         timer = 0,
                         $goodsSuggestions = $('#goodsSuggestions');
 
@@ -647,6 +647,19 @@
         });
         $("#saveAddress").on('click', function() {
             var url = _global.v.addressSaveUrl;
+            var intention=$("#goodsName").val();
+            if(intention==""){
+                $.notify({
+                    type: 'error',
+                    title: '保存失败',
+                    text: '意向商品不能为空',
+                    delay: 3e3,
+                    call: function() {
+                    }
+                });
+                return;
+            }
+
             $.ajax({
                 url: url,
                 data: $("#addressForm").serialize()+"&remark="+$("#addressRemark").val(),

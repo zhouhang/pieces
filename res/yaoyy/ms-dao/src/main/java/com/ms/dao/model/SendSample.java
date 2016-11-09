@@ -16,7 +16,7 @@ public class SendSample  implements Serializable {
 	//寄样单号
 	private String code;
 	
-	//寄样商品
+	//寄样商品(历史表中数据)
 	private String intention;
 	
 	//处理状态：
