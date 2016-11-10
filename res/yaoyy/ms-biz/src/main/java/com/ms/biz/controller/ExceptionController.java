@@ -184,7 +184,7 @@ public class ExceptionController implements ErrorController {
 
     @Override
     public String getErrorPath() {
-        return "";
+        return "error/";
     }
 
 }
