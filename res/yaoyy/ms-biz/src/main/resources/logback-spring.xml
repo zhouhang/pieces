@@ -53,14 +53,16 @@
         </filter>
     </appender>
 
-    <logger name="com.ms">
-        <level value="ERROR" />
-        <appender-ref ref="error" />
-    </logger>
+    <!--<logger name="com.ms">-->
+        <!--<level value="ERROR" />-->
+        <!--<appender-ref ref="error" />-->
+    <!--</logger>-->
 
-    <logger name="com.ms">
+    <root>
         <level value="info" />
         <level value="debug" />
+        <level value="ERROR" />
         <appender-ref ref="file" />
-    </logger>
+        <appender-ref ref="error" />
+    </root>
 </configuration>
