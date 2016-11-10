@@ -20,8 +20,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer implements EmbeddedServletContainerCustomizer {
 
-    @Autowired
-    ErrorPageFilter errorPageFilter;
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -35,15 +33,23 @@ public class Application extends SpringBootServletInitializer implements Embedde
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
         container.setPort(8189);
-        errorPageFilter.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,"/error/404"));
-        errorPageFilter.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR,"/error/500"));
-        errorPageFilter.addErrorPages(new ErrorPage(RuntimeException.class,"/error/500"));
     }
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(Application.class);
     }
+
+    @Bean
+    public  ErrorPageFilter initErrorPageFilter() {
+        ErrorPageFilter filter = new ErrorPageFilter();
+        filter.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,"/error/404"));
+        filter.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR,"/error/500"));
+        filter.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST,"/error/400"));
+        filter.addErrorPages(new ErrorPage(RuntimeException.class,"/error/500"));
+        return filter;
+    }
+
     //显示声明CommonsMultipartResolver为mutipartResolver
     @Bean(name = "multipartResolver")
     public MultipartResolver multipartResolver(){

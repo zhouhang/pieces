@@ -9,9 +9,13 @@ import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomi
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.boot.web.support.ErrorPageFilter;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 
 /**
  * Created by burgl on 2016/8/13.
@@ -26,8 +30,7 @@ import org.springframework.stereotype.Controller;
 public class Application extends SpringBootServletInitializer implements EmbeddedServletContainerCustomizer {
 
 
-    @Autowired
-    ErrorPageFilter errorPageFilter;
+
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
@@ -35,21 +38,26 @@ public class Application extends SpringBootServletInitializer implements Embedde
 
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
-        container.setPort(8189);
+        container.setPort(8188);
 //        container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,"/error/404"));
 //        container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR,"/error/500"));
 //        container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST,"/error/400"));
-
-        errorPageFilter.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,"/error/404"));
-        errorPageFilter.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR,"/error/500"));
-        errorPageFilter.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST,"/error/400"));
-        errorPageFilter.addErrorPages(new ErrorPage(RuntimeException.class,"/error/500"));
     }
 
 
     public Application() {
         super();
-        setRegisterErrorPageFilter(true); // <- this one
+//        setRegisterErrorPageFilter(true); // <- this one
+    }
+
+    @Bean
+    public  ErrorPageFilter initErrorPageFilter() {
+        ErrorPageFilter filter = new ErrorPageFilter();
+        filter.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND,"/error/404"));
+        filter.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR,"/error/500"));
+        filter.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST,"/error/400"));
+        filter.addErrorPages(new ErrorPage(RuntimeException.class,"/error/500"));
+        return filter;
     }
 
     @Override
