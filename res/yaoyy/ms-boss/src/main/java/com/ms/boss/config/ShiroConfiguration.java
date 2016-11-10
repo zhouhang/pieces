@@ -1,31 +1,31 @@
 package com.ms.boss.config;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import com.ms.boss.shiro.BossAuthorizationFilter;
 import com.ms.boss.shiro.BossRealm;
 import com.ms.boss.shiro.RetryLimitHashedCredentialsMatcher;
 import com.ms.boss.shiro.ShiroTagFreeMarkerConfigurer;
+import com.ms.service.redis.RedisConfig;
 import com.ms.service.redis.RedisManager;
+import com.ms.service.shiro.MsShiroFilterFactoryBean;
 import com.ms.service.shiro.ShiroRedisCacheManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import com.ms.service.shiro.MsShiroFilterFactoryBean;
 import org.springframework.web.filter.DelegatingFilterProxy;
-import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.JedisShardInfo;
-import redis.clients.jedis.ShardedJedisPool;
+
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 
 @Configuration
+@AutoConfigureAfter(RedisConfig.class)
 public class ShiroConfiguration {
 
     @Value("${doc.base.url}")
@@ -45,9 +45,9 @@ public class ShiroConfiguration {
     }
 
     @Bean(name = "bossRealm")
-    public BossRealm getShiroRealm() {
+    public BossRealm getShiroRealm(RetryLimitHashedCredentialsMatcher credentialsMatcher) {
         BossRealm bossRealm =  new BossRealm();
-        bossRealm.setCredentialsMatcher(getCredentialsMatcher());
+        bossRealm.setCredentialsMatcher(credentialsMatcher);
         return bossRealm;
     }
 
@@ -64,16 +64,16 @@ public class ShiroConfiguration {
     }
 
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager() {
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(BossRealm realm) {
         DefaultWebSecurityManager dwsm = new DefaultWebSecurityManager();
-        dwsm.setRealm(getShiroRealm());
+        dwsm.setRealm(realm);
         return dwsm;
     }
 
     @Bean
-    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor() {
+    public AuthorizationAttributeSourceAdvisor getAuthorizationAttributeSourceAdvisor(DefaultWebSecurityManager defaultWebSecurityManager) {
         AuthorizationAttributeSourceAdvisor aasa = new AuthorizationAttributeSourceAdvisor();
-        aasa.setSecurityManager(getDefaultWebSecurityManager());
+        aasa.setSecurityManager(defaultWebSecurityManager);
         return new AuthorizationAttributeSourceAdvisor();
     }
 
@@ -84,64 +84,37 @@ public class ShiroConfiguration {
     }
 
     @Bean(name = "shiroFilter")
-    public MsShiroFilterFactoryBean getMsShiroFilterFactoryBean() {
+    public MsShiroFilterFactoryBean getMsShiroFilterFactoryBean(DefaultWebSecurityManager securityManager) {
         MsShiroFilterFactoryBean shiroFilterFactoryBean = new MsShiroFilterFactoryBean();
         shiroFilterFactoryBean
-                .setSecurityManager(getDefaultWebSecurityManager());
+                .setSecurityManager(securityManager);
         shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setSuccessUrl("/403");
-        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        shiroFilterFactoryBean.setUnauthorizedUrl("/error/403");
         shiroFilterFactoryBean.setFiltersString("bossAuthorization=bossAuthorizationFilter");
         //Map<String, Filter> filters = new HashMap<>();
         //filters.put("bossAuthorization", getBizAuthorizationFilter());
         //shiroFilterFactoryBean.setFilters(filters);
-        shiroFilterFactoryBean.setFilterChainDefinitionsString("/login=anon;/logout=logout;/assets/**=anon;/error/**=anon;/role/** = bossAuthorization;/category/**=bossAuthorization;/commodity/**=bossAuthorization;");
+        shiroFilterFactoryBean.setFilterChainDefinitionsString("/login=anon;/logout=logout;/assets/**=anon;/error/**=anon;" +
+                "/role/** = bossAuthorization;" +
+                "/category/**=bossAuthorization;" +
+                "/commodity/**=bossAuthorization;");
         return shiroFilterFactoryBean;
     }
 
-    @Bean(name = "jedisPoolConfig")
-    public JedisPoolConfig getJedisPoolConfig() {
-        JedisPoolConfig jpc = new JedisPoolConfig();
-        jpc.setMaxActive(20);
-        jpc.setMaxIdle(10);
-        jpc.setMaxWait(100);
-        return jpc;
-    }
-
-    @Bean(name = "jedis.shardInfo")
-    public JedisShardInfo getJedisShardInfo() {
-        JedisShardInfo jedisShardInfo = new JedisShardInfo("192.168.1.41",6379,"master");
-        return jedisShardInfo;
-    }
-
-    @Bean(name = "shardedJedisPool")
-    public ShardedJedisPool getShardedJedisPool() {
-        ArrayList<JedisShardInfo> list = new ArrayList<JedisShardInfo>();
-        list.add(getJedisShardInfo());
-        ShardedJedisPool shardedJedisPool = new ShardedJedisPool(getJedisPoolConfig(),list);
-        return shardedJedisPool;
-    }
-
-    @Bean(name = "redisManager")
-    public RedisManager getRedisManager() {
-        RedisManager redisManager = new RedisManager();
-        redisManager.setExpire(3600);
-        redisManager.setJedisPool(getShardedJedisPool());
-        return redisManager;
-    }
 
     @Bean(name = "cacheManager")
-    public ShiroRedisCacheManager getCacheManager() {
+    public ShiroRedisCacheManager getCacheManager(RedisManager redisManager) {
         ShiroRedisCacheManager shiroRedisCacheManager = new ShiroRedisCacheManager();
-        shiroRedisCacheManager.setRedisManager(getRedisManager());
+        shiroRedisCacheManager.setRedisManager(redisManager);
         shiroRedisCacheManager.setApplicationPrefix("boss:");
         shiroRedisCacheManager.setExpire(3600);
         return shiroRedisCacheManager;
     }
 
     @Bean(name = "credentialsMatcher")
-    public RetryLimitHashedCredentialsMatcher getCredentialsMatcher() {
-        RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher(getCacheManager());
+    public RetryLimitHashedCredentialsMatcher getCredentialsMatcher(ShiroRedisCacheManager cacheManager) {
+        RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher(cacheManager);
         retryLimitHashedCredentialsMatcher.setRetryCounterCacheName("retryCounter");
         return retryLimitHashedCredentialsMatcher;
     }

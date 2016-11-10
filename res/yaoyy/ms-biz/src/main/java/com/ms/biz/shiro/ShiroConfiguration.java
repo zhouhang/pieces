@@ -2,6 +2,7 @@ package com.ms.biz.shiro;
 
 import com.ms.biz.config.WebConfig;
 import com.ms.dao.config.MyBatisConfig;
+import com.ms.service.redis.RedisConfig;
 import com.ms.service.redis.RedisManager;
 import com.ms.service.shiro.MsShiroFilterFactoryBean;
 import com.ms.service.shiro.ShiroRedisCacheManager;
