@@ -46,10 +46,15 @@
             <charset>UTF-8</charset>
             <pattern>%d %p (%file:%line\)- %m%n</pattern>
         </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
     </appender>
 
     <logger name="com.ms">
-        <level value="error" />
+        <level value="ERROR" />
         <appender-ref ref="error" />
     </logger>
 
