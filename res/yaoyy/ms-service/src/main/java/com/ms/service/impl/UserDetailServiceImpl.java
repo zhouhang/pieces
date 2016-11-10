@@ -61,6 +61,7 @@ public class UserDetailServiceImpl  extends AbsCommonService<UserDetail> impleme
 	}
 
 
+
 	@Override
 	public ICommonDao<UserDetail> getDao() {
 		return userDetailDao;
