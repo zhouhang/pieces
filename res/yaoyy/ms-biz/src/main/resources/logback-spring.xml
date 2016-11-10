@@ -12,10 +12,10 @@
 
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--<Encoding>UTF-8</Encoding>-->
-        <File>../logs/yaoyy_boss.log</File>
+        <File>../logs/yaoyy_biz.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>
-                ../logs/yaoyy_boss-%d{yyyy-MM-dd}.%i.log
+                ../logs/yaoyy_biz-%d{yyyy-MM-dd}.%i.log
             </FileNamePattern>
             <MaxHistory>10</MaxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy
@@ -31,10 +31,10 @@
 
     <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--<Encoding>UTF-8</Encoding>-->
-        <File>../logs/yaoyy_error_boss.log</File>
+        <File>../logs/yaoyy_error_biz.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>
-                ../logs/yaoyy_error_boss-%d{yyyy-MM-dd}.%i.log
+                ../logs/yaoyy_error_biz-%d{yyyy-MM-dd}.%i.log
             </FileNamePattern>
             <MaxHistory>10</MaxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy
