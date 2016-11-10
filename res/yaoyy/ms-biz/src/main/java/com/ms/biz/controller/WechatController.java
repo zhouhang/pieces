@@ -78,13 +78,6 @@ public class WechatController {
     }
 
 
-    @RequestMapping("test")
-    public String test(String phone){
-
-        userService.transactionalTest(phone);
-
-        return "wechat_test";
-    }
 
     /**
      * 跳转到微信登陆页面（绑定微信和手机号）

@@ -51,7 +51,6 @@
             init: function() {
                 this.validator();
                 this.loadInfo();
-
             },
             loadInfo:function(){
                   var userinfo=getAppyInfo();

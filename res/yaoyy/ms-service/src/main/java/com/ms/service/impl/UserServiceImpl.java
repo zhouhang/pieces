@@ -126,9 +126,6 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 			user.setType(UserEnum.auto.getType());
 			user.setCreateTime(new Date());
 			user.setUpdateTime(new Date());
-//			Password pass = EncryptUtil.PiecesEncode(DEF_PASSWORD);
-//			user.setPassword(pass.getPassword());
-//			user.setSalt(pass.getSalt());
 			create(user);
 		}
 
@@ -162,19 +159,30 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 	@Override
 	@Transactional
 	public User registerWechat(String phone, String openId, String nickname, String headImgUrl) {
-		User user = new User();
-		user.setPhone(phone);
-		user.setOpenid(openId);
-		user.setType(UserEnum.enable.getType());
-		user.setCreateTime(new Date());
-		user.setUpdateTime(new Date());
-		create(user);
-		UserDetail userDetail = new UserDetail();
-		userDetail.setUserId(user.getId());
-		userDetail.setPhone(phone);
-		userDetail.setNickname(nickname);
-		userDetail.setHeadImgUrl(headImgUrl);
-		userDetail.setType(UserEnum.enable.getType());
+		User user = findByPhone(phone);
+		if(user!=null){
+			user.setOpenid(openId);
+			update(user);
+		}else{
+			user = new User();
+			user.setPhone(phone);
+			user.setOpenid(openId);
+			user.setType(UserEnum.enable.getType());
+			user.setCreateTime(new Date());
+			user.setUpdateTime(new Date());
+			create(user);
+		}
+
+		UserDetail userDetail  = userDetailService.findByUserId(user.getId());
+		if(userDetail==null){
+			userDetail = new UserDetail();
+			userDetail.setUserId(user.getId());
+			userDetail.setPhone(phone);
+			userDetail.setNickname(nickname);
+			userDetail.setHeadImgUrl(headImgUrl);
+		}else {
+			userDetail.setHeadImgUrl(headImgUrl);
+		}
 		userDetailService.save(userDetail);
 		return user;
 	}
@@ -225,29 +233,6 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 		userDao.update(user);
 	}
 
-	@Override
-	@Transactional(rollbackFor = RuntimeException.class)
-	public void transactionalTest(String phone) {
-		User user = new User();
-		user.setPhone(phone);
-		user.setType(UserEnum.enable.getType());
-		user.setCreateTime(new Date());
-		user.setUpdateTime(new Date());
-//		create(user);
-		userDao.create(user);
-		if(true){
-			throw  new RuntimeException("xxxxx");
-		}
-
-
-		UserDetail userDetail = new UserDetail();
-		userDetail.setUserId(user.getId());
-		userDetail.setPhone(phone);
-		userDetail.setNickname(phone);
-		userDetail.setType(UserEnum.enable.getType());
-		userDetailService.save(userDetail);
-
-	}
 
 	@Override
 	public ICommonDao<User> getDao() {

@@ -11,4 +11,5 @@ public interface UserDetailService extends ICommonService<UserDetail>{
     public UserDetailVo findByUserId(Integer userId);
 
     public void save(UserDetail userDetail);
+
 }
