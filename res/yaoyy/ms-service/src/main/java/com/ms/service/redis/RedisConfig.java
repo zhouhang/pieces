@@ -27,7 +27,7 @@ public class RedisConfig {
 
     @Bean(name = "jedis.shardInfo")
     public JedisShardInfo getJedisShardInfo() {
-        JedisShardInfo jedisShardInfo = new JedisShardInfo("192.168.1.41",6379,"master");
+        JedisShardInfo jedisShardInfo = new JedisShardInfo("localhost",6379,"master");
         return jedisShardInfo;
     }
 
