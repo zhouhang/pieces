@@ -21,25 +21,32 @@
         <div class="tools">
             <div class="filter">
                 <form action="" id="searchForm">
-                    <label>联系人：</label><input name="nickname" type="text" class="ipt" placeholder="请输入" value="">
-                    <label>联系电话：</label><input name="phone" type="text" class="ipt" placeholder="联系电话" value="">
-                    <label>寄样编号：</label><input name="code" type="text" class="ipt" placeholder="寄样编号" value="">
-                    <label>状态：</label>
-                    <select name="status" class="slt">
-                        <option value="">全部</option>
-                        <option value="0">未处理</option>
-                        <option value="1">同意寄样</option>
-                        <option value="2">拒绝寄样</option>
-                        <option value="3">客户来访</option>
-                        <option value="4">已寄样</option>
-                        <option value="5">寄样完成</option>
-                    </select>
-                    <label>是否废弃</label>
-                    <select name="abandon" class="slt">
-                        <option value="0">正常</option>
-                        <option value="1">废弃</option>
-                    </select>
-                    <button type="button" class="ubtn ubtn-blue" id="search">搜索</button>
+                    <div class="group">
+                        <label>联系人：</label>
+                        <input name="nickname" type="text" class="ipt" placeholder="请输入" value="">
+                        <label>联系电话：</label>
+                        <input name="phone" type="text" class="ipt" placeholder="联系电话" value="">
+                        <label>寄样编号：</label>
+                        <input name="code" type="text" class="ipt" placeholder="寄样编号" value="">
+                    </div>
+                    <div class="group">
+                        <label>状态：</label>
+                        <select name="status" class="slt">
+                            <option value="">全部</option>
+                            <option value="0">未受理</option>
+                            <option value="1">同意寄样</option>
+                            <option value="2">拒绝寄样</option>
+                            <option value="3">客户来访</option>
+                            <option value="4">已寄样</option>
+                            <option value="5">寄样完成</option>
+                        </select>
+                        <label>是否废弃</label>
+                        <select name="abandon" class="slt">
+                            <option value="0">正常</option>
+                            <option value="1">废弃</option>
+                        </select>
+                        <button type="button" class="ubtn ubtn-blue" id="search">搜索</button>
+                    </div>
                 </form>
             </div>
 

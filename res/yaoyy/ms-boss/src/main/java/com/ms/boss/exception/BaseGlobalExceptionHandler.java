@@ -26,11 +26,7 @@ public class BaseGlobalExceptionHandler {
 
     private boolean debug = true;
 
-    protected static final Logger logger = null;
-
-    public Logger getLogger() {
-        return LoggerFactory.getLogger(BaseGlobalExceptionHandler.class);
-    }
+    protected static final Logger logger = LoggerFactory.getLogger(BaseGlobalExceptionHandler.class);
 
     protected static final String DEFAULT_ERROR_MESSAGE = "系统忙，请稍后再试";
 
@@ -43,7 +39,7 @@ public class BaseGlobalExceptionHandler {
         String errorMsg =  DEFAULT_ERROR_MESSAGE;
         String errorStack = Throwables.getStackTraceAsString(e);
 
-        getLogger().error("Request: {} raised {}", req.getRequestURI(), errorStack);
+        logger.error("Request: {} raised {}", req.getRequestURI(), errorStack);
         if (isAjaxRequest(req)) {
             return handleAjaxError(rsp, e);
         }

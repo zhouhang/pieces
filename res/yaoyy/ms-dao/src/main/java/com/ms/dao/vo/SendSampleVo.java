@@ -1,5 +1,6 @@
 package com.ms.dao.vo;
 
+import com.ms.dao.enums.BizSampleEnum;
 import com.ms.dao.model.Commodity;
 import com.ms.dao.model.SendSample;
 import com.ms.dao.enums.SampleEnum;
@@ -23,6 +24,26 @@ public class SendSampleVo extends SendSample{
 
 
     private String intentCommodityIds;
+
+    private Integer  getSample;//标记是否确认收货
+
+    private String bizStatusText;
+
+    public String getBizStatusText() {
+        return BizSampleEnum.findByValue(getStatus());
+    }
+
+    public void setBizStatusText(String bizStatusText) {
+        this.bizStatusText = bizStatusText;
+    }
+
+    public Integer getGetSample() {
+        return getSample;
+    }
+
+    public void setGetSample(Integer getSample) {
+        this.getSample = getSample;
+    }
 
     public String getIntentCommodityIds() {
         List<Integer> ids = new ArrayList<>();

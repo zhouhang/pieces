@@ -8,6 +8,7 @@
             <result column="num"  property="num" />
             <result column="unit"  property="unit" />
             <result column="total"  property="total" />
+            <result column="price"  property="price" />
             <result column="create_time"  property="createTime" />
         
     </resultMap>
@@ -30,12 +31,12 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,pick_id,commodity_id,num,unit,total,create_time
+        id,pick_id,commodity_id,num,unit,total,price,create_time
     </sql>
 
     <sql id="Join_Commodity_Column_List">
         pc.id as id,pc.pick_id as pick_id,pc.commodity_id as commodity_id,pc.num as num,
-        pc.unit as unit,pc.total as total,pc.create_time as create_time,
+        pc.unit as unit,pc.total as total,pc.create_time as create_time,pc.price as price,
         c.name as name,c.origin as origin,c.spec as spec,c.price as price,c.unit as price_unit,c.commodity_id as real_commodityId
     </sql>
 
@@ -76,9 +77,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ms.dao.model.PickCommodity">
         insert into
-        pick_commodity (pick_id,commodity_id,num,unit,total,create_time)
+        pick_commodity (pick_id,commodity_id,num,unit,total,price,create_time)
         values
-        (#{pickId},#{commodityId},#{num},#{unit},#{total},#{createTime})
+        (#{pickId},#{commodityId},#{num},#{unit},#{total},#{price},#{createTime})
     </insert>
 
     <update id="update" parameterType="com.ms.dao.model.PickCommodity">
@@ -103,6 +104,10 @@
                                             
             <if test="total != null">
                 total = #{total},
+            </if>
+
+            <if test="price != null">
+                price = #{price},
             </if>
                                             
             <if test="createTime != null">

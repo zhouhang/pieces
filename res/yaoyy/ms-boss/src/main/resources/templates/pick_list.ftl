@@ -26,10 +26,11 @@
                     <label>状态：</label>
                     <select name="status" class="slt">
                         <option value="">全部</option>
-                        <option value="0">未处理</option>
-                        <option value="1">处理中</option>
-                        <option value="2">未完成</option>
-                        <option value="3">已完成</option>
+                        <option value="0">未受理</option>
+                        <option value="1">已受理</option>
+                        <option value="4">审核不通过</option>
+                        <option value="2">交易未完成</option>
+                        <option value="3">交易已完成</option>
                     </select>
                     <label>是否废弃</label>
                     <select name="abandon" class="slt">

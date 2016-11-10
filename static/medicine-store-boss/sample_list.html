@@ -51,23 +51,32 @@
 			<div class="tools">
 				<div class="filter">
 					<form action="">
-								<label>联系人：</label>
-								<input type="text" class="ipt" placeholder="请输入">
-								<label>联系电话：</label>
-								<input type="text" class="ipt" placeholder="商品名称">
-								<label>寄样编号：</label>
-								<input type="text" class="ipt" placeholder="商品名称">
-								<label>状态：</label>
-								<select name="" class="slt">
-									<option value="">全部</option>
-									<option value="">未受理</option>
-									<option value="">同意寄样</option>
-									<option value="">拒绝寄样</option>
-									<option value="">客户来访</option>
-									<option value="">已寄样</option>
-									<option value="">寄样完成</option>
-								</select>
-								<button class="ubtn ubtn-blue">搜索</button>
+						<div class="group">
+							<label>联系人：</label>
+							<input type="text" class="ipt" placeholder="请输入">
+							<label>联系电话：</label>
+							<input type="text" class="ipt" placeholder="商品名称">
+							<label>寄样编号：</label>
+							<input type="text" class="ipt" placeholder="商品名称">
+						</div>
+						<div class="group">
+							<label>状态：</label>
+							<select name="" class="slt">
+								<option value="">全部</option>
+								<option value="">未受理</option>
+								<option value="">同意寄样</option>
+								<option value="">拒绝寄样</option>
+								<option value="">客户来访</option>
+								<option value="">已寄样</option>
+								<option value="">寄样完成</option>
+							</select>
+							<label>是否废弃</label>
+							<select name="abandon" class="slt">
+		                        <option value="0">正常</option>
+		                        <option value="1">废弃</option>
+		                    </select>
+							<button class="ubtn ubtn-blue">搜索</button>
+						</div>
 					</form>
 				</div>
 

@@ -32,13 +32,4 @@ public class GlobalExceptionHandler  extends BaseGlobalExceptionHandler{
         return handleError(req, rsp, e, "error-front", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
-
-    @Override
-    public Logger getLogger() {
-        return LoggerFactory.getLogger(GlobalExceptionHandler.class);
-    }
-
-
-
 }

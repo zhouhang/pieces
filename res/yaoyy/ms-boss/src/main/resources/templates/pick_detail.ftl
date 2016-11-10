@@ -147,7 +147,7 @@
             <button type="button" class="ubtn ubtn-blue submit1">同意受理</button>
             <button type="button" class="ubtn ubtn-gray ml submit2">拒绝受理</button>
         </div>
-        <form action=""  <#if pickVo.status==0||pickVo.status==2||pickVo.status=3||pickVo.status=3> class="hide"</#if> id="traceForm">
+        <form action=""  <#if pickVo.status==0||pickVo.status==2||pickVo.status=3||pickVo.status=3||pickVo.status=4> class="hide"</#if> id="traceForm">
             <div class="item">
                 <div class="txt">跟踪记录：</div>
                 <div class="cnt">

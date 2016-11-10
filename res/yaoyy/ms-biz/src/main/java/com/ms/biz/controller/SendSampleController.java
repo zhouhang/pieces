@@ -75,6 +75,17 @@ public class SendSampleController {
         else{
             sampleList = sendSampleService.findByUserId(userId);
         }
+        sampleList.forEach(s->{
+            SampleTrackingVo sampleTrackingVo=new SampleTrackingVo();
+            sampleTrackingVo.setSendId(s.getId());
+            sampleTrackingVo.setRecordType(TrackingEnum.TRACKING_GET.getValue());
+            List<SampleTrackingVo> trackingList=sampleTrackingService.findAllByParams(sampleTrackingVo);
+            if(trackingList!=null){
+                s.setGetSample(1);
+            }else{
+                s.setGetSample(0);
+            }
+        });
         model.put("sampleList",sampleList);
         model.put("name",name);
         return "sample_list";

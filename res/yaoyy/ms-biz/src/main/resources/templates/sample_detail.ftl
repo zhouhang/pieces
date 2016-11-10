@@ -16,7 +16,7 @@
     <div class="sinfo">
         <div class="item">
             <ul class="info">
-                <li>寄样状态：${sendSampleVo.statusText}</li>
+                <li>寄样状态：${sendSampleVo.bizStatusText}</li>
                 <li>寄样单号：${sendSampleVo.code}</li>
                 <li>申请时间：${(sendSampleVo.createTime?datetime)!}</li>
             </ul>

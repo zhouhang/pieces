@@ -10,8 +10,6 @@ public class PickCommodityVo extends PickCommodity{
 
     private String spec;
 
-    private Float price;
-
     private String priceUnit;
 
     private Integer realCommodityId;//商品表中的Id
@@ -30,14 +28,6 @@ public class PickCommodityVo extends PickCommodity{
 
     public void setPriceUnit(String priceUnit) {
         this.priceUnit = priceUnit;
-    }
-
-    public Float getPrice() {
-        return price;
-    }
-
-    public void setPrice(Float price) {
-        this.price = price;
     }
 
     public String getName() {

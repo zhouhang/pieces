@@ -1,5 +1,6 @@
 package com.ms.dao.vo;
 
+import com.ms.dao.enums.BizPickEnum;
 import com.ms.dao.enums.PickEnum;
 import com.ms.dao.model.Commodity;
 import com.ms.dao.model.Pick;
@@ -13,6 +14,15 @@ public class PickVo extends Pick{
 
     private String statusText;
 
+    private String bizStatusText;
+
+    public String getBizStatusText() {
+        return BizPickEnum.findByValue(getStatus());
+    }
+
+    public void setBizStatusText(String bizStatusText) {
+        this.bizStatusText = bizStatusText;
+    }
 
     private List<PickCommodityVo> pickCommodityVoList;
 

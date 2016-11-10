@@ -1,6 +1,5 @@
-package com.ms.biz.shiro;
+package com.ms.service.redis;
 
-import com.ms.service.redis.RedisManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import redis.clients.jedis.JedisPoolConfig;

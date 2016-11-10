@@ -1,20 +1,19 @@
 package com.ms.dao.enums;
 
 /**
- * Created by xiao on 2016/10/28.
+ * Created by xiao on 2016/11/9.
  */
-public enum PickEnum {
-
-    PICK_NOTHANDLE(0,"未受理"),
-    PICK_HANDING(1,"已受理"),
+public enum BizPickEnum {
+    PICK_NOTHANDLE(0,"选货单已提交,等待客服来电"),
+    PICK_HANDING(1,"选货单已受理"),
     PICK_NOTFINISH(2,"交易未完成"),
     PICK_FINISH(3,"交易已完成"),
-    PICK_REFUSE(4,"审核不通过");
+    PICK_REFUSE(4,"选货单失效");
 
 
 
 
-    private PickEnum (Integer value, String text) {
+    private BizPickEnum (Integer value, String text) {
         this.value = value;
         this.text = text;
     }
@@ -41,11 +40,12 @@ public enum PickEnum {
      * @return
      */
     public static String findByValue(Integer id) {
-        for (PickEnum  pickEnum: PickEnum.values()) {
+        for (BizPickEnum  pickEnum: BizPickEnum.values()) {
             if (pickEnum.getValue().equals(id)) {
                 return pickEnum.getText();
             }
         }
         return null;
     }
+
 }
