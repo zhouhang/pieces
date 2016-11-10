@@ -1,5 +1,6 @@
 package com.ms.service.redis;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import redis.clients.jedis.JedisPoolConfig;
@@ -16,6 +17,16 @@ import java.util.ArrayList;
 @Configuration
 public class RedisConfig {
 
+
+    @Value("${redis.url}")
+    private String url;
+
+    @Value("${redis.port}")
+    private Integer port;
+
+    @Value("${redis.name}")
+    private String name;
+
     @Bean(name = "jedisPoolConfig")
     public JedisPoolConfig getJedisPoolConfig() {
         JedisPoolConfig jpc = new JedisPoolConfig();
@@ -27,7 +38,7 @@ public class RedisConfig {
 
     @Bean(name = "jedis.shardInfo")
     public JedisShardInfo getJedisShardInfo() {
-        JedisShardInfo jedisShardInfo = new JedisShardInfo("192.168.1.41",6379,"master");
+        JedisShardInfo jedisShardInfo = new JedisShardInfo(url,port,name);
         return jedisShardInfo;
     }
 

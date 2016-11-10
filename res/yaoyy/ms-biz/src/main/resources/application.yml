@@ -24,10 +24,15 @@ upload:
     path: @pro.upload.path@
     url: @pro.upload.url@
 
-logging:
-    level:
-        com:
-          ms: DEBUG
+redis:
+    url: @redis.url@
+    port: @redis.port@
+    name: @redis.name@
+
+#logging:
+#    level:
+#        com:
+#          ms: DEBUG
 
 server:
     error:
