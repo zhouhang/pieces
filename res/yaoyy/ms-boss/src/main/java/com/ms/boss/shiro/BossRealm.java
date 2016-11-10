@@ -1,8 +1,11 @@
 package com.ms.boss.shiro;
 
+import com.ms.dao.MemberDao;
 import com.ms.dao.model.Member;
+import com.ms.dao.model.Resources;
 import com.ms.service.MemberService;
 import com.ms.service.shiro.SerializableSimpleAuthenticationInfo;
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -16,6 +19,8 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -27,7 +32,11 @@ import java.util.Set;
 public class BossRealm extends AuthorizingRealm {
 
 	@Autowired
-	private MemberService memberService;
+	private MemberDao memberDao;
+
+
+
+
 	
 	private Set<Permission> addCommonPermissions(Set<Permission> permissions){
 		return permissions;
@@ -43,7 +52,14 @@ public class BossRealm extends AuthorizingRealm {
 			PrincipalCollection principals) {
 		String userCode = (String)principals.getPrimaryPrincipal();
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-		Set<String>	permissionSet  = memberService.findPermissionByUsername(userCode);
+		List<Resources> resourcesList =  memberDao.findResourcesByUserName(userCode);
+		Set<String> permissionSet = new HashSet<>();
+		for(Resources resources : resourcesList){
+			if(resources!=null&& StringUtils.isNotBlank(resources.getPermission())){
+				permissionSet.add(resources.getPermission());
+			}
+		}
+
 		authorizationInfo.setStringPermissions(permissionSet);
 		return authorizationInfo;
 	}
@@ -57,7 +73,7 @@ public class BossRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authToken) throws AuthenticationException {
 		BossToken token = (BossToken) authToken;
-		Member member = memberService.findByUsername(token.getUsername());
+		Member member = memberDao.findByUsername(token.getUsername());
 		if(member==null){
 			throw new AuthenticationException();
 		}
