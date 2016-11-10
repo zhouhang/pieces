@@ -55,6 +55,7 @@ public class PickCommodityServiceImpl  extends AbsCommonService<PickCommodity> i
 			CommodityVo commodityVo=commodityService.findById(p.getCommodityId());
 			HistoryCommodity historyCommodity=historyCommodityService.saveCommodity(commodityVo);
 			p.setCommodityId(historyCommodity.getId());
+			p.setPrice(commodityVo.getPrice());
 			float total=(commodityVo.getPrice())*(p.getNum());
 			p.setTotal(total);
 			p.setUnit(commodityVo.getUnitName());
