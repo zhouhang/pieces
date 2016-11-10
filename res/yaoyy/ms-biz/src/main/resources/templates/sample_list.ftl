@@ -41,8 +41,8 @@
                 </a>
                 </#list>
                 <div class="ft">
-                    <span class="status-5">状态：${sample.statusText}</span>
-                    <#if sample.status==4>
+                    <span class="status-${sample.status+1}">状态：${sample.bizStatusText}</span>
+                    <#if sample.status==4 && sample.getSample==0>
                     <button type="button" class="btn mid receipt"  sid="${sample.id?c}">确认收货</button>
                     </#if>
                 </div>

@@ -70,6 +70,7 @@ public class PickController {
         PageInfo<PickVo> pickVoPageInfo=pickService.findByParams(pickVo,pageNum,pageSize);
         pickVoPageInfo.getList().forEach(p->{
             p.setStatusText(p.getStatusText());
+            p.setBizStatusText(p.getBizStatusText());
         });
         return Result.success().data(pickVoPageInfo);
     }

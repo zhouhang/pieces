@@ -51,7 +51,10 @@
                 id = #{id}
             </if>
             <if test="sendId != null">
-            send_id = #{sendId}
+                and send_id = #{sendId}
+            </if>
+            <if test="recordType != null">
+               and  record_type = #{recordType}
             </if>
         </where>
     </select>

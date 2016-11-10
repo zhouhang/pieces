@@ -21,8 +21,18 @@ public class PickCommodity  implements Serializable {
 	private String unit;
 	
 	private Float total;
+
+	private Float price;
 	
 	private Date createTime;
+
+	public Float getPrice() {
+		return price;
+	}
+
+	public void setPrice(Float price) {
+		this.price = price;
+	}
 	
 	public PickCommodity(){}
 	

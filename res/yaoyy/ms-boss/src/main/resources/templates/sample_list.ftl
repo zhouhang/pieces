@@ -27,7 +27,7 @@
                     <label>状态：</label>
                     <select name="status" class="slt">
                         <option value="">全部</option>
-                        <option value="0">未处理</option>
+                        <option value="0">未受理</option>
                         <option value="1">同意寄样</option>
                         <option value="2">拒绝寄样</option>
                         <option value="3">客户来访</option>
