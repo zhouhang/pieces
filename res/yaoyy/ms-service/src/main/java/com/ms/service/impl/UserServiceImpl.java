@@ -176,6 +176,7 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 		UserDetail userDetail  = userDetailService.findByUserId(user.getId());
 		if(userDetail==null){
 			userDetail = new UserDetail();
+			userDetail.setType(0);
 			userDetail.setUserId(user.getId());
 			userDetail.setPhone(phone);
 			userDetail.setNickname(nickname);
