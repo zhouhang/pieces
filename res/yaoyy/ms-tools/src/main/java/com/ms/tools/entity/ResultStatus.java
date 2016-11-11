@@ -19,4 +19,7 @@ public class ResultStatus {
 
     // 参数验证未通过
     public static Integer ERROR_VERIFICATION = 501;
+
+    //没有数据了
+    public static Integer NO_DATA=506;
 }

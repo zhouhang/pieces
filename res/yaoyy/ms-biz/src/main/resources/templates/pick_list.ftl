@@ -62,7 +62,12 @@
                     },
                     loadDownFn : function(me){
                         var showNum=$(".pick-list  .item").length;
-                        var pageNum=(showNum/5)+1;
+                        if(showNum!=0&&showNum<5){
+                            popover('已经没有了!');
+                            me.resetload();
+                            return;
+                        }
+                        var pageNum=parseInt(showNum/5)+1;
                         $.ajax({
                             type: 'POST',
                             url: _global.v.dataUrl,
@@ -70,6 +75,9 @@
                             dataType: 'json',
                             success: function(data){
                                 if (!data.data.list) {
+                                    popover('已经没有了!');
+                                    me.resetload();
+                                    return;
                                     return false;
                                 }
                                 var result = self.toHtml(data.data.list);
