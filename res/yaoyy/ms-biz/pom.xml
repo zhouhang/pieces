@@ -135,10 +135,10 @@
             <id>pro</id>
             <properties>
                 <spring.dataSource.url>jdbc:mysql://localhost:3306/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
-                <spring.dataSource.username>yaoyy</spring.dataSource.username>
-                <spring.dataSource.password>123456</spring.dataSource.password>
+                <spring.dataSource.username>yaobest</spring.dataSource.username>
+                <spring.dataSource.password>yaobest20161110</spring.dataSource.password>
                 <doc.base.url>http://y.sghaoyao.com</doc.base.url>
-                <pro.upload.path>E:\uploadfiles\yaobest\</pro.upload.path>
+                <pro.upload.path>/opt/resources/yaobest</pro.upload.path>
                 <pro.upload.url>http://ystatic.sghaoyao.com/</pro.upload.url>
                 <elasticsearch.host>localhost</elasticsearch.host>
                 <elasticsearch.port>9300</elasticsearch.port>
