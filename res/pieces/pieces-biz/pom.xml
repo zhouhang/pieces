@@ -234,8 +234,8 @@
 			<id>prod</id>
 			<properties>
 				<biz.base.url>http://www.sghaoyao.com</biz.base.url>
-				<biz.upload.url>http://static.sghaoyao.com/files/upload/</biz.upload.url>
-				<biz.upload.path>/opt/resources/files/upload/</biz.upload.path>
+				<biz.upload.url>http://static.sghaoyao.com/</biz.upload.url>
+				<biz.upload.path>/opt/resources/sghaoyao/</biz.upload.path>
 			</properties>
 		</profile>
 	</profiles>

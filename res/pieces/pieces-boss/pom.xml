@@ -234,8 +234,8 @@
 			<id>prod</id>
 			<properties>
 				<boss.base.url>http://boss.sghaoyao.com</boss.base.url>
-				<boss.upload.url>http://static.sghaoyao.com/files/upload/</boss.upload.url>
-				<boss.upload.path>/opt/resources/files/upload/</boss.upload.path>
+				<boss.upload.url>http://static.sghaoyao.com/</boss.upload.url>
+				<boss.upload.path>/opt/resources/sghaoyao/</boss.upload.path>
 			</properties>
 		</profile>
 	</profiles>
