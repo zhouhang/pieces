@@ -2,6 +2,7 @@ package com.ms.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.google.common.base.Strings;
 import com.ms.dao.ICommonDao;
 import com.ms.dao.UserDao;
 import com.ms.dao.enums.UserEnum;
@@ -91,14 +92,15 @@ public class UserServiceImpl  extends AbsCommonService<User> implements UserServ
 
 	@Override
 	public void login(Subject subject, UsernamePasswordToken token) {
+		User user = findByPhone(token.getUsername());
+
 		try{
 			subject.login(token);
 		}catch(Exception e){
 			e.printStackTrace();
-			throw new RuntimeException("Shiro 登入错误.");
+			throw new RuntimeException("登入失败!");
 		}
 
-		User user = findByPhone(token.getUsername());
 		user.setPassword(null);
 		user.setSalt(null);
 		Session s = subject.getSession();

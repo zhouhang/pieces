@@ -113,6 +113,9 @@
                 <pro.upload.url>http://127.0.0.1:8188/ms-files/</pro.upload.url>
                 <elasticsearch.host>192.168.1.41</elasticsearch.host>
                 <elasticsearch.port>9300</elasticsearch.port>
+                <redis.url>192.168.1.41</redis.url>
+                <redis.port>6379</redis.port>
+                <redis.name>master</redis.name>
             </properties>
         </profile>
         <profile>

@@ -16,11 +16,11 @@
     </appender>
 
     <!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 -->
-    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="log" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <Encoding>UTF-8</Encoding>
-        <File>../logs/boos.log</File>
+        <File>../logs/pieces_boos_handle.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>../logs/boos-%d{yyyy-MM-dd}.log
+            <FileNamePattern>../logs/pieces_boos_handle-%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>10</MaxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy
@@ -34,17 +34,60 @@
         </layout>
     </appender>
 
+    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--<Encoding>UTF-8</Encoding>-->
+        <File>../logs/pieces_boss.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                ../logs/pieces_boss-%d{yyyy-MM-dd}.%i.log
+            </FileNamePattern>
+            <MaxHistory>10</MaxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>5MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d %p (%file:%line\)- %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--<Encoding>UTF-8</Encoding>-->
+        <File>../logs/pieces_error_boss.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                ../logs/pieces_error_boss-%d{yyyy-MM-dd}.%i.log
+            </FileNamePattern>
+            <MaxHistory>10</MaxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>5MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d %p (%file:%line\)- %m%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
     <!-- 日志级别 -->
     <root>
-        <level value="error" />
-        <level value="info" />
-        <level value="debug" />
+        <level value="DEBUG" />
+        <appender-ref ref="file" />
+        <appender-ref ref="error" />
         <appender-ref ref="console" />
     </root>
 
     <logger name="com.pieces.tools.log.internal.LogHandle"  additivity="false">
         <level value="info" />
-        <appender-ref ref="file" />
+        <appender-ref ref="log" />
     </logger>
 
 

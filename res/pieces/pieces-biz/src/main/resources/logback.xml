@@ -11,17 +11,19 @@
 
 	<!-- 日志输出到控制台 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder charset="UTF-8">
-            <pattern>[%cn] [%date] [%thread] %logger{0} [%level] %msg%n</pattern>
-        </encoder>
+        <Encoding>UTF-8</Encoding>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
+            </pattern>
+        </layout>
     </appender>
 
     <!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 -->
-    <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="log" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <Encoding>UTF-8</Encoding>
-        <File>../logs/biz.log</File>
+        <File>../logs/pieces_biz_handle.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>../logs/biz-%d{yyyy-MM-dd}.log
+            <FileNamePattern>../logs/pieces_biz_handle-%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>10</MaxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy
@@ -35,17 +37,60 @@
         </layout>
     </appender>
 
-    <!-- 日志级别 -->
+    <appender name="logout" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
+        <File>../logs/pieces_biz.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                ../logs/pieces_biz-%d{yyyy-MM-dd}.%i.log
+            </FileNamePattern>
+            <MaxHistory>10</MaxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>5MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
+        <File>../logs/pieces_error_biz.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                ../logs/pieces_error_biz-%d{yyyy-MM-dd}.%i.log
+            </FileNamePattern>
+            <MaxHistory>10</MaxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>5MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n
+            </pattern>
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!--&lt;!&ndash; 日志级别 &ndash;&gt;-->
     <root>
-        <level value="error" />
-        <level value="info" />
-        <level value="debug" />
+        <level value="DEBUG" />
+        <appender-ref ref="logout" />
+        <appender-ref ref="error" />
         <appender-ref ref="console" />
     </root>
 
     <logger name="com.pieces.tools.log.internal.LogHandle"  additivity="false">
-        <level value="info" />
-        <appender-ref ref="file" />
+        <level value="INFO" />
+        <appender-ref ref="log" />
     </logger>
 
 	
