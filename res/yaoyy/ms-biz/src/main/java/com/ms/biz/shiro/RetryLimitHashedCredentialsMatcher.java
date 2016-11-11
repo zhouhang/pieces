@@ -1,5 +1,6 @@
 package com.ms.biz.shiro;
 
+import com.google.common.base.Strings;
 import com.ms.service.dto.Password;
 import com.ms.service.utils.EncryptUtil;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -83,7 +84,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
     private boolean match(AuthenticationToken token, AuthenticationInfo info){
         if (token instanceof BizToken) {
             BizToken bizToken = (BizToken)token;
-           if (bizToken.getValidationCode() != null || bizToken.getOpenId() != null){
+           if (!Strings.isNullOrEmpty(bizToken.getValidationCode()) || !Strings.isNullOrEmpty(bizToken.getOpenId())){
                return true;
            }
         }
