@@ -167,6 +167,7 @@
             initAttr: function () {
                 var html = "";
                 //品种，切制规格和产地
+                html=html+"<dl><dt>商品名称</dt><dd>${commodityVo.name}</dd></dl>";
                 html=html+"<dl><dt>品种</dt><dd>${commodityVo.categoryName}</dd></dl>";
                 html=html+"<dl><dt>切制规格</dt><dd>${commodityVo.spec}</dd></dl>";
                 html=html+"<dl><dt>产地</dt><dd>${commodityVo.origin}</dd></dl>";
