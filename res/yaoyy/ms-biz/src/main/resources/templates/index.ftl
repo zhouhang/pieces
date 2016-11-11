@@ -8,7 +8,7 @@
 <header class="ui-header">
     <div class="logo">药优优药材商城</div>
     <div class="abs-r mid">
-        <a href="search.html"><i class="fa fa-search"></i></a>
+        <a href="category/search"><i class="fa fa-search"></i></a>
     </div>
 </header><!-- /ui-header -->
 <#include "./common/navigation.ftl">
