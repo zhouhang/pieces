@@ -35,12 +35,10 @@
                     scrollArea : window,
                     threshold : 50,
                     loadUpFn : function(me){
-                        var showNum=$(".pick-list .item").length;
-                        var pageNum=showNum%5+1;
                         $.ajax({
                             type: 'POST',
                             url: _global.v.dataUrl,
-                            data:{pageSize:5,pageNum:pageNum},
+                            data:{pageSize:5,pageNum:1},
                             dataType: 'json',
                             success: function(data){
                                 if (!data.data.list) {
@@ -62,7 +60,7 @@
                     },
                     loadDownFn : function(me){
                         var showNum=$(".pick-list  .item").length;
-                        if(showNum!=0&&showNum<5){
+                        if(showNum!=0&&(showNum%5)<5&&(showNum%5)!=0){
                             popover('已经没有了!');
                             me.resetload();
                             return;
@@ -78,11 +76,12 @@
                                     popover('已经没有了!');
                                     me.resetload();
                                     return;
-                                    return false;
                                 }
                                 var result = self.toHtml(data.data.list);
 
-                                if(data.status === 'nomore'){
+                                if(data.data.pages === pageNum){
+                                    $('.pick-list').append(result);
+                                    me.resetload();
                                     me.lock();
                                     me.noData();
                                     me.resetload();
@@ -92,6 +91,11 @@
                                     $('.pick-list').append(result);
                                     me.resetload();
                                 }, 1e3);
+
+
+
+
+
                             },
                             error: function(xhr, type){
                                 popover('网络连接超时，请您稍后重试!');
@@ -121,7 +125,7 @@
                     })
 
                     html.push('</dl> \n');
-                    item.pickCommodityVoList.length> 5 && html.push('<div class="more">更多</div>'); // 选货单超过5条显示更多按钮
+                    //item.pickCommodityVoList.length> 5 && html.push('<div class="more">更多</div>'); // 选货单超过5条显示更多按钮
 
                     html.push('</div>');
                 })

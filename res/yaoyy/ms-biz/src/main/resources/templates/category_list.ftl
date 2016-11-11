@@ -67,12 +67,11 @@
                     },
                     loadDownFn : function(me){
                         var showNum=$(".plist li").length;
-                        if(showNum!=0&&showNum<10){
+                        if(showNum!=0&&(showNum%10)<10&&(showNum%10)!=0){
                             popover('已经没有了!');
                             me.resetload();
                             return;
                         }
-
                         var pageNum=parseInt(showNum/10)+1;
                         $.ajax({
                             type: 'POST',
@@ -85,7 +84,9 @@
                                 }
                                 var result = self.toHtml(data.data.list);
 
-                                if(data.status === 'nomore'){
+                                if(data.data.pages === pageNum){
+                                    $('.plist ul').append(result);
+                                    me.resetload();
                                     me.lock();
                                     me.noData();
                                     me.resetload();
