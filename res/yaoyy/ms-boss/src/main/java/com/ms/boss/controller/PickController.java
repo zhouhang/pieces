@@ -29,7 +29,7 @@ import java.util.List;
  * Created by xiao on 2016/10/28.
  */
 @Controller
-@RequestMapping(value="pick")
+@RequestMapping(value="pick/")
 public class PickController {
 
     @Autowired

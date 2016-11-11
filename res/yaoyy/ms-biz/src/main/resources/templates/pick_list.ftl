@@ -35,10 +35,12 @@
                     scrollArea : window,
                     threshold : 50,
                     loadUpFn : function(me){
+                        var showNum=$(".pick-list .item").length;
+                        var pageNum=showNum%5+1;
                         $.ajax({
                             type: 'POST',
                             url: _global.v.dataUrl,
-                            data:{pageSize:5},
+                            data:{pageSize:5,pageNum:pageNum},
                             dataType: 'json',
                             success: function(data){
                                 if (!data.data.list) {
@@ -59,13 +61,8 @@
                         });
                     },
                     loadDownFn : function(me){
-                        var showNum=$(".pick-list .item").length;
-                        if(showNum!=0&&showNum<5){
-                            popover('已经没有了!');
-                            me.resetload();
-                            return;
-                        }
-                        var pageNum=showNum%5+1;
+                        var showNum=$(".pick-list  .item").length;
+                        var pageNum=(showNum/5)+1;
                         $.ajax({
                             type: 'POST',
                             url: _global.v.dataUrl,

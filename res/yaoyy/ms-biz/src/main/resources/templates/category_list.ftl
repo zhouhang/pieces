@@ -67,13 +67,7 @@
                     },
                     loadDownFn : function(me){
                         var showNum=$(".plist li").length;
-                        if(showNum!=0&&showNum<10){
-                            popover('已经没有了!');
-                            me.resetload();
-                            return;
-                        }
-
-                        var pageNum=showNum%10+1;
+                        var pageNum=(showNum/10)+1;
                         $.ajax({
                             type: 'POST',
                             url: _global.v.dataUrl,
