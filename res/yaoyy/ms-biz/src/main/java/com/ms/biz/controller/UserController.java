@@ -82,7 +82,7 @@ public class UserController {
             userService.login(subject, token);
         } catch (Exception e) {
             model.put("error", e.getMessage());
-            url =  "login";
+            return "login";
         }
 
         if ( WebUtils.getSavedRequest(request) != null) {
