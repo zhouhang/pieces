@@ -73,7 +73,7 @@
                             return;
                         }
 
-                        var pageNum=showNum%10+1;
+                        var pageNum=parseInt(showNum/10)+1;
                         $.ajax({
                             type: 'POST',
                             url: _global.v.dataUrl,

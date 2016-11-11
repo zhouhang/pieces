@@ -10,17 +10,23 @@
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="assets/css/app.css">
 </head>
-<body class="body-gray">
+<body class="ui-body-nofoot body-gray">
+    <header class="ui-header">
+        <div class="title">搜索</div>
+        <div class="abs-l mid">
+            <a href="javascript:history.back();" class="fa fa-back"></a>
+        </div>
+    </header><!-- /ui-header -->
+
     <div class="ui-content">
-        <div class="search-bar">
-            <div class="back mid">
-                <a href="javascript:history.back();" class="fa fa-back"></a>
-            </div>
-            <div class="form">
-                <form action="">
-                    <input type="text" name="keyword" id="keyword" class="ipt" placeholder="请输入原药材品种名称" autocomplete="off">
-                    <button type="submit" id="submit" class="fa fa-search submit mid"></button>
-                </form>
+        <div class="ui-search">
+            <form action="">
+                <button type="submit" id="submit" class="fa fa-search submit mid"></button>
+                <input type="text" name="keyword" id="keyword" class="ipt" placeholder="请输入原药材品种名称" autocomplete="off">
+            </form>
+            <div class="suggest">
+                <div class="suggest-panel"></div>
+                <div class="suggest-close">关闭</div>
             </div>
         </div>
 
@@ -39,6 +45,7 @@
             init: function() {
                 this.showHistory();
                 this.searchForm();
+                this.autocomplete();
             },
             showHistory: function() {
                 var self = this;
@@ -103,6 +110,40 @@
                     } else {
 
                     }
+                })
+            },
+            autocomplete: function() {
+                var t,
+                    self = this,
+                    $suggestions = $('.suggest');
+                var search = function() {
+                    $.ajax({
+                        url: 'json/catName.json',
+                        success: function(data) {
+                            var html = [];
+                            $.each(data.data, function(i, item) {
+                                html.push('<a href="' ,item.href ,'">', item.name, '</a>');
+                            })
+                            $suggestions.show().find('.suggest-panel').html(html.join(''));
+                        }
+                    })
+                }
+                var _s = function() {
+                    t && clearTimeout(t);
+                    t = setTimeout(function() {
+                        search();
+                    }, 300);
+                }
+                $('#keyword').on('input', _s);
+
+                // 添加历史记录
+                $suggestions.on('click', 'a', function() {
+                    self.addHistory($(this).html());
+                })
+
+                // 关闭
+                $suggestions.on('click', '.suggest-close', function() {
+                    $suggestions.hide();
                 })
             }
         }

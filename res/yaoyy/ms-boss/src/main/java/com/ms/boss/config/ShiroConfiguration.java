@@ -98,6 +98,16 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setFilterChainDefinitionsString("/login=anon;/logout=logout;/assets/**=anon;/error/**=anon;" +
                 "/role/** = bossAuthorization;" +
                 "/category/**=bossAuthorization;" +
+                "/ad/**=bossAuthorization;" +
+                "/admin/**=bossAuthorization;" +
+                "/cms/**=bossAuthorization;" +
+                "/index=bossAuthorization;" +
+                "/member/**=bossAuthorization;" +
+                "/pick/**=bossAuthorization;" +
+                "/tracking/**=bossAuthorization;" +
+                "/sample/**=bossAuthorization;" +
+                "/special/**=bossAuthorization;" +
+                "/user/**=bossAuthorization;" +
                 "/commodity/**=bossAuthorization;");
         return shiroFilterFactoryBean;
     }
