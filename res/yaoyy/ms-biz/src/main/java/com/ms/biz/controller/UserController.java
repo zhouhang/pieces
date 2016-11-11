@@ -78,7 +78,7 @@ public class UserController {
         try {
             // 登陆验证
             Subject subject = SecurityUtils.getSubject();
-            BizToken token = new BizToken(phone, password, false, null, "");
+            BizToken token = new BizToken(phone, password, false, null, null);
             userService.login(subject, token);
         } catch (Exception e) {
             model.put("error", e.getMessage());
