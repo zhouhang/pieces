@@ -150,10 +150,6 @@ public class SendSampleServiceImpl  extends AbsCommonService<SendSample> impleme
 			userDetailDao.update(userDetail);
 		}
 
-
-
-
-
 		SendSample sendSample=new SendSample();
 		if(nowLogin==null){
 			sendSample.setUserId(useId);

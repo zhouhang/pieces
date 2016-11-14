@@ -48,7 +48,7 @@ public class BaseGlobalExceptionHandler {
         if (isValidAndBindException(e)) {
             result = Result.failVerification().data(formatVaildAndBindError(e));
         } else {
-            result = Result.error().data(debug?errorStack:DEFAULT_ERROR_MESSAGE);
+            result = Result.error().msg(debug?e.getMessage():DEFAULT_ERROR_MESSAGE);
         }
         return result;
     }
