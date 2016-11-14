@@ -57,6 +57,6 @@ wechat:
 
 endpoints:
     jmx:
-        enabled: true
+        enabled: false
         domain: yaoyybiz
         unique-names: true

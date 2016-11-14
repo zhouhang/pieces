@@ -43,6 +43,6 @@ sms:
 
 endpoints:
     jmx:
-        enabled: true
+        enabled: false
         domain: yaoyyboss
         unique-names: true
