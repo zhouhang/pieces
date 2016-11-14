@@ -11,7 +11,7 @@
     <groupId>yaoyy</groupId>
     <artifactId>ms-biz</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>yaoyy</groupId>
@@ -23,16 +23,13 @@
             <artifactId>jstl</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-jasper</artifactId>
-            <scope>provided</scope>
-        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-loader-tools</artifactId>
         </dependency>
+     
 
         <!-- apache common lang -->
         <dependency>
@@ -73,7 +70,6 @@
                 <elasticsearch.port>9300</elasticsearch.port>
                 <redis.url>192.168.1.41</redis.url>
                 <redis.port>6379</redis.port>
-                <redis.name>master</redis.name>
             </properties>
         </profile>
         <profile>
@@ -102,7 +98,6 @@
                 <elasticsearch.port>9300</elasticsearch.port>
                 <redis.url>192.168.1.41</redis.url>
                 <redis.port>6379</redis.port>
-                <redis.name>master</redis.name>
             </properties>
         </profile>
         <profile>
@@ -118,7 +113,6 @@
                 <elasticsearch.port>9300</elasticsearch.port>
                 <redis.url>192.168.1.41</redis.url>
                 <redis.port>6379</redis.port>
-                <redis.name>master</redis.name>
             </properties>
         </profile>
         <profile>
@@ -127,11 +121,13 @@
                 <spring.dataSource.url>jdbc:mysql://192.168.1.41:3306/yaoyy?characterEncoding=utf-8</spring.dataSource.url>
                 <spring.dataSource.username>yaoyy</spring.dataSource.username>
                 <spring.dataSource.password>123456</spring.dataSource.password>
-                <doc.base.url>http://yb647.free.natapp.cc</doc.base.url>
+                <doc.base.url>http://localhost:8188</doc.base.url>
                 <pro.upload.path>E:/development/apache-tomcat-8.0.361/webapps/ms-files/</pro.upload.path>
                 <pro.upload.url>http://static.yaobest.com/</pro.upload.url>
                 <elasticsearch.host>192.168.1.41</elasticsearch.host>
                 <elasticsearch.port>9300</elasticsearch.port>
+                <redis.url>192.168.1.41</redis.url>
+                <redis.port>6379</redis.port>
             </properties>
         </profile>
         <profile>
@@ -141,13 +137,12 @@
                 <spring.dataSource.username>yaobest</spring.dataSource.username>
                 <spring.dataSource.password>yaobest20161110</spring.dataSource.password>
                 <doc.base.url>http://y.sghaoyao.com</doc.base.url>
-                <pro.upload.path>/opt/resources/yaobest</pro.upload.path>
+                <pro.upload.path>/opt/resources/yaobest/</pro.upload.path>
                 <pro.upload.url>http://ystatic.sghaoyao.com/</pro.upload.url>
                 <elasticsearch.host>localhost</elasticsearch.host>
                 <elasticsearch.port>9300</elasticsearch.port>
-                <redis.url>192.168.1.41</redis.url>
+                <redis.url>127.0.0.1</redis.url>
                 <redis.port>6379</redis.port>
-                <redis.name>master</redis.name>
             </properties>
         </profile>
     </profiles>
@@ -176,6 +171,11 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <jvmArguments>
+                        -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005
+                    </jvmArguments>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

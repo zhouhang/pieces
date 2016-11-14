@@ -64,6 +64,7 @@ em,i{font-style:normal;}
 .fl{float:left;}
 .fr{float:right;}
 .mid{position:absolute;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);}
+.cartAnim{color:#d74141;z-index:999999;}
 
 /* status color */
 .status-1{color:#b9a060;}

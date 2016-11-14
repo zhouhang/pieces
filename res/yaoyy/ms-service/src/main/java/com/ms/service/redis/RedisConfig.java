@@ -24,8 +24,6 @@ public class RedisConfig {
     @Value("${redis.port}")
     private Integer port;
 
-    @Value("${redis.name}")
-    private String name;
 
     @Bean(name = "jedisPoolConfig")
     public JedisPoolConfig getJedisPoolConfig() {
@@ -38,7 +36,7 @@ public class RedisConfig {
 
     @Bean(name = "jedis.shardInfo")
     public JedisShardInfo getJedisShardInfo() {
-        JedisShardInfo jedisShardInfo = new JedisShardInfo(url,port,name);
+        JedisShardInfo jedisShardInfo = new JedisShardInfo(url,port);
         return jedisShardInfo;
     }
 

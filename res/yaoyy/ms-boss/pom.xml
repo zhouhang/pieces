@@ -10,7 +10,7 @@
     <groupId>yaoyy</groupId>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ms-boss</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies>
         <dependency>
@@ -79,7 +79,6 @@
                 <elasticsearch.port>9300</elasticsearch.port>
                 <redis.url>192.168.1.41</redis.url>
                 <redis.port>6379</redis.port>
-                <redis.name>master</redis.name>
             </properties>
         </profile>
         <profile>
@@ -124,7 +123,6 @@
                 <elasticsearch.port>9300</elasticsearch.port>
                 <redis.url>192.168.1.41</redis.url>
                 <redis.port>6379</redis.port>
-                <redis.name>master</redis.name>
             </properties>
         </profile>
         <profile>
@@ -141,7 +139,6 @@
                 <elasticsearch.port>9300</elasticsearch.port>
                 <redis.url>192.168.1.41</redis.url>
                 <redis.port>6379</redis.port>
-                <redis.name>master</redis.name>
             </properties>
         </profile>
         <profile>
@@ -156,6 +153,8 @@
                 <pro.upload.url>http://127.0.0.1:8189/ms-files/</pro.upload.url>
                 <elasticsearch.host>192.168.1.41</elasticsearch.host>
                 <elasticsearch.port>9300</elasticsearch.port>
+                <redis.url>192.168.1.41</redis.url>
+                <redis.port>6379</redis.port>
             </properties>
         </profile>
         <profile>
@@ -166,10 +165,12 @@
                 <spring.dataSource.password>yaobest20161110</spring.dataSource.password>
                 <doc.base.url>http://yboss.sghaoyao.com/</doc.base.url>
                 <biz.base.url>http://y.sghaoyao.com/</biz.base.url>
-                <pro.upload.path>/opt/resources/yaobest</pro.upload.path>
+                <pro.upload.path>/opt/resources/yaobest/</pro.upload.path>
                 <pro.upload.url>http://ystatic.sghaoyao.com/</pro.upload.url>
                 <elasticsearch.host>localhost</elasticsearch.host>
                 <elasticsearch.port>9300</elasticsearch.port>
+                <redis.url>127.0.0.1</redis.url>
+                <redis.port>6379</redis.port>
             </properties>
         </profile>
     </profiles>

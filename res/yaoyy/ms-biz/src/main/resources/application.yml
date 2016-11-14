@@ -27,7 +27,6 @@ upload:
 redis:
     url: @redis.url@
     port: @redis.port@
-    name: @redis.name@
 
 #logging:
 #    level:
