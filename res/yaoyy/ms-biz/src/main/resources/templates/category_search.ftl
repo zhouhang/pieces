@@ -4,17 +4,24 @@
     <title>搜索-药优优</title>
     <#include "./common/meta.ftl"/>
 </head>
-<body class="body-gray">
+<body class="ui-body-nofoot body-gray">
+<header class="ui-header">
+    <div class="title">搜索</div>
+    <div class="abs-l mid">
+        <a href="javascript:history.back();" class="fa fa-back"></a>
+    </div>
+</header>
 <div class="ui-content">
-    <div class="search-bar">
-        <div class="back mid">
-            <a href="javascript:history.back();" class="fa fa-back"></a>
-        </div>
+    <div class="ui-search">
         <div class="form">
             <form action="category/list">
                 <input type="text" name="variety" id="keyword" class="ipt" placeholder="请输入原药材品种名称" autocomplete="off">
                 <button type="submit" id="submit" class="fa fa-search submit mid"></button>
             </form>
+            <div class="suggest">
+                <div class="suggest-panel"></div>
+                <div class="suggest-close">关闭</div>
+            </div>
         </div>
     </div>
 
@@ -26,12 +33,14 @@
 
     var _global = {
         v: {
-            searchHistoryName: 'searchhistory'
+            searchHistoryName: 'searchhistory',
+            searchCategoryUrl:'category/search'
         },
         fn: {
             init: function() {
                 this.showHistory();
                 this.searchForm();
+                this.autocomplete();
             },
             showHistory: function() {
                 var self = this;
@@ -97,7 +106,53 @@
 
                     }
                 })
+            },
+            autocomplete: function() {
+                var t,
+                        self = this,
+                        $suggestions = $('.suggest');
+                var search = function() {
+                    if($('#keyword').val()!=""){
+                        $.ajax({
+                            url: _global.v.searchCategoryUrl,
+                            type:"POST",
+                            data:{variety:$('#keyword').val()},
+                            success: function(data) {
+                                console.log(data.data);
+                                if(data.data.length!=0){
+                                    var html = [];
+                                    $.each(data.data, function(i, item) {
+                                        html.push('<a href="category/list/?variety=' ,item.variety ,'">', item.variety, '</a>');
+                                    })
+                                    $suggestions.show().find('.suggest-panel').html(html.join(''));
+                                }
+                            }
+                        })
+                    }
+                }
+                var _s = function() {
+                    t && clearTimeout(t);
+                    t = setTimeout(function() {
+                        search();
+                    }, 300);
+                }
+                $('#keyword').on('input', _s);
+
+                // 添加历史记录
+                $suggestions.on('click', 'a', function() {
+                    self.addHistory($(this).html());
+                })
+
+                // 关闭
+                $suggestions.on('click', '.suggest-close', function() {
+                    $suggestions.hide();
+                })
             }
+
+
+
+
+
         }
     }
 

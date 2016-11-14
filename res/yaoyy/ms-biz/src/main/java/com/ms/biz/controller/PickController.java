@@ -14,6 +14,7 @@ import com.ms.service.PickService;
 import com.ms.service.PickTrackingService;
 import com.ms.service.enums.RedisEnum;
 import com.ms.tools.entity.Result;
+import com.ms.tools.entity.ResultStatus;
 import com.ms.tools.utils.CookieUtils;
 import com.ms.tools.utils.GsonUtil;
 import org.apache.commons.lang.StringUtils;
@@ -72,7 +73,10 @@ public class PickController {
             p.setStatusText(p.getStatusText());
             p.setBizStatusText(p.getBizStatusText());
         });
+
         return Result.success().data(pickVoPageInfo);
+
+
     }
 
     /**

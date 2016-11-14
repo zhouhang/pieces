@@ -66,6 +66,7 @@ public class Result implements Serializable {
         return result;
     }
 
+
     public Object getData() {
         return data;
     }

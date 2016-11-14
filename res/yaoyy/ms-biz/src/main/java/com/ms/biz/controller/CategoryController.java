@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 /**
  * Author: koabs
  * 10/25/16.
@@ -51,6 +53,17 @@ public class CategoryController {
     @RequestMapping(value = "search", method = RequestMethod.GET)
     public String searchPage() {
         return "category_search";
+    }
+
+    @RequestMapping(value = "search",method = RequestMethod.POST)
+    @ResponseBody
+    public Result searchCategory(CategoryVo categoryVo){
+        categoryVo.setLevel(CategoryEnum.LEVEL_BREED.getValue());
+        List<CategoryVo> categoryVoList=categoryService.searchCategory(categoryVo);
+        if(categoryVoList.size()>6){
+            return  Result.success().data(categoryVoList.subList(0,6));
+        }
+        return  Result.success().data(categoryVoList);
     }
 
 
