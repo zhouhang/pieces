@@ -9,6 +9,8 @@
 * Copyright (c) 2015 wuyuedong; Licensed MIT */
 !function(t){function e(e,n){this.$element=t(e),this.settings=t.extend(!0,{},i,n),this.init()}var i={version:"1.0.0",autoPlay:!0,vertex_Rtop:20,speed:1.2,start:{},end:{},onEnd:t.noop};e.prototype={init:function(){this.setOptions(),this.play()},setOptions:function(){var e=this.settings,i=e.start,n=e.end;this.$element.css({marginTop:"0px",marginLeft:"0px",position:"fixed"}).appendTo("body"),null!=n.width&&null!=n.height&&t.extend(!0,i,{width:this.$element.width(),height:this.$element.height()});var o=Math.min(i.top,n.top)-Math.abs(i.left-n.left)/3;o<e.vertex_Rtop&&(o=Math.min(e.vertex_Rtop,Math.min(i.top,n.top)));var h=Math.sqrt(Math.pow(i.top-n.top,2)+Math.pow(i.left-n.left,2)),s=Math.ceil(Math.min(Math.max(Math.log(h)/.05-75,30),100)/e.speed),a=i.top==o?0:-Math.sqrt((n.top-o)/(i.top-o)),p=(a*i.left-n.left)/(a-1),l=n.left==p?0:(n.top-o)/Math.pow(n.left-p,2);t.extend(!0,e,{count:-1,steps:s,vertex_left:p,vertex_top:o,curvature:l})},play:function(){this.settings.autoPlay&&this.move()},move:function(){var e=this.settings,i=e.start,n=e.count,o=e.steps,h=e.end,s=i.left+(h.left-i.left)*n/o,a=0==e.curvature?i.top+(h.top-i.top)*n/o:e.curvature*Math.pow(s-e.vertex_left,2)+e.vertex_top;if(null!=h.width&&null!=h.height){var p=o/2,l=h.width-(h.width-i.width)*Math.cos(p>n?0:(n-p)/(o-p)*Math.PI/2),r=h.height-(h.height-i.height)*Math.cos(p>n?0:(n-p)/(o-p)*Math.PI/2);this.$element.css({width:l+"px",height:r+"px","font-size":Math.min(l,r)+"px"})}this.$element.css({left:s+"px",top:a+"px"}),e.count++;var f=window.requestAnimationFrame(t.proxy(this.move,this));n==o&&(window.cancelAnimationFrame(f),e.onEnd.apply(this))},destroy:function(){this.$element.remove()}},t.fn.fly=function(t){return this.each(function(){new e(this,t)})}}(window.Zepto||window.jQuery);
 
+CARTNAME= 'pickCommodityCart';//采购单存储key
+APPLYINFO='applyInfo';//申请寄样以及申请选货单提交的资料
 // 气泡式弹出层
 function popover(msg, delay) {
 	var $ele = $('#popover');
@@ -223,7 +225,134 @@ var _YYY = {
     }
 }
 
+function is_weixin(){
+    var ua = navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i)=="micromessenger") {
+        return true;
+    } else {
+        return false;
+    }
+}
 
-$(function(){
-	
-});
+//添加商品
+function pickCommodity(id,num){
+    var first = localStorage.getItem(CARTNAME)==null?true:false;//判断是否有cookie进行添加
+    var same = false;//判断时候已经追加
+    //是否是第一次添加
+    if(first){
+        //第一次添加,建立json结构。
+        localStorage.setItem(CARTNAME,'[{commodityId:'+id+',num:'+num+'}]');
+    }else{
+        var str = localStorage.getItem(CARTNAME);
+        var arr = eval(str);
+        //遍历所有对象。如果id相同，让该商品数量递增 ;
+        for(var attr in arr){
+            if(arr[attr].commodityId == id){
+                arr[attr].num =  parseInt(arr[attr].num)+parseInt(num);
+                var cookieStr = JSON.stringify(arr);//将json对象转换成字符串.
+                localStorage.setItem(CARTNAME,cookieStr);
+                same = true;
+            }
+        }
+        //如果id不同，重新建立商品对象;
+        if(!same){
+            var obj  = {commodityId:id,num:num};
+            arr.push(obj);
+            var cookieStr = JSON.stringify(arr);
+            localStorage.setItem(CARTNAME,cookieStr);
+        }
+    }
+
+
+}
+//修改品种数量
+function updateCommodity(id,num){
+    var str = localStorage.getItem(CARTNAME);
+    var arr = eval(str);
+    for(var attr in arr){
+        if(arr[attr].commodityId == id){
+            arr[attr].num = num;
+            var cookieStr = JSON.stringify(arr);
+            localStorage.setItem(CARTNAME,cookieStr);
+        }
+    }
+}
+
+
+
+//删除商品
+function deleteCommodity(id){
+    var str = localStorage.getItem(CARTNAME);
+    var arr = eval(str);
+    var arr2 = [];
+    //遍历所有对象。如果id相同，让该商品数量递增 ;
+    for(var attr in arr) {
+        if (arr[attr].commodityId != id) {
+            arr2.push(arr[attr]);
+        }
+        var cookieStr = JSON.stringify(arr2);//将json对象转换成字符串
+        localStorage.setItem(CARTNAME, cookieStr);
+    }
+}
+//获取商品数量
+function getCommodityCount(){
+    var str = localStorage.getItem(CARTNAME);
+    var arr = eval(str);
+    var total=0
+    if (arr){
+        for(var attr in arr){
+            total=  parseInt(arr[attr].num)+total;
+        }
+    }
+
+    return total;
+}
+
+
+function getAppyInfo(){
+    var info=localStorage.getItem(APPLYINFO);
+    if(info){
+        var infojson= eval("(" + info + ")");
+        return infojson;
+    }
+    else{
+        return null;
+    }
+}
+function saveAppyinfo(info){
+    var userinfo=localStorage.getItem(APPLYINFO);
+    var infojson;
+    if (userinfo){
+        infojson= eval("(" + userinfo + ")");
+        if(!info.area&&infojson.area){
+            info.area=infojson.area;
+        }
+    }
+    var cookieStr = JSON.stringify(info);//将json对象转换成字符串.
+    localStorage.setItem(APPLYINFO,cookieStr);
+}
+function deleteInfo() {
+    localStorage.removeItem(APPLYINFO);
+}
+function navigationActive(){
+    var $nav = $('#foot-nav'),
+        URL = document.URL.split('#')[0].split('?')[0].toLowerCase();
+
+    $nav.find('a').each(function() {
+        var url = this.href.toLowerCase();
+
+
+        if (URL === url) {
+            $(this).addClass('current');
+            return false; // break
+        }
+    })
+}
+
+$(function() {
+    var count = getCommodityCount();
+    if (count != 0) {
+        $("#commodityCart").append("<b>" + count + "</b>");
+    }
+    navigationActive();
+})

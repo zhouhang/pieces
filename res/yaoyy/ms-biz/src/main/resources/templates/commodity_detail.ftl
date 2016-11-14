@@ -6,7 +6,7 @@
 </head>
 <body class="ui-body body-gray">
     <header class="ui-header">
-        <div class="title">商品详情-${commodityVo.title}</div>
+        <div class="title">商品详情</div>
         <div class="abs-l mid">
             <a href="javascript:history.back();" class="fa fa-back"></a>
         </div>
