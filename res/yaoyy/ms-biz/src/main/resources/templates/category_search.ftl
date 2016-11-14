@@ -112,18 +112,23 @@
                         self = this,
                         $suggestions = $('.suggest');
                 var search = function() {
-                    $.ajax({
-                        url: _global.v.searchCategoryUrl,
-                        type:"POST",
-                        data:{variety:$('#keyword').val()},
-                        success: function(data) {
-                            var html = [];
-                            $.each(data.data, function(i, item) {
-                                html.push('<a href="category/list/?variety=' ,item.variety ,'">', item.variety, '</a>');
-                            })
-                            $suggestions.show().find('.suggest-panel').html(html.join(''));
-                        }
-                    })
+                    if($('#keyword').val()!=""){
+                        $.ajax({
+                            url: _global.v.searchCategoryUrl,
+                            type:"POST",
+                            data:{variety:$('#keyword').val()},
+                            success: function(data) {
+                                console.log(data.data);
+                                if(data.data.length!=0){
+                                    var html = [];
+                                    $.each(data.data, function(i, item) {
+                                        html.push('<a href="category/list/?variety=' ,item.variety ,'">', item.variety, '</a>');
+                                    })
+                                    $suggestions.show().find('.suggest-panel').html(html.join(''));
+                                }
+                            }
+                        })
+                    }
                 }
                 var _s = function() {
                     t && clearTimeout(t);
