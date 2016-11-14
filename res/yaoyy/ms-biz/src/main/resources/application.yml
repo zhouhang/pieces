@@ -55,3 +55,9 @@ wechat:
       appid: wxa7f10cbf0dc060b9
       secret: fe68a821107c34bf9863348831e26755
       token: E10ADC3949BA59ABBE56E057F20F883E
+
+endpoints:
+    jmx:
+        enabled: true
+        domain: yaoyybiz
+        unique-names: true
