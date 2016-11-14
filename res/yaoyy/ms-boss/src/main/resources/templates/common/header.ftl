@@ -5,10 +5,10 @@
     <div class="menu">
         <ul>
             <li>
-                <a href="#" class="dropdown-toggle"> <i class="fa fa-question-circle"></i> 帮助 </a>
+                <a href="javascript:;" class="dropdown-toggle"> <i class="fa fa-question-circle"></i> 帮助 </a>
             </li>
             <li class="dropdown user user-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
                     <i class="fa fa-user"></i>
                     <span class="hidden-xs">${(member_session_boss.username)!}</span>
                 </a>
