@@ -1,21 +1,14 @@
-package com.ms.biz.config;
+package com.ms.boss.config;
 
-import org.apache.commons.io.filefilter.TrueFileFilter;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.SearchStrategy;
 import org.springframework.boot.autoconfigure.jmx.ParentAwareNamingStrategy;
-import org.springframework.boot.bind.RelaxedPropertyResolver;
-import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.MBeanExportConfiguration.SpecificPlatform;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.env.Environment;
 import org.springframework.jmx.export.MBeanExporter;
 import org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource;
 import org.springframework.jmx.export.annotation.AnnotationMBeanExporter;
@@ -23,7 +16,6 @@ import org.springframework.jmx.export.naming.ObjectNamingStrategy;
 import org.springframework.jmx.support.MBeanServerFactoryBean;
 import org.springframework.jmx.support.RegistrationPolicy;
 import org.springframework.util.StringUtils;
-import org.springframework.context.annotation.MBeanExportConfiguration.SpecificPlatform;
 
 import javax.management.MBeanServer;
 
@@ -33,7 +25,7 @@ import javax.management.MBeanServer;
 @Configuration
 @ConditionalOnClass({ MBeanExporter.class })
 //@ConditionalOnProperty(prefix = "spring.jmx", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class JmxConfig{
+public class JmxConfig {
 
 
     @Value("${spring.jmx.default-domain}")

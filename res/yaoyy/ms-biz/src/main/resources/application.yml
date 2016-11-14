@@ -8,6 +8,10 @@ spring:
             suffix: .ftl
             templateEncoding: UTF-8
             templateLoaderPath: classpath:/templates/
+    jmx:
+          enabled: true
+          default-domain: yaoyybiz
+
 
 #mybatis:
 #  mapperLocations: classpath:mapper/*.xml
@@ -55,8 +59,3 @@ wechat:
       secret: fe68a821107c34bf9863348831e26755
       token: E10ADC3949BA59ABBE56E057F20F883E
 
-endpoints:
-    jmx:
-        enabled: false
-        domain: yaoyybiz
-        unique-names: true

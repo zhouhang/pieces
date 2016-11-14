@@ -8,6 +8,9 @@ spring:
             suffix: .ftl
             templateEncoding: UTF-8
             templateLoaderPath: classpath:/templates/
+    jmx:
+         enabled: true
+         default-domain: yaoyyboss
 
 #mybatis:
 #  mapperLocations: classpath:mapper/*.xml
@@ -41,8 +44,3 @@ server:
 sms:
   apikey: 49a8a3011d2eb2734a5e88938bea8c1e
 
-endpoints:
-    jmx:
-        enabled: false
-        domain: yaoyyboss
-        unique-names: true
