@@ -352,7 +352,7 @@ function navigationActive(){
 $(function() {
     var count = getCommodityCount();
     if (count != 0) {
-        $("#commodityCart").append("<b>" + count + "</b>");
+        $("#commodityCart").append("<b id='cart'>" + count + "</b>");
     }
     navigationActive();
 })

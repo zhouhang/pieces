@@ -206,8 +206,8 @@
 		<profile>
 			<id>dev-ff</id>
 			<properties>
-				<boss.base.url>http://127.0.0.1:8089</boss.base.url>
-				<boss.upload.url>http://127.0.0.1:8089/files/</boss.upload.url>
+				<boss.base.url>http://127.0.0.1:8081</boss.base.url>
+				<boss.upload.url>http://127.0.0.1:8081/files/</boss.upload.url>
 				<boss.upload.path>/Software/JAVAEE/apache-tomcat-8.0.23/webapps/files/</boss.upload.path>
 			</properties>
 			<activation>
