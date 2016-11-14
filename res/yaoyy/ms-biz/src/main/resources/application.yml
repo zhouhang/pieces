@@ -47,15 +47,9 @@ sms:
   apikey: 49a8a3011d2eb2734a5e88938bea8c1e
 
 
-#wechat:
-#    mp:
-#      appid: wx0b6c6683f64d3cc2
-#      secret: b52e6a9abba43685cf273c6028aec69d
-#      token: E10ADC3949BA59ABBE56E057F20F883E
-
 wechat:
     mp:
-      appid: wxa7f10cbf0dc060b9
-      secret: fe68a821107c34bf9863348831e26755
+      appid: wx0b6c6683f64d3cc2
+      secret: b52e6a9abba43685cf273c6028aec69d
       token: E10ADC3949BA59ABBE56E057F20F883E
 
