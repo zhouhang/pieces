@@ -31,13 +31,14 @@
                     <a href="center.html">
                         <i class="fa fa-cart"></i>
                         <span>采购单</span>
+                        <b id="quantity">11</b>
                     </a>
                 </li>
                 <li class="wide">
                     <a class="sample" href="sample_free.html">免费寄样</a>
                 </li>
                 <li class="wide">
-                    <a class="cart" href="center.html">加入采购单</a>
+                    <a class="cart" href="javascript:;" id="addCommodity">加入采购单</a>
                 </li>
             </ul>
         </nav>
@@ -138,6 +139,7 @@
                 this.slide();
                 this.tab();
                 this.quantity();
+                this.addCommodity();
             },
             slide: function() {
                 var $slide = $('#slide1'),
@@ -184,7 +186,37 @@
                     }
                     num = this.value;
                 })
+            },
+            addCommodity:function(){
+                var self = this;
+                $('#addCommodity').on('click', function (){
+                    self.cartAnim();
+                    return false;
+                })
+            },
+            cartAnim: function() {
+                var offset1 = $('.norms .current').offset(),
+                    offset2 = $('#quantity').offset(),
+                    width = 20,
+                    st = document.body.scrollTop || document.documentElement.scrollTop,
+                    flyer = $('<div class="cartAnim"><i class="fa fa-cart"></i></div>');
+                flyer.fly({
+                    start: {
+                        left: offset1.left + width/2,
+                        top: offset1.top - st
+                    },
+                    end: {
+                        left: offset2.left,
+                        top: offset2.top - st,
+                        width: 20,
+                        height: 20
+                    },
+                    onEnd: function(){
+                        this.destroy();
+                    }
+                });
             }
+
         }
     }
 

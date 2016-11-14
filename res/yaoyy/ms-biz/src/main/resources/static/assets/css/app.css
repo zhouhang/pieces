@@ -100,6 +100,7 @@ em,i{font-style:normal;}
 .ui-footer .extra li.wide{width:30%;}
 .ui-footer .extra a.sample{line-height:42px;font-size:1.4rem;background:#f1ecdf;color:#b9a060;border-top-color:#f1ecdf;}
 .ui-footer .extra a.cart{line-height:42px;font-size:1.4rem;background:#b9a060;color:#fff;border-top-color:#b9a060;}
+.cartOrder{z-index:9999;color:#e50012;}
 
 /* content */
 .ui-content{max-width:640px;margin:0 auto;}
