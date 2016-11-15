@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>企业资质认证-饮片B2B</title>
+    <meta name="renderer" content="webkit" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+    <!-- site-nav end -->
+    <div class="site-nav">
+        <div class="wrap">
+            <p class="fl">欢迎光临上工之选饮片采购平台！</p>
+            <ul class="fr">
+                <li>ht****@163.com  <a href="logout.html">退出</a></li>
+                <li>|</li>
+                <li><a href="logout.html">我的供应链</a></li>
+                <li>|</li>
+                <li><a href="helper.html">帮助中心</a></li>
+                <li>|</li>
+                <li><a href="sitemap.html">网站导航 <i class="fa fa-chevron-down"></i></a></li>
+            </ul>
+        </div>
+    </div><!-- site-nav end -->
+
+
+    <!-- header start -->
+    <div class="header header-red">
+        <div class="wrap">
+            <div class="logo">
+                <a href="home.html">饮片B2B首页</a>
+            </div>
+            <div class="title">
+                <h1>我的供应链</h1>
+            </div>
+            <div class="plus">
+                <a class="back" href="home.html"><i class="fa fa-chevron-left"></i> 返回商城首页</a>
+            </div>
+        </div>
+    </div><!-- header end -->
+
+
+    <!-- member-box start -->
+    <div class="member-box">
+        <div class="wrap">
+            <div class="side">
+                <dl>
+                    <dt>
+                        <em class="fa fa-question-circle"></em>
+                        <span>询价</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </dt>
+                </dl>
+                <dl>
+                    <dt>
+                        <em class="fa fa-menu"></em>
+                        <span>订单</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </dt>
+                </dl>
+                <dl>
+                    <dt>
+                        <em class="fa fa-clock"></em>
+                        <span>交货周期</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </dt>
+                </dl>
+                <dl>
+                    <dt>
+                        <em class="fa fa-invoice"></em>
+                        <span>发票</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </dt>
+                </dl>
+                <dl>
+                    <dt>
+                        <em class="fa fa-bill"></em>
+                        <span>对账单</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </dt>
+                    <dd>
+                        <a href="user_bill.html">支付记录</a>
+                        <a href="user_payment.html">账期账单</a>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <em class="fa fa-heart"></em>
+                        <span>收藏</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </dt>
+                    <dd>
+                        <a href="user_collect.html">我的收藏</a>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>
+                        <em class="fa fa-setting"></em>
+                        <span>设置</span>
+                        <i class="fa fa-chevron-right"></i>
+                    </dt>
+                    <dd>
+                        <a href="user_info.html">注册资料</a>
+                        <a href="user_consignee.html">收货地址</a>
+                        <a href="user_update_password.html">修改密码</a>
+                    </dd>
+                </dl>
+            </div>
+
+            <div class="main">
+                <div class="title">
+                    <h3>企业资质认证</h3>
+                    <div class="extra"></div>
+                </div>
+
+                <div class="fa-step">
+                    <ol>
+                        <li><em>1</em>填写基础信息</li>
+                        <li><i class="fa fa-chevron-right"></i></li>
+                        <li class="curr"><em>2</em>上传企业资质，等待平台审核</li>
+                        <li><i class="fa fa-chevron-right"></i></li>
+                        <li><em>3</em>完成</li>
+                    </ol>
+                </div>
+
+                <div class="tab">
+                    <span class="curr">企业三证</span>
+                    <span>三证合一</span>
+                    <strong><em>提示：</em>如果客户的营业执照是老证，选择企业三证，如果是新证，选择三证合一。</strong>
+                </div>
+                <div class="tabcont fa-form">
+                    <form action="" id="myform">
+                        <div class="box">
+                            <div class="group group-val">
+                                <div class="txt">
+                                    <i>*</i>证件名称：
+                                </div>
+                                <div class="cnt">
+                                    <span class="val">营业执照</span>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="txt">
+                                    <i>*</i>证件号：
+                                </div>
+                                <div class="cnt">
+                                    <input class="ipt" value="" autocomplete="off" name="cardID_1" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
+                                    <span class="error1"></span>
+                                </div>
+                            </div>
+                            <div class="group group-a">
+                                <div class="txt">
+                                    <i>*</i>有效期：
+                                </div>
+                                <div class="cnt">
+                                    <input class="ipt date" value="" autocomplete="off" name="indate_1" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                    <span class="error1"></span>
+                                    <label><input type="checkbox" name="timeless_1" class="cbx">长期</label>
+                                </div>
+                            </div>
+                            <div class="group group-up">
+                                <div class="txt">
+                                    <i>*</i>证件照片：
+                                </div>
+                                <div class="cnt">
+                                    <span class="up-img thumb"></span>
+                                    <input type="hidden" name="img_1" class="ipt" data-msg="{empty: '请上传证件照片'}">
+                                    <span class="error1"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box">
+                            <div class="group group-val">
+                                <div class="txt">
+                                    <i>*</i>证件名称：
+                                </div>
+                                <div class="cnt">
+                                    <span class="val">组织机构代码证</span>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="txt">
+                                    <i>*</i>证件号：
+                                </div>
+                                <div class="cnt">
+                                    <input class="ipt" value="" autocomplete="off" name="cardID_2" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
+                                    <span class="error1"></span>
+                                </div>
+                            </div>
+                            <div class="group group-a">
+                                <div class="txt">
+                                    <i>*</i>有效期：
+                                </div>
+                                <div class="cnt">
+                                    <input class="ipt date" value="" autocomplete="off" name="indate_2" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                    <span class="error1"></span>
+                                    <label><input type="checkbox" name="timeless_2" class="cbx">长期</label>
+                                </div>
+                            </div>
+                            <div class="group group-up">
+                                <div class="txt">
+                                    <i>*</i>证件照片：
+                                </div>
+                                <div class="cnt">
+                                    <span class="up-img thumb"></span>
+                                    <input type="hidden" name="img_2" class="ipt" data-msg="{empty: '请上传证件照片'}">
+                                    <span class="error1"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box">
+                            <div class="group group-val">
+                                <div class="txt">
+                                    <i>*</i>证件名称：
+                                </div>
+                                <div class="cnt">
+                                    <span class="val">税务登记证</span>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="txt">
+                                    <i>*</i>证件号：
+                                </div>
+                                <div class="cnt">
+                                    <input class="ipt" value="" autocomplete="off" name="cardID_3" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
+                                    <span class="error1"></span>
+                                </div>
+                            </div>
+                            <div class="group group-a">
+                                <div class="txt">
+                                    <i>*</i>有效期：
+                                </div>
+                                <div class="cnt">
+                                    <input class="ipt date" value="" autocomplete="off" name="indate_3" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                    <span class="error1"></span>
+                                    <label><input type="checkbox" name="timeless_2" class="cbx">长期</label>
+                                </div>
+                            </div>
+                            <div class="group group-up">
+                                <div class="txt">
+                                    <i>*</i>证件照片：
+                                </div>
+                                <div class="cnt">
+                                    <span class="up-img thumb"></span>
+                                    <input type="hidden" name="img_3" class="ipt" data-msg="{empty: '请上传证件照片'}">
+                                    <span class="error1"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="button">
+                            <button type="submit" class="btn btn-red" id="submit1">提交</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><!-- member-box end -->
+
+
+    <!-- footer start -->
+    <div class="footer">
+        <div class="wrap">
+            <div class="links">
+                <a href="#">关于上工之选</a>
+                <i>|</i>
+                <a href="#">联系我们</a>
+                <i>|</i>
+                <a href="#">法律申明</a>
+                <i>|</i>
+                <a href="#">建议与投诉</a>
+                <i>|</i>
+                <a href="#">友情链接</a>
+                <i>|</i>
+                <a href="#">站长统计</a>
+            </div>
+            <div class="copyright">
+                <p> 电信与信息服务业务经营许可证号：皖B20140001  备案号：皖ICP备13006003号  互联网药品交易服务资格证：皖B20130001  互联网药品信息服务资格证：（皖）-经营性-2016-0001</p>
+                <p>网站商务合作邮箱：bd@copy;yaoyy.com  客户服务企业邮箱：service@copy;yaoyy.com  Copyright &copy; 2015 – 2020 上工之选 All Rights Reserved</p>
+            </div>
+        </div>
+    </div><!-- footer end -->
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/croppic.min.js"></script>
+    <script src="js/lightbox.js"></script>
+    <script>
+        var _global = {
+            v: {
+            },
+            fn: {
+                init: function() {
+                    this.bindEvent();
+                    this.submitForm();
+                    this.goodsImg();
+                },
+                bindEvent: function() {
+                    var $myform = $('#myform');
+
+                    // 三证合一
+                    $('.tab').on('click', 'span', function() {
+                        $(this).addClass('curr').siblings().removeClass('curr');
+                        if ($(this).index() === 1) {
+                            $myform.find('.box:gt(0)').hide();
+                        } else {
+                            $myform.find('.box:gt(0)').show();
+                        }
+                    })
+
+                    // 长期
+                    $myform.on('click', '.cbx', function() {
+                        var $ipt = $(this).closest('.cnt').find('.ipt');
+                        $ipt.prop('disabled', this.checked).val('').next().hide();
+                    })
+
+                    // blur
+                    $myform.on('blur', '.ipt', function() {
+                        var len = this.value.length,
+                            tips = eval('(' + $(this).data('msg') + ')'),
+                            msg = '';
+
+                        if (len == 0) {
+                            msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
+                        } else if (len < 2 || len > 50) {
+                            msg = '<i class="fa fa-prompt"></i> ' + tips.error;
+                        } 
+                        $(this).next().html(msg)[msg == '' ? 'hide' : 'show']();
+                    })
+                },
+                formValidate: function() {
+                    var $myform = $('#myform'),
+                        $ipts = $myform.find('.box:visible .ipt'),
+                        pass = true;
+
+                    $ipts.each(function() {
+                        var len = this.value.length,
+                            tips = eval('(' + $(this).data('msg') + ')'),
+                            msg = '';
+
+                        if ($(this).prop('disabled')) {
+                            // do nothing
+                        } else if (len == 0) {
+                            msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
+                        } else if (len < 2 || len > 50) {
+                            msg = '<i class="fa fa-prompt"></i> ' + tips.error;
+                        }
+                        $(this).next().html(msg)[msg == '' ? 'hide' : 'show']();
+                        if (pass && msg != '') {
+                            pass = false;
+                            $(this).focus();
+                        }
+                    })
+
+                    return pass;
+                },
+                submitForm: function() {
+                    var self = this;
+                    $('#submit1').on('click', function() {
+                        if (self.formValidate()) {
+                            alert('success')
+                        } else {
+
+                        }
+                        return false;
+                    })
+                },
+                // 商品图片
+                goodsImg: function() {
+                    var self = this,
+                        $upImg = $('.up-img');
+
+                    // 删除图片
+                    $upImg.on('click', '.del', function() {
+                        var $self = $(this);
+                        layer.confirm('确认删除商品图片？', {
+                            btn: ['确认','取消'] //按钮
+                        }, function(index){
+                            $self.parent().empty().next(':hidden').val('');
+                            layer.close(index);
+                        });
+                        return false;
+                    })
+                    // 点击图片无效
+                    $upImg.on('click', 'img', function() {
+                        return false;
+                    })
+
+                    // 证件照          
+                    $upfiles = $('<div id="upfiles"></div>').hide().appendTo($('body'));
+                    $upImg.each(function(i) {
+                        var $el = $(this),
+                            upId = 'upfile' + i,
+                            id = 'upfileBtn' + i;
+
+                        this.id = id;
+                        $upfiles.append('<div id="' + upId + '"></div>');
+
+                        new Croppic(upId, {
+                            uploadUrl:'img_save_to_file.php',
+                            customUploadButtonId: id,
+                            onAfterImgUpload: function(response){
+                                $el.show().html('<img src="' + response.url + '" /><i class="del" title="删除"></i>');
+                                $el.next('input:hidden').val(response.url).trigger('blur');
+                            },
+                            onError:function(msg){
+                                $.notify({
+                                    type: 'error', 
+                                    title: msg.title,   // 不允许的文件类型
+                                    text: msg.message,     //'支持 jpg、jepg、png、gif等格式图片文件', 
+                                    delay: 3e3
+                                });
+                            }
+                        });
+                    })
+                }
+            }
+        }
+        $(function() {
+            _global.fn.init();
+        })
+    </script>
+</body>
+</html>

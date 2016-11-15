@@ -59,7 +59,7 @@
             <div class="price">
                 <i>&yen;</i>
                 <em>${commodityVo.price}</em>
-                <b>${commodityVo.unitName!}</b>
+                <b>元/${commodityVo.unitName!}</b>
                 <#if commodityVo.mark!=0>
                     <span>量大价优</span>
                 </#if>

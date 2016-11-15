@@ -75,6 +75,7 @@ public class MemberServiceImpl extends AbsCommonService<Member> implements Membe
     }
 
     @Override
+    @Transactional
     public int updateMember(Member member, Integer roleId) {
         if (StringUtils.isNotBlank(member.getPassword())) {
             Password pass = EncryptUtil.PiecesEncode(member.getPassword());

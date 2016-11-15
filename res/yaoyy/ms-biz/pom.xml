@@ -123,7 +123,7 @@
                 <spring.dataSource.password>123456</spring.dataSource.password>
                 <doc.base.url>http://localhost:8188</doc.base.url>
                 <pro.upload.path>E:/development/apache-tomcat-8.0.361/webapps/ms-files/</pro.upload.path>
-                <pro.upload.url>http://static.yaobest.com/</pro.upload.url>
+                <pro.upload.url>http://localhost:8188/</pro.upload.url>
                 <elasticsearch.host>192.168.1.41</elasticsearch.host>
                 <elasticsearch.port>9300</elasticsearch.port>
                 <redis.url>192.168.1.41</redis.url>

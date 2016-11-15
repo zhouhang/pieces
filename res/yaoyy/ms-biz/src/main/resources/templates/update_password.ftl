@@ -60,11 +60,13 @@
                             type:"post",
                             data:{code:code,password:password},
                             success: function(data) {
-                                if (data.status === 200) {
-                                    popover(data.info);
+                                if (data.status == '200') {
+                                    popover(data.msg);
                                     //TODO: 跳转到那个页面
+                                    location.href="/center/index";
+
                                 } else {
-                                    popover(data.info);
+                                    popover(data.msg);
                                 }
                             },
                             error: function(XMLHttpRequest, textStatus, errorThrown) {

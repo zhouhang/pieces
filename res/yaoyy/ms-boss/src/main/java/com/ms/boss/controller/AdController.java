@@ -8,6 +8,7 @@ import com.ms.dao.vo.AdVo;
 import com.ms.service.AdService;
 import com.ms.service.AdTypeService;
 import com.ms.tools.entity.Result;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,7 +33,7 @@ public class AdController {
     @Autowired
     private AdTypeService adTypeService;
 
-
+    @RequiresPermissions(value = "ad:list")
     @RequestMapping(value = "list", method = RequestMethod.GET)
     public String list(AdVo adVo, Integer pageNum, Integer pageSize, ModelMap model) {
         List<AdType> types = adTypeService.findAll();
@@ -42,12 +43,14 @@ public class AdController {
         return "ad_list";
     }
 
+    @RequiresPermissions(value = "ad:edit")
     @RequestMapping(value = "detail/{id}", method = RequestMethod.GET)
     @ResponseBody
     public Result detail(@PathVariable("id") Integer id) {
         return Result.success().data(adService.findById(id));
     }
 
+    @RequiresPermissions(value = "ad:edit")
     @RequestMapping(value = "save", method = RequestMethod.POST)
     @ResponseBody
     public Result save(Ad ad) {
@@ -55,6 +58,7 @@ public class AdController {
         return Result.success("保存成功!");
     }
 
+    @RequiresPermissions(value = "ad:edit")
     @RequestMapping(value = "delete/{id}", method = RequestMethod.POST)
     @ResponseBody
     public Result delete(@PathVariable("id")Integer id) {
@@ -62,6 +66,7 @@ public class AdController {
         return Result.success("删除成功!");
     }
 
+    @RequiresPermissions(value = "ad:edit")
     @RequestMapping(value = "enable/{id}", method = RequestMethod.POST)
     @ResponseBody
     public Result enable(@PathVariable("id")Integer id) {
@@ -69,6 +74,7 @@ public class AdController {
         return Result.success("启用成功!");
     }
 
+    @RequiresPermissions(value = "ad:edit")
     @RequestMapping(value = "disable/{id}", method = RequestMethod.POST)
     @ResponseBody
     public Result disable(@PathVariable("id")Integer id) {

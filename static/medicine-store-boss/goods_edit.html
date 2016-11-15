@@ -377,7 +377,7 @@
                     imgEyecandyOpacity:0.5,
                     loaderHtml:'<span class="loader">正在上传图片，请稍后...</span>',
                     onAfterImgCrop:function(response){ 
-                        $el.html('<img src="' + response.url + '" /><i class="del" title="删除"></i>');
+                        $el.show().html('<img src="' + response.url + '" /><i class="del" title="删除"></i>');
                         $el.next('input:hidden').val(response.url).trigger('validate');
                         // 关闭弹层
                         layer.closeAll();

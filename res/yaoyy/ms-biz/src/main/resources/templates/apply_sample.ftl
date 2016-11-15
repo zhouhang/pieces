@@ -83,7 +83,7 @@
                                 if(result.status=="200"){
                                     layer.open({
                                         className: 'layer-custom',
-                                        content: '<div class="box"><div class="hd">您的寄样申请已提交成功！</div><div class="bd">我们会在60分钟之内与您取得联系。登录可以跟踪您的所有寄养申请。</div></div>'
+                                        content: '<div class="box"><div class="hd">您的寄样申请已提交成功！</div><div class="bd">我们会在60分钟之内与您取得联系。登录可以跟踪您的所有寄样申请。</div></div>'
                                         ,btn: ['历史寄样单', '返回']
                                         ,yes: function(index){
                                             if(is_weixin()){
