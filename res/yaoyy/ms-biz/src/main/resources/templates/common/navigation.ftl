@@ -17,6 +17,7 @@
                 <a href="/pickCommodity/list" id="commodityCart">
                     <i class="fa fa-cart"></i>
                     <span>选货单</span>
+                    <b id="cart"></b>
                 </a>
             </li>
             <li>

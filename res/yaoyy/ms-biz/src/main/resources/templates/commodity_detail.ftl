@@ -25,6 +25,7 @@
                     <a href="/pickCommodity/list">
                         <i class="fa fa-cart"></i>
                         <span>选货单</span>
+                        <b id="cart"></b>
                     </a>
                 </li>
                 <li class="wide">
@@ -182,7 +183,7 @@
             showCartNum:function(){
                 var count=getCommodityCount();
                 if(count!=0){
-                    $(".fa-cart").append("<b id='cart'>"+count+"</b>");
+                    $("#cart").html(count);
                 }
 
             },

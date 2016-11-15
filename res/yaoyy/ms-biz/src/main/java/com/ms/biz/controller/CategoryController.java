@@ -59,6 +59,7 @@ public class CategoryController {
     @ResponseBody
     public Result searchCategory(CategoryVo categoryVo){
         categoryVo.setLevel(CategoryEnum.LEVEL_BREED.getValue());
+        categoryVo.setStatus(1);
         List<CategoryVo> categoryVoList=categoryService.searchCategory(categoryVo);
         if(categoryVoList.size()>6){
             return  Result.success().data(categoryVoList.subList(0,6));
