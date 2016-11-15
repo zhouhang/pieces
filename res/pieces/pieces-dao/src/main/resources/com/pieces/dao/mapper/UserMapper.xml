@@ -16,12 +16,14 @@
 		<result column="source"  property="source" />
 		<result column="area_full"  property="areaFull" />
 		<result column="is_del"  property="isDel" />
+		<result column="type"  property="type" />
+		<result column="certify_status"  property="certifyStatus" />
 		<result column="create_time"  property="createTime" />
 		<result column="update_time"  property="updateTime" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id,user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,create_time,update_time
+		id,user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,type,certify_status,create_time,update_time
 	</sql>
 
 
@@ -45,9 +47,9 @@
 
 	<insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.User">
 		insert into
-		user (user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,create_time,update_time)
+		user (user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,type,certify_status,create_time,update_time)
 		values
-		(#{userName},#{password},#{salt},#{companyFullName},#{areaId},#{contactName},#{contactMobile},#{onlineStatus},#{bindErp},#{source},#{areaFull},#{isDel},#{createTime},#{updateTime})
+		(#{userName},#{password},#{salt},#{companyFullName},#{areaId},#{contactName},#{contactMobile},#{onlineStatus},#{bindErp},#{source},#{areaFull},#{isDel},#{type},#{certifyStatus},#{createTime},#{updateTime})
 	</insert>
 
 	<update id="update" parameterType="com.pieces.dao.model.User">
@@ -102,6 +104,14 @@
 				is_del = #{isDel},
 			</if>
 
+			<if test="type != null">
+				type = #{type},
+			</if>
+
+			<if test="certifyStatus != null">
+				certify_status = #{certifyStatus},
+			</if>
+
 			<if test="createTime != null">
 				create_time = #{createTime},
 			</if>
@@ -152,7 +162,7 @@
 		<![CDATA[
 			insert into user
 			(user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,isDel,create_time,update_time
-			,online_status,bind_erp,source,area_full)
+			,online_status,bind_erp,source,area_full,type,certify_status)
 			values (#{userName,jdbcType=VARCHAR},
 			#{password,jdbcType=VARCHAR},
 			#{salt,jdbcType=VARCHAR},
@@ -166,7 +176,9 @@
 			#{onlineStatus,jdbcType=INTEGER},
 			#{bindErp,jdbcType=INTEGER},
 			#{source,jdbcType=INTEGER},
-			#{areaFull,jdbcType=VARCHAR}
+			#{areaFull,jdbcType=VARCHAR},
+			#{type,jdbcType=INTEGER},
+			#{certifyStatus,jdbcType=INTEGER}
 			)
 		]]>
 	</insert>

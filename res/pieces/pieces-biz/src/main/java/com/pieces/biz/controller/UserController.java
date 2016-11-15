@@ -104,14 +104,6 @@ public class UserController extends BaseController {
 		if(StringUtils.isBlank(user.getPassword())){
 			message.append("密码不能为空");
 		}
-		pattern = Pattern.compile("^([a-zA-Z0-9_\\(\\)-]|[\\u4e00-\\u9fa5]|[（）]){4,50}$");
-		matcher = pattern.matcher(user.getCompanyFullName());
-		if(!matcher.matches()){
-			message.append("用药单位名称有误");
-		}
-		if(user.getAreaId() < 10000){
-			message.append("注册地有误");
-		}
 		pattern = Pattern.compile("^([a-zA-Z]|[\u4e00-\u9fa5]){2,50}$");
 		matcher = pattern.matcher(user.getContactName());
 		if(!matcher.matches()){
@@ -121,6 +113,9 @@ public class UserController extends BaseController {
 		matcher = pattern.matcher(user.getContactMobile());
 		if(StringUtils.isBlank(user.getContactMobile()) || !matcher.matches()){
 			message.append("联系人手机错误");
+		}
+		if(userService.ifExistMobile(user.getContactMobile())){
+			message.append("联系人手机重复");
 		}
 		
 		if (StringUtils.isNotBlank(message.toString())) {
@@ -158,7 +153,7 @@ public class UserController extends BaseController {
 		String userName = request.getParameter("userName");
 		Pattern pattern = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$");
 		Matcher matcher = pattern.matcher(userName);
-		
+
 		if	(!StringUtils.isNotBlank(userName) || !matcher.matches()){
 			result.put("error", "用户名必须以英文字母开头，长度6到20位!");
 			WebUtil.print(response, result);
@@ -171,6 +166,26 @@ public class UserController extends BaseController {
 			return;
 		}
 		
+		result.put("ok", "");
+		WebUtil.print(response, result);
+	}
+
+
+	/**
+	 * 验证手机号
+	 *
+	 * @return
+	 */
+	@RequestMapping(value = "/checkmobile")
+	public void checkMobile(String contactMobile,HttpServletResponse response) {
+		Map<String, String> result = new HashMap<String, String>();
+
+		if (userService.ifExistMobile(contactMobile)) {
+			result.put("error", "该手机号已被使用，请重新输入");
+			WebUtil.print(response, result);
+			return;
+		}
+
 		result.put("ok", "");
 		WebUtil.print(response, result);
 	}
