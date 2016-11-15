@@ -13,6 +13,10 @@
 </header><!-- /ui-header -->
 
 <section class="ui-content">
+    <div class="ui-notice ui-notice-extra hide">
+        寄样列表还没有商品，<br>去商品详情页面可以添加商品到选货单！
+        <a class="ubtn ubtn-primary" href='/'>返回首页</a>
+    </div>
     <div class="ui-search">
         <form action="">
             <button type="button" id="submit" class="fa fa-search submit mid"></button>
@@ -62,11 +66,11 @@
         fn: {
             init: function () {
                 this.bindEvent();
+                this.empty();
             },
-
             bindEvent: function () {
-                var $search =$("#submit");
-                var $mid=$(".receipt");
+                var $search = $("#submit");
+                var $mid = $(".receipt");
                 $search.on('click', function() {
                     var url="sample/list";
                     var name=$("#keyword").val();
@@ -76,7 +80,6 @@
                     else{
                         location.href=url;
                     }
-
                 });
                 $mid.on('click',function(){
                     var sendId=$(this).attr("sid");
@@ -89,8 +92,12 @@
                         }
                     })
                 })
-
-
+            },
+            empty: function() {
+                if ($('.slist').find('li').length === 0) {
+                    $('.ui-search').remove();
+                    $('.ui-notice').removeClass('hide');
+                }
             }
         }
     }

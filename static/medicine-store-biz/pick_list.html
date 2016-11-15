@@ -19,8 +19,12 @@
     </header><!-- /ui-header -->
 
     <section class="ui-content">
+        <div class="ui-notice ui-notice-extra hide">
+            选货单列表还没有商品，<br>去商品详情页面可以添加商品到选货单！
+            <a class="ubtn ubtn-primary" href='/'>返回首页</a>
+        </div>
         <div class="pick-list">
-            <div class="item">
+            <!-- <div class="item">
                 <dl>
                     <dt>
                         状态：<em>选货单已提交  客服马上与您联系</em>
@@ -57,7 +61,7 @@
                         <a href="pick_detail.html"><em>茯苓</em><span>云南  2级货  过4号筛  直径0.8cm以内  10公斤</span></a>
                     </dd>
                 </dl>
-            </div>
+            </div> -->
         </div>
 
     </section><!-- /ui-content -->
@@ -73,54 +77,35 @@
                 this.loadPlist();
             },
             loadPlist: function() {
-                var self = this;
+                var self = this,
+                    pageNum = 1; // 当前页
+
                 $('.ui-content').dropload({
                     scrollArea : window,
                     threshold : 50,
-                    loadUpFn : function(me){
-                        $.ajax({
-                            type: 'GET',
-                            url: 'json/pick-list.json',
-                            dataType: 'json',
-                            success: function(data){
-                                if (!data.list) {
-                                    return;
-                                }
-                                me.unlock();
-                                me.isDate = true;
-                                var result = self.toHtml(data.list);
-                                setTimeout(function(){
-                                    $('.pick-list').html(result);
-                                    me.resetload();
-                                }, 1e3);
-                            },
-                            error: function(xhr, type){
-                                popover('网络连接超时，请您稍后重试!');
-                                me.resetload();
-                            }
-                        });
-                    },
                     loadDownFn : function(me){
                         $.ajax({
                             type: 'GET',
                             url: 'json/pick-list.json',
+                            data: {pageSize:5, pageNum:pageNum},
                             dataType: 'json',
                             success: function(data){
-                                if (!data.list) {
-                                    return false;
-                                }
-                                var result = self.toHtml(data.list);
-
-                                if(data.status === 'nomore'){
+                                pageNum ++;
+                                if (data.list.length === 0) {
                                     me.lock();
                                     me.noData();
-                                    me.resetload();
-                                    return;
+                                    if (pageNum === 1) {
+                                        $('.ui-notice').removeClass('hide');
+                                        me.$domDown.hide();
+                                    } else {
+                                        setTimeout(function() {
+                                            me.$domDown.addClass('dropload-down-hide');
+                                        }, 2e3);
+                                    }
+                                } else {
+                                    self.toHtml(data.list);
                                 }
-                                setTimeout(function(){
-                                    $('.pick-list').append(result);
-                                    me.resetload();
-                                }, 1e3);
+                                me.resetload();
                             },
                             error: function(xhr, type){
                                 popover('网络连接超时，请您稍后重试!');
@@ -153,7 +138,7 @@
 
                     html.push('</div>');
                 })
-                return html.join('');
+                $('.pick-list').append(html.join(''));
             }
         }
     }

@@ -13,6 +13,10 @@
 </header><!-- /ui-header -->
 
 <section class="ui-content">
+    <div class="ui-notice ui-notice-extra hide">
+        选货单列表还没有商品，<br>去商品详情页面可以添加商品到选货单！
+        <a class="ubtn ubtn-primary" href='/'>返回首页</a>
+    </div>
     <div class="pick-list">
     </div>
 
@@ -30,72 +34,35 @@
                 this.loadPlist();
             },
             loadPlist: function() {
-                var self = this;
+                var self = this,
+                    pageNum = 1; // 当前页
+
                 $('.ui-content').dropload({
                     scrollArea : window,
                     threshold : 50,
-                    loadUpFn : function(me){
-                        $.ajax({
-                            type: 'POST',
-                            url: _global.v.dataUrl,
-                            data:{pageSize:5,pageNum:1},
-                            dataType: 'json',
-                            success: function(data){
-                                if (!data.data.list) {
-                                    return;
-                                }
-                                me.unlock();
-                                me.isDate = true;
-                                var result = self.toHtml(data.data.list);
-                                setTimeout(function(){
-                                    $('.pick-list').html(result);
-                                    me.resetload();
-                                }, 1e3);
-                            },
-                            error: function(xhr, type){
-                                popover('网络连接超时，请您稍后重试!');
-                                me.resetload();
-                            }
-                        });
-                    },
                     loadDownFn : function(me){
-                        var showNum=$(".pick-list  .item").length;
-                        if(showNum!=0&&(showNum%5)<5&&(showNum%5)!=0){
-                            popover('已经没有了!');
-                            me.resetload();
-                            return;
-                        }
-                        var pageNum=parseInt(showNum/5)+1;
                         $.ajax({
                             type: 'POST',
                             url: _global.v.dataUrl,
-                            data:{pageSize:5,pageNum:pageNum},
+                            data:{pageSize:5, pageNum:pageNum},
                             dataType: 'json',
                             success: function(data){
-                                if (!data.data.list) {
-                                    popover('已经没有了!');
-                                    me.resetload();
-                                    return;
-                                }
-                                var result = self.toHtml(data.data.list);
-
-                                if(data.data.pages === pageNum){
-                                    $('.pick-list').append(result);
-                                    me.resetload();
+                                pageNum ++;
+                                if (data.data.list.length === 0) {
                                     me.lock();
                                     me.noData();
-                                    me.resetload();
-                                    return;
+                                    if (pageNum === 1) {
+                                        $('.ui-notice').removeClass('hide');
+                                        me.$domDown.hide();
+                                    } else {
+                                        setTimeout(function() {
+                                            me.$domDown.addClass('dropload-down-hide');
+                                        }, 2e3);
+                                    }
+                                } else {
+                                    self.toHtml(data.data.list);
                                 }
-                                setTimeout(function(){
-                                    $('.pick-list').append(result);
-                                    me.resetload();
-                                }, 1e3);
-
-
-
-
-
+                                me.resetload();
                             },
                             error: function(xhr, type){
                                 popover('网络连接超时，请您稍后重试!');
@@ -106,7 +73,6 @@
                 });
             },
             toHtml: function(data) {
-                console.log(data);
                 var html = [];
                 $.each(data, function(i, item) {
                     html.push('<div class="item">\n <dl>');
@@ -120,7 +86,7 @@
                             return false;
                         }
                         html.push(     '<dd>\n');
-                        html.push(         '<a href="/pick/detail/', item.id, '"><em>', list.name, '</em><span>', list.origin, '</span><span>', list.spec, '</span><span>', list.num,list.unit, '</span></a>\n');
+                        html.push(         '<a href="/pick/detail/', item.id, '"><em>', list.name, '</em><span>', list.origin, ' ', list.spec, ' ', list.num, ' ', list.unit, '</span></a>\n');
                         html.push(     '</dd>\n');
                     })
 
@@ -129,7 +95,7 @@
 
                     html.push('</div>');
                 })
-                return html.join('');
+                $('.pick-list').append(html.join(''));
             }
         }
     }

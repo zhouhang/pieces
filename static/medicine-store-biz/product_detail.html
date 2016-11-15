@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>品种详情-药优优</title>
+    <title>商品详情-药优优</title>
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="assets/css/app.css">
 </head>
 <body class="ui-body body-gray">
     <header class="ui-header">
-        <div class="title">品种详情</div>
+        <div class="title">商品详情</div>
         <div class="abs-l mid">
             <a href="javascript:history.back();" class="fa fa-back"></a>
         </div>
@@ -28,10 +28,10 @@
                     </a>
                 </li>
                 <li>
-                    <a href="center.html">
+                    <a href="pick.html">
                         <i class="fa fa-cart"></i>
                         <span>采购单</span>
-                        <b id="quantity">11</b>
+                        <b id="cartNum"></b>
                     </a>
                 </li>
                 <li class="wide">
@@ -58,9 +58,9 @@
             <h1 class="title">白芍  安徽白芍  选货  过6-8号筛<em>50公斤起购</em></h1>
             <div class="tag">商品标语</div>
             <div class="norms">
-                <a href="product_detail.html" class="current">过8号筛</a>
+                <a href="product_detail.html">过8号筛</a>
                 <a href="product_detail.html">过10号筛</a>
-                <a href="product_detail.html">过12号筛</a>
+                <a href="product_detail.html" class="current">过12号筛</a>
                 <a href="product_detail.html">过14号筛</a>
                 <a href="product_detail.html">过16号筛</a>
             </div>
@@ -72,7 +72,7 @@
 
                 <div class="ui-quantity" id="quantity">
                     <button type="button" class="fa fa-reduce op"></button>
-                    <input type="tel" class="ipt" value="1" autocomplete="off" data-price="{1-499:140,500-999:120,1000:100}">
+                    <input type="tel" class="ipt" id="num" value="1" autocomplete="off" data-price="{1-499:140,500-999:120,1000:100}">
                     <button type="button" class="fa fa-plus op"></button>
                     <b>公斤</b>
                 </div>
@@ -183,6 +183,8 @@
                     if (val) {
                         val = (!isNaN(val = parseInt(val, 10)) && val) > 0 ? val : 1;
                         this.value = val;
+                    } else {
+                        this.value = 1;
                     }
                     num = this.value;
                 })
@@ -190,13 +192,15 @@
             addCommodity:function(){
                 var self = this;
                 $('#addCommodity').on('click', function (){
-                    self.cartAnim();
+                    var id = 1021;
+                    var num = parseInt($('#num').val(), 10);
+                    !isNaN(num) && self.cartAnim(id, num);
                     return false;
                 })
             },
-            cartAnim: function() {
+            cartAnim: function(id, num) {
                 var offset1 = $('.norms .current').offset(),
-                    offset2 = $('#quantity').offset(),
+                    offset2 = $('#cartNum').offset(),
                     width = 20,
                     st = document.body.scrollTop || document.documentElement.scrollTop,
                     flyer = $('<div class="cartAnim"><i class="fa fa-cart"></i></div>');
@@ -212,6 +216,7 @@
                         height: 20
                     },
                     onEnd: function(){
+                        pickCommodity(id, num);
                         this.destroy();
                     }
                 });

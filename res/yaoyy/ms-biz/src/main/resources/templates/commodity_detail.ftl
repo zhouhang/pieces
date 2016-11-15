@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <#include "./common/meta.ftl"/>
-    <title>品种详情-药优优</title>
+    <title>商品详情-药优优</title>
 </head>
 <body class="ui-body body-gray">
     <header class="ui-header">
@@ -25,7 +25,7 @@
                     <a href="/pickCommodity/list">
                         <i class="fa fa-cart"></i>
                         <span>选货单</span>
-                        <b id="cart"></b>
+                        <b id="cartNum"></b>
                     </a>
                 </li>
                 <li class="wide">
@@ -117,7 +117,6 @@
                 this.quantity();
                 this.initAttr();
                 this.addCommodity();
-                this.showCartNum();
             },
             slide: function() {
                 var $slide = $('#slide1'),
@@ -161,55 +160,42 @@
                     if (val) {
                         val = (!isNaN(val = parseInt(val, 10)) && val) > 0 ? val : 1;
                         this.value = val;
+                    } else {
+                        this.value = 1;
                     }
                     num = this.value;
                 })
             },
             initAttr: function () {
-                var html = "";
+                var html = [];
                 //品种，切制规格和产地
-                html=html+"<dl><dt>商品名称</dt><dd>${commodityVo.name}</dd></dl>";
-                html=html+"<dl><dt>品种</dt><dd>${commodityVo.categoryName}</dd></dl>";
-                html=html+"<dl><dt>切制规格</dt><dd>${commodityVo.spec}</dd></dl>";
-                html=html+"<dl><dt>产地</dt><dd>${commodityVo.origin}</dd></dl>";
-            <#if commodityVo.attribute?exists && commodityVo.attribute != "">
-                var parameter = ${commodityVo.attribute};
-                $.each(parameter, function (k, v) {
-                   html=html+"<dl><dt>"+k+"</dt> <dd>"+v+"</dd> </dl>"
-                })
-                $("#attributeItem").html(html);
-            </#if>
-            },
-            showCartNum:function(){
-                var count=getCommodityCount();
-                if(count!=0){
-                    $("#cart").html(count);
-                }
-
+                html.push('<dl><dt>商品名称</dt><dd>${commodityVo.name}</dd></dl>');
+                html.push('<dl><dt>品种</dt><dd>${commodityVo.categoryName}</dd></dl>');
+                html.push('<dl><dt>切制规格</dt><dd>${commodityVo.spec}</dd></dl>');
+                html.push('<dl><dt>产地</dt><dd>${commodityVo.origin}</dd></dl>');
+                <#if commodityVo.attribute?exists && commodityVo.attribute != "">
+                    var parameter = ${commodityVo.attribute};
+                    $.each(parameter, function (k, v) {
+                        html.push('<dl><dt>' , k , '</dt><dd>' , v , '</dd></dl>');
+                    })
+                </#if>
+                $('#attributeItem').html(html.join(''));
             },
             addCommodity:function(){
-                var self=this;
-                $("#addCommodity").click(function () {
-                    var id=${commodityVo.id};
-                    var num=$("#num").val();
-                    if(num!=""){
-                        pickCommodity(id,num);
-                        self.showCartNum();
-                        self.cartAnim();
-                    }
-                    else{
-                        alert("数量不能为空");
-                    }
-
+                var self = this;
+                $('#addCommodity').on('click', function (){
+                    var id = ${commodityVo.id};
+                    var num = parseInt($('#num').val(), 10);
+                    !isNaN(num) && self.cartAnim(id, num);
                     return false;
                 })
             },
-            cartAnim: function() {
+            cartAnim: function(id, num) {
                 var offset1 = $('.norms .current').offset(),
-                        offset2 = $('#cart').offset(),
-                        width = 20,
-                        st = document.body.scrollTop || document.documentElement.scrollTop,
-                        flyer = $('<div class="cartAnim"><i class="fa fa-cart"></i></div>');
+                    offset2 = $('#cartNum').offset(),
+                    width = 20,
+                    st = document.body.scrollTop || document.documentElement.scrollTop,
+                    flyer = $('<div class="cartAnim"><i class="fa fa-cart"></i></div>');
                 flyer.fly({
                     start: {
                         left: offset1.left + width/2,
@@ -222,6 +208,7 @@
                         height: 20
                     },
                     onEnd: function(){
+                        pickCommodity(id, num);
                         this.destroy();
                     }
                 });
