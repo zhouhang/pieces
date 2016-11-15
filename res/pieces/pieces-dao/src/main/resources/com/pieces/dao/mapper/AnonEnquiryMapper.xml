@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.AnonEnquiryDao">
+    <resultMap id="AnonEnquiryResultMap" type="com.pieces.dao.model.AnonEnquiry">
+            <id column="id"  property="id" />
+            <result column="content"  property="content" />
+            <result column="contacts"  property="contacts" />
+            <result column="publish_time"  property="publishTime" />
+            <result column="phone"  property="phone" />
+            <result column="last_follow_time"  property="lastFollowTime" />
+            <result column="last_follow_id"  property="lastFollowId" />
+            <result column="status"  property="status" />
+        
+    </resultMap>
+
+    <resultMap id="AnonEnquiryResultMapVo" type="com.pieces.dao.vo.AnonEnquiryVo">
+            <id column="id"  property="id" />
+            <result column="content"  property="content" />
+            <result column="contacts"  property="contacts" />
+            <result column="publish_time"  property="publishTime" />
+            <result column="phone"  property="phone" />
+            <result column="last_follow_time"  property="lastFollowTime" />
+            <result column="last_follow_id"  property="lastFollowId" />
+            <result column="status"  property="status" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,content,contacts,publish_time,phone,last_follow_time,last_follow_id,status
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="AnonEnquiryResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from anon_enquiry
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="AnonEnquiryResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from anon_enquiry
+    </select>
+
+    <select id="findByParams" resultMap="AnonEnquiryResultMapVo" parameterType="com.pieces.dao.vo.AnonEnquiryVo">
+        select
+        <include refid="Base_Column_List" />
+        from anon_enquiry
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from anon_enquiry
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.AnonEnquiry">
+        insert into
+        anon_enquiry (content,contacts,publish_time,phone,last_follow_time,last_follow_id,status)
+        values
+        (#{content},#{contacts},#{publishTime},#{phone},#{lastFollowTime},#{lastFollowId},#{status})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.AnonEnquiry">
+        update anon_enquiry
+        <set>
+                                                        
+            <if test="content != null">
+                content = #{content},
+            </if>
+                                            
+            <if test="contacts != null">
+                contacts = #{contacts},
+            </if>
+                                            
+            <if test="publishTime != null">
+                publish_time = #{publishTime},
+            </if>
+                                            
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+                                            
+            <if test="lastFollowTime != null">
+                last_follow_time = #{lastFollowTime},
+            </if>
+                                            
+            <if test="lastFollowId != null">
+                last_follow_id = #{lastFollowId},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

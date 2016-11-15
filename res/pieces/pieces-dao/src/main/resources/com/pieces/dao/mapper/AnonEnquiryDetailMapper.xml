@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.AnonEnquiryDetailDao">
+    <resultMap id="AnonEnquiryDetailResultMap" type="com.pieces.dao.model.AnonEnquiryDetail">
+            <id column="id"  property="id" />
+            <result column="anon_enquiry_id"  property="anonEnquiryId" />
+            <result column="type"  property="type" />
+            <result column="content"  property="content" />
+            <result column="attachment_url"  property="attachmentUrl" />
+        
+    </resultMap>
+
+    <resultMap id="AnonEnquiryDetailResultMapVo" type="com.pieces.dao.vo.AnonEnquiryDetailVo">
+            <id column="id"  property="id" />
+            <result column="anon_enquiry_id"  property="anonEnquiryId" />
+            <result column="type"  property="type" />
+            <result column="content"  property="content" />
+            <result column="attachment_url"  property="attachmentUrl" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,anon_enquiry_id,type,content,attachment_url
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="AnonEnquiryDetailResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from anon_enquiry_detail
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="AnonEnquiryDetailResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from anon_enquiry_detail
+    </select>
+
+    <select id="findByParams" resultMap="AnonEnquiryDetailResultMapVo" parameterType="com.pieces.dao.vo.AnonEnquiryDetailVo">
+        select
+        <include refid="Base_Column_List" />
+        from anon_enquiry_detail
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from anon_enquiry_detail
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.AnonEnquiryDetail">
+        insert into
+        anon_enquiry_detail (anon_enquiry_id,type,content,attachment_url)
+        values
+        (#{anonEnquiryId},#{type},#{content},#{attachmentUrl})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.AnonEnquiryDetail">
+        update anon_enquiry_detail
+        <set>
+                                                        
+            <if test="anonEnquiryId != null">
+                anon_enquiry_id = #{anonEnquiryId},
+            </if>
+                                            
+            <if test="type != null">
+                type = #{type},
+            </if>
+                                            
+            <if test="content != null">
+                content = #{content},
+            </if>
+                                            
+            <if test="attachmentUrl != null">
+                attachment_url = #{attachmentUrl},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.UserBindDao">
+    <resultMap id="UserBindResultMap" type="com.pieces.dao.model.UserBind">
+            <id column="id"  property="id" />
+            <result column="agent_id"  property="agentId" />
+            <result column="terminal_id"  property="terminalId" />
+            <result column="create_time"  property="createTime" />
+        
+    </resultMap>
+
+    <resultMap id="UserBindResultMapVo" type="com.pieces.dao.vo.UserBindVo">
+            <id column="id"  property="id" />
+            <result column="agent_id"  property="agentId" />
+            <result column="terminal_id"  property="terminalId" />
+            <result column="create_time"  property="createTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,agent_id,terminal_id,create_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="UserBindResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_bind
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="UserBindResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_bind
+    </select>
+
+    <select id="findByParams" resultMap="UserBindResultMapVo" parameterType="com.pieces.dao.vo.UserBindVo">
+        select
+        <include refid="Base_Column_List" />
+        from user_bind
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from user_bind
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.UserBind">
+        insert into
+        user_bind (agent_id,terminal_id,create_time)
+        values
+        (#{agentId},#{terminalId},#{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.UserBind">
+        update user_bind
+        <set>
+                                                        
+            <if test="agentId != null">
+                agent_id = #{agentId},
+            </if>
+                                            
+            <if test="terminalId != null">
+                terminal_id = #{terminalId},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

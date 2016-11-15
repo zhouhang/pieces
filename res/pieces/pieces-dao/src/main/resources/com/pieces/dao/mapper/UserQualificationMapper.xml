@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.UserQualificationDao">
+    <resultMap id="UserQualificationResultMap" type="com.pieces.dao.model.UserQualification">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="number"  property="number" />
+            <result column="term"  property="term" />
+            <result column="status"  property="status" />
+            <result column="type"  property="type" />
+            <result column="group"  property="group" />
+            <result column="picture_url"  property="pictureUrl" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <resultMap id="UserQualificationResultMapVo" type="com.pieces.dao.vo.UserQualificationVo">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="number"  property="number" />
+            <result column="term"  property="term" />
+            <result column="status"  property="status" />
+            <result column="type"  property="type" />
+            <result column="group"  property="group" />
+            <result column="picture_url"  property="pictureUrl" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,number,term,status,type,group,picture_url,create_time,update_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="UserQualificationResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_qualification
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="UserQualificationResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_qualification
+    </select>
+
+    <select id="findByParams" resultMap="UserQualificationResultMapVo" parameterType="com.pieces.dao.vo.UserQualificationVo">
+        select
+        <include refid="Base_Column_List" />
+        from user_qualification
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from user_qualification
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.UserQualification">
+        insert into
+        user_qualification (user_id,number,term,status,type,group,picture_url,create_time,update_time)
+        values
+        (#{userId},#{number},#{term},#{status},#{type},#{group},#{pictureUrl},#{createTime},#{updateTime})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.UserQualification">
+        update user_qualification
+        <set>
+                                                        
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+                                            
+            <if test="number != null">
+                number = #{number},
+            </if>
+                                            
+            <if test="term != null">
+                term = #{term},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                                            
+            <if test="type != null">
+                type = #{type},
+            </if>
+                                            
+            <if test="group != null">
+                group = #{group},
+            </if>
+                                            
+            <if test="pictureUrl != null">
+                picture_url = #{pictureUrl},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

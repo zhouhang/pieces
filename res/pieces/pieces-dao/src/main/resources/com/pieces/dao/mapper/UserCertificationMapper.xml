@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.UserCertificationDao">
+    <resultMap id="UserCertificationResultMap" type="com.pieces.dao.model.UserCertification">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="company"  property="company" />
+            <result column="corporation"  property="corporation" />
+            <result column="address"  property="address" />
+            <result column="type"  property="type" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <resultMap id="UserCertificationResultMapVo" type="com.pieces.dao.vo.UserCertificationVo">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="company"  property="company" />
+            <result column="corporation"  property="corporation" />
+            <result column="address"  property="address" />
+            <result column="type"  property="type" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,company,corporation,address,type,create_time,update_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="UserCertificationResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_certification
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="UserCertificationResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_certification
+    </select>
+
+    <select id="findByParams" resultMap="UserCertificationResultMapVo" parameterType="com.pieces.dao.vo.UserCertificationVo">
+        select
+        <include refid="Base_Column_List" />
+        from user_certification
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from user_certification
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.UserCertification">
+        insert into
+        user_certification (user_id,company,corporation,address,type,create_time,update_time)
+        values
+        (#{userId},#{company},#{corporation},#{address},#{type},#{createTime},#{updateTime})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.UserCertification">
+        update user_certification
+        <set>
+                                                        
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+                                            
+            <if test="company != null">
+                company = #{company},
+            </if>
+                                            
+            <if test="corporation != null">
+                corporation = #{corporation},
+            </if>
+                                            
+            <if test="address != null">
+                address = #{address},
+            </if>
+                                            
+            <if test="type != null">
+                type = #{type},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
