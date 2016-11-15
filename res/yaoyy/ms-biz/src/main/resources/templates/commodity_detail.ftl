@@ -192,9 +192,15 @@
                 $("#addCommodity").click(function () {
                     var id=${commodityVo.id};
                     var num=$("#num").val();
-                    pickCommodity(id,num);
-                    self.showCartNum();
-                    self.cartAnim();
+                    if(num!=""){
+                        pickCommodity(id,num);
+                        self.showCartNum();
+                        self.cartAnim();
+                    }
+                    else{
+                        alert("数量不能为空");
+                    }
+
                     return false;
                 })
             },
