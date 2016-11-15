@@ -19,6 +19,10 @@
     </header><!-- /ui-header -->
 
     <section class="ui-content">
+        <div class="ui-notice ui-notice-extra hide">
+            寄样列表还没有商品，<br>去商品详情页面可以添加商品到选货单！
+            <a class="ubtn ubtn-primary" href='/'>返回首页</a>
+        </div>
         <div class="ui-search">
             <form action="">
                 <button type="submit" id="submit" class="fa fa-search submit mid"></button>
@@ -76,5 +80,24 @@
 	
     <script src="assets/js/zepto.min.js"></script>
     <script src="assets/js/app.js"></script>
+    <script>
+        var _global = {
+            fn: {
+                init: function() {
+                    this.empty();
+                },
+                empty: function() {
+                    if ($('.slist').find('li').length === 0) {
+                        $('.ui-search').remove();
+                        $('.ui-notice').removeClass('hide');
+                    }
+                }
+            }
+        }
+
+    $(function() {
+        _global.fn.init();
+    })
+</script>
 </body>
 </html>

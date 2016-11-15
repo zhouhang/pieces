@@ -13,8 +13,9 @@
 </header><!-- /ui-header -->
 
 <section class="ui-content">
-    <div class="ui-notice">
-        您的选货单如下，“选货登记”后我们会在30分钟内与您取得联系。如您需要寄样服务可以直接与我们电话沟通，我们为您提供免费的寄样服务。联系电话：0273334474
+    <div class="ui-notice ui-notice-extra">
+        选货单还没有商品，<br>去商品详情页面可以添加商品到选货单！
+        <a class="ubtn ubtn-primary" href='/'>返回首页</a>
     </div>
     <div class="pick-form">
         <form action="" id="pick_commodity">
@@ -22,6 +23,8 @@
     </div>
 </section><!-- /ui-content -->
 
+<div class="ui-loading"></div>
+    
 
 
 <#include "./common/footer.ftl"/>
@@ -35,244 +38,196 @@
         },
         fn: {
             init: function() {
-                this.iniCart();
+                this.initCart();
             },
-            iniCart:function(){
+            initCart:function(){
                 var self = this;
-                var pick_commodity = localStorage.getItem(CARTNAME);
-                if(pick_commodity){//如果购物车不为空。
-                    var pick_obj = eval(pick_commodity);
-                    var commodityIds=[];
-                    for(var i=0;i<pick_obj.length;i++){
-                       var pick=pick_obj[i];
-                        commodityIds.push(pick.commodityId);
-                    }
-                    if(commodityIds.length!=0){
+                var cartName = _YYY.localstorage.get(_YYY.CARTNAME);
+                if(cartName){
+                    var arr = eval(cartName),
+                        commodityIds = [];
+                    $.each(arr, function(i, item) {
+                        commodityIds.push(item.commodityId);
+                    })
+                    if(commodityIds.length != 0){
+                        $('.ui-loading').show();
                         $.ajax({
                             url: _global.v.commoditySearchUrl,
                             data: JSON.stringify(commodityIds),
                             type: "POST",
                             contentType : 'application/json',
                             success: function(data) {
-                                self.tohtml(data.data,pick_obj);
-                                self.submit();
-                                self.quantity();
+                                self.tohtml(data.data, arr);
                             }
                         })
                     }
-                    else{
-                        $(".ui-notice").html("选货单还没有商品，去商品详情页面可以添加商品到选货单！<a style='color:blue;text-decoration:underline' href='/'>返回首页</a>");
-                        $("#pick_commodity").empty();
-                    }
-
-
-
                 }
-                else{
-                    $(".ui-notice").html("选货单还没有商品，去商品详情页面可以添加商品到选货单！<a style='color:blue;text-decoration:underline' href='/'>返回首页</a>");
-                    $("#pick_commodity").empty();
-                }
-
             },
-            tohtml:function (data,cart) {
-                var html="";
-                for(var i=0;i<data.length;i++){
-                    var commodity=data[i];
-                    html=html+"<div class='item'>"
-                           +"<div class='hd'>"
-                           + "<em>"+commodity.name+"</em>"
-                           + "<span>"+commodity.origin+' '+commodity.spec+"</span>"
-                           +  "</div> <div class='price'>"
-                           + "<i>&yen;</i> <b>"+commodity.price+"</b> 元"
-                           + "</div> <div class='ui-quantity cale'> <button type='button' class='fa fa-reduce op'></button>"
-                           + "<input type='tel' class='ipt num-input' value='1' cid='"+commodity.id+"'autocomplete='off' data-price='{1-499:140,500-999:120,1000:100}'>"
-                            +"<button type='button' class='fa fa-plus op'></button> </div>"
-                            +"<div class='cale unitName'>"+commodity.unitName+"</div>"
-                            +"<div class='del'> <button type='button' class='fa fa-remove' cid='"+commodity.id+"'></button> </div> </div>"
-
+            tohtml:function (data, arr) {
+                var html = [];
+                $('.ui-loading').hide();
+                if (data.length == 0) {
+                    return false;
                 }
-                html=html+'<div class="tel"> <button type="button" class="fa fa-tel"></button> </div> ' +
-                        '<div class="button"> <button type="button"' +
-                        ' class="ubtn ubtn-primary" id="submit">提交</button> </div>'
-                $("#pick_commodity").html(html);
-                for(var i=0;i<cart.length;i++){
-                    var pick=cart[i];
-                    $("#pick_commodity .ipt").each(function(){
-                        if(pick.commodityId==$(this).attr("cid")){
-                            $(this).val(pick.num);
+                $('.ui-notice').removeClass('ui-notice-extra').html('您的选货单如下，“选货登记”后我们会在30分钟内与您取得联系如您需要寄养服务可以直接与我们电话沟通，我们为您提供免费的寄养服务。联系电话：0273334474');
+                $.each(data, function(i, item) {
+                    html.push('<div class="item">');
+
+                    html.push('<div class="hd">');
+                    html.push('<em>' , item.name , '</em>');
+                    html.push('<span>' , item.origin , ' ' , item.spec , '</span>');
+                    html.push('</div>');
+
+                    html.push('<div class="price">');
+                    html.push('<i>&yen;</i> <b>' , item.price , '</b> 元');
+                    html.push('</div>');
+
+                    html.push('<div class="ui-quantity cale">');
+                    html.push('<button type="button" class="fa fa-reduce op"></button>');
+                    html.push('<input type="tel" class="ipt num-input" value="1" cid="' , item.id , '" autocomplete="off">');
+                    html.push('<button type="button" class="fa fa-plus op"></button>');
+                    html.push('</div>');
+
+                    html.push('<div class="cale unitName">' , item.unitName , '</div>');
+
+                    html.push('<div class="del">');
+                    html.push('<button type="button" class="fa fa-remove" cid="' , item.id , '""></button>');
+                    html.push('</div>');
+
+                    html.push('</div>');
+                })
+
+                html.push('<div class="ft">');
+                html.push('<input type="text" class="text" id="username" placeholder="姓名">');
+                html.push('<input type="tel" class="text" id="mobile" placeholder="手机号">');
+                html.push('<button type="button" class="ubtn ubtn-primary" id="submit">提交</button>');
+                html.push('</div>');
+                $("#pick_commodity").html(html.join(''));
+
+                // 商品数量
+                $.each(arr, function(i, item) {
+                    $('#pick_commodity').find('.ipt[cid="' + item.commodityId + '"]').val(item.num);                    
+                })
+                this.submit();
+                this.bindEvent();
+            },
+            submit: function() {
+                var self = this,
+                    userinfo = getAppyInfo();
+
+                if(userinfo){
+                    $('#username').val(userinfo.nickname);
+                    $('#mobile').val(userinfo.phone);
+                }                    
+
+                $('#submit').on('click', function() {
+                    if (!self.checkName() || !self.checkMobile()) {
+                        return false;
+                    }
+                    var pickVo = {
+                        nickname: $('#username').val(),
+                        phone: $('#mobile').val()
+                    }
+                    var list = [];
+                    saveAppyinfo(pickVo);
+                    $("#pick_commodity").find('.ipt').each(function(){
+                        commodity.commodityId = $(this).attr('cid');
+                        commodity.num = this.value;
+                        list.push({
+                            commodityId: $(this).attr('cid'),
+                            num: this.value
+                        });
+                    })
+                    pickVo.pickCommodityVoList = list;
+
+                    $.ajax({
+                        url: _global.v.saveUrl,
+                        data: JSON.stringify(pickVo),
+                        type: "POST",
+                        contentType : 'application/json',
+                        success: function(result) {
+                            if(result.status=="200"){
+                                //清空选货单
+                                _YYY.localstorage.remove(_YYY.CARTNAME);
+                                layer.open({
+                                    className: 'layer-custom',
+                                    content: '<div class="box"><div class="hd">您的选货单已提交成功！</div><div class="bd">我们会在30分钟之内与您取得联系。登录可以跟踪您的所有选货单申请。</div></div>'
+                                    ,btn: ['历史选货单', '返回']
+                                    ,yes: function(index){
+                                        location.href = '/pick/list' + (_YYY.is_winxin ? '?source=WECHAT' : '');
+                                    },no: function(index) {
+                                        window.history.back(); // 返回按钮事件
+                                    },shadeClose: false
+                                });
+                            }
                         }
                     })
-                }
-
-
+                })
             },
-
-
-            // 加减数量
-            quantity: function() {
+            bindEvent: function() {
                 var $quantity = $('.pick-form');
-                //删除品种
 
-                $quantity.on('change', '.num-input', function() {
-                    var commodityId=$(this).attr("cid");
-                    var num=$(this).val();
-                    updateCommodity(commodityId,num);
-                })
-
+                //删除
                 $quantity.on('click', '.fa-remove', function() {
-                    deleteCommodity($(this).attr("cid"));
-                    window.location.reload();
+                    var $this = $(this);
+                    layer.open({
+                        content: '确定要删除吗？',
+                        btn: ['确定', '取消'],
+                        yes: function(index) {
+                            deleteCommodity($this.attr('cid'));
+                            $this.closest('.item').remove();
+                            layer.close(index);
+                        }
+                    });
                 })
 
+                // 数量加
                 $quantity.on('click', '.fa-plus', function() {
                     var $ipt = $(this).prev(),
-                            num = $ipt.val() || 1;
+                        num = $ipt.val() || 1;
                     $ipt.val(++num);
-                    var commodityId=$ipt.attr("cid");
-                    updateCommodity(commodityId,num);
+                    updateCommodity($ipt.attr('cid'), num);
                 })
+                // 数量减
                 $quantity.on('click', '.fa-reduce', function() {
                     var $ipt = $(this).next(),
-                            num = $ipt.val() || 1;
-
+                        num = $ipt.val() || 1;
                     num > 1 && $ipt.val(--num);
-                    var commodityId=$ipt.attr("cid");
-                    updateCommodity(commodityId,num);
+                    updateCommodity($ipt.attr('cid'), num);
                 })
-                // 只能输入数字
-                $quantity.on('blur', '.ipt', function() {
+
+                // 输入数量
+                $quantity.on('blur', '.num-input', function() {
                     var val = this.value;
                     if (val) {
                         val = (!isNaN(val = parseInt(val, 10)) && val) > 0 ? val : 1;
                         this.value = val;
+                    } else {
+                        this.value = 1;
                     }
-                    num = this.value;
+                    updateCommodity($ipt.attr('cid'), this.value);
                 })
             },
             checkName: function() {
                 var $el = $('#username'),
-                        val = $el.val();
-
+                    val = $el.val();
                 if (!val) {
-                    $el.next().html('请输入姓名').show();
-
-                } else {
-                    $el.next().hide();
-                    return true;
+                    popover('请输入姓名');
+                    return false;
                 }
-                return false;
+                return true;
             },
             checkMobile: function() {
                 var $el = $('#mobile'),
-                        val = $el.val();
-
+                    val = $el.val();
                 if (!val) {
-                    $el.next().html('请输入手机号码！').show();
-
+                    popover('请输入手机号码！');
                 } else if (!_YYY.verify.isMobile(val)) {
-                    $el.next().html('请输入有效的手机号！').show();
-
+                    popover('请输入有效的手机号！');
                 } else {
-                    $el.next().hide();
                     return true;
                 }
                 return false;
-            },
-            submit: function() {
-                var flag = false,
-                        self = this,
-                        form = function() {
-                            var phone="";
-                            var nickname="";
-                            var show=true;
-                            var userinfo=getAppyInfo();
-                            if(userinfo){
-                                phone=userinfo.phone;
-                                nickname=userinfo.nickname;
-                            }
-                            flag = true;
-                            layer.open({
-                                    className: 'pick-form-layer ui-form'
-                                    ,content: '<div class="item"><input type="text" class="ipt" id="username" placeholder="姓名"><span class="error"></span></div>\n <div class="item"><input type="tel" class="ipt" id="mobile" placeholder="手机号"><span class="error"></span></div>'
-                                    ,shade:false
-                                });
-                            $("#username").val(nickname);
-                            $("#mobile").val(phone);
-                        }
-
-                $('#submit').on('click', function() {
-                    var userinfo=getAppyInfo();
-                    if (!flag&&!userinfo) {
-                        form();
-                        return false;
-                    }
-                    if((self.checkName() && self.checkMobile())||(!flag&&userinfo)){
-                        var pickVo={};
-                        if($('#mobile').val()&&$('#username').val()){
-                            pickVo.phone= $('#mobile').val();
-                            pickVo.nickname=$('#username').val();
-                        }
-                        else{
-                            pickVo.phone= userinfo.phone;
-                            pickVo.nickname=userinfo.nickname;
-                        }
-
-                        var list=[];
-                        $("#pick_commodity .ipt").each(function(){
-                            var commodity={};
-                            commodity.commodityId=$(this).attr("cid");
-                            commodity.num=$(this).val();
-                            list.push(commodity);
-                        })
-                        pickVo.pickCommodityVoList=list;
-                        var userinfo={};
-                        userinfo.nickname=pickVo.nickname;
-                        userinfo.phone=pickVo.phone;
-                        saveAppyinfo(userinfo);
-                        $.ajax({
-                            url: _global.v.saveUrl,
-                            data: JSON.stringify(pickVo),
-                            type: "POST",
-                            contentType : 'application/json',
-                            success: function(result) {
-                                if(result.status=="200"){
-                                    //清空选货单
-                                    localStorage.removeItem(CARTNAME);
-
-                                    layer.open({
-                                        className: 'layer-custom',
-                                        content: '<div class="box"><div class="hd">您的选货单已提交成功！</div><div class="bd">我们会在30分钟之内与您取得联系。登录可以跟踪您的所有选货单申请。</div></div>'
-                                        ,btn: ['历史选货单', '返回']
-                                        ,yes: function(index){
-                                            if(is_weixin()){
-                                                location.href = '/pick/list?source=WECHAT';
-                                            }
-                                            else{
-                                                location.href ='/pick/list';
-                                            }
-                                        },no: function(index) {
-                                            window.history.back(); // 返回按钮事件
-                                        },shadeClose: false
-                                    });
-                                }
-                            }
-                        })
-                    }
-                })
-                $('.fa-tel').on('click', function() {
-                    if (!flag) {
-                        form();
-                        $(this).addClass('active')
-                    } else {
-                        flag = false;
-                        var userinfo={};
-                        userinfo.nickname=$('#username').val();
-                        userinfo.phone=$('#mobile').val();
-                        saveAppyinfo(userinfo);
-                        $('.layui-m-close').trigger('click');
-                        $(this).removeClass('active')
-                    }
-                })
             }
         }
     }

@@ -17,7 +17,7 @@
                 <a href="/pickCommodity/list" id="commodityCart">
                     <i class="fa fa-cart"></i>
                     <span>选货单</span>
-                    <b id="cart"></b>
+                    <b id="cartNum"></b>
                 </a>
             </li>
             <li>
@@ -29,10 +29,3 @@
         </ul>
     </nav>
 </footer>
-<script>
-    window.onload = function () {
-        if (is_weixin()) {
-            $("#center").attr("href", $("#center").attr("href") + "?source=WECHAT")
-        }
-    }
-</script>

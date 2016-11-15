@@ -34,6 +34,7 @@
     </div>
 
     <script src="assets/js/zepto.min.js"></script>
+    <script src="assets/js/layer.js"></script>
     <script src="assets/js/app.js"></script>
     <script>
 
@@ -50,7 +51,7 @@
             showHistory: function() {
                 var self = this;
                 var html = [];
-                var his = localStorage.getItem(_global.v.searchHistoryName);
+                var his = _YYY.localstorage.get(_global.v.searchHistoryName);
                 var h = [];
 
                 if (his) {
@@ -72,10 +73,15 @@
                     $searchHistory = $('#searchHistory');
                 // 清空搜索历史
                 $searchHistory.on('click', '.clear', function() {
-                    if (confirm('确定要清空吗?')) {
-                        self.clearHistory();
-                        $searchHistory.html('');
-                    } 
+                    layer.open({
+                        content: '确定要清空吗？',
+                        btn: ['确定', '取消'],
+                        yes: function(index) {
+                            self.clearHistory();
+                            $searchHistory.html('');
+                            layer.close(index);
+                        }
+                    });
                     return false;
                 })
 
@@ -86,7 +92,7 @@
             },
             // 添加一条历史记录
             addHistory: function(val) {
-                var his = localStorage.getItem(_global.v.searchHistoryName);
+                var his = _YYY.localstorage.get(_global.v.searchHistoryName);
                 var h = his ? his.split(',') : [];
                 var maxSize = 5; // 历史记录最大限制
 
