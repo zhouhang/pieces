@@ -1,5 +1,6 @@
 package com.pieces.biz.controller;
 
+import com.pieces.dao.enums.CertifyStatusEnum;
 import com.pieces.dao.model.User;
 import com.pieces.dao.model.UserQualification;
 import com.pieces.dao.vo.UserCertificationVo;
@@ -9,6 +10,7 @@ import com.pieces.service.UserQualificationService;
 import com.pieces.service.UserService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -50,7 +52,9 @@ public class UserCertificateController {
     }
 
     @RequestMapping(value = "/stepTwo", method = RequestMethod.GET)
-    public String stepTwo(){
+    public String stepTwo(ModelMap model){
+        UserCertificationVo certificationVo=( UserCertificationVo)httpSession.getAttribute(RedisEnum.USER_SESSION_CERTIFICATION.getValue());
+        model.put("certificationVo",certificationVo);
         return "certificate_2";
     }
 
@@ -62,8 +66,33 @@ public class UserCertificateController {
     @RequestMapping(value = "/stepOne", method = RequestMethod.POST)
     @ResponseBody
     public Result stepOnePost(UserCertificationVo userCertificationVo){
-        httpSession.setAttribute(RedisEnum.USER_SESSION_CERTIFICATION.getValue(),userCertificationVo);
-        return new Result(true).info("提交成功");
+        String status=null;
+        String info="提交成功";
+        if(!StringUtils.isNotBlank(userCertificationVo.getCompany())){
+              status="20001";
+              info="企业名称不能为空";
+
+        }
+        else if(!StringUtils.isNotBlank(userCertificationVo.getCorporation())){
+            status="20002";
+            info="企业负责人不能为空";
+        }
+        else if(!StringUtils.isNotBlank(userCertificationVo.getAddress())){
+            status="20003";
+            info="企业所在地不能为空";
+        }
+        else if(userCertificationVo.getType()==null){
+            status="20004";
+            info="企业类型不能为空";
+        }
+        if(status==null){
+            httpSession.setAttribute(RedisEnum.USER_SESSION_CERTIFICATION.getValue(),userCertificationVo);
+            return new Result(true).info(info);
+        }
+        else{
+            return new Result(status).info(info);
+        }
+
     }
 
     @RequestMapping(value = "/stepTwo", method = RequestMethod.POST)
@@ -85,7 +114,7 @@ public class UserCertificateController {
             userQualificationVo.setUpdateTime(now);
             userQualificationService.create(userQualificationVo);
         }
-        user.setCertifyStatus();
+        user.setCertifyStatus(CertifyStatusEnum.CERTIFYING.getValue());
         userService.update(user);
         return new Result(true).info("提交成功");
     }

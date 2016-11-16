@@ -3,21 +3,23 @@ package com.pieces.dao.enums;
 /**
  * Created by xiao on 2016/11/16.
  */
-public enum CertifyStatusEnum {
+public enum CertifyTypeEnum {
 
-    //0未认证,1审核中，2审核通过,3审核失败
+    //1单体药店,2连锁药店,3公立医院,4民营医院,5个体诊所,6社区医疗机构
 
-    NOT_CERTIFY(0, "未认证"),
-    CERTIFYING(1, "审核中"),
-    CERTIFY_PASS(2, "审核通过"),
-    CERTIFY_FAIL(3, "审核失败");
+    SINGLE_DRUGSTORE(1, "单体药店"),
+    CHAIN_DRUGSTORE(2, "连锁药店"),
+    PUBLIC_HOSPITAL(3, "公立医院"),
+    PRIVATE_HOSPITAL(4, "民营医院"),
+    PRIVATE_CLINIC(5, "个体诊所"),
+    COMMUNITY_MEDICINE(6, "社区医疗机构");
 
     private Integer value;
 
     private String text;
 
 
-    CertifyStatusEnum(Integer value, String text) {
+    CertifyTypeEnum(Integer value, String text) {
         this.value = value;
         this.text = text;
     }
@@ -45,9 +47,9 @@ public enum CertifyStatusEnum {
      * @return
      */
     public static String findByValue(Integer id) {
-        for (CertifyStatusEnum certifyStatusEnum : CertifyStatusEnum.values()) {
-            if (certifyStatusEnum.getValue().equals(id)) {
-                return certifyStatusEnum.getText();
+        for (CertifyTypeEnum certifyTypeEnum : CertifyTypeEnum.values()) {
+            if (certifyTypeEnum .getValue().equals(id)) {
+                return certifyTypeEnum .getText();
             }
         }
         return null;

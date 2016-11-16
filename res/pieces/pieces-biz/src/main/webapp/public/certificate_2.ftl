@@ -167,7 +167,6 @@
 
 <#include "./inc/footer.ftl"/>
 
-<script src="js/jquery.min.js"></script>
 <script src="js/common.js"></script>
 <script src="js/layer/layer.js"></script>
 <script src="js/croppic.min.js"></script>
