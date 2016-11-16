@@ -13,13 +13,8 @@
 </header><!-- /ui-header -->
 
 <section class="ui-content">
-    <div class="ui-notice ui-notice-extra hide">
-        选货单列表还没有商品，<br>去商品详情页面可以添加商品到选货单！
-        <a class="ubtn ubtn-primary" href='/'>返回首页</a>
-    </div>
-    <div class="pick-list">
-    </div>
-
+    <div class="pick-list"></div>
+    <div id="pagenav"></div>
 </section><!-- /ui-content -->
 <#include "./common/footer.ftl"/>
 
@@ -31,6 +26,7 @@
         },
         fn: {
             init: function() {
+                this.page();
                 this.loadPlist();
             },
             loadPlist: function() {
@@ -44,24 +40,26 @@
                         $.ajax({
                             type: 'POST',
                             url: _global.v.dataUrl,
-                            data:{pageSize:5, pageNum:pageNum},
+                            data: {pageNum:pageNum, pageSize: 5},
                             dataType: 'json',
-                            success: function(data){
-                                pageNum ++;
-                                if (data.data.list.length === 0) {
-                                    me.lock();
-                                    me.noData();
-                                    if (pageNum === 1) {
-                                        $('.ui-notice').removeClass('hide');
-                                        me.$domDown.hide();
-                                    } else {
+                            success: function(result){
+                                if (result.data.list.length !== 0) {
+                                    self.toHtml(result.data.list, pageNum);
+                                    if (result.data.isLastPage) {
+                                        me.lock();
+                                        me.noData();
                                         setTimeout(function() {
                                             me.$domDown.addClass('dropload-down-hide');
                                         }, 2e3);
                                     }
-                                } else {
-                                    self.toHtml(data.data.list);
+                                    self.pagenav(result.data.pageNum, result.data.pages);
+                                } else{
+                                    if (result.data.isLastPage) {
+                                        self.empty(true);
+                                        me.$domDown.hide();
+                                    }
                                 }
+                                pageNum ++;
                                 me.resetload();
                             },
                             error: function(xhr, type){
@@ -72,8 +70,9 @@
                     }
                 });
             },
-            toHtml: function(data) {
+            toHtml: function(data, pageNum) {
                 var html = [];
+                html.push('<div id="page' + pageNum + '">');
                 $.each(data, function(i, item) {
                     html.push('<div class="item">\n <dl>');
                     html.push(     '<dt>\n');
@@ -95,7 +94,30 @@
 
                     html.push('</div>');
                 })
+                html.push('</div>');
                 $('.pick-list').append(html.join(''));
+                this.offset[pageNum] = $('#page' + pageNum).offset().top;
+            },
+            empty: function(isEmpty) {
+                if (isEmpty) {
+                    $('.ui-content').prepend('<div class="ui-notice ui-notice-extra"> \n 选货单列表还没有商品，<br>去商品详情页面可以添加商品到选货单！ \n <a class="ubtn ubtn-primary" href="/">返回首页</a> \n </div>');
+                }
+            },
+            pagenav: function(pageNum, pages) {
+                $('#pagenav').show().html('<em>' + pageNum + '</em>/' + pages);
+            },
+            page: function() {
+                var self = this;
+                self.offset = {};
+                $(window).on('scroll', function() {
+                    var st = document.body.scrollTop || document.documentElement.scrollTop,
+                        winHeight = $(window).height() / 1.5;
+                    $.each(self.offset, function(key, val) {
+                        if (st + winHeight >= val) {
+                            $('#pagenav').find('em').html(key);
+                        }
+                    })
+                })
             }
         }
     }
