@@ -18,12 +18,7 @@
 <#include "./common/navigation.ftl">
 
 <section class="ui-content">
-    <div class="plist" id="categroyList">
-        <ul>
-
-        </ul>
-    </div>
-
+    <div class="plist" id="categroyList"></div>
 </section><!-- /ui-content -->
 <#include "./common/footer.ftl"/>
 <script>
@@ -34,51 +29,48 @@
         },
         fn: {
             init: function() {
+                this.page();
                 this.loadPlist();
             },
             loadPlist: function() {
-                var self = this;
-                $('.plist').dropload({
+                var self = this,
+                    pageNum = 1; // 当前页
+
+                $('.ui-content').dropload({
                     scrollArea : window,
                     threshold : 50,
-                    loadUpFn : function(me){
+                    loadDownFn : function(me){
                         $.ajax({
                             type: 'POST',
-                            url: _global.v.dataUrl,
-                            data:{variety:'${variety?default('')}'},
+                            url: _global.v.dataUrl, 
+                            data: {pageNum:pageNum, variety:'${variety?default('')}'},
                             dataType: 'json',
-                            success: function(data){
-                                if (!data.data.list) {
-                                    return;
+                            success: function(result){
+                                if (result.data.list.length !== 0) {
+                                    self.toHtml(result.data.list, pageNum);
+                                    if (result.data.isLastPage) {
+                                        me.lock();
+                                        me.noData();
+                                        setTimeout(function() {
+                                            me.$domDown.addClass('dropload-down-hide');
+                                        }, 2e3);
+                                    }
+                                    self.pagenav(result.data.pageNum, result.data.pages);
+                                } else {
+                                    if (result.data.isLastPage) {
+                                        self.empty(true);
+                                        me.$domDown.hide();
+                                    }
                                 }
-                                me.unlock();
-                                me.isDate = true;
-                                var result = self.toHtml(data.data.list);
-                                setTimeout(function(){
-                                    $('.plist ul').html(result);
-                                    me.resetload();
-                                }, 1e3);
+                                pageNum ++;
+                                me.resetload();
                             },
                             error: function(xhr, type){
                                 popover('网络连接超时，请您稍后重试!');
                                 me.resetload();
-                            }
-                        });
-                    },
-                    loadDownFn : function(me){
-                        var showNum=$(".plist li").length;
-                        if(showNum!=0&&(showNum%10)<10&&(showNum%10)!=0){
-                            popover('已经没有了!');
-                            me.resetload();
-                            return;
-                        }
-                        var pageNum=parseInt(showNum/10)+1;
-                        $.ajax({
-                            type: 'POST',
-                            url: _global.v.dataUrl,
-                            data:{pageNum:pageNum,variety:'${variety?default('')}'},
-                            dataType: 'json',
-                            success: function(data){
+                            },
+
+                            success2: function(data){
                                 if (!data.data.list) {
                                     return false;
                                 }
@@ -96,17 +88,14 @@
                                     $('.plist ul').append(result);
                                     me.resetload();
                                 }, 1e3);
-                            },
-                            error: function(xhr, type){
-                                popover('网络连接超时，请您稍后重试!');
-                                me.resetload();
                             }
                         });
                     }
                 });
             },
-            toHtml: function(data) {
+            toHtml: function(data, pageNum) {
                 var html = [];
+                html.push('<ul id="page' + pageNum + '">');
                 $.each(data, function(i, item) {
                     html.push('<li>\n');
                     html.push( '<a href="/commodity/detail/' + data[i].defaultCommodityId + '">\n');
@@ -121,7 +110,30 @@
                     html.push( '</a>\n');
                     html.push('</li>');
                 })
-                return html.join('');
+                html.push('</ul>');
+                $('.plist').append(html.join(''));
+                this.offset[pageNum] = $('#page' + pageNum).offset().top;
+            },
+            empty: function(isEmpty) {
+                if (isEmpty) {
+                    $('.ui-content').prepend('<div class="ui-notice ui-notice-extra"> \n 品种列表还没有商品，<br>去商品详情页面可以添加商品到选货单！ \n <a class="ubtn ubtn-primary" href="/">返回首页</a> \n </div>');
+                }
+            },
+            pagenav: function(pageNum, pages) {
+                $('#pagenav').show().html('<em>' + pageNum + '</em>/' + pages);
+            },
+            page: function() {
+                var self = this;
+                self.offset = {};
+                $(window).on('scroll', function() {
+                    var st = document.body.scrollTop || document.documentElement.scrollTop,
+                        winHeight = $(window).height() / 1.5;
+                    $.each(self.offset, function(key, val) {
+                        if (st + winHeight >= val) {
+                            $('#pagenav').find('em').html(key);
+                        }
+                    })
+                })
             }
         }
     }
