@@ -235,6 +235,7 @@
                         
                         $btnBuy.on("click",function(){
                         	var commodityStr = [];
+                            var $cbs = $(this).parent().parent().find('.cbx');
                         	$cbs.each(function(){
                         		this.checked && commodityStr.push(this.value);
                         	})
@@ -260,7 +261,7 @@
                         var checkBox = "";
                         var order = "";
                         if(item.myPrice!=null&&item.expireDate!=null&&new Date(item.expireDate)>new Date()){
-                            checkBox = '<label><input class="cbx" type="checkbox">';
+                            checkBox = '<label><input class="cbx" type="checkbox" value="'+item.id+'">';
                             order = '<a href="#">订购</a>';
                             flag = true;
                         }
