@@ -339,6 +339,8 @@ vertical-align:middle;
 .fa-form .group-up .cnt .up-img{width:100px;height:100px;line-height:100px;border-style:solid;vertical-align:middle;}
 .fa-form .group-a .cnt{height:auto;margin-bottom:26px;}
 .fa-form .group-a label{display:block;width:60px;margin-top:16px;}
+.fa-form .group-t{position:relative;padding-left:140px;}
+.fa-form .group-t .cnt{height:auto;line-height:50px;}
 .fa-form .agreement .cnt{height:46px;}
 .fa-form .agreement a{color:#1769ff;}
 .fa-form .ft{padding:30px 0 0 140px;}
@@ -555,6 +557,11 @@ vertical-align:middle;
 .member-box .main .tabcont .button{padding:50px 0;}
 .member-box .main .tabcont .button .btn{width:350px;height:50px;font-size:16px;}
 .member-box .main .tabcont .error1{color:#c3272b;display:none;}
+.member-box .txtinfo{margin:10px 0 0 260px;border:1px solid #e7e7e7;display:none;}
+.member-box .txtinfo h3{padding:0 30px;line-height:50px;border-bottom:1px solid #e7e7e7;}
+.member-box .txtinfo .item{position:relative;padding-left:180px;line-height:50px;}
+.member-box .txtinfo .item label{position:absolute;top:0;left:0;width:170px;text-align:right;}
+.member-box .txtinfo .item span{display:block;}
 
 /* 幻灯片 */
 .slide{position:relative;width:900px;margin:0 auto;}
@@ -719,8 +726,8 @@ vertical-align:middle;
 .mybill .info .bt1{padding-bottom:45px;border-top:1px solid #ccc;}
 .mybill .info table{width:auto;}
 .mybill .info td{width:330px;padding:3px 0;border:0;}
-.mybill .info em{color:#999;}
 .mybill .info b{font-weight:700;}
+.mybill .info em{color:#999;}
 .mybill .info .img{height:42px;line-height:66px;}
 .mybill .info img{margin-right:6px;vertical-align:middle;}
 .mybill .state{margin-bottom:30px;padding:6px 19px;border:1px solid #e7e7e7;background:#f5f5f5;} 
@@ -730,6 +737,10 @@ vertical-align:middle;
 .mybill .state .fa-times-circle{color:#c3272b;} 
 .mybill .state span{vertical-align:middle;} 
 .mybill .state span em{color:#999;font-size:12px;} 
+.mybill-extra .info td{width:auto;}
+.mybill-extra .info td em{display:inline-block;width:100px;margin-right:10px;text-align:right;}
+.mybill-extra .info .ok{margin-left:10px;color:#58c805;}
+.mybill-extra .info .link{margin-left:10px;color:#1769ff;}
 
 /* 功效 */
 .pro-floor{margin-bottom:80px;}
