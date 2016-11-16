@@ -632,7 +632,7 @@
                     $('#orderSubmit').on('click', function(e) {
                     	var addrHistoryId = $("#addrHistoryId").val();
                     	var freightPrice = $("#freightPrice").val();
-                    	if(addrHistoryId=='undefind'||addrHistoryId==""){
+                        if(addrHistoryId=="" || addrHistoryId == null){
                     		layer.msg('请填写收货地址！', {icon: 5});
                     		return false;
                     	}
