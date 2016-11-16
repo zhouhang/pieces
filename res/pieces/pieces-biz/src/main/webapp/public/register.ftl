@@ -60,35 +60,6 @@
 								data-msg-match="两次输入的密码不一致">
 						</div>
 					</div>
-
-					<div class="group">
-						<div class="txt">
-							<i>*</i>用药单位：
-						</div>
-						<div class="cnt">
-							<input type="text" class="ipt" value="" autocomplete="off"
-								name="companyFullName" id="companyName" placeholder="用药单位名称"
-								data-msg-required="请输入用药单位名称"
-								data-msg-company="用药单位名称长度4-50位，不能包含特殊字符">
-						</div>
-					</div>
-
-					<div class="group">
-						<div class="txt">
-							<i>*</i>所在地区：
-						</div>
-						<div class="cnt" id="pickArea">
-							<select name="provinceCode" id="province">
-								<option value="">-省-</option>
-							</select> <select name="cityCode" id="city">
-								<option value="">-市-</option>
-							</select> <select name="areaId" id="area" data-msg-required="请选择至最后一级">
-								<option value="">-区/县-</option>
-							</select>
-						</div>
-						<input type="hidden" id="areaFull" name="areaFull" value="">
-					</div>
-
 					<div class="group">
 						<div class="txt">
 							<i>*</i>联系人姓名：
@@ -194,10 +165,8 @@
 							userName : '用户名: required;username;remote(/user/checkusername)',
 							password : '密码: required; password',
 							pwdRepeat : '确认密码: required; match(password)',
-							companyFullName : '用药单位: required, company',
-							areaId : '所在地区: required',
 							contactName : '联系人: required;nickName',
-							contactMobile : '手机号码: required;mobile',
+							contactMobile : '手机号码: required;mobile;remote(/user/checkmobile)',
 							mobileCode : '验证码: required',
 							agreement : '同意协议：checked'
 						},

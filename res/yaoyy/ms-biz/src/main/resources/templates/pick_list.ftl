@@ -90,7 +90,7 @@
                     })
 
                     html.push('</dl> \n');
-                    //item.pickCommodityVoList.length> 5 && html.push('<div class="more">更多</div>'); // 选货单超过5条显示更多按钮
+                    item.pickCommodityVoList.length> 5 && html.push('<div class="more">更多</div>'); // 选货单超过5条显示更多按钮
 
                     html.push('</div>');
                 })
