@@ -85,7 +85,7 @@ public class UserCertificateController {
             userQualificationVo.setUpdateTime(now);
             userQualificationService.create(userQualificationVo);
         }
-        user.setCertifyStatus();
+        //user.setCertifyStatus();
         userService.update(user);
         return new Result(true).info("提交成功");
     }
