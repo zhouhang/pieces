@@ -16,6 +16,7 @@
     <div class="pick-list"></div>
     <div id="pagenav"></div>
 </section><!-- /ui-content -->
+
 <#include "./common/footer.ftl"/>
 
 <script>
