@@ -155,6 +155,12 @@
   		<if test="contactName != null" >
   			and b.contact_name = #{contactName, jdbcType=VARCHAR}
   		</if>
+	    <if test="type != null" >
+		  and b.type = #{type}
+	     </if>
+	  <if test="certifyStatus != null" >
+		  and b.certify_status = #{certifyStatus}
+	  </if>
   </select>
   
   	<!-- 新增会员 -->
@@ -281,6 +287,12 @@
 		</if>
 		<if test="endDate != null and endDate != ''">
 			and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<=]]> DATE_FORMAT(#{endDate},'%Y-%m-%d')
+		</if>
+		<if test="type != null" >
+			and b.type = #{type}
+		</if>
+		<if test="certifyStatus != null" >
+			and b.certify_status = #{certifyStatus}
 		</if>
 	</select>
 
