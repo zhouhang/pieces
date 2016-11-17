@@ -28,7 +28,7 @@
             </dl>
         </div>
         <div class="main">
-            <form action="" id="myform">
+            <form action="/user/save" id="myform">
                 <div class="title">
                     <h3><i class="fa fa-people"></i>新客户</h3>
                     <div class="extra">
@@ -46,8 +46,8 @@
                                 <i>*</i>客户类型：
                             </div>
                             <div class="cnt cbxs">
-                                <label><input type="radio" class="cbx" name="category">终端客户</label>
-                                <label><input type="radio" class="cbx" name="category">代理商</label>
+                                <label><input type="radio" class="cbx" name="type" value="1">终端客户</label>
+                                <label><input type="radio" class="cbx" name="type" value="2" nullmsg="请选择用户类型">代理商</label>
                             </div>
                         </div>
 
@@ -56,7 +56,7 @@
                                 <i>*</i>会员名：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="" autocomplete="off" name="username" id="username" placeholder="">
+                                <input type="text" class="ipt" value="" autocomplete="off" name="userName" id="userName" placeholder="">
                             </div>
                         </div>
 
@@ -65,7 +65,7 @@
                                 <i>*</i>联系人姓名：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="" autocomplete="off" name="linkMan" id="linkMan" placeholder="">
+                                <input type="text" class="ipt" value="" autocomplete="off" name="contactName" id="contactName" placeholder="">
                             </div>
                         </div>
 
@@ -74,7 +74,7 @@
                                 <i>*</i>联系人手机号码：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="" autocomplete="off" name="mobile" id="mobile" placeholder="">
+                                <input type="text" class="ipt" value="" autocomplete="off" name="contactMobile" id="contactMobile" placeholder="">
                             </div>
                         </div>
 
@@ -90,13 +90,13 @@
                                 <i>*</i>新密码：
                             </div>
                             <div class="cnt">
-                                <input type="password" class="ipt" value="" autocomplete="off" name="pwd" id="pwd" placeholder="请输入新密码">
+                                <input type="password" class="ipt" value="" autocomplete="off" name="password" id="password" placeholder="请输入新密码">
                             </div>
                         </div>
 
                         <div class="group">
                             <div class="cnt-extra">
-                                <label><input class="cbx" id="mobileCode" type="checkbox">或发送随机密码</label>
+                                <label><input class="cbx" name="random" id="mobileCode" type="checkbox">或发送随机密码</label>
                             </div>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                                 代理商ID：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="" autocomplete="off" name="" id="" placeholder="">
+                                <input type="text" class="ipt" value="" autocomplete="off" name="agentId" id="agentId" placeholder="">
                             </div>
                         </div>
                     </div>
@@ -130,63 +130,57 @@
 
 <script>
     $(function() {
-        var formValidate = $("#myform").Validform();
+        var formValidate = $("#myform").Validform({
+            ajaxPost:true,
+            callback:function(data){
+                if(data.status=="y"){
+                    location.href="/user/index?advices="+data.info
+                }else{
+                    $("#error_advices span").html(data.info);
+                    $("#error_advices").show();
+                }
+            }
+        });
         formValidate.addRule([
             {
-                ele: '#username',
+                ele: '#userName',
                 datatype: 'uname',
-                ajaxurl: 'json/valid.php',
                 nullmsg: '请输入会员名',
                 errormsg: '会员名必须以英文字母开头，长度6到20位'
             },
             {
-                ele: '#linkMan',
+                ele: '#contactName',
                 datatype: 's',
                 nullmsg: '请输入联系人姓名'
             },
             {
-                ele: '#mobile',
+                ele: '#contactName',
+                datatype: 's',
+                nullmsg: '请输入联系人姓名'
+            },
+            {
+                ele: '#contactMobile',
                 datatype: 'm',
                 nullmsg: '请输入手机号码',
                 errormsg: '请输入正确的手机号码'
             },
             {
-                ele: '#pwd',
+                ele: '#password',
                 datatype: 'pwd',
                 nullmsg: '请输入密码',
                 errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
             }
         ])
-		    valid: function(form) {
-		    	var myfromValid = this;
-		    	if ( $(form).isValid() ) {
-			    	$.ajax({
-			            url: "/user/save",
-			            data: $(form).formSerialize(),
-			            type: "POST",
-			            success: function(data){
-			            	if(data.status=="y"){
-			                    location.href="/user/index?advices="+data.info
-			                }else{
-			                    $("#error_advices").show();
-			                }
-			            }
-			        });
-		    	} 
-			}
-		});
 
         var $mobileCode = $('#random');
         var $pwd = $('#password');
         var _setPwd = function() {
             var flag = $mobileCode.prop('checked');
             if (flag) {
-            	$('#userForm').data('validator').options.ignore = '#password';
-                //formValidate.ignore($pwd);
-                $pwd.removeClass('n-invalid').nextAll('.msg-box').html('');
+                formValidate.ignore($pwd);
+                $pwd.nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
             } else {
-            	$('#userForm').data('validator').options.ignore = '';
-                //formValidate.unignore($pwd);
+                formValidate.unignore($pwd);
             }
             $pwd.prop('disabled', flag);
         }

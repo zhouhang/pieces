@@ -1,6 +1,7 @@
 package com.pieces.boss.controller;
 
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.pieces.boss.commons.LogConstant;
+import com.pieces.dao.model.UserBind;
 import com.pieces.dao.vo.UserVo;
+import com.pieces.service.UserBindService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.impl.SmsService;
 import com.pieces.tools.log.annotation.BizLog;
@@ -41,6 +44,9 @@ public class UserController extends  BaseController{
 	private SmsService smsService;
 	@Autowired
 	private AreaService areaService;
+
+	@Autowired
+	private UserBindService userBindService;
 	/**
 	 * 会员查询页面
 	 * @param request
@@ -115,26 +121,45 @@ public class UserController extends  BaseController{
 	@BizLog(type = LogConstant.user, desc = "保存会员信息")
 	public void userSubmit(HttpServletRequest request,
 						   HttpServletResponse response,
-						   Boolean random,
-						   @Valid User user)throws Exception{
+						   String random,
+						   @Valid User user,Integer agentId)throws Exception{
 		String advices = "新增用户信息成功!";
 		String passWord =null;
 		//是否发送随机密码
-		if(random!=null&&random){
+		if(random!=null&&random.equalsIgnoreCase("on")){
 			passWord = SeqNoUtil.getXegerPwd();
 			user.setPassword(passWord);
 		}
 		user.setSource(BasicConstants.USER_CREATECHANNEL_BOSS);
+
+		/*
 		//补全地址信息
 		if(user.getAreaId()!=null){
 			StringBuffer sb = new StringBuffer();
 			Area area = areaService.findParentsById(user.getAreaId());
 			sb.append(area.getProvince()).append(area.getCity()).append(area.getAreaname());
 			user.setAreaFull(sb.toString());
-		}
+		}*/
 		//没有用户ID为新用户
 		if(user.getId()==null){
+			if(userService.ifExistMobile(user.getContactMobile())){
+				advices="手机号存在";
+				WebUtil.print(response,new Result(false).info(advices));
+				return;
+			}
+			if(userService.checkUserName(user.getUserName())){
+				advices="用户名存在";
+				WebUtil.print(response,new Result(false).info(advices));
+				return;
+			}
 			userService.addUser(user);
+			if(user.getType()==1){
+				UserBind userBind=new UserBind();
+				userBind.setAgentId(agentId);
+				userBind.setTerminalId(user.getId());
+				userBind.setCreateTime(new Date());
+				userBindService.create(userBind);
+			}
 			//发送短信
 			if(passWord!=null){
 				smsService.sendAddUserAccount(passWord,user.getContactMobile(),user.getUserName());

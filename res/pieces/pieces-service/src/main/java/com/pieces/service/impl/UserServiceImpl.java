@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.github.pagehelper.PageHelper;
+import com.pieces.dao.enums.CertifyStatusEnum;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,8 +47,10 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         user.setOnlineStatus(false);
         user.setBindErp(false);
         user.setCreateTime(new Date());
-        user.setSource(0);
+        user.setCertifyStatus(CertifyStatusEnum.NOT_CERTIFY.getValue());
+        //user.setSource(0);
         return this.create(user);
+
     }
 
 

@@ -33,8 +33,6 @@ public class User  implements Serializable {
 	private String salt;
 	
 	//企业全称
-	@NotEmpty
-	@Pattern(regexp = "^([a-zA-Z0-9_\\(\\)-]|[\\u4e00-\\u9fa5]|[（）]){4,50}$", groups = {Biz.class, Boss.class})
 	private String companyFullName;
 	
 	//企业注册地省份
