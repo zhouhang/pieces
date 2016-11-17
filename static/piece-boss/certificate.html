@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>账户信息-boss-饮片B2B</title>
+    <title>企业资质审核-boss-饮片B2B</title>
     <meta name="renderer" content="webkit" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -71,118 +71,76 @@
 
     <!-- fa-floor start -->
     <div class="fa-floor">
+        
         <div class="wrap">
-            <div class="side">
-                <dl>
-                    <dt>企业资质审核</dt>
-                    <dd>
-                        <a class="curr" href="#!">资质信息</a>
-                    </dd>
-                </dl>
+            <div class="title title-btm">
+                <h3>企业资质审核</h3>
             </div>
-            <div class="main">
-                <div class="title">
-                    <h3><i class="fa fa-people"></i>hehuan的企业资质审核</h3>
-                    <div class="extra">
-                        <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                        <button type="reset" class="btn btn-gray">不通过</button>
-                        <button type="submit" class="btn btn-red">通过</button>
-                    </div>
+            <div class="pagin">
+                <div class="extra">
+                    <button class="btn btn-gray" type="button" id="reset">重置条件</button>
+                    <button class="btn btn-blue" type="button" id="submit"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
-
-                <div class="user-info">
-                    <h3>企业基础信息</h3>
-                    <div class="fa-form">
-                        <div class="group">
-                            <div class="txt">
-                                <i>*</i>企业名称：
-                            </div>
-                            <div class="cnt">
-                                <span class="val">武汉同济医院</span>
-                            </div>
-                        </div>
-
-                        <div class="group">
-                            <div class="txt">
-                                <i>*</i>企业负责人：
-                            </div>
-                            <div class="cnt">
-                                <span class="val">何先生</span>
-                            </div>
-                        </div>
-
-                        <div class="group">
-                            <div class="txt">
-                                <i>*</i>企业所在地：
-                            </div>
-                            <div class="cnt">
-                                <span class="val">湖北省武汉市XX区XX路XXX号</span>
-                            </div>
-                        </div>
-
-                        <div class="group">
-                            <div class="txt">
-                                <i>*</i>企业类型：
-                            </div>
-                            <div class="cnt">
-                                <span class="val">公立医院</span>
-                            </div>
-                        </div>
-
-                    </div>
+                <div class="skip">
+                    <span>第</span>
+                    <a class="fa fa-chevron-left btn btn-gray"></a><input type="text" class="ipt" value="1"><a class="fa fa-chevron-right btn btn-gray"></a>
+                    <span>页，共</span><em>6</em><span>页</span>
+                    <i>|</i>
+                    <span>每页</span>
+                    <select name="" id="">
+                        <option value="">10</option>
+                        <option value="">20</option>
+                        <option value="">30</option>
+                        <option value="">40</option>
+                    </select>
+                    <span>个记录，共有 2 个记录</span>
                 </div>
-                <div class="user-info">
-                    <h3>企业资质</h3>
-                    <div class="fa-form">
-                        <div class="group">
-                            <div class="txt">
-                                证件名称：
-                            </div>
-                            <div class="cnt">
-                                <span class="val">医疗机构执业许可证</span>   
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">
-                                证件号：
-                            </div>
-                            <div class="cnt">
-                                <span class="val">XXXXXXXXXX</span>  
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">
-                                有效期
-                            </div>
-                            <div class="cnt">
-                                <span class="val">长期</span>     
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">
-                                证件照片：
-                            </div>
-                            <div class="cnt cnt-mul">
-                                <div class="goods-img thumb">
-                                    <img src="uploads/p0.jpg" data-src="uploads/p0.jpg">
-                                </div>
-                                <input type="hidden" value="" id="imgUrl">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="chart-info">
-                    <h3>跟进结果</h3>
-                    <form action="" class="note-form">
-                        <div class="cnt2">
-                            <textarea class="ipt" name="" id="" cols="30" rows="10" placeholder="请填写跟进结果。"></textarea>
-                        </div>
-                    </form>
-                </div>
+            </div>
+            <div class="chart">
+                <table class="tc">
+                    <thead>
+                        <tr>
+                            <th width="70">编号</th>
+                            <th>会员名</th>
+                            <th>跟进人</th>
+                            <th width="100">状态</th>
+                            <th width="200">提交时间</th>
+                            <th width="200">跟进时间</th>
+                            <th width="100">操作</th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
+                            <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
+                            <td>
+                                <select name="" id="">
+                                    <option value=""></option>
+                                    <option value="">审核通过</option>
+                                    <option value="">审核不通过</option>
+                                    <option value="">未处理</option>
+                                </select>
+                            </td>
+                            <td><input type="text" class="ipt date" value="" id="start"> - <input type="text" class="ipt date" value="" id="end"></td>
+                            <td><input type="text" class="ipt date" value="" id="start2"> - <input type="text" class="ipt date" value="" id="end2"></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tfoot></tfoot>
+                    <tbody>
+                        <tr>
+                            <td>01</td>
+                            <td>hehuan</td>
+                            <td>何欢</td>
+                            <td>未处理</td>
+                            <td>2016-06-23 17:44:30</td>
+                            <td>2016-06-20 17:10:24</td>
+                            <td><a href="certificate_info.html">查看</a></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div><!-- fa-floor end -->
+    
     </div>
 
 
@@ -196,64 +154,68 @@
     </div><!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/validform.min.js"></script>
-    <script src="js/lightbox.js"></script>
+    <script src="js/laydate/laydate.js"></script>
     <script>
-        $(function() {
-            var formValidate = $("#myform").Validform();
+    //定义根变量
+    !(function($) {
+        var page = {
+            //定义全局变量区
+            v: {
+                id: "page"
+            },
+            //定义方法区
+            fn: {
+                //初始化方法区
+                init: function () {
+                    page.fn.dateInit();
+                },
+                //日期选择
+                dateInit: function () {
+                    var start = {
+                        elem: '#start',
+                        choose: function(datas){
+                             end.min = datas;
+                             end.start = datas;
+                             $('#start').attr('title', datas);
+                        }
+                    };
+                    var end = {
+                        elem: '#end',
+                        choose: function(datas){
+                            start.max = datas; 
+                            $('#end').attr('title', datas);
+                        }
+                    };
+                    laydate(start);
+                    laydate(end);
 
-            formValidate.addRule([
-                {
-                    ele: '#companyName',
-                    datatype: 's',
-                    nullmsg: '用户名必须以英文字母开头，长度6到20位',
-                    errormsg: '用户名长度只能在6-20位字符之间'
-                },
-                {
-                    ele: '#area',
-                    datatype: 's',
-                    nullmsg: '请选择企业注册地'
-                },
-                {
-                    ele: '#linkMan',
-                    datatype: 's',
-                    nullmsg: '请输入联系人姓名'
-                },
-                {
-                    ele: '#mobile',
-                    datatype: 'm',
-                    nullmsg: '请输入手机号码',
-                    errormsg: '请输入正确的手机号码'
-                },
-                {
-                    ele: '#pwd',
-                    datatype: 'pwd',
-                    nullmsg: '请输入密码',
-                    errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
-                },
-                {
-                    ele: '#pwdOld',
-                    datatype: '*',
-                    nullmsg: '请输入当前操作人的boss帐号密码'
+                    var start2 = {
+                        elem: '#start2',
+                        choose: function(datas){
+                             end2.min = datas;
+                             end2.start = datas;
+                             $('#start2').attr('title', datas);
+                        }
+                    };
+                    var end2 = {
+                        elem: '#end2',
+                        choose: function(datas){
+                            start2.max = datas;
+                            $('#end2').attr('title', datas);
+                        }
+                    };
+                    laydate(start2);
+                    laydate(end2);
                 }
-            ])
-            
-            var $mobileCode = $('#mobileCode');
-            var $pwd = $('#pwd');
-            var _setPwd = function() {
-                var flag = $mobileCode.prop('checked');
-                if (flag) {
-                    formValidate.ignore($pwd);
-                    $pwd.nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
-                } else {
-                    formValidate.unignore($pwd);
-                }
-                $pwd.prop('disabled', flag);
             }
-            $mobileCode.on('click', _setPwd);
-            _setPwd();
+        }
+        //加载页面js
+        $(function() {
+            page.fn.init();
+        });
+    })(jQuery);
 
-        })
+        
     </script>
 </body>
 </html>
