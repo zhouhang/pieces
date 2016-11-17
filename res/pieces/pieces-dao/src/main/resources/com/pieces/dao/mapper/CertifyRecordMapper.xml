@@ -4,9 +4,11 @@
     <resultMap id="CertifyRecordResultMap" type="com.pieces.dao.model.CertifyRecord">
             <id column="id"  property="id" />
             <result column="user_id"  property="userId" />
+            <result column="user_name"  property="userName" />
             <result column="create_time"  property="createTime" />
             <result column="status"  property="status" />
-            <result column="folllow_id"  property="folllowId" />
+            <result column="follow_id"  property="followId" />
+            <result column="follow_name"  property="followName" />
             <result column="follow_time"  property="followTime" />
             <result column="result"  property="result" />
         
@@ -15,17 +17,20 @@
     <resultMap id="CertifyRecordResultMapVo" type="com.pieces.dao.vo.CertifyRecordVo">
             <id column="id"  property="id" />
             <result column="user_id"  property="userId" />
+            <result column="user_name"  property="userName" />
             <result column="create_time"  property="createTime" />
             <result column="status"  property="status" />
-            <result column="folllow_id"  property="folllowId" />
+            <result column="follow_id"  property="followId" />
+            <result column="follow_name"  property="followName" />
             <result column="follow_time"  property="followTime" />
             <result column="result"  property="result" />
         
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,create_time,status,folllow_id,follow_time,result
+        id,user_id,user_name,create_time,status,follow_id,follow_name,follow_time,result
     </sql>
+
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="CertifyRecordResultMap">
         select
@@ -48,6 +53,32 @@
             <if test="id != null">
                 id = #{id}
             </if>
+            <if test="userName != null">
+                and user_name like  '%${userName}%'
+            </if>
+
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="followName != null">
+                and folllow_name like  '%${followName}%'
+            </if>
+            <if test="startTime != null">
+                and creater_time <![CDATA[ >= ]]> #{startTime}
+            </if>
+
+            <if test="endTime != null">
+                and creater_time <![CDATA[ <= ]]> #{endTime}
+            </if>
+            <if test="startFollowTime != null">
+                and follow_time <![CDATA[ >= ]]> #{startFollowTime}
+            </if>
+
+            <if test="endFollowTime != null">
+                and follow_time <![CDATA[ <= ]]> #{endFollowTime}
+            </if>
+
+
         </where>
     </select>
 
@@ -58,9 +89,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.CertifyRecord">
         insert into
-        certify_record (user_id,create_time,status,folllow_id,follow_time,result)
+        certify_record (user_id,user_name,create_time,status,follow_id,follow_name,follow_time,result)
         values
-        (#{userId},#{createTime},#{status},#{folllowId},#{followTime},#{result})
+        (#{userId},#{userName},#{createTime},#{status},#{followId},#{followName},#{followTime},#{result})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.CertifyRecord">
@@ -69,6 +100,10 @@
                                                         
             <if test="userId != null">
                 user_id = #{userId},
+            </if>
+
+            <if test="userName != null">
+                user_name = #{userName},
             </if>
                                             
             <if test="createTime != null">
@@ -79,8 +114,12 @@
                 status = #{status},
             </if>
                                             
-            <if test="folllowId != null">
+            <if test="followId != null">
                 folllow_id = #{folllowId},
+            </if>
+
+            <if test="followName != null">
+                folllow_name = #{folllowName},
             </if>
                                             
             <if test="followTime != null">

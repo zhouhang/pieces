@@ -113,6 +113,7 @@ public class UserCertificateController {
         }
         CertifyRecord certifyRecord=new CertifyRecord();
         certifyRecord.setUserId(user.getId());
+        certifyRecord.setUserName(user.getUserName());
         certifyRecord.setCreateTime(new Date());
         certifyRecord.setStatus(CertifyRecordStatusEnum.NOT_HANDLE.getValue());
         certifyRecordService.saveRecord(certifyRecord,certificationVo,userQualificationVos);
