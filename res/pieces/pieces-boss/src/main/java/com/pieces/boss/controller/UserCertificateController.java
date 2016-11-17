@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by xiao on 2016/11/17.
  */
 @Controller
-@RequestMapping(value = "/index")
+@RequestMapping(value = "certify/")
 public class UserCertificateController {
+
+
 
 }
