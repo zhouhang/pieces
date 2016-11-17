@@ -1,10 +1,13 @@
 package com.pieces.biz.controller;
 
+import com.pieces.dao.enums.CertifyRecordStatusEnum;
 import com.pieces.dao.enums.CertifyStatusEnum;
+import com.pieces.dao.model.CertifyRecord;
 import com.pieces.dao.model.User;
 import com.pieces.dao.model.UserQualification;
 import com.pieces.dao.vo.UserCertificationVo;
 import com.pieces.dao.vo.UserQualificationVo;
+import com.pieces.service.CertifyRecordService;
 import com.pieces.service.UserCertificationService;
 import com.pieces.service.UserQualificationService;
 import com.pieces.service.UserService;
@@ -25,6 +28,7 @@ import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
+
 /**
  * Created by xiao on 2016/11/16.
  */
@@ -42,6 +46,9 @@ public class UserCertificateController {
 
     @Autowired
     UserCertificationService userCertificationService;
+
+    @Autowired
+    CertifyRecordService certifyRecordService;
 
     @Autowired
     UserService userService;
@@ -104,18 +111,12 @@ public class UserCertificateController {
         if(certificationVo==null){
             return new Result(false).info("session 过期");
         }
-
-        Date now=new Date();
-        certificationVo.setUserId(user.getId());
-        certificationVo.setCreateTime(now);
-        certificationVo.setUpdateTime(now);
-        userCertificationService.create(certificationVo);
-        for(UserQualificationVo userQualificationVo:userQualificationVos){
-            userQualificationVo.setUserId(user.getId());
-            userQualificationVo.setCreateTime(now);
-            userQualificationVo.setUpdateTime(now);
-            userQualificationService.create(userQualificationVo);
-        }
+        CertifyRecord certifyRecord=new CertifyRecord();
+        certifyRecord.setUserId(user.getId());
+        certifyRecord.setCreateTime(new Date());
+        certifyRecord.setStatus(CertifyRecordStatusEnum.NOT_HANDLE.getValue());
+        certifyRecordService.saveRecord(certifyRecord,certificationVo,userQualificationVos);
+        httpSession.removeAttribute(RedisEnum.USER_SESSION_CERTIFICATION.getValue());
         return new Result(true).info("提交成功");
     }
 

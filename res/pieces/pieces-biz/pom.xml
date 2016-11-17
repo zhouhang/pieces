@@ -219,7 +219,7 @@
 			<properties>
 				<biz.base.url>http://127.0.0.1:8088</biz.base.url>
 				<biz.upload.url>http://127.0.0.1:8088/files/</biz.upload.url>
-				<biz.upload.path>E:/Program Files/Apache Software Foundation/Tomcat 8.5/webapps/files</biz.upload.path>
+				<biz.upload.path>E:/Program Files/Apache Software Foundation/Tomcat 8.5/webapps/files/</biz.upload.path>
 			</properties>
 		</profile>
 		<profile>
