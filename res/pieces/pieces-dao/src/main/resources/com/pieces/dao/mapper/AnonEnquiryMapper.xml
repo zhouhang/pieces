@@ -13,20 +13,17 @@
         
     </resultMap>
 
-    <resultMap id="AnonEnquiryResultMapVo" type="com.pieces.dao.vo.AnonEnquiryVo">
-            <id column="id"  property="id" />
-            <result column="content"  property="content" />
-            <result column="contacts"  property="contacts" />
-            <result column="publish_time"  property="publishTime" />
-            <result column="phone"  property="phone" />
-            <result column="last_follow_time"  property="lastFollowTime" />
-            <result column="last_follow_id"  property="lastFollowId" />
-            <result column="status"  property="status" />
-        
+    <resultMap id="AnonEnquiryResultMapVo" type="com.pieces.dao.vo.AnonEnquiryVo" extends="AnonEnquiryResultMap">
+            <result column="lastFollowName"  property="lastFollowName" />
     </resultMap>
 
     <sql id="Base_Column_List">
         id,content,contacts,publish_time,phone,last_follow_time,last_follow_id,status
+    </sql>
+
+    <sql id="Base_Column_List_Alisa">
+        anon.id as id,anon.content as content,anon.contacts as contacts,anon.publish_time as publish_time,anon.phone as phone,
+        anon.last_follow_time as last_follow_time,anon.last_follow_id as last_follow_id,anon.status as status
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="AnonEnquiryResultMap">
@@ -44,11 +41,39 @@
 
     <select id="findByParams" resultMap="AnonEnquiryResultMapVo" parameterType="com.pieces.dao.vo.AnonEnquiryVo">
         select
-        <include refid="Base_Column_List" />
-        from anon_enquiry
+        <include refid="Base_Column_List_Alisa" />,
+        mem.name as lastFollowName
+        from anon_enquiry anon
+        LEFT JOIN member mem on anon.last_follow_id = mem.id
         <where>
             <if test="id != null">
-                id = #{id}
+                anon.id = #{id}
+            </if>
+            <if test="content != null">
+                AND anon.content = "%"#{content}"%"
+            </if>
+            <if test="contacts != null">
+                AND anon.contacts LIKE "%"#{contacts}"%"
+            </if>
+            <if test="status != null">
+                AND anon.status = #{status}
+            </if>
+            <if test="lastFollowName != null">
+                AND mem.name LIKE "%"#{lastFollowName}"%"
+            </if>
+            <if test="lastFollowTimeStart != null">
+                AND anon.last_follow_time <![CDATA[ >= ]]> #{lastFollowTimeStart}
+            </if>
+
+            <if test="lastFollowTimeEnd != null">
+                AND anon.last_follow_time <![CDATA[ <= ]]> #{lastFollowTimeEnd}
+            </if>
+            <if test="publishTimeStart != null">
+                AND anon.publish_time <![CDATA[ >= ]]> #{publishTimeStart}
+            </if>
+
+            <if test="publishTimeEnd != null">
+                AND anon.publish_time <![CDATA[ <= ]]> #{publishTimeEnd}
             </if>
         </where>
     </select>

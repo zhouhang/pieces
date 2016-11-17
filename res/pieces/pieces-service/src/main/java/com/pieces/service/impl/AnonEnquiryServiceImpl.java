@@ -12,6 +12,7 @@ import com.pieces.service.AnonEnquiryDetailService;
 import com.pieces.service.AnonEnquiryService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.AnonEnquiryEnum;
+import com.pieces.tools.utils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,9 @@ public class AnonEnquiryServiceImpl  extends AbsCommonService<AnonEnquiry> imple
 
 	@Override
 	public PageInfo<AnonEnquiryVo> findByParams(AnonEnquiryVo anonEnquiryVo,Integer pageNum,Integer pageSize) {
-    PageHelper.startPage(pageNum, pageSize);
+		pageNum=pageNum==null?1:pageNum;
+		pageSize=pageSize==null?10:pageSize;
+    	PageHelper.startPage(pageNum, pageSize);
     	List<AnonEnquiryVo>  list = anonEnquiryDao.findByParams(anonEnquiryVo);
         PageInfo page = new PageInfo(list);
         return page;
@@ -68,6 +71,23 @@ public class AnonEnquiryServiceImpl  extends AbsCommonService<AnonEnquiry> imple
 		}
 		detailService.save(list);
 		return new Result(true).info("询价成功!");
+	}
+
+	@Override
+	public AnonEnquiryVo findVoById(Integer id) {
+		AnonEnquiryVo vo = new AnonEnquiryVo();
+		AnonEnquiry anonEnquiry = findById(id);
+		if (anonEnquiry == null) {
+			throw new RuntimeException("询价记录不存在");
+		}
+		BeanUtils.copy(anonEnquiry,vo);
+		List<AnonEnquiryDetail> details = detailService.findByType(id,0);
+		if (details != null && details.size()>0) {
+			vo.setDetail(details.get(0));
+		}
+
+		vo.setFiles(detailService.findByType(id,1));
+		return vo;
 	}
 
 	@Override

@@ -11,4 +11,6 @@ public interface AnonEnquiryDetailService extends ICommonService<AnonEnquiryDeta
     public PageInfo<AnonEnquiryDetailVo> findByParams(AnonEnquiryDetailVo anonEnquiryDetailVo,Integer pageNum,Integer pageSize);
 
     public void save(List<AnonEnquiryDetail> list);
+
+    public List<AnonEnquiryDetail> findByType(Integer id, Integer type);
 }

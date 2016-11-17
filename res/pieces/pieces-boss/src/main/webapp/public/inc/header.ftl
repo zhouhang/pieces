@@ -82,6 +82,7 @@
                 <a href="javascript:;">消息</a>
                 <div class="subnav">
                     <a href="certify/list">企业资质审核</a>
+                    <a href="anon/enquiry">新客询价</a>
                 </div>
             </li>
             <@shiro.hasPermission name="cms:index">
