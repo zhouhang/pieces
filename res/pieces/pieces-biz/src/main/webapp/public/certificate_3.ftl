@@ -29,7 +29,7 @@
                     <p>审核需要一点时间，您可以先进行询价操作。</p>
                 </div>
                 <div class="ft">
-                    <a class="btn btn-red" href="certificate.html">开始询价</a>
+                    <a class="btn btn-red" href="/center/enquiry/index">开始询价</a>
                 </div>
             </div><!-- fa-message start -->
 

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class UserCertificateController {
 
     @RequestMapping(value = "/stepOne", method = RequestMethod.POST)
     @ResponseBody
-    public Result stepOnePost(UserCertificationVo userCertificationVo){
+    public Result stepOnePost(@Valid UserCertificationVo userCertificationVo){
         String status=null;
         String info="提交成功";
         if(!StringUtils.isNotBlank(userCertificationVo.getCompany())){
@@ -114,8 +115,6 @@ public class UserCertificateController {
             userQualificationVo.setUpdateTime(now);
             userQualificationService.create(userQualificationVo);
         }
-        user.setCertifyStatus(CertifyStatusEnum.CERTIFYING.getValue());
-        userService.update(user);
         return new Result(true).info("提交成功");
     }
 

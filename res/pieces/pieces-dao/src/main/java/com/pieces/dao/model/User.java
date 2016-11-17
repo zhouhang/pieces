@@ -69,7 +69,7 @@ public class User  implements Serializable {
 	//用户类型 0：终端 1：代理商
 	private int type;
 
-	//0未认证,1审核中，2审核通过,3审核失败
+	//0未认证,1认证通过
 	private int certifyStatus;
 	
 	//创建时间

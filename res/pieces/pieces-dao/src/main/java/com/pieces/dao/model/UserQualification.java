@@ -24,7 +24,7 @@ public class UserQualification  implements Serializable {
 	//证书类型（三证合一的要做区分）
 	private Integer type;
 	
-	private Integer group;
+	private Integer isCombine;
 	
 	//图片地址
 	private String pictureUrl;
@@ -83,12 +83,12 @@ public class UserQualification  implements Serializable {
 		this.type = type;
 	}
 	
-	public Integer getGroup() {
-		return group;
+	public Integer getIsCombine() {
+		return isCombine;
 	}
 
-	public void setGroup(Integer group) {
-		this.group = group;
+	public void setIsCombine(Integer isCombine) {
+		this.isCombine = isCombine;
 	}
 	
 	public String getPictureUrl() {

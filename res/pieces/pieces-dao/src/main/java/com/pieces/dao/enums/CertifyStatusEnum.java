@@ -8,8 +8,6 @@ public enum CertifyStatusEnum {
     //0未认证,1审核中，2审核通过,3审核失败
 
     NOT_CERTIFY(0, "未认证"),
-    CERTIFYING(1, "审核中"),
-    CERTIFY_PASS(2, "审核通过"),
     CERTIFY_FAIL(3, "审核失败");
 
     private Integer value;

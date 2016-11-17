@@ -8,7 +8,7 @@
             <result column="term"  property="term" />
             <result column="status"  property="status" />
             <result column="type"  property="type" />
-            <result column="group"  property="group" />
+            <result column="is_combine"  property="isCombine" />
             <result column="picture_url"  property="pictureUrl" />
             <result column="create_time"  property="createTime" />
             <result column="update_time"  property="updateTime" />
@@ -22,7 +22,7 @@
             <result column="term"  property="term" />
             <result column="status"  property="status" />
             <result column="type"  property="type" />
-            <result column="group"  property="group" />
+            <result column="is_combine"  property="isCombine" />
             <result column="picture_url"  property="pictureUrl" />
             <result column="create_time"  property="createTime" />
             <result column="update_time"  property="updateTime" />
@@ -30,7 +30,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,number,term,status,type,group,picture_url,create_time,update_time
+        id,user_id,number,term,status,type,is_combine,picture_url,create_time,update_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="UserQualificationResultMap">
@@ -64,9 +64,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.UserQualification">
         insert into
-        user_qualification (user_id,number,term,status,type,group,picture_url,create_time,update_time)
+        user_qualification (user_id,number,term,status,type,is_combine,picture_url,create_time,update_time)
         values
-        (#{userId},#{number},#{term},#{status},#{type},#{group},#{pictureUrl},#{createTime},#{updateTime})
+        (#{userId},#{number},#{term},#{status},#{type},#{isCombine},#{pictureUrl},#{createTime},#{updateTime})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.UserQualification">
@@ -93,8 +93,8 @@
                 type = #{type},
             </if>
                                             
-            <if test="group != null">
-                group = #{group},
+            <if test="isCombine != null">
+                is_combine = #{isCombine},
             </if>
                                             
             <if test="pictureUrl != null">
