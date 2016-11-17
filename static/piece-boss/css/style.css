@@ -153,19 +153,19 @@ vertical-align:middle;
 .fa-floor .main .title{height:50px;}
 .fa-floor .main .title h3{font-weight:400;font-size:14px;}
 .fa-floor .main .title h3 i{margin-right:6px;color:#666;}
-.fa-floor .main .title .extra .btn{width:60px;margin-left:10px;}
+.fa-floor .main .title .extra .btn{margin-left:10px;}
 .fa-floor .main .title .extra .btn-red{width:100px;}
 .fa-floor .main .title .extra a.btn-gray{padding:0;width:58px;}
 .fa-floor .chart{margin-top:20px;}
 
 /* table */
 .chart .tc{text-align:center;}
+.chart tr:hover{background:#f5f5f5;}
 .chart thead td{padding:0;background:#ededed;}
-.chart th{padding:20px 0;;background:#e7e7e7;border:1px solid #ccc;font-weight:400;}
+.chart th{padding:10px 0;;background:#e7e7e7;border:1px solid #ccc;font-weight:400;}
 .chart td{padding:10px 0;border:1px solid #ccc;color:#666;font-size:12px;}
 .chart select{width:90%;height:32px;line-height:32px;text-align:center;font-size:12px;}
 .chart option{text-align:center;}
-.chart tbody tr:nth-child(even){background:#f5f5f5;}
 .chart .ipt{width:80%;height:18px;line-height:18px;padding:6px 5px;border:1px solid #ccc;}
 .chart .ipt-wrap{margin:6px;padding:6px;border:1px solid #ccc;background:#fff;}
 .chart .ipt-wrap .ipt{width:100%;padding:0;border:none;vertical-align:top;}
@@ -219,6 +219,8 @@ vertical-align:middle;
 .fa-form .cnt .Validform_loading{position:absolute;top:12px;left:460px;width:16px;height:16px;background:url(../images/loader.gif) no-repeat 50%;}
 .fa-form .cnt .msg-box .error{color:#c3272b;}
 .fa-form .cnt-extra{height:46px;}
+.fa-form .cbxs{line-height:40px;}
+.fa-form .cbxs label{margin-right:10px;}
 #imgCropWrap{display:none;}    
 #imgCrop{display:block !important;}    
 #imgCrop img{cursor:pointer;}    
@@ -313,7 +315,7 @@ vertical-align:middle;
 
 /* 订单详情 */
 .chart-info{margin-bottom:30px;}
-.chart-info h3{line-height:34px;padding:7px 30px;font-weight:700;background:#f0eff5;border:1px solid #e7e7e7;border-bottom:0;}
+.chart-info h3{line-height:34px;padding:7px 15px;font-weight:700;background:#f0eff5;border:1px solid #e7e7e7;border-bottom:0;}
 .chart-info .chart{margin-top:0;}
 .chart-info .summary{line-height:30px;padding:12px 30px;text-align:right;}
 .chart-info .summary span{display:inline-block;vertical-align:middle;color:#999;}
@@ -321,7 +323,10 @@ vertical-align:middle;
 .chart-info .summary .price{font-size:16px;font-weight:700;color:#c3272b;}
 .note-form{padding:30px;font-size:12px;border:1px solid #e7e7e7;overflow:hidden;}
 .note-form .txt{float:left;}
+.note-form .tips{margin-bottom:10px;}
+.note-form .tips i{margin-right:6px;color:#c3272b;}
 .note-form .cnt{margin-left:64px;padding:9px 14px;border:1px solid #ccc;}
+.note-form .cnt2{padding:9px 14px;border:1px solid #ccc;}
 .note-form .ipt{width:100%;height:80px;line-height:20px;font-size:12px;border:none;}
 .note-form .button{clear:both;padding:20px 0;text-align:right;}
 .note-form .button .btn{width:100px;}

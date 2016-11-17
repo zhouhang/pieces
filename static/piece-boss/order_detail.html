@@ -86,8 +86,8 @@
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                         <button type="button" class="btn btn-gray">修改</button>
-                        <button type="button" class="btn btn-gray">发票</button>
-                        <button type="button" class="btn btn-gray">配送</button>
+                        <button type="button" class="btn btn-gray">发货</button>
+                        <button type="button" class="btn btn-gray">配送失败</button>
                         <button type="submit" class="btn btn-red">重新下单</button>
                     </div>
                 </div>
@@ -135,14 +135,16 @@
                                     <th width="80">等级</th>
                                     <th>产地</th>
                                     <th width="100">期望交货日期</th>
-                                    <th width="120">数量（公斤）</th>
-                                    <th width="120">单价（元/公斤）</th>
-                                    <th width="200">小计（元）</th>
+                                    <th>数量（公斤）</th>
+                                    <th>指导价（元/公斤）</th>
+                                    <th>合同价（元/公斤）</th>
+                                    <th>合同价小计（元）</th>
+                                    <th>操作</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <td colspan="8">
+                                    <td colspan="10">
                                         <div class="summary">
                                             <div class="item">
                                                 <span>商品合计：</span>
@@ -153,8 +155,12 @@
                                                 <em>￥3000.0</em>
                                             </div>
                                             <div class="item">
-                                                <span>实际应付：</span>
+                                                <span>总额：</span>
                                                 <em class="price">￥2203000.00</em>
+                                            </div>
+                                            <div class="item">
+                                                <span>需支付保证金：</span>
+                                                <em>￥2400.00</em>
                                             </div>
                                         </div>
                                     </td>
@@ -169,37 +175,13 @@
                                     <td>2016-06-20</td>
                                     <td>60</td>
                                     <td>20</td>
-                                    <td>&yen; 12000</td>
-                                </tr>
-                                <tr>
-                                    <td>天南星</td>
-                                    <td>个</td>
-                                    <td>2</td>
-                                    <td>安徽省</td>
-                                    <td>2016-06-20</td>
-                                    <td>60</td>
                                     <td>20</td>
                                     <td>&yen; 12000</td>
-                                </tr>
-                                <tr>
-                                    <td>艾绒</td>
-                                    <td>个</td>
-                                    <td>1</td>
-                                    <td>安徽省</td>
-                                    <td>2016-06-20</td>
-                                    <td>60</td>
-                                    <td>20</td>
-                                    <td>&yen; 12000</td>
-                                </tr>
-                                <tr>
-                                    <td>天南星</td>
-                                    <td>个</td>
-                                    <td>2</td>
-                                    <td>安徽省</td>
-                                    <td>2016-06-20</td>
-                                    <td>60</td>
-                                    <td>20</td>
-                                    <td>&yen; 12000</td>
+                                    <td>
+                                        <a href="javascript:;" class="add">添加</a>
+                                        
+                                        <a class="remove c-red" href="javascript:;">删除</a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
