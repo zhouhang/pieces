@@ -41,12 +41,10 @@
 						<tr>
 							<th width="70">编号</th>
 							<th>会员名</th>
-							<th>企业全称</th>
-							<th>企业注册地区</th>
 							<th>联系人</th>
 							<th>手机号</th>
 							<th width="170">注册日期</th>
-							<th width="80">与ERP关联</th>
+							<th width="80">客户类型</th>
 							<th width="80">操作</th>
 						</tr>
 						<tr>
@@ -55,14 +53,6 @@
 								<td><div class="ipt-wrap">
 										<input name="userName" type="text" class="ipt"
 											value="${userVo.userName!}">
-									</div></td>
-								<td><div class="ipt-wrap">
-										<input name="companyFullName" type="text" class="ipt"
-											value="${userVo.companyFullName!}">
-									</div></td>
-								<td><div class="ipt-wrap">
-										<input name="areaFull" type="text" class="ipt"
-											value="${userVo.areaFull!}">
 									</div></td>
 								<td><div class="ipt-wrap">
 										<input name="contactName" type="text" class="ipt"
@@ -76,15 +66,15 @@
 									value="${userVo.startDate}" id="start"> - <input
 									name="endDate" type="text" class="ipt date"
 									value="${userVo.endDate}" id="end"></td>
-								<td><select name="bindErp" id="bindErp">
-										<option <#if (!userVo.bindErp??)>selected</#if>
-											value=""></option>
+								<td><select name="type" id="type">
+										<option <#if (!userVo.type??)>selected</#if>
+                                                value=""></option>
 										<option <#if
-											(userVo.bindErp??&&!userVo.bindErp)>selected</#if>
-											value="false">否</option>
+											(userVo.type??&&userVo.type==1)>selected</#if>
+											value="1">终端用户</option>
 										<option <#if
-											(userVo.bindErp??&&userVo.bindErp)>selected</#if>
-											value="true">是</option>
+											(userVo.type??&&userVo.type==2)>selected</#if>
+											value="2">代理商</option>
 								</select></td>
 								<td></td>
 							</form>
@@ -96,12 +86,10 @@
 						<tr>
 							<td>${user.id}</td>
 							<td>${user.userName}</td>
-							<td>${user.companyFullName}</td>
-							<td>${user.areaFull}</td>
 							<td>${user.contactName}</td>
 							<td>${user.contactMobile}</td>
 							<td>${user.createTime?date}</td>
-							<td><#if (user.bindErp)>是 <#else>否</#if></td>
+							<td><#if user.type==1>终端用户 <#elseif user.type==2>代理商</#if></td>
 							<td>
 								<@shiro.hasPermission name="customer:edit">
 									<a href="user/info/${user.id}">修改</a>

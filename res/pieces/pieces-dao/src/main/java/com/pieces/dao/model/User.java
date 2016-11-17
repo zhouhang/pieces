@@ -67,10 +67,10 @@ public class User  implements Serializable {
 	private Boolean isDel;
 
 	//用户类型 0：终端 1：代理商
-	private int type;
+	private Integer type;
 
 	//0未认证,1认证通过
-	private int certifyStatus;
+	private Integer certifyStatus;
 	
 	//创建时间
 	private Date createTime;
@@ -80,20 +80,20 @@ public class User  implements Serializable {
 	
 	public User(){}
 
-	public int getCertifyStatus() {
-		return certifyStatus;
-	}
-
-	public void setCertifyStatus(int certifyStatus) {
-		this.certifyStatus = certifyStatus;
-	}
-
-	public int getType() {
+	public Integer getType() {
 		return type;
 	}
 
-	public void setType(int type) {
+	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public Integer getCertifyStatus() {
+		return certifyStatus;
+	}
+
+	public void setCertifyStatus(Integer certifyStatus) {
+		this.certifyStatus = certifyStatus;
 	}
 
 	public Integer getId() {
