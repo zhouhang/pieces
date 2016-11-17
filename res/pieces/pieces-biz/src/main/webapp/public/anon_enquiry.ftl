@@ -55,7 +55,12 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="batch"><span class="btn" v-on:click="batch">&gt;&gt;批量询价</span></div>
+                    <div class="batch">
+                        <span class="btn" v-on:click="batch">&gt;&gt;批量询价</span>
+                        <ul class="files">
+                            <li v-for="file in files"><i class="fa fa-attach"></i><span>{{file.content}}</span><a href="javascript:;" v-on:click="delAttach(file.content)">删除</a></li>
+                        </ul>
+                    </div>
                     <div class="title">
                         <p><strong>联系方式</strong></p>
                         <p>填写您的联系方式，方便报价人员与您联系。</p>

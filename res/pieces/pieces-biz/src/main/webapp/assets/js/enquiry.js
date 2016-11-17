@@ -58,18 +58,17 @@
 				if (!pass || this.check.name || this.check.mobile || this.check.verify) {
 					return;
 				}
+
 				$.ajax({
-					url: '/anon/enquiry',
+					url: '/anon/enquiry?captcha=' + self.contact.verify,
 					type: 'POST',
-					data: {
-						list: self.items,
+					contentType : 'application/json',
+					data: JSON.stringify({
 						contacts: self.contact.name,
 						phone:self.contact.mobile,
-						captcha:self.contact.verify,
-						json:JSON.stringify(self.items),
-						fileName:"",
-						fileUrl:""
-					},
+						detail:{content:JSON.stringify(self.items)},
+						files:self.files
+					}),
 					success: function(result) {
 						if(result.status=='y'){
 	                        $.notify({
@@ -129,7 +128,10 @@
 						$("#excelForm").ajaxForm({
 	                        url:"/anon/upload",
 	                        success: function(result) {
-	                        	self.files.push({filename: result.data.name});
+	                        	self.files.push({
+									content: result.data.name,
+									attachmentUrl:result.data.url
+								});
 	                        }
 	                    });
 						$("#excelForm").submit();
@@ -137,9 +139,9 @@
 				})
 			},
 			// 删除附件
-			delAttach: function(filename) {
+			delAttach: function(content) {
 				for (var i in this.files) {
-					if (this.files[i].filename == filename) {
+					if (this.files[i].content == content) {
 						this.files.splice(i, 1);
 		            	break;
 					}
