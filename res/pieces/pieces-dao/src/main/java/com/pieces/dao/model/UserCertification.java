@@ -1,8 +1,5 @@
 package com.pieces.dao.model;
 
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,21 +10,18 @@ public class UserCertification  implements Serializable {
 	
 	private Integer id;
 	
-	//用户信息
+	//用户id
 	private Integer userId;
 	
+	//提交记录的id
+	private Integer recordId;
+	
 	//企业名称
-	@NotEmpty
-	@Length(min = 4, max = 50)
 	private String company;
 	
 	//法人
-	@NotEmpty
-	@Length(min = 4, max = 50)
 	private String corporation;
-
-	@NotEmpty
-	@Length(min = 4, max = 150)
+	
 	private String address;
 	
 	//企业类型
@@ -53,6 +47,14 @@ public class UserCertification  implements Serializable {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+	
+	public Integer getRecordId() {
+		return recordId;
+	}
+
+	public void setRecordId(Integer recordId) {
+		this.recordId = recordId;
 	}
 	
 	public String getCompany() {

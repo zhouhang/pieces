@@ -104,6 +104,7 @@ public class UserCertificateController {
         if(certificationVo==null){
             return new Result(false).info("session 过期");
         }
+
         Date now=new Date();
         certificationVo.setUserId(user.getId());
         certificationVo.setCreateTime(now);

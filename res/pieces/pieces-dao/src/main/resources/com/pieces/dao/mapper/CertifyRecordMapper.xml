@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.CertifyRecordDao">
+    <resultMap id="CertifyRecordResultMap" type="com.pieces.dao.model.CertifyRecord">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="create_time"  property="createTime" />
+            <result column="status"  property="status" />
+            <result column="folllow_id"  property="folllowId" />
+            <result column="follow_time"  property="followTime" />
+            <result column="result"  property="result" />
+        
+    </resultMap>
+
+    <resultMap id="CertifyRecordResultMapVo" type="com.pieces.dao.vo.CertifyRecordVo">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="create_time"  property="createTime" />
+            <result column="status"  property="status" />
+            <result column="folllow_id"  property="folllowId" />
+            <result column="follow_time"  property="followTime" />
+            <result column="result"  property="result" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,create_time,status,folllow_id,follow_time,result
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="CertifyRecordResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from certify_record
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="CertifyRecordResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from certify_record
+    </select>
+
+    <select id="findByParams" resultMap="CertifyRecordResultMapVo" parameterType="com.pieces.dao.vo.CertifyRecordVo">
+        select
+        <include refid="Base_Column_List" />
+        from certify_record
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from certify_record
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.CertifyRecord">
+        insert into
+        certify_record (user_id,create_time,status,folllow_id,follow_time,result)
+        values
+        (#{userId},#{createTime},#{status},#{folllowId},#{followTime},#{result})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.CertifyRecord">
+        update certify_record
+        <set>
+                                                        
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                                            
+            <if test="folllowId != null">
+                folllow_id = #{folllowId},
+            </if>
+                                            
+            <if test="followTime != null">
+                follow_time = #{followTime},
+            </if>
+                                            
+            <if test="result != null">
+                result = #{result},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

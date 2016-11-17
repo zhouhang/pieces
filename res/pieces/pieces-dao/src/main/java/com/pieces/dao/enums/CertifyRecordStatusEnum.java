@@ -1,19 +1,21 @@
 package com.pieces.dao.enums;
 
 /**
- * Created by xiao on 2016/11/16.
+ * Created by xiao on 2016/11/17.
  */
-public enum CertifyStatusEnum {
+public enum CertifyRecordStatusEnum {
 
-    NOT_CERTIFY(0, "未认证"),
-    CERTIFY_SUCESS(1, "认证");
+
+    NOT_HANDLE(0, "未处理"),
+    CERTIFY_FAIL(2, "审核不通过"),
+    CERTIFY_SUCESS(1, "审核通过");
 
     private Integer value;
 
     private String text;
 
 
-    CertifyStatusEnum(Integer value, String text) {
+    CertifyRecordStatusEnum (Integer value, String text) {
         this.value = value;
         this.text = text;
     }
@@ -41,13 +43,11 @@ public enum CertifyStatusEnum {
      * @return
      */
     public static String findByValue(Integer id) {
-        for (CertifyStatusEnum certifyStatusEnum : CertifyStatusEnum.values()) {
-            if (certifyStatusEnum.getValue().equals(id)) {
-                return certifyStatusEnum.getText();
+        for (CertifyRecordStatusEnum  certifyRecordStatusEnum : CertifyRecordStatusEnum .values()) {
+            if (certifyRecordStatusEnum.getValue().equals(id)) {
+                return certifyRecordStatusEnum.getText();
             }
         }
         return null;
     }
-
-
 }

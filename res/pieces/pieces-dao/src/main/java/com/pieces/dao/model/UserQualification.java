@@ -12,6 +12,8 @@ public class UserQualification  implements Serializable {
 	
 	private Integer userId;
 	
+	private Integer recordId;
+	
 	//证件号
 	private String number;
 	
@@ -49,6 +51,14 @@ public class UserQualification  implements Serializable {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+	
+	public Integer getRecordId() {
+		return recordId;
+	}
+
+	public void setRecordId(Integer recordId) {
+		this.recordId = recordId;
 	}
 	
 	public String getNumber() {

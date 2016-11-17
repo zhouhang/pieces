@@ -4,6 +4,7 @@
     <resultMap id="UserCertificationResultMap" type="com.pieces.dao.model.UserCertification">
             <id column="id"  property="id" />
             <result column="user_id"  property="userId" />
+            <result column="record_id"  property="recordId" />
             <result column="company"  property="company" />
             <result column="corporation"  property="corporation" />
             <result column="address"  property="address" />
@@ -16,6 +17,7 @@
     <resultMap id="UserCertificationResultMapVo" type="com.pieces.dao.vo.UserCertificationVo">
             <id column="id"  property="id" />
             <result column="user_id"  property="userId" />
+            <result column="record_id"  property="recordId" />
             <result column="company"  property="company" />
             <result column="corporation"  property="corporation" />
             <result column="address"  property="address" />
@@ -26,7 +28,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,company,corporation,address,type,create_time,update_time
+        id,user_id,record_id,company,corporation,address,type,create_time,update_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="UserCertificationResultMap">
@@ -60,9 +62,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.UserCertification">
         insert into
-        user_certification (user_id,company,corporation,address,type,create_time,update_time)
+        user_certification (user_id,record_id,company,corporation,address,type,create_time,update_time)
         values
-        (#{userId},#{company},#{corporation},#{address},#{type},#{createTime},#{updateTime})
+        (#{userId},#{recordId},#{company},#{corporation},#{address},#{type},#{createTime},#{updateTime})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.UserCertification">
@@ -71,6 +73,10 @@
                                                         
             <if test="userId != null">
                 user_id = #{userId},
+            </if>
+                                            
+            <if test="recordId != null">
+                record_id = #{recordId},
             </if>
                                             
             <if test="company != null">
