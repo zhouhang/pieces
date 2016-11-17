@@ -1,5 +1,9 @@
 package com.pieces.dao.model;
 
+import com.pieces.tools.config.ValidPattern;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -14,12 +18,16 @@ public class AnonEnquiry  implements Serializable {
 	private String content;
 	
 	//联系人
+	@NotEmpty
 	private String contacts;
 	
 	//发布时间
 	private Date publishTime;
 	
 	//手机号
+	//手机号码
+	@NotEmpty
+	@Pattern(regexp = ValidPattern.mobile, message = "手机格式错误")
 	private String phone;
 	
 	//最后跟踪时间

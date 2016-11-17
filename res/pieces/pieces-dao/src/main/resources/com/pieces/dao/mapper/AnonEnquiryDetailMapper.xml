@@ -59,6 +59,15 @@
         (#{anonEnquiryId},#{type},#{content},#{attachmentUrl})
     </insert>
 
+    <insert id="batchCreate" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.AnonEnquiryDetail">
+        insert into
+        anon_enquiry_detail (anon_enquiry_id,type,content,attachment_url)
+        values
+        <foreach collection="list" item="item" index="index" separator="," >
+        (#{item.anonEnquiryId},#{item.type},#{item.content},#{item.attachmentUrl})
+        </foreach>
+    </insert>
+
     <update id="update" parameterType="com.pieces.dao.model.AnonEnquiryDetail">
         update anon_enquiry_detail
         <set>

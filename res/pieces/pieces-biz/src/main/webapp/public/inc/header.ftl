@@ -41,7 +41,7 @@
             </ul>
         </div>
         <div class="plus">
-            <a href="/center/enquiry/index" class="btn btn-gray"><i class="fa fa-question-circle"></i>快速询价</a>
+            <a href="/anon/enquiry" class="btn btn-gray"><i class="fa fa-question-circle"></i>快速询价</a>
         </div>
     </div>
 </div><!-- nav end -->

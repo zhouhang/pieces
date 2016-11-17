@@ -10,6 +10,8 @@ import com.pieces.service.AbsCommonService;
 import com.pieces.service.AnonEnquiryDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -27,6 +29,11 @@ public class AnonEnquiryDetailServiceImpl  extends AbsCommonService<AnonEnquiryD
         return page;
 	}
 
+	@Override
+	@Transactional
+	public void save(List<AnonEnquiryDetail> list) {
+		anonEnquiryDetailDao.batchCreate(list);
+	}
 
 	@Override
 	public ICommonDao<AnonEnquiryDetail> getDao() {

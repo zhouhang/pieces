@@ -6,7 +6,7 @@
 			items: [
 				{idx: 1, val1: '', val2: '', val3: '', e1: false}
 			],
-			verification: 'uploads/code.jpg', // 验证码,
+			verification: '/anon/captcha', // 验证码,
 			contact: {
 				name: '',
 				mobile: '',
@@ -33,7 +33,7 @@
 			},
 			// 验证码
 			changeVcode: function() {
-				this.verification = 'https://authcode.jd.com/verify/image?a=0&acid=a&srcid=reg&yys=' + (new Date).getTime();
+				this.verification = '/anon/captcha?data=' + (new Date).getTime();
 			},
 			submitForm: function() {
 				var self = this,
@@ -58,11 +58,16 @@
 					return;
 				}
 				$.ajax({
-					url: '',
+					url: '/anon/enquiry',
 					type: 'POST',
 					data: {
 						list: self.items,
-						contact: self.contact
+						contacts: self.contact.name,
+						phone:self.contact.mobile,
+						captcha:self.contact.verify,
+						json:JSON.stringify(self.items),
+						fileName:"",
+						fileUrl:""
 					},
 					success: function(result) {
 						if(result.status=='y'){

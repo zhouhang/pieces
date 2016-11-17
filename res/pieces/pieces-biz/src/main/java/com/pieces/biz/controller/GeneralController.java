@@ -85,9 +85,7 @@ public class GeneralController extends BaseController {
 
 
     @RequestMapping(value = "/file/upload")
-    public void fileUpload(HttpServletRequest request,
-                           HttpServletResponse response,
-                           @RequestParam(required = false) MultipartFile file)throws Exception {
+    public void fileUpload(@RequestParam(required = false) MultipartFile file)throws Exception {
         defaultUploadFile.uploadFile(file.getOriginalFilename(), file.getInputStream());
     }
 
