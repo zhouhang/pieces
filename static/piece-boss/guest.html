@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>选择客户-boss-饮片B2B</title>
+    <title>新客询价-boss-饮片B2B</title>
     <meta name="renderer" content="webkit" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -14,7 +14,7 @@
     <div class="header">
         <div class="wrap">
             <div class="logo">
-                <a href="home.html">药优优电子商务管理系统</a>
+                <a href="home.html"><span>上工之选</span>电子商务管理系统</a>
             </div>
             <div class="user">
                 <span>登录用户 hehuan</span>
@@ -33,9 +33,9 @@
             <ul>
                 <li><a href="home.html">首页</a></li>
                 <li>
-                    <a href="#!">销售</a>
+                    <a class="curr" href="#!">销售</a>
                     <div class="subnav">
-                        <a href="enquiry.html">询价管理</a>
+                        <a class="on" href="enquiry.html">询价管理</a>
                         <a href="order.html">订单管理</a>
                     </div>
                 </li>
@@ -48,7 +48,7 @@
                     </div>
                 </li>
                 <li>
-                    <a class="curr" href="#!">客户</a>
+                    <a href="#!">客户</a>
                     <div class="subnav">
                         <a href="customers.html">客户管理</a>
                     </div>
@@ -73,11 +73,10 @@
     <div class="fa-floor">
         <div class="wrap">
             <div class="title title-btm">
-                <h3>请选择客户</h3>
-                <div class="extra"><a class="btn btn-gray" href="customers-add.html">返回</a></div>
+                <h3>新客询价</h3>
             </div>
             <div class="pagin">
-                <div class="extra"> 
+                <div class="extra">
                     <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                     <button class="btn btn-blue" type="button" id="submit"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
@@ -101,78 +100,52 @@
                     <thead>
                         <tr>
                             <th width="70">编号</th>
-                            <th>会员名</th>
-                            <th>用药单位</th>
-                            <th>代理商</th>
+                            <th>消息内容</th>
+                            <th>联系人</th>
+                            <th>跟进人</th>
+                            <th width="100">状态</th>
+                            <th width="200">发布时间</th>
+                            <th width="200">最后一次跟进时间</th>
+                            <th width="100">操作</th>
                         </tr>
                         <tr>
                             <td></td>
                             <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
                             <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
                             <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
+                            <td>
+                                <select name="" id="">
+                                    <option value=""></option>
+                                    <option value="">已处理</option>
+                                    <option value="">未处理</option>
+                                </select>
+                            </td>
+                            <td><input type="text" class="ipt date" value="" id="start"> - <input type="text" class="ipt date" value="" id="end"></td>
+                            <td><input type="text" class="ipt date" value="" id="start2"> - <input type="text" class="ipt date" value="" id="end2"></td>
+                            <td></td>
                         </tr>
                     </thead>
                     <tfoot></tfoot>
                     <tbody>
                         <tr>
                             <td>01</td>
-                            <td>yanfei1010</td>
-                            <td>速采科技（武汉）有限公司</td>
-                            <td>王彬</td>        
+                            <td>批量询价</td>
+                            <td>王彬</td>
+                            <td>何欢</td>
+                            <td>未处理</td>
+                            <td>2016-06-23 17:44:30</td>
+                            <td>2016-06-20 17:10:24</td>
+                            <td><a href="guest_detail.html">查看</a></td>
                         </tr>
                         <tr>
-                            <td>02</td>
-                            <td>yanfei1010</td>
-                            <td>速采科技（武汉）有限公司</td>
-                            <td>何先生</td>      
-                        </tr>
-                        <tr>
-                            <td>03</td>
-                            <td>yanfei1010</td>
-                            <td>速采科技（武汉）有限公司</td>
-                            <td>何先生</td>                     
-                        </tr>
-                        <tr>
-                            <td>04</td>
-                            <td>yanfei1010</td>
-                            <td>速采科技（武汉）有限公司</td>
-                            <td>何先生</td>                   
-                        </tr>
-                        <tr>
-                            <td>05</td>
-                            <td>yanfei1010</td>
-                            <td>速采科技（武汉）有限公司</td>
-                            <td>何先生</td>       
-                        </tr>
-                        <tr>
-                            <td>06</td>
-                            <td>yanfei1010</td>
-                            <td>速采科技（武汉）有限公司</td>
-                            <td>何先生</td>                   
-                        </tr>
-                        <tr>
-                            <td>07</td>
-                            <td>yanfei1010</td>
-                            <td>速采科技（武汉）有限公司</td>
-                            <td>何先生</td>       
-                        </tr>
-                        <tr>
-                            <td>08</td>
-                            <td>yanfei1010</td>
-                            <td>速采科技（武汉）有限公司</td>
-                            <td>何先生</td>                   
-                        </tr>
-                        <tr>
-                            <td>09</td>
-                            <td>yanfei1010</td>
-                            <td>速采科技（武汉）有限公司</td>
-                            <td>何先生</td>       
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td>yanfei1010</td>
-                            <td>速采科技（武汉）有限公司</td>
-                            <td>何先生</td>                   
+                            <td>01</td>
+                            <td>白芍 薄片 30公斤，丹参 段 20公斤，紫硇砂 块 30公斤</td>
+                            <td>王彬</td>
+                            <td>何欢</td>
+                            <td>未处理</td>
+                            <td>2016-06-23 17:44:30</td>
+                            <td>2016-06-20 17:10:24</td>
+                            <td><a href="guest_detail.html">查看</a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -205,50 +178,44 @@
                 //初始化方法区
                 init: function () {
                     page.fn.dateInit();
-                    page.fn.filter();
                 },
                 //日期选择
                 dateInit: function () {
                     var start = {
                         elem: '#start',
-                        format: 'YYYY/MM/DD hh:mm:ss',
-                        min: laydate.now(), //设定最小日期为当前日期
-                        max: '2099-06-16 23:59:59', //最大日期
-                        istime: true,
-                        istoday: false,
                         choose: function(datas){
-                             end.min = datas; //开始日选好后，重置结束日的最小日期
-                             end.start = datas; //将结束日的初始值设定为开始日
+                             end.min = datas;
+                             end.start = datas;
                              $('#start').attr('title', datas);
                         }
                     };
                     var end = {
                         elem: '#end',
-                        format: 'YYYY/MM/DD hh:mm:ss',
-                        min: laydate.now(),
-                        max: '2099-06-16 23:59:59',
-                        istime: true,
-                        istoday: false,
                         choose: function(datas){
-                            start.max = datas; //结束日选好后，重置开始日的最大日期
+                            start.max = datas; 
                             $('#end').attr('title', datas);
                         }
                     };
                     laydate(start);
                     laydate(end);
-                },
-                // 筛选
-                filter: function() {
-                    var $ipts = $('.chart .ipt, .chart select');
 
-                    $('#submit').on('click', function() {
-                        var params = [];
-                        $ipts.each(function() {
-                            var val = $.trim(this.value);
-                            val && params.push($(this).attr('name') + '=' + val);
-                        })
-                        console.log(params.join('&'))
-                    })
+                    var start2 = {
+                        elem: '#start2',
+                        choose: function(datas){
+                             end2.min = datas;
+                             end2.start = datas;
+                             $('#start2').attr('title', datas);
+                        }
+                    };
+                    var end2 = {
+                        elem: '#end2',
+                        choose: function(datas){
+                            start2.max = datas;
+                            $('#end2').attr('title', datas);
+                        }
+                    };
+                    laydate(start2);
+                    laydate(end2);
                 }
             }
         }

@@ -256,17 +256,18 @@
                                     <th>商品名称</th>
                                     <th>切制规格</th>
                                     <th>等级</th>
-                                    <th width="100">产地</th>
-                                    <th width="100">期望交货日期</th>
-                                    <th width="90">数量（公斤）</th>
-                                    <th width="100">单价（元/公斤）</th>
-                                    <th width="120">小计（元）</th>
-                                    <th width="120">操作</th>
+                                    <th>产地</th>
+                                    <th>期望交货日期</th>
+                                    <th>数量（公斤）</th>
+                                    <th>指导价（元/公斤）</th>
+                                    <th>合同价（元/公斤）</th>
+                                    <th>合同价小计（元）</th>
+                                    <th width="90">操作</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <td colspan="7" class="tl">共 2 件商品</td>
+                                    <td colspan="8" class="tl">共 2 件商品</td>
                                     <td colspan="2" class="tl">总计：<b class="jsum"></b></td>
                                 </tr>
                             </tfoot>
@@ -278,7 +279,8 @@
                                     <td><div class="ipt-wrap"><input type="text" class="ipt" name="origin"></div><span class="error"></span></td>
                                     <td><input type="text" class="ipt" name="date" value="" onclick="laydate({min:laydate.now()})"><span class="error"></span></td>
                                     <td><input type="text" class="ipt amount" name="amount" value=""><span class="error"></span></td>
-                                    <td><input type="text" class="ipt price" name="price" value=""><span class="error"></span></td>
+                                    <td><input type="text" class="ipt price" name="price1" value=""><span class="error"></span></td>
+                                    <td><input type="text" class="ipt price" name="price2" value=""><span class="error"></span></td>
                                     <td class="jtotal"></td>
                                     <td>
                                         <a href="javascript:;" class="add">添加</a>
@@ -361,6 +363,10 @@
                             <span>实际应付：</span>
                             <em class="price jsum2"></em>
                         </div>
+                        <div class="item">
+                            <span>需支付保证金：</span>
+                            <em>￥2400.00</em>
+                        </div>
                     </div>
                 </div>
 
@@ -401,7 +407,8 @@
             <td><div class="ipt-wrap"><input type="text" class="ipt" name="origin"></div><span class="error"></span></td>
             <td><input type="text" class="ipt" name="date" value="" onclick="laydate({min:laydate.now()})"><span class="error"></span></td>
             <td><input type="text" class="ipt amount" name="amount" value=""><span class="error"></span></td>
-            <td><input type="text" class="ipt price" name="price" value=""><span class="error"></span></td>
+            <td><input type="text" class="ipt price" name="price1" value=""><span class="error"></span></td>
+            <td><input type="text" class="ipt price" name="price2" value=""><span class="error"></span></td>
             <td class="jtotal"></td>
             <td>
                 <a href="javascript:;" class="add">添加</a>

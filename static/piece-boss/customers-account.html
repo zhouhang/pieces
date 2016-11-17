@@ -76,8 +76,9 @@
                 <dl>
                     <dt>客户信息</dt>
                     <dd>
-                        <a href="customers.html">客户界面</a>
+                        <a href="customers-info.html">客户界面</a>
                         <a class="curr" href="customers-account.html">账户信息</a>
+                        <a href="customers-certificate.html">企业资质</a>
                     </dd>
                 </dl>
             </div>
@@ -99,30 +100,12 @@
                         <div class="fa-form">
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>企业全称：
+                                    <i>*</i>会员名：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="companyName" id="companyName" placeholder="">   
+                                    <span class="val">hehuan</span>                          
                                 </div>
                             </div>
-
-                            <div class="group">
-                                <div class="txt">
-                                    <i>*</i>企业注册地：
-                                </div>
-                                <div class="cnt">
-                                    <select name="province" id="province">
-                                        <option value="">-省-</option>
-                                    </select>
-                                    <select name="city" id="city">
-                                        <option value="">-市-</option>
-                                    </select>
-                                    <select name="area" id="area">
-                                        <option value="">-区/县-</option>
-                                    </select>
-                                </div>
-                            </div>
-
                             <div class="group">
                                 <div class="txt">
                                     <i>*</i>联系人姓名：
@@ -174,6 +157,20 @@
                             </div>
                         </div>
                     </div>
+                    <div class="user-info">
+                        <h3>绑定代理商</h3>
+
+                        <div class="fa-form">
+                            <div class="group">
+                                <div class="txt">
+                                    代理商ID：
+                                </div>
+                                <div class="cnt">
+                                    <input type="text" class="ipt" value="" autocomplete="off" name="" id="" placeholder="">     
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div><!-- fa-floor end -->
@@ -191,23 +188,11 @@
 
     <script src="js/jquery.min.js"></script>
     <script src="js/validform.min.js"></script>
-    <script src="js/area.js"></script>
     <script>
         $(function() {
             var formValidate = $("#myform").Validform();
 
             formValidate.addRule([
-                {
-                    ele: '#companyName',
-                    datatype: 's',
-                    nullmsg: '用户名必须以英文字母开头，长度6到20位',
-                    errormsg: '用户名长度只能在6-20位字符之间'
-                },
-                {
-                    ele: '#area',
-                    datatype: 's',
-                    nullmsg: '请选择企业注册地'
-                },
                 {
                     ele: '#linkMan',
                     datatype: 's',

@@ -141,8 +141,8 @@ function gallery(weChatImagePreview) {
 
 
 var _YYY = {
-    CARTNAME: 'pickCommodityCart', //采购单存储key
-    APPLYINFO: 'applyInfo', //申请寄样以及申请选货单提交的资料
+    CARTNAME: 'cartList', // 采购单存储key
+    APPLYINFO: 'userInfo', // 申请寄样以及申请选货单提交的资料
 
     is_weixn: (function() {
         var ua = navigator.userAgent.toLowerCase();  
@@ -293,28 +293,25 @@ function deleteCommodity(id) {
 }
 
 function getAppyInfo(){
-    var info = _YYY.localstorage.get(_YYY.APPLYINFO);
-    if(info) {
-        return eval("(" + info + ")");
+    var userinfo = _YYY.localstorage.get(_YYY.APPLYINFO);
+    if(userinfo !== null) {
+        return eval('(' + userinfo + ')');
     } else {
         return null;
     }
 }
 
 function saveAppyinfo(info){
-    var info = _YYY.localstorage.get(_YYY.APPLYINFO);
-    var infojson;
-    if (info){
-        infojson = eval("(" + info + ")");
-        if(!info.area && infojson.area){
-            info.area = infojson.area;
-        }
+    var userinfo = _YYY.localstorage.get(_YYY.APPLYINFO);
+    var arr = userinfo === null ? [] : eval('(' + userinfo + ')');
+
+    if (arr.length !== 0 && arr.region && !info.region) {
+        info.region = arr.region;
     }
-    var cookieStr = JSON.stringify(info);//将json对象转换成字符串.
-     _YYY.localstorage.set(_YYY.APPLYINFO, cookieStr);
+    _YYY.localstorage.set(_YYY.APPLYINFO, JSON.stringify(info));
 }
 function deleteInfo() {
-     _YYY.localstorage.remove(_YYY.APPLYINFO);
+    _YYY.localstorage.remove(_YYY.APPLYINFO);
 }
 
 // 导航高亮

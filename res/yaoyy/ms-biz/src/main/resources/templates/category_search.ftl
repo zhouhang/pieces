@@ -45,7 +45,7 @@
             showHistory: function() {
                 var self = this;
                 var html = [];
-                var his = localStorage.getItem(_global.v.searchHistoryName);
+                var his = _YYY.localstorage.get(_global.v.searchHistoryName);
                 var h = [];
 
                 if (his) {
@@ -53,10 +53,14 @@
                     h = his.split(',');
                     for (var i in h) {
                         html.push('<li><i class="fa fa-clock"></i>');
-                        html.push('<span>' + h[i] + "</span>");
+                        html.push('<span>' + h[i] + '</span>');
+                        html.push('<em class="fa fa-del mid"></em>');
                         html.push("</li>");
+                        if (i > 3) {
+                            break;
+                        }
                     }
-                    html.push('<li class="clear">清除搜索历史</li>');
+                    html.push('<li class="clear">清除搜索历史记录</li>');
                     html.push("</ul>");
                     self.historyBind();
                 }
@@ -67,10 +71,25 @@
                         $searchHistory = $('#searchHistory');
                 // 清空搜索历史
                 $searchHistory.on('click', '.clear', function() {
-                    if (confirm('确定要清空吗?')) {
-                        self.clearHistory();
-                        $searchHistory.html('');
-                    }
+                    layer.open({
+                        content: '确定要清空吗？',
+                        btn: ['确定', '取消'],
+                        yes: function(index) {
+                            self.clearHistory();
+                            $searchHistory.html('');
+                            layer.close(index);
+                        }
+                    });
+                    return false;
+                })
+
+                // 删除搜索历史
+                $searchHistory.on('click', '.fa-del', function() {
+                    var his = _YYY.localstorage.get(_global.v.searchHistoryName) || '';
+                    var val = $(this).parent().find('span').html();
+                    his = (',' + his).replace(',' + val, '');
+                    _YYY.localstorage.set(_global.v.searchHistoryName, his.substring(1));
+                    self.showHistory();
                     return false;
                 })
 
@@ -81,17 +100,10 @@
             },
             // 添加一条历史记录
             addHistory: function(val) {
-                var his = localStorage.getItem(_global.v.searchHistoryName);
-                var h = his ? his.split(',') : [];
-                var maxSize = 5; // 历史记录最大限制
-
-                if (his && his.indexOf(val) >= 0) {
-                    return;
-                }
-                h.unshift(val);
-                // 最多保存5条历史记录
-                h.length > maxSize && h.splice(maxSize - 1, h.length - maxSize);
-                _YYY.localstorage.set(_global.v.searchHistoryName, h.join(','));
+                var his = _YYY.localstorage.get(_global.v.searchHistoryName) || '';
+                his = (',' + his).replace(',' + val, '');
+                his  = val + ',' + his.substring(1);
+                _YYY.localstorage.set(_global.v.searchHistoryName, his);
             },
             clearHistory: function() {
                 _YYY.localstorage.remove(_global.v.searchHistoryName);

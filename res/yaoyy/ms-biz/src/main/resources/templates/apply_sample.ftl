@@ -53,69 +53,50 @@
                 this.loadInfo();
             },
             loadInfo:function(){
-                  var userinfo=getAppyInfo();
-                  if(userinfo){
-                       $("#name").val(userinfo.nickname);
-                       $("#mobile").val(userinfo.phone);
-                       $("#region").val(userinfo.area);
-                  }
+                var userinfo = getAppyInfo();
+                if(userinfo){
+                   $("#name").val(userinfo.nickname || '');
+                   $("#mobile").val(userinfo.phone || '');
+                   $("#region").val(userinfo.region || '');
+                }
             },
             validator: function() {
                 var self = this;
                 $('#submit').on('click', function() {
                     if (self.checkName()  <#if  !Session.user_session_biz?exists> && self.checkMobile()</#if> && self.checkRegion()) {
-                        var userinfo={};
-                        userinfo.nickname=$("#name").val();
-                        userinfo.phone=$("#mobile").val();
-                        userinfo.area=$("#region").val();
+                        var userinfo = {
+                            nickname: $("#name").val(),
+                            phone: $("#mobile").val(),
+                            region: $("#region").val()
+                        }
                         saveAppyinfo(userinfo);
-                        <#if  Session.user_session_biz?exists>
-                          var login=true;
-                        <#else>
-                           var login=false;
-                        </#if>
                         $.ajax({
                             url: _global.v.applyUrl,
                             type: "POST",
                             data:$.param({intention: ${commodity.id}}) + '&'+$("#sampleInfo").serialize(),
                             success: function (result) {
-
                                 if(result.status=="200"){
                                     layer.open({
                                         className: 'layer-custom',
                                         content: '<div class="box"><div class="hd">您的寄样申请已提交成功！</div><div class="bd">我们会在60分钟之内与您取得联系。登录可以跟踪您的所有寄样申请。</div></div>'
                                         ,btn: ['历史寄样单', '返回']
                                         ,yes: function(index){
-                                            if(is_weixin()){
-                                                location.href = '/sample/list?source=WECHAT';
-                                            }
-                                            else{
-                                                location.href ='/sample/list';
-                                            }
+                                            location.href = '/sample/list' + (_YYY.is_winxin ? '?source=WECHAT' : '');
                                         },no: function(index) {
                                             window.history.back(); // 返回按钮事件
                                         },shadeClose: false
                                     });
                                 }
-
                           }
-
                         });
-
-
-
-                    } else {
                     }
-                    return false;
                 })
             },
             checkName: function() {
                 var $el = $('#name'),
-                        val = $el.val();
-
+                    val = $el.val();
                 if (!val) {
                     $el.next().html('请输入您的姓名！').show();
-
                 } else {
                     $el.next().hide();
                     return true;
@@ -124,14 +105,11 @@
             },
             checkMobile: function() {
                 var $el = $('#mobile'),
-                        val = $el.val();
-
+                    val = $el.val();
                 if (!val) {
                     $el.next().html('请输入手机号码！').show();
-
                 } else if (!_YYY.verify.isMobile(val)) {
                     $el.next().html('请输入有效的手机号！').show();
-
                 } else {
                     $el.next().hide();
                     return true;
@@ -140,11 +118,9 @@
             },
             checkRegion: function() {
                 var $el = $('#region'),
-                        val = $el.val();
-
+                    val = $el.val();
                 if (!val) {
                     $el.next().html('请输入您的所在区域（例如：安徽亳州）！').show();
-
                 } else {
                     $el.next().hide();
                     return true;
@@ -156,9 +132,7 @@
 
     $(function(){
         _global.fn.init();
-
     });
-
 </script>
 </body>
 </html>

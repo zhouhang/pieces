@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>新增账户-boss-饮片B2B</title>
+    <title>账户信息-boss-饮片B2B</title>
     <meta name="renderer" content="webkit" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -76,8 +76,9 @@
                 <dl>
                     <dt>客户信息</dt>
                     <dd>
-                        <a href="customers.html">客户界面</a>
-                        <a class="curr" href="customers-account.html">账户信息</a>
+                        <a href="customers-info.html">客户界面</a>
+                        <a href="customers-account.html">账户信息</a>
+                        <a class="curr" href="customers-certificate.html">企业资质</a>
                     </dd>
                 </dl>
             </div>
@@ -86,88 +87,91 @@
 
                 <form action="" id="myform">
                     <div class="title">
-                        <h3><i class="fa fa-people"></i>新客户</h3>
+                        <h3><i class="fa fa-people"></i>hehuan</h3>
                         <div class="extra">
                             <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                            <button type="button" class="btn btn-gray">保存</button>
-                            <button type="submit" class="btn btn-red">保存并继续</button>
+                            <button type="reset" class="btn btn-gray">重置</button>
+                            <button type="submit" class="btn btn-red">保存</button>
                         </div>
                     </div>
 
                     <div class="user-info">
-                        <h3>账户信息</h3>
+                        <h3>企业基础信息</h3>
                         <div class="fa-form">
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>客户类型：
+                                    <i>*</i>企业名称：
                                 </div>
-                                <div class="cnt cbxs">
-                                    <label><input type="radio" class="cbx" name="category">终端客户</label>
-                                    <label><input type="radio" class="cbx" name="category">代理商</label>
+                                <div class="cnt">
+                                    <span class="val">武汉同济医院</span>
                                 </div>
                             </div>
 
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>会员名：
+                                    <i>*</i>企业负责人：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="username" id="username" placeholder="">                            
+                                    <span class="val">何先生</span>
                                 </div>
                             </div>
 
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>联系人姓名：
+                                    <i>*</i>企业所在地：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="linkMan" id="linkMan" placeholder="">                            
+                                    <span class="val">湖北省武汉市XX区XX路XXX号</span>
                                 </div>
                             </div>
 
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>联系人手机号码：
+                                    <i>*</i>企业类型：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="mobile" id="mobile" placeholder="">                            
+                                    <span class="val">公立医院</span>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-
                     <div class="user-info">
-                        <h3>密码管理</h3>
-
+                        <h3>企业资质</h3>
                         <div class="fa-form">
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>新密码：
-                                </div>
-                                <div class="cnt">
-                                    <input type="password" class="ipt" value="" autocomplete="off" name="pwd" id="pwd" placeholder="请输入新密码">     
-                                </div>
-                            </div>
-
-                            <div class="group">
-                                <div class="cnt-extra">
-                                    <label><input class="cbx" id="mobileCode" type="checkbox">或发送随机密码</label>                
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="user-info">
-                        <h3>绑定代理商</h3>
-
-                        <div class="fa-form">
-                            <div class="group">
-                                <div class="txt">
-                                    代理商ID：
+                                    证件名称：
                                 </div>
                                 <div class="cnt">
                                     <input type="text" class="ipt" value="" autocomplete="off" name="" id="" placeholder="">     
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="txt">
+                                    证件号：
+                                </div>
+                                <div class="cnt">
+                                    <input type="text" class="ipt" value="" autocomplete="off" name="" id="" placeholder="">     
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="txt">
+                                    有效期
+                                </div>
+                                <div class="cnt">
+                                    <input type="text" class="ipt" value="" autocomplete="off" name="" id="" placeholder="">     
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="txt">
+                                    证件照片：
+                                </div>
+                                <div class="cnt cnt-mul">
+                                    <div class="goods-img">
+                                        <!-- <img src="images/blank.gif"><i class="del"></i> -->
+                                    </div>
+                                    <input type="hidden" value="" id="imgUrl">
                                 </div>
                             </div>
                         </div>
@@ -189,17 +193,12 @@
 
     <script src="js/jquery.min.js"></script>
     <script src="js/validform.min.js"></script>
+    <script src="js/lightbox.js"></script>
     <script>
         $(function() {
             var formValidate = $("#myform").Validform();
+
             formValidate.addRule([
-                {
-                    ele: '#username',
-                    datatype: 'uname',
-                    ajaxurl: 'json/valid.php',
-                    nullmsg: '请输入会员名',
-                    errormsg: '会员名必须以英文字母开头，长度6到20位'
-                },
                 {
                     ele: '#linkMan',
                     datatype: 's',
@@ -216,6 +215,11 @@
                     datatype: 'pwd',
                     nullmsg: '请输入密码',
                     errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
+                },
+                {
+                    ele: '#pwdOld',
+                    datatype: '*',
+                    nullmsg: '请输入当前操作人的boss帐号密码'
                 }
             ])
             
