@@ -7,6 +7,7 @@ import com.github.bingoohuang.patchca.service.Captcha;
 import com.github.bingoohuang.patchca.word.RandomWordFactory;
 import com.pieces.dao.model.AnonEnquiry;
 import com.pieces.dao.model.AnonEnquiryDetail;
+import com.pieces.dao.vo.AnonEnquiryVo;
 import com.pieces.service.AnonEnquiryService;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.constant.bean.Result;
@@ -77,13 +78,13 @@ public class AnonController {
      */
     @RequestMapping(value = "/enquiry", method = RequestMethod.POST)
     @ResponseBody
-    public Result create(@Valid AnonEnquiry enquiry, String captcha, String json, String fileName, String fileUrl){
+    public Result create(@Valid AnonEnquiryVo enquiry, String captcha){
         Result result = null;
 
         String code = (String)httpSession.getAttribute(BasicConstants.CAPTCHA_ANON_ENQUIRY_KEY);
 
         if (!StringUtils.isEmpty(code) && code.equalsIgnoreCase(captcha)){
-            result = anonEnquiryService.save(enquiry, captcha, json, fileName, fileUrl);
+            result = anonEnquiryService.save(enquiry);
         } else {
             result = new Result(false).info("验证码错误");
         }
@@ -98,8 +99,10 @@ public class AnonController {
      * @throws Exception
      */
     @RequestMapping(value = "/upload")
+    @ResponseBody
     public Result fileUpload(@RequestParam(required = true) MultipartFile file) throws IOException {
         FileBo fileBo = tempUploadFile.uploadFile(file.getOriginalFilename(), file.getInputStream());
+        fileBo.setName(file.getOriginalFilename());
         return new Result(true).data(fileBo);
     }
 

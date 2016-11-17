@@ -102,6 +102,7 @@
     <#include "./inc/helper.ftl"/>
     <#include "./inc/footer.ftl"/>
     <script src="/js/vue.min.js"></script>
+    <script src="js/jquery.form.js"></script>
     <script src="/js/enquiry.js"></script>
     <script src="/js/layer/layer.js"></script>
 </body>
