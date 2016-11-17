@@ -58,18 +58,17 @@
 				if (!pass || this.check.name || this.check.mobile || this.check.verify) {
 					return;
 				}
+
 				$.ajax({
-					url: '/anon/enquiry',
+					url: '/anon/enquiry?captcha=' + self.contact.verify,
 					type: 'POST',
-					data: {
-						list: self.items,
+					contentType : 'application/json',
+					data: JSON.stringify({
 						contacts: self.contact.name,
 						phone:self.contact.mobile,
-						captcha:self.contact.verify,
-						json:JSON.stringify(self.items),
-						fileName:"",
-						fileUrl:""
-					},
+						detail:{content:JSON.stringify(self.items)},
+						files:self.files
+					}),
 					success: function(result) {
 						if(result.status=='y'){
 	                        $.notify({
@@ -123,13 +122,16 @@
 				layer.open({
                     moveType: 1,
 					title: '批量询价',
-					content: '<form action="" id="excelForm" method="post" enctype="multipart/form-data"><p>您可以使用我们提供的 <a class="c-blue" href="http://www.sghaoyao.com/file/%E6%89%B9%E9%87%8F%E9%87%87%E8%B4%AD%E6%A8%A1%E7%89%88.xls">询价单模版<i class="fa fa-download"></i></a>，也可以使用您自己的询价单文件（可以是Excel 或照片）。</p><label class="btn btn-file enquiry_btn"><span>选择文件</span><input type="file" /></label></form>',
+					content: '<form action="" id="excelForm" method="post" enctype="multipart/form-data"><p>您可以使用我们提供的 <a class="c-blue" href="http://www.sghaoyao.com/file/%E6%89%B9%E9%87%8F%E9%87%87%E8%B4%AD%E6%A8%A1%E7%89%88.xls">询价单模版<i class="fa fa-download"></i></a>，也可以使用您自己的询价单文件（可以是Excel 或照片）。</p><label class="btn btn-file enquiry_btn"><span>选择文件</span><input name="file" type="file" /></label></form>',
 					btn: ['确定', '取消'],
 					yes: function() {
 						$("#excelForm").ajaxForm({
-	                        url:"",
+	                        url:"/anon/upload",
 	                        success: function(result) {
-	                        	self.files.push({filename: result.filename});
+	                        	self.files.push({
+									content: result.data.name,
+									attachmentUrl:result.data.url
+								});
 	                        }
 	                    });
 						$("#excelForm").submit();
@@ -137,9 +139,9 @@
 				})
 			},
 			// 删除附件
-			delAttach: function(filename) {
+			delAttach: function(content) {
 				for (var i in this.files) {
-					if (this.files[i].filename == filename) {
+					if (this.files[i].content == content) {
 						this.files.splice(i, 1);
 		            	break;
 					}

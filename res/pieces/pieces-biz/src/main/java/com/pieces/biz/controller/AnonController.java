@@ -7,6 +7,7 @@ import com.github.bingoohuang.patchca.service.Captcha;
 import com.github.bingoohuang.patchca.word.RandomWordFactory;
 import com.pieces.dao.model.AnonEnquiry;
 import com.pieces.dao.model.AnonEnquiryDetail;
+import com.pieces.dao.vo.AnonEnquiryVo;
 import com.pieces.service.AnonEnquiryService;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.constant.bean.Result;
@@ -17,10 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
@@ -77,13 +75,13 @@ public class AnonController {
      */
     @RequestMapping(value = "/enquiry", method = RequestMethod.POST)
     @ResponseBody
-    public Result create(@Valid AnonEnquiry enquiry, String captcha, String json, String fileName, String fileUrl){
+    public Result create(@Valid @RequestBody AnonEnquiryVo enquiry, String captcha){
         Result result = null;
 
         String code = (String)httpSession.getAttribute(BasicConstants.CAPTCHA_ANON_ENQUIRY_KEY);
 
         if (!StringUtils.isEmpty(code) && code.equalsIgnoreCase(captcha)){
-            result = anonEnquiryService.save(enquiry, captcha, json, fileName, fileUrl);
+            result = anonEnquiryService.save(enquiry);
         } else {
             result = new Result(false).info("验证码错误");
         }
@@ -98,8 +96,10 @@ public class AnonController {
      * @throws Exception
      */
     @RequestMapping(value = "/upload")
+    @ResponseBody
     public Result fileUpload(@RequestParam(required = true) MultipartFile file) throws IOException {
         FileBo fileBo = tempUploadFile.uploadFile(file.getOriginalFilename(), file.getInputStream());
+        fileBo.setName(file.getOriginalFilename());
         return new Result(true).data(fileBo);
     }
 

@@ -42,28 +42,25 @@ public class AnonEnquiryServiceImpl  extends AbsCommonService<AnonEnquiry> imple
 
 	@Override
 	@Transactional
-	public Result save(AnonEnquiry enquiry, String captcha, String json, String fileName, String fileUrl) {
+	public Result save(AnonEnquiryVo enquiry) {
 		enquiry.setStatus(AnonEnquiryEnum.TODO.getValue());
 		enquiry.setPublishTime(new Date());
 		List<AnonEnquiryDetail> list = new ArrayList<>();
 
-		if (!StringUtils.isEmpty(json)){
-			AnonEnquiryDetail detail = new AnonEnquiryDetail();
-			detail.setType(0);
-			detail.setContent(json);
+		if (enquiry.getDetail()!= null){
+			enquiry.getDetail().setType(0);
 			enquiry.setContent("");
-			list.add(detail);
+			list.add(enquiry.getDetail());
 		}
 
-		if (!StringUtils.isEmpty(fileName) && !StringUtils.isEmpty(fileUrl)) {
-			AnonEnquiryDetail detail = new AnonEnquiryDetail();
-			detail.setType(1);
-			detail.setContent(fileName);
-			// 保存到指定文件夹替换
-			detail.setAttachmentUrl(fileUrl);
-			list.add(detail);
+		if (enquiry.getFiles() != null && enquiry.getFiles().size() > 0) {
+			for (AnonEnquiryDetail detail: enquiry.getFiles()){
+				detail.setType(1);
+				list.add(detail);
+			}
 			enquiry.setContent("批量询价");
 		}
+
 		anonEnquiryDao.create(enquiry);
 
 		for (AnonEnquiryDetail detail: list){

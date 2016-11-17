@@ -59,7 +59,7 @@
         (#{anonEnquiryId},#{type},#{content},#{attachmentUrl})
     </insert>
 
-    <insert id="batchCreate" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.AnonEnquiryDetail">
+    <insert id="batchCreate" useGeneratedKeys="true" parameterType="com.pieces.dao.model.AnonEnquiryDetail">
         insert into
         anon_enquiry_detail (anon_enquiry_id,type,content,attachment_url)
         values

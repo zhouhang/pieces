@@ -9,5 +9,5 @@ public interface AnonEnquiryService extends ICommonService<AnonEnquiry>{
 
     public PageInfo<AnonEnquiryVo> findByParams(AnonEnquiryVo anonEnquiryVo,Integer pageNum,Integer pageSize);
 
-    public Result save(AnonEnquiry enquiry, String captcha, String json, String fileName, String fileUrl);
+    public Result save(AnonEnquiryVo enquiry);
 }
