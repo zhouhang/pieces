@@ -77,6 +77,7 @@ vertical-align:middle;
 -webkit-text-stroke-width: 0.2px;
 -moz-osx-font-smoothing: grayscale;
 }
+.fa-attach:before{content:"\e62d";}
 .fa-download:before{content:"\e61b";}
 .fa-prompt:before{content:"\e60f";}
 .fa-heart:before{content:"\e603";}
@@ -837,6 +838,9 @@ vertical-align:middle;
 .enquiry .list .del{color:#c3272b;font-size:26px;cursor:pointer;border:none;}
 .enquiry .batch{margin:40px 0 60px;color:#1869ff;}
 .enquiry .batch .btn{padding:0;}
+.enquiry .batch .files{margin-top:5px;color:#666;}
+.enquiry .batch .files a{margin-left:10px;color:#1869ff;font-size:12px;}
+.enquiry .batch .files i{margin-right:4px;font-size:12px;}
 .enquiry .contact{padding:0;}
 .enquiry .contact .group{padding-left:80px;}
 .enquiry .contact .txt{width:72px;line-height:40px;}
