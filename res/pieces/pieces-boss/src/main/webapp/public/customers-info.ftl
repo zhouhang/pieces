@@ -68,7 +68,7 @@
                                     </td>
                                     <th>认证完成时间：</th>
                                     <td>
-                                    <#if user.certifyTime?exists>${(user.certifyTime?datetime)!}</#if>
+                                    <#if user.certifyTime?exists>${(user.certifyTime?datetime)!}<#else>-</#if>
                                     </td>
                                 </tr>
                                 <tr>

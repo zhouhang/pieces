@@ -9,5 +9,7 @@ import java.util.List;
 public interface UserBindDao extends ICommonDao<UserBind>{
 
     public List<UserBindVo> findByParams(UserBindVo userBindVo);
+    public Integer deleteByTerminalId(Integer terminalId);
+
 
 }

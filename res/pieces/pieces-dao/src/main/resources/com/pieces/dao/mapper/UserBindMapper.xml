@@ -76,4 +76,8 @@
         </set>
         where id = #{id}
     </update>
+    <delete id="deleteByTerminalId" parameterType="java.lang.Integer">
+        delete from user_bind
+        where terminal_id = #{terminalId}
+    </delete>
 </mapper>

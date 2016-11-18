@@ -27,28 +27,34 @@
                 </dl>
             </div>
             <div class="main">
-                <form action="user/save" id="userForm" method="post">
+                <form action="/user/save" id="myform" method="post">
                     <input type="hidden" name="id" value="${user.id}">
                     <div class="title">
-                        <h3><i class="fa fa-people"></i><input type="hidden" value="${(user.userName)!}" name="userName" id="userName">${user.userName}</h3>
+                        <h3><i class="fa fa-people"></i>${(user.userName)!}</h3>
                         <div class="extra">
-                            <a  class="btn btn-gray" href="/user/index">返回</a>
-                            <button id="userFormSubmit" type="submit" class="btn btn-red">保存</button>
+                            <input type="hidden" value="${(user.userName)!}" name="userName" id="userName">
+                            <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
+                            <button type="submit" class="btn btn-red">保存</button>
                         </div>
                     </div>
 
                     <div class="user-info">
                         <h3>账户信息</h3>
                         <div class="fa-form">
-
+                            <div class="group">
+                                <div class="txt">
+                                    <i>*</i>会员名：
+                                </div>
+                                <div class="cnt">
+                                    <span class="val">${(user.userName)!}</span>
+                                </div>
+                            </div>
                             <div class="group">
                                 <div class="txt">
                                     <i>*</i>联系人姓名：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="${(user.contactName)!}" autocomplete="off" name="contactName" id="contactName" placeholder="联系人姓名"
-                                    data-msg-required="请输入联系人姓名"
-									data-msg-nickName="联系人姓名长度2-50位，只能包括中文字、英文字母">
+                                    <input type="text" class="ipt" value="${(user.contactName)!}" autocomplete="off" name="contactName" id="contactName" placeholder="">
                                 </div>
                             </div>
 
@@ -57,9 +63,7 @@
                                     <i>*</i>联系人手机号码：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="${(user.contactMobile)!}" autocomplete="off" name="contactMobile" id="contactMobile" placeholder="联系人手机号码"
-                                    data-msg-required="请输入联系人手机号码"
-									data-msg-mobile="请输入正确的手机号码">
+                                    <input type="text" class="ipt" value="${(user.contactMobile)!}" autocomplete="off" name="contactMobile" id="contactMobile" placeholder="">
                                 </div>
                             </div>
 
@@ -73,21 +77,41 @@
 
                             <div class="group">
                                 <div class="txt">
-                                   新密码：
+                                    <i>*</i>新密码：
                                 </div>
                                 <div class="cnt">
-                                    <input type="password" class="ipt" value="" autocomplete="off" name="password" id="password" placeholder="请输入新密码"
-                                    data-msg-required="请输入密码"
-									data-msg-password="密码由数字、字母或下划线组成，长度为6-20位">
+                                    <input type="password" class="ipt" value="" autocomplete="off" name="password" id="password" placeholder="请输入新密码">
                                 </div>
                             </div>
 
                             <div class="group">
                                 <div class="cnt-extra">
-                                    <label><input class="cbx" id="random" name="random" value="true" type="checkbox">或发送随机密码</label>
+                                    <label><input class="cbx" name="random" id="random" type="checkbox">或发送随机密码</label>
                                 </div>
                             </div>
 
+                            <div class="group">
+                                <div class="txt">
+                                    <i>*</i>您的密码：
+                                </div>
+                                <div class="cnt">
+                                    <input type="password" class="ipt" value="" autocomplete="off" name="memberPwd" id="memberPwd" placeholder="请输入当前操作人的boss帐号密码">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-info">
+                        <h3>绑定代理商</h3>
+
+                        <div class="fa-form">
+                            <div class="group">
+                                <div class="txt">
+                                    代理商ID：
+                                </div>
+                                <div class="cnt">
+                                    <input type="text" class="ipt" value="" autocomplete="off" name="agentId" id="agentId" placeholder="">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -100,57 +124,68 @@
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
-	<script src="/js/validator/jquery.validator.js?local=zh-CN"></script>
-    <script src="js/area.js"></script>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/validform.min.js"></script>
 
 
 <script>
     $(function() {
-        var $myform = $('#userForm');
-
-        $myform.validator({
-			fields : {
-				password : '密码: required; password',
-				companyFullName : '用药单位: required, company',
-				areaId : '所在地区: required',
-				contactName : '联系人: required;nickName',
-				contactMobile : '手机号码: required;mobile',
-			},
-		    valid: function(form) {
-		    	var myfromValid = this;
-		    	if ( $(form).isValid() ) {
-			    	$.ajax({
-			            url: "/user/save",
-			            data: $(form).formSerialize(),
-			            type: "POST",
-			            success: function(data){
-			            	if(data.status=="y"){
-			                    location.href="user/index?advices="+data.info
-			                }else{
-			                    $("#error_advices").show();
-			                }
-			            }
-			        });
-		    	} 
-			}
-		});
-
-        var $contactMobileCode = $('#random');
-        var $password = $('#password');
-        var _setpassword = function() {
-            var flag = $contactMobileCode.prop('checked');
-            if (flag) {
-                $myform.data('validator').options.ignore = '#password';
-                $password.removeClass('n-invalid').nextAll('.msg-box').html('');
-            } else {
-                $myform.data('validator').options.ignore = '';
+        $(function() {
+            var formValidate = $("#myform").Validform({
+                    ajaxPost:true,
+                    callback:function(data){
+                    if(data.status=="y"){
+                        location.href="/user/index?advices="+data.info
+                    }else{
+                        $("#error_advices span").html(data.info);
+                        $("#error_advices").show();
+                }
             }
-            $password.prop('disabled', flag);
-        }
-        $contactMobileCode.on('click', _setpassword);
-        setTimeout(_setpassword, 200);
-        //_setpassword();
+        });
 
+            formValidate.addRule([
+                {
+                    ele: '#contactName',
+                    datatype: 's',
+                    nullmsg: '请输入联系人姓名'
+                },
+                {
+                    ele: '#contactMobile',
+                    datatype: 'm',
+                    nullmsg: '请输入手机号码',
+                    errormsg: '请输入正确的手机号码'
+                },
+                {
+                    ele: '#password',
+                    datatype: 'pwd',
+                    nullmsg: '请输入密码',
+                    errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
+                },
+                {
+                    ele: '#memberPwd',
+                    datatype: '*',
+                    nullmsg: '请输入当前操作人的boss帐号密码'
+                }
+            ])
+
+
+            var $mobileCode = $('#random');
+            var $pwd = $('#password');
+            var _setPwd = function() {
+                var flag = $mobileCode.prop('checked');
+                if (flag) {
+                    formValidate.ignore($pwd);
+                    $pwd.nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
+                } else {
+                    formValidate.unignore($pwd);
+                }
+                $pwd.prop('disabled', flag);
+            }
+            $mobileCode.on('click', _setPwd);
+            _setPwd();
+
+        })
 
     })
 </script>

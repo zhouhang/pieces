@@ -7,16 +7,20 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.enums.CertifyStatusEnum;
+import com.pieces.dao.model.Member;
 import com.pieces.dao.model.UserBind;
 import com.pieces.dao.vo.UserVo;
-import com.pieces.service.CertifyRecordService;
-import com.pieces.service.UserBindService;
+import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.service.dto.Password;
+import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.impl.SmsService;
+import com.pieces.service.utils.EncryptUtil;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.SeqNoUtil;
@@ -32,8 +36,6 @@ import org.springframework.web.bind.annotation.*;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.Area;
 import com.pieces.dao.model.User;
-import com.pieces.service.AreaService;
-import com.pieces.service.UserService;
 import com.pieces.service.constant.BasicConstants;
 
 @Controller
@@ -52,6 +54,12 @@ public class UserController extends  BaseController{
 
 	@Autowired
 	private CertifyRecordService certifyRecordService;
+
+	@Autowired
+	private HttpSession httpSession;
+
+	@Autowired
+	private MemberService memberService;
 	/**
 	 * 会员查询页面
 	 * @param request
@@ -127,7 +135,8 @@ public class UserController extends  BaseController{
 	public void userSubmit(HttpServletRequest request,
 						   HttpServletResponse response,
 						   String random,
-						   @Valid User user,Integer agentId)throws Exception{
+						   String memberPwd,
+						   User user,Integer agentId)throws Exception{
 		String advices = "新增用户信息成功!";
 		String passWord =null;
 		//是否发送随机密码
@@ -163,14 +172,40 @@ public class UserController extends  BaseController{
 				userBind.setAgentId(agentId);
 				userBind.setTerminalId(user.getId());
 				userBind.setCreateTime(new Date());
-				userBindService.create(userBind);
+				userBindService.saveBind(userBind);
 			}
 			//发送短信
 			if(passWord!=null){
 				smsService.sendAddUserAccount(passWord,user.getContactMobile(),user.getUserName());
 			}
 		}else{
+			User oldUser=userService.findById(user.getId());
+			if(!(oldUser.getContactMobile().equals(user.getContactMobile()))&&userService.ifExistMobile(user.getContactMobile())){
+				advices="修改手机号存在";
+				WebUtil.print(response,new Result(false).info(advices));
+				return;
+			}
+			Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
+			Member member=memberService.findById(mem.getId());
+			Password pass = EncryptUtil.PiecesEncode(memberPwd, member.getSalt());
+			if(memberPwd==null||!(pass.getPassword().equals(member.getPassword()))){
+				advices="管理员密码错误";
+				WebUtil.print(response,new Result(false).info(advices));
+				return;
+			}
+
 			userService.updateUser(user);
+			if(agentId!=null){
+				UserBind userBind=new UserBind();
+				userBind.setAgentId(agentId);
+				userBind.setTerminalId(user.getId());
+				userBind.setCreateTime(new Date());
+				userBindService.saveBind(userBind);
+			}
+			else{
+				userBindService.deleteByTerminalId(user.getId());
+			}
+
 			advices = "修改用户信息成功!";
 			if(passWord!=null){
 				smsService.sendUpdateUserAccount(passWord,user.getContactMobile(),user.getUserName());
