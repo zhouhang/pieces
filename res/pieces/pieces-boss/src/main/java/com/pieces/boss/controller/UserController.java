@@ -14,6 +14,8 @@ import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.enums.CertifyStatusEnum;
 import com.pieces.dao.model.Member;
 import com.pieces.dao.model.UserBind;
+import com.pieces.dao.vo.UserCertificationVo;
+import com.pieces.dao.vo.UserQualificationVo;
 import com.pieces.dao.vo.UserVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
@@ -52,8 +54,12 @@ public class UserController extends  BaseController{
 	@Autowired
 	private UserBindService userBindService;
 
+
 	@Autowired
-	private CertifyRecordService certifyRecordService;
+	UserCertificationService userCertificationService;
+
+	@Autowired
+	UserQualificationService userQualificationService;
 
 	@Autowired
 	private HttpSession httpSession;
@@ -108,6 +114,23 @@ public class UserController extends  BaseController{
 		return "customers-info";
 	}
 
+	@RequestMapping(value = "/certify/{id}")
+	@BizLog(type = LogConstant.user, desc = "会员详细信息页面")
+	public String userCertify(@PathVariable("id") Integer id,
+						   ModelMap model){
+		User user = userService.findById(id);
+		UserCertificationVo userCertification=new UserCertificationVo();
+		userCertification.setUserId(id);
+		UserQualificationVo userQualification=new UserQualificationVo();
+		userQualification.setUserId(id);
+
+
+
+		model.put("userCertification",userCertificationService.findAll(userCertification));
+		model.put("userQualification",userQualificationService.findAll(userQualification));
+		model.put("user",user);
+		return "customers-certificate";
+	}
 
 
 	/**
