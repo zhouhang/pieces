@@ -214,10 +214,32 @@
                 formValidate: function() {
                     $('#myform').validator({
                         fields: {
-                            companyName: 'required',
-                            legalPerson: 'required',
-                            companyRegion: 'required',
-                            category: 'checked',
+                            companyName: {
+                                rule: 'required, company',
+                                msg: {
+                                    required: '请输入企业名称'
+                                }
+                            },
+                            legalPerson: {
+                                rule: 'required,  length(4~50)',
+                                msg: {
+                                    required: '请输入企业负责姓名',
+                                    length: '企业责任人长度4-50位'
+                                }
+                            },
+                            companyRegion: {
+                                rule: 'required,  length(4~150)',
+                                msg: {
+                                    required: '请输入企业所在地地址',
+                                    length: '企业责任人长度4-150位'
+                                }
+                            },
+                            category: {
+                                rule: 'checked',
+                                msg: {
+                                    checked: '请选择企业类型'
+                                }
+                            }
                         }
                     });
                 }
