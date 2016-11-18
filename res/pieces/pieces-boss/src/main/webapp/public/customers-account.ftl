@@ -110,7 +110,7 @@
                                     代理商ID：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="agentId" id="agentId" placeholder="">
+                                    <input type="text" class="ipt" value="${userBind.agentId?default('')}" autocomplete="off" name="agentId" id="agentId" placeholder="">
                                 </div>
                             </div>
                         </div>

@@ -11,4 +11,6 @@ public interface UserBindService extends ICommonService<UserBind>{
     public Integer deleteByTerminalId(Integer terminalId);
 
     public void saveBind(UserBind userBind);
+
+    public UserBindVo getByVo(UserBindVo userBindVo);
 }

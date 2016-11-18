@@ -14,6 +14,7 @@ import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.enums.CertifyStatusEnum;
 import com.pieces.dao.model.Member;
 import com.pieces.dao.model.UserBind;
+import com.pieces.dao.vo.UserBindVo;
 import com.pieces.dao.vo.UserCertificationVo;
 import com.pieces.dao.vo.UserQualificationVo;
 import com.pieces.dao.vo.UserVo;
@@ -276,9 +277,13 @@ public class UserController extends  BaseController{
 	public String edit(@PathVariable("id") Integer id,
 					   ModelMap model){
 		User user =	userService.findById(id);
-		Area area =  areaService.findParentsById(user.getAreaId());
+		//Area area =  areaService.findParentsById(user.getAreaId());
 		model.put("user",user);
-		model.put("userArea",area);
+		UserBindVo userBindVo=new UserBindVo();
+		userBindVo.setTerminalId(id);
+		UserBind userBind=userBindService.getByVo(userBindVo);
+		//model.put("userArea",area);
+		model.put("userBind",userBind);
 		return "customers-account";
 	}
 
