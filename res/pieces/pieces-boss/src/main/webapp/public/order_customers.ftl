@@ -35,7 +35,7 @@
                             <td></td>
                             <td><div class="ipt-wrap"><input type="text"  name="userName" class="ipt" value="${userVo.userName!}"></div></td>
                             <td><div class="ipt-wrap"><input type="text" name="companyFullName" class="ipt" value="${userVo.companyFullName!}"></div></td>
-                            <td><div class="ipt-wrap"><input type="text" class="ipt" name="proxyName" value="${userVo.proxyName!}"></div></td>
+                            <td><div class="ipt-wrap"><input type="text" class="ipt" name="agentName" value="${userVo.agentName!}"></div></td>
                         </tr>
                     </thead>
                     <tfoot></tfoot>
@@ -43,10 +43,10 @@
 
                     <#list customerPage.list as customer>
                         <tr>
-                            <td proxyId="${customer.proxyId}">${customer.id!}</td>
+                            <td agentId="${customer.agentId}">${customer.id!}</td>
                             <td>${customer.userName!}</td>
                             <td>${customer.companyFullName!}</td>
-                            <td>${customer.proxyName!}</td>
+                            <td>${customer.agentName!}</td>
                         </tr>
                     </#list>
 
@@ -99,8 +99,8 @@
                 createOrder:function(){
                     $(".tc>tbody>tr").click(function(){
                         var customerId = $(this).find("td:first").text();
-                        var proxyId = $(this).find("td:first").attr("proxyId");
-                        location.href="/order/create/"+customerId+"?proxyId="+proxyId;
+                        var agentId = $(this).find("td:first").attr("agentId");
+                        location.href="/order/create/"+customerId+"?agentId="+agentId;
                     })
 
                 }

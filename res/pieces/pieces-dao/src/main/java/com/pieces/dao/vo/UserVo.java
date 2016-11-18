@@ -12,9 +12,9 @@ public class UserVo  extends User{
 
     private String endDate;
 
-    private String proxyName;
+    private String agentName;
 
-    private String proxyId;
+    private String agentId;
 
     public String getStartDate() {
         return startDate;
@@ -32,19 +32,19 @@ public class UserVo  extends User{
         this.endDate = endDate;
     }
 
-    public String getProxyName() {
-        return proxyName;
+    public String getAgentName() {
+        return agentName;
     }
 
-    public void setProxyName(String proxyName) {
-        this.proxyName = proxyName;
+    public void setAgentName(String agentName) {
+        this.agentName = agentName;
     }
 
-    public String getProxyId() {
-        return proxyId;
+    public String getAgentId() {
+        return agentId;
     }
 
-    public void setProxyId(String proxyId) {
-        this.proxyId = proxyId;
+    public void setAgentId(String agentId) {
+        this.agentId = agentId;
     }
 }
