@@ -42,6 +42,13 @@
             <if test="id != null">
                 id = #{id}
             </if>
+            <if test="agentId != null">
+                and agent_id = #{agentId}
+            </if>
+
+            <if test="terminalId != null">
+               and  terminal_id = #{terminalId}
+            </if>
         </where>
     </select>
 

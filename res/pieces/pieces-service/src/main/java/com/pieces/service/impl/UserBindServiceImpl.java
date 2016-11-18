@@ -44,6 +44,15 @@ public class UserBindServiceImpl  extends AbsCommonService<UserBind> implements 
 		userBindDao.create(userBind);
 	}
 
+	@Override
+	public UserBindVo getByVo(UserBindVo userBindVo) {
+		List<UserBindVo>  list = userBindDao.findByParams(userBindVo);
+		if(list.size()!=0){
+			return list.get(0);
+		}
+		return null;
+	}
+
 
 	@Override
 	public ICommonDao<UserBind> getDao() {

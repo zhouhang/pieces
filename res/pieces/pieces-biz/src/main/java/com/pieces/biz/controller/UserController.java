@@ -16,6 +16,7 @@ import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.model.ShippingAddress;
 import com.pieces.dao.vo.ShippingAddressVo;
 import com.pieces.service.ShippingAddressService;
+import com.pieces.service.constant.BasicConstants;
 import com.pieces.tools.log.annotation.BizLog;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
@@ -136,8 +137,10 @@ public class UserController extends BaseController {
 			WebUtil.print(response, result);
 			return;
 		}
-
+		user.setSource(BasicConstants.USER_CREATECHANNEL_BIZ);
+		user.setType(1);
 		userService.addUser(user);
+
 		Result result = new Result(true);
 		WebUtil.print(response, result);
 	}
