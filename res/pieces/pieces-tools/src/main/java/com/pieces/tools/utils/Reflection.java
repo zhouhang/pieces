@@ -29,7 +29,8 @@ public class Reflection {
             //获取所有字段
             for(Field field : fieldList){
                 field.setAccessible(true);
-                if(field.get(object)!=null&&(!field.getName().equals("serialVersionUID"))){
+
+                if(!field.getType().isArray() && field.get(object)!=null&&(!field.getName().equals("serialVersionUID"))){
                     sb.append("&").append(field.getName()).append("=").append(field.get(object).toString());
                 }
             }

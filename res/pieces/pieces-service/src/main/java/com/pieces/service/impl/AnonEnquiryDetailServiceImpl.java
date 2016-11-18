@@ -36,6 +36,14 @@ public class AnonEnquiryDetailServiceImpl  extends AbsCommonService<AnonEnquiryD
 	}
 
 	@Override
+	public List<AnonEnquiryDetail> findByType(Integer id, Integer type) {
+		AnonEnquiryDetail detail = new AnonEnquiryDetail();
+		detail.setAnonEnquiryId(id);
+		detail.setType(type);
+		return anonEnquiryDetailDao.findByType(detail);
+	}
+
+	@Override
 	public ICommonDao<AnonEnquiryDetail> getDao() {
 		return anonEnquiryDetailDao;
 	}

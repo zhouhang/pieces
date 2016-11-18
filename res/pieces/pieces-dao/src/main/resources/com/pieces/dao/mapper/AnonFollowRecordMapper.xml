@@ -10,14 +10,14 @@
         
     </resultMap>
 
-    <resultMap id="AnonFollowRecordResultMapVo" type="com.pieces.dao.vo.AnonFollowRecordVo">
-            <id column="id"  property="id" />
-            <result column="anon_enquiry_id"  property="anonEnquiryId" />
-            <result column="follower_id"  property="followerId" />
-            <result column="create_time"  property="createTime" />
-            <result column="result"  property="result" />
-        
+    <resultMap id="AnonFollowRecordResultMapVo" type="com.pieces.dao.vo.AnonFollowRecordVo" extends="AnonFollowRecordResultMap">
+            <result column="followerName"  property="followerName" />
     </resultMap>
+
+    <sql id="Base_Column_List_Alisa">
+        record.id as id,record.anon_enquiry_id as anon_enquiry_id,
+        record.follower_id as follower_id,record.create_time as create_time,record.result as result
+    </sql>
 
     <sql id="Base_Column_List">
         id,anon_enquiry_id,follower_id,create_time,result
@@ -38,11 +38,16 @@
 
     <select id="findByParams" resultMap="AnonFollowRecordResultMapVo" parameterType="com.pieces.dao.vo.AnonFollowRecordVo">
         select
-        <include refid="Base_Column_List" />
-        from anon_follow_record
+        <include refid="Base_Column_List_Alisa" />,
+        mem.name as followerName
+        from anon_follow_record record
+        LEFT JOIN member mem on record.follower_id = mem.id
         <where>
             <if test="id != null">
-                id = #{id}
+                record.id = #{id}
+            </if>
+            <if test="followerId != null">
+               AND record.follower_id = #{followerId}
             </if>
         </where>
     </select>

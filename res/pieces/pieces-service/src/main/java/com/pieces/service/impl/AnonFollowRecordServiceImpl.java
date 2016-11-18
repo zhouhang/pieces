@@ -27,6 +27,13 @@ public class AnonFollowRecordServiceImpl  extends AbsCommonService<AnonFollowRec
         return page;
 	}
 
+	@Override
+	public List<AnonFollowRecordVo> findByAnonId(Integer id) {
+		AnonFollowRecordVo vo = new AnonFollowRecordVo();
+		vo.setAnonEnquiryId(id);
+		List<AnonFollowRecordVo>  list = anonFollowRecordDao.findByParams(vo);
+		return list;
+	}
 
 	@Override
 	public ICommonDao<AnonFollowRecord> getDao() {

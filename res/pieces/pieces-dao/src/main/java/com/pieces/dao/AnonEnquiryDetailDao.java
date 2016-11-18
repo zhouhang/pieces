@@ -11,4 +11,6 @@ public interface AnonEnquiryDetailDao extends ICommonDao<AnonEnquiryDetail>{
     public List<AnonEnquiryDetailVo> findByParams(AnonEnquiryDetailVo anonEnquiryDetailVo);
 
     public int batchCreate(List<AnonEnquiryDetail> list);
+
+    public List<AnonEnquiryDetail> findByType(AnonEnquiryDetail detail);
 }

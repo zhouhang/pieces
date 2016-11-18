@@ -30,6 +30,23 @@
         where id = #{id}
     </select>
 
+    <select id="findByType" parameterType="com.pieces.dao.model.AnonEnquiryDetail"  resultMap="AnonEnquiryDetailResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from anon_enquiry_detail
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="type != null">
+                AND type = #{type}
+            </if>
+            <if test="anonEnquiryId != null">
+                AND anon_enquiry_id = #{anonEnquiryId}
+            </if>
+        </where>
+    </select>
+
     <select id="findAll"  resultMap="AnonEnquiryDetailResultMap">
         select
         <include refid="Base_Column_List" />

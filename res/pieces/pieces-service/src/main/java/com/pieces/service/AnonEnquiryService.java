@@ -10,4 +10,6 @@ public interface AnonEnquiryService extends ICommonService<AnonEnquiry>{
     public PageInfo<AnonEnquiryVo> findByParams(AnonEnquiryVo anonEnquiryVo,Integer pageNum,Integer pageSize);
 
     public Result save(AnonEnquiryVo enquiry);
+
+    public AnonEnquiryVo findVoById(Integer id);
 }
