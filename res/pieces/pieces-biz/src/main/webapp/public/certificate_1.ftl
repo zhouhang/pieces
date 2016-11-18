@@ -97,10 +97,32 @@
             formValidate: function() {
                 $('#myform').validator({
                     fields: {
-                        company: 'required',
-                        corporation: 'required',
-                        address: 'required',
-                        type: 'checked',
+                        company: {
+                            rule: 'required, company',
+                            msg: {
+                                required: '请输入企业名称'
+                            }
+                        },
+                        corporation: {
+                            rule: 'required,  length(4~50)',
+                            msg: {
+                                required: '请输入企业负责姓名',
+                                length: '企业责任人长度4-50位'
+                            }
+                        },
+                        address: {
+                            rule: 'required,  length(4~150)',
+                            msg: {
+                                required: '请输入企业所在地地址',
+                                length: '企业责任人长度4-150位'
+                            }
+                        },
+                        type: {
+                            rule: 'checked',
+                            msg: {
+                                checked: '请选择企业类型'
+                            }
+                        }
                     },
                     valid : function(form) {
                         var myfromValid = this;
