@@ -21,6 +21,11 @@
 		<result column="create_time"  property="createTime" />
 		<result column="update_time"  property="updateTime" />
 	</resultMap>
+	
+	<resultMap id="Vo" type="com.pieces.dao.vo.UserVo" extends="BaseResultMap">
+		<result column="proxyName"  property="proxyName" />
+		<result column="proxyId"  property="proxyId" />
+	</resultMap>
 
 	<sql id="Base_Column_List">
 		id,user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,type,certify_status,create_time,update_time
@@ -296,5 +301,24 @@
 		</if>
 	</select>
 
+	<!-- 条件查询User-->
+	<select id="findProxyUser" parameterType="com.pieces.dao.vo.UserVo" resultMap="Vo">
+		select b.id as id,b.user_name as user_name, b.company_full_name as company_full_name,
+		prox.user_name as proxyName,prox.id as proxyId
+		from user b
+		LEFT JOIN  user_bind bind ON b.id = bind.terminal_id
+		LEFT JOIN  user prox ON bind.agent_id = prox.id
+		<where>
+			<if test="userName != null and userName != ''">
+				 b.user_name like "%"#{userName}"%"
+			</if>
+			<if test="companyFullName != null and companyFullName != ''">
+				and b.company_full_name LIKE "%"#{bincompanyFullNamedErp}"%"
+			</if>
+			<if test="proxyName != null and proxyName != ''">
+				and prox.user_name like "%"#{proxyName}"%"
+			</if>
+		</where>
+	</select>
 
 </mapper>
