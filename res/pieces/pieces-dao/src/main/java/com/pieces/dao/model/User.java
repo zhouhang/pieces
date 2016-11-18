@@ -69,6 +69,9 @@ public class User  implements Serializable {
 
 	//0未认证,1认证通过
 	private Integer certifyStatus;
+
+	//认证完成时间
+	private Date certifyTime;
 	
 	//创建时间
 	private Date createTime;
@@ -77,6 +80,14 @@ public class User  implements Serializable {
 	private Date updateTime;
 	
 	public User(){}
+
+	public Date getCertifyTime() {
+		return certifyTime;
+	}
+
+	public void setCertifyTime(Date certifyTime) {
+		this.certifyTime = certifyTime;
+	}
 
 	public Integer getType() {
 		return type;

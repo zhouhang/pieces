@@ -40,33 +40,6 @@
                     <div class="user-info">
                         <h3>账户信息</h3>
                         <div class="fa-form">
-                            <div class="group">
-                                <div class="txt">
-                                    <i>*</i>用药单位：
-                                </div>
-                                <div class="cnt">
-                                    <input type="text" class="ipt" value="${(user.companyFullName)!}" autocomplete="off" name="companyFullName" id="companyFullName" placeholder="用药单位名称"
-                                    data-msg-required="请输入用药单位名称"
-								    data-msg-company="用药单位名称长度4-50位，不能包含特殊字符">
-                                </div>
-                            </div>
-
-                            <div class="group">
-                                <div class="txt">
-                                    <i>*</i>所在地区：
-                                </div>
-                                <div class="cnt" id="pickArea">
-                                    <select name="province" id="province"  data-value="${userArea.provinceId}">
-                                        <option value="">-省-</option>
-                                    </select>
-                                    <select name="city" id="city" data-value="${userArea.cityId}">
-                                        <option value="">-市-</option>
-                                    </select>
-                                    <select name="areaId" id="area" data-value="${userArea.id}" data-msg-required="请选择至最后一级">
-                                        <option value="">-区/县-</option>
-                                    </select>
-                                </div>
-                            </div>
 
                             <div class="group">
                                 <div class="txt">

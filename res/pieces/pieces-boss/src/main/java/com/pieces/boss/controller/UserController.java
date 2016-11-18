@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.pieces.boss.commons.LogConstant;
+import com.pieces.dao.enums.CertifyStatusEnum;
 import com.pieces.dao.model.UserBind;
 import com.pieces.dao.vo.UserVo;
+import com.pieces.service.CertifyRecordService;
 import com.pieces.service.UserBindService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.impl.SmsService;
@@ -47,6 +49,9 @@ public class UserController extends  BaseController{
 
 	@Autowired
 	private UserBindService userBindService;
+
+	@Autowired
+	private CertifyRecordService certifyRecordService;
 	/**
 	 * 会员查询页面
 	 * @param request
