@@ -121,6 +121,16 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
     }
 
     @Override
+    public PageInfo<UserVo> findProxyUser(UserVo userVo, Integer pageNum, Integer pageSize) {
+        pageNum=pageNum==null?1:pageNum;
+        pageSize=pageSize==null?10:pageSize;
+        PageHelper.startPage(pageNum, pageSize);
+        List<UserVo> list = userDao.findProxyUser(userVo);
+        PageInfo page = new PageInfo(list);
+        return page;
+    }
+
+    @Override
     public ICommonDao<User> getDao() {
         return userDao;
     }

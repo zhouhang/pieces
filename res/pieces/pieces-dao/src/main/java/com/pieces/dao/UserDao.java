@@ -21,5 +21,6 @@ public interface UserDao extends ICommonDao<User>{
 
 	List<User> findByCondition(UserVo userVo);
 
+	List<UserVo> findProxyUser(UserVo userVo);
 
 }

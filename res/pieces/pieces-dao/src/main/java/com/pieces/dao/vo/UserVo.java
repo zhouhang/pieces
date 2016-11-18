@@ -8,10 +8,13 @@ import com.pieces.dao.model.User;
  */
 public class UserVo  extends User{
 
-    public String startDate;
+    private String startDate;
 
-    public String endDate;
+    private String endDate;
 
+    private String proxyName;
+
+    private String proxyId;
 
     public String getStartDate() {
         return startDate;
@@ -29,7 +32,19 @@ public class UserVo  extends User{
         this.endDate = endDate;
     }
 
+    public String getProxyName() {
+        return proxyName;
+    }
 
+    public void setProxyName(String proxyName) {
+        this.proxyName = proxyName;
+    }
 
+    public String getProxyId() {
+        return proxyId;
+    }
 
+    public void setProxyId(String proxyId) {
+        this.proxyId = proxyId;
+    }
 }
