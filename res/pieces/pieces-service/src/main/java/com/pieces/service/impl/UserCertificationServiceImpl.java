@@ -8,6 +8,7 @@ import com.pieces.dao.model.UserCertification;
 import com.pieces.dao.vo.UserCertificationVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.UserCertificationService;
+import com.pieces.tools.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -25,6 +26,15 @@ public class UserCertificationServiceImpl  extends AbsCommonService<UserCertific
     	List<UserCertificationVo>  list = userCertificationDao.findByParams(userCertificationVo);
         PageInfo page = new PageInfo(list);
         return page;
+	}
+
+	@Override
+	public UserCertificationVo findAll(UserCertificationVo userCertificationVo) {
+		List<UserCertificationVo>  list=userCertificationDao.findByParams(userCertificationVo);
+	    if(list.size()!=0){
+			return list.get(0);
+		}
+		return null;
 	}
 
 

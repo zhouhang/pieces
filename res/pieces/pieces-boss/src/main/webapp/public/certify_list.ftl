@@ -59,11 +59,11 @@
                 <tr>
                     <td>${certifyRecord.id}</td>
                     <td>${certifyRecord.userName}</td>
-                    <td>${(certifyRecord.followName??)}</td>
+                    <td>${certifyRecord.followName?default("")}</td>
                     <td>${certifyRecord.statusText}</td>
                     <td>${(certifyRecord.createTime?datetime)!}</td>
                     <td><#if certifyRecord.followTime?exists>${(certifyRecord.followTime?datetime)!}</#if></td>
-                    <td><a href="/certify/info/1">查看</a></td>
+                    <td><a href="/certify/info/${certifyRecord.id}">查看</a></td>
                 </tr>
               </#list>
                 </tbody>

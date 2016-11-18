@@ -8,6 +8,7 @@ import com.pieces.dao.model.UserQualification;
 import com.pieces.dao.vo.UserQualificationVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.UserQualificationService;
+import com.pieces.tools.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -26,6 +27,17 @@ public class UserQualificationServiceImpl  extends AbsCommonService<UserQualific
         PageInfo page = new PageInfo(list);
         return page;
 	}
+
+	@Override
+	public List<UserQualificationVo> findAll(UserQualificationVo userQualificationVo) {
+		List<UserQualificationVo>  list = userQualificationDao.findByParams(userQualificationVo);
+		for(UserQualificationVo userQualificationVo1:list){
+			userQualificationVo1.setPictureUrl(FileUtil.getUrl(userQualificationVo1.getPictureUrl()));
+			//userQualificationVo1.setTypeText(userQualificationVo1.getTypeText());
+		}
+		return list;
+	}
+
 
 
 	@Override

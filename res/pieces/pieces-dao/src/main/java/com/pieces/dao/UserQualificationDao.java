@@ -10,4 +10,6 @@ public interface UserQualificationDao extends ICommonDao<UserQualification>{
 
     public List<UserQualificationVo> findByParams(UserQualificationVo userQualificationVo);
 
+    public Integer updateByRecordId(UserQualificationVo userQualificationVo);
+
 }

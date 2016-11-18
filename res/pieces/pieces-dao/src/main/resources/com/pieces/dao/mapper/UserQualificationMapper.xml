@@ -56,6 +56,12 @@
             <if test="id != null">
                 id = #{id}
             </if>
+            <if test="userId != null">
+                and user_id= #{userId }
+            </if>
+            <if test="recordId != null">
+                and record_id = #{recordId}
+            </if>
         </where>
     </select>
 
@@ -117,5 +123,49 @@
                             
         </set>
         where id = #{id}
+    </update>
+    <update id="updateByRecordId" parameterType="com.pieces.dao.model.UserQualification">
+        update user_qualification
+        <set>
+
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+
+
+            <if test="number != null">
+                number = #{number},
+            </if>
+
+            <if test="term != null">
+                term = #{term},
+            </if>
+
+            <if test="status != null">
+                status = #{status},
+            </if>
+
+            <if test="type != null">
+                type = #{type},
+            </if>
+
+            <if test="isCombine != null">
+                is_combine = #{isCombine},
+            </if>
+
+            <if test="pictureUrl != null">
+                picture_url = #{pictureUrl},
+            </if>
+
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+
+        </set>
+        where record_id = #{recordId}
     </update>
 </mapper>

@@ -10,4 +10,8 @@ public interface UserCertificationDao extends ICommonDao<UserCertification>{
 
     public List<UserCertificationVo> findByParams(UserCertificationVo userCertificationVo);
 
+    public Integer updateByRecordId(UserCertificationVo userCertificationVo);
+
+
+
 }

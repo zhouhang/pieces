@@ -6,13 +6,17 @@ import com.pieces.dao.ICommonDao;
 import com.pieces.dao.CertifyRecordDao;
 import com.pieces.dao.UserCertificationDao;
 import com.pieces.dao.UserQualificationDao;
+import com.pieces.dao.enums.CertifyStatusEnum;
 import com.pieces.dao.model.CertifyRecord;
+import com.pieces.dao.model.User;
 import com.pieces.dao.model.UserCertification;
+import com.pieces.dao.model.UserQualification;
 import com.pieces.dao.vo.CertifyRecordVo;
 import com.pieces.dao.vo.UserCertificationVo;
 import com.pieces.dao.vo.UserQualificationVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.CertifyRecordService;
+import com.pieces.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +36,9 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 
 	@Autowired
 	private UserQualificationDao userQualificationDao;
+
+	@Autowired
+	private UserService userService;
 
 
 	@Override
@@ -60,6 +67,26 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 			userQualificationVo.setUpdateTime(now);
 			userQualificationDao.create(userQualificationVo);
 		}
+	}
+
+	@Override
+	@Transactional
+	public void passCertify(CertifyRecordVo certifyRecordVo) {
+		certifyRecordDao.update(certifyRecordVo);
+		User user=userService.findById(certifyRecordVo.getUserId());
+		user.setCertifyStatus(CertifyStatusEnum.CERTIFY_SUCESS.getValue());
+		userService.update(user);
+		UserQualificationVo userQualification=new UserQualificationVo();
+		userQualification.setRecordId(certifyRecordVo.getId());
+		userQualification.setUserId(certifyRecordVo.getUserId());
+		userQualification.setUpdateTime(new Date());
+		UserCertificationVo userCertification=new UserCertificationVo();
+		userCertification.setRecordId(certifyRecordVo.getId());
+		userCertification.setUserId(certifyRecordVo.getUserId());
+		userCertification.setUpdateTime(new Date());
+		userCertificationDao.updateByRecordId(userCertification);
+		userQualificationDao.updateByRecordId(userQualification);
+
 	}
 
 

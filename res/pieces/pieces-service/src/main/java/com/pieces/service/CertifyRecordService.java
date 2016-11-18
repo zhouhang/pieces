@@ -13,4 +13,8 @@ public interface CertifyRecordService extends ICommonService<CertifyRecord>{
     public PageInfo<CertifyRecordVo> findByParams(CertifyRecordVo certifyRecordVo,Integer pageNum,Integer pageSize);
 
     public void saveRecord(CertifyRecord certifyRecord,UserCertificationVo certificationVo,List<UserQualificationVo> userQualificationVos);
+
+    public void passCertify(CertifyRecordVo certifyRecordVo);
+
+
 }

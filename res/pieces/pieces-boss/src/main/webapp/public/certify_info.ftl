@@ -22,11 +22,13 @@
         </div>
         <div class="main">
             <div class="title">
-                <h3><i class="fa fa-people"></i>hehuan的企业资质审核</h3>
+                <h3><i class="fa fa-people"></i>${certifyRecord.userName}的企业资质审核</h3>
                 <div class="extra">
                     <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                    <button type="reset" class="btn btn-gray">不通过</button>
-                    <button type="submit" class="btn btn-red">通过</button>
+                    <#if certifyRecord.status==0>
+                    <button type="button" class="btn btn-gray" id="notpass">不通过</button>
+                    <button type="button" class="btn btn-red" id="pass">通过</button>
+                    </#if>
                 </div>
             </div>
 
@@ -38,7 +40,7 @@
                             <i>*</i>企业名称：
                         </div>
                         <div class="cnt">
-                            <span class="val">武汉同济医院</span>
+                            <span class="val">${userCertification.company}</span>
                         </div>
                     </div>
 
@@ -47,7 +49,7 @@
                             <i>*</i>企业负责人：
                         </div>
                         <div class="cnt">
-                            <span class="val">何先生</span>
+                            <span class="val">${userCertification.corporation}</span>
                         </div>
                     </div>
 
@@ -56,7 +58,7 @@
                             <i>*</i>企业所在地：
                         </div>
                         <div class="cnt">
-                            <span class="val">湖北省武汉市XX区XX路XXX号</span>
+                            <span class="val">${userCertification.address}</span>
                         </div>
                     </div>
 
@@ -65,7 +67,7 @@
                             <i>*</i>企业类型：
                         </div>
                         <div class="cnt">
-                            <span class="val">公立医院</span>
+                            <span class="val">${userCertification.typeText}</span>
                         </div>
                     </div>
 
@@ -73,13 +75,14 @@
             </div>
             <div class="user-info">
                 <h3>企业资质</h3>
+                <#list userQualification as qualification>
                 <div class="fa-form">
                     <div class="group">
                         <div class="txt">
                             证件名称：
                         </div>
                         <div class="cnt">
-                            <span class="val">医疗机构执业许可证</span>
+                            <span class="val">${qualification.typeText}</span>
                         </div>
                     </div>
                     <div class="group">
@@ -87,16 +90,24 @@
                             证件号：
                         </div>
                         <div class="cnt">
-                            <span class="val">XXXXXXXXXX</span>
+                            <span class="val">${qualification.number}</span>
                         </div>
                     </div>
                     <div class="group">
                         <div class="txt">
                             有效期
                         </div>
+                        <#if qualification.status=1>
                         <div class="cnt">
                             <span class="val">长期</span>
                         </div>
+                        <#else>
+                            <div class="cnt">
+                                <span class="val">${qualification.term}</span>
+                            </div>
+                        </#if>
+
+
                     </div>
                     <div class="group">
                         <div class="txt">
@@ -104,12 +115,13 @@
                         </div>
                         <div class="cnt cnt-mul">
                             <div class="goods-img thumb">
-                                <img src="uploads/p0.jpg" data-src="uploads/p0.jpg">
+                                <img src="${qualification.pictureUrl}" data-src="${qualification.pictureUrl}">
                             </div>
                             <input type="hidden" value="" id="imgUrl">
                         </div>
                     </div>
                 </div>
+                </#list>
             </div>
 
 
@@ -118,7 +130,7 @@
                 <form action="" class="note-form">
                     <p class="tips"><i>*</i>判断为不通过时要填写原因。</p>
                     <div class="cnt2">
-                        <textarea class="ipt" name="" id="" cols="30" rows="10" placeholder="请填写跟进结果。"></textarea>
+                        <textarea class="ipt" name="" value="" id="result" cols="30" rows="10" placeholder="请填写跟进结果。">${certifyRecord.result}</textarea>
                     </div>
                 </form>
             </div>
@@ -129,12 +141,60 @@
 
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
-
-<script src="js/jquery.min.js"></script>
-<script src="js/validform.min.js"></script>
-<script src="js/lightbox.js"></script>
+<script src="/js/common.js"></script>
 <script>
     $(function() {
+           var recordId=${certifyRecord.id};
+           var userId=${certifyRecord.userId};
+           $("#pass").click(function(){
+               var status=1;
+               $.ajax({
+                   url: "/certify/handle",
+                   data: {"id":recordId,"userId":userId,"status":status},
+                   type: "POST",
+                   success: function(data){
+                       $.notify({
+                           type: 'success',
+                           title: data.info,
+                           delay: 3e3
+                       });
+                       if(data.status=="y"){
+                           $("#pass").hide();
+                           $("#notpass").hide();
+                       }
+
+                   }
+               });
+           });
+        $("#notpass").click(function(){
+            var status=2;
+            var result=$("#result").val();
+            if(result==""){
+                $.notify({
+                    type: 'error',
+                    title: "请填写原因",
+                    delay: 3e3
+                });
+                return;
+            }
+            $.ajax({
+                url: "/certify/handle",
+                data: {"id":recordId,"userId":userId,"result":result,"status":status},
+                type: "POST",
+                success: function(data){
+                    $.notify({
+                        type: 'success',
+                        title: data.info,
+                        delay: 3e3
+                    });
+                    if(data.status=="y"){
+                        $("#pass").hide();
+                        $("#notpass").hide();
+                    }
+                }
+            });
+        });
+
 
     })
 </script>

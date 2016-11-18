@@ -61,7 +61,7 @@
                 and status = #{status}
             </if>
             <if test="followName != null">
-                and folllow_name like  '%${followName}%'
+                and follow_name like  '%${followName}%'
             </if>
             <if test="startTime != null">
                 and creater_time <![CDATA[ >= ]]> #{startTime}
@@ -115,11 +115,11 @@
             </if>
                                             
             <if test="followId != null">
-                folllow_id = #{folllowId},
+                follow_id = #{followId},
             </if>
 
             <if test="followName != null">
-                folllow_name = #{folllowName},
+                follow_name = #{followName},
             </if>
                                             
             <if test="followTime != null">
