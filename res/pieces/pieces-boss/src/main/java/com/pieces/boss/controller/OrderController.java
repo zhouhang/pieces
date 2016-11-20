@@ -253,6 +253,8 @@ public class OrderController extends BaseController{
             customerId = orderForm.getUserId();
 
             model.put("origOrderForm",orderForm);
+            //如果有代理商放入代理商id
+            model.put("agentId", orderForm.getAgentId());
 
             //该订单填写的收货地址
             ShippingAddressHistory shippingAddressHistory = shippingAddressHistoryService.findById(orderForm.getAddrHistoryId());

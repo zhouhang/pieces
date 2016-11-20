@@ -102,7 +102,7 @@
                             </thead>
                             <tfoot>
                             <tr>
-                                <td colspan="8">
+                                <td colspan="9">
                                     <div class="summary">
                                         <div class="item">
                                             <span>商品合计：</span>
@@ -118,7 +118,7 @@
                                         </div>
                                         <div class="item">
                                             <span>需支付保证金：</span>
-                                            <em class="price"><#if vo??>${vo.deposit!}</#if></em>
+                                            <em class="price">￥<#if vo??>${vo.deposit!}</#if></em>
                                         </div>
                                     </div>
                                 </td>
@@ -133,7 +133,7 @@
                                 <td>${commoditie.originOf}</td>
                                 <td>${commoditie.expectDate?date}</td>
                                 <td>${commoditie.amount}</td>
-                                <td>${commodity.guidePrice!}</td>
+                                <td>${commoditie.guidePrice!}</td>
                                 <td>${commoditie.price}</td>
                                 <td>&yen;${commoditie.subtotal}</td>
                             </tr>
