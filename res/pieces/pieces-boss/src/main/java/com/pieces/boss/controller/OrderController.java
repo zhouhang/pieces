@@ -187,9 +187,11 @@ public class OrderController extends BaseController{
     @RequiresPermissions(value = "order:add")
     @RequestMapping(value = "create/{customerId}")
     @BizLog(type = LogConstant.order, desc = "创建订单页面")
-    public String createOrder(@PathVariable("customerId") Integer customerId,
+    public String createOrder(@PathVariable("customerId") Integer customerId, Integer agentId,
                               ModelMap model){
         orderModel(customerId,null,model);
+        model.put("agentId", agentId);
+        // 修改和重新下单时 要带上代理商ID
         model.put("order_type","创建新订单");
         return "order_create";
     }
@@ -229,6 +231,8 @@ public class OrderController extends BaseController{
         BigDecimal payable = new BigDecimal(orderFormVo.getShippingCosts()).add(sum);
         orderFormVo.setAmountsPayable(payable.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
 
+        //TODO: 计算保证金
+        orderFormVo.setDeposit(payable.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
 
         Member member = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         orderFormVo.setCreateMember(member.getId());
@@ -244,7 +248,7 @@ public class OrderController extends BaseController{
     private void orderModel(Integer customerId,Integer orderId,ModelMap model){
         if(orderId!=null){
             //查询订单详情
-            com.pieces.dao.model.OrderForm orderForm =  orderFormService.findById(orderId);
+            OrderForm orderForm =  orderFormService.findById(orderId);
 
             customerId = orderForm.getUserId();
 
