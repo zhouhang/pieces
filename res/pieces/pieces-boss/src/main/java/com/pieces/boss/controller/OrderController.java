@@ -13,11 +13,13 @@ import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.WebUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StreamUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -231,9 +233,10 @@ public class OrderController extends BaseController{
         BigDecimal payable = new BigDecimal(orderFormVo.getShippingCosts()).add(sum);
         orderFormVo.setAmountsPayable(payable.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
 
-        //TODO: 计算保证金 指导价X 数量加运费
-        orderFormVo.setDeposit(payable.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
-
+        if (orderFormVo.getAgentId() != null) {
+            //TODO: 计算保证金 指导价X 数量加运费
+            orderFormVo.setDeposit(payable.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+        }
         Member member = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         orderFormVo.setCreateMember(member.getId());
         if(orderFormVo.getOrderId()==null){

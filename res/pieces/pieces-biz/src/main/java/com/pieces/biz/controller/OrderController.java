@@ -143,6 +143,9 @@ public class OrderController extends BaseController {
 			return "redirect:/center/enquiry/record";
 		}
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+		if (orderFormVo.getAddrHistoryId() == null) {
+			throw new RuntimeException("收货地址不能为空");
+		}
 		ShippingAddress sa = shippingAddressService.findById(orderFormVo.getAddrHistoryId());
 		ShippingAddressHistory sah = new ShippingAddressHistory();
 		BeanUtils.copyProperties(sa, sah);
@@ -221,7 +224,6 @@ public class OrderController extends BaseController {
         return "order_list";
     }
 
-
     /**
      * 用户订单详情
      * @return
@@ -251,6 +253,7 @@ public class OrderController extends BaseController {
 
 	/**
 	 * 修改订单状态
+	 * TODO: 待完善修改状态前需要判断订单当前状态
 	 * @param orderId
 	 * @param status
      * @return
@@ -277,6 +280,37 @@ public class OrderController extends BaseController {
 		return new Result(true).info("发票信息保存成功");
 	}
 
+	/**--代理商订单信息--**/
+	/**
+	 *代理商订单列表
+     * @return
+     */
+	@RequestMapping(value = "/order/agent", method = RequestMethod.GET)
+	@BizLog(type = LogConstant.order, desc = "代理商订单列表")
+	public String agent(Integer pageNum, Integer pageSize, ModelMap modelMap) {
+		User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+		PageInfo<OrderFormVo> pageInfo = orderFormService.findOrderByAgentId(user.getId(),pageNum, pageSize);
+		modelMap.put("pageInfo", pageInfo);
+		return "order_list";
+	}
 
+	/**
+	 *
+	 * @param id
+	 * @param modelMap
+     * @return
+     */
+	@RequestMapping(value = "/order/agent/detail/{id}", method = RequestMethod.GET)
+	@BizLog(type = LogConstant.order, desc = "代理商订单详情")
+	public String agentDetail(@PathVariable("id")Integer id, ModelMap modelMap) {
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+		OrderFormVo vo =  orderFormService.findVoById(id);
+		modelMap.put("orderForm", vo);
+		//该订单非用户自己订单
+		if(!user.getId().equals(vo.getAgentId())){
+			return "redirect:error/404";
+		}
+		return "order_detail";
+	}
 
 }

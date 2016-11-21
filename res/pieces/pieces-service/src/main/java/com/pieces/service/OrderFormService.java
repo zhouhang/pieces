@@ -46,6 +46,14 @@ public interface OrderFormService extends ICommonService<OrderForm>{
      */
     public PageInfo<OrderFormVo> findOrderByUserId(Integer userId, Integer pageNum, Integer pageSize);
 
+    /**
+     *根据代理商id 获取用户订单列表
+     * @param userId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    public PageInfo<OrderFormVo> findOrderByAgentId(Integer userId, Integer pageNum, Integer pageSize);
 
     public OrderFormVo create(OrderFormVo orderFormVo);
 

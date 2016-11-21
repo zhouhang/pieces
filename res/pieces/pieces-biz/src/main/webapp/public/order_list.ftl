@@ -49,8 +49,14 @@
                                 </#if>
                             </td>
                             <td width="140">
-                                <#if (orderForm.status == 1)>
-                                    <a href="/center/pay/go/${orderForm.id}" class="btn btn-red">付款</a>
+                                <#if user_session_biz?? && user_session_biz.type == 2>
+                                    <#if (orderForm.status == 1)>
+                                        <a href="/center/pay/go/${orderForm.id}" class="btn btn-red">支付保证金</a>
+                                    </#if>
+                                <#else >
+                                    <#if (orderForm.status == 1)>
+                                        <a href="/center/pay/go/${orderForm.id}" class="btn btn-red">付款</a>
+                                    </#if>
                                 </#if>
                                 <#if (orderForm.status == 4)>
                                     <a href="${orderForm.id}" name="5" class="btn btn-red status">确认收货</a>
@@ -64,7 +70,11 @@
                                 <#if ((orderForm.status == 4 || orderForm.status == 5) && !orderForm.invoiceId?exists)>
                                     <span><a href="${orderForm.id}" name="-1" class="c-blue jinvoice">补开发票</a></span>
                                 </#if>
-                                <span><a href="/center/order/detail/${orderForm.id}" class="c-blue">查看详情</a></span>
+                                <#if user_session_biz?? && user_session_biz.type == 2>
+                                    <span><a href="/center/order/agent/detail/${orderForm.id}" class="c-blue">查看详情</a></span>
+                                <#else >
+                                    <span><a href="/center/order/detail/${orderForm.id}" class="c-blue">查看详情</a></span>
+                                </#if>
                             </td>
                         </tr>
                         <tr class="space"></tr>
