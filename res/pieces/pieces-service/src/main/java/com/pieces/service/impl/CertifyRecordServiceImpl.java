@@ -89,6 +89,11 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 
 	}
 
+	@Override
+	public CertifyRecordVo getLatest(Integer userId) {
+		return certifyRecordDao.getLatest(userId);
+	}
+
 
 	@Override
 	public ICommonDao<CertifyRecord> getDao() {

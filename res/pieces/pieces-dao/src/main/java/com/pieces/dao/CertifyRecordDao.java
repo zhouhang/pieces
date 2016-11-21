@@ -10,4 +10,6 @@ public interface CertifyRecordDao extends ICommonDao<CertifyRecord>{
 
     public List<CertifyRecordVo> findByParams(CertifyRecordVo certifyRecordVo);
 
+    public CertifyRecordVo getLatest(Integer userId);
+
 }

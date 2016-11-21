@@ -13,9 +13,17 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import com.pieces.biz.controller.commons.LogConstant;
+import com.pieces.dao.enums.CertifyRecordStatusEnum;
+import com.pieces.dao.enums.CertifyStatusEnum;
+import com.pieces.dao.model.CertifyRecord;
 import com.pieces.dao.model.ShippingAddress;
+import com.pieces.dao.model.UserCertification;
+import com.pieces.dao.vo.CertifyRecordVo;
 import com.pieces.dao.vo.ShippingAddressVo;
+import com.pieces.dao.vo.UserCertificationVo;
+import com.pieces.service.CertifyRecordService;
 import com.pieces.service.ShippingAddressService;
+import com.pieces.service.UserCertificationService;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.tools.log.annotation.BizLog;
 import org.apache.commons.lang.StringUtils;
@@ -62,6 +70,12 @@ public class UserController extends BaseController {
 
 	@Autowired
 	private ShippingAddressService shippingAddressService;
+
+	@Autowired
+	CertifyRecordService certifyRecordService;
+
+	@Autowired
+	UserCertificationService userCertificationService;
 
 	@Autowired
 	HttpSession httpSession;
@@ -369,6 +383,21 @@ public class UserController extends BaseController {
 	public String userInfo(ModelMap model, HttpServletRequest request) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		model.put("user", user);
+		if(user.getCertifyStatus()== CertifyStatusEnum.NOT_CERTIFY.getValue()){
+			CertifyRecordVo certifyRecordVo=certifyRecordService.getLatest(user.getId());
+			if(certifyRecordVo!=null){
+				model.put("cerfiy", certifyRecordVo.getStatus());
+			}
+			else{
+				model.put("cerfiy", -1);
+			}
+
+		}
+		UserCertificationVo userCertification=new UserCertificationVo();
+		userCertification.setUserId(user.getId());
+		model.put("userCertification",userCertificationService.findAll(userCertification));
+
+
 		return "user_info";
 	}
 	
