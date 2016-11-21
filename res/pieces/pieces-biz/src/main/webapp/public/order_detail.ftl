@@ -37,7 +37,11 @@
                             <span>收货地址：<em>${orderForm.address.area}${orderForm.address.detail}</em></span>
                         </td>
                         <td class="tl nl nr">
+                        <#if user_session_biz?? && user_session_biz.type == 2>
+                            <span>需支付保证金：<em class="price">¥${orderForm.deposit}</em></span>
+                        <#else >
                             <span>商品合计：<em class="price">¥${orderForm.amountsPayable}</em></span>
+                        </#if>
                             <span>运　　费：<em class="price">¥${orderForm.shippingCosts}</em></span>
                         </td>
                         <td class="nl">
@@ -83,8 +87,14 @@
                             <th width="100">产地</th>
                             <th width="90">期望交货日期</th>
                             <th width="90">数量<span>（公斤）</span></th>
+                        <#if user_session_biz?? && user_session_biz.type == 2>
+                            <th width="80">指导价<span>（元/公斤）</span></th>
+                            <th width="80">合同价<span>（元/公斤）</span></th>
+                            <th width="80">合同价小计<span>（元）</span></th>
+                        <#else >
                             <th width="100">单价<span>（元/公斤）</span></th>
                             <th width="130">小计<span>（元）</span></th>
+                        </#if>
                             <th>状态</th>
                         </tr>
                         </thead>
@@ -98,6 +108,9 @@
                             <td>${commodity.originOf}</td>
                             <td><#if commodity.expectDate??>${commodity.expectDate?date}</#if></td>
                             <td>${commodity.amount}</td>
+                            <#if user_session_biz?? && user_session_biz.type == 2>
+                                <td><#if commodity.guidePrice??>¥${commodity.guidePrice}</#if></td>
+                            </#if>
                             <td><#if commodity.price??>¥${commodity.price}</#if></td>
                             <td><#if commodity.subtotal??>¥${commodity.subtotal}</#if></td>
                             <#if commodity_index == 0>

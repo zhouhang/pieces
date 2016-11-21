@@ -1,26 +1,21 @@
 package com.pieces.dao.vo;
 
-import com.pieces.dao.OrderFormDao;
+
 import com.pieces.dao.config.SystemConfig;
 import com.pieces.dao.enums.OrderEnum;
 import com.pieces.dao.event.OrderStatusEvent;
-import com.pieces.dao.group.Boss;
 import com.pieces.dao.model.*;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.SpringUtil;
-import com.pieces.tools.utils.httpclient.common.util.StringUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.validation.annotation.Validated;
-
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.*;
 
 /**
  * Author: koabs
  * 8/15/16.
  */
-public class OrderFormVo extends com.pieces.dao.model.OrderForm {
+public class OrderFormVo extends OrderForm {
 
     private Integer orderId;
 
