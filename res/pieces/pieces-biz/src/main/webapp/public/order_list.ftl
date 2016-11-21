@@ -39,6 +39,9 @@
                             </td>
                             <td class="nl" width="145">
                                 <span class="price">¥${orderForm.amountsPayable}</span>
+                                <#if user_session_biz?? && user_session_biz.type == 2>
+                                <span>保证金:￥${orderForm.deposit}元</span>
+                                </#if>
                                 <span>（包含运费￥${orderForm.shippingCosts}元 ）</span>
                             </td>
                             <td width="140">
