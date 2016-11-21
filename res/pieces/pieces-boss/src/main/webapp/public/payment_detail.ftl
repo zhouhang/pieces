@@ -65,10 +65,6 @@
                     <table>
                         <tbody>
                         <tr>
-                            <td><b>支付金额：<span class="price">&yen;${pay.actualPayment}</span></b></td>
-                            <td>&nbsp;</td>
-                        </tr>
-                        <tr>
                             <td class="space"></td>
                         </tr>
                         <tr>

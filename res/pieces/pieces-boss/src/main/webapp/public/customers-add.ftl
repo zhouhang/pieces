@@ -46,7 +46,7 @@
                                 <i>*</i>客户类型：
                             </div>
                             <div class="cnt cbxs">
-                                <label><input type="radio" class="cbx" name="type" value="1">终端客户</label>
+                                <label><input type="radio" class="cbx" name="type" value="1" checked>终端客户</label>
                                 <label><input type="radio" class="cbx" name="type" value="2" nullmsg="请选择用户类型">代理商</label>
                             </div>
                         </div>
