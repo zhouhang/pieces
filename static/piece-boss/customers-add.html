@@ -101,9 +101,9 @@
                                 <div class="txt">
                                     <i>*</i>客户类型：
                                 </div>
-                                <div class="cnt cbxs">
-                                    <label><input type="radio" class="cbx" name="category">终端客户</label>
-                                    <label><input type="radio" class="cbx" name="category">代理商</label>
+                                <div class="cnt cbxs" id="categorys">
+                                    <label><input type="radio" class="cbx" name="category" value="1">终端客户</label>
+                                    <label><input type="radio" class="cbx" name="category" value="2">代理商</label>
                                 </div>
                             </div>
 
@@ -158,7 +158,7 @@
                         </div>
                     </div>
 
-                    <div class="user-info">
+                    <div class="user-info hide" id="agencyCnt">
                         <h3>绑定代理商</h3>
 
                         <div class="fa-form">
@@ -259,6 +259,14 @@
                 },
                 onSelect: function (suggestion) {
                     // $(this).val(suggestion.data); // 保存品种id到隐藏文本域
+                }
+            })
+
+            $('#categorys').on('click', '.cbx', function() {
+                if (this.value === '2') {
+                    $('#agencyCnt').hide();
+                } else {
+                    $('#agencyCnt').show();
                 }
             })
         })
