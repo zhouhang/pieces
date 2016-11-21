@@ -70,11 +70,9 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 	}
 
 	@Override
-	public PageInfo<PayRecordVo> findByNormalRecord(Integer userId, Integer pageNum, Integer pageSize) {
+	public PageInfo<PayRecordVo> findByNormalRecord(PayRecordVo payRecordVo, Integer pageNum, Integer pageSize) {
 		pageNum = pageNum == null ? 1 : pageNum;
 		pageSize = pageSize == null ? 10 : pageSize;
-		PayRecordVo payRecordVo = new PayRecordVo();
-		payRecordVo.setUserId(userId);
 		List<PayRecordVo>  list = payRecordDao.findByNormalRecord(payRecordVo);
 		PageHelper.startPage(pageNum, pageSize);
 		PageInfo page = new PageInfo(list);

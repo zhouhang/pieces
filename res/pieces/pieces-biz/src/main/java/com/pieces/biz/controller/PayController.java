@@ -147,7 +147,14 @@ public class PayController extends BaseController{
                          Integer pageSize,
                          Integer pageNum){
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-        PageInfo<PayRecordVo> recordPage = payRecordService.findByNormalRecord(user.getId(),pageNum,pageSize);
+        PayRecordVo payRecord=new PayRecordVo();
+        if(user.getType()==1){
+            payRecord.setUserId(user.getId());
+        }
+        else{
+            payRecord.setAgentId(user.getId());
+        }
+        PageInfo<PayRecordVo> recordPage = payRecordService.findByNormalRecord(payRecord,pageNum,pageSize);
         for(PayRecordVo payRecordVo : recordPage.getList()){
             String orderCode =  payRecordVo.getOrderCode();
             OrderForm orderForm = orderFormService.findByOrderCode(orderCode);
@@ -170,9 +177,17 @@ public class PayController extends BaseController{
                           @PathVariable("id")Integer id){
         PayRecordVo payRecordVo =  payRecordService.findVoById(id);
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-        if(!payRecordVo.getUserId().equals(user.getId())){
-            return "redirect:error/404";
+        if(user.getType()==1){
+            if(!payRecordVo.getUserId().equals(user.getId())){
+                return "redirect:error/404";
+            }
         }
+        else{
+            if(!payRecordVo.getAgentId().equals(user.getId())){
+                return "redirect:error/404";
+            }
+        }
+
 
         modelMap.put("payRecordVo",payRecordVo);
         return "pay_detail";
