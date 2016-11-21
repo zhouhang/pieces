@@ -78,6 +78,16 @@
     </dl>
         <dl>
             <dt>
+                <em class="fa fa-setting"></em>
+                <span>物流</span>
+                <i class="fa fa-chevron-right"></i>
+            </dt>
+            <dd>
+                <a href="/center/logistics/agent/list">我的物流</a>
+            </dd>
+        </dl>
+        <dl>
+            <dt>
                 <em class="fa fa-bill"></em>
                 <span>对账单</span>
                 <i class="fa fa-chevron-right"></i>

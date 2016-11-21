@@ -306,7 +306,7 @@ public class OrderController extends BaseController {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		OrderFormVo vo =  orderFormService.findVoById(id);
 		modelMap.put("orderForm", vo);
-		//该订单非用户自己订单
+		//该订单非代理商代理的订单
 		if(!user.getId().equals(vo.getAgentId())){
 			return "redirect:error/404";
 		}
