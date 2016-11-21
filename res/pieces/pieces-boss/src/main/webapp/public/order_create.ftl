@@ -101,14 +101,15 @@
                                 <th width="100">产地</th>
                                 <th width="100">期望交货日期</th>
                                 <th width="90">数量（公斤）</th>
-                                <th width="100">单价（元/公斤）</th>
-                                <th width="120">小计（元）</th>
+                                <th width="90">指导价（元/公斤）</th>
+                                <th width="100">合同价（元/公斤）</th>
+                                <th width="120">合同价小计（元）</th>
                                 <th width="120">操作</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <td colspan="7" class="tl">共 <#if commodityVos??&&commodityVos?has_content>${commodityVos?size}<#else>0</#if> 件商品</td>
+                                <td colspan="8" class="tl">共 <#if commodityVos??&&commodityVos?has_content>${commodityVos?size}<#else>0</#if> 件商品</td>
                                 <td colspan="2" class="tl">总计：<b class="jsum"></b></td>
                             </tr>
                             </tfoot>
@@ -122,6 +123,7 @@
                                         <td><div class="ipt-wrap"><input type="text" value="${commodity.originOf!}" class="ipt" name="originOf"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt" name="expectDate" value="${commodity.expectDate?string("yyyy-MM-dd")}" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt amount" name="amount" value="${commodity.amount!}"><span class="error"></span></div></td>
+                                        <td><div class="pr"><input type="text" class="ipt guidePrice" name="guidePrice" value="${commodity.guidePrice!}"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt price" name="price" value="${commodity.price!}"><span class="error"></span></div></td>
                                         <td class="jtotal"></td>
                                         <td>
@@ -216,7 +218,7 @@
 
             <div class="chart-info">
                 <input type="hidden" id="userId" name="userId" value="${user.id!}">
-
+                <input type="hidden" id="agentId" name="agentId" value="${agentId!}">
                 <input type="hidden" id="orderId" name="orderId" value="<#if order_type=='修改订单'>${origOrderForm.id!}</#if>">
 
                 <h3>订单总额</h3>
@@ -232,6 +234,10 @@
                     <div class="item">
                         <span>实际应付：</span>
                         <em class="price jsum2"><#if origOrderForm??>${origOrderForm.amountsPayable!}</#if></em>
+                    </div>
+                    <div class="item">
+                        <span>需支付保证金：</span>
+                        <em class="price jsum2"><#if origOrderForm??>${origOrderForm.deposit!}</#if></em>
                     </div>
                 </div>
             </div>
@@ -270,6 +276,7 @@
             <td><div class="ipt-wrap"><input type="text" class="ipt" name="originOf"><span class="error"></span></div></td>
             <td><div class="pr"><input type="text" class="ipt" name="expectDate" value="" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
             <td><div class="pr"><input type="text" class="ipt amount" name="amount" value=""><span class="error"></span></div></td>
+            <td><div class="pr"><input type="text" class="ipt guidePrice" name="guidePrice" value=""><span class="error"></span></div></td>
             <td><div class="pr"><input type="text" class="ipt price" name="price" value=""><span class="error"></span></div></td>
             <td class="jtotal"></td>
             <td>
@@ -545,8 +552,11 @@
 
                         var formObj = {};
 
+                        // 代理商id
+                        var agentId = $("#agentId").val();
                         var userId = $("#userId").val();
                         var commodities = _global.fn.formatTableData();
+                        formObj.agentId = agentId;
                         //用户ID
                         formObj.userId=userId;
                         //商品

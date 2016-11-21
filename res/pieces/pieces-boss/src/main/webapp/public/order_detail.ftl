@@ -95,13 +95,14 @@
                                 <th>产地</th>
                                 <th width="100">期望交货日期</th>
                                 <th width="120">数量（公斤）</th>
-                                <th width="120">单价（元/公斤）</th>
-                                <th width="200">小计（元）</th>
+                                <th width="90">指导价（元/公斤）</th>
+                                <th width="100">合同价（元/公斤）</th>
+                                <th width="120">合同价小计（元）</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <td colspan="8">
+                                <td colspan="9">
                                     <div class="summary">
                                         <div class="item">
                                             <span>商品合计：</span>
@@ -114,6 +115,10 @@
                                         <div class="item">
                                             <span>实际应付：</span>
                                             <em class="price">￥${vo.amountsPayable}</em>
+                                        </div>
+                                        <div class="item">
+                                            <span>需支付保证金：</span>
+                                            <em class="price">￥<#if vo??>${vo.deposit!}</#if></em>
                                         </div>
                                     </div>
                                 </td>
@@ -128,6 +133,7 @@
                                 <td>${commoditie.originOf}</td>
                                 <td>${commoditie.expectDate?date}</td>
                                 <td>${commoditie.amount}</td>
+                                <td>${commoditie.guidePrice!}</td>
                                 <td>${commoditie.price}</td>
                                 <td>&yen;${commoditie.subtotal}</td>
                             </tr>

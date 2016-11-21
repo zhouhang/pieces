@@ -24,8 +24,8 @@
 	</resultMap>
 	
 	<resultMap id="Vo" type="com.pieces.dao.vo.UserVo" extends="BaseResultMap">
-		<result column="proxyName"  property="proxyName" />
-		<result column="proxyId"  property="proxyId" />
+		<result column="agentName"  property="agentName" />
+		<result column="agentId"  property="agentId" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
@@ -316,10 +316,10 @@
 	<!-- 条件查询User-->
 	<select id="findProxyUser" parameterType="com.pieces.dao.vo.UserVo" resultMap="Vo">
 		select b.id as id,b.user_name as user_name, b.company_full_name as company_full_name,
-		prox.user_name as proxyName,prox.id as proxyId
+		agent.user_name as agentName,agent.id as agentId
 		from user b
 		LEFT JOIN  user_bind bind ON b.id = bind.terminal_id
-		LEFT JOIN  user prox ON bind.agent_id = prox.id
+		LEFT JOIN  user agent ON bind.agent_id = agent.id
 		<where>
 			<if test="userName != null and userName != ''">
 				 b.user_name like "%"#{userName}"%"
@@ -327,8 +327,8 @@
 			<if test="companyFullName != null and companyFullName != ''">
 				and b.company_full_name LIKE "%"#{bincompanyFullNamedErp}"%"
 			</if>
-			<if test="proxyName != null and proxyName != ''">
-				and prox.user_name like "%"#{proxyName}"%"
+			<if test="agentName != null and agentName != ''">
+				and agent.user_name like "%"#{agentName}"%"
 			</if>
 		</where>
 	</select>

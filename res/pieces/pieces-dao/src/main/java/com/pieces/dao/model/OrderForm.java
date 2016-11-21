@@ -44,6 +44,12 @@ public class OrderForm  implements Serializable {
 	
 	//付款日期
 	private Date paymentDate;
+
+	// 保证金
+	private Double deposit;
+
+	// 代理商id
+	private Integer agentId;
 	
 	public OrderForm(){}
 	
@@ -149,5 +155,21 @@ public class OrderForm  implements Serializable {
 
 	public void setCreateMember(Integer createMember) {
 		this.createMember = createMember;
+	}
+
+	public Double getDeposit() {
+		return deposit;
+	}
+
+	public void setDeposit(Double deposit) {
+		this.deposit = deposit;
+	}
+
+	public Integer getAgentId() {
+		return agentId;
+	}
+
+	public void setAgentId(Integer agentId) {
+		this.agentId = agentId;
 	}
 }

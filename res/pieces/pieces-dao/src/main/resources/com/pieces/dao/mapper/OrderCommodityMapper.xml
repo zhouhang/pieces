@@ -13,26 +13,15 @@
             <result column="subtotal"  property="subtotal" />
             <result column="enquiry_commodity_id"  property="enquiryCommodityId" />
             <result column="order_id"  property="orderId" />
-        
+            <result column="guide_price"  property="guidePrice" />
+
     </resultMap>
 
-    <resultMap id="OrderCommodityResultMapVo" type="com.pieces.dao.vo.OrderCommodityVo">
-            <id column="id"  property="id" />
-            <result column="name"  property="name" />
-            <result column="spec"  property="spec" />
-            <result column="level"  property="level" />
-            <result column="originOf"  property="originOf" />
-            <result column="expectDate"  property="expectDate" />
-            <result column="amount"  property="amount" />
-            <result column="price"  property="price" />
-            <result column="subtotal"  property="subtotal" />
-            <result column="enquiry_commodity_id"  property="enquiryCommodityId" />
-            <result column="order_id"  property="orderId" />
-        
+    <resultMap id="OrderCommodityResultMapVo" type="com.pieces.dao.vo.OrderCommodityVo" extends="OrderCommodityResultMap">
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,spec,level,originOf,expectDate,amount,price,subtotal,enquiry_commodity_id,order_id
+        id,name,spec,level,originOf,expectDate,amount,price,subtotal,enquiry_commodity_id,order_id,guide_price
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="OrderCommodityResultMap">
@@ -77,17 +66,17 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.OrderCommodity">
         insert into
-        order_commodity (name,spec,level,originOf,expectDate,amount,price,subtotal,enquiry_commodity_id,order_id)
+        order_commodity (name,spec,level,originOf,expectDate,amount,price,subtotal,enquiry_commodity_id,order_id,guide_price)
         values
-        (#{name},#{spec},#{level},#{originOf},#{expectDate},#{amount},#{price},#{subtotal},#{enquiryCommodityId},#{orderId})
+        (#{name},#{spec},#{level},#{originOf},#{expectDate},#{amount},#{price},#{subtotal},#{enquiryCommodityId},#{orderId},#{guidePrice})
     </insert>
 
     <insert id="batchCreate" useGeneratedKeys="true"  parameterType="com.pieces.dao.model.OrderCommodity">
         insert into
-        order_commodity (name,spec,level,originOf,expectDate,amount,price,subtotal,enquiry_commodity_id,order_id)
+        order_commodity (name,spec,level,originOf,expectDate,amount,price,subtotal,enquiry_commodity_id,order_id,guide_price)
         values
         <foreach collection="list" item="item" index="index" separator="," >
-            (#{item.name},#{item.spec},#{item.level},#{item.originOf},#{item.expectDate},#{item.amount},#{item.price},#{item.subtotal},#{item.enquiryCommodityId},#{item.orderId})
+            (#{item.name},#{item.spec},#{item.level},#{item.originOf},#{item.expectDate},#{item.amount},#{item.price},#{item.subtotal},#{item.enquiryCommodityId},#{item.orderId},#{item.guidePrice})
         </foreach>
     </insert>
 
@@ -136,7 +125,9 @@
             <if test="orderId != null">
                 order_id = #{orderId},
             </if>
-                            
+            <if test="guidePrice != null">
+                guide_price = #{guidePrice},
+            </if>
         </set>
         where id = #{id}
     </update>

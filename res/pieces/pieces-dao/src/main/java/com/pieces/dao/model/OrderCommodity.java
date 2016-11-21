@@ -31,6 +31,9 @@ public class OrderCommodity  implements Serializable {
 	@NotNull(groups = {Boss.class})
 	private Double price;
 
+	// 指导价
+	private Double guidePrice;
+
 	private Double subtotal;
 	
 	private Integer enquiryCommodityId;
@@ -126,5 +129,12 @@ public class OrderCommodity  implements Serializable {
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
-	
+
+	public Double getGuidePrice() {
+		return guidePrice;
+	}
+
+	public void setGuidePrice(Double guidePrice) {
+		this.guidePrice = guidePrice;
+	}
 }
