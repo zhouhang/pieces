@@ -20,6 +20,7 @@
                     <div class="extra"></div>
                 </div>
                 <div class="mybill mybill-extra">
+                    <#if user.type==0>
                     <div class="state">
                         <i class="fa fa-prompt"></i>
                         <#if user.certifyStatus=0 >
@@ -35,6 +36,7 @@
                         </#if>
 
                     </div>
+                    </#if>
 
                     <div class="info">
                         <div class="hd">账号资料</div>
