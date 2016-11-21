@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.enums.SessionEnum;
 import com.pieces.dao.model.*;
+import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.dao.vo.PayRecordVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
@@ -53,14 +54,20 @@ public class PayController extends BaseController{
     public String go(ModelMap modelMap,
                      @PathVariable("orderId")Integer orderId){
 
-        OrderForm orderForm = orderFormService.findById(orderId);
+        OrderFormVo orderForm = orderFormService.findVoById(orderId);
         modelMap.put("orderForm",orderForm);
         String token = UUID.randomUUID().toString();
         httpSession.setAttribute(SessionEnum.PAY_TOKEN.getKey(),token);
         modelMap.put("token",token);
         List<PayAccount> payAccountList = payAccountService.findAll();
         modelMap.put("payAccountList",payAccountList);
-        return "payment";
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        if(user.getType()==1){
+            return "payment";
+        }else{
+            return "payment_agent";
+        }
+
     }
 
     /**

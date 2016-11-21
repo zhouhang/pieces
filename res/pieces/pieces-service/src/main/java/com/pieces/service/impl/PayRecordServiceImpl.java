@@ -130,14 +130,17 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		payRecordVo.setOrderCode(orderForm.getCode());
 		payRecordVo.setAmountsPayable(orderForm.getAmountsPayable());
 
+
 		//添加收款账户信息
 		PayAccount payAccount = payAccountService.findById(payRecordVo.getPayAccountId());
 		payRecordVo.setReceiveAccount(payAccount.getReceiveAccount());
 		payRecordVo.setReceiveBank(payAccount.getReceiveBank());
 		payRecordVo.setReceiveBankCard(payAccount.getReceiveBankCard());
 
-		//其他信息
-		payRecordVo.setUserId(userId);
+		//其他信息代理商支付不能用userId
+		if(payRecordVo.getUserId()==null){
+			payRecordVo.setUserId(userId);
+		}
 		payRecordVo.setPaymentTime(new Date());
 		payRecordVo.setStatus(0);
 		payRecordVo.setCreateTime(new Date());

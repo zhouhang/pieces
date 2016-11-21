@@ -20,7 +20,7 @@
                     <div class="extra"></div>
                 </div>
                 <div class="mybill mybill-extra">
-                    <#if user.type==0>
+                    <#if user.type==1>
                     <div class="state">
                         <i class="fa fa-prompt"></i>
                         <#if user.certifyStatus=0 >

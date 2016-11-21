@@ -46,6 +46,8 @@ public class PayRecord  implements Serializable {
 	
 	//付款用户
 	private Integer userId;
+
+	private Integer agentId;
 	
 	//支付时间
 	private Date paymentTime;
@@ -66,7 +68,15 @@ public class PayRecord  implements Serializable {
 	private Date createTime;
 	
 	public PayRecord(){}
-	
+
+	public Integer getAgentId() {
+		return agentId;
+	}
+
+	public void setAgentId(Integer agentId) {
+		this.agentId = agentId;
+	}
+
 	public Integer getId() {
 		return id;
 	}

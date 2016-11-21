@@ -37,6 +37,7 @@ public class PayRecordVo extends PayRecord{
 
     private List<PayDocumentVo> imgs;
 
+
     public String getOrderUserName() {
         return orderUserName;
     }
