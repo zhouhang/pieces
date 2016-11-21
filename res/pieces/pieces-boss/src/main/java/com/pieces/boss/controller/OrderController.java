@@ -139,7 +139,7 @@ public class OrderController extends BaseController{
                                      UserVo userVo){
         pageNum=pageNum==null?1:pageNum;
         pageSize=pageSize==null?10:pageSize;
-        PageInfo<User> customerPage =  userService.findByCondition(userVo,pageNum,pageSize);
+        PageInfo<UserVo> customerPage =  userService.findProxyUser(userVo,pageNum,pageSize);
         model.put("customerParams", Reflection.serialize(userVo));
         model.put("customerPage",customerPage);
         return "order_customers";
@@ -231,7 +231,7 @@ public class OrderController extends BaseController{
         BigDecimal payable = new BigDecimal(orderFormVo.getShippingCosts()).add(sum);
         orderFormVo.setAmountsPayable(payable.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
 
-        //TODO: 计算保证金
+        //TODO: 计算保证金 指导价X 数量加运费
         orderFormVo.setDeposit(payable.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
 
         Member member = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
