@@ -134,6 +134,9 @@
             <if test="isUserSearch == 1">
                 and o.status != 7
             </if>
+            <if test="agentId != null">
+                and o.agent_id = #{agentId}
+            </if>
         </where>
         order by creater_time desc
     </select>

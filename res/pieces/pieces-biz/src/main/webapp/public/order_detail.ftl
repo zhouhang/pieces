@@ -41,8 +41,14 @@
                             <span>运　　费：<em class="price">¥${orderForm.shippingCosts}</em></span>
                         </td>
                         <td class="nl">
-                        <#if (orderForm.status == 1)>
-                            <a href="/center/pay/go/${orderForm.id}" class="btn btn-red">付款</a>
+                        <#if user_session_biz?? && user_session_biz.type == 2>
+                            <#if (orderForm.status == 1)>
+                                <a href="/center/pay/go/${orderForm.id}" class="btn btn-red">支付保证金</a>
+                            </#if>
+                        <#else >
+                            <#if (orderForm.status == 1)>
+                                <a href="/center/pay/go/${orderForm.id}" class="btn btn-red">付款</a>
+                            </#if>
                         </#if>
                         <#if (orderForm.status == 4)>
                             <a href="${orderForm.id}" name="5" class="btn btn-red status">确认收货</a>

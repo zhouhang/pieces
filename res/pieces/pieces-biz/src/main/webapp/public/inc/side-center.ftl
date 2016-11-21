@@ -1,4 +1,5 @@
 <div class="side">
+<#if user_session_biz?? && user_session_biz.type == 1>
     <dl>
         <dt>
             <em  class="fa fa-question-circle"></em>
@@ -63,4 +64,17 @@
             <a href="user/shippingaddress/index">收货地址</a>
         </dd>
     </dl>
+    </#if>
+    <#if user_session_biz?? && user_session_biz.type == 2>
+    <dl>
+        <dt>
+            <em class="fa fa-setting"></em>
+            <span>订单</span>
+            <i class="fa fa-chevron-right"></i>
+        </dt>
+        <dd>
+            <a href="/center/order/agent">我的订单</a>
+        </dd>
+    </dl>
+    </#if>
 </div>

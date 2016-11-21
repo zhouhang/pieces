@@ -99,6 +99,18 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
     public PageInfo<OrderFormVo> findOrderByUserId(Integer userId, Integer pageNum, Integer pageSize) {
         OrderFormVo vo = new OrderFormVo();
         vo.setUserId(userId);
+        return findOrderByVo(vo,pageNum,pageSize);
+    }
+
+
+    @Override
+    public PageInfo<OrderFormVo> findOrderByAgentId(Integer agentId, Integer pageNum, Integer pageSize) {
+        OrderFormVo vo = new OrderFormVo();
+        vo.setAgentId(agentId);
+        return findOrderByVo(vo,pageNum,pageSize);
+    }
+
+    private PageInfo<OrderFormVo> findOrderByVo(OrderFormVo vo, Integer pageNum, Integer pageSize){
         vo.setIsUserSearch(1); // 用来过滤已删除的订单 使其不在前台显示.
         PageInfo<OrderFormVo> page = findByParams(vo,pageNum,pageSize);
         // 根据查询出来的订单查询订单商品信息
@@ -108,9 +120,6 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
         }
         return page;
     }
-
-
-
 
     /**
      *
