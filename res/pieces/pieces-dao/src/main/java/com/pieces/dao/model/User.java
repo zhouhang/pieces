@@ -64,7 +64,7 @@ public class User  implements Serializable {
 	//用户状态： 0：有效 1：删除
 	private Boolean isDel;
 
-	//用户类型 0：终端 1：代理商
+	//用户类型 1：终端 2：代理商
 	private Integer type;
 
 	//0未认证,1认证通过
