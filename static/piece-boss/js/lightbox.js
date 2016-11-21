@@ -1,14 +1,6 @@
-(function(root, factory) {
-	if (typeof define === 'function' && define.amd) {
-		define(['jquery'], factory)
-	} else if (typeof exports === 'object') {
-		module.exports = factory(require('jquery'))
-	} else {
-		root.lightbox = factory(root.jQuery)
-	}
-}(this, function($) {
+!(function($, window) {	
 	var defaults = {
-		selector: '.thumb img',
+		selector: '.thumb',
 		albumLabel: '<span>%1 / %2</span>',
 		fadeDuration: 300,
 		resizeDuration: 100
@@ -39,8 +31,8 @@
 					}, self.options.resizeDuration);
 				}
 			};
-			$window.on('resize', winResize);
-			return self;
+			$window.on('resize.lightbox', winResize);
+			return this;
 		},
 		getSize: function() {
 			this.windowWidth = $(window).width();
@@ -49,15 +41,15 @@
 		},
 		enable: function() {
 			var self = this;
-			$body.on('click', self.options.selector, function() {
+			$(self.options.selector).on('click', 'img', function() {
 				self.start($(this));
 				return false;
 			})
-			return self;
+			return this;
 		},
 		build: function() {
 			var self = this;
-			$('<div id="lightboxOverlay"class="lightboxOverlay"></div><div id="lightbox"class="lightbox"><div class="lb-nav"></div><div class="lb-thumb"><img class="lb-image" src="/static/images/blank.gif"/><span class="lb-prev"></span><span class="lb-next"></span></div><div class="lb-loader"></div><div class="lb-close" title="关闭"></div></div>').appendTo($('body'));
+			$('<div id="lightboxOverlay" class="lightboxOverlay"></div><div id="lightbox" class="lightbox"><div class="lb-nav"></div><div class="lb-thumb"><img class="lb-image" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw=="/><span class="lb-prev"></span><span class="lb-next"></span></div><div class="lb-loader"></div><div class="lb-close" title="关闭"></div></div>').appendTo($('body'));
 			this.$lightbox = $('#lightbox');
 			this.$overlay = $('#lightboxOverlay');
 			self.$image = this.$lightbox.find('.lb-image');
@@ -87,13 +79,14 @@
 				}
 				return false
 			});
+			return this;
 		},
 		start: function($img) {
 			var self = this;
 			self.album = [];
 			$img.parent().find('img').each(function() {
 				self.album.push({
-					url: $(this).data('src'),
+					url: $(this).data('src') || this.src,
 					preloader: false
 				});
 		    });	
@@ -130,14 +123,14 @@
 					}
 				}
 
-				imageWidth = Math.max(290, imageWidth);
-				imageHeight = Math.max(290, imageHeight);
+				imageWidth = Math.max(300, imageWidth);
+				imageHeight = Math.max(300, imageHeight);
 
 				self.$lightbox.animate({
 					width: imageWidth,
 					height: imageHeight,
-					marginLeft: -(imageWidth + 8)/2,
-					marginTop: -(imageHeight + 8)/2
+					marginLeft: -(imageWidth)/2,
+					marginTop: -(imageHeight)/2
 				}, self.options.fadeDuration, 'swing', function() {
 					self.$image.attr({
 						'src': self.album[current].url,
@@ -148,21 +141,6 @@
 					self.$loader.stop(true).hide();
 				});
 			};
-			img.onerror = function() {
-				this.onerror = null;
-				this.onload = null;
-				var imageWidth = 290;
-				var imageHeight = 290;
-				self.$lightbox.animate({
-					width: imageWidth,
-					height: imageHeight,
-					marginLeft: -(imageWidth + 8)/2,
-					marginTop: -(imageHeight + 8)/2
-				}, self.options.fadeDuration, 'swing', function() {
-					self.$image.fadeIn();
-					self.$loader.stop(true).hide();
-				});
-			}
 			img.src = self.album[current].url;
 			self.currentImageIndex = current;
 			self.preloadNeighboringImages();
@@ -191,5 +169,7 @@
 			this.$overlay.fadeOut(this.options.fadeDuration);
 		}
 	}
-	return new Lightbox()
-}));
+	$(function() {
+		new Lightbox();
+	})
+})(jQuery, window);
