@@ -16,6 +16,7 @@ import com.pieces.dao.vo.UserCertificationVo;
 import com.pieces.dao.vo.UserQualificationVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.CertifyRecordService;
+import com.pieces.service.UserCertificationService;
 import com.pieces.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,9 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 
 	@Autowired
 	private UserCertificationDao userCertificationDao;
+
+	@Autowired
+	private UserCertificationService userCertificationService;
 
 	@Autowired
 	private UserQualificationDao userQualificationDao;
@@ -75,6 +79,12 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 		certifyRecordDao.update(certifyRecordVo);
 		User user=userService.findById(certifyRecordVo.getUserId());
 		user.setCertifyStatus(CertifyStatusEnum.CERTIFY_SUCESS.getValue());
+		UserCertificationVo userCertificationVo=new UserCertificationVo();
+		userCertificationVo.setRecordId(certifyRecordVo.getId());
+		UserCertificationVo userCertificationVo1=userCertificationService.findAll(userCertificationVo);
+		if(userCertificationVo1!=null){
+			user.setCompanyFullName(userCertificationVo1.getCompany());
+		}
 		userService.update(user);
 		UserQualificationVo userQualification=new UserQualificationVo();
 		userQualification.setRecordId(certifyRecordVo.getId());
