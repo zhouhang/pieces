@@ -142,6 +142,7 @@
                                         <td><div class="ipt-wrap"><input type="text"  class="ipt" name="originOf"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt" name="expectDate"  onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt amount" name="amount" ><span class="error"></span></div></td>
+                                        <td><div class="pr"><input type="text" class="ipt guidePrice" name="guidePrice"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt price" name="price" ><span class="error"></span></div></td>
                                         <td class="jtotal"></td>
                                         <td>
