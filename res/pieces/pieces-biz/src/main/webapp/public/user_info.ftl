@@ -23,7 +23,7 @@
                     <#if user.type==1>
                     <div class="state">
                         <i class="fa fa-prompt"></i>
-                        <#if user.certifyStatus=0 >
+                        <#if user.certifyStatus==0 >
                         <#if cerfiy==0>
                             <span>您的公司信息正在审核中，通过审核后方可进行询价、下单等操作，如需帮助请拨打(86)400-8830-393</span>
                         <#elseif cerfiy==2>
@@ -31,7 +31,7 @@
                         <#elseif cerfiy==-1>
                             <span>您的公司信息尚未提交审核，通过审核后方可进行询价、下单等操作<a class="btn btn-red" href="/center/certificate/stepOne">提交资格审核</a></span>
                         </#if>
-                            <#else>
+                        <#else>
                                 <span>您的公司信息审核通过</span>
                         </#if>
 
@@ -44,7 +44,7 @@
                             <table>
                                 <tr>
                                     <td><em>用户名：</em>${user.contactName!'' }
-                                        <#if user.certifyStatus=1>
+                                        <#if user.certifyStatus==1>
                                         <strong class="ok"><i class="fa fa-check-circle"></i>已通过企业资质审核</strong>
                                         </#if>
                                     </td>
@@ -90,25 +90,6 @@
                 </div>
             </div>
 
-            <div class="txtinfo">
-                <h3>企业资料</h3>
-                <div class="item">
-                    <label>企业名称：</label>
-                    <span>武汉市同济医院</span>
-                </div>
-                <div class="item">
-                    <label>企业类型：</label>
-                    <span>公立医院</span>
-                </div>
-                <div class="item">
-                    <label>联系人姓名：</label>
-                    <span>*欢</span>
-                </div>
-                <div class="item">
-                    <label>手机号：</label>
-                    <span>*******5487</span>
-                </div>
-            </div>
         </div>
     </div><!-- member-box end --><!-- member-box end -->
 

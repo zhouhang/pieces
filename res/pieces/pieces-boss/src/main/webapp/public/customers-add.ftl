@@ -96,7 +96,7 @@
 
                         <div class="group">
                             <div class="cnt-extra">
-                                <label><input class="cbx" name="random" id="mobileCode" type="checkbox">或发送随机密码</label>
+                                <label><input class="cbx" name="random" id="random" type="checkbox">或发送随机密码</label>
                             </div>
                         </div>
                     </div>

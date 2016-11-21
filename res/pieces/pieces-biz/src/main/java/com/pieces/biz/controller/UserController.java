@@ -382,8 +382,9 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/info")
 	public String userInfo(ModelMap model, HttpServletRequest request) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+		//user=userService.findById(user.getId());
 		model.put("user", user);
-		if(user.getCertifyStatus()== CertifyStatusEnum.NOT_CERTIFY.getValue()){
+		if(user.getCertifyStatus()==(CertifyStatusEnum.NOT_CERTIFY.getValue())){
 			CertifyRecordVo certifyRecordVo=certifyRecordService.getLatest(user.getId());
 			if(certifyRecordVo!=null){
 				model.put("cerfiy", certifyRecordVo.getStatus());

@@ -138,7 +138,7 @@
         select
         <include refid="Base_Column_List" />
         from certify_record
-        where user_id=#{userId} ORDER by createTime desc limit 1
+        where user_id=#{userId} ORDER by create_time desc limit 1
     </select>
 
 

@@ -182,7 +182,7 @@
 										var status = data.status; 
 										var info = "验证码错误，请重新输入";
 										if(status == "y"){
-											window.location = "/user/regsuccess?userName="+ $('#username').val() + "&password="+ $('#pwd').val();
+											window.location = "/user/regsuccess";
 										}else{
 											myfromValid.showMsg("#mobileCode", {
 											    type: "error",
