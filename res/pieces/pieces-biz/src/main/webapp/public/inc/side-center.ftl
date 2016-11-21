@@ -88,6 +88,16 @@
         </dl>
         <dl>
             <dt>
+                <em class="fa fa-bill"></em>
+                <span>对账单</span>
+                <i class="fa fa-chevron-right"></i>
+            </dt>
+            <dd>
+                <a href="/center/pay/record">支付记录</a>
+            </dd>
+        </dl>
+        <dl>
+            <dt>
                 <em class="fa fa-setting"></em>
                 <span>设置</span>
                 <i class="fa fa-chevron-right"></i>

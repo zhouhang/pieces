@@ -101,6 +101,9 @@
            <if test="userId != null">
            and  pr.user_id = #{userId}
            </if>
+            <if test="agentId != null">
+                and  pr.agent_id = #{agentId}
+            </if>
         </where>
         ORDER BY pr.create_time DESC
     </select>
