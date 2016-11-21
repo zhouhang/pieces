@@ -129,5 +129,9 @@
             <if test="shipDateStr != null">
                 and DATE_FORMAT(l.ship_date, '%Y-%m-%d') = DATE_FORMAT(#{shipDateStr},'%Y-%m-%d')
             </if>
+            <if test="agentId != null">
+                and o.agent_id = #{agentId}
+            </if>
+
     </select>
 </mapper>

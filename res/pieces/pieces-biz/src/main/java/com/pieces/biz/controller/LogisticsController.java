@@ -57,8 +57,6 @@ public class LogisticsController extends BaseController {
     @RequestMapping(value = "/logistics/list", method = RequestMethod.GET)
     @BizLog(type = LogConstant.logistics, desc = "物流列表")
     public String list(Integer pageNum, Integer pageSize, ModelMap modelMap) {
-		pageNum = pageNum == null ? 1 : pageNum;
-		pageSize = pageSize == null ? 10 : pageSize;
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         LogisticalVo logisticalVo = new LogisticalVo();
         logisticalVo.setUserId(user.getId());
@@ -109,4 +107,21 @@ public class LogisticsController extends BaseController {
     	}
     }
 
+
+    /***-代理商物流-***/
+
+    /**
+     * 代理商物流页面
+     * @return
+     */
+    @RequestMapping(value = "/logistics/agent/list", method = RequestMethod.GET)
+    @BizLog(type = LogConstant.logistics, desc = "代理商物流列表")
+    public String agentList(Integer pageNum, Integer pageSize, ModelMap modelMap) {
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        LogisticalVo logisticalVo = new LogisticalVo();
+        logisticalVo.setAgentId(user.getId());
+        PageInfo<LogisticalVo> pageInfo = logisticalService.findByUser(logisticalVo, pageNum, pageSize);
+        modelMap.put("pageInfo", pageInfo);
+        return "user_logistics";
+    }
 }

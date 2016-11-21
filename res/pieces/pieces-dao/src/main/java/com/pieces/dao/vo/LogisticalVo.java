@@ -5,6 +5,10 @@ import com.pieces.dao.model.Logistical;
 public class LogisticalVo extends Logistical{
 	//用户id
 	private Integer userId;
+
+	// 代理商id
+	private Integer agentId;
+
 	//运单号
 	private String lCode;
 	//订单号
@@ -43,6 +47,12 @@ public class LogisticalVo extends Logistical{
 	public void setShipDateStr(String shipDateStr) {
 		this.shipDateStr = shipDateStr;
 	}
-	
-	
+
+	public Integer getAgentId() {
+		return agentId;
+	}
+
+	public void setAgentId(Integer agentId) {
+		this.agentId = agentId;
+	}
 }
