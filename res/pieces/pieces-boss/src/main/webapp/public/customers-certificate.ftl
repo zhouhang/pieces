@@ -17,7 +17,9 @@
                     <dd>
                         <a href="/user/info/${user.id}">客户界面</a>
                         <a href="/user/edit/${user.id}">账户信息</a>
+                        <#if user.type==1>
                         <a class="curr" href="/user/certify/${user.id}">企业资质</a>
+                        </#if>
                     </dd>
                 </dl>
             </div>

@@ -23,7 +23,9 @@
                     <dd>
                         <a href="/user/info/${user.id}">客户界面</a>
                         <a class="curr" href="/user/edit/${user.id}">账户信息</a>
+                        <#if user.type==1>
                         <a  href="/user/certify/${user.id}">企业资质</a>
+                        </#if>
                     </dd>
                 </dl>
             </div>
@@ -101,6 +103,7 @@
                             </div>
                         </div>
                     </div>
+                    <#if user.type==1>
                     <div class="user-info">
                         <h3>绑定代理商</h3>
 
@@ -110,11 +113,13 @@
                                     代理商ID：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="${userBind.agentId?default('')}" autocomplete="off" name="agentId" id="agentId" placeholder="">
+                                    <input type="text" class="ipt" value="${userBind.agentName}" autocomplete="off" name="" id="agencyName" placeholder="">
                                 </div>
+                                <input type="hidden" class="ipt" value="${userBind.agentId?default('')}" autocomplete="off" name="agentId" id="agentId" placeholder="">
                             </div>
                         </div>
                     </div>
+                    </#if>
                 </form>
             </div>
         </div>
@@ -127,6 +132,7 @@
     <!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.autocomplete.min.js"></script>
     <script src="js/validform.min.js"></script>
 
 
@@ -186,6 +192,33 @@
             $mobileCode.on('click', _setPwd);
             _setPwd();
 
+        })
+        // 代理商姓名联想
+        var $agencyName = $('#agencyName');
+        $agencyName.autocomplete({
+            serviceUrl: '/user/search',
+            paramName: 'name',
+            deferRequestBy: 100,
+            type: 'POST',
+            showNoSuggestionNotice: true,
+            noSuggestionNotice: '没有该代理商',
+            transformResult: function (response) {
+                response = JSON.parse(response);
+                if (response.status == "y") {
+                    return {
+                        suggestions: $.map(response.data.list, function (dataItem) {
+                            return {value: dataItem.contactName, data: dataItem.id};
+                        })
+                    };
+                } else {
+                    return {
+                        suggestions: []
+                    }
+                }
+            },
+            onSelect: function (suggestion) {
+                $("#agentId").val(suggestion.data); // 保存品种id到隐藏文本域
+            }
         })
 
     })

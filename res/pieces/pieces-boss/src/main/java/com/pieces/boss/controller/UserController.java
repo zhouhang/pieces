@@ -219,7 +219,7 @@ public class UserController extends  BaseController{
 			}
 
 			userService.updateUser(user);
-			if(agentId!=null&&user.getType()==1){
+			if(agentId!=null&&oldUser.getType()==1){
 				UserBind userBind=new UserBind();
 				userBind.setAgentId(agentId);
 				userBind.setTerminalId(user.getId());
@@ -279,13 +279,33 @@ public class UserController extends  BaseController{
 		User user =	userService.findById(id);
 		//Area area =  areaService.findParentsById(user.getAreaId());
 		model.put("user",user);
-		UserBindVo userBindVo=new UserBindVo();
-		userBindVo.setTerminalId(id);
-		UserBind userBind=userBindService.getByVo(userBindVo);
-		//model.put("userArea",area);
-		model.put("userBind",userBind);
+		if(user.getType()==1){
+			UserBindVo userBindVo=new UserBindVo();
+			userBindVo.setTerminalId(id);
+			UserBindVo userBind=userBindService.getByVo(userBindVo);
+			User bindUser=userService.findById(userBind.getAgentId());
+			if(bindUser!=null) {
+				userBind.setAgentName(bindUser.getContactName());
+			}
+			model.put("userBind",userBind);
+		}
+
+
 		return "customers-account";
 	}
+
+	@RequestMapping(value = "/search" ,method= RequestMethod.POST)
+	@ResponseBody
+	public Result searchUser(String name,
+					   ModelMap model){
+
+        UserVo userVo=new UserVo();
+		userVo.setContactName(name);
+		userVo.setType(2);
+		PageInfo<User> userPage = userService.findByCondition(userVo,1,10);
+		return new Result(true).data(userPage);
+	}
+
 
 
 

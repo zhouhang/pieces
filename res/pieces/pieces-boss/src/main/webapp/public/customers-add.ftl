@@ -33,7 +33,7 @@
                     <h3><i class="fa fa-people"></i>新客户</h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                        <button type="button" class="btn btn-gray">保存</button>
+                        <!--<button type="button" class="btn btn-gray">保存</button>-->
                         <button type="submit" class="btn btn-red">保存并继续</button>
                     </div>
                 </div>
@@ -45,9 +45,9 @@
                             <div class="txt">
                                 <i>*</i>客户类型：
                             </div>
-                            <div class="cnt cbxs">
+                            <div class="cnt cbxs" id="categorys">
                                 <label><input type="radio" class="cbx" name="type" value="1" checked>终端客户</label>
-                                <label><input type="radio" class="cbx" name="type" value="2" nullmsg="请选择用户类型">代理商</label>
+                                <label><input type="radio" class="cbx" name="type" value="2" >代理商</label>
                             </div>
                         </div>
 
@@ -102,7 +102,7 @@
                     </div>
                 </div>
 
-                <div class="user-info">
+                <div class="user-info" id="agencyCnt">
                     <h3>绑定代理商</h3>
 
                     <div class="fa-form">
@@ -111,8 +111,9 @@
                                 代理商ID：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="" autocomplete="off" name="agentId" id="agentId" placeholder="">
+                                <input type="text" class="ipt" value="" autocomplete="off" name="" id="agencyName" placeholder="">
                             </div>
+                            <input type="hidden" class="ipt" value="" autocomplete="off" name="agentId" id="agentId" placeholder="">
                         </div>
                     </div>
                 </div>
@@ -126,6 +127,7 @@
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
     <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.autocomplete.min.js"></script>
     <script src="js/validform.min.js"></script>
 
 <script>
@@ -186,6 +188,40 @@
         }
         $mobileCode.on('click', _setPwd);
         _setPwd();
+        $('#categorys').on('click', '.cbx', function() {
+            if (this.value === '2') {
+                $('#agencyCnt').hide();
+            } else {
+                $('#agencyCnt').show();
+            }
+        })
+        // 代理商姓名联想
+        var $agencyName = $('#agencyName');
+        $agencyName.autocomplete({
+            serviceUrl: '/user/search',
+            paramName: 'name',
+            deferRequestBy: 100,
+            type: 'POST',
+            showNoSuggestionNotice: true,
+            noSuggestionNotice: '没有该代理商',
+            transformResult: function (response) {
+                response = JSON.parse(response);
+                if (response.status == "y") {
+                    return {
+                        suggestions: $.map(response.data.list, function (dataItem) {
+                            return {value: dataItem.contactName, data: dataItem.id};
+                        })
+                    };
+                } else {
+                    return {
+                        suggestions: []
+                    }
+                }
+            },
+            onSelect: function (suggestion) {
+                $("#agentId").val(suggestion.data); // 保存品种id到隐藏文本域
+            }
+        })
     })
 </script>
 </body>
