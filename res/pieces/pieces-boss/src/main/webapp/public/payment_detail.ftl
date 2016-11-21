@@ -93,11 +93,6 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><em>开&nbsp; 户&nbsp; 行：</em>${pay.payBank}</td>
-                            <td><em>开户人：</em>${pay.payAccount}</td>
-                        </tr>
-                        <tr>
-                            <td><em>收款账号：</em>${pay.payBankCard}</td>
                             <td rowspan="2">
                                 <div class="img">
                                     <em>支付凭证：</em>
