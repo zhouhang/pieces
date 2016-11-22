@@ -64,11 +64,11 @@
                 and follow_name like  '%${followName}%'
             </if>
             <if test="startTime != null">
-                and creater_time <![CDATA[ >= ]]> #{startTime}
+                and create_time <![CDATA[ >= ]]> #{startTime}
             </if>
 
             <if test="endTime != null">
-                and creater_time <![CDATA[ <= ]]> #{endTime}
+                and create_time <![CDATA[ <= ]]> #{endTime}
             </if>
             <if test="startFollowTime != null">
                 and follow_time <![CDATA[ >= ]]> #{startFollowTime}

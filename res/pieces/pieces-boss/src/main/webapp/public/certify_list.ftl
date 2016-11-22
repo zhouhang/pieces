@@ -49,7 +49,7 @@
                         </select>
                     </td>
                     <td><input type="text" class="ipt date" value="<#if certifyRecordVo.startTime?exists>${certifyRecordVo.startTime?datetime}</#if>" name="startTime" id="start"> - <input type="text" class="ipt date" value="<#if certifyRecordVo.endTime?exists>${certifyRecordVo.endTime?datetime}</#if>" name="endTime"  id="end"></td>
-                    <td><input type="text" class="ipt date" value="<#if certifyRecordVo.startFollowTime?exists>${vo.startFollowTime?datetime}</#if>"  name="startFollowTime"  id="start2"> - <input type="text" class="ipt date" value="<#if certifyRecordVo.endFollowTime?exists>${vo.endFollowTime?datetime}</#if>" name="endFollowTime" id="end2"></td>
+                    <td><input type="text" class="ipt date" value="<#if certifyRecordVo.startFollowTime?exists>${certifyRecordVo.startFollowTime?datetime}</#if>"  name="startFollowTime"  id="start2"> - <input type="text" class="ipt date" value="<#if certifyRecordVo.endFollowTime?exists>${certifyRecordVo.endFollowTime?datetime}</#if>" name="endFollowTime" id="end2"></td>
                     <td></td>
                 </tr>
                 </thead>
@@ -92,7 +92,7 @@
                 init: function () {
                     page.fn.dateInit();
                     page.fn.filter();
-                    $("#status").val(${vo.status});
+                    $("#status").val(${certifyRecordVo.status});
                 },
 
                 filter: function() {
@@ -116,6 +116,7 @@
                 dateInit: function () {
                     var start = {
                         elem: '#start',
+                        format: 'YYYY/MM/DD',
                         choose: function(datas){
                             end.min = datas;
                             end.start = datas;
@@ -124,6 +125,7 @@
                     };
                     var end = {
                         elem: '#end',
+                        format: 'YYYY/MM/DD',
                         choose: function(datas){
                             start.max = datas;
                             $('#end').attr('title', datas);
@@ -134,6 +136,7 @@
 
                     var start2 = {
                         elem: '#start2',
+                        format: 'YYYY/MM/DD',
                         choose: function(datas){
                             end2.min = datas;
                             end2.start = datas;
@@ -142,6 +145,7 @@
                     };
                     var end2 = {
                         elem: '#end2',
+                        format: 'YYYY/MM/DD',
                         choose: function(datas){
                             start2.max = datas;
                             $('#end2').attr('title', datas);
