@@ -73,6 +73,8 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 		}
 	}
 
+
+
 	@Override
 	@Transactional
 	public void passCertify(CertifyRecordVo certifyRecordVo) {
@@ -85,6 +87,7 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 		if(userCertificationVo1!=null){
 			user.setCompanyFullName(userCertificationVo1.getCompany());
 		}
+		user.setCertifyTime(new Date());
 		userService.update(user);
 		UserQualificationVo userQualification=new UserQualificationVo();
 		userQualification.setRecordId(certifyRecordVo.getId());
@@ -102,6 +105,37 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 	@Override
 	public CertifyRecordVo getLatest(Integer userId) {
 		return certifyRecordDao.getLatest(userId);
+	}
+
+	@Override
+	@Transactional
+	public void saveCertify(UserCertificationVo certificationVo, List<UserQualificationVo> userQualificationVos) {
+		Date now=new Date();
+		certificationVo.setCreateTime(now);
+		certificationVo.setUpdateTime(now);
+		if(certificationVo.getId()==null){
+			userCertificationDao.create(certificationVo);
+		}
+		else{
+			userCertificationDao.update(certificationVo);
+		}
+
+		for(UserQualificationVo userQualificationVo:userQualificationVos){
+			userQualificationVo.setPictureUrl(FileUtil.getAbsolutePath(userQualificationVo.getPictureUrl()));
+			userQualificationVo.setCreateTime(now);
+			userQualificationVo.setUpdateTime(now);
+			if(userQualificationVo.getId()==null){
+				userQualificationDao.create(userQualificationVo);
+			}
+			else{
+				userQualificationDao.update(userQualificationVo);
+			}
+		}
+		User user=userService.findById(certificationVo.getUserId());
+		user.setCertifyStatus(CertifyStatusEnum.CERTIFY_SUCESS.getValue());
+		user.setCompanyFullName(certificationVo.getCompany());
+		user.setCertifyTime(new Date());
+		userService.update(user);
 	}
 
 

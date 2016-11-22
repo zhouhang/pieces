@@ -18,5 +18,7 @@ public interface CertifyRecordService extends ICommonService<CertifyRecord>{
 
     public CertifyRecordVo getLatest(Integer userId);
 
+    public void saveCertify(UserCertificationVo certificationVo,List<UserQualificationVo> userQualificationVos);
+
 
 }

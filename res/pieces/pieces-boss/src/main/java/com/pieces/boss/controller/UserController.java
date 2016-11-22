@@ -3,6 +3,7 @@ package com.pieces.boss.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +15,7 @@ import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.enums.CertifyStatusEnum;
 import com.pieces.dao.model.Member;
 import com.pieces.dao.model.UserBind;
-import com.pieces.dao.vo.UserBindVo;
-import com.pieces.dao.vo.UserCertificationVo;
-import com.pieces.dao.vo.UserQualificationVo;
-import com.pieces.dao.vo.UserVo;
+import com.pieces.dao.vo.*;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.dto.Password;
@@ -67,6 +65,9 @@ public class UserController extends  BaseController{
 
 	@Autowired
 	private MemberService memberService;
+
+	@Autowired
+	private CertifyRecordService certifyRecordService;
 	/**
 	 * 会员查询页面
 	 * @param request
@@ -283,10 +284,14 @@ public class UserController extends  BaseController{
 			UserBindVo userBindVo=new UserBindVo();
 			userBindVo.setTerminalId(id);
 			UserBindVo userBind=userBindService.getByVo(userBindVo);
-			User bindUser=userService.findById(userBind.getAgentId());
-			if(bindUser!=null) {
-				userBind.setAgentName(bindUser.getContactName());
+			if(userBind!=null){
+				User bindUser=userService.findById(userBind.getAgentId());
+				if(bindUser!=null) {
+					userBind.setAgentName(bindUser.getContactName());
+				}
 			}
+
+
 			model.put("userBind",userBind);
 		}
 
@@ -305,6 +310,18 @@ public class UserController extends  BaseController{
 		PageInfo<User> userPage = userService.findByCondition(userVo,1,10);
 		return new Result(true).data(userPage);
 	}
+
+
+	@RequestMapping(value = "/certify/save" ,method= RequestMethod.POST)
+	@ResponseBody
+	public Result saveCertify(@RequestBody CertifyParamVo certifyParamVo,
+							  ModelMap model){
+
+        certifyRecordService.saveCertify(certifyParamVo.getUserCertificationVo(),certifyParamVo.getUserQualificationVos());
+		return new Result(true).data("保存成功");
+	}
+
+
 
 
 
