@@ -238,7 +238,7 @@
                     </div>
                     <div class="item">
                         <span>需支付保证金：</span>
-                        <em class="price jsum2"><#if origOrderForm??>${origOrderForm.deposit!}</#if></em>
+                        <em class="price jsum3"><#if origOrderForm??>${origOrderForm.deposit!}</#if></em>
                     </div>
                 </div>
             </div>
@@ -454,22 +454,32 @@
             calcPrice: function($tbody, $tr) {
                 var freightPrice = parseFloat($('#jfreightPrice').val());
                 var subTotal = 0;
+                //保证金
+                var subDeposit = 0;
+
                 if (isNaN(freightPrice)) {
                     freightPrice = 0;
                 }
                 $tbody.find('tr').each(function(i) {
                     var amount = parseInt($(this).find('.amount').val(), 10);
                     var price = parseFloat($(this).find('.price').val(), 10);
+                    var deposit = parseFloat($(this).find('.guidePrice').val());
                     var total = parseFloat((amount * price).toFixed(2));
-                    if(!isNaN(total)){
+                    var depositTotal = parseFloat((amount * deposit).toFixed(2));
+                    if (!isNaN(total)) {
                         $(this).find('.jtotal').text(total)
                     }
                     subTotal += isNaN(total) ? 0 : total;
+                    subDeposit += isNaN(depositTotal) ? 0 : depositTotal;
                 });
                 $('.jsum').html(subTotal === 0 ? '' : '&yen; ' + subTotal.toFixed(2));
 
                 subTotal += freightPrice;
                 $('.jsum2').html(subTotal === 0 ? '' : '&yen; ' + subTotal.toFixed(2));
+
+                // 代理商保证金
+                subDeposit += freightPrice;
+                $('.jsum3').html(subDeposit === 0 ? '' : '&yen; ' + subDeposit.toFixed(2));
             },
             // ajax 查询关键词
             getKeywords: function(keywords) {

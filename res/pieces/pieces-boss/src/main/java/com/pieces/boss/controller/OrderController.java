@@ -234,8 +234,15 @@ public class OrderController extends BaseController{
         orderFormVo.setAmountsPayable(payable.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
 
         if (orderFormVo.getAgentId() != null) {
-            //TODO: 计算保证金 指导价X 数量加运费
-            orderFormVo.setDeposit(payable.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
+            //计算保证金 指导价X 数量加运费
+            BigDecimal sumD = new BigDecimal(0);
+            for(OrderCommodity commodity : commodities ){
+                BigDecimal total= new BigDecimal(commodity.getAmount()).multiply(new BigDecimal(commodity.getGuidePrice()));
+                sumD = sumD.add(total);
+            }
+            //保证金总额
+            BigDecimal deposit = new BigDecimal(orderFormVo.getShippingCosts()).add(sumD);
+            orderFormVo.setDeposit(deposit.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue());
         }
         Member member = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         orderFormVo.setCreateMember(member.getId());
