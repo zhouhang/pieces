@@ -111,9 +111,9 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 	@Transactional
 	public void saveCertify(UserCertificationVo certificationVo, List<UserQualificationVo> userQualificationVos) {
 		Date now=new Date();
-		certificationVo.setCreateTime(now);
 		certificationVo.setUpdateTime(now);
 		if(certificationVo.getId()==null){
+			certificationVo.setCreateTime(now);
 			userCertificationDao.create(certificationVo);
 		}
 		else{
@@ -125,6 +125,7 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 			userQualificationVo.setCreateTime(now);
 			userQualificationVo.setUpdateTime(now);
 			if(userQualificationVo.getId()==null){
+				certificationVo.setCreateTime(now);
 				userQualificationDao.create(userQualificationVo);
 			}
 			else{
