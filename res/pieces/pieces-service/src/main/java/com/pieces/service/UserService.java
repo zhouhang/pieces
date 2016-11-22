@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.UserVo;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 
 /**
  * 前台用户service
@@ -46,4 +48,6 @@ public interface UserService extends ICommonService<User>{
      * @return
      */
 	PageInfo<UserVo> findProxyUser(UserVo userVo, Integer pageNum, Integer pageSize);
+
+	public void login(Subject subject, UsernamePasswordToken token);
 }

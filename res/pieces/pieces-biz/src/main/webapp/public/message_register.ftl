@@ -31,7 +31,7 @@
                 <p>通过企业资质认证后您将得到更精准的报价，以及更方便的订购服务。</p>
             </div>
             <div class="ft">
-                <a class="btn btn-red" href="#">立即认证</a>
+                <a class="btn btn-red" href="/center/certificate/stepOne">立即认证</a>
             </div>
                  <a  href="/">返回首页</a>
         </div>

@@ -5,7 +5,11 @@ import java.util.List;
 
 import com.github.pagehelper.PageHelper;
 import com.pieces.dao.enums.CertifyStatusEnum;
+import com.pieces.service.enums.RedisEnum;
 import org.apache.commons.lang.StringUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -128,6 +132,21 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         List<UserVo> list = userDao.findProxyUser(userVo);
         PageInfo page = new PageInfo(list);
         return page;
+    }
+
+    @Override
+    public void login(Subject subject, UsernamePasswordToken token) {
+        try{
+            subject.login(token);
+        }catch(Exception e){
+            e.printStackTrace();
+            throw new RuntimeException("登入失败!");
+        }
+        User user = findByUserName(token.getUsername());
+        user.setPassword(null);
+        user.setSalt(null);
+        Session s = subject.getSession();
+        s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), user);
     }
 
     @Override

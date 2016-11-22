@@ -108,6 +108,7 @@ public class UserController extends BaseController {
 		
 		//后台验证
 		StringBuffer message = new StringBuffer();
+		String passWord=null;
 		Pattern pattern = Pattern.compile("^[a-zA-Z]{1}[a-zA-Z0-9]{5,19}$");
 		Matcher matcher = pattern.matcher(user.getUserName());
 		if(StringUtils.isBlank(user.getUserName()) || !matcher.matches()){
@@ -151,9 +152,16 @@ public class UserController extends BaseController {
 			WebUtil.print(response, result);
 			return;
 		}
+		passWord=user.getPassword();
 		user.setSource(BasicConstants.USER_CREATECHANNEL_BIZ);
 		user.setType(1);
 		userService.addUser(user);
+
+		Subject subject = SecurityUtils.getSubject();
+		BizToken token = new BizToken(user.getUserName(), passWord, false, CommonUtils.getRemoteHost(request), "");
+		userService.login(subject,token);
+
+
 
 		Result result = new Result(true);
 		WebUtil.print(response, result);
@@ -243,7 +251,7 @@ public class UserController extends BaseController {
 		Subject subject = SecurityUtils.getSubject();
 		BizToken token = new BizToken(userName, password, false, CommonUtils.getRemoteHost(request), "");
 		try{
-			subject.login(token);
+			userService.login(subject,token);
 		}catch(Exception e){
 			e.printStackTrace();
 			Result result = new Result(false).info("用户名密码错误");
@@ -254,11 +262,7 @@ public class UserController extends BaseController {
 		if(StringUtils.isBlank(url)){
 			url = WebUtils.getSavedRequest(request) != null ? WebUtils.getSavedRequest(request).getRequestUrl() : "/user/info";
 		}
-		User user = userService.findByUserName(token.getUsername());
-		user.setPassword(null);
-		user.setSalt(null);
-		Session s = subject.getSession();
-		s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), user);
+
 		Result result = new Result(true).info(url);
 		WebUtil.print(response, result);
 	}
@@ -382,7 +386,7 @@ public class UserController extends BaseController {
 	@RequestMapping(value = "/info")
 	public String userInfo(ModelMap model, HttpServletRequest request) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-		//user=userService.findById(user.getId());
+		user=userService.findById(user.getId());//获取最新用户信息
 		model.put("user", user);
 		if(user.getCertifyStatus()==(CertifyStatusEnum.NOT_CERTIFY.getValue())){
 			CertifyRecordVo certifyRecordVo=certifyRecordService.getLatest(user.getId());
