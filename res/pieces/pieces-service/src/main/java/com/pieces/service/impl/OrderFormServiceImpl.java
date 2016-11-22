@@ -9,7 +9,6 @@ import com.pieces.dao.model.*;
 import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
-import com.pieces.tools.utils.SeqNoUtil;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -179,9 +178,13 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
     @Override
     @Transactional
     public Result changeOrderStatus(Integer orderId, Integer status) {
-        com.pieces.dao.model.OrderForm form = new com.pieces.dao.model.OrderForm();
+        OrderForm form = new OrderForm();
         form.setId(orderId);
         form.setStatus(status);
+        if (status == OrderEnum.SHIPPED_FAIL.getValue() ||
+                status == OrderEnum.SHIPPED.getValue()) {
+            form.setDeliveryDate(new Date());
+        }
         orderFormDao.update(form);
         return new Result(true).info("");
     }

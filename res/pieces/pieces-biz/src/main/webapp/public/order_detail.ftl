@@ -37,10 +37,9 @@
                             <span>收货地址：<em>${orderForm.address.area}${orderForm.address.detail}</em></span>
                         </td>
                         <td class="tl nl nr">
+                            <span>订单总额：<em class="price">¥${orderForm.amountsPayable}</em></span>
                         <#if user_session_biz?? && user_session_biz.type == 2>
                             <span>需支付保证金：<em class="price">¥${orderForm.deposit}</em></span>
-                        <#else >
-                            <span>商品合计：<em class="price">¥${orderForm.amountsPayable}</em></span>
                         </#if>
                             <span>运　　费：<em class="price">¥${orderForm.shippingCosts}</em></span>
                         </td>
@@ -57,7 +56,7 @@
                         <#if (orderForm.status == 4)>
                             <a href="${orderForm.id}" name="5" class="btn btn-red status">确认收货</a>
                         </#if>
-                        <#if (orderForm.status &lt;= 2)>
+                        <#if (orderForm.status &lt;= 2 || orderForm.status == 8)>
                             <span><a href="${orderForm.id}" name="6" class="c-blue jremove status">取消订单</a></span>
                         </#if>
                         <#if (orderForm.status == 6)>

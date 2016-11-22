@@ -82,7 +82,7 @@
 
     <!--&lt;!&ndash; 日志级别 &ndash;&gt;-->
     <root>
-        <level value="DEBUG" />
+        <level value="INFO" />
         <appender-ref ref="logout" />
         <appender-ref ref="error" />
         <appender-ref ref="console" />

@@ -146,6 +146,7 @@ public class OrderFormVo extends OrderForm {
 
     public String getStatusText() {
         getOrderValidityPeriod();
+        aotoComplete();
         return OrderEnum.findByValue(getStatus());
     }
 
@@ -183,6 +184,26 @@ public class OrderFormVo extends OrderForm {
         this.isUserSearch = isUserSearch;
     }
 
+    /**
+     * 每次显示是
+     * 发货后15天自动收货完成订单
+     */
+    private void aotoComplete() {
+        if (getDeliveryDate()!= null && getStatus().equals(OrderEnum.SHIPPED.getValue())){
+            Long intervals = Long.valueOf(SystemConfig.deliveryValidityPeriod * 24 * 60 * 60 * 1000L);
+            Long currentTime = new Date().getTime();
+            Long createTime = this.getDeliveryDate().getTime() + intervals;
+            if (createTime <= currentTime) {
+                // 如果发货后 15天 订单设置为自动收货
+                SpringUtil.getApplicationContext().publishEvent(new OrderStatusEvent(getId(), OrderEnum.COMPLETE.getValue()));
+            }
+        }
+    }
+
+    /**
+     * 订单支付有效期
+     * @return
+     */
     public String getOrderValidityPeriod() {
         if (this.getCreaterTime() != null) {
             if (this.getStatus().equals(OrderEnum.UNPAID.getValue()) ) {

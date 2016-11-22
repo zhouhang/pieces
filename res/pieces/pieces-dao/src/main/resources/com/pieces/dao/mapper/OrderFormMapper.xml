@@ -17,6 +17,7 @@
             <result column="payment_date"  property="paymentDate" />
             <result column="deposit"  property="deposit" />
             <result column="agent_id"  property="agentId" />
+            <result column="delivery_date"  property="deliveryDate" />
     </resultMap>
 
     <resultMap id="OrderFormResultMapVo" type="com.pieces.dao.vo.OrderFormVo" extends="OrderFormResultMap">
@@ -66,13 +67,13 @@
 
     <sql id="Base_Column_List">
         id,code,shipping_costs,addr_history_id,user_id,remark,amounts_payable,
-        sum,invoice_id,status,create_member,creater_time,payment_date,deposit,agent_id
+        sum,invoice_id,status,create_member,creater_time,payment_date,deposit,agent_id,delivery_date
     </sql>
 
     <sql id="Base_Column_List_Aliases">
         o.id as id,o.code as code,o.shipping_costs as shipping_costs,o.addr_history_id as addr_history_id,o.user_id as user_id,o.remark as remark,
         o.amounts_payable as amounts_payable,o.sum as sum,o.invoice_id as invoice_id,o.status as status,o.creater_time as creater_time,
-        o.payment_date as payment_date,o.deposit as deposit, o.agent_id as agent_id
+        o.payment_date as payment_date,o.deposit as deposit, o.agent_id as agent_id, delivery_date as delivery_date
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="OrderFormResultMap">
@@ -148,9 +149,10 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.OrderForm">
         insert into
-        order_form (code,shipping_costs,addr_history_id,user_id,remark,amounts_payable,sum,invoice_id,status,create_member,creater_time,payment_date,deposit,agent_id)
+        order_form (code,shipping_costs,addr_history_id,user_id,remark,amounts_payable,sum,invoice_id,status,create_member,creater_time,payment_date,deposit,agent_id,delivery_date)
         values
-        (#{code},#{shippingCosts},#{addrHistoryId},#{userId},#{remark},#{amountsPayable},#{sum},#{invoiceId},#{status},#{createMember},#{createrTime},#{paymentDate},#{deposit},#{agentId})
+        (#{code},#{shippingCosts},#{addrHistoryId},#{userId},#{remark},#{amountsPayable},#{sum},
+        #{invoiceId},#{status},#{createMember},#{createrTime},#{paymentDate},#{deposit},#{agentId},#{deliveryDate})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.OrderForm">
@@ -206,6 +208,9 @@
 
             <if test="agentId != null">
                 agent_id = #{agentId},
+            </if>
+            <if test="deliveryDate != null">
+                delivery_date = #{deliveryDate},
             </if>
         </set>
         where id = #{id}

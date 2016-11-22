@@ -22,16 +22,19 @@
                 <div class="title">
                     <h3><i class="fa fa-chevron-right"></i>订单 ${vo.code} | <#if vo.createrTime?exists>${vo.createrTime?datetime}</#if></h3>
                     <div class="extra">
-                        <a  class="btn btn-gray" href="order/index">返回</a>
-                        <@shiro.hasPermission name="order:edit">
-                            <a id="editerOrder" class="btn btn-gray" href="javascript:;">修改</a>
-                        </@shiro.hasPermission>
-                    <#if vo.status == 3>
+                        <a class="btn btn-gray" href="order/index">返回</a>
+                    <@shiro.hasPermission name="order:edit">
+                        <a id="editerOrder" class="btn btn-gray" href="javascript:;">修改</a>
+                    </@shiro.hasPermission>
+                    <#if vo.status == 3 || vo.status == 8>
                         <a id="delivery" type="button" class="btn btn-gray" href="javascript:;">配送</a>
                     </#if>
-                        <@shiro.hasPermission name="order:edit">
-                            <a  class="btn btn-red" href="/order/anew/${vo.id!}">重新下单</a>
-                        </@shiro.hasPermission>
+                    <#if vo.status == 4>
+                        <a id="deliveryFail" type="button" class="btn btn-gray" href="javascript:;">配送失败</a>
+                    </#if>
+                    <@shiro.hasPermission name="order:edit">
+                        <a class="btn btn-red" href="/order/anew/${vo.id!}">重新下单</a>
+                    </@shiro.hasPermission>
                     </div>
                 </div>
 
@@ -220,7 +223,26 @@
                             if (data.status == "y") {
                                 $.notify({
                                     type: 'success',
-                                    title: '订单状态修为为已发货.',
+                                    title: '订单状态修为已发货.',
+                                    delay: 3e3,
+                                    call: function () {
+                                        window.location.reload();
+                                    }
+                                });
+                            }
+                        })
+                    });
+                    return false
+                });
+                // 配送失败按钮
+                $("#deliveryFail").click(function () {
+                    layer.confirm('您确认吗？货物配送失败', {icon: 3, title: '提示'}, function (index) {
+                        layer.close(index);
+                        $.post("/order/status",{status:8,orderId:${vo.id}}, function (data) {
+                            if (data.status == "y") {
+                                $.notify({
+                                    type: 'success',
+                                    title: '订单状态修为配送失败.',
                                     delay: 3e3,
                                     call: function () {
                                         window.location.reload();

@@ -50,6 +50,9 @@ public class OrderForm  implements Serializable {
 
 	// 代理商id
 	private Integer agentId;
+
+	// 发货时间
+	private Date deliveryDate;
 	
 	public OrderForm(){}
 	
@@ -171,5 +174,13 @@ public class OrderForm  implements Serializable {
 
 	public void setAgentId(Integer agentId) {
 		this.agentId = agentId;
+	}
+
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
 	}
 }

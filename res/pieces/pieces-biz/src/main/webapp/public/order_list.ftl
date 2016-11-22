@@ -64,7 +64,7 @@
                                 <#if (orderForm.status == 4)>
                                     <a href="${orderForm.id}" name="5" class="btn btn-red status">确认收货</a>
                                 </#if>
-                                <#if (orderForm.status &lt;= 2)>
+                                <#if (orderForm.status &lt;= 2 || orderForm.status== 8)>
                                     <span><a href="${orderForm.id}" name="6" class="c-blue jremove status">取消订单</a></span>
                                 </#if>
                                 <#if (orderForm.status == 6)>
