@@ -80,7 +80,7 @@
 
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>新密码：
+                                    <i></i>新密码：
                                 </div>
                                 <div class="cnt">
                                     <input type="password" class="ipt" value="" autocomplete="off" name="password" id="password" placeholder="请输入新密码">
@@ -162,12 +162,6 @@
                     datatype: 'm',
                     nullmsg: '请输入手机号码',
                     errormsg: '请输入正确的手机号码'
-                },
-                {
-                    ele: '#password',
-                    datatype: 'pwd',
-                    nullmsg: '请输入密码',
-                    errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
                 },
                 {
                     ele: '#memberPwd',
