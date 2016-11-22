@@ -569,7 +569,7 @@
                 },
                 submitForm: function() {
                     var self = this;
-                    var boxs = $('#myform').find('.box:visible');
+                    var boxs = $('#myform').find('.box');
                     $('#submit1').on('click', function() {
                         if (self.formValidate()) {
                             var certifyParamVo={};
