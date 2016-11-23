@@ -48,8 +48,8 @@
                             <option value="0">未处理</option>
                         </select>
                     </td>
-                    <td><input type="text" class="ipt date" value="<#if certifyRecordVo.startTime?exists>${certifyRecordVo.startTime}</#if>" name="startTime" id="start"> - <input type="text" class="ipt date" value="<#if certifyRecordVo.endTime?exists>${certifyRecordVo.endTime}</#if>" name="endTime"  id="end"></td>
-                    <td><input type="text" class="ipt date" value="<#if certifyRecordVo.startFollowTime?exists>${certifyRecordVo.startFollowTime}</#if>"  name="startFollowTime"  id="start2"> - <input type="text" class="ipt date" value="<#if certifyRecordVo.endFollowTime?exists>${certifyRecordVo.endFollowTime}</#if>" name="endFollowTime" id="end2"></td>
+                    <td><input type="text" class="ipt date" value="<#if certifyRecordVo.startTime?exists>${certifyRecordVo.startTime?string("YYYY/MM/dd")}</#if>" name="startTime" id="start"> - <input type="text" class="ipt date" value="<#if certifyRecordVo.endTime?exists>${certifyRecordVo.endTime?string("YYYY/MM/dd")}</#if>" name="endTime"  id="end"></td>
+                    <td><input type="text" class="ipt date" value="<#if certifyRecordVo.startFollowTime?exists>${certifyRecordVo.startFollowTime?string("YYYY/MM/dd")}</#if>"  name="startFollowTime"  id="start2"> - <input type="text" class="ipt date" value="<#if certifyRecordVo.endFollowTime?exists>${certifyRecordVo.endFollowTime?string("YYYY/MM/dd")}</#if>" name="endFollowTime" id="end2"></td>
                     <td></td>
                 </tr>
                 </thead>
