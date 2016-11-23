@@ -1,6 +1,7 @@
 package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.model.AnonEnquiry;
 import com.pieces.dao.model.AnonFollowRecord;
 import com.pieces.dao.model.Member;
@@ -11,7 +12,9 @@ import com.pieces.service.AnonFollowRecordService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.AnonEnquiryEnum;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -41,6 +44,16 @@ public class AnonController {
     @Autowired
     HttpSession httpSession;
 
+    /**
+     * 新客询价
+     * @param pageSize
+     * @param pageNum
+     * @param anonEnquiryVo
+     * @param model
+     * @return
+     */
+    @RequiresPermissions(value = "anon:enquiry")
+    @BizLog(type = LogConstant.anon, desc = "新客询价列表")
     @RequestMapping(value = "/enquiry", method = RequestMethod.GET)
     public String index(Integer pageSize,
                         Integer pageNum,
@@ -60,6 +73,8 @@ public class AnonController {
      * @param id
      * @return
      */
+    @RequiresPermissions(value = "anon:detail")
+    @BizLog(type = LogConstant.anon, desc = "新客询价详情")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public String detail(Integer id, ModelMap model){
         AnonEnquiryVo vo = anonEnquiryService.findVoById(id);
@@ -72,6 +87,8 @@ public class AnonController {
      * @param anonId
      * @return
      */
+    @RequiresPermissions(value = "anon:trail")
+    @BizLog(type = LogConstant.anon, desc = "跟踪记录")
     @RequestMapping(value = "/trail", method = RequestMethod.GET)
     public String trail(Integer anonId, ModelMap model){
        List<AnonFollowRecordVo> list =  followRecordService.findByAnonId(anonId);
@@ -85,6 +102,8 @@ public class AnonController {
      * 保存跟踪记录
      * @return
      */
+    @RequiresPermissions(value = "anon:trail")
+    @BizLog(type = LogConstant.anon, desc = "保存跟踪记录")
     @RequestMapping(value = "/trail", method = RequestMethod.POST)
     @ResponseBody
     public Result trailSave(AnonFollowRecord record){

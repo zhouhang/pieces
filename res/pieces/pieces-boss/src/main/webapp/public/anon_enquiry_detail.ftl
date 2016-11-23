@@ -21,10 +21,9 @@
             </div>
             <div class="main">
                 <div class="title">
-                    <h3><i class="fa fa-chevron-right"></i>王彬 的询价信息</h3>
+                    <h3><i class="fa fa-chevron-right"></i>${vo.contacts} 的询价信息</h3>
                     <div class="extra">
-                        <button type="button" class="btn btn-gray">返回</button>
-                        <a href="#" class="btn btn-red">保存</a>
+                        <a href="/anon/enquiry" class="btn btn-gray">返回</a>
                     </div>
                 </div>
                 <div class="chart-info">

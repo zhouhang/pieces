@@ -82,10 +82,12 @@
             <li>
                 <a href="javascript:;">消息</a>
                 <div class="subnav">
-                   <@shiro.hasPermission name="certify:index">
-                    <a href="certify/list">企业资质审核</a>
-                   </@shiro.hasPermission>
-                    <a href="anon/enquiry">新客询价</a>
+                    <@shiro.hasPermission name="certify:index">
+                        <a href="certify/list">企业资质审核</a>
+                    </@shiro.hasPermission>
+                    <@shiro.hasPermission name="anon:enquiry">
+                        <a href="anon/enquiry">新客询价</a>
+                    </@shiro.hasPermission>
                 </div>
             </li>
            </@shiro.hasPermission>

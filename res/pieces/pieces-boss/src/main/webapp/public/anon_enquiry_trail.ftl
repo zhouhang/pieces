@@ -15,7 +15,7 @@
                     <dt>新客询价</dt>
                     <dd>
                         <a href="/anon/detail?id=${anonId}">询价信息</a>
-                        <a class="curr" href="#">跟进记录</a>
+                        <a class="curr" href="#!">跟进记录</a>
                     </dd>
                 </dl>
             </div>
@@ -23,8 +23,10 @@
                 <div class="title">
                     <h3><i class="fa fa-chevron-right"></i>王彬 的询价信息</h3>
                     <div class="extra">
-                        <button type="button" class="btn btn-gray">返回</button>
+                        <a href="/anon/enquiry" class="btn btn-gray">返回</a>
+                        <@shiro.hasPermission name="anon:trail">
                         <button type="button" id="submit" class="btn btn-red">保存</button>
+                        </@shiro.hasPermission>
                     </div>
                 </div>
                 <div class="chart-info">

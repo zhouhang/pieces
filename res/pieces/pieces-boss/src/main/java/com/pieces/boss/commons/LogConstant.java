@@ -18,4 +18,5 @@ public interface LogConstant {
     public final String order = "订单";
     public final String pay = "订单支付";
     public final String certify="资质审核";
+    public final String anon="新客询价";
 }
