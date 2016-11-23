@@ -46,8 +46,8 @@
             <if test="id != null">
                 record.id = #{id}
             </if>
-            <if test="followerId != null">
-               AND record.follower_id = #{followerId}
+            <if test="anonEnquiryId != null">
+               AND record.anon_enquiry_id = #{anonEnquiryId}
             </if>
         </where>
     </select>

@@ -92,8 +92,8 @@ public class AnonController {
     @RequestMapping(value = "/trail", method = RequestMethod.GET)
     public String trail(Integer anonId, ModelMap model){
        List<AnonFollowRecordVo> list =  followRecordService.findByAnonId(anonId);
-
-        model.put("anonId", anonId);
+        AnonEnquiry anon = anonEnquiryService.findById(anonId);
+        model.put("anon", anon);
         model.put("list",list);
         return "anon_enquiry_trail";
     }

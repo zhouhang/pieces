@@ -14,14 +14,14 @@
                 <dl>
                     <dt>新客询价</dt>
                     <dd>
-                        <a href="/anon/detail?id=${anonId}">询价信息</a>
+                        <a href="/anon/detail?id=${anon.id}">询价信息</a>
                         <a class="curr" href="#!">跟进记录</a>
                     </dd>
                 </dl>
             </div>
             <div class="main">
                 <div class="title">
-                    <h3><i class="fa fa-chevron-right"></i>王彬 的询价信息</h3>
+                    <h3><i class="fa fa-chevron-right"></i>${anon.contacts} 的询价信息</h3>
                     <div class="extra">
                         <a href="/anon/enquiry" class="btn btn-gray">返回</a>
                         <@shiro.hasPermission name="anon:trail">
@@ -70,7 +70,7 @@
     $(function () {
         $("#submit").click(function(){
             var msg = $("#msg").val();
-            $.post("/anon/trail",{result:msg,anonEnquiryId:${anonId}}, function (result) {
+            $.post("/anon/trail",{result:msg,anonEnquiryId:${anon.id}}, function (result) {
                 if (result.status == "y") {
                     window.location.reload()
                 }
