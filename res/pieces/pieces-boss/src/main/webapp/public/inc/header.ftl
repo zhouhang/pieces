@@ -78,13 +78,17 @@
                     </div>
                 </li>
             </@shiro.hasPermission>
+           <@shiro.hasPermission name="message:index">
             <li>
                 <a href="javascript:;">消息</a>
                 <div class="subnav">
+                   <@shiro.hasPermission name="certify:index">
                     <a href="certify/list">企业资质审核</a>
+                   </@shiro.hasPermission>
                     <a href="anon/enquiry">新客询价</a>
                 </div>
             </li>
+           </@shiro.hasPermission>
             <@shiro.hasPermission name="cms:index">
                 <li>
                     <a href="javascript:;">CMS</a>
