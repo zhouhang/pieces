@@ -235,7 +235,7 @@
                             response = JSON.parse(response);
                             if (response.status == "y") {
                                 return {
-                                    suggestions: $.map(response.data, function (dataItem) {
+                                    suggestions: $.map(response.data.list, function (dataItem) {
                                         return {value: dataItem.name, data: dataItem.id};
                                     })
                                 };

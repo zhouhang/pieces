@@ -610,7 +610,6 @@
                             });
                             certifyParamVo.userCertificationVo=userCertificationVo;
                             certifyParamVo.userQualificationVos=userQualificationVos;
-                            console.log(certifyParamVo);
                             $.ajax({
                                 url: page.v.saveUrl,
                                 data: JSON.stringify(certifyParamVo),

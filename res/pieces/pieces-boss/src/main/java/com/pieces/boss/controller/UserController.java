@@ -192,7 +192,7 @@ public class UserController extends  BaseController{
 				return;
 			}
 			userService.addUser(user);
-			if(user.getType()==1){
+			if(user.getType()==1&&agentId!=null){
 				UserBind userBind=new UserBind();
 				userBind.setAgentId(agentId);
 				userBind.setTerminalId(user.getId());
