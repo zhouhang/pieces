@@ -226,7 +226,7 @@
 			<id>test</id>
 			<properties>
 				<biz.base.url>http://www.sghaoyao.com</biz.base.url>
-				<biz.upload.url>http://static.sghaoyao.com/files/upload/</biz.upload.url>
+				<biz.upload.url>http://static.sghaoyao.com/</biz.upload.url>
 				<biz.upload.path>E:\uploadfiles\sghaoyao\</biz.upload.path>
 			</properties>
 		</profile>
