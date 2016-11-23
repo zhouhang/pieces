@@ -227,7 +227,7 @@
 			<properties>
 				<boss.base.url>http://boss.sghaoyao.com</boss.base.url>
 				<boss.upload.url>http://static.sghaoyao.com/files/upload/</boss.upload.url>
-				<boss.upload.path>E:\Program Files (x86)\nginx-1.10.0\html\files\upload\</boss.upload.path>
+				<boss.upload.path>E:\uploadfiles\sghaoyao\</boss.upload.path>
 			</properties>
 		</profile>
 		<profile>
