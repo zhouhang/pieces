@@ -17,4 +17,5 @@ public interface LogConstant {
     public final String logistics = "物流";
     public final String order = "订单";
     public final String pay = "订单支付";
+    public final String certify="资质审核";
 }

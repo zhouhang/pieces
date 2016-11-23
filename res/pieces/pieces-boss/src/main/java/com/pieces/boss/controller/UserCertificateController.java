@@ -52,7 +52,9 @@ public class UserCertificateController {
     @Autowired
     HttpSession httpSession;
 
+    @RequiresPermissions(value = "certify:index" )
     @RequestMapping(value = "/list")
+    @BizLog(type = LogConstant.certify, desc = "资质审核列表")
     public String certifyIndex(
                             Integer pageNum,
                             Integer pageSize,
@@ -65,8 +67,9 @@ public class UserCertificateController {
 
         return "certify_list";
     }
-
+    @RequiresPermissions(value = "certify:info" )
     @RequestMapping(value = "/info/{id}")
+    @BizLog(type = LogConstant.certify, desc = "资质审核详情")
     public String certifyInfo(
                            @PathVariable("id") Integer id,
                            ModelMap model){
@@ -87,8 +90,10 @@ public class UserCertificateController {
         return "certify_info";
     }
     //审核认证信息
+    @RequiresPermissions(value = "certify:handle" )
     @RequestMapping(value = "/handle",method = RequestMethod.POST)
     @ResponseBody
+    @BizLog(type = LogConstant.certify, desc = "资质审核")
     public Result handleCertify(CertifyRecordVo certifyRecordVo){
 
            Boolean status=true;

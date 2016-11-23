@@ -115,7 +115,7 @@ public class UserController extends  BaseController{
 		model.put("user",user);
 		return "customers-info";
 	}
-
+	@RequiresPermissions(value = {"customer:add","customer:edit"} ,logical = Logical.OR)
 	@RequestMapping(value = "/certify/{id}")
 	@BizLog(type = LogConstant.user, desc = "会员详细信息页面")
 	public String userCertify(@PathVariable("id") Integer id,
@@ -298,9 +298,10 @@ public class UserController extends  BaseController{
 
 		return "customers-account";
 	}
-
+	@RequiresPermissions(value = "customer:edit")
 	@RequestMapping(value = "/search" ,method= RequestMethod.POST)
 	@ResponseBody
+	@BizLog(type = LogConstant.user, desc = "代理商搜索")
 	public Result searchUser(String name,
 					   ModelMap model){
 
@@ -311,9 +312,10 @@ public class UserController extends  BaseController{
 		return new Result(true).data(userPage);
 	}
 
-
+	@RequiresPermissions(value = "customer:edit")
 	@RequestMapping(value = "/certify/save" ,method= RequestMethod.POST)
 	@ResponseBody
+	@BizLog(type = LogConstant.user, desc = "修改认证信息")
 	public Result saveCertify(@RequestBody CertifyParamVo certifyParamVo,
 							  ModelMap model){
 
