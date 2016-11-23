@@ -21,21 +21,21 @@
                 </div>
                 <div class="mybill mybill-extra">
                     <#if user.type==1>
-                    <div class="state">
-                        <i class="fa fa-prompt"></i>
+
                         <#if user.certifyStatus==0 >
+                            <div class="state">
+                            <i class="fa fa-prompt"></i>
                         <#if cerfiy==0>
-                            <span>您的公司信息正在审核中，通过审核后方可进行询价、下单等操作，如需帮助请拨打(86)400-8830-393</span>
+                            <span>您的公司信息正在审核中，通过审核后方可进行询价、下单等操作，如需帮助请拨打0558-5120088</span>
                         <#elseif cerfiy==2>
                             <span>您的公司信息审核失败&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-red" href="/center/certificate/stepOne">继续提交资格审核</a></span>
                         <#elseif cerfiy==-1>
                             <span>您的公司信息尚未提交审核，通过审核后方可进行询价、下单等操作&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-red" href="/center/certificate/stepOne">提交资格审核</a></span>
                         </#if>
-                        <#else>
-                                <span>您的公司信息审核通过</span>
+                        </div>
                         </#if>
 
-                    </div>
+
                     </#if>
 
                     <div class="info">
