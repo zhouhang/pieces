@@ -99,7 +99,7 @@ public class FileUtil {
      * @throws IOException
      */
     public static String saveFileFromTemp(String url, String direct) {
-        // 判断url中不包含temp 直接return null
+        // 判断url中不包含temp 直接return url
         if (!url.contains("temp/")) {
             url = url.replace(urlPre, absolutePath);
             return url;

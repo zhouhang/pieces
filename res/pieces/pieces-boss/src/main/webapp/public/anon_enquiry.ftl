@@ -69,7 +69,7 @@
                             </#if>
                         </td>
                         <td>${(anon.publishTime?datetime)!}</td>
-                        <td><#if anon.lastFollowTime?is_date>${(anon.lastFollowTime?datetime)!}</#if></td>
+                        <td><#if anon.lastFollowTime! && anon.lastFollowTime?is_date>${anon.lastFollowTime?datetime}</#if></td>
                         <td><a href="/anon/detail?id=${anon.id}">查看</a></td>
                     </tr>
                     </#list>

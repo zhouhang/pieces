@@ -12,7 +12,9 @@ import com.pieces.service.AnonEnquiryDetailService;
 import com.pieces.service.AnonEnquiryService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.AnonEnquiryEnum;
+import com.pieces.service.enums.PathEnum;
 import com.pieces.tools.utils.BeanUtils;
+import com.pieces.tools.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,6 +60,8 @@ public class AnonEnquiryServiceImpl  extends AbsCommonService<AnonEnquiry> imple
 
 		if (enquiry.getFiles() != null && enquiry.getFiles().size() > 0) {
 			for (AnonEnquiryDetail detail: enquiry.getFiles()){
+				// 保存询价问价到对应文件夹
+				detail.setAttachmentUrl(FileUtil.saveFileFromTemp(detail.getAttachmentUrl(), PathEnum.ANON.getValue()));
 				detail.setType(1);
 				list.add(detail);
 			}
@@ -85,8 +89,9 @@ public class AnonEnquiryServiceImpl  extends AbsCommonService<AnonEnquiry> imple
 		if (details != null && details.size()>0) {
 			vo.setDetail(details.get(0));
 		}
-
-		vo.setFiles(detailService.findByType(id,1));
+		List<AnonEnquiryDetail> files =detailService.findByType(id,1);
+		files = FileUtil.convertAbsolutePathToUrl(files, "attachmentUrl");
+		vo.setFiles(files);
 		return vo;
 	}
 

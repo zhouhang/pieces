@@ -8,6 +8,7 @@ import com.pieces.dao.model.AnonEnquiryDetail;
 import com.pieces.dao.vo.AnonEnquiryDetailVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.AnonEnquiryDetailService;
+import com.pieces.tools.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

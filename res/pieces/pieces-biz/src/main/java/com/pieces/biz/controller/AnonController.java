@@ -103,6 +103,17 @@ public class AnonController {
         return new Result(true).data(fileBo);
     }
 
+    /**
+     * 匿名询价下载文件
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping(value = "/download")
+    @ResponseBody
+    public void download(HttpServletResponse response,String url, String fileName) throws IOException {
+
+    }
+
 
     /**
      * 图片验证码
