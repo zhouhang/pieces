@@ -330,6 +330,9 @@
 			<if test="agentName != null and agentName != ''">
 				and agent.user_name like "%"#{agentName}"%"
 			</if>
+			<if test="true">
+				and b.type = 1
+			</if>
 		</where>
 	</select>
 
