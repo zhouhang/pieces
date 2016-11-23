@@ -33,7 +33,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/anon")
-public class AnonController {
+public class AnonController extends BaseController{
 
     @Autowired
     private AnonEnquiryService anonEnquiryService;
