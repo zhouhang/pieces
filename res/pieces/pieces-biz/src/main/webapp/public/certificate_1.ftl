@@ -104,17 +104,17 @@
                             }
                         },
                         corporation: {
-                            rule: 'required,  length(4~50)',
+                            rule: 'required,  length(2~50)',
                             msg: {
                                 required: '请输入企业负责姓名',
-                                length: '企业责任人长度4-50位'
+                                length: '企业责任人长度2-50位'
                             }
                         },
                         address: {
                             rule: 'required,  length(4~150)',
                             msg: {
                                 required: '请输入企业所在地地址',
-                                length: '企业责任人长度4-150位'
+                                length: '企业所在地地址长度4-150位'
                             }
                         },
                         type: {

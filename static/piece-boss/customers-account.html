@@ -143,7 +143,7 @@
 
                             <div class="group">
                                 <div class="cnt-extra">
-                                    <label><input class="cbx" id="mobileCode" type="checkbox">或发送随机密码</label>                
+                                    <label><input class="cbx" id="random" type="checkbox">或发送随机密码</label>                
                                 </div>
                             </div>
 
@@ -187,53 +187,43 @@
     </div><!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/validform.min.js"></script>
+    <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
     <script>
-        $(function() {
-            var formValidate = $("#myform").Validform();
+        var _global = {
+            v: {},
+            fn: {
+                init: function() {
+                    this.formValidate();
+                },
+                formValidate: function() {
+                    $('#myform').validator({
+                        fields: {
+                            contactName: '会员名: required',
+                            contactMobile: '联系人姓名: required',
+                            memberPwd: '联系人手机号码: required'
+                        },
+                        valid: function(form) {
+                            if ( $(form).isValid() ) {
+                            }
+                        }
+                    });
 
-            formValidate.addRule([
-                {
-                    ele: '#linkMan',
-                    datatype: 's',
-                    nullmsg: '请输入联系人姓名'
-                },
-                {
-                    ele: '#mobile',
-                    datatype: 'm',
-                    nullmsg: '请输入手机号码',
-                    errormsg: '请输入正确的手机号码'
-                },
-                {
-                    ele: '#pwd',
-                    datatype: 'pwd',
-                    nullmsg: '请输入密码',
-                    errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
-                },
-                {
-                    ele: '#pwdOld',
-                    datatype: '*',
-                    nullmsg: '请输入当前操作人的boss帐号密码'
+                    var $pwd = $('#pwd');
+
+                    // 量大价优
+                    $('#random').on('click', function() {
+                        $pwd.attr('class', 'ipt').prop('disabled', this.checked).val('').trigger("hidemsg");
+                        $('#myform').data('validator').options.ignore = this.checked ? $pwd : '';
+                    }).prop('checked', false);
+
                 }
-            ])
-            
-            var $mobileCode = $('#mobileCode');
-            var $pwd = $('#pwd');
-            var _setPwd = function() {
-                var flag = $mobileCode.prop('checked');
-                if (flag) {
-                    formValidate.ignore($pwd);
-                    $pwd.nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
-                } else {
-                    formValidate.unignore($pwd);
-                }
-                $pwd.prop('disabled', flag);
             }
-            $mobileCode.on('click', _setPwd);
-            _setPwd();
+        }
 
+        $(function() {
+            _global.fn.init();
         })
-    </script>
+        </script>
 </body>
 </html>
 

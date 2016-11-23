@@ -27,9 +27,9 @@
                         <#if cerfiy==0>
                             <span>您的公司信息正在审核中，通过审核后方可进行询价、下单等操作，如需帮助请拨打(86)400-8830-393</span>
                         <#elseif cerfiy==2>
-                            <span>您的公司信息审核失败<a class="btn btn-red" href="/center/certificate/stepOne">继续提交资格审核</a></span>
+                            <span>您的公司信息审核失败&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-red" href="/center/certificate/stepOne">继续提交资格审核</a></span>
                         <#elseif cerfiy==-1>
-                            <span>您的公司信息尚未提交审核，通过审核后方可进行询价、下单等操作<a class="btn btn-red" href="/center/certificate/stepOne">提交资格审核</a></span>
+                            <span>您的公司信息尚未提交审核，通过审核后方可进行询价、下单等操作&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-red" href="/center/certificate/stepOne">提交资格审核</a></span>
                         </#if>
                         <#else>
                                 <span>您的公司信息审核通过</span>
@@ -43,7 +43,8 @@
                         <div class="bd">
                             <table>
                                 <tr>
-                                    <td><em>用户名：</em>${user.contactName!'' }
+
+                                    <td><em>用户名：</em>**${user.userName?substring(user.userName?length-3)}
                                         <#if user.certifyStatus==1>
                                         <strong class="ok"><i class="fa fa-check-circle"></i>已通过企业资质审核</strong>
                                         </#if>
@@ -60,17 +61,19 @@
                         <div class="hd">企业资料</div>
                         <div class="bd">
                             <table>
+                               <#if user.type==1>
                                 <tr class="item">
                                     <td><em>企业名称：</em>${userCertification.company!''}</td>
                                 </tr>
                                 <tr class="item">
                                     <td><em>企业类型：</em>${userCertification.typeText!''}</td>
                                 </tr>
+                               </#if>
                                 <tr class="item">
-                                    <td><em>联系人姓名：</em>${user.contactName!'' }</td>
+                                    <td><em>联系人姓名：</em>*${user.contactName?substring(user.contactName?length-1) }</td>
                                 </tr>
                                 <tr class="item">
-                                    <td><em>手机号：</em>${user.contactMobile!''}</td>
+                                    <td><em>手机号：</em>*******${user.contactMobile?substring(user.contactMobile?length-4) }</td>
                                 </tr>
                             </table>
                         </div>

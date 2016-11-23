@@ -95,7 +95,7 @@
 
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>您的密码：
+                                    <i></i>您的密码：
                                 </div>
                                 <div class="cnt">
                                     <input type="password" class="ipt" value="" autocomplete="off" name="memberPwd" id="memberPwd" placeholder="请输入当前操作人的boss帐号密码">
@@ -110,7 +110,7 @@
                         <div class="fa-form">
                             <div class="group">
                                 <div class="txt">
-                                    代理商ID：
+                                    代理商姓名：
                                 </div>
                                 <div class="cnt">
                                     <input type="text" class="ipt" value="${userBind.agentName}" autocomplete="off" name="" id="agencyName" placeholder="">
@@ -132,89 +132,89 @@
     <!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.form.js"></script>
     <script src="js/jquery.autocomplete.min.js"></script>
-    <script src="js/validform.min.js"></script>
+    <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
 
 
 <script>
-    $(function() {
-        $(function() {
-            var formValidate = $("#myform").Validform({
-                    ajaxPost:true,
-                    callback:function(data){
-                    if(data.status=="y"){
-                        location.href="/user/index?advices="+data.info
-                    }else{
-                        $("#error_advices span").html(data.info);
-                        $("#error_advices").show();
-                }
-            }
-        });
-
-            formValidate.addRule([
-                {
-                    ele: '#contactName',
-                    datatype: 's',
-                    nullmsg: '请输入联系人姓名'
-                },
-                {
-                    ele: '#contactMobile',
-                    datatype: 'm',
-                    nullmsg: '请输入手机号码',
-                    errormsg: '请输入正确的手机号码'
-                },
-                {
-                    ele: '#memberPwd',
-                    datatype: '*',
-                    nullmsg: '请输入当前操作人的boss帐号密码'
-                }
-            ])
-
-
-            var $mobileCode = $('#random');
-            var $pwd = $('#password');
-            var _setPwd = function() {
-                var flag = $mobileCode.prop('checked');
-                if (flag) {
-                    formValidate.ignore($pwd);
-                    $pwd.nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
-                } else {
-                    formValidate.unignore($pwd);
-                }
-                $pwd.prop('disabled', flag);
-            }
-            $mobileCode.on('click', _setPwd);
-            _setPwd();
-
-        })
-        // 代理商姓名联想
-        var $agencyName = $('#agencyName');
-        $agencyName.autocomplete({
-            serviceUrl: '/user/search',
-            paramName: 'name',
-            deferRequestBy: 100,
-            type: 'POST',
-            showNoSuggestionNotice: true,
-            noSuggestionNotice: '没有该代理商',
-            transformResult: function (response) {
-                response = JSON.parse(response);
-                if (response.status == "y") {
-                    return {
-                        suggestions: $.map(response.data.list, function (dataItem) {
-                            return {value: dataItem.contactName, data: dataItem.id};
-                        })
-                    };
-                } else {
-                    return {
-                        suggestions: []
-                    }
-                }
+    var _global = {
+        v: {},
+        fn: {
+            init: function() {
+                this.formValidate();
+                this.agency();
             },
-            onSelect: function (suggestion) {
-                $("#agentId").val(suggestion.data); // 保存品种id到隐藏文本域
-            }
-        })
+            formValidate: function() {
+                $('#myform').validator({
+                    fields: {
+                        contactName: '会员名: required',
+                        contactMobile: '联系人姓名: required',
+                    },
+                    valid: function(form) {
+                        if ( $(form).isValid() ) {
+                            $.ajax({
+                                url: '/user/save',
+                                data: $(form).formSerialize(),
+                                type: "POST",
+                                success: function (data) {
+                                    if(data.status=="y"){
+                                        location.href="/user/index?advices="+data.info
+                                    }else{
+                                        $("#error_advices span").html(data.info);
+                                        $("#error_advices").show();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
 
+                var $pwd = $('#password');
+
+                // 量大价优
+                $('#random').on('click', function() {
+                    $pwd.attr('class', 'ipt').prop('disabled', this.checked).val('').trigger("hidemsg");
+                    $('#myform').data('validator').options.ignore = this.checked ? $pwd : '';
+                }).prop('checked', false);
+
+            },
+            agency: function() {
+                // 代理商姓名联想
+                var $agencyName = $('#agencyName');
+                $agencyName.autocomplete({
+                    serviceUrl: '/user/search',
+                    paramName: 'name',
+                    deferRequestBy: 100,
+                    type: 'POST',
+                    showNoSuggestionNotice: true,
+                    noSuggestionNotice: '没有该代理商',
+                    transformResult: function (response) {
+                        response = JSON.parse(response);
+                        if (response.status == "y") {
+                            return {
+                                suggestions: $.map(response.data.list, function (dataItem) {
+                                    return {value: dataItem.contactName, data: dataItem.id};
+                                })
+                            };
+                        } else {
+                            return {
+                                suggestions: []
+                            }
+                        }
+                    },
+                    onSelect: function (suggestion) {
+                        $("#agentId").val(suggestion.data); // 保存品种id到隐藏文本域
+                    }
+                })
+            }
+
+        }
+
+    }
+
+    $(function() {
+        _global.fn.init();
     })
 </script>
 </body>

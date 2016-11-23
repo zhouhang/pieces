@@ -34,7 +34,7 @@
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                         <!--<button type="button" class="btn btn-gray">保存</button>-->
-                        <button type="submit" class="btn btn-red">保存并继续</button>
+                        <button type="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
 
@@ -108,7 +108,7 @@
                     <div class="fa-form">
                         <div class="group">
                             <div class="txt">
-                                代理商ID：
+                                代理商姓名：
                             </div>
                             <div class="cnt">
                                 <input type="text" class="ipt" value="" autocomplete="off" name="" id="agencyName" placeholder="">
@@ -127,102 +127,97 @@
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
     <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.form.js"></script>
     <script src="js/jquery.autocomplete.min.js"></script>
-    <script src="js/validform.min.js"></script>
+    <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
+    <script src="js/common.js"></script>
 
 <script>
-    $(function() {
-        var formValidate = $("#myform").Validform({
-            ajaxPost:true,
-            callback:function(data){
-                if(data.status=="y"){
-                    location.href="/user/index?advices="+data.info
-                }else{
-                    $("#error_advices span").html(data.info);
-                    $("#error_advices").show();
-                }
-            }
-        });
-        formValidate.addRule([
-            {
-                ele: '#userName',
-                datatype: 'uname',
-                nullmsg: '请输入会员名',
-                errormsg: '会员名必须以英文字母开头，长度6到20位'
+    var _global = {
+        v: {},
+        fn: {
+            init: function() {
+                this.formValidate();
+                this.agency();
             },
-            {
-                ele: '#contactName',
-                datatype: 's',
-                nullmsg: '请输入联系人姓名'
-            },
-            {
-                ele: '#contactName',
-                datatype: 's',
-                nullmsg: '请输入联系人姓名'
-            },
-            {
-                ele: '#contactMobile',
-                datatype: 'm',
-                nullmsg: '请输入手机号码',
-                errormsg: '请输入正确的手机号码'
-            },
-            {
-                ele: '#password',
-                datatype: 'pwd',
-                nullmsg: '请输入密码',
-                errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
-            }
-        ])
-
-        var $mobileCode = $('#random');
-        var $pwd = $('#password');
-        var _setPwd = function() {
-            var flag = $mobileCode.prop('checked');
-            if (flag) {
-                formValidate.ignore($pwd);
-                $pwd.nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
-            } else {
-                formValidate.unignore($pwd);
-            }
-            $pwd.prop('disabled', flag);
-        }
-        $mobileCode.on('click', _setPwd);
-        _setPwd();
-        $('#categorys').on('click', '.cbx', function() {
-            if (this.value === '2') {
-                $('#agencyCnt').hide();
-            } else {
-                $('#agencyCnt').show();
-            }
-        })
-        // 代理商姓名联想
-        var $agencyName = $('#agencyName');
-        $agencyName.autocomplete({
-            serviceUrl: '/user/search',
-            paramName: 'name',
-            deferRequestBy: 100,
-            type: 'POST',
-            showNoSuggestionNotice: true,
-            noSuggestionNotice: '没有该代理商',
-            transformResult: function (response) {
-                response = JSON.parse(response);
-                if (response.status == "y") {
-                    return {
-                        suggestions: $.map(response.data.list, function (dataItem) {
-                            return {value: dataItem.contactName, data: dataItem.id};
-                        })
-                    };
-                } else {
-                    return {
-                        suggestions: []
+            formValidate: function() {
+                $('#myform').validator({
+                    fields: {
+                        userName: '会员名: required',
+                        contactName: '联系人姓名: required',
+                        contactMobile: '联系人手机号码: required, mobile',
+                        password: '新密码: required'
+                    },
+                    valid: function(form) {
+                        if ( $(form).isValid() ) {
+                            $.ajax({
+                                url: '/user/save',
+                                data: $(form).formSerialize(),
+                                type: "POST",
+                                success: function (data) {
+                                    if(data.status=="y"){
+                                        location.href="/user/index?advices="+data.info
+                                    }else{
+                                        $("#error_advices span").html(data.info);
+                                        $("#error_advices").show();
+                                    }
+                                }
+                            });
+                        }
                     }
-                }
+                });
+
+                var $pwd = $('#password');
+                $('#random').on('click', function() {
+                    $pwd.attr('class', 'ipt').prop('disabled', this.checked).val('').trigger("hidemsg");
+                    $('#myform').data('validator').options.ignore = this.checked ? $pwd : '';
+                }).prop('checked', false);
+
             },
-            onSelect: function (suggestion) {
-                $("#agentId").val(suggestion.data); // 保存品种id到隐藏文本域
+            agency: function() {
+                    // 代理商姓名联想
+                    var $agencyName = $('#agencyName');
+                    $agencyName.autocomplete({
+                        serviceUrl: '/user/search',
+                        paramName: 'name',
+                        deferRequestBy: 100,
+                        type: 'POST',
+                        showNoSuggestionNotice: true,
+                        noSuggestionNotice: '没有该代理商',
+                        transformResult: function (response) {
+                            response = JSON.parse(response);
+                            if (response.status == "y") {
+                                return {
+                                    suggestions: $.map(response.data.list, function (dataItem) {
+                                        return {value: dataItem.contactName, data: dataItem.id};
+                                    })
+                                };
+                            } else {
+                                return {
+                                    suggestions: []
+                                }
+                            }
+                        },
+                        onSelect: function (suggestion) {
+                            $("#agentId").val(suggestion.data); // 保存品种id到隐藏文本域
+                        }
+                    })
+
+                $('#categorys').on('click', '.cbx', function() {
+                    if (this.value === '2') {
+                        $('#agencyCnt').hide();
+                    } else {
+                        $('#agencyCnt').show();
+                    }
+                })
             }
-        })
+        }
+    }
+
+    $(function() {
+        _global.fn.init();
     })
+
 </script>
 </body>
 </html>
