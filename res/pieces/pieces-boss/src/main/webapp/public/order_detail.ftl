@@ -24,7 +24,9 @@
                     <div class="extra">
                         <a class="btn btn-gray" href="order/index">返回</a>
                     <@shiro.hasPermission name="order:edit">
+                        <#if vo.status != 7>
                         <a id="editerOrder" class="btn btn-gray" href="javascript:;">修改</a>
+                        </#if>
                     </@shiro.hasPermission>
                     <#if vo.status == 3 || vo.status == 8>
                         <a id="delivery" type="button" class="btn btn-gray" href="javascript:;">配送</a>
