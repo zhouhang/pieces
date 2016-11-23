@@ -72,7 +72,13 @@
                                 </tr>
                                 <tr>
                                     <td><em>收款账号：</em>${payRecordVo.receiveBankCard!}</td>
-                                    <td><em>付款金额：</em>${payRecordVo.actualPayment!}</td>
+                                    <td><em>付款金额：</em>
+                                    <#if payRecord.actualPayment?exists>
+                                    ${payRecordVo.actualPayment!}
+                                    <#else>
+                                    ${payRecordVo.amountsPayable!}
+                                    </#if>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -84,11 +90,17 @@
                                     </td>
                                 </tr>
                                 <tr>
+                                    <#if payRecordVo.payBank?exists>
                                     <td><em>开&nbsp; 户&nbsp; 行：</em>${payRecordVo.payBank!}</td>
+                                    </#if>
+                                    <#if payRecordVo.payAccount?exists>
                                     <td><em>开&nbsp; 户&nbsp; 人：</em>${payRecordVo.payAccount!}</td>
+                                    </#if>
                                 </tr>
                                 <tr>
+                                    <#if payRecordVo.payBankCard?exists>
                                     <td><em>收款账号：</em>${payRecordVo.payBankCard!}</td>
+                                    </#if>
                                     <td rowspan="2">
                                         <div class="img">
                                             <em>支付凭证：</em>

@@ -39,7 +39,11 @@
                                         <td>${payRecord.payCode!}</td>
                                         <td>${payRecord.orderCode!} <span>${payRecord.commodityOverview!}</span></td>
                                         <td>&yen;${payRecord.amountsPayable!}</td>
+                                        <#if payRecord.actualPayment?exists>
                                         <td>&yen;${payRecord.actualPayment!}</td>
+                                        <#else >
+                                            <td>&yen;${payRecord.amountsPayable!}</td>
+                                        </#if>
                                         <td>${payRecord.paymentTime?string("yyyy-MM-dd")}</td>
                                         <td><em class="c-red">${payRecord.statusText!}</em></td>
                                         <td><a href="/center/pay/details/${payRecord.id!}" class="c-blue">查看详情</a></td>
