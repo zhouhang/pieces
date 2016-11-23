@@ -34,7 +34,7 @@
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                         <!--<button type="button" class="btn btn-gray">保存</button>-->
-                        <button type="submit" class="btn btn-red">保存并继续</button>
+                        <button type="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
 

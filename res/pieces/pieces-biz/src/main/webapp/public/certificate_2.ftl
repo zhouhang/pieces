@@ -34,7 +34,7 @@
             <div class="tab">
                 <span class="curr">企业三证</span>
                 <span>三证合一</span>
-                <strong><em>提示：</em>如果客户的营业执照是老证，选择企业三证，如果是新证，选择三证合一。</strong>
+                <strong><em>提示：</em>如果您的营业执照是老证，选择企业三证，如果是新证，选择三证合一。</strong>
             </div>
             <div class="tabcont fa-form">
                     <div class="box" type="1">
