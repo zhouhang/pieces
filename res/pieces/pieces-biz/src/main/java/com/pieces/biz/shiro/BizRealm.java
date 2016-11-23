@@ -1,8 +1,8 @@
 package com.pieces.biz.shiro;
 
-import java.util.List;
-import java.util.Set;
-
+import com.pieces.dao.model.User;
+import com.pieces.service.UserService;
+import com.pieces.service.shiro.SerializableSimpleAuthenticationInfo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -12,14 +12,10 @@ import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.apache.shiro.util.ByteSource.Util;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.pieces.dao.model.User;
-import com.pieces.service.UserService;
-import com.pieces.service.shiro.SerializableSimpleAuthenticationInfo;
-import com.pieces.service.utils.CommonUtils;
-import com.pieces.service.utils.ValidUtils;
+import java.util.Set;
 
 
 /**

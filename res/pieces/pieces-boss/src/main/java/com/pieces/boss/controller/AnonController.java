@@ -13,6 +13,7 @@ import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.AnonEnquiryEnum;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.log.annotation.BizLog;
+import com.pieces.tools.utils.FileUtil;
 import com.pieces.tools.utils.Reflection;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 
@@ -119,6 +123,38 @@ public class AnonController extends BaseController{
         anonEnquiry.setLastFollowTime(new Date());
         anonEnquiryService.update(anonEnquiry);
         return new Result(true).info("创建成功");
+    }
+
+
+
+    /**
+     * 匿名询价下载文件
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping(value = "/download")
+    @ResponseBody
+    public void download(HttpServletResponse response, String url, String fileName) throws IOException {
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("multipart/form-data");
+        response.setHeader("Content-Disposition", "attachment;fileName="
+                + URLEncoder.encode(fileName, "UTF-8"));
+        String path = FileUtil.getAbsolutePath(url);
+        //TODO: 文件不存在时的处理逻辑
+        InputStream inputStream = new FileInputStream(new File(path));
+        OutputStream os = response.getOutputStream();
+        try {
+            byte[] b = new byte[2048];
+            int length;
+            while ((length = inputStream.read(b)) > 0) {
+                os.write(b, 0, length);
+            }
+            os.flush();
+        } finally {
+            // 这里主要关闭。
+            os.close();
+            inputStream.close();
+        }
     }
 
 }
