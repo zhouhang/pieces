@@ -212,12 +212,15 @@ public class UserController extends  BaseController{
 			}
 			Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
 			Member member=memberService.findById(mem.getId());
-			Password pass = EncryptUtil.PiecesEncode(memberPwd, member.getSalt());
-			if(memberPwd==null||!(pass.getPassword().equals(member.getPassword()))){
-				advices="管理员密码错误";
-				WebUtil.print(response,new Result(false).info(advices));
-				return;
+			if(user.getPassword()!=null){
+				Password pass = EncryptUtil.PiecesEncode(memberPwd, member.getSalt());
+				if(memberPwd==null||!(pass.getPassword().equals(member.getPassword()))){
+					advices="管理员密码错误";
+					WebUtil.print(response,new Result(false).info(advices));
+					return;
+				}
 			}
+
 
 			userService.updateUser(user);
 			if(agentId!=null&&oldUser.getType()==1){

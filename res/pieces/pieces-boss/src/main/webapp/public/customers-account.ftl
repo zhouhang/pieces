@@ -95,7 +95,7 @@
 
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>您的密码：
+                                    <i></i>您的密码：
                                 </div>
                                 <div class="cnt">
                                     <input type="password" class="ipt" value="" autocomplete="off" name="memberPwd" id="memberPwd" placeholder="请输入当前操作人的boss帐号密码">
@@ -110,7 +110,7 @@
                         <div class="fa-form">
                             <div class="group">
                                 <div class="txt">
-                                    代理商ID：
+                                    代理商姓名：
                                 </div>
                                 <div class="cnt">
                                     <input type="text" class="ipt" value="${userBind.agentName}" autocomplete="off" name="" id="agencyName" placeholder="">
@@ -163,11 +163,6 @@
                     nullmsg: '请输入手机号码',
                     errormsg: '请输入正确的手机号码'
                 },
-                {
-                    ele: '#memberPwd',
-                    datatype: '*',
-                    nullmsg: '请输入当前操作人的boss帐号密码'
-                }
             ])
 
 

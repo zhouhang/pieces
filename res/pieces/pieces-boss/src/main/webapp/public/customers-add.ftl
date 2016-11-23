@@ -108,7 +108,7 @@
                     <div class="fa-form">
                         <div class="group">
                             <div class="txt">
-                                代理商ID：
+                                代理商姓名：
                             </div>
                             <div class="cnt">
                                 <input type="text" class="ipt" value="" autocomplete="off" name="" id="agencyName" placeholder="">
