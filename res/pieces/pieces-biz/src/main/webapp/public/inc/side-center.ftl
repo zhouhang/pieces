@@ -68,7 +68,7 @@
     <#if user_session_biz?? && user_session_biz.type == 2>
     <dl>
         <dt>
-            <em class="fa fa-setting"></em>
+            <em class="fa fa-menu"></em>
             <span>订单</span>
             <i class="fa fa-chevron-right"></i>
         </dt>
@@ -78,7 +78,7 @@
     </dl>
         <dl>
             <dt>
-                <em class="fa fa-setting"></em>
+                <em class="fa fa-logistics"></em>
                 <span>物流</span>
                 <i class="fa fa-chevron-right"></i>
             </dt>

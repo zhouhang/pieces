@@ -5,8 +5,6 @@ import com.github.bingoohuang.patchca.custom.ConfigurableCaptchaService;
 import com.github.bingoohuang.patchca.filter.predefined.CurvesRippleFilterFactory;
 import com.github.bingoohuang.patchca.service.Captcha;
 import com.github.bingoohuang.patchca.word.RandomWordFactory;
-import com.pieces.dao.model.AnonEnquiry;
-import com.pieces.dao.model.AnonEnquiryDetail;
 import com.pieces.dao.vo.AnonEnquiryVo;
 import com.pieces.service.AnonEnquiryService;
 import com.pieces.service.constant.BasicConstants;
@@ -28,7 +26,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.awt.*;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * Author: koabs
@@ -101,17 +98,6 @@ public class AnonController {
         FileBo fileBo = tempUploadFile.uploadFile(file.getOriginalFilename(), file.getInputStream());
         fileBo.setName(file.getOriginalFilename());
         return new Result(true).data(fileBo);
-    }
-
-    /**
-     * 匿名询价下载文件
-     * @param response
-     * @throws IOException
-     */
-    @RequestMapping(value = "/download")
-    @ResponseBody
-    public void download(HttpServletResponse response,String url, String fileName) throws IOException {
-
     }
 
 

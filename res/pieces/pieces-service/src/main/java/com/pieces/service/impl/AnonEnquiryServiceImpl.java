@@ -54,7 +54,10 @@ public class AnonEnquiryServiceImpl  extends AbsCommonService<AnonEnquiry> imple
 
 		if (enquiry.getDetail()!= null){
 			enquiry.getDetail().setType(0);
-			enquiry.setContent("");
+			if(enquiry.getContent() != null && enquiry.getContent().length() > 30){
+				enquiry.setContent(enquiry.getContent().substring(0,30)+ "...");
+			}
+
 			list.add(enquiry.getDetail());
 		}
 
