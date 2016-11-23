@@ -38,18 +38,20 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td><div class="ipt-wrap"><input type="text" class="ipt" value="${anonVo.content}" name="content"></div></td>
-                        <td><div class="ipt-wrap"><input type="text" class="ipt" value="${anonVo.contacts}" name="contacts"></div></td>
-                        <td><div class="ipt-wrap"><input type="text" class="ipt" value="${anonVo.lastFollowName}" name="lastFollowName"></div></td>
+                        <td><div class="ipt-wrap"><input type="text" class="ipt" value="${anonVo.content!}" name="content"></div></td>
+                        <td><div class="ipt-wrap"><input type="text" class="ipt" value="${anonVo.contacts!}" name="contacts"></div></td>
+                        <td><div class="ipt-wrap"><input type="text" class="ipt" value="${anonVo.lastFollowName!}" name="lastFollowName"></div></td>
                         <td>
-                            <select name="" id="">
+                            <select name="status" id="status">
                                 <option value=""></option>
                                 <option value="2">已处理</option>
                                 <option value="1">未处理</option>
                             </select>
                         </td>
-                        <td><input type="text" class="ipt date" value="${anonVo.publishTimeStart}" id="start" name="publishTimeStart"> - <input type="text" class="ipt date" name="publishTimeEnd" value="${anonVo.publishTimeEnd}" id="end"></td>
-                        <td><input type="text" class="ipt date" value="${anonVo.lastFollowTimeStart}" id="start2" name="lastFollowTimeStart"> - <input type="text" class="ipt date" name="lastFollowTimeEnd" value="${anonVo.lastFollowTimeEnd}" id="end2"></td>
+                        <td><input type="text" class="ipt date" value="<#if anonVo.publishTimeStart?? && anonVo.publishTimeStart?is_date>${anonVo.publishTimeStart?date!}</#if>" id="start" name="publishTimeStart"> -
+                            <input type="text" class="ipt date" name="publishTimeEnd" value="<#if anonVo.publishTimeEnd?? && anonVo.publishTimeEnd?is_date>${anonVo.publishTimeEnd?date!}</#if>" id="end"></td>
+                        <td><input type="text" class="ipt date" value="<#if anonVo.lastFollowTimeStart?? && anonVo.lastFollowTimeStart?is_date>${anonVo.lastFollowTimeStart?date!}</#if>" id="start2" name="lastFollowTimeStart"> -
+                            <input type="text" class="ipt date" name="lastFollowTimeEnd" value="<#if anonVo.lastFollowTimeEnd?? && anonVo.lastFollowTimeEnd?is_date>${anonVo.lastFollowTimeEnd?date!}</#if>" id="end2"></td>
                         <td></td>
                     </tr>
                     </thead>
@@ -95,6 +97,12 @@
                     init: function () {
                         page.fn.dateInit();
                         page.fn.filter();
+
+                        $("#status").val(${anonVo.status});
+
+                        $("#reset").click(function(){
+                            $('.chart .ipt, .chart select').val("")
+                        })
                     },
                     // 筛选
                     filter: function() {
@@ -113,6 +121,7 @@
                     //日期选择
                     dateInit: function () {
                         var start = {
+                            format: 'YYYY-MM-DD hh:mm:ss',
                             elem: '#start',
                             choose: function(datas){
                                 end.min = datas;
@@ -121,6 +130,7 @@
                             }
                         };
                         var end = {
+                            format: 'YYYY-MM-DD hh:mm:ss',
                             elem: '#end',
                             choose: function(datas){
                                 start.max = datas;
