@@ -259,7 +259,9 @@ public class ExcelParse {
             // 设置response参数，可以打开下载页面
             response.reset();
             response.setContentType("application/octet-stream");
-            String name = URLEncoder.encode(fileName, "UTF-8");
+
+            String name = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
+
             response.setHeader("Content-disposition", "attachment;filename="
                     + name + ".xls");
             ServletOutputStream out = null;
