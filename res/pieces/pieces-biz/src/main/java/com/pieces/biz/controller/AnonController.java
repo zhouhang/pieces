@@ -127,4 +127,16 @@ public class AnonController {
             out.close();
         }
     }
+
+    /**
+     * 询价成功页面
+     * @return
+     */
+    @RequestMapping(value = "/enquirySuccess")
+    public String enquiryMessage(){
+        return "message_enquiry";
+    }
+
+
+
 }
