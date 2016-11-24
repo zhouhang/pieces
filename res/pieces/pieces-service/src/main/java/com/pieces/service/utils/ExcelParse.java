@@ -145,9 +145,9 @@ public class ExcelParse {
             c = r.createCell(4);
             c.setCellValue(commodity.getOrigin());
             c = r.createCell(5);
-            c.setCellValue(commodity.getAmount());
+            c.setCellValue(String.valueOf(commodity.getAmount()));
             c = r.createCell(6);
-            c.setCellValue(commodity.getExpectPrice());
+            c.setCellValue(String.valueOf(commodity.getExpectPrice()));
             c = r.createCell(7);
             c.setCellValue(commodity.getExpectDate());
             c.setCellStyle(cellStyle);
@@ -234,7 +234,9 @@ public class ExcelParse {
                 value = String.valueOf(c.getBooleanCellValue());
                 break;
             case Cell.CELL_TYPE_FORMULA:
-                value = c.getCellFormula();
+                // TODO: 针对数字型 公式
+                BigDecimal bigDecimal = new BigDecimal(c.getNumericCellValue());
+                value = bigDecimal.toString();
                 break;
             default:
         }
