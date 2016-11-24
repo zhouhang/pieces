@@ -178,9 +178,9 @@ vertical-align:middle;
 .fa-message .hd{font-size:26px;}
 .fa-message .hd i{line-height:1;font-size:38px;color:#58c805;}
 .fa-message .hd strong{vertical-align:middle;}
-.fa-message .bd{margin-top:30px;font-size:16px;color:#999;}
+.fa-message .bd{margin-top:10px;font-size:14px;color:#999;}
 .fa-message .ft{width:300px;margin:75px auto;}
-.fa-message .ft .btn{display:block;margin-bottom:10px;padding:12px 0;font-size:16px;}
+.fa-message .ft .btn{display:block;margin-bottom:30px;padding:12px 0;font-size:16px;}
 .fa-message .links{margin-top:30px;}
 .fa-message .links a{color:#1769ff;}
 
