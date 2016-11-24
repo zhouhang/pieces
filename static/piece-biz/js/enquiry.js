@@ -119,7 +119,7 @@
 				layer.open({
                     moveType: 1,
 					title: '批量询价',
-					content: '<form action="" id="excelForm" method="post" enctype="multipart/form-data"><p>您可以使用我们提供的 <a class="c-blue" href="http://www.sghaoyao.com/file/%E6%89%B9%E9%87%8F%E9%87%87%E8%B4%AD%E6%A8%A1%E7%89%88.xls">询价单模版<i class="fa fa-download"></i></a>，也可以使用您自己的询价单文件（可以是Excel 或照片）。</p><label class="btn btn-file enquiry_btn"><span>选择文件</span><input type="file" /></label></form>',
+					content: '<form action="" id="excelForm" method="post" enctype="multipart/form-data"><p>您可以使用我们提供的 <a class="c-blue" href="http://www.sghaoyao.com/file/%E6%89%B9%E9%87%8F%E9%87%87%E8%B4%AD%E6%A8%A1%E7%89%88.xls">询价单模版<i class="fa fa-download"></i></a>，也可以使用您自己的询价单文件（可以是Excel 或照片）。</p><input class="enquiry_btn" type="file" /></form>',
 					btn: ['确定', '取消'],
 					yes: function(index) {
 						$("#excelForm").ajaxForm({
