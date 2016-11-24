@@ -538,10 +538,16 @@
                     var $last = $tbody.find('tr:last');
                     var length = $cbs.length;
 
+                    if ($cbs.length === 0) {
+                        return;
+                    }
+
                     if ($last.find('.ipt-name').val() === '') {
                         $last.remove();
                     } else if ($last.index() === 0) {
-                        $last.find('.add').after(' <a class="remove c-red" href="javascript:;">删除</a>');
+                        if ($last.find('.remove').length === 0) {
+                            $last.find('.add').after(' <a class="remove c-red" href="javascript:;">删除</a>');
+                        }
                     }
                     $cbs.each(function() {
                         var $tr = $(modal),
