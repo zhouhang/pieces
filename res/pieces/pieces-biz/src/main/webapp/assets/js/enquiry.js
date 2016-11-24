@@ -78,11 +78,7 @@
 					}),
 					success: function(result) {
 						if(result.status=='y'){
-	                        $.notify({
-	                            type: 'success',
-	                            title: '提交成功',
-	                            text: result.info
-	                        })
+							window.location.href = "/anon/enquirySuccess"
 	                    }else{
 	                        $.notify({
 	                            type: 'error',
