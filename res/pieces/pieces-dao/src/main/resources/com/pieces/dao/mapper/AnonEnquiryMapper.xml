@@ -76,6 +76,7 @@
                 AND anon.publish_time <![CDATA[ <= ]]> #{publishTimeEnd}
             </if>
         </where>
+        ORDER BY anon.id DESC
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
