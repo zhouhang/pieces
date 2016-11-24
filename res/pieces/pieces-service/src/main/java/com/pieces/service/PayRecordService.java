@@ -37,4 +37,8 @@ public interface PayRecordService extends ICommonService<PayRecord>{
      * @return
      */
     public void fail(Integer payId, String msg, Member member);
+
+    public PageInfo<PayRecordVo> findByUserId(PayRecordVo payRecordVo,Integer pageNum, Integer pageSize);
+
+
 }

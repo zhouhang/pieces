@@ -220,6 +220,16 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 	}
 
 	@Override
+	public PageInfo<PayRecordVo> findByUserId(PayRecordVo payRecordVo, Integer pageNum, Integer pageSize) {
+		pageNum = pageNum == null ? 1 : pageNum;
+		pageSize = pageSize == null ? 10 : pageSize;
+		List<PayRecordVo>  list = payRecordDao.findByUserId(payRecordVo);
+		PageHelper.startPage(pageNum, pageSize);
+		PageInfo page = new PageInfo(list);
+		return page;
+	}
+
+	@Override
 	public ICommonDao<PayRecord> getDao() {
 		return payRecordDao;
 	}

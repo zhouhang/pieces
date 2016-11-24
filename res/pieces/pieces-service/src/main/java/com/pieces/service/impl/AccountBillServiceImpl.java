@@ -192,7 +192,7 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 
 		accountBill.setUserId(payRecord.getUserId());
 		accountBill.setOrderId(payRecord.getOrderId());
-		accountBill.setBillTime(30);
+		accountBill.setBillTime(90);
 		accountBill.setStatus(1);
 
 		Integer billTime = accountBill.getBillTime();
