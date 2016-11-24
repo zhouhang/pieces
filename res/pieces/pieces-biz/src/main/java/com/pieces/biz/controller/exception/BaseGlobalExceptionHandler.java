@@ -21,16 +21,24 @@ import java.util.Date;
  */
 public class BaseGlobalExceptionHandler {
 
-    protected static final Logger logger = null;
+    //打印那个级别的日志
+    protected static String LOG_LEVEL_ERROR = "ERROR";
+    protected static String LOG_LEVEL_NONE = "NONE";
+
     protected static final String DEFAULT_ERROR_MESSAGE = "系统忙，请稍后再试";
 
-    protected ModelAndView handleError(HttpServletRequest req, HttpServletResponse rsp, Exception e, String viewName, HttpStatus status) throws Exception {
+    protected ModelAndView handleError(HttpServletRequest req, HttpServletResponse rsp, Exception e, String viewName, HttpStatus status,String logLevel) throws Exception {
         if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null){
             throw e;
         }
         String errorMsg =  DEFAULT_ERROR_MESSAGE;
         String errorStack = Throwables.getStackTraceAsString(e);
-        getLogger().error("Request: {} raised {}", req.getRequestURI(), errorStack);
+        switch (logLevel){
+            case "NONE":
+                break;
+            default:
+                getLogger().error("Request: {} raised {}", req.getRequestURI(), errorStack);
+        }
         if(isAjaxRequest(req)){
             return handleAjaxError(rsp, errorMsg, status);
         }
@@ -56,7 +64,6 @@ public class BaseGlobalExceptionHandler {
         return LoggerFactory.getLogger(BaseGlobalExceptionHandler.class);
     }
 
-
     public static boolean isAjaxRequest(HttpServletRequest request) {
         String requestType = request.getHeader("X-Requested-With");
         if (requestType != null && requestType.indexOf("XMLHttpRequest")!=-1) {
@@ -65,4 +72,7 @@ public class BaseGlobalExceptionHandler {
             return false;
         }
     }
+
+
+
 }
