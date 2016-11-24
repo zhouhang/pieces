@@ -234,7 +234,9 @@ public class ExcelParse {
                 value = String.valueOf(c.getBooleanCellValue());
                 break;
             case Cell.CELL_TYPE_FORMULA:
-                value = c.getCellFormula();
+                // TODO: 针对数字型 公式
+                BigDecimal bigDecimal = new BigDecimal(c.getNumericCellValue());
+                value = bigDecimal.toString();
                 break;
             default:
         }

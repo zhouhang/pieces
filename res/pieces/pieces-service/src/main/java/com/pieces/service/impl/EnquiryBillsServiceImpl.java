@@ -149,6 +149,6 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     public void exportEnquiryExcel(HttpServletResponse response, Integer id) {
         EnquiryBillsVo vo = findVOById(id);
         Workbook workbook = ExcelParse.exportEnquiryInfo(vo);
-        ExcelParse.returnExcel(response, workbook,"询价单"+ id);
+        ExcelParse.returnExcel(response, workbook,"报价表"+ id);
     }
 }
