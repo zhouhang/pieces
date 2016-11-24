@@ -21,7 +21,9 @@ import com.pieces.service.constant.bean.Result;
 import com.pieces.service.dto.Password;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.impl.SmsService;
+import com.pieces.service.redis.RedisManager;
 import com.pieces.service.utils.EncryptUtil;
+import com.pieces.service.utils.SerializeUtils;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.SeqNoUtil;
@@ -68,6 +70,10 @@ public class UserController extends  BaseController{
 
 	@Autowired
 	private CertifyRecordService certifyRecordService;
+
+
+	@Autowired
+	private RedisManager redisManager;
 	/**
 	 * 会员查询页面
 	 * @param request
@@ -235,6 +241,10 @@ public class UserController extends  BaseController{
 			}
 
 			advices = "修改用户信息成功!";
+			if(user.getPassword()!=null){//清除认证缓存
+				byte[] byteKey = SerializeUtils.serialize(user.getUserName());
+				redisManager.removeInHash("biz:shiro_cache:authenticationCache".getBytes(), byteKey);
+			}
 			if(passWord!=null){
 				smsService.sendUpdateUserAccount(passWord,user.getContactMobile(),user.getUserName());
 			}
