@@ -104,7 +104,7 @@ public class ExcelParse {
         Row r = null;
         Cell c = null;
         String[] titles = null;
-        wb.setSheetName(0, "询价商品");
+        wb.setSheetName(0, "报价表");
         // 设置询价单信息 cell title
         titles = new String[]{"ID", "商品名称", "切制规格", "规格等级", "产地", "数量(公斤)", "期望单价(元/公斤)",
                 "期望交货日期", "裸价(元/公斤)", "报价有效期"};
@@ -152,8 +152,8 @@ public class ExcelParse {
             c.setCellValue(commodity.getExpectDate());
             c.setCellStyle(cellStyle);
         }
-        Sheet s1 = wb.createSheet();
-        wb.setSheetName(1, "询价单详情");
+//        Sheet s1 = wb.createSheet();
+//        wb.setSheetName(1, "报价表");
         return wb;
     }
 
