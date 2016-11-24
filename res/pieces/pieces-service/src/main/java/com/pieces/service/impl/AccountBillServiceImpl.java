@@ -181,9 +181,40 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 	}
 
 	@Override
+	@Transactional
+	public void generateBill(PayRecord payRecord,Integer memberId) {
+		AccountBill accountBill = new AccountBill();
+		OrderForm orderForm = orderFormService.findById(payRecord.getOrderId());
+
+		accountBill.setAmountsPayable(orderForm.getAmountsPayable());
+		accountBill.setUnPayable(orderForm.getAmountsPayable());
+		accountBill.setAlreadyPayable(0.0);
+
+		accountBill.setUserId(payRecord.getUserId());
+		accountBill.setOrderId(payRecord.getOrderId());
+		accountBill.setBillTime(30);
+		accountBill.setStatus(1);
+
+		Integer billTime = accountBill.getBillTime();
+		Date repayTime = DateUtils.dateAddDay(new Date(),billTime);
+		accountBill.setRepayTime(repayTime);
+		accountBill.setCreateDate(new Date());
+		accountBill.setMemberId(memberId);
+		accountBill.setOperateTime(new Date());
+
+		this.create(accountBill);
+
+		accountBill.setCode(SeqNoUtil.get("B", accountBill.getId(), 6));
+		this.update(accountBill);
+
+	}
+
+	@Override
 	public ICommonDao<AccountBill> getDao() {
 		return accountBillDao;
 	}
+
+
 
 
 }

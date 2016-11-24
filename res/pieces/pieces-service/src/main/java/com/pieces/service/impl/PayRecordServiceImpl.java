@@ -6,6 +6,7 @@ import com.pieces.dao.ICommonDao;
 import com.pieces.dao.PayRecordDao;
 import com.pieces.dao.enums.OrderEnum;
 import com.pieces.dao.model.*;
+import com.pieces.dao.vo.AccountBillVo;
 import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.dao.vo.PayRecordVo;
 import com.pieces.service.AbsCommonService;
@@ -40,6 +41,7 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 
 	@Autowired
 	private SmsService smsService;
+
 
 
 	@Override
@@ -189,6 +191,10 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		} else {
 			smsService.sendPaySuccess(orderFormVo.getUser().getContactName(),payRecord.getActualPayment(),
 					orderFormVo.getUser().getContactMobile());
+		}
+		//为代理商用户生成三个月账期
+		if(payRecord.getAgentId()!=null){
+			accountBillService.generateBill(payRecord,member.getId());
 		}
 
 }
