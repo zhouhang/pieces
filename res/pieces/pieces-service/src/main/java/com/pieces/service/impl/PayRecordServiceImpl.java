@@ -127,6 +127,7 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		OrderForm orderForm = orderFormService.findById(orderId);
 		payRecordVo.setOrderCode(orderForm.getCode());
 		payRecordVo.setAmountsPayable(orderForm.getAmountsPayable());
+		payRecordVo.setDeposit(orderForm.getDeposit());
 
 
 		//添加收款账户信息
@@ -138,7 +139,6 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		//其他信息代理商支付不能用userId
 		if(payRecordVo.getUserId()==null){
 			payRecordVo.setUserId(userId);
-			payRecordVo.setDeposit(orderForm.getDeposit());
 		}
 		payRecordVo.setPaymentTime(new Date());
 		payRecordVo.setStatus(0);
