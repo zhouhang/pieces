@@ -32,8 +32,9 @@
             </div>
             <div class="ft">
                 <a class="btn btn-red" href="/center/certificate/stepOne">立即认证</a>
+                <a  href="/">返回首页</a>
             </div>
-                 <a  href="/">返回首页</a>
+
         </div>
     </div><!-- fa-message start --> 
     
