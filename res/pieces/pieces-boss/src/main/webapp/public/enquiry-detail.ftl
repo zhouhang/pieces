@@ -23,6 +23,8 @@
                 <h3><i class="fa fa-chevron-right"></i>${enquiryBills.code}</h3>
                 <div class="extra">
                     <a class="btn btn-gray" href="enquiry/index">返回</a>
+                    <a class="btn btn-gray" href="enquiry/download/${enquiryBills.id}">导出报价</a>
+                    <button class="btn btn-gray" id="importExcel">导入报价</button>
                     <@shiro.hasPermission name="enquiry:quote">
                     <button type="button" id="submit" class="btn btn-red"><#if enquiryBills.status ==1>保存<#else>报价</#if></button>
                     </@shiro.hasPermission>
@@ -91,6 +93,8 @@
 <!-- footer end -->
 <script src="js/laydate/laydate.js"></script>
 <script src="/js/common.js"></script>
+<script src="/js/layer/layer.js"></script>
+<link type="text/css" rel="stylesheet" href="/js/layer/skin/layer.css" />
 <script>
 
     var enquiryPage = {
@@ -99,6 +103,8 @@
             init: function () {
                 this.pirceInput();
                 this.dateInit();
+                this.batch();
+
                 $("#submit").click(function () {
                     $.ajaxSetup({
                         headers : {
@@ -114,7 +120,9 @@
                                 title: '保存成功',
                                 text: data.info,
                                 delay: 3e3,
-                                call: function () {}
+                                call: function () {
+                                    window.location.href = "/enquiry/${enquiryBills.id}"
+                                }
                             });
                         }
                     },"json")
@@ -151,6 +159,20 @@
                 }).get();
 
                 return tableObj;
+            },
+            batch: function() {
+                $("#importExcel").click(function(){
+                    layer.open({
+                        moveType: 1,
+                        title: '导入报价',
+                        content: '<form action="/enquiry/excel/${enquiryBills.id}" id="excelForm" method="post" enctype="multipart/form-data"><p>上传报价文件</p><input name="file" type="file" /></form>',
+                        btn: ['确定', '取消'],
+                        yes: function(index) {
+                            $("#excelForm").submit();
+                            layer.close(index);
+                        }
+                    })
+                })
             }
         }
     }
