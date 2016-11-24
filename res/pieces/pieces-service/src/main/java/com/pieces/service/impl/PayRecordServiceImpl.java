@@ -138,6 +138,7 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		//其他信息代理商支付不能用userId
 		if(payRecordVo.getUserId()==null){
 			payRecordVo.setUserId(userId);
+			payRecordVo.setDeposit(orderForm.getDeposit());
 		}
 		payRecordVo.setPaymentTime(new Date());
 		payRecordVo.setStatus(0);

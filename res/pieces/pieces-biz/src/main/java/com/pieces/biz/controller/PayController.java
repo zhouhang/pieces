@@ -160,9 +160,17 @@ public class PayController extends BaseController{
             OrderForm orderForm = orderFormService.findByOrderCode(orderCode);
             Integer orderId = orderForm.getId();
             payRecordVo.setCommodities(assignCommodity(orderId));
+            if(payRecordVo.getDeposit()==null){
+                payRecordVo.setDeposit(orderForm.getDeposit());
+            }
         }
         modelMap.put("recordPage",recordPage);
-        return "pay_record";
+        if(user.getType()==1) {
+            return "pay_record";
+        }
+        else{
+            return "pay_record_agent";
+        }
     }
 
 
@@ -187,10 +195,18 @@ public class PayController extends BaseController{
                 return "redirect:error/404";
             }
         }
-
+        OrderForm orderForm = orderFormService.findByOrderCode(payRecordVo.getOrderCode());
+        if(payRecordVo.getDeposit()==null){
+            payRecordVo.setDeposit(orderForm.getDeposit());
+        }
 
         modelMap.put("payRecordVo",payRecordVo);
-        return "pay_detail";
+        if(user.getType()==1){
+            return "pay_detail";
+        }
+        else{
+            return "pay_detail_agent";
+        }
     }
 
 
