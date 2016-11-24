@@ -14,10 +14,11 @@ import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.utils.CommonUtils;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.WebUtil;
-import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.stereotype.Controller;
@@ -32,8 +33,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HomeController extends BaseController{
 
-    private static final Logger logger = Logger.getLogger(HomeController.class);
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private MemberService memberService;
@@ -76,8 +77,9 @@ public class HomeController extends BaseController{
         try {
             subject.login(token);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.info("subject.login Exception {} ",e.getMessage());
             WebUtil.print(response, new Result(false).info("用户名密码错误!"));
+            return;
         }
 
         // 存入用户信息到session

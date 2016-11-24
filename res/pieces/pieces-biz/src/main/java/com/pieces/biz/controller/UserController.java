@@ -31,6 +31,8 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -59,6 +61,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/user")
 public class UserController extends BaseController {
+
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private UserService userService;
 	
@@ -253,7 +257,7 @@ public class UserController extends BaseController {
 		try{
 			userService.login(subject,token);
 		}catch(Exception e){
-			e.printStackTrace();
+			logger.info("userService.login Exception {} ",e.getMessage());
 			Result result = new Result(false).info("用户名密码错误");
 			WebUtil.print(response, result);
 			return;
