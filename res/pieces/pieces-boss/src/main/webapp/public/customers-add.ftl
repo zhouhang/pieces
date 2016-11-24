@@ -143,10 +143,10 @@
             formValidate: function() {
                 $('#myform').validator({
                     fields: {
-                        userName: '会员名: required',
-                        contactName: '联系人姓名: required',
+                        userName: '会员名: required;username;remote(/user/username/check)',
+                        contactName: '联系人姓名: required;nickName',
                         contactMobile: '联系人手机号码: required, mobile',
-                        password: '新密码: required'
+                        password: '新密码: required;password'
                     },
                     valid: function(form) {
                         if ( $(form).isValid() ) {

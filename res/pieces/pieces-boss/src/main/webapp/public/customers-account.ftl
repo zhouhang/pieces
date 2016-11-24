@@ -148,8 +148,8 @@
             formValidate: function() {
                 $('#myform').validator({
                     fields: {
-                        contactName: '会员名: required',
-                        contactMobile: '联系人姓名: required',
+                        contactName: '会员名: required;nickName',
+                        contactMobile: '联系人姓名: required, mobile',
                     },
                     valid: function(form) {
                         if ( $(form).isValid() ) {
