@@ -767,8 +767,7 @@ vertical-align:middle;
 .img-upload-main .side{position:absolute;top:20px;right:20px;width:120px;text-align:center;}
 .img-upload-main .side .preview{width:108px;height:108px;padding:5px;border:1px solid #ddd;overflow:hidden;}
 .img-upload-main .side .preview img{width:100%;height:100%;}
-.img-upload-main .side .btn-file{position:relative;line-height:32px;margin-top:10px;color:#fff;background:#009f95;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;overflow:hidden;}
-.img-upload-main .side .btn-file input{position:absolute;width:10000px;height:1000px;right:-20px;top:-20px;font-size:1000px;opacity:0;filter:alpha(opacity=0);z-index:1;cursor:pointer;}
+.img-upload-main .side .btn-file{line-height:32px;margin-top:10px;color:#fff;background:#009f95;}
 
 /* subject */
 .subject{color:#666;}
@@ -850,6 +849,8 @@ vertical-align:middle;
 .enquiry .contact .cnt .error{display:inline-block;margin-left:10px;color:#c3272b;line-height:16px;}
 .enquiry .contact .cnt .error i{vertical-align:top;}
 .enquiry .contact .cnt .btn-red{width:300px;height:50px;margin-top:10px;font-size:16px;}
+
+/* 上传文件 */
 .enquiry_btn{width:98px;line-height:28px;margin:20px 10px 0 0;padding:0;font-size:12px;color:#666;border:1px solid #e7e7e7;}
 .filename{display:inline-block;line-height:28px;margin:20px 0 0 0;font-size:12px;vertical-align:middle;}
 

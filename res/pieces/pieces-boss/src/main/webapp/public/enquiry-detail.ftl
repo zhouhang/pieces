@@ -165,12 +165,18 @@
                     layer.open({
                         moveType: 1,
                         title: '导入报价',
-                        content: '<form action="/enquiry/excel/${enquiryBills.id}" id="excelForm" method="post" enctype="multipart/form-data"><p>上传报价文件</p><input name="file" type="file" /></form>',
+                        content: '<form action="/enquiry/excel/${enquiryBills.id}" id="excelForm" method="post" enctype="multipart/form-data"><p>上传报价文件</p><label class="btn btn-file enquiry_btn"><span>上传文件</span><input type="file" name="file"></label><label class="filename"></label></form>',
                         btn: ['确定', '取消'],
                         yes: function(index) {
                             $("#excelForm").submit();
                             layer.close(index);
+                        },
+                        end: function() {
+                            $('.enquiry_btn').off();
                         }
+                    })
+                    $('.enquiry_btn').on('change', 'input', function() {
+                        $('.filename').html($(this).val());
                     })
                 })
             }
