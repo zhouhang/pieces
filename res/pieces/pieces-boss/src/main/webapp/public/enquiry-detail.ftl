@@ -164,6 +164,7 @@
                 $("#importExcel").click(function(){
                     layer.open({
                         moveType: 1,
+                        area: ['600px'],
                         title: '导入报价',
                         content: '<form action="/enquiry/excel/${enquiryBills.id}" id="excelForm" method="post" enctype="multipart/form-data"><p>上传报价文件</p><label class="btn btn-file enquiry_btn"><span>上传文件</span><input type="file" name="file"></label><label class="filename"></label></form>',
                         btn: ['确定', '取消'],
