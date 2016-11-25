@@ -192,12 +192,13 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 
 		accountBill.setUserId(payRecord.getUserId());
 		accountBill.setOrderId(payRecord.getOrderId());
-		accountBill.setBillTime(90);
+		accountBill.setBillTime(3);
 		accountBill.setStatus(1);
 
 		Integer billTime = accountBill.getBillTime();
-		Date repayTime = DateUtils.dateAddDay(new Date(),billTime);
-		accountBill.setRepayTime(repayTime);
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, billTime);
+		accountBill.setRepayTime(calendar.getTime());
 		accountBill.setCreateDate(new Date());
 		accountBill.setMemberId(memberId);
 		accountBill.setOperateTime(new Date());
