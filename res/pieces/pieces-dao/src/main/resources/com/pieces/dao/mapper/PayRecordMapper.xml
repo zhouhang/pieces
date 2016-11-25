@@ -209,4 +209,16 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="findByUserId"    resultMap="PayRecordResultMapVo" parameterType="com.pieces.dao.vo.PayRecordVo">
+        select
+        <include refid="Base_Column_List" />
+        from pay_record pr
+        <where>
+            (pr.status = 1 or  pr.status = 2)
+                and  pr.user_id = #{userId} and pr.agent_id=NULL
+
+        </where>
+        ORDER BY pr.create_time DESC
+    </select>
 </mapper>

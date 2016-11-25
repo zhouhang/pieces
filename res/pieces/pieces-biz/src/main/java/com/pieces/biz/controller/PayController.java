@@ -148,13 +148,16 @@ public class PayController extends BaseController{
                          Integer pageNum){
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         PayRecordVo payRecord=new PayRecordVo();
+        PageInfo<PayRecordVo> recordPage;
         if(user.getType()==1){
             payRecord.setUserId(user.getId());
+            recordPage = payRecordService.findByUserId(payRecord,pageNum,pageSize);
         }
         else{
             payRecord.setAgentId(user.getId());
+            recordPage = payRecordService.findByNormalRecord(payRecord,pageNum,pageSize);
         }
-        PageInfo<PayRecordVo> recordPage = payRecordService.findByNormalRecord(payRecord,pageNum,pageSize);
+
         for(PayRecordVo payRecordVo : recordPage.getList()){
             String orderCode =  payRecordVo.getOrderCode();
             OrderForm orderForm = orderFormService.findByOrderCode(orderCode);
