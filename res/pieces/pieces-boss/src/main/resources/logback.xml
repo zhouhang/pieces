@@ -18,9 +18,9 @@
     <!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 -->
     <appender name="log" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <Encoding>UTF-8</Encoding>
-        <File>../logs/pieces_boos_handle.log</File>
+        <File>${catalina.home}/logs/pieces_boos_handle.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>../logs/pieces_boos_handle-%d{yyyy-MM-dd}.log
+            <FileNamePattern>${catalina.home}/logs/pieces_boos_handle-%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>10</MaxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy
@@ -36,10 +36,10 @@
 
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--<Encoding>UTF-8</Encoding>-->
-        <File>../logs/pieces_boss.log</File>
+        <File>${catalina.home}/logs/pieces_boss.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>
-                ../logs/pieces_boss-%d{yyyy-MM-dd}.%i.log
+                ${catalina.home}/logs/pieces_boss-%d{yyyy-MM-dd}.%i.log
             </FileNamePattern>
             <MaxHistory>10</MaxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy
@@ -55,10 +55,10 @@
 
     <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--<Encoding>UTF-8</Encoding>-->
-        <File>../logs/pieces_error_boss.log</File>
+        <File>${catalina.home}/logs/pieces_error_boss.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>
-                ../logs/pieces_error_boss-%d{yyyy-MM-dd}.%i.log
+                ${catalina.home}/logs/pieces_error_boss-%d{yyyy-MM-dd}.%i.log
             </FileNamePattern>
             <MaxHistory>10</MaxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy
@@ -80,6 +80,7 @@
     <!-- 日志级别 -->
     <root>
         <level value="INFO" />
+        <level value="ERROR" />
         <appender-ref ref="file" />
         <appender-ref ref="error" />
         <appender-ref ref="console" />

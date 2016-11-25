@@ -21,9 +21,9 @@
     <!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 -->
     <appender name="log" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <Encoding>UTF-8</Encoding>
-        <File>../logs/pieces_biz_handle.log</File>
+        <File>${catalina.home}/logs/pieces_biz_handle.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>../logs/pieces_biz_handle-%d{yyyy-MM-dd}.log
+            <FileNamePattern>${catalina.home}/logs/pieces_biz_handle-%d{yyyy-MM-dd}.log
             </FileNamePattern>
             <MaxHistory>10</MaxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy
@@ -39,10 +39,10 @@
 
     <appender name="logout" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <Encoding>UTF-8</Encoding>
-        <File>../logs/pieces_biz.log</File>
+        <File>${catalina.home}/logs/pieces_biz.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>
-                ../logs/pieces_biz-%d{yyyy-MM-dd}.%i.log
+                ${catalina.home}/logs/pieces_biz-%d{yyyy-MM-dd}.%i.log
             </FileNamePattern>
             <MaxHistory>10</MaxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy
@@ -58,10 +58,10 @@
 
     <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <Encoding>UTF-8</Encoding>
-        <File>../logs/pieces_error_biz.log</File>
+        <File>${catalina.home}/logs/pieces_error_biz.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>
-                ../logs/pieces_error_biz-%d{yyyy-MM-dd}.%i.log
+                ${catalina.home}/logs/pieces_error_biz-%d{yyyy-MM-dd}.%i.log
             </FileNamePattern>
             <MaxHistory>10</MaxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy
