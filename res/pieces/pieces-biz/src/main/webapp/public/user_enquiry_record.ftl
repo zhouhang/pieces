@@ -75,7 +75,9 @@
                                             </div>
                                             <div class="td w10">
                                                 <#if commodity.myPrice??&&commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
+                                                    <#if user_session_biz??&&user_session_biz.certifyStatus==1>
                                                     <a href="javascript:void(0);" onclick="page.fn.orderCommodity(${commodity.id!})">订购</a>
+                                                    </#if>
                                                 </#if>
                                             </div>
                                         </div>
@@ -230,7 +232,9 @@
                                 $btnBuy.remove();
                             }
                         } else {
+                           <#if user_session_biz??&&user_session_biz.certifyStatus==1>
                             $btnBuy.attr('href', 'javascript:;').html('订购已选商品');
+                           </#if>
                         }
                         
                         $btnBuy.on("click",function(){
@@ -262,7 +266,12 @@
                         var order = "";
                         if(item.myPrice!=null&&item.expireDate!=null&&new Date(item.expireDate)>new Date()){
                             checkBox = '<label><input class="cbx" type="checkbox" value="'+item.id+'">';
+                           <#if user_session_biz??&&user_session_biz.certifyStatus==1>
                             order = '<a href="#">订购</a>';
+                           <#else>
+                                   order ="";
+                           </#if>
+
                             flag = true;
                         }
                         modal.push('<div class="td w1">'+checkBox, item.commodityName,'</label></div>');
@@ -278,7 +287,9 @@
                         modal.push('</div>');
                     })
                     modal.push('</div>');
+                   <#if user_session_biz??&&user_session_biz.certifyStatus==1>
                     $expend.parent().find('.hd .c-blue').html('订购已选商品');
+                   </#if>
                     return modal.join('');
                 },
                 formatDate: function(date) {
