@@ -21,6 +21,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -112,7 +113,7 @@ public class EnquiryController extends BaseController{
      * 下载报价excel
      */
     @RequestMapping(value = "/download/{id}")
-    public void exportEnquiryExcel(HttpServletResponse response, @PathVariable("id") Integer id){
-        enquiryBillsService.exportEnquiryExcel(response, id);
+    public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, @PathVariable("id") Integer id){
+        enquiryBillsService.exportEnquiryExcel(response, request, id);
     }
 }

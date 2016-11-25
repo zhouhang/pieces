@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Date;
@@ -146,9 +147,9 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     }
 
     @Override
-    public void exportEnquiryExcel(HttpServletResponse response, Integer id) {
+    public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, Integer id) {
         EnquiryBillsVo vo = findVOById(id);
         Workbook workbook = ExcelParse.exportEnquiryInfo(vo);
-        ExcelParse.returnExcel(response, workbook,"报价表"+ id);
+        ExcelParse.returnExcel(response,request, workbook,"报价表"+ id);
     }
 }

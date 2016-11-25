@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -51,5 +52,5 @@ public interface EnquiryBillsService extends ICommonService<EnquiryBills>{
     /**
      * 下载报价excel
      */
-    public void exportEnquiryExcel(HttpServletResponse response, Integer id);
+    public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, Integer id);
 }

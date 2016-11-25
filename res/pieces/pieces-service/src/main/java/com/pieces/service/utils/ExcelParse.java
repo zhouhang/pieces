@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.math.BigDecimal;
@@ -250,7 +251,7 @@ public class ExcelParse {
      * @param workbook
      * @param fileName
      */
-    public static void returnExcel(HttpServletResponse response, Workbook workbook, String fileName) {
+    public static void returnExcel(HttpServletResponse response, HttpServletRequest request, Workbook workbook, String fileName) {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             workbook.write(os);
@@ -260,12 +261,16 @@ public class ExcelParse {
             response.reset();
             response.setContentType("application/octet-stream");
 
-            String name = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
+            String name;
+            if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) {
+                name = URLEncoder.encode(fileName, "UTF-8");
+            } else {
+                name = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
+            }
 
             response.setHeader("Content-disposition", "attachment;filename="
                     + name + ".xls");
-            ServletOutputStream out = null;
-            out = response.getOutputStream();
+            ServletOutputStream out = response.getOutputStream();
             BufferedInputStream bis = null;
             BufferedOutputStream bos = null;
             try {
