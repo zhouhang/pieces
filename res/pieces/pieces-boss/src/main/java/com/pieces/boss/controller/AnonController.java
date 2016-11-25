@@ -142,7 +142,8 @@ public class AnonController extends BaseController{
         response.setCharacterEncoding("utf-8");
         response.setContentType("application/octet-stream");
 
-        if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) {
+        if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0 ||
+                request.getHeader("User-Agent").toUpperCase().indexOf("TRIDENT") > 0) {
             fileName = URLEncoder.encode(fileName, "UTF-8");
         } else {
             fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");

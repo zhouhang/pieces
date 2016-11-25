@@ -262,7 +262,8 @@ public class ExcelParse {
             response.setContentType("application/octet-stream");
 
             String name;
-            if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0) {
+            if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0 ||
+                    request.getHeader("User-Agent").toUpperCase().indexOf("TRIDENT") > 0) {
                 name = URLEncoder.encode(fileName, "UTF-8");
             } else {
                 name = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
