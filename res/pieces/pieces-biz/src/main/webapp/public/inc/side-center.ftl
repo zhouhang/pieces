@@ -11,6 +11,7 @@
             <a href="center/enquiry/record">询价记录</a>
         </dd>
     </dl>
+    <#if user_session_biz.certifyStatus == 1>
     <dl>
         <dt>
             <em class="fa fa-menu"></em>
@@ -42,6 +43,7 @@
             <a href="/center/bill/index">帐期账单</a>
         </dd>
     </dl>
+    </#if>
     <dl>
         <dt>
             <em class="fa fa-heart"></em>
