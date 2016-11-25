@@ -332,6 +332,7 @@
 			</if>
 			<if test="true">
 				and b.type = 1
+				AND b.certify_status = 1
 			</if>
 		</where>
 	</select>
