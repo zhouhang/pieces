@@ -3,7 +3,6 @@
 <head>
     <#include "./inc/meta.ftl"/>
     <title>支付记录-上工好药</title>
-    <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>

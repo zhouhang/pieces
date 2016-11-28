@@ -23,7 +23,7 @@
                 <div class="fa-table">
                 	<div class="caption">
                         <form id="excelForm" action="/center/enquiry/parseXsl" method="post" enctype="multipart/form-data">
-                        <p>请输入要询价的商品名称及对应数量，期望单价可以不输入。一次可以添加多个商品。</p>
+                        <p><strong>输入商品的名称，选择要询价的片型及规格等级。一次可添加多个商品。</strong></p>
                         <p>您还可以<a class="btn" href="/file/批量采购模版.xls">下载模板</a>填入内容后，
                             <span class="btn btn-file">上传文档<input type="file" id="excel" name="excel"></span>
                             到网站。</p>
@@ -36,14 +36,11 @@
 	                		<table>
 	                			<thead>
 	                				<tr>
-	                					<th width="180">商品名称</th>
-	                					<th>切制规格</th>
-	                					<th>规格等级</th>
-	                					<th>产地</th>
-	                					<th>数量<span>（公斤）</span></th>
-	                					<th width="130">期望单价<span>（元/公斤）</span></th>
-	                					<th width="110">期望交货日期</th>
-	                					<th width="100">操作</th>
+                                        <th width="110">商品名称</th>
+                                        <th width="90">片型</th>
+                                        <th>规格等级</th>
+                                        <th width="100">产地</th>
+                                        <th width="150">操作</th>
 	                				</tr>
 	                			</thead>
 	                			<tfoot>
@@ -53,9 +50,6 @@
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="specs" autocomplete="off"><span class="error"></span></div></td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"><span class="error"></span></div></td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"><span class="error"></span></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"><span class="error"></span></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
 	                            		<td>
 	                            			<a class="add c-blue" href="javascript:;">添加</a>
 	                            			<a class="remove c-red" href="javascript:;">删除</a>
@@ -71,9 +65,6 @@
                                         <td><div class="ipt-wrap"><input type="text" class="ipt" value="${enquiryCommodity.specs!}" name="specs" autocomplete="off"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text" class="ipt" value="${enquiryCommodity.level!}" name="level" autocomplete="off"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text" class="ipt" value="${enquiryCommodity.origin!}" name="origin" autocomplete="off"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="${enquiryCommodity.amount!}" name="amount" autocomplete="off"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text" class="ipt price" value="${enquiryCommodity.expectPrice!}" name="expectPrice" autocomplete="off"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text" class="ipt date" value="${enquiryCommodity.expectDate?string("yyyy-MM-dd")}" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                         <td>
                                             <a class="add c-blue" href="javascript:;">添加</a>
                                             <#if (enquiryCommoditysList?size>1)>
@@ -92,9 +83,6 @@
                                             <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.spec!}" name="specs" autocomplete="off"><span class="error"></span></div></td>
                                             <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.level!}" name="level" autocomplete="off"><span class="error"></span></div></td>
                                             <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.originOf!}" name="origin" autocomplete="off"><span class="error"></span></div></td>
-                                            <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"><span class="error"></span></div></td>
-                                            <td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"><span class="error"></span></div></td>
-                                            <td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                             <td>
                                                 <a class="add c-blue" href="javascript:;">添加</a>
                                                 <#if (commodityList?size>1)>
@@ -110,9 +98,6 @@
                                                 <td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="specs" autocomplete="off"><span class="error"></span></div></td>
                                                 <td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"><span class="error"></span></div></td>
                                                 <td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"><span class="error"></span></div></td>
-                                                <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"><span class="error"></span></div></td>
-                                                <td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"><span class="error"></span></div></td>
-                                                <td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                                 <td>
                                                     <a class="add c-blue" href="javascript:;">添加</a>
                                                 </td>
@@ -203,9 +188,6 @@
                     self.$suggestions = $suggestions;
     				$tfoot.empty();
 
-                    // 第一个输入框不为空时自动获取焦点
-                    $ipt.val() === '' && $ipt.focus() && $ipt.after($suggestions);
-
                     // 隐藏错误提示
                     $myform.on('focus', '.ipt', function() {
                         $(this).nextAll('.error').html('').hide();
@@ -232,9 +214,11 @@
                     // 商品名联想
     				$myform.on({
                         'click': function(event) {
-                            $(this).after($suggestions);
-                            // self.getKeywords(this.value); // 获取焦点时查询一次
                             event.stopPropagation();
+                        },
+                        'focus': function() {
+                            $(this).after($suggestions);
+                            $('#suggestions').find('.group').length > 1 && $suggestions.show();
                         },
                         'input': function() {
                             self.getKeywords(this.value);                           
@@ -304,7 +288,7 @@
                         self.timer && clearTimeout(self.timer);
                         self.timer = setTimeout(function() {
                             self.ajaxSearch(keywords);
-                        }, 500);                
+                        }, 300);                
 					}    			
     			},
                 ajaxSearch: function(keywords) {
