@@ -115,6 +115,14 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
     }
 
     @Override
+    public PageInfo<UserVo> findVoByCondition(UserVo userVo, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<UserVo> list = userDao.findVoByCondition(userVo);
+        PageInfo page = new PageInfo(list);
+        return page;
+    }
+
+    @Override
     @Transactional
     public int updateUserByCondition(User user) {
         return userDao.updateUserByCondition(user);

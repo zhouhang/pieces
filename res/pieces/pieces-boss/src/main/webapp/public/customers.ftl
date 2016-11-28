@@ -44,7 +44,9 @@
 							<th>联系人</th>
 							<th>手机号</th>
 							<th width="170">注册日期</th>
+                            <th width="80">是否认证</th>
 							<th width="80">客户类型</th>
+                            <th width="80">跟单员</th>
 							<th width="80">操作</th>
 						</tr>
 						<tr>
@@ -66,6 +68,16 @@
 									value="${userVo.startDate}" id="start"> - <input
 									name="endDate" type="text" class="ipt date"
 									value="${userVo.endDate}" id="end"></td>
+                                <td><select name="certifyStatus" id="certifyStatus">
+                                    <option <#if (!userVo.certifyStatus??)>selected</#if>
+                                            value=""></option>
+                                    <option <#if
+											(userVo.certifyStatus??&&userVo.certifyStatus==1)>selected</#if>
+                                            value="1">是</option>
+                                    <option <#if
+											(userVo.certifyStatus??&&userVo.certifyStatus==0)>selected</#if>
+                                            value="0">否</option>
+                                </select></td>
 								<td><select name="type" id="type">
 										<option <#if (!userVo.type??)>selected</#if>
                                                 value=""></option>
@@ -76,6 +88,10 @@
 											(userVo.type??&&userVo.type==2)>selected</#if>
 											value="2">代理商</option>
 								</select></td>
+                                <td><div class="ipt-wrap">
+                                    <input name="serviceName" type="text" class="ipt"
+                                           value="${userVo.serviceName!}">
+                                </div></td>
 								<td></td>
 							</form>
 						</tr>
@@ -89,7 +105,9 @@
 							<td>${user.contactName}</td>
 							<td>${user.contactMobile}</td>
 							<td>${user.createTime?date}</td>
+                            <td><#if user.certifyStatus==1>是 <#else>否</#if></td>
 							<td><#if user.type==1>终端用户 <#elseif user.type==2>代理商</#if></td>
+							<td>${user.serviceName!}</td>
 							<td>
 								<@shiro.hasPermission name="customer:edit">
 									<a href="user/info/${user.id}">修改</a>

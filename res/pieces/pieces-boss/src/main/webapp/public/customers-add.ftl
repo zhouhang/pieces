@@ -117,6 +117,21 @@
                         </div>
                     </div>
                 </div>
+                <div class="user-info" id="serviceCnt">
+                    <h3>跟单员</h3>
+
+                    <div class="fa-form">
+                        <div class="group">
+                            <div class="txt">
+                                跟单员姓名：
+                            </div>
+                            <div class="cnt">
+                                <input type="text" class="ipt" value="" autocomplete="off" name="" id="serviceName" placeholder="">
+                            </div>
+                            <input type="hidden" class="ipt" value="" autocomplete="off" name="serviceId" id="serviceId" placeholder="">
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div><!-- fa-floor end -->
@@ -139,6 +154,7 @@
             init: function() {
                 this.formValidate();
                 this.agency();
+                this.service();
             },
             formValidate: function() {
                 $('#myform').validator({
@@ -210,6 +226,36 @@
                         $('#agencyCnt').show();
                     }
                 })
+            },
+            service:function () {
+                // 跟单姓名联想
+                var $serviceName = $('#serviceName');
+                $serviceName.autocomplete({
+                    serviceUrl: '/user/searchMember',
+                    paramName: 'name',
+                    deferRequestBy: 100,
+                    type: 'POST',
+                    showNoSuggestionNotice: true,
+                    noSuggestionNotice: '没有该客服',
+                    transformResult: function (response) {
+                        response = JSON.parse(response);
+                        if (response.status == "y") {
+                            return {
+                                suggestions: $.map(response.data.list, function (dataItem) {
+                                    return {value: dataItem.name, data: dataItem.id};
+                                })
+                            };
+                        } else {
+                            return {
+                                suggestions: []
+                            }
+                        }
+                    },
+                    onSelect: function (suggestion) {
+                        $("#serviceId").val(suggestion.data); // 保存品种id到隐藏文本域
+                    }
+                })
+
             }
         }
     }

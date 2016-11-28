@@ -75,21 +75,17 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>是否与ERP关联：</th>
+                                    <th>代理商：</th>
                                     <td>
-                                    <#if (user.bindErp==1)>
-                                        已关联
-                                    <#else>
-                                        未关联
-                                    </#if>
+                                        -
+                                    </td>
+                                    <th>跟单员：</th>
+                                    <td>
+                                        -
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th></th>
-                                    <td>
-                                    </td>
-                                    <th></th>
-                                    <td></td>
+
                                 </tr>
                             </tbody>
                         </table>

@@ -95,7 +95,7 @@ public class UserController extends  BaseController{
 							ModelMap model) {
 		pageNum=pageNum==null?1:pageNum;
 		pageSize=pageSize==null?10:pageSize;
-		PageInfo<User> userPage = userService.findByCondition(userVo,pageNum,pageSize);
+		PageInfo<UserVo> userPage = userService.findVoByCondition(userVo,pageNum,pageSize);
 		model.put("userPage",userPage);
 		model.put("userParams", Reflection.serialize(userVo));
 		model.put("advices",advices);
@@ -315,8 +315,7 @@ public class UserController extends  BaseController{
 	@RequestMapping(value = "/search" ,method= RequestMethod.POST)
 	@ResponseBody
 	@BizLog(type = LogConstant.user, desc = "代理商搜索")
-	public Result searchUser(String name,
-					   ModelMap model){
+	public Result searchUser(String name){
 
         UserVo userVo=new UserVo();
 		userVo.setContactName(name);
@@ -324,6 +323,18 @@ public class UserController extends  BaseController{
 		PageInfo<User> userPage = userService.findByCondition(userVo,1,10);
 		return new Result(true).data(userPage);
 	}
+	@RequiresPermissions(value = "customer:edit")
+	@RequestMapping(value = "/searchMember" ,method= RequestMethod.POST)
+	@ResponseBody
+	@BizLog(type = LogConstant.user, desc = "后台客服人员搜索")
+	public Result searchMember(String name){
+
+		MemberVo memberVo=new MemberVo();
+		memberVo.setName(name);
+		PageInfo<Member>  memberVoPageInfo=memberService.findByCondition(memberVo,1,10);
+		return new Result(true).data(memberVoPageInfo);
+	}
+
 
 	@RequiresPermissions(value = "customer:edit")
 	@RequestMapping(value = "/certify/save" ,method= RequestMethod.POST)

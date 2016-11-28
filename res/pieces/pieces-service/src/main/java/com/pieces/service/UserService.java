@@ -40,6 +40,8 @@ public interface UserService extends ICommonService<User>{
 
 	PageInfo<User> findByCondition(UserVo userVo, Integer pageNum, Integer pageSize);
 
+	PageInfo<UserVo> findVoByCondition(UserVo userVo, Integer pageNum, Integer pageSize);
+
 	/**
 	 * 新建订单时选择客户来源
 	 * @param userVo
