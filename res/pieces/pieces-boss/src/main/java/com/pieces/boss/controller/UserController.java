@@ -290,9 +290,10 @@ public class UserController extends  BaseController{
 	@BizLog(type = LogConstant.user, desc = "修改会员信息页面")
 	public String edit(@PathVariable("id") Integer id,
 					   ModelMap model){
-		User user =	userService.findById(id);
+		UserVo user =	userService.findVoById(id);
 		//Area area =  areaService.findParentsById(user.getAreaId());
 		model.put("user",user);
+		/*
 		if(user.getType()==1){
 			UserBindVo userBindVo=new UserBindVo();
 			userBindVo.setTerminalId(id);
@@ -306,7 +307,7 @@ public class UserController extends  BaseController{
 
 
 			model.put("userBind",userBind);
-		}
+		}*/
 
 
 		return "customers-account";

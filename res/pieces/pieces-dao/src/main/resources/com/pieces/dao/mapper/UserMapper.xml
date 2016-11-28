@@ -398,7 +398,7 @@
 
 
 	<select id="findVoById" parameterType="java.lang.Integer" resultMap="Vo">
-		select b.* ,m.name as serviceName,agent.user_name as agentName,agent.id as agentId  from user b
+		select b.* ,m.name as serviceName,agent.contact_name as agentName,agent.id as agentId  from user b
 		LEFT JOIN member m ON b.service_id = m.id
 		LEFT JOIN  user_bind bind ON b.id = bind.terminal_id
 		LEFT JOIN  user agent ON bind.agent_id = agent.id
