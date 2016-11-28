@@ -52,4 +52,7 @@ public interface UserService extends ICommonService<User>{
 	PageInfo<UserVo> findProxyUser(UserVo userVo, Integer pageNum, Integer pageSize);
 
 	public void login(Subject subject, UsernamePasswordToken token);
+
+	UserVo findVoById(Integer id);
+
 }

@@ -117,7 +117,7 @@ public class UserController extends  BaseController{
 						   HttpServletResponse response,
 						   @PathVariable("id") Integer id,
 						   ModelMap model){
-		User user = userService.findById(id);
+		UserVo user = userService.findVoById(id);
 		model.put("user",user);
 		return "customers-info";
 	}

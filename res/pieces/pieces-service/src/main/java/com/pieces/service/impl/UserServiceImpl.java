@@ -162,6 +162,11 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
     }
 
     @Override
+    public UserVo findVoById(Integer id) {
+        return userDao.findVoById(id);
+    }
+
+    @Override
     public ICommonDao<User> getDao() {
         return userDao;
     }

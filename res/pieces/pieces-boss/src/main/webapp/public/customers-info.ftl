@@ -77,11 +77,19 @@
                                 <tr>
                                     <th>代理商：</th>
                                     <td>
-                                        -
+                                        <#if user.agentName?exists>
+                                            ${user.agentName!}
+                                        <#else>
+                                            -
+                                        </#if>
                                     </td>
                                     <th>跟单员：</th>
                                     <td>
+                                    <#if user.serviceName?exists>
+                                        ${user.serviceName!}
+                                    <#else>
                                         -
+                                    </#if>
                                     </td>
                                 </tr>
                                 <tr>
