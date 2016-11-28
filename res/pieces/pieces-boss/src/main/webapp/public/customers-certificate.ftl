@@ -409,8 +409,9 @@
                             group=0;
                         </#if>
                         var $picture=showBox.find(".goods-img");
-                        $picture.show().html('<img src="' + '${q.pictureUrl}' + '" /><i class="del" title="删除"></i>');
-                        $picture.next('input:hidden').val('${q.pictureUrl}').trigger('blur');
+                        var url='${q.pictureUrl?replace("\\",'/')}'
+                        $picture.show().html('<img src="' + url + '" /><i class="del" title="删除"></i>');
+                        $picture.next('input:hidden').val(url).trigger('blur');
                     </#list>
                     </#if>
 
