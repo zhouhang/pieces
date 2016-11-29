@@ -29,7 +29,7 @@
                     <div class="bd">
                         <div class="th">
                             <span class="w1">商品</span>
-                            <span class="w2">切制规格</span>
+                            <span class="w2">片型</span>
                             <span class="w3">规格等级</span>
                             <span class="w4">产地</span>
                         </div>
@@ -64,7 +64,7 @@
                 <div class="bd">
                     <div class="th">
                         <span class="w1">商品</span>
-                        <span class="w2">切制规格</span>
+                        <span class="w2">片型</span>
                         <span class="w3">规格等级</span>
                         <span class="w4">产地</span>
                     </div>
@@ -96,10 +96,9 @@
                             <thead>
                             <tr>
                                 <th>商品名称</th>
-                                <th>切制规格</th>
+                                <th>片型</th>
                                 <th>规格等级</th>
                                 <th width="100">产地</th>
-                                <th width="100">期望交货日期</th>
                                 <th width="90">数量（公斤）</th>
                                 <th width="90">指导价（元/公斤）</th>
                                 <th width="100">合同价（元/公斤）</th>
@@ -121,7 +120,6 @@
                                         <td><div class="ipt-wrap"><input type="text" value="${commodity.spec!}" class="ipt" name="spec"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text" value="${commodity.level!}" class="ipt" name="level"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text" value="${commodity.originOf!}" class="ipt" name="originOf"><span class="error"></span></div></td>
-                                        <td><div class="pr"><input type="text" class="ipt" name="expectDate" value="${commodity.expectDate?string("yyyy-MM-dd")}" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt amount" name="amount" value="${commodity.amount!}"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt guidePrice" name="guidePrice" value="${commodity.guidePrice!}"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt price" name="price" value="${commodity.price!}"><span class="error"></span></div></td>
@@ -140,7 +138,6 @@
                                         <td><div class="ipt-wrap"><input type="text"  class="ipt" name="spec"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text"  class="ipt" name="level"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text"  class="ipt" name="originOf"><span class="error"></span></div></td>
-                                        <td><div class="pr"><input type="text" class="ipt" name="expectDate"  onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt amount" name="amount" ><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt guidePrice" name="guidePrice"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt price" name="price" ><span class="error"></span></div></td>
@@ -229,10 +226,6 @@
                         <em class="jsum"><#if origOrderForm??>${origOrderForm.sum!}</#if></em>
                     </div>
                     <div class="item">
-                        <span>运&#12288;&#12288;费：</span>
-                        <em><input value="<#if origOrderForm??>${origOrderForm.shippingCosts!}</#if>" type="text" class="ipt" name="jfreightPrice" id="jfreightPrice"></em>
-                    </div>
-                    <div class="item">
                         <span>实际应付：</span>
                         <em class="price jsum2"><#if origOrderForm??>${origOrderForm.amountsPayable!}</#if></em>
                     </div>
@@ -263,7 +256,7 @@
 <div class="suggestions" id="suggestions">
     <div class="hd">
         <div class="group">
-            <span class="w1">商品名称</span><span class="w2">切制规格</span><span class="w3">规格等级</span><span class="w4">产地</span>
+            <span class="w1">商品名称</span><span class="w2">片型</span><span class="w3">规格等级</span><span class="w4">产地</span>
         </div>
     </div>
     <div class="bd"></div>
@@ -275,7 +268,6 @@
             <td><div class="ipt-wrap"><input type="text" class="ipt" name="spec"><span class="error"></span></div></td>
             <td><div class="ipt-wrap"><input type="text" class="ipt" name="level"><span class="error"></span></div></td>
             <td><div class="ipt-wrap"><input type="text" class="ipt" name="originOf"><span class="error"></span></div></td>
-            <td><div class="pr"><input type="text" class="ipt" name="expectDate" value="" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
             <td><div class="pr"><input type="text" class="ipt amount" name="amount" value=""><span class="error"></span></div></td>
             <td><div class="pr"><input type="text" class="ipt guidePrice" name="guidePrice" value=""><span class="error"></span></div></td>
             <td><div class="pr"><input type="text" class="ipt price" name="price" value=""><span class="error"></span></div></td>
@@ -299,6 +291,7 @@
                 this.myformEvent();
                 this.addGoodsToOrder();
                 this.insertArea();
+                this.batch();
 
 
                 $('#myform').validator({
@@ -307,7 +300,7 @@
                         tel : '手机号: required; ',
                         area : '所在地区: required;',
                         detail : '详细地址: required;',
-                        jfreightPrice : '运费: required;',
+                       // jfreightPrice : '运费: required;',
                     }
                 });
 
@@ -458,14 +451,15 @@
             },
             // 小计&总计
             calcPrice: function($tbody, $tr) {
-                var freightPrice = parseFloat($('#jfreightPrice').val());
+                //var freightPrice = parseFloat($('#jfreightPrice').val());
+                var freightPrice =0;
                 var subTotal = 0;
                 //保证金
                 var subDeposit = 0;
 
-                if (isNaN(freightPrice)) {
-                    freightPrice = 0;
-                }
+                //if (isNaN(freightPrice)) {
+                //    freightPrice = 0;
+                //}
                 $tbody.find('tr').each(function(i) {
                     var amount = parseInt($(this).find('.amount').val(), 10);
                     var price = parseFloat($(this).find('.price').val(), 10);
@@ -590,8 +584,8 @@
                         var remark =  $(".cnt textarea[name='remark']").val();
                         formObj.remark = remark;
                         //运费
-                        var jfreightPrice = $("#jfreightPrice").val();
-                        formObj.shippingCosts = jfreightPrice;
+                        //var jfreightPrice = $("#jfreightPrice").val();
+                        formObj.shippingCosts = 0;
                         //订单号
                         var orderId = $("#orderId").val();
                         formObj.orderId = orderId;
@@ -737,6 +731,40 @@
                             code: area[2]
                         });
                     }
+                })
+            },
+            batch: function() {
+                $("#importExcel").click(function(){
+                    layer.open({
+                        moveType: 1,
+                        area: ['600px'],
+                        title: '导入报价',
+                        content: '<form action="/order/importExcel" id="excelForm" method="post" enctype="multipart/form-data"><p>上传报价文件</p><label class="btn btn-file enquiry_btn"><span>上传文件</span><input type="file" name="file"></label><label class="filename"></label></form>',
+                        btn: ['确定', '取消'],
+                        yes: function(index) {
+                            layer.close(index);
+                            $.ajax({
+                                url: '/order/importExcel',
+                                data: new FormData($('#excelForm')[0]),
+                                type: "POST",
+                                contentType: false,
+                                processData:false,
+                                cache: false,
+                                success: function (data) {
+                                    if (data.status == "y") {
+                                        console.log(data);
+                                    }
+                                }
+                            });
+                        },
+                        end: function() {
+                            $('.enquiry_btn').off();
+                        }
+                    })
+
+                    $('.enquiry_btn').on('change', 'input', function() {
+                        $('.filename').html($(this).val());
+                    })
                 })
             }
         }
