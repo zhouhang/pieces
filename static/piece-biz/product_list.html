@@ -356,119 +356,21 @@
     <script src="js/layer/layer.js"></script>
     <script src="js/common.js"></script>
     <script>
-    var page = {
-        v: {
-
-        },
+    var productPage = {
         fn: {
-            init: function() {
-                this.checkboxEvent();
-                this.dorpDown();
-                this.quote();
+            init: function(){
+                this.skip();
             },
-            // 全选事件
-            checkboxEvent: function() {
-                var _self = this;
-                $('.drop-dowm dt .cbx').each(function() {
-                    var $this = $(this),
-                        $cbxList = $this.closest('dt').next().find('.cbx')
-
-                    _self.checkAll($this, $cbxList);
+            skip: function() {
+                $('.fa-pro-list').on('click', 'tr', function() {
+                    window.location.href = $(this).find('td:eq(0)').find('a')[0].href;
                 })
-                return this;
-            },
-            // 全选
-            checkAll: function($checkAll, $checkList) {
-                var amount = $checkList.length, // 总个数
-                    total  = 0; // 当前选中的个数
-                
-                // 单选
-                $checkList.on("click", function() {
-                    total += this.checked ? 1 : -1;
-                    $checkAll.prop('checked', total === amount);
-
-                }).each(function() {
-                    // 统计已选个数
-                    total += this.checked ? 1 : 0;
-                });
-
-                // 全选
-                $checkAll.on("click", function() {
-                    var icheck = this.checked;
-                    $checkList.each(function() {
-                        this.checked = icheck;
-                    });
-                    
-                    total = icheck ? amount : 0;
-                }).each(function() {
-                    this.checked = total !== 0 && total === amount;
-                });
-
-                // 确定按钮
-                $checkAll.parent().next().on('click', function() {
-                    var data = $('#myform').formSerialize();
-                    console.log(data)
-                    var val = [];
-                    $checkList.filter(':checked').each(function() {
-                        val.push(this.value);
-                    });
-
-                    // console.log(val) 
-
-                    // 关闭下拉
-                    $(this).closest('.bd').hide();
-                    // window.open('search?' + $checkAll.val() + '=' + val.join('-'));
-                    // location.href = 'search?' + $checkAll.val() + '=' + val.join('-');
-                    return false;
-                })
-            },
-            // 下拉
-            dorpDown: function() {
-                var $dorpDownList = $('.drop-dowm .bd');
-                // 打开当前下拉并关闭其他下拉
-                $('.drop-dowm').on('click', '.hd', function() {
-                    $dorpDownList.hide();
-                    $(this).next().show();
-                    return false;
-                })
-                // 点击页面关闭下拉
-                $(document).on('click', function() {
-                    $dorpDownList.hide();
-                })
-                // 点击下拉区域阻止关闭
-                $(document).on('click', '.drop-dowm', function(e) {
-                    if (e.stopPropagation) {
-                        e.stopPropagation();
-                    }
-                    else {
-                        e.cancelBubble = true;
-                    }
-                })
-                return this;
-            },
-            // 询价
-            quote: function() {
-                $('#myform').on('click', '.btn-quote', function() {
-                    layer.open({
-                        type: 2,
-                        title: '账户登录',
-                        area: ['360px', '360px'],
-                        content: ['login_mini.html', 'no']
-                    });
-                    return false;
-                })
-            },
-            // 登录成功关闭弹框
-            logined: function() {
-                layer.closeAll();
-            },
-            defaultImg: function() {
-                $('img[original]')
             }
+
         }
     }
     $(function() {
-        page.fn.init();
+        productPage.fn.init();
     })
     </script>
 </body>
