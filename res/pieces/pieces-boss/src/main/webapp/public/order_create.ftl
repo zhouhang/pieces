@@ -90,7 +90,7 @@
             <form action="" id="myform">
 
             <div class="chart-info">
-                <h3>订购商品</h3>
+                <h3>订购商品  <button type="button"class="btn btn-gray" id="importExcel">导入报价</button></h3>
                 <div class="chart">
                         <table class="tc">
                             <thead>
