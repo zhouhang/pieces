@@ -50,13 +50,10 @@
                         <thead>
                         <tr>
                             <th>商品名称</th>
-                            <th width="80">切制规格</th>
-                            <th width="80">规格等级</th>
-                            <th>产地</th>
-                            <th width="90">数量（公斤）</th>
-                            <th width="140">期望单价（元/公斤）</th>
-                            <th width="100">期望交货日期</th>
-                            <th width="120">裸价（元/公斤）</th>
+                            <th width="80">片型</th>
+                            <th width="300">规格等级</th>
+                            <th width="100">产地</th>
+                            <th width="120">单价（元/公斤）</th>
                             <th width="120">报价有效期至</th>
                         </tr>
                         </thead>
@@ -69,15 +66,14 @@
                             <td>${commodity.specs}</td>
                             <td>${commodity.level}</td>
                             <td>${commodity.origin}</td>
-                            <td>${commodity.amount}</td>
-                            <td>${commodity.expectPrice}</td>
-                            <td><#if commodity.expectDate?exists>${commodity.expectDate?date}</#if></td>
                             <td>
                                 <input type="text" name="id" style="display: none" value="${commodity.id}">
                                 <input type="text" name="myPrice" class="ipt ipt-price" value="${commodity.myPrice}">
                             </td>
-                            <td><input type="text" name="expireDate" class="ipt ipt-date" value="<#if commodity.expireDate?exists>${commodity.expireDate?date}</#if>" onclick="laydate({min: laydate.now(),istoday:false})"></td>
-                        </tr>
+                            <#if commodity_index == 0>
+                            <td rowspan="${enquiryBills.enquiryCommoditys?size}"><input type="text" id="expireDate" name="expireDate" class="ipt ipt-date" value="<#if commodity.expireDate?exists>${commodity.expireDate?date}</#if>" onclick="laydate({min: laydate.now(),istoday:false})"></td>
+                            </#if>
+                            </tr>
                         </#list>
                         </tbody>
                     </table>
@@ -155,6 +151,7 @@
                     $(this).find('input').each(function (i) {
                         row[$(this).attr("name")] = $(this).val();
                     });
+                    row["expireDate"] = $("#expireDate").val();
                     return row;
                 }).get();
 

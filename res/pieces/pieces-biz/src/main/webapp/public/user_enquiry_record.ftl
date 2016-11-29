@@ -33,13 +33,10 @@
                             <div class="group">
                                 <div class="tr th">
                                     <div class="td w1">商品名称</div>
-                                    <div class="td w2">切制规格</div>
+                                    <div class="td w2">片型</div>
                                     <div class="td w3">规格等级</div>
                                     <div class="td w4">产地</div>
-                                    <div class="td w5">数量<span>（公斤）</span></div>
-                                    <div class="td w6">期望单价<span>（元/公斤）</span></div>
-                                    <div class="td w7">期望交货日期</div>
-                                    <div class="td w8">裸价<span>（元/公斤）</span></div>
+                                    <div class="td w8">单价<span>（元/公斤）</span></div>
                                     <div class="td w9">报价有效期至</div>
                                     <div class="td w10">操作</div>
                                 </div>
@@ -60,13 +57,6 @@
                                             <div class="td w2">${commodity.specs!}</div>
                                             <div class="td w3">${commodity.level!}</div>
                                             <div class="td w4">${commodity.origin!}</div>
-                                            <div class="td w5">${commodity.amount!}</div>
-                                            <div class="td w6">${commodity.expectPrice!}</div>
-                                            <div class="td w7">
-                                            <#if commodity.expectDate??>
-                                                ${commodity.expectDate?string("yyyy-MM-dd")}
-                                            </#if>
-                                            </div>
                                             <div class="td w8">${commodity.myPrice!}</div>
                                             <div class="td w9">
                                             <#if commodity.expireDate??>
@@ -278,9 +268,6 @@
                         modal.push('<div class="td w2">', item.specs,'</div>');
                         modal.push('<div class="td w3">', item.level,'</div>');
                         modal.push('<div class="td w4">', item.origin,'</div>');
-                        modal.push('<div class="td w5">', item.amount,'</div>');
-                        modal.push('<div class="td w6">', item.expectPrice,'</div>');
-                        modal.push('<div class="td w7">', self.formatDate(item.expectDate),'</div>');
                         modal.push('<div class="td w8">', item.myPrice,'</div>');
                         modal.push('<div class="td w9">', self.formatDate(item.expireDate),'</div>');
                         modal.push('<div class="td w10">'+order+'</div>');

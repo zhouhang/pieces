@@ -2,6 +2,7 @@ package com.pieces.service.utils;
 
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.vo.EnquiryBillsVo;
+import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -45,7 +46,7 @@ public class ExcelParse {
             EnquiryCommoditys commoditys = new EnquiryCommoditys();
 
             for (int cn = 0; cn < 7; cn++) {
-                // 0商品名称(必填)	1切制规格（必填）	2等级（必填）	3产地（数量）	4数量（必填）	5期望单价（元/公斤）	6期望交期（必填）
+                // 0商品名称(必填)	1切制规格（必填）	2等级（必填）	3产地
                 Cell c = r.getCell(cn, Row.RETURN_BLANK_AS_NULL);
                 if (c == null) {
                     // The spreadsheet is empty in this cell
@@ -65,16 +66,8 @@ public class ExcelParse {
                             case 3:
                                 commoditys.setOrigin(getCellValue(c));
                                 break;
-                            case 4:
-                                commoditys.setAmount(Double.valueOf(getCellValue(c)).intValue());
-                                break;
-                            case 5:
-                                commoditys.setExpectPrice(Double.valueOf(getCellValue(c)));
-                                break;
-                            case 6:
-                                Date date = new Date(Double.valueOf(getCellValue(c)).longValue());
-                                commoditys.setExpectDate(date);
-
+                           default:
+                               break;
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -107,27 +100,26 @@ public class ExcelParse {
         String[] titles = null;
         wb.setSheetName(0, "报价表");
         // 设置询价单信息 cell title
-        titles = new String[]{"ID", "商品名称", "切制规格", "规格等级", "产地", "数量(公斤)", "期望单价(元/公斤)",
-                "期望交货日期", "裸价(元/公斤)", "报价有效期"};
+        titles = new String[]{"ID", "商品名称", "片型", "规格等级", "产地", "单价(元/公斤)"};
         s.setColumnWidth(0, 5 * 256);
         s.setColumnWidth(1, 25 * 256);
         s.setColumnWidth(2, 10 * 256);
         s.setColumnWidth(3, 15 * 256);
         s.setColumnWidth(4, 20 * 256);
         s.setColumnWidth(5, 10 * 256);
-        s.setColumnWidth(6, 12 * 256);
-        s.setColumnWidth(7, 15 * 256);
-        s.setColumnWidth(8, 15 * 256);
-        s.setColumnWidth(9, 15 * 256);
+
         r = s.createRow(0);
         for (int cellnum = 0; cellnum < titles.length; cellnum++) {
             c = r.createCell(cellnum);
             c.setCellValue(titles[cellnum]);
         }
 
-        CreationHelper createHelper = wb.getCreationHelper();
         CellStyle cellStyle = wb.createCellStyle();
-        cellStyle.setDataFormat(createHelper.createDataFormat().getFormat("yyyy-MM-dd"));
+        cellStyle.setLocked(true);
+
+        DataFormat format= wb.createDataFormat();
+        CellStyle numberStyle = wb.createCellStyle();
+        numberStyle.setDataFormat(format.getFormat("0.00"));
 
         List<EnquiryCommoditys> list = enquiryBillsVo.getEnquiryCommoditys();
         for (int rownum = (short) 1; rownum < list.size()+1; rownum++) {
@@ -137,21 +129,21 @@ public class ExcelParse {
 
             c = r.createCell(0);
             c.setCellValue(commodity.getId());
+            c.setCellStyle(cellStyle);
             c = r.createCell(1);
             c.setCellValue(commodity.getCommodityName());
+            c.setCellStyle(cellStyle);
             c = r.createCell(2);
             c.setCellValue(commodity.getSpecs());
+            c.setCellStyle(cellStyle);
             c = r.createCell(3);
             c.setCellValue(commodity.getLevel());
+            c.setCellStyle(cellStyle);
             c = r.createCell(4);
             c.setCellValue(commodity.getOrigin());
-            c = r.createCell(5);
-            c.setCellValue(String.valueOf(commodity.getAmount()));
-            c = r.createCell(6);
-            c.setCellValue(String.valueOf(commodity.getExpectPrice()));
-            c = r.createCell(7);
-            c.setCellValue(commodity.getExpectDate());
             c.setCellStyle(cellStyle);
+            c = r.createCell(5);
+            c.setCellStyle(numberStyle);
         }
 //        Sheet s1 = wb.createSheet();
 //        wb.setSheetName(1, "报价表");
@@ -179,8 +171,7 @@ public class ExcelParse {
             EnquiryCommoditys commoditys = new EnquiryCommoditys();
 
             for (int cn = 0; cn <= 10; cn++) {
-                //"0 ID", "1 商品名称", "2 切制规格", "3 规格等级", "4 产地", "5 数量(公斤)", "6 期望单价(元/公斤)",
-                //        "7 期望交货日期", "8 裸价(元/公斤)", "9 报价有效期"
+                //"0 ID", "1 商品名称", "2 切制规格", "3 规格等级", "4 产地", "5 单价(元/公斤)"
                 Cell c = r.getCell(cn, Row.RETURN_BLANK_AS_NULL);
                 if (c == null) {
                     // The spreadsheet is empty in this cell
@@ -191,12 +182,8 @@ public class ExcelParse {
                             case 0:
                                 commoditys.setId(Integer.valueOf(getCellValue(c)));
                                 break;
-                            case 8:
+                            case 5:
                                 commoditys.setMyPrice(Double.valueOf(getCellValue(c)));
-                                break;
-                            case 9:
-                                Date date = new Date(Double.valueOf(getCellValue(c)).longValue());
-                                commoditys.setExpireDate(date);
                                 break;
                             default:
                                 break;
