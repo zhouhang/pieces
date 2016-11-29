@@ -244,6 +244,7 @@ vertical-align:middle;
 .fa-chart-d .th .w6,
 .fa-chart-d .th .w8{line-height:18px;padding:6px 0;} 
 .fa-chart-d .hd{line-height:38px;margin-bottom:18px;padding-bottom:0;background:#f0eff5;color:#999;}      
+.fa-chart-d .hd label{margin-right:10px;}
 .fa-chart-d .hd span{margin-right:50px;}      
 .fa-chart-d .td{float:left;min-height:18px;word-wrap:break-word;}      
 .fa-chart-d .td span{display:block;margin-left:-4px;font-weight:400;}      
