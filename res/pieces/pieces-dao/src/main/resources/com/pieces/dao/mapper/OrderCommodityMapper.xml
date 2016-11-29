@@ -7,7 +7,6 @@
             <result column="spec"  property="spec" />
             <result column="level"  property="level" />
             <result column="originOf"  property="originOf" />
-            <result column="expectDate"  property="expectDate" />
             <result column="amount"  property="amount" />
             <result column="price"  property="price" />
             <result column="subtotal"  property="subtotal" />
@@ -21,7 +20,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,spec,level,originOf,expectDate,amount,price,subtotal,enquiry_commodity_id,order_id,guide_price
+        id,name,spec,level,originOf,amount,price,subtotal,enquiry_commodity_id,order_id,guide_price
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="OrderCommodityResultMap">
@@ -66,17 +65,17 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.OrderCommodity">
         insert into
-        order_commodity (name,spec,level,originOf,expectDate,amount,price,subtotal,enquiry_commodity_id,order_id,guide_price)
+        order_commodity (name,spec,level,originOf,amount,price,subtotal,enquiry_commodity_id,order_id,guide_price)
         values
-        (#{name},#{spec},#{level},#{originOf},#{expectDate},#{amount},#{price},#{subtotal},#{enquiryCommodityId},#{orderId},#{guidePrice})
+        (#{name},#{spec},#{level},#{originOf},#{amount},#{price},#{subtotal},#{enquiryCommodityId},#{orderId},#{guidePrice})
     </insert>
 
     <insert id="batchCreate" useGeneratedKeys="true"  parameterType="com.pieces.dao.model.OrderCommodity">
         insert into
-        order_commodity (name,spec,level,originOf,expectDate,amount,price,subtotal,enquiry_commodity_id,order_id,guide_price)
+        order_commodity (name,spec,level,originOf,amount,price,subtotal,enquiry_commodity_id,order_id,guide_price)
         values
         <foreach collection="list" item="item" index="index" separator="," >
-            (#{item.name},#{item.spec},#{item.level},#{item.originOf},#{item.expectDate},#{item.amount},#{item.price},#{item.subtotal},#{item.enquiryCommodityId},#{item.orderId},#{item.guidePrice})
+            (#{item.name},#{item.spec},#{item.level},#{item.originOf},#{item.amount},#{item.price},#{item.subtotal},#{item.enquiryCommodityId},#{item.orderId},#{item.guidePrice})
         </foreach>
     </insert>
 
@@ -101,11 +100,7 @@
             <if test="originOf != null">
                 originOf = #{originOf},
             </if>
-                                            
-            <if test="expectDate != null">
-                expectDate = #{expectDate},
-            </if>
-                                            
+
             <if test="amount != null">
                 amount = #{amount},
             </if>

@@ -56,7 +56,6 @@
             <result column="c_spec"  property="spec" />
             <result column="c_level"  property="level" />
             <result column="c_originOf"  property="originOf" />
-            <result column="c_expectDate"  property="expectDate" />
             <result column="c_amount"  property="amount" />
             <result column="c_price"  property="price" />
             <result column="c_subtotal"  property="subtotal" />
@@ -225,7 +224,7 @@
         i.identifier as i_identifier,i.registered_address as i_registered_address,
         i.registered_tel as i_registered_tel,i.bank_name as i_bank_name,i.bank_account as i_bank_account,
         c.id as c_id,c.name as c_name,c.spec as c_spec,c.level as c_level,c.originOf as c_originOf,
-        c.expectDate as c_expectDate,c.amount as c_amount,c.price as c_price,c.subtotal as c_subtotal,
+        c.amount as c_amount,c.price as c_price,c.subtotal as c_subtotal,
         c.enquiry_commodity_id as c_enquiry_commodity_id,c.order_id as c_order_id,c.guide_price as c_guide_price,
         u.contact_name as u_contact_name, u.company_full_name as u_company_full_name,u.contact_mobile as u_contact_mobile
         from order_form o

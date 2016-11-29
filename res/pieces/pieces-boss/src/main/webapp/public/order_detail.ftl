@@ -98,7 +98,6 @@
                                 <th width="80">切制规格</th>
                                 <th width="80">规格等级</th>
                                 <th>产地</th>
-                                <th width="100">期望交货日期</th>
                                 <th width="120">数量（公斤）</th>
                                 <th width="90">指导价（元/公斤）</th>
                                 <th width="100">合同价（元/公斤）</th>
@@ -136,7 +135,6 @@
                                 <td>${commoditie.spec}</td>
                                 <td>${commoditie.level}</td>
                                 <td>${commoditie.originOf}</td>
-                                <td>${commoditie.expectDate?date}</td>
                                 <td>${commoditie.amount}</td>
                                 <td>${commoditie.guidePrice!}</td>
                                 <td>${commoditie.price}</td>

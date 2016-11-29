@@ -162,7 +162,6 @@ public class OrderController extends BaseController {
 			oc.setSpec(ec.getSpecs());
 			oc.setLevel(ec.getLevel());
 			oc.setOriginOf(ec.getOrigin());
-			oc.setExpectDate(ec.getExpectDate());
 			oc.setAmount(ec.getAmount());
 			oc.setPrice(ec.getMyPrice());
 			oc.setSubtotal(oc.getAmount()*oc.getPrice());

@@ -25,8 +25,6 @@ public class OrderCommodity  implements Serializable {
 	@NotEmpty(groups = {Boss.class})
 	private String originOf;
 	@NotNull(groups = {Boss.class})
-	private Date expectDate;
-	@NotNull(groups = {Boss.class})
 	private Integer amount;
 	@NotNull(groups = {Boss.class})
 	private Double price;
@@ -80,14 +78,6 @@ public class OrderCommodity  implements Serializable {
 
 	public void setOriginOf(String originOf) {
 		this.originOf = originOf;
-	}
-	
-	public Date getExpectDate() {
-		return expectDate;
-	}
-
-	public void setExpectDate(Date expectDate) {
-		this.expectDate = expectDate;
 	}
 	
 	public Integer getAmount() {

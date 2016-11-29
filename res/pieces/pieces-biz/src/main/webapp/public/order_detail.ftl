@@ -84,7 +84,6 @@
                             <th width="70">切制规格</th>
                             <th width="70">规格等级</th>
                             <th width="100">产地</th>
-                            <th width="90">期望交货日期</th>
                             <th width="90">数量<span>（公斤）</span></th>
                         <#if user_session_biz?? && user_session_biz.type == 2>
                             <th width="80">指导价<span>（元/公斤）</span></th>
@@ -105,7 +104,6 @@
                             <td>${commodity.spec}</td>
                             <td>${commodity.level}</td>
                             <td>${commodity.originOf}</td>
-                            <td><#if commodity.expectDate??>${commodity.expectDate?date}</#if></td>
                             <td>${commodity.amount}</td>
                             <#if user_session_biz?? && user_session_biz.type == 2>
                                 <td><#if commodity.guidePrice??>¥${commodity.guidePrice}</#if></td>

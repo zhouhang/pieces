@@ -99,7 +99,6 @@
                                 <th>切制规格</th>
                                 <th>规格等级</th>
                                 <th width="100">产地</th>
-                                <th width="100">期望交货日期</th>
                                 <th width="90">数量（公斤）</th>
                                 <th width="90">指导价（元/公斤）</th>
                                 <th width="100">合同价（元/公斤）</th>
@@ -121,7 +120,6 @@
                                         <td><div class="ipt-wrap"><input type="text" value="${commodity.spec!}" class="ipt" name="spec"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text" value="${commodity.level!}" class="ipt" name="level"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text" value="${commodity.originOf!}" class="ipt" name="originOf"><span class="error"></span></div></td>
-                                        <td><div class="pr"><input type="text" class="ipt" name="expectDate" value="${commodity.expectDate?string("yyyy-MM-dd")}" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt amount" name="amount" value="${commodity.amount!}"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt guidePrice" name="guidePrice" value="${commodity.guidePrice!}"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt price" name="price" value="${commodity.price!}"><span class="error"></span></div></td>
@@ -140,7 +138,6 @@
                                         <td><div class="ipt-wrap"><input type="text"  class="ipt" name="spec"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text"  class="ipt" name="level"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text"  class="ipt" name="originOf"><span class="error"></span></div></td>
-                                        <td><div class="pr"><input type="text" class="ipt" name="expectDate"  onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt amount" name="amount" ><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt guidePrice" name="guidePrice"><span class="error"></span></div></td>
                                         <td><div class="pr"><input type="text" class="ipt price" name="price" ><span class="error"></span></div></td>
@@ -275,7 +272,6 @@
             <td><div class="ipt-wrap"><input type="text" class="ipt" name="spec"><span class="error"></span></div></td>
             <td><div class="ipt-wrap"><input type="text" class="ipt" name="level"><span class="error"></span></div></td>
             <td><div class="ipt-wrap"><input type="text" class="ipt" name="originOf"><span class="error"></span></div></td>
-            <td><div class="pr"><input type="text" class="ipt" name="expectDate" value="" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
             <td><div class="pr"><input type="text" class="ipt amount" name="amount" value=""><span class="error"></span></div></td>
             <td><div class="pr"><input type="text" class="ipt guidePrice" name="guidePrice" value=""><span class="error"></span></div></td>
             <td><div class="pr"><input type="text" class="ipt price" name="price" value=""><span class="error"></span></div></td>
@@ -638,9 +634,7 @@
                             $amount   = $(this).find('.ipt[name="amount"]'),
                             amount    = $.trim($amount.val()),
                             $price    = $(this).find('.ipt[name="price"]'),
-                            price     = $.trim($price.val()),
-                            $date     = $(this).find('.ipt[name="expectDate"]'),
-                            date      = $.trim($date.val());
+                            price     = $.trim($price.val());
 
                     if (name) {
                         $name.nextAll('.error').html('').hide();
@@ -700,7 +694,6 @@
                             originOf: origin,
                             amount: amount,
                             price: price,
-                            expectDate: date
                         })
                     } else {
                         window.scrollTo(0, 200);

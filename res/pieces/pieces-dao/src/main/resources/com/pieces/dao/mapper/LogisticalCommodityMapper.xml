@@ -18,7 +18,6 @@
             <result column="spec"  property="spec" />
             <result column="level"  property="level" />
             <result column="originOf"  property="originOf" />
-            <result column="expectDate"  property="expectDate" />
             <result column="oAmount"  property="oAmount" />
 
         
@@ -85,7 +84,7 @@
     </update>
     
     <select id="findCommoditys" resultMap="LogisticalCommodityResultMapVo" parameterType="com.pieces.dao.vo.LogisticalCommodityVo">
-        select o.`name`,o.spec,o.`level`,o.originOf,o.expectDate,o.amount as oAmount from logistical_commodity lc,order_commodity o
+        select o.`name`,o.spec,o.`level`,o.originOf,o.amount as oAmount from logistical_commodity lc,order_commodity o
 			where lc.order_commodity_id = o.id
 			<if test="logisticalId != null">
                 and lc.logistical_id = #{logisticalId}
