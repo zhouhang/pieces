@@ -71,7 +71,7 @@
                                 <input type="text" name="myPrice" class="ipt ipt-price" value="${commodity.myPrice}">
                             </td>
                             <#if commodity_index == 0>
-                            <td rowspan="${enquiryBills.enquiryCommoditys?size}"><input type="text" id="expireDate" name="expireDate" class="ipt ipt-date" value="<#if commodity.expireDate?exists>${commodity.expireDate?date}</#if>" onclick="laydate({min: laydate.now(),istoday:false})"></td>
+                            <td rowspan="${enquiryBills.enquiryCommoditys?size}"><input type="text" id="expireDate" name="expireDate" class="ipt ipt-date" value="<#if commodity.expireDate?exists>${commodity.expireDate?date}</#if>"></td>
                             </#if>
                             </tr>
                         </#list>
@@ -136,6 +136,12 @@
             },
             //日期选择
             dateInit: function () {
+                laydate({
+                    elem: '#expireDate',
+                    istime: true,
+                    min: laydate.now()
+                })
+                
                 // 重新定位
                 $('.ipt-date').on('click', function() {
                     var 
