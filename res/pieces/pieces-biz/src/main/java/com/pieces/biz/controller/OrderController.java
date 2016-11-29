@@ -171,7 +171,7 @@ public class OrderController extends BaseController {
 			total = total + oc.getSubtotal();
 		}
 		orderFormVo.setSum(total);
-		total = total + orderFormVo.getShippingCosts();
+		//total = total + orderFormVo.getShippingCosts();
 		orderFormVo.setAmountsPayable(total);
 		orderFormVo.setCommodities(orderCommoditysList);
 		orderFormService.save(orderFormVo, user);

@@ -42,7 +42,6 @@
                                 <#if user_session_biz?? && user_session_biz.type == 2>
                                 <span>保证金:￥${orderForm.deposit}元</span>
                                 </#if>
-                                <span>（包含运费￥${orderForm.shippingCosts}元 ）</span>
                             </td>
                             <td width="140">
                                 <span class="c-red">${orderForm.statusText}</span>
