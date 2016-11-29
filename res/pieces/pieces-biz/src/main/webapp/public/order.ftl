@@ -63,7 +63,6 @@
                                     <th width="80">切制规格</th>
                                     <th width="80">规格等级</th>
                                     <th width="110">产地</th>
-                                    <th width="110">期望交货日期</th>
                                     <th width="110">数量<em>（公斤）</em></th>
                                     <th width="110">单价<em>（元/公斤）</em></th>
                                     <th>小计<em>（元）</em></th>
@@ -78,7 +77,6 @@
                                     <td>${enquiryCommoditys.specs}</td>
                                     <td>${enquiryCommoditys.level}</td>
                                     <td>${enquiryCommoditys.origin}</td>
-                                    <td>${enquiryCommoditys.expectDate?date}</td>
                                     <td>${enquiryCommoditys.amount}</td>
                                     <td>${enquiryCommoditys.myPrice}</td>
                                     <td name="commoditysPrice">${enquiryCommoditys.amount * enquiryCommoditys.myPrice}</td>

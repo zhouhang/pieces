@@ -632,9 +632,7 @@
                             $amount   = $(this).find('.ipt[name="amount"]'),
                             amount    = $.trim($amount.val()),
                             $price    = $(this).find('.ipt[name="price"]'),
-                            price     = $.trim($price.val()),
-                            $date     = $(this).find('.ipt[name="expectDate"]'),
-                            date      = $.trim($date.val());
+                            price     = $.trim($price.val());
 
                     if (name) {
                         $name.nextAll('.error').html('').hide();
@@ -694,7 +692,6 @@
                             originOf: origin,
                             amount: amount,
                             price: price,
-                            expectDate: date
                         })
                     } else {
                         window.scrollTo(0, 200);

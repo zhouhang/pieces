@@ -11,8 +11,6 @@
             <result column="level"  property="level" />
             <result column="origin"  property="origin" />
             <result column="amount"  property="amount" />
-            <result column="expect_price"  property="expectPrice" />
-            <result column="expect_date"  property="expectDate" />
             <result column="my_price"  property="myPrice" />
             <result column="expire_date"  property="expireDate" />
             <result column="create_time"  property="createTime" />
@@ -20,7 +18,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,expect_price,expect_date,my_price,expire_date,create_time
+        id,user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,my_price,expire_date,create_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="EnquiryCommoditysResultMap">
@@ -97,17 +95,17 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.EnquiryCommoditys">
         insert into
-        enquiry_commoditys (user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,expect_price,expect_date,my_price,expire_date,create_time)
+        enquiry_commoditys (user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,my_price,expire_date,create_time)
         values
-        (#{userId},#{billsId},#{commodityId},#{commodityName},#{specs},#{level},#{origin},#{amount},#{expectPrice},#{expectDate},#{myPrice},#{expireDate},#{createTime})
+        (#{userId},#{billsId},#{commodityId},#{commodityName},#{specs},#{level},#{origin},#{amount},#{myPrice},#{expireDate},#{createTime})
     </insert>
 
     <insert id="batchCreate" useGeneratedKeys="true"  parameterType="com.pieces.dao.model.EnquiryCommoditys">
         insert into
-        enquiry_commoditys (user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,expect_price,expect_date,my_price,expire_date,create_time)
+        enquiry_commoditys (user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,my_price,expire_date,create_time)
         values
         <foreach collection="list" item="item" index="index" separator="," >
-            (#{item.userId},#{item.billsId},#{item.commodityId},#{item.commodityName},#{item.specs},#{item.level},#{item.origin},#{item.amount},#{item.expectPrice},#{item.expectDate},#{item.myPrice},#{item.expireDate},#{item.createTime})
+            (#{item.userId},#{item.billsId},#{item.commodityId},#{item.commodityName},#{item.specs},#{item.level},#{item.origin},#{item.amount},#{item.myPrice},#{item.expireDate},#{item.createTime})
         </foreach>
     </insert>
 
@@ -167,15 +165,7 @@
             <if test="amount != null">
                 amount = #{amount},
             </if>
-                                            
-            <if test="expectPrice != null">
-                expect_price = #{expectPrice},
-            </if>
-                                            
-            <if test="expectDate != null">
-                expect_date = #{expectDate},
-            </if>
-                                            
+
             <if test="myPrice != null">
                 my_price = #{myPrice},
             </if>

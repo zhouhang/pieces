@@ -32,16 +32,9 @@ public class EnquiryCommoditys  implements Serializable {
 	
 	//产地
 	private String origin;
-	
+
 	//数量
 	private Integer amount;
-	
-	//期望价格
-	private Double expectPrice;
-	
-	//期望交货日期
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Date expectDate;
 	
 	//我方报价
 	private Double myPrice;
@@ -117,21 +110,13 @@ public class EnquiryCommoditys  implements Serializable {
 	public void setOrigin(String origin) {
 		this.origin = origin;
 	}
-	
+
 	public Integer getAmount() {
 		return amount;
 	}
 
 	public void setAmount(Integer amount) {
 		this.amount = amount;
-	}
-	@JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
-	public Date getExpectDate() {
-		return expectDate;
-	}
-
-	public void setExpectDate(Date expectDate) {
-		this.expectDate = expectDate;
 	}
 
 	public Date getExpireDate() {
@@ -148,14 +133,6 @@ public class EnquiryCommoditys  implements Serializable {
 
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
-	}
-
-	public Double getExpectPrice() {
-		return expectPrice;
-	}
-
-	public void setExpectPrice(Double expectPrice) {
-		this.expectPrice = expectPrice;
 	}
 
 	public Double getMyPrice() {

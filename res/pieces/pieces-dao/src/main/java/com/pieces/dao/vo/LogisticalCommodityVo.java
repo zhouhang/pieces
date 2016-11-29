@@ -15,8 +15,7 @@ public class LogisticalCommodityVo extends LogisticalCommodity{
 	private String originOf;
 	//数量
 	private Integer oAmount;
-	//期望交货日期
-	private Date expectDate;
+
 	public String getName() {
 		return name;
 	}
@@ -46,11 +45,5 @@ public class LogisticalCommodityVo extends LogisticalCommodity{
 	}
 	public void setoAmount(Integer oAmount) {
 		this.oAmount = oAmount;
-	}
-	public Date getExpectDate() {
-		return expectDate;
-	}
-	public void setExpectDate(Date expectDate) {
-		this.expectDate = expectDate;
 	}
 }
