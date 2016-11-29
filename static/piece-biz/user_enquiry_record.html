@@ -176,6 +176,7 @@
                         <div class="group">
                             <div class="tr hd">
                                 <a class="fr c-blue" href="#">订购已选商品</a>
+                                <label><input class="cbx" type="checkbox">全选</label>
                                 <span>询价单号：E201606201024001</span>
                                 <span>询价日期：2016-06-20</span>
                             </div>
@@ -196,6 +197,7 @@
                         <div class="group">
                             <div class="tr hd">
                                 <a class="fr c-blue" href="#">订购已选商品</a>
+                                <label><input class="cbx" type="checkbox">全选</label>
                                 <span>询价单号：E201606201024001</span>
                                 <span>询价日期：2016-06-20</span>
                             </div>
@@ -325,6 +327,7 @@
                         <div class="group">
                             <div class="tr hd">
                                 <a class="fr c-blue" href="#">订购已选商品</a>
+                                <label><input class="cbx" type="checkbox">全选</label>
                                 <span>询价单号：E201606201024001</span>
                                 <span>询价日期：2016-06-20</span>
                             </div>
@@ -637,13 +640,35 @@
                 },
                 // 操作
                 handle: function() {
-                    $('.fa-chart-d').find('.group:gt(0)').each(function() {
+                    var $table = $('.fa-chart-d');
+
+                    $table.find('.group:gt(0)').each(function() {
                         if ($(this).find('.cbx').length === 0) {
                             $(this).find('.hd .c-blue').html('重新询价');
                         } else {
                             $(this).find('.hd .c-blue').html('订购已选商品');
                         }
-                    });
+                    })
+
+                    // 全选 &　反选
+                    $table.on('click', '.hd .cbx', function() {
+                        $(this).closest('.group').find('.cbx').prop('checked', this.checked);
+                    })
+
+                    // 单选
+                    $table.on('click', '.w1 .cbx', function() {
+                        var $cbxAll = $(this).closest('.group').find('.hd .cbx'),
+                            $cbxs = $(this).closest('.group').find('.w1 .cbx'),
+                            length = $cbxs.length,
+                            count = 0;
+
+                        if (this.checked) {
+                            $cbxs.each(function(i) {
+                                count += this.checked ? 1 : 0;
+                            })
+                        }
+                        $cbxAll.prop('checked', count === length);
+                    })
                 }
             }
         }

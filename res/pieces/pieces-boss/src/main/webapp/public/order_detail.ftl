@@ -95,7 +95,7 @@
                             <thead>
                             <tr>
                                 <th>商品名称</th>
-                                <th width="80">切制规格</th>
+                                <th width="80">片型</th>
                                 <th width="80">规格等级</th>
                                 <th>产地</th>
                                 <th width="120">数量（公斤）</th>

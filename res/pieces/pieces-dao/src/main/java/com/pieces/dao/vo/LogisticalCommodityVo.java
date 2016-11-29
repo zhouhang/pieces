@@ -7,7 +7,7 @@ import com.pieces.dao.model.LogisticalCommodity;
 public class LogisticalCommodityVo extends LogisticalCommodity{
 	//商品名称
 	private String name;
-	//切制规格
+	//切制规格 片型
 	private String spec;
 	//等级
 	private String level;

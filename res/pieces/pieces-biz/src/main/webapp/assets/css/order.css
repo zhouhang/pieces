@@ -28,14 +28,14 @@
 .order .group .hd h3{font-weight:700;font-size:14px;}
 .order .group .consignee{margin:-7px 0;}
 .order .group .btn{padding:2px 10px;font-size:12px;}
-.order .group .fa-chart td{padding:10px 0;background:#fff;}
-.order .group .fa-chart .ipt{width:160px;padding:10px 0;font-size:12px;text-align:center;border:1px solid #ccc;}
+.order .group .fa-chart .ipt{width:100px;margin:5px;padding:5px 0;font-size:12px;border:1px solid #ccc;}
 .order .group .mul{width:580px;height:60px;padding:9px;font-size:12px;}
 .order .invoice .tips{display:block;margin-bottom:5px;}
 .order .invoice em{margin-right:20px;}
-.order .summary{line-height:30px;margin:30px -30px;padding:22px 30px;font-size:14px;background:#f5f5f5;text-align:right;}
-.order .summary span{display:inline-block;vertical-align:middle;}
-.order .summary em{display:inline-block;width:150px;vertical-align:middle;}
+.order .summary{line-height:30px;margin:30px -30px;padding:22px 30px;font-size:14px;background:#f5f5f5;}
+.order .summary .item{position:relative;text-align:right;}
+.order .summary .dt{position:absolute;top:0;right:160px;}
+.order .summary .rmb{margin-right:4px;}
 .order .summary .price{font-size:18px;font-weight:700;color:#c3272b;}
 .order .submit{padding-bottom:50px;text-align:right;}
 .order .submit .btn{padding:10px 60px;font-size:16px;}

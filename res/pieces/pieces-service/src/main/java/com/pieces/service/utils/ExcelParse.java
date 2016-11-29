@@ -46,7 +46,7 @@ public class ExcelParse {
             EnquiryCommoditys commoditys = new EnquiryCommoditys();
 
             for (int cn = 0; cn < 7; cn++) {
-                // 0商品名称(必填)	1切制规格（必填）	2等级（必填）	3产地
+                // 0商品名称(必填)	1切制规格（必填）片型	2等级（必填）	3产地
                 Cell c = r.getCell(cn, Row.RETURN_BLANK_AS_NULL);
                 if (c == null) {
                     // The spreadsheet is empty in this cell
@@ -171,7 +171,7 @@ public class ExcelParse {
             EnquiryCommoditys commoditys = new EnquiryCommoditys();
 
             for (int cn = 0; cn <= 10; cn++) {
-                //"0 ID", "1 商品名称", "2 切制规格", "3 规格等级", "4 产地", "5 单价(元/公斤)"
+                //"0 ID", "1 商品名称", "2 切制规格 片型", "3 规格等级", "4 产地", "5 单价(元/公斤)"
                 Cell c = r.getCell(cn, Row.RETURN_BLANK_AS_NULL);
                 if (c == null) {
                     // The spreadsheet is empty in this cell

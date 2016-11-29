@@ -38,7 +38,7 @@ public class CommodityExcelParse {
             CommodityVo commoditys = new CommodityVo();
 
             for (int cn = 0; cn < 8; cn++) {
-                // 0商品名称(必填)	1切制规格（必填）	2等级（必填）	3产地（数量）	4数量（必填）	5期望单价（元/公斤）	6期望交期（必填）
+                // 0商品名称(必填)	1片型（必填）	2等级（必填）	3产地（数量）	4数量（必填）	5期望单价（元/公斤）	6期望交期（必填）
                 Cell c = r.getCell(cn, Row.RETURN_BLANK_AS_NULL);
                 if (c == null) {
                     // The spreadsheet is empty in this cell

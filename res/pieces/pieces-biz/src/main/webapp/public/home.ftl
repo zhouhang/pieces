@@ -111,7 +111,7 @@
                                     <dd>
                                         <a href="/commodity/${commodity.id!}"><img src="images/blank.gif" class="lazyload" data-original="${commodity.pictureUrl!}" width="180" height="180"></a>
                                         <a href="/commodity/${commodity.id!}">${commodity.name!}</a>
-                                        <span>切制规格：${commodity.spec!}</span>
+                                        <span>片型：${commodity.spec!}</span>
                                     </dd>
                                 </#list>
                             </#if>

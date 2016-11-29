@@ -32,7 +32,7 @@
                         <th width="70">编号</th>
                         <th width="220">原药品种</th>
                         <th width="240">商品名称</th>
-                        <th width="100">切制规格</th>
+                        <th width="100">片型</th>
                         <th width="100">原料产地</th>
                         <th>规格等级</th>
                         <th width="100">状态</th>
