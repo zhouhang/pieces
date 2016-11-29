@@ -64,6 +64,34 @@ public class OrderFormVo extends OrderForm {
     // 1 用户前台搜索 不显示已删除的订单.
     private Integer isUserSearch;
 
+
+    /**
+     * 创建订单时候传递的参数
+     */
+
+    private  List<EnquiryCommoditys> commodityses;
+
+    /**
+     * 提交订单要检验的token
+     */
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public List<EnquiryCommoditys> getCommodityses() {
+        return commodityses;
+    }
+
+    public void setCommodityses(List<EnquiryCommoditys> commodityses) {
+        this.commodityses = commodityses;
+    }
+
     public List<OrderCommodity> getCommodities() {
         return commodities;
     }
