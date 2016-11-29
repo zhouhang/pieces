@@ -59,14 +59,14 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th width="180">商品名称</th>
-                                    <th width="80">切制规格</th>
-                                    <th width="80">规格等级</th>
-                                    <th width="110">产地</th>
-                                    <th width="110">数量<em>（公斤）</em></th>
+                                    <th width="110">商品名称</th>
+                                    <th width="90">片型</th>
+                                    <th>规格等级</th>
+                                    <th width="100">产地</th>
                                     <th width="110">单价<em>（元/公斤）</em></th>
-                                    <th>小计<em>（元）</em></th>
-                                    <th width="200">运费<em>（元）</em></th>
+                                    <th width="110">数量<em>（公斤）</em></th>
+                                    <th width="150">小计<em>（元）</em></th>
+                                    <td width="100">操作</td>
                                 </tr>
                             </thead>
                             <tfoot></tfoot>
@@ -77,12 +77,10 @@
                                     <td>${enquiryCommoditys.specs}</td>
                                     <td>${enquiryCommoditys.level}</td>
                                     <td>${enquiryCommoditys.origin}</td>
-                                    <td>${enquiryCommoditys.amount}</td>
-                                    <td>${enquiryCommoditys.myPrice}</td>
-                                    <td name="commoditysPrice">${enquiryCommoditys.amount * enquiryCommoditys.myPrice}</td>
-                                    <#if enquiryCommoditys_index == 0>
-                                    	<td rowspan="${enquiryCommoditysList?size}"><input class="ipt" name="shippingCosts" id="freightPrice" type="text" placeholder="请填写询价时协商好的运费"></td>
-                                    </#if>
+                                    <td><i>&yen;</i> ${enquiryCommoditys.myPrice}</td>
+                                    <td><div class="ipt-wrap"><input type="text" value="${enquiryCommoditys.amount}" data-price="${enquiryCommoditys.myPrice}" class="ipt" placeholder="请输入数量"></div></td>
+                                    <td name="commoditysPrice"><i>&yen;</i> <span>${enquiryCommoditys.amount * enquiryCommoditys.myPrice}</span></td>
+                                    <td><a href="javascript:;" class="c-blue">删除</a></td>
                                 </tr>
                             </#list>
                             </tbody>
@@ -97,7 +95,7 @@
                         <h3>订单备注</h3>
                     </div>
                     <div>
-                        <textarea name="remark" id="remark" cols="30" rows="10" class="mul" placeholder="请填写本次采购另外需要注意的事项。"></textarea>
+                        <textarea name="remark" id="remark" cols="30" rows="10" class="mul" placeholder="期望交货日期等需要注意的事项。"></textarea>
                     </div>
                 </div><!-- end 订单备注 -->
 
@@ -121,16 +119,8 @@
                 <!-- start 小计 -->
                 <div class="summary">
                     <div class="item">
-                        <span>商品合计：</span>
-                        <em id="totalPriceDisplay">￥${totalPrice}</em>
-                    </div>
-                    <div class="item">
-                        <span>运&#12288;&#12288;费：</span>
-                        <em id="freightPriceDisplay">￥0.0</em>
-                    </div>
-                    <div class="item">
-                        <span>实际应付：</span>
-                        <em id="priceDisplay" class="price">￥${totalPrice}</em>
+                        <span class="dt">订单金额：</span>
+                        <span class="dd price"><i class="rmb">&yen;</i><em id="total">${totalPrice}</em></span>
                     </div>
                 </div><!-- end 小计 -->
                 
@@ -329,7 +319,7 @@
                     this.addInvoice();
                     this.addConsignee();
                     this.chooseConsignee();
-                    this.freightPrice();
+                    this.computePrice();
                     this.orderSubmit();
     			},
                 // 新增发票
@@ -610,36 +600,82 @@
                     })
 
                 },
-                // 运费
-                freightPrice: function() {
-                    // 单价
-                    $('#freightPrice').on('keyup', function(e) {
-                        var val = this.value;
-                        if (!/^\d+\.?\d*$/.test(val)) {
-                            val = Math.abs(parseFloat(val));
-                            this.value = isNaN(val) ? '' : val;
-                        }
-                    }).on('blur', function(){
-                    	var price = this.value == '' ? 0 : this.value;
-                        $('#freightPriceDisplay').html("&yen;" +price);
-                        $('#priceDisplay').html("&yen;" + (parseFloat(price) + parseFloat(_global.v.totalPrice)).toFixed(2));
-                    });
-                },
                 //提交
                 orderSubmit: function() {
                     $('#orderSubmit').on('click', function(e) {
                     	var addrHistoryId = $("#addrHistoryId").val();
-                    	var freightPrice = $("#freightPrice").val();
-                    	if(addrHistoryId=="" || addrHistoryId == null){
+                    	if(!addrHistoryId){
                     		layer.msg('请填写收货地址！', {icon: 5});
-                    		return false;
-                    	}
-                    	if(freightPrice==''){
-                    		layer.msg('请填写运费！', {icon: 5});
+                            window.scrollTo(0, 0);
                     		return false;
                     	}
                     	$("#orderSave").submit();
                     })
+                },
+                // 计算价格
+                computePrice: function() {
+                    var $table = $('.fa-chart');
+                        $ipts = $table.find('.ipt'),
+                        $amount = $('#total'),
+                        unitPrice = [];
+
+                    var total = function() {
+                        var sum = 0;
+                        $.each(unitPrice, function(i, item) {
+                            sum += parseFloat(item.sum);
+                        })
+                        $('#total').html(formatPrice(sum));
+                    }
+
+                    var formatPrice = function(val) {
+                        return val.toFixed(2);
+                    }
+
+                    $ipts.each(function(i) {
+                        var $sum = $(this).closest('td').next('td').find('span'),
+                            amount = this.value,
+                            myprice = $(this).data('price');
+
+                        // 保存初始值
+                        unitPrice.push({
+                            myprice: $(this).data('price'),
+                            amount: this.value,
+                            sum: $(this).data('price') * this.value
+                        })
+
+                        // 小计
+                        // $sum.html(formatPrice(this.value * myprice)); // 页面已输出
+
+                        // 修改数量
+                        $(this).on('blur', function() {
+                            var val = this.value,
+                                sum = 0;
+                            if (val) {
+                                val = (!isNaN(val = parseInt(val, 10)) && val) > 0 ? val : 1;
+                                this.value = Math.max(val, 1);
+                            } else {
+                                this.value = 1;
+                            }
+                            sum = formatPrice(this.value * myprice);
+                            $sum.html(sum);
+                            unitPrice[i].sum = sum;
+                            total();
+                        })
+                    })
+
+                    // 删除商品
+                    $table.on('click', '.c-blue', function() {
+                        var $tr = $(this).closest('tr'),
+                            idx = $tr.index();
+                        layer.confirm('确认删除吗？', function(index) {
+                            $tr.remove();
+                            unitPrice[idx].sum = 0;
+                            layer.close(index);
+                            total();
+                        })
+                    })
+
+                    // total(); // 页面已输出
                 }
     		}
     	}
