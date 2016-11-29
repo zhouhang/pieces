@@ -56,6 +56,8 @@ a.btn{height:28px;}
 .c-blue:hover{color:#155ee5 !important;}
 .c-red{color:#c3272b !important;}
 .c-red:hover{color:#af2327 !important;}
+.c-green{color:#58c805 !important;}
+.c-green:hover{color:#58c805 !important;}
 
 /* iconfont.cn */
 @font-face {font-family: "fa";
@@ -175,6 +177,7 @@ vertical-align:middle;
 .chart .ipt-wrap{margin:6px;padding:6px;border:1px solid #ccc;background:#fff;}
 .chart .ipt-wrap .ipt{width:100%;padding:0;border:none;vertical-align:top;}
 .chart .date{width:63px;}
+.chart .date{width:75px;}
 .chart .button{width:60px;height:30px;color:#fff;background:#1769ff;cursor:pointer;border:none;}
 .chart .button:hover{background:#155ee5;}
 .chart .button span{margin-left:4px;vertical-align:middle;}

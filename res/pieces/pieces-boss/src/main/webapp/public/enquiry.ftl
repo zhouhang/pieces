@@ -24,41 +24,33 @@
         <div class="chart">
             <table class="tc">
                 <thead>
-                <tr>
-                    <th width="70">编号</th>
-                    <th>询价单号</th>
-                    <th>询价会员名</th>
-                    <th>询价单位</th>
-                    <th width="200">所在地区</th>
-                    <th width="170">询价日期</th>
-                    <th width="80">状态</th>
-                    <th width="100">操作</th>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td>
-                        <div class="ipt-wrap"><input type="text" name="code" class="ipt" value="${param.code}"></div>
-                    </td>
-                    <td>
-                        <div class="ipt-wrap"><input type="text" name="userName" class="ipt" value="${param.userName}"></div>
-                    </td>
-                    <td>
-                        <div class="ipt-wrap"><input type="text" name="companyFullName" class="ipt" value="${param.companyFullName}"></div>
-                    </td>
-                    <td>
-                        <div class="ipt-wrap"><input type="text" name="areaFull" class="ipt" value="${param.areaFull}"></div>
-                    </td>
-                    <td><input type="text" class="ipt date" value=" <#if param.startTime?exists>${param.startTime?datetime}</#if>" name="startTime" id="start"> -
-                        <input type="text" class="ipt date" value="<#if param.endTime?exists>${param.endTime?datetime}</#if>" name="endTime" id="end"></td>
-                    <td>
-                        <select name="status" id="status">
-                            <option value=""></option>
-                            <option value="1">已报价</option>
-                            <option value="0">未报价</option>
-                        </select>
-                    </td>
-                    <td></td>
-                </tr>
+                    <tr>
+                        <th width="70">编号</th>
+                        <th>询价单号</th>
+                        <th>询价会员名</th>
+                        <th width="200">询价日期</th>
+                        <th width="120">状态</th>
+                        <th width="100">操作</th>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <div class="ipt-wrap"><input type="text" name="code" class="ipt" value="${param.code}"></div>
+                        </td>
+                        <td>
+                            <div class="ipt-wrap"><input type="text" name="userName" class="ipt" value="${param.userName}"></div>
+                        </td>
+                        <td><input type="text" class="ipt date" value=" <#if param.startTime?exists>${param.startTime?datetime}</#if>" name="startTime" id="start"> -
+                            <input type="text" class="ipt date" value="<#if param.endTime?exists>${param.endTime?datetime}</#if>" name="endTime" id="end"></td>
+                        <td>
+                            <select name="status" id="status">
+                                <option value=""></option>
+                                <option value="1">已报价</option>
+                                <option value="0">未报价</option>
+                            </select>
+                        </td>
+                        <td></td>
+                    </tr>
                 </thead>
                 <tfoot></tfoot>
                 <tbody>
@@ -70,7 +62,7 @@
                     <td>${enquiry.companyFullName}</td>
                     <td>${enquiry.areaFull}</td>
                     <td>${enquiry.createTime?datetime}</td>
-                    <td><#if enquiry.status ==1>已报价<#else>未报价</#if></td>
+                    <td><#if enquiry.status ==1>已报价<#else><span class="c-red">未报价</span></#if></td>
                     <td>
                         <@shiro.hasPermission name="enquiry:info">
                         <a href="enquiry/${enquiry.id}">查看</a>
@@ -127,27 +119,16 @@
                 dateInit: function () {
                     var start = {
                         elem: '#start',
-                        format: 'YYYY-MM-DD hh:mm:ss',
-                        min: laydate.now(), //设定最小日期为当前日期
-                        max: '2099-06-16 23:59:59', //最大日期
-                        istime: true,
                         istoday: false,
                         choose: function (datas) {
-                            end.min = datas; //开始日选好后，重置结束日的最小日期
-                            end.start = datas; //将结束日的初始值设定为开始日
-                            $('#start').attr('title', datas);
+                            end.min = datas;
                         }
                     };
                     var end = {
                         elem: '#end',
-                        format: 'YYYY-MM-DD hh:mm:ss',
-                        min: laydate.now(),
-                        max: '2099-06-16 23:59:59',
-                        istime: true,
                         istoday: false,
                         choose: function (datas) {
-                            start.max = datas; //结束日选好后，重置开始日的最大日期
-                            $('#end').attr('title', datas);
+                            start.max = datas; 
                         }
                     };
                     laydate(start);
