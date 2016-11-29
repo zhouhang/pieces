@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
 <#include "./inc/meta.ftl"/>
     <title>询价信息-boss-上工好药</title>
@@ -34,10 +34,14 @@
             <div class="user-table">
                 <div class="caption">
                     <!-- id -->
-                    <span>用药单位：<em>${enquiryBills.companyFullName}</em></span>
-                    <span>所在地区：<em>${enquiryBills.areaFull}</em></span>
-                    <span>联系人姓名：<em>${enquiryBills.contactName}</em></span>
-                    <span>联系人手机号：<em>${enquiryBills.contactMobile}</em></span>
+                    <span>用户名：<em>${enquiryBills.userName}</em></span>
+                    <span>用户类型：<em><#if enquiryBills.userType == 1>终端 <#else >代理商 </#if></em></span>
+                    <span>认证状态：<em><#if enquiryBills.certifyStatus == 1>已认证<#else >未认证</#if></em></span>
+                    <span>企业名称：<em>${enquiryBills.companyFullName}</em></span>
+                    <span>企业类型：<em>${enquiryBills.companyType}</em></span>
+                    <span>询价日期：<em>${enquiryBills.createTime?date}</em></span>
+                    <span>联系人：<em>${enquiryBills.contactName}(${enquiryBills.contactMobile})</em></span>
+                    </br>
                     <#if enquiryBills.status ==1>
                     <span>报价时间：<em>${enquiryBills.quotedTime?date}</em></span>
                     <span>报价人：<em>${enquiryBills.quotedName}</em></span>
