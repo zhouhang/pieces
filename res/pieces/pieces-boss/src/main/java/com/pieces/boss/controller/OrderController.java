@@ -314,19 +314,14 @@ public class OrderController extends BaseController{
     @ResponseBody
     private Result importExcel(@RequestParam("file") MultipartFile file){
 
-        Map<Integer,EnquiryCommoditys> map = null;
+        List<EnquiryCommoditys> enquiryCommodityses= null;
+
         try {
-            map = ExcelParse.importEnquiryInfo(file.getInputStream());
+            enquiryCommodityses = ExcelParse.importQuoteInfo(file.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InvalidFormatException e) {
             e.printStackTrace();
-        }
-        List<EnquiryCommoditys> enquiryCommodityses=new ArrayList<EnquiryCommoditys>();
-        if(map!=null){
-            for (EnquiryCommoditys  enquiryCommoditys : map.values()) {
-                enquiryCommodityses.add(enquiryCommoditys);
-            }
         }
 
         return new Result(true).data(enquiryCommodityses);
