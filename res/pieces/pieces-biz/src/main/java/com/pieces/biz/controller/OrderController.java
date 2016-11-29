@@ -134,7 +134,8 @@ public class OrderController extends BaseController {
 		if (orderFormVo.getAddrHistoryId() == null) {
 			throw new RuntimeException("收货地址不能为空");
 		}
-		if(request.getSession().getAttribute(SessionEnum.ORDER_TOKEN.getKey()) == orderFormVo.getToken()){
+		String token=(String)request.getSession().getAttribute(SessionEnum.ORDER_TOKEN.getKey());
+		if(token==null||!(token.equals(orderFormVo.getToken()))){
 			return new Result(false).data("重复的提交订单");
 		}
 		ShippingAddress sa = shippingAddressService.findById(orderFormVo.getAddrHistoryId());
