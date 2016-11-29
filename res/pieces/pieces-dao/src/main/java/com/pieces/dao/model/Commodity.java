@@ -32,7 +32,7 @@ public class Commodity  implements Serializable {
 	@Length(min = 1, max = 50)
 	private String level;
 	
-	//切制规格
+	//切制规格 片型
 	@NotEmpty
 	@Length(min = 1, max = 20)
 	private String spec;

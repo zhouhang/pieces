@@ -30,7 +30,7 @@ public class CommodityDoc {
     //品种名称
     private String categoryName;
 
-    //切制规格
+    //切制规格 片型
     private String spec;
     //原药产地
     private String originOf;

@@ -44,7 +44,7 @@
                             <th width="150"></th>
                             <th width="260">商品信息</th>
                             <th width="160">规格等级</th>
-                            <th width="110">切制规格</th>
+                            <th width="110">片型</th>
                             <th width="120">原药产地</th>
                             <th width="">执行标准</th>
                             <th width="140">操作</th>

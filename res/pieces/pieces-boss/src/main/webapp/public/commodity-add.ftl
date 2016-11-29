@@ -67,7 +67,7 @@
                         </div>
                         <div class="group">
                             <div class="txt">
-                                <i>*</i>切制规格：
+                                <i>*</i>片型：
                             </div>
                             <div class="cnt">
                                 <input type="text" class="ipt" value="" name="spec" autocomplete="off" placeholder="">

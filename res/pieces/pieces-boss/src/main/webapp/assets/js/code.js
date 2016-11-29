@@ -19,7 +19,7 @@
         })
     }
     $.fn.code.type = {
-        COMMODITY_SPECIFICATIONS: 'SPEC',//"切制规格"
+        COMMODITY_SPECIFICATIONS: 'SPEC',//"片型"
         COMMODITY_PLACE: 'ORIGIN',//"原药产地"
         COMMODITY_LEVEL: 'LEVEL'//"规格等级"
     }

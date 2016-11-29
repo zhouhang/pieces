@@ -105,7 +105,7 @@
     <div class="suggestions" id="suggestions">
 		<div class="hd">
 			<div class="group">
-				<span class="w1">商品名称</span><span class="w2">切制规格</span><span class="w3">规格等级</span><span class="w4">产地</span>
+				<span class="w1">商品名称</span><span class="w2">片型</span><span class="w3">规格等级</span><span class="w4">产地</span>
 			</div>
 		</div>
 		<div class="bd"></div>
