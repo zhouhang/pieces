@@ -136,7 +136,7 @@ public class OrderController extends BaseController {
 		}
 		String token=(String)request.getSession().getAttribute(SessionEnum.ORDER_TOKEN.getKey());
 		if(token==null||!(token.equals(orderFormVo.getToken()))){
-			return new Result(false).data("重复的提交订单");
+			return new Result(false).data("该订单已经提交！不允许重复提交");
 		}
 		ShippingAddress sa = shippingAddressService.findById(orderFormVo.getAddrHistoryId());
 		ShippingAddressHistory sah = new ShippingAddressHistory();
