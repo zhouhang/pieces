@@ -404,13 +404,9 @@
                 },
                 response:function(result){
                     if(result.status=='y'){
-                        $.notify({
-                            type: 'success',
-                            title: '提交成功',
-                            text: result.info
-                        })
                         this.$tbody.empty().html(this.modal).find('.remove').remove();
                         $('#billId').val('');
+                        window.location.href="/center/enquiry/success";
                     }else{
                         $.notify({
                             type: 'error',

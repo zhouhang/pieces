@@ -22,7 +22,7 @@
                     <dd>
                         <a href="/user/login">登录</a>
                         <a href="/user/register">注册</a>
-                        <a href="/user/info">我的供应链</a>
+                        <a href="/user/info">用户中心</a>
                     </dd>
 
                     <dt>产品</dt>

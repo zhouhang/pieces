@@ -27,7 +27,7 @@
             </div>
             <div class="bd">
                 <h3>付款说明</h3>
-                <p>您需要将货款支付到我们提供的其中一个账户上，支付完成后在 <a href="/user/info">我的供应链</a> &gt; <a href="/center/pay/record" class="c-blue">对账单</a> 中上传您的支付凭证。
+                <p>您需要将货款支付到我们提供的其中一个账户上，支付完成后在 <a href="/user/info">用户中心</a> &gt; <a href="/center/pay/record" class="c-blue">对账单</a> 中上传您的支付凭证。
                 </p>
                 <p>平台以您上传支付凭证的时间为付款时间。</p>
 
