@@ -120,6 +120,7 @@
                         istoday: false,
                         choose: function (datas) {
                             end.min = datas;
+                            end.start = datas;
                         }
                     };
                     var end = {

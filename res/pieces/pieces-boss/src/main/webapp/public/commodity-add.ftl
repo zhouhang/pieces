@@ -245,16 +245,14 @@
                 var categoryId = $('#categoryId').val();
                 var categoryIdV = $("#categoryIdV").val();
 
-                /**
-                 * 初始化自动提示框.
-                 */
                 $('#categoryId').autocomplete({
                     serviceUrl: '/breed/search',
                     paramName: 'name',
                     preventBadQueries: false,
-                    deferRequestBy: 0,
+                    deferRequestBy: 100,
+                    showNoSuggestionNotice: true,
+                    noSuggestionNotice: '没有此品种',
                     triggerSelectOnValidInput: false,
-//                    autoSelectFirst:true,
                     transformResult: function (response) {
                         response = JSON.parse(response);
                         if (response.status == "y") {
@@ -314,9 +312,7 @@
             // 提交事件
             submitEvent: function () {
                 $('#submit').on('click', function () {
-                    $('#form').isValid(function (v) {
-                        //console.log(v ? '表单验证通过' : '表单验证不通过');
-
+                    $('#form').isValid(function(v) {
                         if (v) {
                             var attr = {};
                             var trs = $("#attribute>tbody tr");
@@ -425,10 +421,8 @@
                         layer.closeAll();
                     },
                     onReset: function () {
-                        //console.log('onReset')
                     },
                     onError: function (msg) {
-                        // console.log(msg)
                         $.notify({
                             type: 'error',
                             title: msg.title,   // 不允许的文件类型

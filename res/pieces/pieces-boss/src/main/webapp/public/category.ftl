@@ -37,7 +37,7 @@
                         </tr>
                         <tr>
                             <td></td>
-                            <td><div class="ipt-wrap"><input type="text" name="name" id="name" class="ipt" value="${category.name }"></div></td>
+                            <td><div class="ipt-wrap"><input type="text" name="name" id="name" class="ipt" value="${category.name }" autocomplete="off"></div></td>
                             <!-- <td>
                                 <select name="status" id="status">
                                 	<option <#if (!category.status??)>selected</#if> value=""></option>

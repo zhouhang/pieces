@@ -28,11 +28,11 @@
                             <span>商品名称：</span>
                             <input class="ipt" value="${enquiryRecordVo.commodityName!}" name="commodityName" type="text">
                             <span class="ml">状态：</span>
-                            <select name="" id="" class="slt">
-                                <option value="0">全部</option>
+                            <select name="status" id="status" class="slt">
+                                <option value="">全部</option>
                                 <option value="1">已报价</option>
-                                <option value="2">未报价</option>
-                                <option value="3">已过期</option>
+                                <option value="0">未报价</option>
+                                <option value="2">已过期</option>
                             </select>
                             <span>询价日期：</span>
                             <input class="ipt date" name="startDate" type="text" id="start"  value="${enquiryRecordVo.startDate!}"><em>-</em><input class="ipt date" name="endDate" type="text" id="end"  value="${enquiryRecordVo.endDate!}">
@@ -157,6 +157,7 @@
                     this.dateInit();
                     this.filter();
                     this.expand();
+                    $("#status").val(${enquiryRecordVo.status!});
                 },
                 //日期选择
                 dateInit: function () {
@@ -200,7 +201,7 @@
                         if ($self.data('loader') === 'true') {
                             var status = $self.data('expand') === 0 ? 1 : 0;
                             $self.data('expand', status).html(txt[status]).prev().slideToggle();
-                            call();
+                            if(call) call();
                         } else {
                             $.ajax({
                                 url: 'center/enquiry/commodity',
@@ -213,7 +214,7 @@
                                         result.data.splice(0, 10); // 去掉前10条数据
                                         $self.before(self.toHtml(result.data, $self));
                                         $self.data('expand', '1').html(txt[1]).prev().slideDown();
-                                        call();
+                                        if(call) call();
                                     }else{
                                         $.notify({
                                             type: 'error',
@@ -299,12 +300,15 @@
                         modal = [];
                     modal.push('<div class="more" style="display:none;">');
                     $.each(data, function(i, item) {
-                        modal.push('<div class="bd">');
-                        var checkBox = '',
-                            myPrice = item.myPrice != 0 ? item.myPrice : '--';
 
-                        if(item.myPrice!=0&&item.expireDate!=null&&new Date(item.expireDate)>new Date()){
+                        var checkBox = '',
+                            myPrice = (item.myPrice != 0 &&item.myPrice!= null )? item.myPrice : '--';
+
+                        if((item.myPrice != 0 &&item.myPrice!= null )&&item.expireDate!=null&&new Date(item.expireDate)>new Date()){
                             checkBox = '<input class="cbx" type="checkbox" value="'+item.id+'">';
+                            modal.push('<div class="bd">');
+                        } else {
+                            modal.push('<div class="bd enable">');
                         }
                         modal.push('<div class="td w1">', checkBox, '</div>');
                         modal.push('<div class="td w2">', item.commodityName, '</div>');

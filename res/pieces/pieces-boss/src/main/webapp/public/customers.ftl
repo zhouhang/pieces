@@ -43,7 +43,7 @@
 							<th>会员名</th>
 							<th>联系人</th>
 							<th>手机号</th>
-							<th width="170">注册日期</th>
+							<th width="200">注册日期</th>
                             <th width="80">是否认证</th>
 							<th width="80">客户类型</th>
                             <th width="80">跟单员</th>
@@ -171,6 +171,7 @@
                         istoday: false,
                         choose: function(datas){
                             end.min = datas;
+                            end.start = datas;
                         }
                     };
                     var end = {

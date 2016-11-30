@@ -195,6 +195,9 @@
             <if test="status != null">
                 and b.status = #{status}
             </if>
+            <if test="expireDate != null">
+                and b.expire_date <![CDATA[<]]> DATE_FORMAT(#{expireDate},'%Y-%m-%d')
+            </if>
             <if test="commodityName != null">
                 and c.commodity_name like "%"#{commodityName}"%"
             </if>
@@ -205,7 +208,6 @@
                 and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<]]> DATE_FORMAT(DATE_ADD(#{endDate},INTERVAL 1 DAY),'%Y-%m-%d')
             </if>
         </where>
-
         order by  b.create_time DESC
     </select>
 

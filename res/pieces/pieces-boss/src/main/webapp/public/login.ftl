@@ -26,12 +26,12 @@
                         <i class="fa fa-lock"></i>
                     </div>
                     <div class="cnt">
-                        <input onkeydown="loginPage.fn.keyDown()" type="password" placeholder="密码" id="password" name="password" autocomplete="off" value="" class="ipt">
+                        <input type="password" placeholder="密码" id="password" name="password" autocomplete="off" value="" class="ipt">
                     </div>
                 </div>
 
                 <div class="button">
-                    <button id="submit" class="btn btn-red" type="button">登 录</button>
+                    <button id="submit" class="btn btn-red" type="submit">登 录</button>
                 </div>
             </form>
         </div>
@@ -52,17 +52,6 @@
         fn: {
             init: function() {
                 this.bindEvent();
-
-                $("#submit").click(function(){
-                    loginPage.fn.login();
-                })
-
-            },
-            keyDown:function(){
-                if (event.keyCode == 13)
-                {
-                    $("#submit").click();
-                }
             },
             // 错误提示
             showMsg: function(msg) {
@@ -110,9 +99,13 @@
                 });
 
                 loginPage.v.$submit.on('click', function() {
-                    return self.checkForm();
-                });
+                    if (self.checkForm()) {
+                        self.login();
+                    } else {
 
+                    }
+                    return false;
+                });
             },
             login:function(){
                 $("#loginForm").ajaxSubmit({

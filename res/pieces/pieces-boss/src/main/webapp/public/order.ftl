@@ -33,7 +33,7 @@
                         <th>订购用户</th>
                         <th>用药单位</th>
                         <th>订单金额</th>
-                        <th width="170">下单日期</th>
+                        <th width="200">下单日期</th>
                         <th width="80">状态</th>
                         <th width="100">操作</th>
                     </tr>
@@ -128,6 +128,7 @@
                         elem: '#start',
                         choose: function(datas){
                             end.min = datas;
+                            end.start = datas;
                         }
                     };
                     var end = {

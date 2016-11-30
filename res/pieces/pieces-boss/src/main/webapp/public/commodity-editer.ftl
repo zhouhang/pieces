@@ -115,19 +115,18 @@
                     <div class="chart chart-form">
                         <table id="attribute">
                             <thead>
-                            <tr>
-                                <th width="200">属性名</th>
-                                <th width="380">属性值</th>
-                                <th>操作</th>
-                            </tr>
+                                <tr>
+                                    <th width="200"><div class="inner">属性名</div></th>
+                                    <th width="380"><div class="inner">属性值</div></th>
+                                    <th class="tc">操作</th>
+                                </tr>
                             </thead>
                             <tfoot>
-                            <tr>
-                                <td colspan="3"><span class="c-blue" id="addAttribute">+增加新属性</span></td>
-                            </tr>
+                                <tr>
+                                    <td colspan="3"><span class="c-blue" id="addAttribute">+增加新属性</span></td>
+                                </tr>
                             </tfoot>
-                            <tbody>
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
@@ -206,7 +205,10 @@ ${commodity.details}
     $('#categoryId').autocomplete({
         serviceUrl: '/breed/search',
         paramName:'name',
+        preventBadQueries: false,
         deferRequestBy:100,
+        showNoSuggestionNotice: true,
+        noSuggestionNotice: '没有此品种',
         triggerSelectOnValidInput:false,
         transformResult: function(response) {
             response = JSON.parse(response);
@@ -259,10 +261,7 @@ ${commodity.details}
 
 
                 $("#delete").click(function(){
-                    layer.confirm('确认要删除该商品？', {
-                        title: '删除商品',
-                        btn: ['确认','取消'] //按钮
-                    }, function(index){
+                    layer.confirm('确认要删除该商品？', {icon: 3, title:'提示'}, function(index){
                         commodityAddPage.fn.deleteCommodity();
                         layer.close(index);
                     });
@@ -285,7 +284,6 @@ ${commodity.details}
                 var $table = $('#attribute').find('tbody');
                 $table.html(html);
             </#if>
-
             },
             formValidate: function () {
                 $("#form").validator({
@@ -326,41 +324,36 @@ ${commodity.details}
             },
             // 提交事件
             submitEvent: function () {
-                var self = this;
-
-
                 $('#submit').on('click', function () {
-                            $('#form').isValid(function(v) {
-                                //console.log(v ? '表单验证通过' : '表单验证不通过');
-                                if (v) {
-                                    var attr = {};
-                                    var trs = $("#attribute>tbody tr");
-                                    $.each(trs, function (k, v) {
-                                        attr[$($(v).find("input")[0]).val()] = $($(v).find("input")[1]).val();
-                                    })
-                                    var data = $("#form").serializeObject();
-                                    $.each(data, function(k,v){
-                                        if (k.match("attr")){
-                                            delete data[k];
-                                        }
-                                    })
-                                    data.attribute = JSON.stringify(attr);
-
-                                    $.post("/commodity/save", data, function (data) {
-                                        if (data.status == "y") {
-                                            $.notify({
-                                                type: 'success',
-                                                title: '保存成功',
-                                                text: '商品保存成功',
-                                                delay: 3e3,
-                                                call: function () {
-                                                    // $("#submit").attr("disabled", "disabled");
-                                                }
-                                            });
-                                        }
-                                    })
+                    $('#form').isValid(function(v) {
+                        if (v) {
+                            var attr = {};
+                            var trs = $("#attribute>tbody tr");
+                            $.each(trs, function (k, v) {
+                                attr[$($(v).find("input")[0]).val()] = $($(v).find("input")[1]).val();
+                            })
+                            var data = $("#form").serializeObject();
+                            $.each(data, function(k,v){
+                                if (k.match("attr")){
+                                    delete data[k];
                                 }
                             })
+                            data.attribute = JSON.stringify(attr);
+                            $.post("/commodity/save", data, function (data) {
+                                if (data.status == "y") {
+                                    $.notify({
+                                        type: 'success',
+                                        title: '保存成功',
+                                        text: '商品保存成功',
+                                        delay: 3e3,
+                                        call: function () {
+                                            // $("#submit").attr("disabled", "disabled");
+                                        }
+                                    });
+                                }
+                            })
+                        }
+                    });
                     return false;
                 })
             },
@@ -414,8 +407,8 @@ ${commodity.details}
                     onBeforeImgUpload: function () {
 
                         // 检查图片大小
-                        var size =  $("#imgCrop_imgUploadField")[0].files[0].size;
-                        if (size && size/(1024*1024) >2) {
+                        var size = $("#imgCrop_imgUploadField")[0].files[0].size;
+                        if (size && size / (1024 * 1024) > 2) {
                             $.notify({
                                 type: 'error',
                                 title: "提示消息",   // 不允许的文件类型
@@ -440,10 +433,8 @@ ${commodity.details}
                         layer.closeAll();
                     },
                     onReset: function () {
-                        //console.log('onReset')
                     },
                     onError: function (msg) {
-                        //console.log(msg)
                         $.notify({
                             type: 'error',
                             title: msg.title,   // 不允许的文件类型
@@ -479,6 +470,5 @@ ${commodity.details}
         // .getContent() 获取内容
     })
 </script>
-
 </body>
 </html>

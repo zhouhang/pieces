@@ -147,47 +147,14 @@
 <script src="js/croppic.min.js"></script>
 <script src="js/common.js"></script>
 <script>
-    var roleAddPage = {
+    var _global = {
         v: {},
         fn: {
             init: function() {
                 this.dateInit();
                 this.formValidate();
                 this.goodsImg();
-                $('#delete').on('click', function() {
-                    var $self = $(this);
-                    layer.confirm('确认删除该广告？', {
-                        btn: ['确认','取消'] //按钮
-                    }, function(index){
-                        layer.close(index);
-                        $.ajax({
-                            url: "/ad/delete?id=" + $("#adId").val(),
-                            type: "POST",
-                            success: function(data){
-                                if(data.status == "y"){
-                                    $.notify({
-                                        type: 'success',
-                                        title: data.info,
-                                        text: '3秒后自动跳转到广告列表页',
-                                        delay: 3e3,
-                                        call: function() {
-                                            setTimeout(function() {
-                                                location.href = '/ad/index';
-                                            }, 3e3);
-                                        }
-                                    });
-                                }else{
-                                    $.notify({
-                                        type: 'error',
-                                        title: data.info,
-                                        delay: 3e3
-                                    });
-                                }
-                            }
-                        });
-                    });
-                    return false;
-                });
+                this.delete();
             },
             //日期选择
             dateInit: function () {
@@ -198,6 +165,7 @@
                     istime: true,
                     choose: function(datas){
                         end.min = datas;
+                        end.start = datas;
                         $('#start').trigger('validate');
                     }
                 };
@@ -213,7 +181,6 @@
                 };
                 laydate(start);
                 laydate(end);
-
             },
             formValidate: function() {
                 $('#myform').validator({
@@ -295,11 +262,44 @@
                     }
                 }
                 var cropModal = new Croppic('imgCropWrap', options);
+            },
+            delete: function() {
+                var iid = $("#adId").val();
+                $('#delete').on('click', function() {
+                    layer.confirm('确认删除该广告？', {icon: 3, title:'提示'}, function(index){
+                        layer.close(index);
+                        $.ajax({
+                            url: "/ad/delete?id=" + iid,
+                            type: "POST",
+                            success: function(data){
+                                if(data.status == "y"){
+                                    $.notify({
+                                        type: 'success',
+                                        title: data.info,
+                                        text: '3秒后自动跳转到广告列表页',
+                                        delay: 3e3,
+                                        call: function() {
+                                            setTimeout(function() {
+                                                location.href = '/ad/index';
+                                            }, 3e3);
+                                        }
+                                    });
+                                }else{
+                                    $.notify({
+                                        type: 'error',
+                                        title: data.info,
+                                        delay: 3e3
+                                    });
+                                }
+                            }
+                        });
+                    });
+                });
             }
         }
     }
     $(function() {
-        roleAddPage.fn.init();
+        _global.fn.init();
     })
 </script>
 </body>

@@ -116,19 +116,18 @@
                     <div class="chart chart-form">
                         <table id="attribute">
                             <thead>
-                            <tr>
-                                <th width="200">属性名</th>
-                                <th width="380">属性值</th>
-                                <th>操作</th>
-                            </tr>
+                                <tr>
+                                    <th width="200"><div class="inner">属性名</div></th>
+                                    <th width="380"><div class="inner">属性值</div></th>
+                                    <th class="tc">操作</th>
+                                </tr>
                             </thead>
                             <tfoot>
-                            <tr>
-                                <td colspan="3"><span class="c-blue" id="addAttribute">+增加新属性</span></td>
-                            </tr>
+                                <tr>
+                                    <td colspan="3"><span class="c-blue" id="addAttribute">+增加新属性</span></td>
+                                </tr>
                             </tfoot>
-                            <tbody>
-                            </tbody>
+                            <tbody></tbody>
                         </table>
                     </div>
                 </div>
@@ -185,7 +184,6 @@
 <div id="umeditorContent" style="display: none;">
 ${commodity.details}
 </div>
-
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
@@ -208,7 +206,10 @@ ${commodity.details}
     $('#categoryId').autocomplete({
         serviceUrl: '/breed/search',
         paramName:'name',
+        preventBadQueries: false,
         deferRequestBy:100,
+        showNoSuggestionNotice: true,
+        noSuggestionNotice: '没有此品种',
         triggerSelectOnValidInput:false,
         transformResult: function(response) {
             response = JSON.parse(response);
@@ -261,7 +262,10 @@ ${commodity.details}
 
 
                 $("#delete").click(function(){
-                    commodityAddPage.fn.deleteCommodity();
+                    layer.confirm('确认要删除该商品？', {icon: 3, title:'提示'}, function(index){
+                        commodityAddPage.fn.deleteCommodity();
+                        layer.close(index);
+                    });
                 })
 
                 $("#copy").click(function(){
@@ -276,7 +280,6 @@ ${commodity.details}
                     html += '<tr> \n <td><div class="inner"><input name="attrN_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="' + k + '" data-rule="required;length[1~20]"></div></td> \n ' +
                             '<td><div class="inner"><input name="attrV_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="' + v + '" data-rule="required;length[1~100]"></div></td> \n ' +
                             '<td><span class="c-red">删除</span></td> \n </tr>';
-
                     commodityAddPage.v.attr_index += 1;
                 })
                 var $table = $('#attribute').find('tbody');
@@ -322,12 +325,8 @@ ${commodity.details}
             },
             // 提交事件
             submitEvent: function () {
-                var self = this;
-
-
                 $('#submit').on('click', function () {
                     $('#form').isValid(function(v) {
-                        //console.log(v ? '表单验证通过' : '表单验证不通过');
                         if (v) {
                             var attr = {};
                             var trs = $("#attribute>tbody tr");
@@ -341,7 +340,6 @@ ${commodity.details}
                                 }
                             })
                             data.attribute = JSON.stringify(attr);
-
                             $.post("/commodity/save", data, function (data) {
                                 if (data.status == "y") {
                                     $.notify({
@@ -356,7 +354,7 @@ ${commodity.details}
                                 }
                             })
                         }
-                    })
+                    });
                     return false;
                 })
             },
@@ -410,8 +408,8 @@ ${commodity.details}
                     onBeforeImgUpload: function () {
 
                         // 检查图片大小
-                        var size =  $("#imgCrop_imgUploadField")[0].files[0].size;
-                        if (size && size/(1024*1024) >2) {
+                        var size = $("#imgCrop_imgUploadField")[0].files[0].size;
+                        if (size && size / (1024 * 1024) > 2) {
                             $.notify({
                                 type: 'error',
                                 title: "提示消息",   // 不允许的文件类型
@@ -436,10 +434,8 @@ ${commodity.details}
                         layer.closeAll();
                     },
                     onReset: function () {
-                        //console.log('onReset')
                     },
                     onError: function (msg) {
-                        //console.log(msg)
                         $.notify({
                             type: 'error',
                             title: msg.title,   // 不允许的文件类型
@@ -475,6 +471,5 @@ ${commodity.details}
         // .getContent() 获取内容
     })
 </script>
-
 </body>
 </html>

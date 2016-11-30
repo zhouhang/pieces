@@ -9,9 +9,7 @@ import java.util.List;
 @AutoMapper
 public interface EnquiryCommoditysDao extends ICommonDao<EnquiryCommoditys>{
 
-    public List<EnquiryCommoditys> findByBillId(@Param(value = "billId") Integer billId,@Param(value = "pageSize") Integer pageSize);
-
-    public List<EnquiryCommoditys> findByBillId(@Param(value = "userId") Integer userId, @Param(value = "billId") Integer billId,@Param(value = "pageSize") Integer pageSize);
+    public List<EnquiryCommoditys> findByBillId(@Param(value = "billId") Integer billId,@Param(value = "userId") Integer userId,@Param(value = "pageSize") Integer pageSize);
 
     public void batchCreate(List<EnquiryCommoditys> enquiryCommoditysList);
 
