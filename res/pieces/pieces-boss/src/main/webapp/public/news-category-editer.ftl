@@ -57,41 +57,12 @@
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
 <script>
-    var roleAddPage = {
+    var _global = {
         v: {},
         fn: {
             init: function () {
                 this.formValidate();
-                $("#delete").click(function() {
-                    layer.confirm('确认要删除该分类？', {
-                        title: '删除分类',
-                        btn: ['确认','取消'] //按钮
-                    }, function(index){
-                        $.post("cms/category/delete/${category.id}", function (data) {
-                            if (data.status == "y") {
-                                $.notify({
-                                    type: 'success',
-                                    title: '删除成功',
-                                    text: '3秒后自动跳转到分类列表',
-                                    delay: 3e3,
-                                    call: function () {
-                                        setTimeout(function () {
-                                            location.href = 'cms/category/index?model=${category.model}';
-                                        }, 3e3);
-                                    }
-                                });
-                            } else {
-                                $.notify({
-                                    type: 'warn',
-                                    title: '删除失败',
-                                    text: data.info,
-                                    delay: 3e3
-                                });
-                            }
-                        }, "json")
-                        layer.close(index);
-                    });
-                });
+                this.delete();
             },
             formValidate: function () {
                 $('#form').validator({
@@ -119,11 +90,40 @@
                         }
                     }
                 });
+            },
+            delete: function() {
+                $("#delete").click(function() {
+                    layer.confirm('确认要删除该分类？', {icon: 3, title:'提示'}, function(index){
+                        layer.close(index);
+                        $.post("cms/category/delete/${category.id}", function (data) {
+                            if (data.status == "y") {
+                                $.notify({
+                                    type: 'success',
+                                    title: '删除成功',
+                                    text: '3秒后自动跳转到分类列表',
+                                    delay: 3e3,
+                                    call: function () {
+                                        setTimeout(function () {
+                                            location.href = 'cms/category/index?model=${category.model}';
+                                        }, 3e3);
+                                    }
+                                });
+                            } else {
+                                $.notify({
+                                    type: 'warn',
+                                    title: '删除失败',
+                                    text: data.info,
+                                    delay: 3e3
+                                });
+                            }
+                        }, "json")
+                    });
+                });
             }
         }
     }
     $(function () {
-        roleAddPage.fn.init();
+        _global.fn.init();
     })
 
 
