@@ -37,7 +37,6 @@
                                     <div class="td w3">规格等级</div>
                                     <div class="td w4">产地</div>
                                     <div class="td w8">单价<span>（元/公斤）</span></div>
-                                    <div class="td w9">报价有效期至</div>
                                     <div class="td w10">操作</div>
                                 </div>
                             </div>
@@ -46,28 +45,37 @@
                                 <div class="group">
                                     <div class="tr hd">
                                         <a data-billid="${bill.id!}" data-status="${bill.status!}" class="fr c-blue" href="/center/enquiry/index?billId=${bill.id!}">重新询价</a>
-                                        <label><input class="cbx" type="checkbox">全选</label>
+                                        <#if bill.expireDate?exists && bill.expireDate?is_date&&(bill.expireDate?date>.now?date)> <label><input class="cbx" type="checkbox">全选</label></#if>
                                         <span>询价单号：${bill.code!}</span>
-                                        <span>询价日期：${bill.createTime?string("yyyy-MM-dd")}</span>
+                                        <span>询价日期：${(bill.createTime?date)!}</span>
+                                        <#if bill.expireDate?exists && bill.expireDate?is_date> <span>报价截止日期：${(bill.expireDate?date)!}</span></#if>
+                                        <span>状态：
+                                            <#if bill.status==0>
+                                                未报价
+                                            <#else >
+                                                <#if bill.expireDate?exists&&bill.expireDate?is_date&&(bill.expireDate?date>.now?date)>
+                                                    已报价
+                                                <#else >
+                                                    已过期
+                                                </#if>
+                                            </#if>
+                                        </span>
                                     </div>
 
                                     <#list bill.enquiryCommoditys as commodity>
                                         <div class="tr">
-                                            <div class="td w1"><label><#if commodity.myPrice??&&commodity.expireDate??&&(commodity.expireDate?date>.now?date)><input class="cbx" type="checkbox" name="commodity" value="${commodity.id!}"> </#if>${commodity.commodityName!}</label></div>
+                                            <div class="td w1"><label><#if (commodity.myPrice != 0) &&commodity.expireDate??&&(commodity.expireDate?date>.now?date)><input class="cbx" type="checkbox" name="commodity" value="${commodity.id!}"> </#if>${commodity.commodityName!}</label></div>
                                             <div class="td w2">${commodity.specs!}</div>
                                             <div class="td w3">${commodity.level!}</div>
                                             <div class="td w4">${commodity.origin!}</div>
-                                            <div class="td w8">${commodity.myPrice!}</div>
-                                            <div class="td w9">
-                                            <#if commodity.expireDate??>
-                                                ${commodity.expireDate?string("yyyy-MM-dd")}
-                                            </#if>
-                                            </div>
+                                            <div class="td w8"><#if commodity.myPrice == 0>-<#else>${commodity.myPrice!}</#if></div>
                                             <div class="td w10">
-                                                <#if commodity.myPrice??&&commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
+                                                <#if (commodity.myPrice != 0)&&commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
                                                     <#if user_session_biz??&&user_session_biz.certifyStatus==1>
                                                     <a href="javascript:void(0);" onclick="page.fn.orderCommodity(${commodity.id!})">订购</a>
                                                     </#if>
+                                                    <#elseif commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
+                                                        暂不出售此商品
                                                 </#if>
                                             </div>
                                         </div>
@@ -223,6 +231,9 @@
 
                     // 全选 &　反选
                     $table.on('click', '.hd .cbx', function() {
+                        if(this.checked) {
+                            // 全选 展开询价单所有商品. 并选中.需要回调函数来实现
+                        }
                         $(this).closest('.group').find('.cbx').prop('checked', this.checked);
                     })
 
@@ -273,9 +284,6 @@
                         modal.push('</div>');
                     })
                     modal.push('</div>');
-                   <#if user_session_biz??&&user_session_biz.certifyStatus==1>
-                    $expend.parent().find('.hd .c-blue').html('订购已选商品');
-                   </#if>
                     return modal.join('');
                 },
                 formatDate: function(date) {
