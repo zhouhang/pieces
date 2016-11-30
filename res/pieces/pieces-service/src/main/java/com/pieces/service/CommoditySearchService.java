@@ -51,4 +51,8 @@ public interface CommoditySearchService {
 
     public void  deleteByCommodityId(Integer commodityId);
 
+
+    public Page<CommodityDoc> findByPinyinSearch(String pinyin);
+
+
 }
