@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="fa-chart">
-                        <table>
+                        <table id="orderList">
                             <thead>
                                 <tr>
                                     <th width="110">商品名称</th>
@@ -74,11 +74,12 @@
                             <#list enquiryCommoditysList as enquiryCommoditys>	
                                 <tr>
                                     <td>${enquiryCommoditys.commodityName}</td>
+                                    <input type="hidden" data-name="enquiryCommodityId" value="${enquiryCommoditys.id}">
                                     <td>${enquiryCommoditys.specs}</td>
                                     <td>${enquiryCommoditys.level}</td>
                                     <td>${enquiryCommoditys.origin}</td>
                                     <td><i>&yen;</i> ${enquiryCommoditys.myPrice}</td>
-                                    <td><div class="ipt-wrap"><input type="text" value="${enquiryCommoditys.amount}" data-price="${enquiryCommoditys.myPrice}" class="ipt" placeholder="请输入数量"></div></td>
+                                    <td><div class="ipt-wrap"><input type="text" data-name ="amount" value="${enquiryCommoditys.amount}" data-price="${enquiryCommoditys.myPrice}" class="ipt" placeholder="请输入数量"></div></td>
                                     <td name="commoditysPrice"><i>&yen;</i> <span>${enquiryCommoditys.amount * enquiryCommoditys.myPrice}</span></td>
                                     <td><a href="javascript:;" class="c-blue">删除</a></td>
                                 </tr>
@@ -308,7 +309,7 @@
     <script src="js/laydate/laydate.js"></script>
     <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
     <script src="/js/jquery.form.js"></script>
-    <script src="js/area.js"></script>
+    <script src="js/jquery_util.js"></script>
     <script>
     	var _global = {
     		v: {
@@ -609,7 +610,42 @@
                             window.scrollTo(0, 0);
                     		return false;
                     	}
-                    	$("#orderSave").submit();
+                        var $table=$("#orderList");
+                        var commodityses=[];
+                        $table.find("tbody tr").each(function(item){
+                              var enId=$(this).find("input[data-name='enquiryCommodityId']").val();
+                              var count=$(this).find("input[data-name='amount']").val();
+                              var commodity={};
+                              commodity.id=enId;
+                              commodity.amount=count;
+                              commodityses.push(commodity);
+                        })
+
+                        var param=$("#orderSave").serializeObject();
+                        param.commodityses=commodityses;
+                        $.ajax({
+                            type : 'POST',
+                            url : '/center/order/save',
+                            data: JSON.stringify(param),
+                            contentType : 'application/json',
+                            success : function(data) {
+                                var status = data.status;
+                                if (status == 'y') {
+                                    window.location = "/center/order/success/"+data.data;
+                                }
+                                else{
+                                    $.notify({
+                                        type: 'error',
+                                        title:"提交订单错误",
+                                        text: data.data,
+                                        delay: 3e3
+                                    });
+                                }
+                            }
+
+                        });
+
+                    	//$("#orderSave").submit();
                     })
                 },
                 // 计算价格

@@ -375,7 +375,7 @@
 	<!-- 条件查询User-->
 	<select id="findProxyUser" parameterType="com.pieces.dao.vo.UserVo" resultMap="Vo">
 		select b.id as id,b.user_name as user_name, b.company_full_name as company_full_name,
-		agent.user_name as agentName,agent.id as agentId
+		agent.contact_name as agentName,agent.id as agentId
 		from user b
 		LEFT JOIN  user_bind bind ON b.id = bind.terminal_id
 		LEFT JOIN  user agent ON bind.agent_id = agent.id
@@ -387,7 +387,7 @@
 				and b.company_full_name LIKE "%"#{bincompanyFullNamedErp}"%"
 			</if>
 			<if test="agentName != null and agentName != ''">
-				and agent.user_name like "%"#{agentName}"%"
+				and agent.contact_name like "%"#{agentName}"%"
 			</if>
 			<if test="true">
 				and b.type = 1

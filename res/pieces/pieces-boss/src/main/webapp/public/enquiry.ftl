@@ -59,8 +59,6 @@
                     <td>${enquiry.id}</td>
                     <td>${enquiry.code}</td>
                     <td>${enquiry.userName}</td>
-                    <td>${enquiry.companyFullName}</td>
-                    <td>${enquiry.areaFull}</td>
                     <td>${enquiry.createTime?datetime}</td>
                     <td><#if enquiry.status ==1>已报价<#else><span class="c-red">未报价</span></#if></td>
                     <td>

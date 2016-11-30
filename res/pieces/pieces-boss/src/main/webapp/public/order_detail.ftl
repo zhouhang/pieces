@@ -113,10 +113,6 @@
                                             <em>￥${vo.sum}</em>
                                         </div>
                                         <div class="item">
-                                            <span>运&#12288;&#12288;费：</span>
-                                            <em>￥${vo.shippingCosts}</em>
-                                        </div>
-                                        <div class="item">
                                             <span>实际应付：</span>
                                             <em class="price">￥${vo.amountsPayable}</em>
                                         </div>

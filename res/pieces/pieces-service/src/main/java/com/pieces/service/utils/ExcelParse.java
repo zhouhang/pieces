@@ -202,6 +202,64 @@ public class ExcelParse {
         return map;
     }
 
+    public static  List<EnquiryCommoditys> importQuoteInfo(InputStream inp) throws IOException, InvalidFormatException {
+        Workbook wb = WorkbookFactory.create(inp);
+        Sheet sheet = wb.getSheetAt(0);
+
+        // Decide which rows to process
+        int rowStart = Math.max(sheet.getFirstRowNum(), 1);
+        int rowEnd = sheet.getLastRowNum();
+        List<EnquiryCommoditys> enquiryCommodityses=new ArrayList<EnquiryCommoditys>();
+        for (int rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
+            Row r = sheet.getRow(rowNum);
+            if (r == null) {
+                continue;
+            }
+            EnquiryCommoditys commoditys = new EnquiryCommoditys();
+
+            for (int cn = 0; cn <= 10; cn++) {
+                //"0 ID", "1 商品名称", "2 切制规格", "3 规格等级", "4 产地", "5 单价(元/公斤)"
+                Cell c = r.getCell(cn, Row.RETURN_BLANK_AS_NULL);
+                if (c == null) {
+                    // The spreadsheet is empty in this cell
+                    continue;
+                } else {
+                    try {
+                        switch (cn) {
+                            case 0:
+                                commoditys.setId(Integer.valueOf(getCellValue(c)));
+                                break;
+                            case 1:
+                                commoditys.setCommodityName(getCellValue(c));
+                                break;
+                            case 2:
+                                commoditys.setSpecs(getCellValue(c));
+                                break;
+                            case 3:
+                                commoditys.setLevel(getCellValue(c));
+                                break;
+                            case 4:
+                                commoditys.setOrigin(getCellValue(c));
+                                break;
+                            case 5:
+                                commoditys.setMyPrice(Double.valueOf(getCellValue(c)));
+                                break;
+                            default:
+                                break;
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        logger.info("importQuoteInfo:" + cn +":", e.getMessage());
+                    }
+                }
+            }
+            enquiryCommodityses.add(commoditys);
+        }
+        inp.close();
+        return enquiryCommodityses;
+    }
+
 
     private static String getCellValue(Cell c) {
         String value = "";

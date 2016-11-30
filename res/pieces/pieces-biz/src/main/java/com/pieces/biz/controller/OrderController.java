@@ -10,28 +10,19 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import com.pieces.biz.controller.commons.LogConstant;
-import com.pieces.dao.group.Biz;
+import com.pieces.dao.model.*;
 import com.pieces.tools.log.annotation.BizLog;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.enums.SessionEnum;
-import com.pieces.dao.model.Area;
-import com.pieces.dao.model.EnquiryCommoditys;
-import com.pieces.dao.model.OrderCommodity;
-import com.pieces.dao.model.OrderInvoice;
-import com.pieces.dao.model.ShippingAddress;
-import com.pieces.dao.model.ShippingAddressHistory;
-import com.pieces.dao.model.User;
 import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.dao.vo.ShippingAddressVo;
 import com.pieces.service.AreaService;
@@ -73,9 +64,12 @@ public class OrderController extends BaseController {
             ModelMap modelMap,
             String commodityIds,
             Integer currentid){
+		// 判断是否全选 获取询价单商品id 去除无效报价
+
 		List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysService.findByIds(commodityIds);
 		double totalPrice = 0.00;
 		for(EnquiryCommoditys ec : enquiryCommoditysList){
+			ec.setAmount(1);
 			totalPrice = totalPrice + ec.getAmount() * ec.getMyPrice();
 		}
 		
@@ -132,19 +126,19 @@ public class OrderController extends BaseController {
 	}
 	
 	
-	@RequestMapping(value = "/order/save")
+	@RequestMapping(value = "/order/save",consumes = MediaType.APPLICATION_JSON_VALUE)
 	@BizLog(type = LogConstant.order, desc = "保存订单")
-	public String orderSave(HttpServletRequest request,
+	@ResponseBody
+	public Result orderSave(HttpServletRequest request,
             HttpServletResponse response,
-            ModelMap modelMap,
-            OrderFormVo orderFormVo,
-            String token){
-		if(request.getSession().getAttribute(SessionEnum.ORDER_TOKEN.getKey()) == null){
-			return "redirect:/center/enquiry/record";
-		}
+            @RequestBody  OrderFormVo orderFormVo){
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		if (orderFormVo.getAddrHistoryId() == null) {
 			throw new RuntimeException("收货地址不能为空");
+		}
+		String token=(String)request.getSession().getAttribute(SessionEnum.ORDER_TOKEN.getKey());
+		if(token==null||!(token.equals(orderFormVo.getToken()))){
+			return new Result(false).data("该订单已经提交！不允许重复提交");
 		}
 		ShippingAddress sa = shippingAddressService.findById(orderFormVo.getAddrHistoryId());
 		ShippingAddressHistory sah = new ShippingAddressHistory();
@@ -153,16 +147,17 @@ public class OrderController extends BaseController {
 		sah.setArea(getFullAdd(sa.getAreaId()));
 		sah.setAreaId(sa.getAreaId());
 		orderFormVo.setAddress(sah);
-		List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysService.findByIds(orderFormVo.getCommodityIds());
+
 		List<OrderCommodity> orderCommoditysList = new ArrayList<OrderCommodity>();
 		Double total = 0.0d;
-		for(EnquiryCommoditys ec : enquiryCommoditysList){
+		for(EnquiryCommoditys enquiryCommoditys:orderFormVo.getCommodityses()){
+			EnquiryCommoditys ec=enquiryCommoditysService.findById(enquiryCommoditys.getId());
 			OrderCommodity oc = new OrderCommodity();
 			oc.setName(ec.getCommodityName());
 			oc.setSpec(ec.getSpecs());
 			oc.setLevel(ec.getLevel());
 			oc.setOriginOf(ec.getOrigin());
-			oc.setAmount(ec.getAmount());
+			oc.setAmount(enquiryCommoditys.getAmount());
 			oc.setPrice(ec.getMyPrice());
 			oc.setSubtotal(oc.getAmount()*oc.getPrice());
 			oc.setEnquiryCommodityId(ec.getId());
@@ -170,16 +165,14 @@ public class OrderController extends BaseController {
 			orderCommoditysList.add(oc);
 			total = total + oc.getSubtotal();
 		}
+
 		orderFormVo.setSum(total);
-		total = total + orderFormVo.getShippingCosts();
+		//total = total + orderFormVo.getShippingCosts();
 		orderFormVo.setAmountsPayable(total);
 		orderFormVo.setCommodities(orderCommoditysList);
 		orderFormService.save(orderFormVo, user);
 		request.getSession().removeAttribute(SessionEnum.ORDER_TOKEN.getKey());
-		modelMap.put("total", total);
-		modelMap.put("orderCode", orderFormVo.getCode());
-		modelMap.put("orderId", orderFormVo.getId());
-        return "order_success";
+        return new Result(true).data(orderFormVo.getId());
 	}
 	
 	/**
@@ -245,8 +238,10 @@ public class OrderController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/order/success/{id}", method = RequestMethod.GET)
-    public String success(@PathVariable("id")Integer id) {
-        return "order_success";
+    public String success(@PathVariable("id")Integer id,ModelMap modelMap) {
+		OrderForm order=orderFormService.findVoById(id);
+		modelMap.put("order", order);
+		return "order_success";
     }
 
 

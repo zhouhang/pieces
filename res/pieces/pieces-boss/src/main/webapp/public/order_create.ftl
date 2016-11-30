@@ -90,7 +90,7 @@
             <form action="" id="myform">
 
             <div class="chart-info">
-                <h3>订购商品</h3>
+                <h3>订购商品  <button type="button"class="btn btn-gray" id="importExcel">导入报价</button></h3>
                 <div class="chart">
                         <table class="tc">
                             <thead>
@@ -226,10 +226,6 @@
                         <em class="jsum"><#if origOrderForm??>${origOrderForm.sum!}</#if></em>
                     </div>
                     <div class="item">
-                        <span>运&#12288;&#12288;费：</span>
-                        <em><input value="<#if origOrderForm??>${origOrderForm.shippingCosts!}</#if>" type="text" class="ipt" name="jfreightPrice" id="jfreightPrice"></em>
-                    </div>
-                    <div class="item">
                         <span>实际应付：</span>
                         <em class="price jsum2"><#if origOrderForm??>${origOrderForm.amountsPayable!}</#if></em>
                     </div>
@@ -295,6 +291,7 @@
                 this.myformEvent();
                 this.addGoodsToOrder();
                 this.insertArea();
+                this.batch();
 
 
                 $('#myform').validator({
@@ -303,7 +300,7 @@
                         tel : '手机号: required; ',
                         area : '所在地区: required;',
                         detail : '详细地址: required;',
-                        jfreightPrice : '运费: required;',
+                       // jfreightPrice : '运费: required;',
                     }
                 });
 
@@ -454,14 +451,15 @@
             },
             // 小计&总计
             calcPrice: function($tbody, $tr) {
-                var freightPrice = parseFloat($('#jfreightPrice').val());
+                //var freightPrice = parseFloat($('#jfreightPrice').val());
+                var freightPrice =0;
                 var subTotal = 0;
                 //保证金
                 var subDeposit = 0;
 
-                if (isNaN(freightPrice)) {
-                    freightPrice = 0;
-                }
+                //if (isNaN(freightPrice)) {
+                //    freightPrice = 0;
+                //}
                 $tbody.find('tr').each(function(i) {
                     var amount = parseInt($(this).find('.amount').val(), 10);
                     var price = parseFloat($(this).find('.price').val(), 10);
@@ -586,8 +584,8 @@
                         var remark =  $(".cnt textarea[name='remark']").val();
                         formObj.remark = remark;
                         //运费
-                        var jfreightPrice = $("#jfreightPrice").val();
-                        formObj.shippingCosts = jfreightPrice;
+                        //var jfreightPrice = $("#jfreightPrice").val();
+                        formObj.shippingCosts = 0;
                         //订单号
                         var orderId = $("#orderId").val();
                         formObj.orderId = orderId;
@@ -678,13 +676,13 @@
                         $amount.nextAll('.error').css('display','block').html('不可空白');
                         result.pass = false;
                     }
-
+                    /*
                     if (date) {
                         $date.nextAll('.error').css('display','none').html('');
                     } else {
                         $date.nextAll('.error').css('display','block').html('不可空白');
                         result.pass = false;
-                    }
+                    }*/
 
                     if (result.pass) {
                         result.serialize.push({
@@ -730,6 +728,60 @@
                             code: area[2]
                         });
                     }
+                })
+            },
+            batch: function() {
+                $("#importExcel").click(function(){
+                    layer.open({
+                        moveType: 1,
+                        area: ['600px'],
+                        title: '导入报价',
+                        content: '<form action="/order/importExcel" id="excelForm" method="post" enctype="multipart/form-data"><p>上传报价文件</p><label class="btn btn-file enquiry_btn"><span>上传文件</span><input type="file" name="file"></label><label class="filename"></label></form>',
+                        btn: ['确定', '取消'],
+                        yes: function(index) {
+                            $.ajax({
+                                url: '/order/importExcel',
+                                data: new FormData($('#excelForm')[0]),
+                                type: "POST",
+                                contentType: false,
+                                processData:false,
+                                cache: false,
+                                success: function (data) {
+                                    if (data.status == "y") {
+                                        var $myform      = $('#myform');
+                                        var $tbody       = $myform.find('tbody');
+                                        var modal        = $('#jmodal').html();
+                                        var $last = $tbody.find('tr:last');
+                                        var list=data.data;
+                                        if ($last.find('.ipt-name').val() === '') {
+                                            $last.remove();
+                                        } else if ($last.index() === 0) {
+                                            if ($last.find('.remove').length === 0) {
+                                                $last.find('.add').after(' <a class="remove c-red" href="javascript:;">删除</a>');
+                                            }
+                                        }
+                                        list.forEach(function(item){
+                                            var $tr = $(modal);
+                                            $tr.find('.ipt:eq(0)').val(item.commodityName);
+                                            $tr.find('.ipt:eq(1)').val(item.specs);
+                                            $tr.find('.ipt:eq(2)').val(item.level);
+                                            $tr.find('.ipt:eq(3)').val(item.myPrice);
+                                            $tr.find('.ipt:eq(5)').val(item.myPrice);
+                                            $tbody.append($tr);
+                                        });
+                                    }
+                                }
+                            });
+                            layer.close(index);
+                        },
+                        end: function() {
+                            $('.enquiry_btn').off();
+                        }
+                    })
+
+                    $('.enquiry_btn').on('change', 'input', function() {
+                        $('.filename').html($(this).val());
+                    })
                 })
             }
         }

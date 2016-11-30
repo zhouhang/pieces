@@ -41,7 +41,6 @@
                         <#if user_session_biz?? && user_session_biz.type == 2>
                             <span>需支付保证金：<em class="price">¥${orderForm.deposit}</em></span>
                         </#if>
-                            <span>运　　费：<em class="price">¥${orderForm.shippingCosts}</em></span>
                         </td>
                         <td class="nl">
                         <#if user_session_biz?? && user_session_biz.type == 2>
