@@ -38,14 +38,20 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
     @Override
     @Transactional
     public void quotedUpdate(List<EnquiryCommoditys> list, Integer memberId, Integer billsId) {
+        removeNullQuoted(list);
+
         EnquiryBills enquiryBills = new EnquiryBills();
         enquiryBills.setId(billsId);
         enquiryBills.setUpdateTime(new Date());
         enquiryBills.setUpdateUser(memberId);
+
+        if (list!= null && list.size()>0){
+            enquiryBills.setExpireDate(list.get(0).getExpireDate());
+        }
+
         enquiryBillsDao.update(enquiryBills);
 
         if(list != null && list.size()>0) {
-            removeNullQuoted(list);
             enquiryCommoditysDao.quotedUpdate(list);
 
             // 报价更新后发生短信
@@ -72,6 +78,9 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
     @Override
     @Transactional
     public void quoted(List<EnquiryCommoditys> list, Integer memberId, Integer billsId) {
+        // 删除空值行
+        removeNullQuoted(list);
+
         EnquiryBills enquiryBills = new EnquiryBills();
         enquiryBills.setId(billsId);
         enquiryBills.setQuotedTime(new Date());
@@ -80,10 +89,11 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
         enquiryBills.setUpdateTime(new Date());
         enquiryBills.setUpdateUser(memberId);
         enquiryBills.setStatus(1);
+        if (list!= null && list.size()>0){
+            enquiryBills.setExpireDate(list.get(0).getExpireDate());
+        }
         enquiryBillsDao.update(enquiryBills);
 
-        // 删除空值行
-        removeNullQuoted(list);
         if(list != null && list.size()>0) {
             enquiryCommoditysDao.quotedUpdate(list);
             // 报价后发生短信

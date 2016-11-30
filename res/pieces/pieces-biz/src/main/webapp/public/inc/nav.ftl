@@ -9,7 +9,7 @@
                 <li><a href="user/login">登录</a> <a href="user/register">注册</a></li>
             </#if>
             <li>|</li>
-            <li><a href="/user/info">我的供应链</a></li>
+            <li><a href="/user/info">用户中心</a></li>
             <li>|</li>
             <li><a href="/help/0">帮助中心</a></li>
             <li>|</li>

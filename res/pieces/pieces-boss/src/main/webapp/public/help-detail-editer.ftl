@@ -99,17 +99,14 @@ ${article.content}
 </div>
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
-<link type="text/css" rel="stylesheet" href="/js/validator/jquery.validator.css"/>
-<script src="/js/validator/jquery.validator.min.js"></script>
-<script src="/js/validator/local/zh-CN.js"></script>
+<script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
+<script src="/js/layer/layer.js"></script>
 
 <!-- 编辑器相关 -->
 <link href="/js/umeditor1_2_2-utf8/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" charset="utf-8" src="/js/umeditor1_2_2-utf8/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="/js/umeditor1_2_2-utf8/umeditor.min.js"></script>
 <script type="text/javascript" src="/js/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js"></script>
-<script src="/js/layer/layer.js"></script>
-<link type="text/css" rel="stylesheet" href="/js/layer/skin/layer.css" />
 <!-- footer end -->
 <script>
     var roleAddPage = {

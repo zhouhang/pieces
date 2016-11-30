@@ -22,6 +22,7 @@ import com.pieces.tools.utils.GsonUtil;
 import com.pieces.tools.utils.WebUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -211,7 +212,14 @@ public class EnquiryController extends BaseController{
         WebUtil.print(response,new Result(true).data(enquiryCommoditysList));
     }
 
-
+    /**
+     * 询价成功页面
+     * @return
+     */
+    @RequestMapping(value = "success", method = RequestMethod.GET)
+    public String success(){
+        return "user_enquiry_message";
+    }
 
     /**
      * 解析上传的excel 文件

@@ -201,9 +201,8 @@
     <script src="js/lightbox.js"></script>
     <script>
         $(function() {
-            var formValidate = $("#myform").Validform();
 
-            formValidate.addRule([
+            var rule = [{
                 {
                     ele: '#companyName',
                     datatype: 's',
@@ -238,21 +237,6 @@
                     nullmsg: '请输入当前操作人的boss帐号密码'
                 }
             ])
-            
-            var $mobileCode = $('#mobileCode');
-            var $pwd = $('#pwd');
-            var _setPwd = function() {
-                var flag = $mobileCode.prop('checked');
-                if (flag) {
-                    formValidate.ignore($pwd);
-                    $pwd.nextAll('.Validform_checktip').removeClass('Validform_wrong').html('');
-                } else {
-                    formValidate.unignore($pwd);
-                }
-                $pwd.prop('disabled', flag);
-            }
-            $mobileCode.on('click', _setPwd);
-            _setPwd();
 
         })
     </script>

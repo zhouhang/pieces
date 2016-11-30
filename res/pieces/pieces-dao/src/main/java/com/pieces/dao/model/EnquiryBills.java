@@ -35,6 +35,9 @@ public class EnquiryBills  implements Serializable {
 	// 最后报价时间
 	private Date quotedTime;
 
+	// 报价截止日期
+	private Date expireDate;
+
 	private List<EnquiryCommoditys> enquiryCommoditys;
 
 	public EnquiryBills(){}
@@ -117,5 +120,13 @@ public class EnquiryBills  implements Serializable {
 
 	public void setEnquiryCommoditys(List<EnquiryCommoditys> enquiryCommoditys) {
 		this.enquiryCommoditys = enquiryCommoditys;
+	}
+
+	public Date getExpireDate() {
+		return expireDate;
+	}
+
+	public void setExpireDate(Date expireDate) {
+		this.expireDate = expireDate;
 	}
 }

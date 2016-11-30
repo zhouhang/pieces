@@ -49,11 +49,9 @@
         </div>
     </div><!-- fa-floor end -->
 </div>
-<script src="js/jquery.min.js"></script>
 <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
 <script src="js/common.js"></script>
 <script src="/js/layer/layer.js"></script>
-<link type="text/css" rel="stylesheet" href="/js/layer/skin/layer.css" />
 
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>

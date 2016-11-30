@@ -76,7 +76,6 @@
 
 <#include "./inc/footer.ftl"/>
 
-<script src="js/jquery.min.js"></script>
 <script src="js/laydate/laydate.js"></script>
 <script>
     //定义根变量
@@ -116,19 +115,14 @@
                 dateInit: function () {
                     var start = {
                         elem: '#start',
-                        format: 'YYYY/MM/DD',
                         choose: function(datas){
                             end.min = datas;
-                            end.start = datas;
-                            $('#start').attr('title', datas);
                         }
                     };
                     var end = {
                         elem: '#end',
-                        format: 'YYYY/MM/DD',
                         choose: function(datas){
                             start.max = datas;
-                            $('#end').attr('title', datas);
                         }
                     };
                     laydate(start);
@@ -136,19 +130,14 @@
 
                     var start2 = {
                         elem: '#start2',
-                        format: 'YYYY/MM/DD',
                         choose: function(datas){
                             end2.min = datas;
-                            end2.start = datas;
-                            $('#start2').attr('title', datas);
                         }
                     };
                     var end2 = {
                         elem: '#end2',
-                        format: 'YYYY/MM/DD',
                         choose: function(datas){
                             start2.max = datas;
-                            $('#end2').attr('title', datas);
                         }
                     };
                     laydate(start2);

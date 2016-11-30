@@ -1,18 +1,83 @@
 {
-    "status": "success",
+    "status": "y",
     "msg": "",
-    "list": [
+    "data": [
 	    {
-	        "goodsName": "巴戟肉",
-	        "standard": "个",
+	        "name": "巴戟肉",
+	        "spec": "个",
 	        "level": "1",
-	        "origin": "湖北省"
+	        "originOf": "湖北省",
+	        "id": "1"
 	    },
 	    {
-	        "goodsName": "巴戟肉",
-	        "standard": "碎",
+	        "name": "白芍",
+	        "spec": "薄片",
+	        "level": "过18-20号筛，直径1.8-2.0cm，厚度2-3mm",
+	        "originOf": "亳州",
+	        "id": "2"
+	    },
+	    {
+	        "name": "酢酱草",
+	        "spec": "段",
 	        "level": "2",
-	        "origin": "安徽省"
+	        "originOf": "安徽",
+	        "id": "3"
+	    },
+	    {
+	        "name": "钻山风",
+	        "spec": "厚片",
+	        "level": "2",
+	        "originOf": "安徽",
+	        "id": "4"
+	    },
+	    {
+	        "name": "祖师麻",
+	        "spec": "个",
+	        "level": "2",
+	        "originOf": "安徽",
+	        "id": "5"
+	    },
+	    {
+	        "name": "走马胎",
+	        "spec": "薄片",
+	        "level": "2",
+	        "originOf": "安徽",
+	        "id": "6"
+	    },
+	    {
+	        "name": "棕榈子",
+	        "spec": "个",
+	        "level": "2",
+	        "originOf": "安徽",
+	        "id": "7"
+	    },
+	    {
+	        "name": "自然铜",
+	        "spec": "块",
+	        "level": "2",
+	        "originOf": "安徽",
+	        "id": "8"
+	    },
+	    {
+	        "name": "煅自然铜",
+	        "spec": "块",
+	        "level": "2",
+	        "originOf": "安徽",
+	        "id": "9"
+	    },
+	    {
+	        "name": "紫珠叶",
+	        "spec": "段",
+	        "level": "2",
+	        "originOf": "安徽",
+	        "id": "10"
+	    },
+	    {
+	        "name": "紫石英",
+	        "spec": "块",
+	        "level": "2",
+	        "originOf": "安徽",
+	        "id": "11"
 	    }
     ]
 }

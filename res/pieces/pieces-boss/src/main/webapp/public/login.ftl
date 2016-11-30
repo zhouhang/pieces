@@ -37,7 +37,6 @@
         </div>
     </div>
 
-    <script src="js/validform.min.js"></script>
     <script src="js/jquery.form.js"></script>
 
 </body>

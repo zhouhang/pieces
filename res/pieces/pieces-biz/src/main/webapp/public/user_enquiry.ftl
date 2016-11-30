@@ -36,17 +36,17 @@
 	                		<table>
 	                			<thead>
 	                				<tr>
-                                        <th width="110">商品名称</th>
-                                        <th width="90">片型</th>
-                                        <th>规格等级</th>
-                                        <th width="100">产地</th>
-                                        <th width="150">操作</th>
+	                					<th width="180">商品名称</th>
+	                					<th width="80">片型</th>
+	                					<th>规格等级</th>
+	                					<th width="110">产地</th>
+	                					<th width="100">操作</th>
 	                				</tr>
 	                			</thead>
 	                			<tfoot>
 	                				<tr>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="commodityName" autocomplete="off"><span class="error"></span></div>
-                                            <input name="commodityId" type="hidden" value="" /></td>
+	                            		<td><div class="ipt-wrap"><input name="commodityId" type="hidden" value="" /><input type="text" class="ipt ipt-name" value="" name="commodityName" autocomplete="off"><span class="error"></span></div>
+                                            </td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="specs" autocomplete="off"><span class="error"></span></div></td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"><span class="error"></span></div></td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"><span class="error"></span></div></td>
@@ -61,7 +61,7 @@
                                 <#if enquiryCommoditysList??>
                                     <#list enquiryCommoditysList as enquiryCommodity>
                                     <tr>
-                                        <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="${enquiryCommodity.commodityName!}" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="<#if enquiryCommodity??>${enquiryCommodity.id!}</#if>" /></td>
+                                        <td><div class="ipt-wrap"><input name="commodityId" type="hidden" value="<#if enquiryCommodity??>${enquiryCommodity.id!}</#if>" /><input type="text" class="ipt ipt-name" value="${enquiryCommodity.commodityName!}" name="commodityName" autocomplete="off"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text" class="ipt" value="${enquiryCommodity.specs!}" name="specs" autocomplete="off"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text" class="ipt" value="${enquiryCommodity.level!}" name="level" autocomplete="off"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text" class="ipt" value="${enquiryCommodity.origin!}" name="origin" autocomplete="off"><span class="error"></span></div></td>
@@ -79,7 +79,7 @@
                                 <#if commodityList??&&commodityList?has_content>
                                     <#list commodityList as commodity>
                                         <tr>
-                                            <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="${commodity.name!}" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="<#if commodityList[0]??>${commodityList[0].id!}</#if>" /></td>
+                                            <td><div class="ipt-wrap"><input name="commodityId" type="hidden" value="<#if commodityList[0]??>${commodityList[0].id!}</#if>" /><input type="text" class="ipt ipt-name" value="${commodity.name!}" name="commodityName" autocomplete="off"><span class="error"></span></div></td>
                                             <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.spec!}" name="specs" autocomplete="off"><span class="error"></span></div></td>
                                             <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.level!}" name="level" autocomplete="off"><span class="error"></span></div></td>
                                             <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.originOf!}" name="origin" autocomplete="off"><span class="error"></span></div></td>
@@ -94,7 +94,7 @@
                                     <#else>
                                         <#if !enquiryCommoditysList??>
                                             <tr>
-                                                <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="" /></td>
+                                                <td><div class="ipt-wrap"><input name="commodityId" type="hidden" value="" /><input type="text" class="ipt ipt-name" value="" name="commodityName" autocomplete="off"><span class="error"></span></div></td>
                                                 <td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="specs" autocomplete="off"><span class="error"></span></div></td>
                                                 <td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"><span class="error"></span></div></td>
                                                 <td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"><span class="error"></span></div></td>
@@ -131,6 +131,7 @@
     <script src="js/jquery.form.js"></script>
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
+    <script src="js/jquery.pagination.min.js"></script>
     <script>
 
     	var page = {
@@ -167,7 +168,7 @@
                             return true; // break
                         }
                         row ++;
-                        html.push('<tr><td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="', getVal(item.commodityName), '" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="', getVal(item.commodityId), '" /></td><td><div class="ipt-wrap"><input type="text" class="ipt" value="', getVal(item.specs), '" name="specs" autocomplete="off"><span class="error"></span></div></td><td><div class="ipt-wrap"><input type="text" class="ipt" value="', getVal(item.level), '" name="level" autocomplete="off"><span class="error"></span></div></td><td><div class="ipt-wrap"><input type="text" class="ipt" value="', getVal(item.origin), '" name="origin" autocomplete="off"><span class="error"></span></div></td><td><a class="add c-blue" href="javascript:;">添加</a><a class="remove c-red" href="javascript:;">删除</a></td></tr>');
+                        html.push('<tr> \n <td> \n <div class="ipt-wrap"> \n <input type="hidden" value="', getVal(item.commodityId), '" name="commodityId"> \n <input type="text" value="', getVal(item.commodityName), '" name="commodityName" class="ipt ipt-name" autocomplete="off"><span class="error"></span> \n </div> \n </td> \n <td> \n <div class="ipt-wrap"> \n <input type="text" value="', getVal(item.specs), '" name="specs" class="ipt" autocomplete="off"><span class="error"></span> \n </div> \n </td> \n <td> \n <div class="ipt-wrap"> \n     <input type="text" value="', getVal(item.level), '" name="level" class="ipt" autocomplete="off"><span class="error"></span></div> \n </td> \n <td> \n <div class="ipt-wrap"> \n     <input type="text" value="', getVal(item.origin), '" name="origin" class="ipt" autocomplete="off"><span class="error"></span></div> \n </td> \n <td><a class="add c-blue" href="javascript:;">添加</a><a class="remove c-red" href="javascript:;">删除</a></td> \n </tr>');
                     })
                     this.$tbody.empty().html(html.join(''));
                     row < 2 && this.$tbody.find('.remove').remove();
@@ -229,12 +230,12 @@
     				$body.on('click', function() {
     					$suggestions.hide();
     				})
-    				$body.on('click', '.suggestions', function(event) {
+    				$suggestions.on('click', function(event) {
     					event.stopPropagation();
     				})
 
                     // 关键字自动填充
-                    $body.on('click', '.suggestions .bd .group', function() {
+                    $suggestions.on('click', '.bd .group', function() {
                         var data = $(this).data('val').split('-');
                         $suggestions.prev().val(data[0])
                         .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
@@ -300,7 +301,7 @@
                         success: function(data) {
                             // 显示查询结果
                             if (data.status === 'y') {
-                                self.toHtml(data.data);
+                                self.toHtml(data.data, 0, 7);
                             } else {
                                 self.$suggestions.hide();
                             }
@@ -308,19 +309,37 @@
                     })
                 },
     			// 显示查询结果
-    			toHtml: function(json) {
-					var modal = [];
-					$.each(json, function(i, item) {
-                        var val = item.name + '-' + item.spec + '-' + item.level + '-' + item.originOf+'-'+item.id;
-						modal.push('<div class="group" data-val="', val, '">');
-						modal.push('<span class="w1">', item.name, '</span>');
-						modal.push('<span class="w2">', item.spec, '</span>');
-						modal.push('<span class="w3">', item.level, '</span>');
-						modal.push('<span class="w4">', item.originOf, '</span>');
-					 	modal.push('</div>');
-					})
-					this.$suggestions.find('.bd').empty().html(modal.join('')).parent().show();
+    			toHtml: function(item, page_index, pageSize) {
+					var modal = [],
+                        maxPage = Math.min((page_index + 1) * pageSize, item.length),
+                        hasPage = pageSize < item.length;
+
+                    for (var i = page_index * pageSize; i < maxPage; i++) {
+                        var val = item[i].name + '-' + item[i].spec + '-' + item[i].level + '-' + item[i].originOf + '-' + item[i].id;
+                        modal.push('<div class="group" data-val="', val, '">');
+                        modal.push(     '<span class="w1">', item[i].name, '</span>');
+                        modal.push(     '<span class="w2">', item[i].spec, '</span>');
+                        modal.push(     '<span class="w3">', item[i].level, '</span>');
+                        modal.push(     '<span class="w4">', item[i].originOf, '</span>');
+                        modal.push('</div>');
+                    }
+                    hasPage && modal.push('<div class="jq-page"></div>');
+                    this.$suggestions.show().find('.bd').empty().html(modal.join(''));
+                    hasPage && this.showPage(item, page_index, pageSize);
+
     			},
+                showPage: function(item, page_index, pageSize) {
+                    var self = this;
+                    $('.jq-page').pagination(item.length, {
+                        items_per_page: pageSize, //pageSize 每页显示数量
+                        current_page: page_index, //默认pageIndex,0(默认),false(不加载)
+                        num_edge_entries: 2, //1(任何情况下都显示第一页和最后一页),0(不显示)
+                        callback: function(page_index) {
+                            self.toHtml(item, page_index, pageSize);
+                        }
+                    })
+                    $('.jq-page').prepend('<div class="p-size">总共' + item.length + '条记录</div>')
+                },
                 submit: function() {
                     var self     = this;
                     var isSubmit = false;
@@ -385,13 +404,9 @@
                 },
                 response:function(result){
                     if(result.status=='y'){
-                        $.notify({
-                            type: 'success',
-                            title: '提交成功',
-                            text: result.info
-                        })
                         this.$tbody.empty().html(this.modal).find('.remove').remove();
                         $('#billId').val('');
+                        window.location.href="/center/enquiry/success";
                     }else{
                         $.notify({
                             type: 'error',

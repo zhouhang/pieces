@@ -94,7 +94,6 @@
 <script src="js/laydate/laydate.js"></script>
 <script src="/js/common.js"></script>
 <script src="/js/layer/layer.js"></script>
-<link type="text/css" rel="stylesheet" href="/js/layer/skin/layer.css" />
 <script>
 
     var enquiryPage = {

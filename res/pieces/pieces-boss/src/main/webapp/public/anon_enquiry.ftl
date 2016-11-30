@@ -121,20 +121,15 @@
                     //日期选择
                     dateInit: function () {
                         var start = {
-                            format: 'YYYY-MM-DD hh:mm:ss',
                             elem: '#start',
                             choose: function(datas){
                                 end.min = datas;
-                                end.start = datas;
-                                $('#start').attr('title', datas);
                             }
                         };
                         var end = {
-                            format: 'YYYY-MM-DD hh:mm:ss',
                             elem: '#end',
                             choose: function(datas){
                                 start.max = datas;
-                                $('#end').attr('title', datas);
                             }
                         };
                         laydate(start);
@@ -144,15 +139,12 @@
                             elem: '#start2',
                             choose: function(datas){
                                 end2.min = datas;
-                                end2.start = datas;
-                                $('#start2').attr('title', datas);
                             }
                         };
                         var end2 = {
                             elem: '#end2',
                             choose: function(datas){
                                 start2.max = datas;
-                                $('#end2').attr('title', datas);
                             }
                         };
                         laydate(start2);

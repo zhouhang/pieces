@@ -141,19 +141,11 @@ function currNav() {
 			hrefBefore = url.split('/')[3] + url.split('/')[4];
 
         if (URL === url) {
-            $(this).addClass("curr").closest('dl').addClass('expand');
+            $(this).addClass("curr");
             return false; // break
         }
-		if(urlBefore === hrefBefore){
-			$(this).closest('dl').addClass('expand');
-		}
     }) 
 
-	$side.find('.expand dd').css({'display':'block'});
-	$side.on('click', 'dt', function() {
-		$(this).next().slideToggle();
-		$(this).parent().toggleClass('expand').siblings().removeClass('expand').find('dd').slideUp();
-	});
 }
 
 // 询价

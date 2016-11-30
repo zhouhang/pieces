@@ -64,6 +64,8 @@ public class OrderController extends BaseController {
             ModelMap modelMap,
             String commodityIds,
             Integer currentid){
+		// 判断是否全选 获取询价单商品id 去除无效报价
+
 		List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysService.findByIds(commodityIds);
 		double totalPrice = 0.00;
 		for(EnquiryCommoditys ec : enquiryCommoditysList){
