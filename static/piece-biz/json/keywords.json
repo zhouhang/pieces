@@ -1,72 +1,83 @@
 {
-    "status": "success",
+    "status": "y",
     "msg": "",
-    "list": [
+    "data": [
 	    {
-	        "goodsName": "巴戟肉",
-	        "standard": "个",
+	        "name": "巴戟肉",
+	        "spec": "个",
 	        "level": "1",
-	        "origin": "湖北省"
+	        "originOf": "湖北省",
+	        "id": "1"
 	    },
 	    {
-	        "goodsName": "白芍",
-	        "standard": "薄片",
+	        "name": "白芍",
+	        "spec": "薄片",
 	        "level": "过18-20号筛，直径1.8-2.0cm，厚度2-3mm",
-	        "origin": "亳州"
+	        "originOf": "亳州",
+	        "id": "2"
 	    },
 	    {
-	        "goodsName": "酢酱草",
-	        "standard": "段",
+	        "name": "酢酱草",
+	        "spec": "段",
 	        "level": "2",
-	        "origin": "安徽"
+	        "originOf": "安徽",
+	        "id": "3"
 	    },
 	    {
-	        "goodsName": "钻山风",
-	        "standard": "厚片",
+	        "name": "钻山风",
+	        "spec": "厚片",
 	        "level": "2",
-	        "origin": "安徽"
+	        "originOf": "安徽",
+	        "id": "4"
 	    },
 	    {
-	        "goodsName": "祖师麻",
-	        "standard": "个",
+	        "name": "祖师麻",
+	        "spec": "个",
 	        "level": "2",
-	        "origin": "安徽"
+	        "originOf": "安徽",
+	        "id": "5"
 	    },
 	    {
-	        "goodsName": "走马胎",
-	        "standard": "薄片",
+	        "name": "走马胎",
+	        "spec": "薄片",
 	        "level": "2",
-	        "origin": "安徽"
+	        "originOf": "安徽",
+	        "id": "6"
 	    },
 	    {
-	        "goodsName": "棕榈子",
-	        "standard": "个",
+	        "name": "棕榈子",
+	        "spec": "个",
 	        "level": "2",
-	        "origin": "安徽"
+	        "originOf": "安徽",
+	        "id": "7"
 	    },
 	    {
-	        "goodsName": "自然铜",
-	        "standard": "块",
+	        "name": "自然铜",
+	        "spec": "块",
 	        "level": "2",
-	        "origin": "安徽"
+	        "originOf": "安徽",
+	        "id": "8"
 	    },
 	    {
-	        "goodsName": "煅自然铜",
-	        "standard": "块",
+	        "name": "煅自然铜",
+	        "spec": "块",
 	        "level": "2",
-	        "origin": "安徽"
+	        "originOf": "安徽",
+	        "id": "9"
 	    },
 	    {
-	        "goodsName": "紫珠叶",
-	        "standard": "段",
+	        "name": "紫珠叶",
+	        "spec": "段",
 	        "level": "2",
-	        "origin": "安徽"
+	        "originOf": "安徽",
+	        "id": "10"
 	    },
 	    {
-	        "goodsName": "紫石英",
-	        "standard": "块",
+	        "name": "紫石英",
+	        "spec": "块",
 	        "level": "2",
-	        "origin": "安徽"
+	        "originOf": "安徽",
+	        "id": "11"
 	    }
     ]
 }
