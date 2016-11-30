@@ -221,4 +221,11 @@
         </where>
         ORDER BY pr.create_time DESC
     </select>
+
+    <select id="getNotHandleCount"  resultType="java.lang.Integer">
+        select count(id)
+        from pay_record WHERE status=0
+    </select>
+
+
 </mapper>

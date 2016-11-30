@@ -16,4 +16,10 @@ public interface PayRecordDao extends ICommonDao<PayRecord>{
 
     public List<PayRecordVo> findByUserId(PayRecordVo payRecordVo);
 
+    /**
+     * 待处理支付记录数目
+     * @return
+     */
+    public Integer getNotHandleCount();
+
 }

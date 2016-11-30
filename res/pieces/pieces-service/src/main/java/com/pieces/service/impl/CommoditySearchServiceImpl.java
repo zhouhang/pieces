@@ -9,6 +9,11 @@ import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -67,6 +72,27 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     @Override
     public void deleteByCommodityId(Integer commodityId) {
         commoditySearchRepository.delete(commodityId);
+    }
+
+    @Override
+    public Page<CommodityDoc>  findByPinyinSearch(Integer pageNum, Integer pageSize,String pinyin) {
+
+        SearchQuery searchQuery =null;
+        QueryBuilder pinyinQueryBuilder =  QueryBuilders
+                .matchQuery("name", pinyin)
+                .type(MatchQueryBuilder.Type.PHRASE)
+                .analyzer("lc_search")
+                .zeroTermsQuery(MatchQueryBuilder.ZeroTermsQuery.NONE);
+
+        FieldSortBuilder sorter = SortBuilders.fieldSort("_score")
+                .order(SortOrder.DESC);
+        searchQuery = new NativeSearchQueryBuilder()
+                .withQuery(pinyinQueryBuilder)
+                .withSort(sorter)
+                .withPageable(new PageRequest(pageNum-1,pageSize))
+                .build();
+        Page<CommodityDoc> result = esTemplate.queryForPage(searchQuery, CommodityDoc.class);
+        return result;
     }
 
 

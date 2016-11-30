@@ -12,4 +12,10 @@ public interface CertifyRecordDao extends ICommonDao<CertifyRecord>{
 
     public CertifyRecordVo getLatest(Integer userId);
 
+    /**
+     * 待处理认证数目
+     * @return
+     */
+    public Integer getNotHandleCount();
+
 }

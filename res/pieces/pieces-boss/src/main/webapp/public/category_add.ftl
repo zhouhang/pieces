@@ -55,7 +55,7 @@
     <script src="/js/validator/jquery.validator.min.js?local=zh-CN"></script>
     <script src="/js/common.js"></script>
     <script>
-        var categoryAddPage = {
+        var _global = {
             v: {},
             fn: {
                 init: function() {
@@ -88,7 +88,7 @@
             }
         }
         $(function() {
-        	categoryAddPage.fn.init();
+            _global.fn.init();
         })
     </script>
 </body>

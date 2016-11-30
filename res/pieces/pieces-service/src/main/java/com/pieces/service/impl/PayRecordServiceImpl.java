@@ -230,6 +230,11 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 	}
 
 	@Override
+	public Integer getNotHandleCount() {
+		return payRecordDao.getNotHandleCount();
+	}
+
+	@Override
 	public ICommonDao<PayRecord> getDao() {
 		return payRecordDao;
 	}

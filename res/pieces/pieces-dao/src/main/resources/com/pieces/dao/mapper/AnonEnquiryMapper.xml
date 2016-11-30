@@ -126,4 +126,10 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="getNotHandleCount"  resultType="java.lang.Integer">
+        select count(id)
+        from anon_enquiry WHERE status=1
+    </select>
+
 </mapper>

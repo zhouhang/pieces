@@ -16,6 +16,10 @@ public class CommodityDoc {
     @Id
     private Integer id;
     //商品名称
+    @Field( type = FieldType.String,
+            index=FieldIndex.analyzed,
+            analyzer = "lc_index",
+            searchAnalyzer = "lc_search")
     private String name;
 
     private String title;

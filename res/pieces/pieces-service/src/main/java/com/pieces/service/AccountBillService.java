@@ -57,4 +57,7 @@ public interface AccountBillService extends ICommonService<AccountBill>{
 
     public void generateBill(PayRecord payRecord,Integer memberId);
 
+
+    public Integer getNotHandleCount();
+
 }

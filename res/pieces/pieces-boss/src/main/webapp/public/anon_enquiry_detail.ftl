@@ -31,37 +31,26 @@
                     <div class="chart">
                         <table class="tc">
                             <thead>
-                            <tr>
-                                <th>品名</th>
-                                <th>片型</th>
-                                <th>数量（公斤）</th>
-                            </tr>
+                                <tr>
+                                    <th>品名</th>
+                                    <th>片型</th>
+                                    <th>数量（公斤）</th>
+                                </tr>
                             </thead>
-                            <tbody id="commodity_body">
-                            <tr>
-                                <td>白芍</td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td>丹参</td>
-                                <td>段</td>
-                                <td>30公斤</td>
-                            </tr>
-                            </tbody>
+                            <tbody id="commodity_body"></tbody>
                             <tfoot>
-                            <tr>
-                                <td colspan="3" class="tl">
-                                    附件：
-                                <#if vo.files?exists && vo.files?size gt 0 >
-                                    <#list vo.files as file>
-                                        <a href="/anon/download?url=${file.attachmentUrl!}&fileName=${file.content!}">${file.content!}</a>
-                                    </#list>
-                                <#else>
-                                    无
-                                </#if>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td colspan="3" class="tl">
+                                        附件：
+                                    <#if vo.files?exists && vo.files?size gt 0 >
+                                        <#list vo.files as file>
+                                            <a href="/anon/download?url=${file.attachmentUrl!}&fileName=${file.content!}">${file.content!}</a>
+                                        </#list>
+                                    <#else>
+                                        无
+                                    </#if>
+                                    </td>
+                                </tr>
                             </tfoot>
                         </table>
                     </div>
@@ -88,23 +77,25 @@
     </div>
     <#include "./inc/footer.ftl"/>
 <script>
-    var detail = {
+    var _global = {
         v:{
             commodity:<#if vo.detail?exists>${vo.detail.content!}</#if>
         },
         fn:{
+            init: function() {
+                this.initCommodity();
+            },
             initCommodity:function(){
-                var html = "";
+                var html = [];
                 $.each(detail.v.commodity, function (k,v) {
-                   html += "<tr><td>"+v.val1+ "</td><td>" +v.val2+ "</td><td>"+v.val3+"</td></tr>";
+                   html.push('<tr><td>', v.val1, '</td><td>', v.val2, '</td><td>', v.val3, '</td></tr>');
                 })
-
-                $("#commodity_body").html(html);
+                $('#commodity_body').html(html.join(''));
             }
         }
     }
     $(function(){
-        detail.fn.initCommodity();
+        _global.fn.init();
     })
 </script>
 </body>

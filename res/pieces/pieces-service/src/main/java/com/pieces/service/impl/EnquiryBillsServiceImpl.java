@@ -156,4 +156,9 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
         Workbook workbook = ExcelParse.exportEnquiryInfo(vo);
         ExcelParse.returnExcel(response,request, workbook,"报价表"+ id);
     }
+
+    @Override
+    public Integer getNotHandleCount() {
+        return enquiryBillsDao.getNotHandleCount();
+    }
 }

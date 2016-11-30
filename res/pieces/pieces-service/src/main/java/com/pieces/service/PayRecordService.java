@@ -40,5 +40,7 @@ public interface PayRecordService extends ICommonService<PayRecord>{
 
     public PageInfo<PayRecordVo> findByUserId(PayRecordVo payRecordVo,Integer pageNum, Integer pageSize);
 
+    public Integer getNotHandleCount();
+
 
 }

@@ -1,6 +1,7 @@
 package com.pieces.boss.controller;
 
 
+import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.model.Category;
 import com.pieces.dao.model.Commodity;
 import com.pieces.dao.vo.BreedVo;
@@ -18,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -54,6 +56,14 @@ public class DemoController {
         commoditySearchService.createAllCommodityDoc();
         WebUtil.print(response,new Result(true).info("索引创建成功"));
     }
+    @RequestMapping("/pinyin")
+    public void pinyinSearch(HttpServletRequest request,
+                                  HttpServletResponse response,
+                             String pinyin){
+        Page<CommodityDoc> result=commoditySearchService.findByPinyinSearch(1,10,pinyin);
+        WebUtil.print(response,new Result(true).data(result.getContent()));
+    }
+
 
     public Result installCommodity()throws Exception{
         File file = new File("G:\\Downloads\\产品规格等级手册20160524.xls");

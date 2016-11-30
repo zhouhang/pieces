@@ -12,4 +12,6 @@ public interface AnonEnquiryService extends ICommonService<AnonEnquiry>{
     public Result save(AnonEnquiryVo enquiry);
 
     public AnonEnquiryVo findVoById(Integer id);
+
+    public Integer getNotHandleCount();
 }

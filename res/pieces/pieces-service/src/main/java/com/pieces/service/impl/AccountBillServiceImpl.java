@@ -211,6 +211,11 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 	}
 
 	@Override
+	public Integer getNotHandleCount() {
+		return accountBillDao.getNotHandleCount();
+	}
+
+	@Override
 	public ICommonDao<AccountBill> getDao() {
 		return accountBillDao;
 	}

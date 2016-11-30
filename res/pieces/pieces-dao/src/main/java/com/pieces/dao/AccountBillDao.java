@@ -15,4 +15,11 @@ public interface AccountBillDao extends ICommonDao<AccountBill>{
     public List<AccountBillVo> findVoAll(AccountBillVo accountBillVo);
 
     public AccountBillVo findVoById(Integer billId);
+
+
+    /**
+     * 待处理账单数目
+     * @return
+     */
+    public Integer getNotHandleCount();
 }

@@ -10,4 +10,10 @@ public interface AnonEnquiryDao extends ICommonDao<AnonEnquiry>{
 
     public List<AnonEnquiryVo> findByParams(AnonEnquiryVo anonEnquiryVo);
 
+    /**
+     * 未处理新客询价数目
+     * @return
+     */
+    public Integer getNotHandleCount();
+
 }

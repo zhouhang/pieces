@@ -53,4 +53,6 @@ public interface EnquiryBillsService extends ICommonService<EnquiryBills>{
      * 下载报价excel
      */
     public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, Integer id);
+
+    public Integer getNotHandleCount();
 }

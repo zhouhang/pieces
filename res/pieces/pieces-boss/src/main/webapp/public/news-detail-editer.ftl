@@ -112,35 +112,13 @@ ${article.content}
 
 <!-- footer end -->
 <script>
-    var roleAddPage = {
+    var _global = {
         v: {},
         fn: {
             init: function () {
                 this.formValidate();
                 this.dateInit();
-                $("#delete").click(function() {
-                    layer.confirm('确认要删除该文章？', {
-                        title: '删除文章',
-                        btn: ['确认','取消'] //按钮
-                    }, function(index){
-                        $.post("cms/article/delete/${article.id}", function (data) {
-                            if (data.status == "y") {
-                                $.notify({
-                                    type: 'success',
-                                    title: '删除成功',
-                                    text: '3秒后自动跳转到文章列表',
-                                    delay: 3e3,
-                                    call: function () {
-                                        setTimeout(function () {
-                                            location.href = 'cms/article/index?model=${article.model}';
-                                        }, 3e3);
-                                    }
-                                });
-                            }
-                        }, "json")
-                        layer.close(index);
-                    });
-                });
+                this.delete();
             },
             dateInit: function () {
                 var start = {
@@ -186,11 +164,40 @@ ${article.content}
                         }
                     }
                 });
+            },
+            delete: function() {
+                $("#delete").click(function() {
+                    layer.confirm('确认要删除该文章？', {icon: 3, title:'提示'}, function(index){
+                        layer.close(index);
+                        $.post("cms/article/delete/${article.id}", function (data) {
+                            if (data.status == "y") {
+                                $.notify({
+                                    type: 'success',
+                                    title: '删除成功',
+                                    text: '3秒后自动跳转到文章列表',
+                                    delay: 3e3,
+                                    call: function () {
+                                        setTimeout(function () {
+                                            location.href = 'cms/article/index?model=${article.model}';
+                                        }, 3e3);
+                                    }
+                                });
+                            } else {
+                                $.notify({
+                                    type: 'warn',
+                                    title: '删除失败',
+                                    text: data.info,
+                                    delay: 3e3
+                                });
+                            }
+                        }, "json")
+                    });
+                });
             }
         }
     }
     $(function () {
-        roleAddPage.fn.init();
+        _global.fn.init();
         var um = UM.getEditor('content');
         um.ready(function(){
             um.setContent($("#umeditorContent").html());
