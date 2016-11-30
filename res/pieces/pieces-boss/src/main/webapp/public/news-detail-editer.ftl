@@ -100,19 +100,15 @@ ${article.content}
 </div>
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
+<script src="/js/layer/layer.js"></script>
 <script src="js/laydate/laydate.js"></script>
-
-<link type="text/css" rel="stylesheet" href="/js/validator/jquery.validator.css"/>
-<script src="/js/validator/jquery.validator.min.js"></script>
-<script src="/js/validator/local/zh-CN.js"></script>
+<script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
 
 <!-- 编辑器相关 -->
-<link href="/js/umeditor1_2_2-utf8/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" charset="utf-8" src="/js/umeditor1_2_2-utf8/umeditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="/js/umeditor1_2_2-utf8/umeditor.min.js"></script>
-<script type="text/javascript" src="/js/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js"></script>
-<script src="/js/layer/layer.js"></script>
-<link type="text/css" rel="stylesheet" href="/js/layer/skin/layer.css" />
+<link href="/js/umeditor1_2_2-utf8/themes/default/css/umeditor.css" rel="stylesheet">
+<script src="/js/umeditor1_2_2-utf8/umeditor.config.js"></script>
+<script src="/js/umeditor1_2_2-utf8/umeditor.min.js"></script>
+<script src="/js/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js"></script>
 
 <!-- footer end -->
 <script>
@@ -149,12 +145,11 @@ ${article.content}
             dateInit: function () {
                 var start = {
                     elem: '#start',
-                    format: 'YYYY-MM-DD',
+                    format: 'YYYY-MM-DD hh:mm:ss',
                     min: laydate.now(), //设定最小日期为当前日期
-                    max: '2099-06-16', //最大日期
                     istime: true,
                     choose: function(datas){
-                        $('#start').removeClass('n-invalid').next().html('');
+                        $('#start').trigger('validate');
                     }
                 };
                 laydate(start);

@@ -189,17 +189,11 @@ ${commodity.details}
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
-<script src="/js/jquery.autocomplete.js"></script>
-<link type="text/css" rel="stylesheet" href="/js/autocomplete/style.css" />
-
-<script src="/js/code.js"></script>
+<script src="/js/jquery.autocomplete.min.js"></script>
 <script src="/js/common.js"></script>
 <script src="/js/croppic.min.js"></script>
 <script src="/js/layer/layer.js"></script>
-<link type="text/css" rel="stylesheet" href="/js/layer/skin/layer.css" />
-<link type="text/css" rel="stylesheet" href="/js/validator/jquery.validator.css" />
-<script src="/js/validator/jquery.validator.min.js"></script>
-<script src="/js/validator/local/zh-CN.js"></script>
+<script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
 
 <!-- 编辑器相关 -->
 <link href="/js/umeditor1_2_2-utf8/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">

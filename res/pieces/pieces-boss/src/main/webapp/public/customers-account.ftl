@@ -146,7 +146,6 @@
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
 
-    <script src="js/jquery.min.js"></script>
     <script src="js/jquery.form.js"></script>
     <script src="js/jquery.autocomplete.min.js"></script>
     <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
