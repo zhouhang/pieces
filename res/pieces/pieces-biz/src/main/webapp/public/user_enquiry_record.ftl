@@ -52,7 +52,7 @@
                         <#if billsPage??&&billsPage.list?has_content>
                             <#list billsPage.list as bill>
                                 <div class="group">
-                                    <div class="hd <#if bill.status==0>hd-1<#else ><#if bill.expireDate?exists&&bill.expireDate?is_date&&(bill.expireDate?date>.now?date)>hd-2"#else >hd-3</#if></#if>>
+                                    <div class="hd <#if bill.status==0>hd-1<#else ><#if bill.expireDate?exists&&bill.expireDate?is_date&&(bill.expireDate?date>.now?date)>hd-2<#else >hd-3</#if></#if>" >
                                         <a data-billid="${bill.id!}" data-status="${bill.status!}" class="buy" href="/center/enquiry/index?billId=${bill.id!}">重新询价</a>
                                         <#if bill.expireDate?exists&&bill.expireDate?is_date&&(bill.expireDate?date>.now?date)><input class="cbx" type="checkbox"></#if>
                                         <span>询价单号：${bill.code!}</span>
@@ -70,30 +70,46 @@
                                             </#if>
                                         </em>
                                     </div>
-
-                                    <#list bill.enquiryCommoditys as commodity>
-                                        <#if (commodity.myPrice != 0)&&commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
-                                            <#if user_session_biz??&&user_session_biz.certifyStatus==1>
-                                            <div class="bd">
-                                                <div class="td w1"><#if (commodity.myPrice != 0) &&commodity.expireDate??&&(commodity.expireDate?date>.now?date)><input class="cbx" type="checkbox" name="commodity" value="${commodity.id!}"> </#if></div>
-                                                <div class="td w2">${commodity.commodityName!}</div>
-                                                <div class="td w3">${commodity.specs!}</div>
-                                                <div class="td w4">${commodity.level!}</div>
-                                                <div class="td w5">${commodity.origin!}</div>
-                                                <div class="td w6"><#if commodity.myPrice == 0>-<#else>${commodity.myPrice!}</#if></div>
-                                            </div>
-                                            </#if>
-                                            <#elseif commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
+                                    <#if bill.status==0>
+                                    <!-- 未报价 -->
+                                        <#list bill.enquiryCommoditys as commodity>
                                             <div class="bd enable">
-                                                <div class="td w1"><#if (commodity.myPrice != 0) &&commodity.expireDate??&&(commodity.expireDate?date>.now?date)><input class="cbx" type="checkbox" name="commodity" value="${commodity.id!}"> </#if></div>
+                                                <div class="td w1"></div>
                                                 <div class="td w2">${commodity.commodityName!}</div>
                                                 <div class="td w3">${commodity.specs!}</div>
                                                 <div class="td w4">${commodity.level!}</div>
                                                 <div class="td w5">${commodity.origin!}</div>
-                                                <div class="td w6">--</div>
+                                                <div class="td w6"></div>
                                             </div>
-                                        </#if>
-                                    </#list>
+                                        </#list>
+                                    <#else >
+                                        <#list bill.enquiryCommoditys as commodity>
+                                            <#if commodity.myPrice??&&(commodity.myPrice != 0)&&commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
+                                                <div class="bd">
+                                                    <div class="td w1">
+                                                        <#if user_session_biz??&&user_session_biz.certifyStatus==1>
+                                                            <input class="cbx" type="checkbox" name="commodity" value="${commodity.id!}">
+                                                        </#if>
+                                                    </div>
+                                                    <div class="td w2">${commodity.commodityName!}</div>
+                                                    <div class="td w3">${commodity.specs!}</div>
+                                                    <div class="td w4">${commodity.level!}</div>
+                                                    <div class="td w5">${commodity.origin!}</div>
+                                                    <div class="td w6">${commodity.myPrice!}</div>
+                                                </div>
+                                            <#else>
+                                                <div class="bd enable">
+                                                    <div class="td w1"></div>
+                                                    <div class="td w2">${commodity.commodityName!}</div>
+                                                    <div class="td w3">${commodity.specs!}</div>
+                                                    <div class="td w4">${commodity.level!}</div>
+                                                    <div class="td w5">${commodity.origin!}</div>
+                                                    <div class="td w6"><#if commodity.myPrice??&&commodity.myPrice == 0>
+                                                        -<#else>${commodity.myPrice!}</#if></div>
+                                                </div>
+                                            </#if>
+                                        </#list>
+                                    </#if>
                                     <#if (bill.enquiryCommoditys?size>=10) >
                                         <div data-val="${bill.id!}" class="expand">展开 <i class="fa fa-chevron-down"></i></div>
                                     </#if>
@@ -252,7 +268,7 @@
                             // 全选 有加载更多选项 且缩起状态时才会触发事件
                             var expand = $(this).closest('.group').find('.expand');
 
-                            if (expand.length > 0 && expand.data('expand') === 0) {
+                            if (expand.length > 0 && (expand.data('expand') === 0 || expand.data('expand')=== undefined)) {
                                 expand.trigger("click", function () {
                                     that.closest('.group').find('.cbx').prop('checked', that[0].checked);
                                 })
