@@ -94,6 +94,7 @@
 <script src="js/laydate/laydate.js"></script>
 <script src="/js/common.js"></script>
 <script src="/js/layer/layer.js"></script>
+<script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
 <script>
 
     var enquiryPage = {
@@ -103,28 +104,31 @@
                 this.pirceInput();
                 this.dateInit();
                 this.batch();
+                this.formValidate();
 
                 $("#submit").click(function () {
-                    $.ajaxSetup({
-                        headers : {
-                            'Content-Type' : 'application/json;charset=utf-8'
-                        }
-                    });
+                    if ($('#myform').isValid()) {
+                        $.ajaxSetup({
+                            headers: {
+                                'Content-Type': 'application/json;charset=utf-8'
+                            }
+                        });
 
-//                    $(this).attr("disabled", "disabled");
-                    $.post( "<#if enquiryBills.status ==1>enquiry/quotedUpdate<#else>enquiry/quoted</#if>?billsId=${enquiryBills.id}", JSON.stringify(enquiryPage.fn.formatTableData()),function(data){
-                        if(data.status == "y") {
-                            $.notify({
-                                type: 'success',
-                                title: '保存成功',
-                                text: data.info,
-                                delay: 3e3,
-                                call: function () {
-                                    window.location.href = "/enquiry/${enquiryBills.id}"
-                                }
-                            });
-                        }
-                    },"json")
+                        //                    $(this).attr("disabled", "disabled");
+                        $.post("<#if enquiryBills.status ==1>enquiry/quotedUpdate<#else>enquiry/quoted</#if>?billsId=${enquiryBills.id}", JSON.stringify(enquiryPage.fn.formatTableData()), function (data) {
+                            if (data.status == "y") {
+                                $.notify({
+                                    type: 'success',
+                                    title: '保存成功',
+                                    text: data.info,
+                                    delay: 3e3,
+                                    call: function () {
+                                        window.location.href = "/enquiry/${enquiryBills.id}"
+                                    }
+                                });
+                            }
+                        }, "json")
+                    }
                 });
             },
             // 裸价
@@ -185,6 +189,13 @@
                     $('.enquiry_btn').on('change', 'input', function() {
                         $('.filename').html($(this).val());
                     })
+                })
+            },
+            formValidate: function () {
+                $('#myform').validator({
+                    fields: {
+                        expireDate: 'required',
+                    }
                 })
             }
         }
