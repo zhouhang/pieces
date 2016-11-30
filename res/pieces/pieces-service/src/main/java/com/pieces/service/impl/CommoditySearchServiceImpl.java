@@ -75,7 +75,8 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     }
 
     @Override
-    public Page<CommodityDoc>  findByPinyinSearch(String pinyin) {
+    public Page<CommodityDoc>  findByPinyinSearch(Integer pageNum, Integer pageSize,String pinyin) {
+
         SearchQuery searchQuery =null;
         QueryBuilder pinyinQueryBuilder =  QueryBuilders
                 .matchQuery("name", pinyin)
@@ -85,7 +86,10 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
 
         FieldSortBuilder sorter = SortBuilders.fieldSort("_score")
                 .order(SortOrder.DESC);
-        searchQuery = new NativeSearchQueryBuilder().withQuery(pinyinQueryBuilder).withSort(sorter)
+        searchQuery = new NativeSearchQueryBuilder()
+                .withQuery(pinyinQueryBuilder)
+                .withSort(sorter)
+                .withPageable(new PageRequest(pageNum-1,pageSize))
                 .build();
         Page<CommodityDoc> result = esTemplate.queryForPage(searchQuery, CommodityDoc.class);
         return result;

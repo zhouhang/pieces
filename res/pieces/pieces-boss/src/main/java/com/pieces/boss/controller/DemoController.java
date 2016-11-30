@@ -60,7 +60,7 @@ public class DemoController {
     public void pinyinSearch(HttpServletRequest request,
                                   HttpServletResponse response,
                              String pinyin){
-        Page<CommodityDoc> result=commoditySearchService.findByPinyinSearch(pinyin);
+        Page<CommodityDoc> result=commoditySearchService.findByPinyinSearch(1,10,pinyin);
         WebUtil.print(response,new Result(true).data(result.getContent()));
     }
 
