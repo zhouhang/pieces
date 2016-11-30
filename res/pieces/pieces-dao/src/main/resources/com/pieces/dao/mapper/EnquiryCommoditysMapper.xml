@@ -49,11 +49,14 @@
             <if test="billId!=null">
                 bills_id = #{billId}
             </if>
-            <if test="pageSize!=null">
-                limit #{pageSize}
+            <if test="userId!=null">
+                and user_id = #{userId}
             </if>
         </where>
-
+        ORDER BY my_price DESC
+        <if test="pageSize!=null">
+            limit #{pageSize}
+        </if>
     </select>
 
     <select id="findByUserAndBillId"  parameterType="java.util.HashMap" resultMap="EnquiryCommoditysResultMap">

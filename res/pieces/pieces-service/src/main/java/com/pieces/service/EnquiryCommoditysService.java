@@ -9,9 +9,7 @@ import java.util.List;
  */
 public interface EnquiryCommoditysService extends ICommonService<EnquiryCommoditys>{
 
-    public List<EnquiryCommoditys> findByBillId(Integer billId, Integer pageSize);
-
-    public List<EnquiryCommoditys> findByBillId(Integer userId,Integer billId, Integer pageSize);
+    public List<EnquiryCommoditys> findByBillId(Integer billId,Integer userId, Integer pageSize);
 
     public List<EnquiryCommoditys> findByIds(String ids);
     public void create(List<EnquiryCommoditys> enquiryCommoditysList);

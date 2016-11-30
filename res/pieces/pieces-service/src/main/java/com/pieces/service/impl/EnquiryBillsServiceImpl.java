@@ -97,15 +97,19 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     @Override
     public EnquiryBillsVo findVOById(Integer id) {
         EnquiryBillsVo vo = enquiryBillsDao.findVOById(id);
-        vo.setEnquiryCommoditys(enquiryCommoditysDao.findByBillId(id, null));
+        vo.setEnquiryCommoditys(enquiryCommoditysDao.findByBillId(id,null, null));
         return vo;
     }
     @Override
     public PageInfo<EnquiryBills> findByPage(int pageNum, int pageSize,EnquiryRecordVo enquiryRecordVo) {
         PageHelper.startPage(pageNum, pageSize);
+        if (enquiryRecordVo!= null && "2".equalsIgnoreCase(String.valueOf(enquiryRecordVo.getStatus()))){
+            enquiryRecordVo.setStatus(null);
+            enquiryRecordVo.setExpireDate(new Date());
+        }
         List<EnquiryBills> list = enquiryBillsDao.findByCommoditys(enquiryRecordVo);
         for (EnquiryBills enquiryBills : list) {
-            List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysDao.findByBillId(enquiryBills.getId(), 10);
+            List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysDao.findByBillId(enquiryBills.getId(),null, 10);
             enquiryBills.setEnquiryCommoditys(enquiryCommoditysList);
         }
         PageInfo page = new PageInfo(list);

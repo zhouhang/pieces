@@ -61,13 +61,8 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
     }
 
     @Override
-    public List<EnquiryCommoditys> findByBillId(Integer billId, Integer pageSize) {
-        return enquiryCommoditysDao.findByBillId(billId,pageSize);
-    }
-
-    @Override
-    public List<EnquiryCommoditys> findByBillId(Integer userId, Integer billId, Integer pageSize) {
-        return enquiryCommoditysDao.findByBillId(userId, billId, pageSize);
+    public List<EnquiryCommoditys> findByBillId(Integer billId,Integer userId, Integer pageSize) {
+        return enquiryCommoditysDao.findByBillId(billId, userId,pageSize);
     }
 
     @Override

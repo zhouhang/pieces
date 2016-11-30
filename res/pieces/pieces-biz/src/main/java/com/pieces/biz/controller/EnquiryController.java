@@ -104,7 +104,7 @@ public class EnquiryController extends BaseController{
 
 
     private List<EnquiryCommoditys> handleEnquiryAgain(Integer userId,Integer billId){
-        List<EnquiryCommoditys> enquiryCommoditysList =  enquiryCommoditysService.findByBillId(userId,billId,null);
+        List<EnquiryCommoditys> enquiryCommoditysList =  enquiryCommoditysService.findByBillId(billId,userId,null);
         return enquiryCommoditysList;
     }
 

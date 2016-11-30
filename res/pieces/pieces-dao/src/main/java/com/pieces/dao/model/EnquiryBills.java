@@ -20,7 +20,7 @@ public class EnquiryBills  implements Serializable {
 	//管理员ID
 	private Integer memberId;
 	
-	//状态(0:未报价,1:已报价)
+	//状态(0:未报价,1:已报价 2:已过期(根据报价有效期来判断))
 	private Integer status;
 	
 	//创建时间
