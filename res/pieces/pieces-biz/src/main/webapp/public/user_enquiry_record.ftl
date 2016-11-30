@@ -42,6 +42,7 @@
                             </div>
                         <#if billsPage??&&billsPage.list?has_content>
                             <#list billsPage.list as bill>
+                                <#assign bill_status="李四">
                                 <div class="group">
                                     <div class="tr hd">
                                         <a data-billid="${bill.id!}" data-status="${bill.status!}" class="fr c-blue" href="/center/enquiry/index?billId=${bill.id!}">重新询价</a>
@@ -164,12 +165,13 @@
                         self = this,
                         txt = ['展开 <i class="fa fa-chevron-down"></i>', '收起 <i class="fa fa-chevron-up"></i>'];
 
-                    $table.on('click', '.expand', function() {
+                    $table.on('click', '.expand', function(event, call) {
                         var $self = $(this);
                         var billId = $self.data("val")
                         if ($self.data('loader') === 'true') {
                             var status = $self.data('expand') === 0 ? 1 : 0;
                             $self.data('expand', status).html(txt[status]).prev().slideToggle();
+                            call();
                         } else {
                             $.ajax({
                                 url: 'center/enquiry/commodity',
@@ -182,6 +184,7 @@
                                         result.data.splice(0, 10); // 去掉前10条数据
                                         $self.before(self.toHtml(result.data, $self));
                                         $self.data('expand', '1').html(txt[1]).prev().slideDown();
+                                        call();
                                     }else{
                                         $.notify({
                                             type: 'error',
@@ -231,10 +234,19 @@
 
                     // 全选 &　反选
                     $table.on('click', '.hd .cbx', function() {
-                        if(this.checked) {
-                            // 全选 展开询价单所有商品. 并选中.需要回调函数来实现
+                        var that = $(this);
+                        if (this.checked) {
+                            // 全选 有加载更多选项 且缩起状态时才会触发事件
+                            var expand = $(this).closest('.group').find('.expand');
+
+                            if (expand.length > 0 && expand.data('expand') === 0) {
+                                expand.trigger("click", function () {
+                                    that.closest('.group').find('.cbx').prop('checked', that[0].checked);
+                                })
+                            } else {
+                                that.closest('.group').find('.cbx').prop('checked', that[0].checked);
+                            }
                         }
-                        $(this).closest('.group').find('.cbx').prop('checked', this.checked);
                     })
 
                     // 单选
