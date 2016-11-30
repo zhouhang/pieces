@@ -25,32 +25,40 @@
                         <form action="">
                         <button id="search_btn" class="btn btn-red btn-submit" type="button">查询</button>
                         ${enquiryRecordVo.startDate!}
-                            <label><span>商品名称：</span><input class="ipt" value="${enquiryRecordVo.commodityName!}" name="commodityName" type="text"></label>
-                            <label><span>询价日期：</span><input class="ipt date" name="startDate" type="text" id="start"  value="${enquiryRecordVo.startDate!}"><em>-</em><input class="ipt date" name="endDate" type="text" id="end"  value="${enquiryRecordVo.endDate!}"></label>
+                            <span>商品名称：</span>
+                            <input class="ipt" value="${enquiryRecordVo.commodityName!}" name="commodityName" type="text">
+                            <span class="ml">状态：</span>
+                            <select name="" id="" class="slt">
+                                <option value="0">全部</option>
+                                <option value="1">已报价</option>
+                                <option value="2">未报价</option>
+                                <option value="3">已过期</option>
+                            </select>
+                            <span>询价日期：</span>
+                            <input class="ipt date" name="startDate" type="text" id="start"  value="${enquiryRecordVo.startDate!}"><em>-</em><input class="ipt date" name="endDate" type="text" id="end"  value="${enquiryRecordVo.endDate!}">
                         </form>     
                 	</div>
                 	<div class="fa-chart-d">
-                            <div class="group">
-                                <div class="tr th">
-                                    <div class="td w1">商品名称</div>
-                                    <div class="td w2">片型</div>
-                                    <div class="td w3">规格等级</div>
-                                    <div class="td w4">产地</div>
-                                    <div class="td w8">单价<span>（元/公斤）</span></div>
-                                    <div class="td w10">操作</div>
-                                </div>
+                        <div class="group">
+                            <div class="th">
+                                <div class="td w1">选择</div>
+                                <div class="td w2">商品名称</div>
+                                <div class="td w3">片型</div>
+                                <div class="td w4">规格等级</div>
+                                <div class="td w5">产地</div>
+                                <div class="td w6">单价<span>（元/公斤）</span></div>
                             </div>
+                        </div>
                         <#if billsPage??&&billsPage.list?has_content>
                             <#list billsPage.list as bill>
-                                <#assign bill_status="李四">
                                 <div class="group">
-                                    <div class="tr hd">
-                                        <a data-billid="${bill.id!}" data-status="${bill.status!}" class="fr c-blue" href="/center/enquiry/index?billId=${bill.id!}">重新询价</a>
-                                        <#if bill.expireDate?exists && bill.expireDate?is_date&&(bill.expireDate?date>.now?date)> <label><input class="cbx" type="checkbox">全选</label></#if>
+                                    <div class="hd <#if bill.status==0>hd-1<#else ><#if bill.expireDate?exists&&bill.expireDate?is_date&&(bill.expireDate?date>.now?date)>hd-2"#else >hd-3</#if></#if>>
+                                        <a data-billid="${bill.id!}" data-status="${bill.status!}" class="buy" href="/center/enquiry/index?billId=${bill.id!}">重新询价</a>
+                                        <#if bill.expireDate?exists&&bill.expireDate?is_date&&(bill.expireDate?date>.now?date)><input class="cbx" type="checkbox"></#if>
                                         <span>询价单号：${bill.code!}</span>
                                         <span>询价日期：${(bill.createTime?date)!}</span>
-                                        <#if bill.expireDate?exists && bill.expireDate?is_date> <span>报价截止日期：${(bill.expireDate?date)!}</span></#if>
-                                        <span>状态：
+                                        <#if bill.expireDate?exists&&bill.expireDate?is_date> <span>报价截止日期：${(bill.expireDate?date)!}</span></#if>
+                                        <em>状态：
                                             <#if bill.status==0>
                                                 未报价
                                             <#else >
@@ -60,26 +68,31 @@
                                                     已过期
                                                 </#if>
                                             </#if>
-                                        </span>
+                                        </em>
                                     </div>
 
                                     <#list bill.enquiryCommoditys as commodity>
-                                        <div class="tr">
-                                            <div class="td w1"><label><#if (commodity.myPrice != 0) &&commodity.expireDate??&&(commodity.expireDate?date>.now?date)><input class="cbx" type="checkbox" name="commodity" value="${commodity.id!}"> </#if>${commodity.commodityName!}</label></div>
-                                            <div class="td w2">${commodity.specs!}</div>
-                                            <div class="td w3">${commodity.level!}</div>
-                                            <div class="td w4">${commodity.origin!}</div>
-                                            <div class="td w8"><#if commodity.myPrice == 0>-<#else>${commodity.myPrice!}</#if></div>
-                                            <div class="td w10">
-                                                <#if (commodity.myPrice != 0)&&commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
-                                                    <#if user_session_biz??&&user_session_biz.certifyStatus==1>
-                                                    <a href="javascript:void(0);" onclick="page.fn.orderCommodity(${commodity.id!})">订购</a>
-                                                    </#if>
-                                                    <#elseif commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
-                                                        暂不出售此商品
-                                                </#if>
+                                        <#if (commodity.myPrice != 0)&&commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
+                                            <#if user_session_biz??&&user_session_biz.certifyStatus==1>
+                                            <div class="bd">
+                                                <div class="td w1"><#if (commodity.myPrice != 0) &&commodity.expireDate??&&(commodity.expireDate?date>.now?date)><input class="cbx" type="checkbox" name="commodity" value="${commodity.id!}"> </#if></div>
+                                                <div class="td w2">${commodity.commodityName!}</div>
+                                                <div class="td w3">${commodity.specs!}</div>
+                                                <div class="td w4">${commodity.level!}</div>
+                                                <div class="td w5">${commodity.origin!}</div>
+                                                <div class="td w6"><#if commodity.myPrice == 0>-<#else>${commodity.myPrice!}</#if></div>
                                             </div>
-                                        </div>
+                                            </#if>
+                                            <#elseif commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
+                                            <div class="bd enable">
+                                                <div class="td w1"><#if (commodity.myPrice != 0) &&commodity.expireDate??&&(commodity.expireDate?date>.now?date)><input class="cbx" type="checkbox" name="commodity" value="${commodity.id!}"> </#if></div>
+                                                <div class="td w2">${commodity.commodityName!}</div>
+                                                <div class="td w3">${commodity.specs!}</div>
+                                                <div class="td w4">${commodity.level!}</div>
+                                                <div class="td w5">${commodity.origin!}</div>
+                                                <div class="td w6">--</div>
+                                            </div>
+                                        </#if>
                                     </#list>
                                     <#if (bill.enquiryCommoditys?size>=10) >
                                         <div data-val="${bill.id!}" class="expand">展开 <i class="fa fa-chevron-down"></i></div>
@@ -199,7 +212,7 @@
 
                     // 询价操作
                     $table.find('.group:gt(0)').each(function() {
-                    	var $btnBuy = $(this).find('.hd .c-blue'),
+                    	var $btnBuy = $(this).find('.hd .buy'),
                             $cbs = $(this).find('.w1 .cbx'),
                             status = $btnBuy.data("status");
                         
@@ -266,46 +279,27 @@
                 },
                 // 插入html
                 toHtml: function(data, $expend) {
-                    var
-                        self = this,
-                        flag = false, // 判断是否有复选框
+                    var self = this,
                         modal = [];
-
                     modal.push('<div class="more" style="display:none;">');
                     $.each(data, function(i, item) {
-                        modal.push('<div class="tr">');
-                        var checkBox = "";
-                        var order = "";
-                        if(item.myPrice!=null&&item.expireDate!=null&&new Date(item.expireDate)>new Date()){
-                            checkBox = '<label><input class="cbx" type="checkbox" value="'+item.id+'">';
-                           <#if user_session_biz??&&user_session_biz.certifyStatus==1>
-                            order = '<a href="#">订购</a>';
-                           <#else>
-                                   order ="";
-                           </#if>
+                        modal.push('<div class="bd">');
+                        var checkBox = '',
+                            myPrice = item.myPrice != 0 ? item.myPrice : '--';
 
-                            flag = true;
+                        if(item.myPrice!=0&&item.expireDate!=null&&new Date(item.expireDate)>new Date()){
+                            checkBox = '<input class="cbx" type="checkbox" value="'+item.id+'">';
                         }
-                        modal.push('<div class="td w1">'+checkBox, item.commodityName,'</label></div>');
-                        modal.push('<div class="td w2">', item.specs,'</div>');
-                        modal.push('<div class="td w3">', item.level,'</div>');
-                        modal.push('<div class="td w4">', item.origin,'</div>');
-                        modal.push('<div class="td w8">', item.myPrice,'</div>');
-                        modal.push('<div class="td w9">', self.formatDate(item.expireDate),'</div>');
-                        modal.push('<div class="td w10">'+order+'</div>');
+                        modal.push('<div class="td w1">', checkBox, '</div>');
+                        modal.push('<div class="td w2">', item.commodityName, '</div>');
+                        modal.push('<div class="td w3">', item.specs, '</div>');
+                        modal.push('<div class="td w4">', item.level, '</div>');
+                        modal.push('<div class="td w5">', item.origin, '</div>');
+                        modal.push('<div class="td w6">', myPrice, '</div>');
                         modal.push('</div>');
                     })
                     modal.push('</div>');
                     return modal.join('');
-                },
-                formatDate: function(date) {
-                    return date ? date.split(' ')[0] : '';
-                },
-                orderCommodity: function(commodityId){
-                	if(commodityId != ""){
-                		$("#commodityIds").val(commodityId);
-                		$("#orderForm").submit();
-                	}
                 }
             }
         }

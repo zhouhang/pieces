@@ -115,25 +115,30 @@
                 <div class="fa-table">
                 	<div class="filter">
                         <form action="">
-                        <button class="btn btn-red btn-submit" type="button">查询</button>
-                            <label><span>商品名称：</span><input class="ipt" type="text"></label>
-                            <label><span>询价日期：</span><input class="ipt date" type="text" id="start"  value=""><em>-</em><input class="ipt date" type="text" id="end"  value=""></label>
+                            <button class="btn btn-red btn-submit" type="button">查询</button>
+                            <span>商品名称：</span>
+                            <input class="ipt" type="text">
+                            <span class="ml">状态：</span>
+                            <select name="" id="" class="slt">
+                                <option value="0">全部</option>
+                                <option value="1">已报价</option>
+                                <option value="2">未报价</option>
+                                <option value="3">已过期</option>
+                            </select>
+                            <span class="ml">询价日期：</span>
+                            <input class="ipt date" type="text" id="start"  value=""><em>-</em><input class="ipt date" type="text" id="end"  value="">
                         </form>     
                 	</div>
 				
                 	<div class="fa-chart-d">
                         <div class="group">
-                            <div class="tr th">
-                                <div class="td w1">商品名称</div>
-                                <div class="td w2">切制规格</div>
-                                <div class="td w3">规格等级</div>
-                                <div class="td w4">产地</div>
-                                <div class="td w5">数量<span>（公斤）</span></div>
-                                <div class="td w6">期望单价<span>（元/公斤）</span></div>
-                                <div class="td w7">期望交货日期</div>
-                                <div class="td w8">裸价<span>（元/公斤）</span></div>
-                                <div class="td w9">报价有效期至</div>
-                                <div class="td w10">操作</div>
+                            <div class="th">
+                                <div class="td w1">选择</div>
+                                <div class="td w2">商品名称</div>
+                                <div class="td w3">片型</div>
+                                <div class="td w4">规格等级</div>
+                                <div class="td w5">产地</div>
+                                <div class="td w6">单价<span>（元/公斤）</span></div>
                             </div>
                         </div> 
 
@@ -142,314 +147,157 @@
                         </div>
 
                         <div class="group">
-                            <div class="tr hd">
-                                <a class="fr c-blue" href="#">重新询价</a>
+                            <div class="hd hd-1">
+                                <a class="buy" href="#">重新询价</a>
+                                <input class="cbx" type="checkbox">
                                 <span>询价单号：E201606201024001</span>
                                 <span>询价日期：2016-06-20</span>
+                                <em>状态：未报价</em>
                             </div>
-                            <div class="tr">
-                                <div class="td w1">艾绒</div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">过20-24号筛，直径2.0-2.4cm，厚度2-3mm</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8"></div>
-                                <div class="td w9"></div>
-                                <div class="td w10"></div>
+                            <div class="bd">
+                                <div class="td w1"><input type="checkbox" class="cbx"></div>
+                                <div class="td w2">艾绒</div>
+                                <div class="td w3">个</div>
+                                <div class="td w4">过20-24号筛，直径2.0-2.4cm，厚度2-3mm</div>
+                                <div class="td w5">湖北省</div>
+                                <div class="td w6"></div>
                             </div>
-                            <div class="tr">
-                                <div class="td w1">艾绒</div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">过20-24号筛，直径2.0-2.4cm，厚度2-3mm</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8"></div>
-                                <div class="td w9"></div>
-                                <div class="td w10"></div>
+                            <div class="bd">
+                                <div class="td w1"><input type="checkbox" class="cbx"></div>
+                                <div class="td w2">艾绒</div>
+                                <div class="td w3">个</div>
+                                <div class="td w4">过20-24号筛，直径2.0-2.4cm，厚度2-3mm</div>
+                                <div class="td w5">湖北省</div>
+                                <div class="td w6"></div>
                             </div>
                         </div> 
 
                         <div class="group">
-                            <div class="tr hd">
-                                <a class="fr c-blue" href="#">订购已选商品</a>
-                                <label><input class="cbx" type="checkbox">全选</label>
+                            <div class="hd hd-3">
+                                <a class="buy" href="#">订购已选商品</a>
+                                <input class="cbx" type="checkbox">
                                 <span>询价单号：E201606201024001</span>
                                 <span>询价日期：2016-06-20</span>
+                                <span>报价截止日期：2016-07-11</span>
+                                <em>状态：已过期</em>
                             </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">2年生毫州223</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
+                            <div class="bd">
+                                <div class="td w1"><input class="cbx" type="checkbox"></div>
+                                <div class="td w2">艾绒</div>
+                                <div class="td w3">个</div>
+                                <div class="td w4">2年生毫州223</div>
+                                <div class="td w5">湖北省</div>
+                                <div class="td w6">90</div>
                             </div>
                         </div>
 
                         <div class="group">
-                            <div class="tr hd">
-                                <a class="fr c-blue" href="#">订购已选商品</a>
-                                <label><input class="cbx" type="checkbox">全选</label>
+                            <div class="hd hd-2">
+                                <a class="buy" href="#">订购已选商品</a>
+                                <input class="cbx" type="checkbox">
                                 <span>询价单号：E201606201024001</span>
                                 <span>询价日期：2016-06-20</span>
+                                <span>报价截止日期：2016-07-11</span>
+                                <em>状态：已报价</em>
                             </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">2年生毫州223</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
+                            <div class="bd enable">
+                                <div class="td w1"></div>
+                                <div class="td w2">艾绒</div>
+                                <div class="td w3">个</div>
+                                <div class="td w4">2年生毫州223</div>
+                                <div class="td w5">湖北省</div>
+                                <div class="td w6">暂不出售此商品</div>
                             </div>
-                            <div class="tr">
-                                <div class="td w1">艾绒</div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">2年生毫州223</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8"></div>
-                                <div class="td w9"></div>
-                                <div class="td w10"></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">2年生毫州223</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1">艾绒</div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">2年生毫州223</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8"></div>
-                                <div class="td w9"></div>
-                                <div class="td w10"></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">2年生毫州223</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">2年生毫州223</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
-                            </div>
-                            <div class="expand">展开 <i class="fa fa-chevron-down"></i></div>
                         </div>
 
                         <div class="group">
-                            <div class="tr hd">
-                                <a class="fr c-blue" href="#">订购已选商品</a>
-                                <label><input class="cbx" type="checkbox">全选</label>
+                            <div class="hd hd-2">
+                                <a class="buy" href="#">订购已选商品</a>
+                                <input class="cbx" type="checkbox">
                                 <span>询价单号：E201606201024001</span>
                                 <span>询价日期：2016-06-20</span>
+                                <span>报价截止日期：2016-07-11</span>
+                                <em>状态：已报价</em>
                             </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
+                            <div class="bd enable">
+                                <div class="td w1"></div>
+                                <div class="td w2">艾绒</div>
+                                <div class="td w3">个</div>
+                                <div class="td w4">2年生毫州223</div>
+                                <div class="td w5">湖北省</div>
+                                <div class="td w6">--</div>
                             </div>
-                            <div class="tr">
-                                <div class="td w1">艾绒</div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8"></div>
-                                <div class="td w9"></div>
-                                <div class="td w10"></div>
+                            <div class="bd">
+                                <div class="td w1"><input class="cbx" type="checkbox"></div>
+                                <div class="td w2">艾绒</div>
+                                <div class="td w3">个</div>
+                                <div class="td w4">2年生毫州223</div>
+                                <div class="td w5">湖北省</div>
+                                <div class="td w6">90</div>
                             </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
+                            <div class="bd">
+                                <div class="td w1"><input class="cbx" type="checkbox"></div>
+                                <div class="td w2">艾绒</div>
+                                <div class="td w3">个</div>
+                                <div class="td w4">2年生毫州223</div>
+                                <div class="td w5">湖北省</div>
+                                <div class="td w6">90</div>
                             </div>
-                            <div class="tr">
-                                <div class="td w1">艾绒</div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8"></div>
-                                <div class="td w9"></div>
-                                <div class="td w10"></div>
+                            <div class="bd">
+                                <div class="td w1"><input class="cbx" type="checkbox"></div>
+                                <div class="td w2">艾绒</div>
+                                <div class="td w3">个</div>
+                                <div class="td w4">2年生毫州223</div>
+                                <div class="td w5">湖北省</div>
+                                <div class="td w6">90</div>
                             </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
+                            <div class="bd">
+                                <div class="td w1"><input class="cbx" type="checkbox"></div>
+                                <div class="td w2">艾绒</div>
+                                <div class="td w3">个</div>
+                                <div class="td w4">2年生毫州223</div>
+                                <div class="td w5">湖北省</div>
+                                <div class="td w6">90</div>
                             </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
+                            <div class="bd">
+                                <div class="td w1"><input class="cbx" type="checkbox"></div>
+                                <div class="td w2">艾绒</div>
+                                <div class="td w3">个</div>
+                                <div class="td w4">2年生毫州223</div>
+                                <div class="td w5">湖北省</div>
+                                <div class="td w6">90</div>
                             </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
+                            <div class="bd">
+                                <div class="td w1"><input class="cbx" type="checkbox"></div>
+                                <div class="td w2">艾绒</div>
+                                <div class="td w3">个</div>
+                                <div class="td w4">2年生毫州223</div>
+                                <div class="td w5">湖北省</div>
+                                <div class="td w6">90</div>
                             </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
+                            <div class="bd">
+                                <div class="td w1"><input class="cbx" type="checkbox"></div>
+                                <div class="td w2">艾绒</div>
+                                <div class="td w3">个</div>
+                                <div class="td w4">2年生毫州223</div>
+                                <div class="td w5">湖北省</div>
+                                <div class="td w6">90</div>
                             </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
+                            <div class="bd">
+                                <div class="td w1"><input class="cbx" type="checkbox"></div>
+                                <div class="td w2">艾绒</div>
+                                <div class="td w3">个</div>
+                                <div class="td w4">2年生毫州223</div>
+                                <div class="td w5">湖北省</div>
+                                <div class="td w6">90</div>
                             </div>
-                            <div class="tr">
-                                <div class="td w1"><label><input class="cbx" type="checkbox">艾绒</label></div>
-                                <div class="td w2">个</div>
-                                <div class="td w3">1</div>
-                                <div class="td w4">湖北省</div>
-                                <div class="td w5">60</div>
-                                <div class="td w6">20</div>
-                                <div class="td w7">2016-06-20</div>
-                                <div class="td w8">24</div>
-                                <div class="td w9">2016-06-20</div>
-                                <div class="td w10"><a href="#">订购</a></div>
+                            <div class="bd">
+                                <div class="td w1"><input class="cbx" type="checkbox"></div>
+                                <div class="td w2">艾绒</div>
+                                <div class="td w3">个</div>
+                                <div class="td w4">2年生毫州223</div>
+                                <div class="td w5">湖北省</div>
+                                <div class="td w6">90</div>
                             </div>
                             <div class="expand">展开 <i class="fa fa-chevron-down"></i></div>
                         </div>
@@ -568,38 +416,25 @@
                                                 'standard': '个',
                                                 'level': '1',
                                                 'origin': '湖北省',
-                                                'amount': '60',
-                                                'price': '20',
-                                                'date': '2016-06-20',
-                                                'naked': '24',
-                                                'endTime': '2016-06-20'
+                                                'price': '20'
                                             },
                                             {
                                                 'name': '艾绒2',
                                                 'standard': '个',
                                                 'level': '2',
                                                 'origin': '亳州市',
-                                                'amount': '160',
-                                                'price': '120',
-                                                'date': '2016-07-20',
-                                                'naked': '124',
-                                                'endTime': '2016-07-30'
+                                                'price': '120'
                                             },
                                             {
                                                 'name': '艾绒3',
                                                 'standard': '个',
                                                 'level': '2',
                                                 'origin': '亳州市',
-                                                'amount': '160',
-                                                'price': '120',
-                                                'date': '2016-07-20',
-                                                'naked': '',
-                                                'endTime': ''
+                                                'price': '120'
                                             },
                                         ]
                                     };
                                     if (data.list) {
-                                        // data.list.splice(0, 10); // 去掉前10条数据
                                         $self.before(self.toHtml(data.list));
                                         $self.data('expand', '1').html(txt[1]).prev().slideDown();
                                     }
@@ -613,17 +448,13 @@
                     var modal = [];
                     modal.push('<div class="more" style="display:none;">');
                     $.each(data, function(i, item) {
-                        modal.push('<div class="tr">');
-                            modal.push('<div class="td w1"><label><input class="cbx" type="checkbox">', item.name,'</label></div>');
-                            modal.push('<div class="td w2">', item.standard,'</div>');
-                            modal.push('<div class="td w3">', item.level,'</div>');
-                            modal.push('<div class="td w4">', item.origin,'</div>');
-                            modal.push('<div class="td w5">', item.amount,'</div>');
+                        modal.push('<div class="bd">');
+                            modal.push('<div class="td w1"><input class="cbx" type="checkbox"></div>');
+                            modal.push('<div class="td w2">', item.name,'</div>');
+                            modal.push('<div class="td w3">', item.standard,'</div>');
+                            modal.push('<div class="td w4">', item.level,'</div>');
+                            modal.push('<div class="td w5">', item.origin,'</div>');
                             modal.push('<div class="td w6">', item.price,'</div>');
-                            modal.push('<div class="td w7">', item.date,'</div>');
-                            modal.push('<div class="td w8">', item.naked,'</div>');
-                            modal.push('<div class="td w9">', item.endTime,'</div>');
-                            modal.push('<div class="td w10"><a href="#">订购</a></div>');
                         modal.push('</div>');
                     })
                     modal.push('</div>');
@@ -634,10 +465,10 @@
                     var $table = $('.fa-chart-d');
 
                     $table.find('.group:gt(0)').each(function() {
-                        if ($(this).find('.cbx').length === 0) {
-                            $(this).find('.hd .c-blue').html('重新询价');
+                        if ($(this).find('.cbx').length <= 1) {
+                            $(this).find('.buy').html('重新询价');
                         } else {
-                            $(this).find('.hd .c-blue').html('订购已选商品');
+                            $(this).find('.buy').html('订购已选商品');
                         }
                     })
 

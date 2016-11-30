@@ -124,11 +124,11 @@
 	                		<table>
 	                			<thead>
 	                				<tr>
-	                					<th width="110">商品名称</th>
-	                					<th width="90">片型</th>
+	                					<th width="180">商品名称</th>
+	                					<th width="80">片型</th>
 	                					<th>规格等级</th>
-	                					<th width="100">产地</th>
-	                					<th width="150">操作</th>
+	                					<th width="110">产地</th>
+	                					<th width="100">操作</th>
 	                				</tr>
 	                			</thead>
 	                			<tfoot>
@@ -138,7 +138,7 @@
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"><span class="error"></span></div></td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"><span class="error"></span></div></td>
 	                            		<td>
-	                            			<a class="add c-blue" href="javascript:;">添加新商品</a>
+	                            			<a class="add c-blue" href="javascript:;">添加</a>
 	                            			<a class="remove c-red" href="javascript:;">删除</a>
 	                            		</td>
 	                				</tr>
@@ -150,7 +150,7 @@
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"><span class="error"></span></div></td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"><span class="error"></span></div></td>
 	                            		<td>
-	                            			<a class="add c-blue" href="javascript:;">添加新商品</a>
+	                            			<a class="add c-blue" href="javascript:;">添加</a>
 	                            		</td>
 	                				</tr>
 	                			</tbody>
@@ -203,6 +203,7 @@
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/jquery.pagination.js"></script>
     <script>
     	var page = {
     		v: {
@@ -351,12 +352,13 @@
                 ajaxSearch: function() {
                     var self = this;
                     $.ajax({
-                        url: 'json/keywords.php',
+                        url: 'json/keywords.json',
+                        cache: false,
                         dataType: 'json',
                         success: function(data) {
                             // 显示查询结果 
                             if (data.status === 'success') {
-                                self.toHtml(data.list);
+                                self.toHtml(data.list, 0, 7);
                             } else {
                                 $suggestions.hide();
                             }
@@ -364,19 +366,47 @@
                     })
                 },
     			// 显示查询结果
-    			toHtml: function(json) {
-					var modal = [];
-					$.each(json, function(i, item) {
-                        var val = item.goodsName + '-' + item.standard + '-' + item.level + '-' + item.origin;
-						modal.push('<div class="group" data-val="', val, '">');
-						modal.push(		'<span class="w1">', item.goodsName, '</span>');
-						modal.push(		'<span class="w2">', item.standard, '</span>');
-						modal.push(		'<span class="w3">', item.level, '</span>');
-						modal.push(		'<span class="w4">', item.origin, '</span>');
-					 	modal.push('</div>');
-					})
+    			toHtml: function(item, page_index, pageSize) {
+					var modal = [],
+                        maxPage = Math.min((page_index + 1) * pageSize, item.length),
+                        hasPage = pageSize < item.length;
+
+                    for (var i = page_index * pageSize; i < maxPage; i++) {
+                        var val = item[i].goodsName + '-' + item[i].standard + '-' + item[i].level + '-' + item[i].origin;
+                        modal.push('<div class="group" data-val="', val, '">');
+                        modal.push(     '<span class="w1">', item[i].goodsName, '</span>');
+                        modal.push(     '<span class="w2">', item[i].standard, '</span>');
+                        modal.push(     '<span class="w3">', item[i].level, '</span>');
+                        modal.push(     '<span class="w4">', item[i].origin, '</span>');
+                        modal.push('</div>');
+                    }
+                    hasPage && modal.push('<div class="jq-page"></div>');
 					$('#suggestions').show().find('.bd').empty().html(modal.join(''));
+                    hasPage && this.showPage(item, page_index, pageSize);
+
     			},
+                showPage: function(item, page_index, pageSize) {
+                    var self = this;
+                    $('.jq-page').pagination(item.length, {
+                        items_per_page: pageSize, //pageSize
+                        num_display_entries: 5, //最多显示多少分页链接:11(默认),0(只显示上一下和下一页)
+                        current_page: page_index, //默认pageIndex,0(默认),false(不加载)
+                        num_edge_entries: 2, //1(任何情况下都显示第一页和最后一页),0(不显示)
+                        link_to: 'javascript:void(0);', //分页href中的内容,#(默认)
+                        prev_text: '上一页', // 默认 Prev
+                        next_text: '下一页', // 默认 Next
+                        ellipse_text: '...', //当num_edge_entries>0时,分页使用的省略符号
+                        prev_show_always: false, //当上一页无法使用时是否显示,true(默认)
+                        next_show_always: false, //当下一页无法使用时是否显示,true(默认)
+                        renderer:"defaultRenderer",
+                        show_if_single_page: false,
+                        load_first_page: false, //第一次自动加载,true(默认),false(不加载)
+                        callback: function(page_index) {
+                            self.toHtml(item, page_index, pageSize);
+                        }
+                    })
+                    $('.jq-page').prepend('<div class="p-size">总共' + item.length + '条记录</div>')
+                },
                 submit: function() {
                     var self     = this;
                     var isSubmit = false;

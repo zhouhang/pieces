@@ -9,10 +9,64 @@
 	        "origin": "湖北省"
 	    },
 	    {
-	        "goodsName": "巴戟肉",
-	        "standard": "碎",
+	        "goodsName": "白芍",
+	        "standard": "薄片",
+	        "level": "过18-20号筛，直径1.8-2.0cm，厚度2-3mm",
+	        "origin": "亳州"
+	    },
+	    {
+	        "goodsName": "酢酱草",
+	        "standard": "段",
 	        "level": "2",
-	        "origin": "安徽省"
+	        "origin": "安徽"
+	    },
+	    {
+	        "goodsName": "钻山风",
+	        "standard": "厚片",
+	        "level": "2",
+	        "origin": "安徽"
+	    },
+	    {
+	        "goodsName": "祖师麻",
+	        "standard": "个",
+	        "level": "2",
+	        "origin": "安徽"
+	    },
+	    {
+	        "goodsName": "走马胎",
+	        "standard": "薄片",
+	        "level": "2",
+	        "origin": "安徽"
+	    },
+	    {
+	        "goodsName": "棕榈子",
+	        "standard": "个",
+	        "level": "2",
+	        "origin": "安徽"
+	    },
+	    {
+	        "goodsName": "自然铜",
+	        "standard": "块",
+	        "level": "2",
+	        "origin": "安徽"
+	    },
+	    {
+	        "goodsName": "煅自然铜",
+	        "standard": "块",
+	        "level": "2",
+	        "origin": "安徽"
+	    },
+	    {
+	        "goodsName": "紫珠叶",
+	        "standard": "段",
+	        "level": "2",
+	        "origin": "安徽"
+	    },
+	    {
+	        "goodsName": "紫石英",
+	        "standard": "块",
+	        "level": "2",
+	        "origin": "安徽"
 	    }
     ]
 }
