@@ -53,10 +53,7 @@
         </div><!-- fa-floor end -->
     </div>
 
-<!-- footer start -->
     <#include "./inc/footer.ftl"/>
-<!-- footer end -->
-    <script src="/js/common.js"></script>
 <script>
     //定义根变量
     !(function($) {

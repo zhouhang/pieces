@@ -141,7 +141,6 @@
 
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
-<script src="/js/common.js"></script>
 <script>
     $(function() {
            var recordId=${certifyRecord.id};
