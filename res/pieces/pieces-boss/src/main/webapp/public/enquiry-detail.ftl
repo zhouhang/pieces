@@ -33,21 +33,21 @@
 
             <div class="user-table">
                 <div class="caption">
-                    <!-- id -->
-                    <span>用户名：<em>${enquiryBills.userName}</em></span>
-                    <span>用户类型：<em><#if enquiryBills.userType == 1>终端用户 <#else >代理商 </#if></em></span>
-                    <span>认证状态：<em><#if enquiryBills.certifyStatus == 1>已认证<#else >未认证</#if></em></span>
-                    <span>企业名称：<em>${enquiryBills.companyFullName}</em></span>
-                    <span>企业类型：<em>${enquiryBills.companyType}</em></span>
-                    <span>询价日期：<em>${enquiryBills.createTime?date}</em></span>
-                    <span>联系人：<em>${enquiryBills.contactName}(${enquiryBills.contactMobile})</em></span>
-                    </br>
-                    <#if enquiryBills.status ==1>
-                    <span>报价时间：<em>${enquiryBills.quotedTime?date}</em></span>
-                    <span>报价人：<em>${enquiryBills.quotedName}</em></span>
-                    <span>修改时间：<em>${enquiryBills.updateTime?date}</em></span>
-                    <span>修改人：<em>${enquiryBills.updateUserName}</em></span>
-                    </#if>
+                    <ul>
+                        <li><span>用户名：</span>${enquiryBills.userName}</li>
+                        <li><span>用户类型：</span><#if enquiryBills.userType == 1>终端用户 <#else >代理商 </#if></li>
+                        <li><span>认证状态：</span><#if enquiryBills.certifyStatus == 1>已认证<#else >未认证</#if></li>
+                        <li><span>企业名称：</span>${enquiryBills.companyFullName}</li>
+                        <li><span>企业类型：</span>${enquiryBills.companyType}</li>
+                        <li><span>询价日期：</span>${enquiryBills.createTime?date}</li>
+                        <li><span>联系人：</span>${enquiryBills.contactName}(${enquiryBills.contactMobile})</li>
+                        <#if enquiryBills.status ==1>
+                        <li><span>报价时间：</span>${enquiryBills.quotedTime?date}</li>
+                        <li><span>报价人：</span>${enquiryBills.quotedName}</li>
+                        <li><span>修改时间：</span>${enquiryBills.updateTime?date}</li>
+                        <li><span>修改人：</span>${enquiryBills.updateUserName}</li>
+                        </#if>
+                    </ul>
                 </div>
                 <form action="" id="myform" class="chart">
                     <table id="form">
@@ -149,7 +149,10 @@
                 laydate({
                     elem: '#expireDate',
                     istime: true,
-                    min: laydate.now()
+                    min: laydate.now(),
+                    choose: function() {
+                        $('#expireDate').trigger('validate')
+                    }
                 })
                 
                 // 重新定位

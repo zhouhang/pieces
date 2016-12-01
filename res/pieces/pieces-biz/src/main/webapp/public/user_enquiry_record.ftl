@@ -257,6 +257,15 @@
                                 this.checked && commodityStr.push(this.value);
                             })
                             
+                            if (commodityStr.length === 0) {
+                                $.notify({
+                                    type: 'warn',
+                                    title: '提示',
+                                    text: '请先勾选要订购的商品',
+                                    delay: 3e3
+                                });
+                                return false;
+                            }   
                             commodityIds = commodityStr.join(',');
                             if(commodityIds){
                                 $("#commodityIds").val(commodityIds);
