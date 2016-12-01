@@ -234,27 +234,26 @@ public class OrderFormVo extends OrderForm {
      */
     public String getOrderValidityPeriod() {
         if (this.getCreaterTime() != null) {
-            if (this.getStatus().equals(OrderEnum.UNPAID.getValue()) ) {
-                // 10天的间隔 转换成毫秒
-                Long intervals = Long.valueOf(SystemConfig.orderValidityPeriod * 24 * 60 * 60 * 1000L);
+            if (this.getStatus().equals(OrderEnum.UNPAID.getValue()) && this.getExpireDate()!= null) {
                 Long day = 24 * 60 * 60 * 1000L;
                 Long hour = 60 * 60 * 1000L;
                 Long minute = 60 * 1000L;
-
-                Long createTime = this.getCreaterTime().getTime() + intervals;
-
+                Calendar now = Calendar.getInstance();
+                now.setTime(this.getExpireDate());
+                now.set(Calendar.HOUR, 23);
+                now.set(Calendar.MINUTE,59);
+                now.set(Calendar.SECOND,59);
+                Long expireDate = now.getTime().getTime();
                 Long currentTime = new Date().getTime();
-                if (createTime <= currentTime) {
+                if (expireDate <= currentTime) {
                     // 付款期限已过 设置付款状态为取消
-                    // TODO:
                     this.setStatus(OrderEnum.CANCEL.getValue());
                     SpringUtil.getApplicationContext().publishEvent(new OrderStatusEvent(getId(), OrderEnum.CANCEL.getValue()));
                 } else {
-                    Long difference = createTime - currentTime;
+                    Long difference = expireDate - currentTime;
                     Long dayS = difference / day;
                     Long hourS = (difference % day) / hour;
                     Long minuteS = ((difference % day) % hour) / minute;
-
                     orderValidityPeriod = dayS.intValue() + "天" + hourS.intValue() + "时" + minuteS.intValue() + "分";
                 }
             }

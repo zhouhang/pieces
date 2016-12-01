@@ -11,6 +11,7 @@ import javax.validation.Valid;
 
 import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.model.*;
+import com.pieces.service.*;
 import com.pieces.tools.log.annotation.BizLog;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
@@ -25,10 +26,6 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.enums.SessionEnum;
 import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.dao.vo.ShippingAddressVo;
-import com.pieces.service.AreaService;
-import com.pieces.service.EnquiryCommoditysService;
-import com.pieces.service.OrderFormService;
-import com.pieces.service.ShippingAddressService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.utils.ValidUtils;
@@ -49,6 +46,9 @@ public class OrderController extends BaseController {
     
     @Autowired
     private EnquiryCommoditysService enquiryCommoditysService;
+
+	@Autowired
+	private EnquiryBillsService enquiryBillsService;
     
     @Autowired
     private ShippingAddressService shippingAddressService;
@@ -150,6 +150,7 @@ public class OrderController extends BaseController {
 
 		List<OrderCommodity> orderCommoditysList = new ArrayList<OrderCommodity>();
 		Double total = 0.0d;
+		Integer billsId = null; // 询价单id
 		for(EnquiryCommoditys enquiryCommoditys:orderFormVo.getCommodityses()){
 			EnquiryCommoditys ec=enquiryCommoditysService.findById(enquiryCommoditys.getId());
 			OrderCommodity oc = new OrderCommodity();
@@ -164,7 +165,11 @@ public class OrderController extends BaseController {
 			oc.setOrderId(null);
 			orderCommoditysList.add(oc);
 			total = total + oc.getSubtotal();
+			// 询价单id
+			billsId = ec.getBillsId();
 		}
+		// 设置订单过期时间
+		orderFormVo.setExpireDate(enquiryBillsService.findById(billsId).getExpireDate());
 
 		orderFormVo.setSum(total);
 		//total = total + orderFormVo.getShippingCosts();
