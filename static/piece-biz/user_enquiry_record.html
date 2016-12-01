@@ -228,7 +228,7 @@
                                 <div class="td w6"><a class="buy" href="#">订购已选商品</a></div>
                             </div>
                             <div class="bd enable">
-                                <div class="td w1"></div>
+                                <div class="td w1"><input class="cbx" type="checkbox" disabled></div>
                                 <div class="td w2">艾绒</div>
                                 <div class="td w3">个</div>
                                 <div class="td w4">2年生毫州223</div>
@@ -481,14 +481,14 @@
                     })
 
                     // 全选 &　反选
-                    $table.on('click', '.hd .cbx', function() {
-                        $(this).closest('.group').find('.cbx').prop('checked', this.checked);
+                    $table.on('click', '.hd .cbx:not(:disabled)', function() {
+                        $(this).closest('.group').find('.cbx:not(:disabled)').prop('checked', this.checked);
                     })
 
                     // 单选
-                    $table.on('click', '.w1 .cbx', function() {
-                        var $cbxAll = $(this).closest('.group').find('.hd .cbx'),
-                            $cbxs = $(this).closest('.group').find('.w1 .cbx'),
+                    $table.on('click', '.w1 .cbx:not(:disabled)', function() {
+                        var $cbxAll = $(this).closest('.group').find('.hd .cbx:not(:disabled)'),
+                            $cbxs = $(this).closest('.group').find('.w1 .cbx:not(:disabled)'),
                             length = $cbxs.length,
                             count = 0;
 
