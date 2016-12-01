@@ -130,7 +130,7 @@ vertical-align:middle;
 .nav li:hover .subnav{display:block;}
 .nav li:hover .subnav .on{color:#333;}
 .nav i{position:absolute;top:10px;right:10px;width:8px;height:8px;margin-left:20px;background:#d74141;color:#fff;-webkit-border-radius:8px;border-radius:8px;z-index:8;}
-.nav b{position:absolute;top:17px;right:10px;min-width:16px;line-height:16px;padding:0 4px;background:#d74141;color:#fff;-webkit-border-radius:8px;border-radius:8px;z-index:8;}
+.nav b{position:absolute;top:17px;right:10px;line-height:16px;padding:0 4px;background:#d74141;color:#fff;-webkit-border-radius:8px;border-radius:8px;z-index:8;}
 
 
 /* footer */
