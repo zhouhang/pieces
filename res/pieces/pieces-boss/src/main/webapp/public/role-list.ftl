@@ -19,9 +19,9 @@
                 <dl>
                     <dt>角色信息</dt>
                     <dd>
-                        <a href="role/info/${role.id}">角色信息</a>
-                        <a href="role/power/${role.id}">角色权限</a>
-                        <a class="curr" href="role/list/${role.id}">角色用户</a>
+                        <a href="/role/info/${role.id}">角色信息</a>
+                        <a href="/role/power/${role.id}">角色权限</a>
+                        <a class="curr" href="/role/list/${role.id}">角色用户</a>
                     </dd>
                 </dl>
             </div>
@@ -29,7 +29,7 @@
                 <div class="title title-btm">
                     <h3><i class="fa fa-people"></i>修改角色 “${role.name}”</h3>
                     <div class="extra">
-                        <a  class="btn btn-gray" href="role/index">返回</a>
+                        <a  class="btn btn-gray" href="/role/index">返回</a>
                     </div>
                 </div>
 
@@ -38,7 +38,7 @@
                         <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                         <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
                     </div>
-                    <@p.pager pageInfo=roleMemberPage  pageUrl="role/list/${role.id}"  params=memberParams/>
+                    <@p.pager pageInfo=roleMemberPage  pageUrl="/role/list/${role.id}"  params=memberParams/>
                 </div>
 
                 <div class="chart">

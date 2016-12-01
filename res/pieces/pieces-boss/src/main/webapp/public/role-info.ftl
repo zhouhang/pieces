@@ -27,9 +27,9 @@
                 <dl>
                     <dt>角色信息</dt>
                     <dd>
-                        <a id="role_info_a" class="curr" href="<#if role??>role/info/${role.id}<#else>role/add</#if>">角色信息</a>
-                        <a id="role_power_a" href="<#if role??>role/power/${role.id}<#else>role/add</#if>">角色权限</a>
-                        <a id="role_list_a" href="<#if role??>role/list/${role.id}<#else>role/add</#if>">角色用户</a>
+                        <a id="role_info_a" class="curr" href="<#if role??>/role/info/${role.id}<#else>role/add</#if>">角色信息</a>
+                        <a id="role_power_a" href="<#if role??>/role/power/${role.id}<#else>role/add</#if>">角色权限</a>
+                        <a id="role_list_a" href="<#if role??>/role/list/${role.id}<#else>role/add</#if>">角色用户</a>
                     </dd>
                 </dl>
             </div>

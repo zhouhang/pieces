@@ -22,7 +22,7 @@
 				<h3>客户管理</h3>
 				<div class="extra">
 				<@shiro.hasPermission name="customer:add">
-    				<a class="btn btn-red" href="user/add"><i class="fa fa-plus"></i>增加新客户</a>
+    				<a class="btn btn-red" href="/user/add"><i class="fa fa-plus"></i>增加新客户</a>
 				</@shiro.hasPermission>
 				</div>
 			</div>
@@ -33,7 +33,7 @@
 						<i class="fa fa-search"></i><span>搜索</span>
 					</button>
 				</div>
-				<@p.pager pageInfo=userPage pageUrl="user/index" params=userParams/>
+				<@p.pager pageInfo=userPage pageUrl="/user/index" params=userParams/>
 			</div>
 			<div class="chart">
 				<table class="tc">

@@ -12,14 +12,14 @@
         <div class="wrap">
             <div class="title title-btm">
                 <h3>单页面分类管理</h3>
-                <div class="extra"><a class="btn btn-red" href="cms/category/add?model=${vo.model}"><i class="fa fa-plus"></i>增加新分类</a></div>
+                <div class="extra"><a class="btn btn-red" href="/cms/category/add?model=${vo.model}"><i class="fa fa-plus"></i>增加新分类</a></div>
             </div>
             <div class="pagin">
                 <div class="extra">
                     <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                     <button class="btn btn-blue" type="button" id="submit"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
-            <@p.pager pageInfo=pageInfo  pageUrl="cms/category/index"  params=param />
+            <@p.pager pageInfo=pageInfo  pageUrl="/cms/category/index"  params=param />
             </div>
             <div class="chart">
                 <table class="tc">
@@ -44,7 +44,7 @@
                         <td>${category.id}</td>
                         <td><div class="tl">${category.name}</div></td>
                         <td><div class="tl">${category.sort}</div></td>
-                        <td><a href="cms/category/detail/${category.id}">修改</a></td>
+                        <td><a href="/cms/category/detail/${category.id}">修改</a></td>
                     </tr>
                     </#list>
                     </tbody>

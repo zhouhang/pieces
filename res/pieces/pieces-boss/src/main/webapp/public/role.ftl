@@ -21,7 +21,7 @@
             <div class="title title-btm">
                 <h3>角色管理</h3>
                 <@shiro.hasPermission name="role:add">
-                    <div class="extra"><a class="btn btn-red" href="role/add"><i class="fa fa-plus"></i>增加新角色</a></div>
+                    <div class="extra"><a class="btn btn-red" href="/role/add"><i class="fa fa-plus"></i>增加新角色</a></div>
                 </@shiro.hasPermission>
             </div>
             <div class="pagin">
@@ -29,7 +29,7 @@
                     <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                     <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
-                <@p.pager pageInfo=rolePage  pageUrl="role/index"  params=roleParams/>
+                <@p.pager pageInfo=rolePage  pageUrl="/role/index"  params=roleParams/>
 
             </div>
             <div class="chart">
@@ -54,7 +54,7 @@
                             <td><div class="tl">${role.name}</div></td>
                             <td>
                                 <@shiro.hasPermission name="role:edit">
-                                    <a href="role/info/${role.id}">配置</a>
+                                    <a href="/role/info/${role.id}">配置</a>
                                 </@shiro.hasPermission>
                             </td>
                         </tr>

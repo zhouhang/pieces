@@ -14,7 +14,7 @@
             <dl>
                 <dt>询价信息</dt>
                 <dd>
-                    <a class="curr" href="enquiry/index">询价信息</a>
+                    <a class="curr" href="/enquiry/index">询价信息</a>
                 </dd>
             </dl>
         </div>
@@ -22,8 +22,8 @@
             <div class="title">
                 <h3><i class="fa fa-chevron-right"></i>${enquiryBills.code}</h3>
                 <div class="extra">
-                    <a class="btn btn-gray" href="enquiry/index">返回</a>
-                    <a class="btn btn-gray" href="enquiry/download/${enquiryBills.id}">导出报价</a>
+                    <a class="btn btn-gray" href="/enquiry/index">返回</a>
+                    <a class="btn btn-gray" href="/enquiry/download/${enquiryBills.id}">导出报价</a>
                     <button class="btn btn-gray" id="importExcel">导入报价</button>
                     <@shiro.hasPermission name="enquiry:quote">
                     <button type="button" id="submit" class="btn btn-red"><#if enquiryBills.status ==1>保存<#else>报价</#if></button>

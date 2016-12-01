@@ -16,7 +16,7 @@
             <dl>
                 <dt>广告信息</dt>
                 <dd>
-                    <a class="curr" href="ad/index">广告信息</a>
+                    <a class="curr" href="/ad/index">广告信息</a>
                 </dd>
             </dl>
         </div>
@@ -25,7 +25,7 @@
                 <div class="title">
                     <h3><i class="fa fa-chevron-right"></i><#if ad??>修改"${ad.title!}"<#else>新增广告</#if></h3>
                     <div class="extra">
-                        <a  class="btn btn-gray" href="ad/index">返回</a>
+                        <a  class="btn btn-gray" href="/ad/index">返回</a>
                         <#if ad??>
                         <button id="delete" type="button" class="btn btn-gray">删除</button>
                         </#if>

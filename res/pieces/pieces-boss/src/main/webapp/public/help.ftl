@@ -13,7 +13,7 @@
     <div class="wrap">
         <div class="title title-btm">
             <h3>单页面管理</h3>
-            <div class="extra"><a class="btn btn-red" href="cms/article/add?model=${vo.model}"><i class="fa fa-plus"></i>增加单页面</a></div>
+            <div class="extra"><a class="btn btn-red" href="/cms/article/add?model=${vo.model}"><i class="fa fa-plus"></i>增加单页面</a></div>
         </div>
         <div class="pagin">
             <div class="extra">
@@ -21,7 +21,7 @@
                 <button class="btn btn-blue" type="button" id="submit"><i class="fa fa-search"></i><span>搜索</span>
                 </button>
             </div>
-        <@p.pager pageInfo=pageInfo  pageUrl="cms/article/index"  params=param />
+        <@p.pager pageInfo=pageInfo  pageUrl="/cms/article/index"  params=param />
         </div>
         <div class="chart">
             <table class="tc">
@@ -69,7 +69,7 @@
                     <td>${article.articleCategoryName}</td>
                     <td>${article.sort}</td>
                     <td><#if article.status ==1>激活<#else>禁用</#if></td>
-                    <td><a href="cms/article/detail/${article.id}">修改</a></td>
+                    <td><a href="/cms/article/detail/${article.id}">修改</a></td>
                 </tr>
                 </#list>
                 </tbody>
