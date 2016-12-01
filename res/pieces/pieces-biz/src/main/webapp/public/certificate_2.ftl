@@ -341,14 +341,13 @@
                     var len = this.value.length,
                             tips = eval('(' + $(this).data('msg') + ')'),
                             msg = '';
-                    if($(this).attr("name")=="picture_url"){
-                        return;
-                    }
                     if (len == 0) {
                         msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
                     }
                     else if (len < 2 || len > 50) {
-                        msg = '<i class="fa fa-prompt"></i> ' + tips.error;
+                        if($(this).attr("name")!="picture_url"){
+                            msg = '<i class="fa fa-prompt"></i> ' + tips.error;
+                        }
                     }
                     $(this).next().html(msg)[msg == '' ? 'hide' : 'show']();
                 })
@@ -362,9 +361,7 @@
                     var len = this.value.length,
                             tips = eval('(' + $(this).data('msg') + ')'),
                             msg = '';
-                    if($(this).attr("name")=="picture_url"){
-                        return;
-                    }
+
                     if ($(this).prop('disabled')) {
                         // do nothing
                     } else if (len == 0) {
@@ -372,7 +369,10 @@
                     }
 
                     else if (len < 2 || len > 50) {
-                        msg = '<i class="fa fa-prompt"></i> ' + tips.error;
+                        if($(this).attr("name")!="picture_url"){
+                            msg = '<i class="fa fa-prompt"></i> ' + tips.error;
+                        }
+
                     }
                     $(this).next().html(msg)[msg == '' ? 'hide' : 'show']();
                     if (pass && msg != '') {
