@@ -109,7 +109,7 @@
                                                     <div class="td w4">${commodity.level!}</div>
                                                     <div class="td w5">${commodity.origin!}</div>
                                                     <div class="td w6"><#if commodity.myPrice??&&commodity.myPrice == 0>
-                                                        -<#else>${commodity.myPrice!}</#if></div>
+                                                        --<#else>${commodity.myPrice!}</#if></div>
                                                 </div>
                                             </#if>
                                         </#list>
