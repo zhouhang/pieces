@@ -11,10 +11,10 @@
 <div class="header header-shadow">
     <div class="wrap">
         <div class="logo">
-            <a href="home.html">饮片B2B首页</a>
+            <a href="#">饮片B2B首页</a>
         </div>
         <div class="title">
-            <h1>欢迎注册</h1>
+            <h1>询价成功</h1>
         </div>
     </div>
 </div><!-- header end -->
@@ -26,10 +26,11 @@
             <strong>您的询价提交成功！</strong>
         </div>
         <div class="bd">
-            <p>工作人员将为您提供相对精准的报价，请时刻关注您的 <a href="#" class="c-blue">询价记录</a>。接下来您可以：</p>
+            <p>稍后将有专业人员与您联系，为您提供相对精准的报价。</p>
         </div>
         <div class="ft">
-            <a class="btn btn-red" href="#">提交新询价单</a>
+            <a class="btn btn-red" href="/anon/enquiry">继续询价</a>
+            <a href="#">返回首页</a>
         </div>
     </div>
 </div><!-- fa-message start -->
