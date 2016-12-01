@@ -76,7 +76,11 @@
                                             </em>
                                         </div>
                                         <div class="td w6">
-                                            <a data-billid="${bill.id!}" data-status="${bill.status!}" class="buy" href="/center/enquiry/index?billId=${bill.id!}">重新询价</a>
+                                            <#if user_session_biz??&&user_session_biz.certifyStatus==1>
+                                                <#if  bill.status == 1 && bill.expireDate?exists&&bill.expireDate?is_date&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
+                                                    <a data-billid="${bill.id!}" data-status="${bill.status!}" class="buy" href="javascript:;">订购已选商品</a>
+                                                </#if>
+                                            </#if>
                                         </div>
                                     </div>
                                     <#if bill.status==0>
@@ -244,13 +248,13 @@
                             $cbs = $(this).find('.w1 .cbx'),
                             status = $btnBuy.data("status");
 
-                        if (status == '0') {
-                            // $btnBuy.remove();
-                        } else {
-                        <#if user_session_biz??&&user_session_biz.certifyStatus==1>
-                            $btnBuy.attr('href', 'javascript:;').html('订购已选商品');
-                        </#if>
-                        }
+                        <#--if (status == '0') {-->
+                            <#--// $btnBuy.remove();-->
+                        <#--} else {-->
+                        <#--<#if user_session_biz??&&user_session_biz.certifyStatus==1>-->
+                            <#--$btnBuy.attr('href', 'javascript:;').html('订购已选商品');-->
+                        <#--</#if>-->
+                        <#--}-->
                         
                         $btnBuy.on('click',function(){
                             var commodityStr = [],
