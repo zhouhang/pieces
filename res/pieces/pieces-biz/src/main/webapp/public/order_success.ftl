@@ -30,19 +30,13 @@
                 <p>您需要将货款支付到我们提供的其中一个账户上，支付完成后在 <a href="/user/info">用户中心</a> &gt; <a href="/center/pay/record" class="c-blue">对账单</a> 中上传您的支付凭证。
                 </p>
                 <p>平台以您上传支付凭证的时间为付款时间。</p>
-
+               <#list payAccountList as payAccount>
                 <dl>
-                    <dt>账户一</dt>
-                    <dd>开户行：中国工商银行</dd>
-                    <dd>开户人：金亮</dd>
-                    <dd>账　号：6222 0210 0107 0070 872</dd>
+                    <dt>${payAccount.receiveBank!}</dt>
+                    <dd>开户人：${payAccount.receiveAccount!}</dd>
+                    <dd>账　号：${payAccount.receiveBankCard!}</dd>
                 </dl>
-                <dl>
-                    <dt>账户二</dt>
-                    <dd>开户行：中国工商银行</dd>
-                    <dd>开户人：金亮</dd>
-                    <dd>账　号：6222 0210 0107 0070 872</dd>
-                </dl>
+               </#list>
             </div>
         </div>
     </div>

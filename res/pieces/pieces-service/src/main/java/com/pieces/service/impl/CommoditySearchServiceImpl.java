@@ -165,11 +165,22 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
 
     @Override
     public List<CommodityDoc> findByCommodityName(String commodityName) {
-        SearchQuery nameSearchQuery = new NativeSearchQueryBuilder()
-                .withQuery(matchQuery("name",commodityName))
-                .withPageable(new PageRequest(0,10)).build();
-        Page<CommodityDoc> commodityDocPage = esTemplate.queryForPage(nameSearchQuery, CommodityDoc.class);
-        return commodityDocPage.getContent();
+        SearchQuery searchQuery =null;
+        QueryBuilder pinyinQueryBuilder =  QueryBuilders
+                .matchQuery("name", commodityName)
+                .type(MatchQueryBuilder.Type.PHRASE)
+                .analyzer("lc_search")
+                .zeroTermsQuery(MatchQueryBuilder.ZeroTermsQuery.NONE);
+
+        FieldSortBuilder sorter = SortBuilders.fieldSort("_score")
+                .order(SortOrder.DESC);
+        searchQuery = new NativeSearchQueryBuilder()
+                .withQuery(pinyinQueryBuilder)
+                .withSort(sorter)
+                .withPageable(new PageRequest(0,10))
+                .build();
+        Page<CommodityDoc> result = esTemplate.queryForPage(searchQuery, CommodityDoc.class);
+        return result.getContent();
     }
 
 
