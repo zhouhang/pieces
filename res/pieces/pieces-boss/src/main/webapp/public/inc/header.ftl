@@ -22,19 +22,19 @@
             <li><a href="/">首页</a></li>
             <@shiro.hasPermission name="sales:index">
                 <li>
-                    <a href="javascript:;">销售</a>
+                    <a href="javascript:;" id="salePage">销售</a>
                     <div class="subnav">
                     <@shiro.hasPermission name="enquiry:index">
-                    <a href="/enquiry/index">询价管理</a>
+                    <a href="/enquiry/index" id="enquiryIndex">询价管理<b></b></a>
                     </@shiro.hasPermission>
                     <@shiro.hasPermission name="order:index">
                     <a href="/order/index">订单管理</a>
                     </@shiro.hasPermission>
                     <@shiro.hasPermission name="pay:index">
-                    <a href="/payment/index">支付管理</a>
+                    <a href="/payment/index" id="paymentIndex">支付管理</a>
                     </@shiro.hasPermission>
                     <@shiro.hasPermission name="bill:index">
-                    <a href="/account/bill/index">账单管理</a>
+                    <a href="/account/bill/index" id="accountIndex">账单管理</a>
                     </@shiro.hasPermission>
                     <@shiro.hasPermission name="logistical:index">
                     <a href="/logistics/index">物流管理</a>
@@ -80,13 +80,13 @@
             </@shiro.hasPermission>
            <@shiro.hasPermission name="message:index">
             <li>
-                <a href="javascript:;">消息</a>
+                <a href="javascript:;" id="message">消息</a>
                 <div class="subnav">
                     <@shiro.hasPermission name="certify:index">
-                        <a href="certify/list">企业资质审核</a>
+                        <a href="certify/list" id="certifyList">企业资质审核</a>
                     </@shiro.hasPermission>
                     <@shiro.hasPermission name="anon:enquiry">
-                        <a href="anon/enquiry">新客询价</a>
+                        <a href="anon/enquiry" id="anonEnquiry">新客询价</a>
                     </@shiro.hasPermission>
                 </div>
             </li>
@@ -130,3 +130,72 @@
     </div>
 </div>
 <!-- nav end -->
+<script>
+$(function() {
+    /*
+      一分钟请求一次
+     */
+    showMessage();
+    setTimeout(showMessage, 60000);
+})
+function showMessage(){
+    $.ajax({
+        url: '/message/notHandle',
+        type: "POST",
+        success: function (data) {
+            if(data.status=="y"){
+                var result=data.data;
+                var ACCOUNT_BILL_NUM=result["1"];
+                var ENQUIRYBILL_NUM=result["2"];
+                var CERTIFY_RECORD_NUM=result["3"];
+                var ANON_ENQUIRY_NUM=result["4"];
+                var PAY_RECORD_NUM=result["5"];
+
+                if(ACCOUNT_BILL_NUM!=0||ENQUIRYBILL_NUM!=0||PAY_RECORD_NUM!=0){
+                    $("#salePage").html("销售<i></i>");
+                    if(ACCOUNT_BILL_NUM==0){
+                        ACCOUNT_BILL_NUM="";
+                    }
+                    if(ENQUIRYBILL_NUM==0){
+                        ENQUIRYBILL_NUM="";
+                    }
+                    if(PAY_RECORD_NUM==0){
+                        PAY_RECORD_NUM="";
+                    }
+                    $("#paymentIndex").html("支付管理<b>"+PAY_RECORD_NUM+"</b>");
+                    $("#enquiryIndex").html("询价管理<b>"+ENQUIRYBILL_NUM+"</b>");
+                    $("#accountIndex").html("账单管理<b>"+ACCOUNT_BILL_NUM+"</b>");
+
+                }
+                else{
+                    $("#salePage").html("销售");
+                    $("#paymentIndex").html("支付管理");
+                    $("#enquiryIndex").html("询价管理");
+                    $("#accountIndex").html("账单管理");
+                }
+
+
+                if(CERTIFY_RECORD_NUM!=0||ANON_ENQUIRY_NUM!=0){
+                    $("#message").html("消息<i></i>");
+                    if(CERTIFY_RECORD_NUM==0){
+                        CERTIFY_RECORD_NUM="";
+                    }
+                    if(ANON_ENQUIRY_NUM==0){
+                        ANON_ENQUIRY_NUM="";
+                    }
+                    $("#certifyList").html("企业资质审核<b>"+CERTIFY_RECORD_NUM+"</b>");
+                    $("#anonEnquiry").html("新客询价<b>"+ANON_ENQUIRY_NUM+"</b>");
+
+                }
+                else{
+                    $("#message").html("消息<i></i>");
+                    $("#certifyList").html("企业资质审核<b>"+CERTIFY_RECORD_NUM+"</b>");
+                    $("#anonEnquiry").html("新客询价<b>"+ANON_ENQUIRY_NUM+"</b>");
+                }
+
+            }
+        }
+    });
+}
+
+</script>
