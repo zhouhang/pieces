@@ -56,6 +56,9 @@ public class OrderController extends BaseController {
     @Autowired
     private AreaService areaService;
 
+	@Autowired
+	private PayAccountService payAccountService;
+
 
 	@RequestMapping(value = "/order/create")
 	@BizLog(type = LogConstant.order, desc = "创建订单页面")
@@ -245,6 +248,8 @@ public class OrderController extends BaseController {
     @RequestMapping(value = "/order/success/{id}", method = RequestMethod.GET)
     public String success(@PathVariable("id")Integer id,ModelMap modelMap) {
 		OrderForm order=orderFormService.findVoById(id);
+		List<PayAccount> payAccountList = payAccountService.findAll();
+		modelMap.put("payAccountList",payAccountList);
 		modelMap.put("order", order);
 		return "order_success";
     }
