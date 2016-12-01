@@ -33,7 +33,7 @@ public class SmsService {
     @Value("${sms.apikey}")
     private String apikey;
 
-    private boolean enable = false;
+    private boolean enable = true;
 
     private final String smsUrl = "https://sms.yunpian.com/v2/sms/single_send.json";
 
