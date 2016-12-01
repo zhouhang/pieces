@@ -59,23 +59,6 @@
         </if>
     </select>
 
-    <select id="findByUserAndBillId"  parameterType="java.util.HashMap" resultMap="EnquiryCommoditysResultMap">
-        select
-        <include refid="Base_Column_List" />
-        from enquiry_commoditys
-        <where>
-            <if test="billId!=null">
-                bills_id = #{billId}
-            </if>
-            <if test="userId!=null">
-                and userId = #{userId}
-            </if>
-            <if test="pageSize!=null">
-                limit #{pageSize}
-            </if>
-        </where>
-    </select>
-
     <!-- 查询用户最近询价的商品 -->
     <select id="findCommoditysByUser"  parameterType="java.lang.String" resultMap="EnquiryCommoditysResultMap">
         select

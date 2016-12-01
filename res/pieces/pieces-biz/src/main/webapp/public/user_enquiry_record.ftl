@@ -22,7 +22,6 @@
 
                 <div class="fa-table">
                 	<div class="filter">
-                        <form action="">
                         <button id="search_btn" class="btn btn-red btn-submit" type="button">查询</button>
                         ${enquiryRecordVo.startDate!}
                             <span>商品名称：</span>
@@ -36,7 +35,6 @@
                             </select>
                             <span>询价日期：</span>
                             <input class="ipt date" name="startDate" type="text" id="start"  value="${enquiryRecordVo.startDate!}"><em>-</em><input class="ipt date" name="endDate" type="text" id="end"  value="${enquiryRecordVo.endDate!}">
-                        </form>     
                 	</div>
                 	<div class="fa-chart-d">
                         <div class="group">
@@ -52,9 +50,9 @@
                         <#if billsPage??&&billsPage.list?has_content>
                             <#list billsPage.list as bill>
                                 <div class="group">
-                                    <div class="hd <#if bill.status==0>hd-1<#else ><#if bill.expireDate?exists&&bill.expireDate?is_date&&(bill.expireDate?date>.now?date)>hd-2<#else >hd-3</#if></#if>" >
+                                    <div class="hd <#if bill.status==0>hd-1<#else ><#if bill.expireDate?exists&&bill.expireDate?is_date&& ((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>hd-2<#else >hd-3</#if></#if>" >
                                         <a data-billid="${bill.id!}" data-status="${bill.status!}" class="buy" href="/center/enquiry/index?billId=${bill.id!}">重新询价</a>
-                                        <#if bill.expireDate?exists&&bill.expireDate?is_date&&(bill.expireDate?date>.now?date)><input class="cbx" type="checkbox"></#if>
+                                        <#if bill.expireDate?exists&&bill.expireDate?is_date&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))><input class="cbx" type="checkbox"></#if>
                                         <span>询价单号：${bill.code!}</span>
                                         <span>询价日期：${(bill.createTime?date)!}</span>
                                         <#if bill.expireDate?exists&&bill.expireDate?is_date> <span>报价截止日期：${(bill.expireDate?date)!}</span></#if>
@@ -62,7 +60,7 @@
                                             <#if bill.status==0>
                                                 未报价
                                             <#else >
-                                                <#if bill.expireDate?exists&&bill.expireDate?is_date&&(bill.expireDate?date>.now?date)>
+                                                <#if bill.expireDate?exists&&bill.expireDate?is_date&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
                                                     已报价
                                                 <#else >
                                                     已过期
@@ -84,7 +82,7 @@
                                         </#list>
                                     <#else >
                                         <#list bill.enquiryCommoditys as commodity>
-                                            <#if commodity.myPrice??&&(commodity.myPrice != 0)&&commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
+                                            <#if commodity.myPrice??&&(commodity.myPrice != 0)&&commodity.expireDate??&&((commodity.expireDate?date gte .now?date) || (commodity.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
                                                 <div class="bd">
                                                     <div class="td w1">
                                                         <#if user_session_biz??&&user_session_biz.certifyStatus==1>
@@ -177,7 +175,7 @@
                     laydate(end);
                 },
                 filter: function() {
-                    var $ipts = $('.filter .ipt');
+                    var $ipts = $('.filter .ipt,.slt');
                     var url="/center/enquiry/record?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
 
                     $('#search_btn').on('click', function() {
@@ -304,7 +302,7 @@
                         var checkBox = '',
                             myPrice = (item.myPrice != 0 &&item.myPrice!= null )? item.myPrice : '--';
 
-                        if((item.myPrice != 0 &&item.myPrice!= null )&&item.expireDate!=null&&new Date(item.expireDate)>new Date()){
+                        if((item.myPrice != 0 &&item.myPrice!= null )&&item.expireDate!=null&&new Date(item.expireDate)>=new Date()){
                             checkBox = '<input class="cbx" type="checkbox" value="'+item.id+'">';
                             modal.push('<div class="bd">');
                         } else {
