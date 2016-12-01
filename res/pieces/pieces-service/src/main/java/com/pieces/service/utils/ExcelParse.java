@@ -38,7 +38,7 @@ public class ExcelParse {
         Sheet sheet = wb.getSheetAt(0);
 
         // Decide which rows to process
-        int rowStart = Math.max(sheet.getFirstRowNum(), 1);
+        int rowStart = Math.max(sheet.getFirstRowNum(), 3);
         int rowEnd = sheet.getLastRowNum();
 
         for (int rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
