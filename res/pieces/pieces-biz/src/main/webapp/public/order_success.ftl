@@ -32,8 +32,7 @@
                 <p>平台以您上传支付凭证的时间为付款时间。</p>
                <#list payAccountList as payAccount>
                 <dl>
-                    <dt>账户${payAccountList_index}</dt>
-                    <dd>开户行：${payAccount.receiveBank!}</dd>
+                    <dt>${payAccount.receiveBank!}</dt>
                     <dd>开户人：${payAccount.receiveAccount!}</dd>
                     <dd>账　号：${payAccount.receiveBankCard!}</dd>
                 </dl>
