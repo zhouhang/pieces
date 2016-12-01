@@ -77,8 +77,8 @@ vertical-align:middle;
 -webkit-text-stroke-width: 0.2px;
 -moz-osx-font-smoothing: grayscale;
 }
-.fa-attach:before{content:"\e62d";}
 .fa-download:before{content:"\e61b";}
+.fa-attach:before{content:"\e62d";}
 .fa-prompt:before{content:"\e60f";}
 .fa-heart:before{content:"\e603";}
 .fa-setting:before{content:"\e604";}
@@ -95,6 +95,7 @@ vertical-align:middle;
 .fa-chevron-left:before{content:"\e610";}
 .fa-plus:before{content:"\e611";}
 .fa-question-circle:before{content:"\e602";}
+.fa-li:before{content:"\e61c";}
 .fa-times:before{content:"\e616";}
 .fa-menu:before{content:"\e606";}
 .fa-logistics:before{content:"\e61a";}
@@ -238,13 +239,14 @@ vertical-align:middle;
 .fa-chart-d{font-size:12px;}      
 .fa-chart-d .empty{margin:40px 0 10px;text-align:center;}      
 .fa-chart-d .group{margin-bottom:10px;border:1px solid #ccc;overflow:hidden;*zoom:1;}      
-.fa-chart-d .th{line-height:48px;padding-bottom:0;background:#ededed;font-weight:700;overflow:hidden;*zoom:1;}      
-.fa-chart-d .hd{line-height:38px;padding:0 14px;margin-bottom:20px;}      
+.fa-chart-d .th{line-height:48px;padding-bottom:0;background:#ededed;font-weight:700;overflow:hidden;*zoom:1;}
+.fa-chart-d .hd{line-height:38px;margin-bottom:20px;overflow:hidden;*zoom:1;}
 .fa-chart-d .hd label{margin-right:10px;}
-.fa-chart-d .hd span{margin-right:36px;}
+.fa-chart-d .hd span{margin-right:20px;}
 .fa-chart-d .hd .cbx{margin-right:25px;}
-.fa-chart-d .hd .buy{float:right;line-height:18px;margin-top:9px;padding:0 15px;border:1px solid #ccc;background:#fff;}
+.fa-chart-d .hd .buy{padding:2px 15px;border:1px solid #ccc;background:#fff;}
 .fa-chart-d .hd .buy:hover{text-decoration:none;color:#222;border-color:#aaa;}
+.fa-chart-d .hd .w6{text-align:right;}
 .fa-chart-d .hd-1{background:#f8dc9c;} /* 未报价 */
 .fa-chart-d .hd-2{background:#cce88a;} /* 已报价 */
 .fa-chart-d .hd-3{background:#ccc;} /* 已过期 */
@@ -256,6 +258,7 @@ vertical-align:middle;
 .fa-chart-d .w4{width:380px;}
 .fa-chart-d .w5{width:110px;}
 .fa-chart-d .w6{width:120px;}
+.fa-chart-d .w7{width:596px;padding-left:14px;}
 .fa-chart-d .enable{color:#999;}
 .fa-chart-d .enable .cbx{display:none;}
 .fa-chart-d .expand{line-height:20px;text-align:center;color:#999;border-top:1px solid #ccc;background:#f5f5f5;cursor:pointer;}
@@ -514,10 +517,13 @@ vertical-align:middle;
 /* 用户中心 */
 .member-box{margin-top:30px;}      
 .member-box .side{float:left;width:220px;padding-top:35px;border:1px solid #e7e7e7;}       
-.member-box .side dl{padding:0 0 35px 60px;color:#333;} 
+.member-box .side i{display:inline-block;width:25px;vertical-align:-3px;} 
+.member-box .side dl{padding:0 0 35px 55px;color:#333;} 
 .member-box .side dt{font-size:14px;font-weight:700;} 
+.member-box .side dt i{font-size:20px;} 
 .member-box .side dd{padding-top:5px;font-size:12px;} 
 .member-box .side dd a.curr{color:#c3272b;} 
+.member-box .side dd i{font-size:16px;padding-left:2px;width:23px;} 
 
 .member-box .side-helper dt{padding:0 0 0 30px;}
 .member-box .side-helper dt span{width:148px;margin-left:0;}

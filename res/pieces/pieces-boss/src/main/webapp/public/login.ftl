@@ -37,10 +37,7 @@
         </div>
     </div>
 
-    <script src="js/jquery.form.js"></script>
-
-</body>
-
+<script src="/js/jquery.form.js"></script>
 <script type="text/javascript">
     var loginPage = {
         v: {
@@ -127,4 +124,5 @@
     })
 
 </script>
+</body>
 </html>

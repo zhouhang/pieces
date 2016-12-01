@@ -59,7 +59,6 @@
     </div><!-- fa-floor end -->
 </div>
 <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
-<script src="js/common.js"></script>
 <script src="js/layer/layer.js"></script>
 
 <!-- footer start -->

@@ -145,7 +145,6 @@
 <script src="js/laydate/laydate.js"></script>
 <script src="js/layer/layer.js"></script>
 <script src="js/croppic.min.js"></script>
-<script src="js/common.js"></script>
 <script>
     var _global = {
         v: {},

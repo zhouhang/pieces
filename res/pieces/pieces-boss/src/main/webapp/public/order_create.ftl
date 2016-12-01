@@ -92,37 +92,37 @@
             <div class="chart-info">
                 <h3>订购商品  <button type="button"class="btn btn-gray" id="importExcel">导入报价</button></h3>
                 <div class="chart">
-                        <table class="tc">
-                            <thead>
+                    <table class="tc">
+                        <thead>
                             <tr>
                                 <th>商品名称</th>
                                 <th>片型</th>
                                 <th>规格等级</th>
                                 <th width="100">产地</th>
                                 <th width="90">数量（公斤）</th>
-                                <th width="90">指导价（元/公斤）</th>
+                                <th width="120">指导价（元/公斤）</th>
                                 <th width="100">合同价（元/公斤）</th>
                                 <th width="120">合同价小计（元）</th>
-                                <th width="120">操作</th>
+                                <th width="100">操作</th>
                             </tr>
-                            </thead>
-                            <tfoot>
+                        </thead>
+                        <tfoot>
                             <tr>
-                                <td colspan="8" class="tl">共 <#if commodityVos??&&commodityVos?has_content>${commodityVos?size}<#else>0</#if> 件商品</td>
-                                <td colspan="2" class="tl">总计：<b class="jsum"></b></td>
+                                <td colspan="5" class="tl">共 <#if commodityVos??&&commodityVos?has_content>${commodityVos?size}<#else>0</#if> 件商品</td>
+                                <td colspan="5" class="tr">总计：<b class="jsum"></b></td>
                             </tr>
-                            </tfoot>
-                            <tbody>
+                        </tfoot>
+                        <tbody>
                             <#if commodityVos??&&commodityVos?has_content>
                                 <#list commodityVos as commodity>
                                     <tr>
-                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.name!}" class="ipt ipt-name" name="name"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.spec!}" class="ipt" name="spec"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.level!}" class="ipt" name="level"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text" value="${commodity.originOf!}" class="ipt" name="originOf"><span class="error"></span></div></td>
-                                        <td><div class="pr"><input type="text" class="ipt amount" name="amount" value="${commodity.amount!}"><span class="error"></span></div></td>
-                                        <td><div class="pr"><input type="text" class="ipt guidePrice" name="guidePrice" value="${commodity.guidePrice!}"><span class="error"></span></div></td>
-                                        <td><div class="pr"><input type="text" class="ipt price" name="price" value="${commodity.price!}"><span class="error"></span></div></td>
+                                        <td><div class="pr ipt-wrap"><input type="text" value="${commodity.name!}" class="ipt ipt-name" name="name" autocomplete="off"><span class="error1"></span></div></td>
+                                        <td><div class="pr ipt-wrap"><input type="text" value="${commodity.spec!}" class="ipt" name="spec" autocomplete="off"><span class="error1"></span></div></td>
+                                        <td><div class="pr ipt-wrap"><input type="text" value="${commodity.level!}" class="ipt" name="level" autocomplete="off"><span class="error1"></span></div></td>
+                                        <td><div class="pr ipt-wrap"><input type="text" value="${commodity.originOf!}" class="ipt" name="originOf" autocomplete="off"><span class="error1"></span></div></td>
+                                        <td><div class="pr"><input type="text" class="ipt amount" name="amount" value="${commodity.amount!}" autocomplete="off"><span class="error1"></span></div></td>
+                                        <td><div class="pr"><input type="text" class="ipt guidePrice" name="guidePrice" value="${commodity.guidePrice!}" autocomplete="off"><span class="error1"></span></div></td>
+                                        <td><div class="pr"><input type="text" class="ipt price" name="price" value="${commodity.price!}" autocomplete="off"><span class="error1"></span></div></td>
                                         <td class="jtotal"></td>
                                         <td>
                                             <a href="javascript:;" class="add">添加</a>
@@ -134,22 +134,21 @@
                                 </#list>
                                 <#else>
                                     <tr>
-                                        <td><div class="ipt-wrap"><input type="text"  class="ipt ipt-name" name="name"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text"  class="ipt" name="spec"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text"  class="ipt" name="level"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text"  class="ipt" name="originOf"><span class="error"></span></div></td>
-                                        <td><div class="pr"><input type="text" class="ipt amount" name="amount" ><span class="error"></span></div></td>
-                                        <td><div class="pr"><input type="text" class="ipt guidePrice" name="guidePrice"><span class="error"></span></div></td>
-                                        <td><div class="pr"><input type="text" class="ipt price" name="price" ><span class="error"></span></div></td>
+                                        <td><div class="pr ipt-wrap"><input type="text"  class="ipt ipt-name" name="name" autocomplete="off"><span class="error1"></span></div></td>
+                                        <td><div class="pr ipt-wrap"><input type="text"  class="ipt" name="spec" autocomplete="off"><span class="error1"></span></div></td>
+                                        <td><div class="pr ipt-wrap"><input type="text"  class="ipt" name="level" autocomplete="off"><span class="error1"></span></div></td>
+                                        <td><div class="pr ipt-wrap"><input type="text"  class="ipt" name="originOf" autocomplete="off"><span class="error1"></span></div></td>
+                                        <td><div class="pr"><input type="text" class="ipt amount" name="amount"  autocomplete="off"><span class="error1"></span></div></td>
+                                        <td><div class="pr"><input type="text" class="ipt guidePrice" name="guidePrice" autocomplete="off"><span class="error1"></span></div></td>
+                                        <td><div class="pr"><input type="text" class="ipt price" name="price" autocomplete="off"><span class="error1"></span></div></td>
                                         <td class="jtotal"></td>
                                         <td>
                                             <a href="javascript:;" class="add">添加</a>
                                         </td>
                                     </tr>
                             </#if>
-
-                            </tbody>
-                        </table>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -170,13 +169,13 @@
                     <div class="group">
                         <div class="txt">收&nbsp;&nbsp;货&nbsp;&nbsp;人：</div>
                         <div class="cnt">
-                            <input type="text" name="consignee" class="ipt" placehoder="" autocomplete="off" value="<#if shippingAddressHistory??>${shippingAddressHistory.consignee!}</#if>">
+                            <input type="text" name="consignee" id="consignee" class="ipt" placehoder="" autocomplete="off" value="<#if shippingAddressHistory??>${shippingAddressHistory.consignee!}</#if>">
                         </div>
                     </div>
                     <div class="group">
                         <div class="txt">手机号码：</div>
                         <div class="cnt">
-                            <input type="text"  name="tel" class="ipt" placehoder="" autocomplete="off" value="<#if shippingAddressHistory??>${shippingAddressHistory.tel!}</#if>">
+                            <input type="text" name="tel" id="tel" class="ipt" placehoder="" autocomplete="off" value="<#if shippingAddressHistory??>${shippingAddressHistory.tel!}</#if>">
                         </div>
                     </div>
                     <div class="group">
@@ -196,7 +195,7 @@
                     <div class="group">
                         <div class="txt">详细地址：</div>
                         <div class="cnt">
-                            <textarea name="detail"  cols="30" rows="10" class="ipt ipt-mul"><#if shippingAddressHistory??>${shippingAddressHistory.detail!}</#if></textarea>
+                            <textarea name="detail" id="address" cols="30" rows="10" class="ipt ipt-mul"><#if shippingAddressHistory??>${shippingAddressHistory.detail!}</#if></textarea>
                         </div>
                     </div>
                 </div>
@@ -264,13 +263,13 @@
 
 <script type="temp" id="jmodal">
         <tr>
-            <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" name="name"><span class="error"></span></div></td>
-            <td><div class="ipt-wrap"><input type="text" class="ipt" name="spec"><span class="error"></span></div></td>
-            <td><div class="ipt-wrap"><input type="text" class="ipt" name="level"><span class="error"></span></div></td>
-            <td><div class="ipt-wrap"><input type="text" class="ipt" name="originOf"><span class="error"></span></div></td>
-            <td><div class="pr"><input type="text" class="ipt amount" name="amount" value=""><span class="error"></span></div></td>
-            <td><div class="pr"><input type="text" class="ipt guidePrice" name="guidePrice" value=""><span class="error"></span></div></td>
-            <td><div class="pr"><input type="text" class="ipt price" name="price" value=""><span class="error"></span></div></td>
+            <td><div class="pr ipt-wrap"><input type="text" class="ipt ipt-name" name="name" autocomplete="off"><span class="error1"></span></div></td>
+            <td><div class="pr ipt-wrap"><input type="text" class="ipt" name="spec" autocomplete="off"><span class="error1"></span></div></td>
+            <td><div class="pr ipt-wrap"><input type="text" class="ipt" name="level" autocomplete="off"><span class="error1"></span></div></td>
+            <td><div class="pr ipt-wrap"><input type="text" class="ipt" name="originOf" autocomplete="off"><span class="error1"></span></div></td>
+            <td><div class="pr"><input type="text" class="ipt amount" name="amount" value="" autocomplete="off"><span class="error1"></span></div></td>
+            <td><div class="pr"><input type="text" class="ipt guidePrice" name="guidePrice" value="" autocomplete="off"><span class="error1"></span></div></td>
+            <td><div class="pr"><input type="text" class="ipt price" name="price" value="" autocomplete="off"><span class="error1"></span></div></td>
             <td class="jtotal"></td>
             <td>
                 <a href="javascript:;" class="add">添加</a>
@@ -283,27 +282,55 @@
 <script src="js/laydate/laydate.js"></script>
 <script src="js/layer/layer.js"></script>
 <script src="js/area.js"></script>
+<script src="js/jquery.pagination.min.js"></script>
 <script>
     var _global = {
         v: {},
         fn: {
             init: function() {
+                this.formValidate();
                 this.myformEvent();
                 this.addGoodsToOrder();
-                this.insertArea();
                 this.batch();
-
-
+            },
+            formValidate: function() {
                 $('#myform').validator({
                     fields : {
-                        consignee : '收货人: required',
-                        tel : '手机号: required; ',
-                        area : '所在地区: required;',
-                        detail : '详细地址: required;',
                        // jfreightPrice : '运费: required;',
+                        consignee : '收货人: required',
+                        tel : '手机号: required; mobile',
+                        area : '所在地区: required',
+                        detail : '详细地址: required'
                     }
                 });
 
+                // 地区选择
+                $('#pickArea').citys({
+                    provinceField: 'province',
+                    cityField: 'city',
+                    areaField: 'area'
+                });
+
+                // 从已有客户地址中选择
+                $("#order_address").change(function(){
+                    if(this.value){
+                        var $checked = $(this).find('option:selected'),
+                            data = $checked.data('val').split(','),
+                            area = $checked.data('area').split(',');
+
+                        $("#consignee").val(data[0]);
+                        $("#tel").val(data[1]);
+                        $("#address").val(data[2]);
+
+                        $('#pickArea').citys({
+                            provinceField: 'province',
+                            cityField: 'city',
+                            areaField: 'area',
+                            code: area[2]
+                        });
+                        $('#myform').validator('cleanUp');
+                    }
+                })
             },
             myformEvent: function() {
                 var $body        = $('body');
@@ -313,6 +340,7 @@
                 var $ipt         = $tbody.find('.ipt:first');
                 var modal        = $('#jmodal').html();
                 var self         = this;
+                self.$suggestions = $suggestions;
 
                 // 计算价格
                 var calcPrice = function() {
@@ -323,7 +351,7 @@
 
                 // 隐藏错误提示
                 $myform.on('focus', '.ipt', function() {
-                    $(this).nextAll('.error').html('').hide();
+                    $(this).nextAll('.error1').html('').hide();
                 })
 
                 // 数量
@@ -352,17 +380,19 @@
                     'blur': function() {
                         self.calcPrice($tbody, $(this).closest('tr'));
                     }
-                }, '.price');
+                }, '.price, .guidePrice');
 
                 // 商品名联想
                 $myform.on({
                     'click': function(event) {
-                        $(this).after($suggestions);
-                        // self.getKeywords(this.value); // 获取焦点时查询一次
                         event.stopPropagation();
                     },
+                    'focus': function() {
+                        $(this).after($suggestions);
+                        $suggestions.find('.group').length > 1 && $suggestions.show();
+                    },
                     'input': function() {
-                        self.getKeywords(this.value);
+                        self.getKeywords(this.value);                           
                     }
                 }, '.ipt-name');
 
@@ -370,17 +400,17 @@
                 $body.on('click', function() {
                     $suggestions.hide();
                 })
-                $body.on('click', '.suggestions', function(event) {
+                $suggestions.on('click', function(event) {
                     event.stopPropagation();
                 })
 
                 // 关键字自动填充
-                $body.on('click', '.suggestions .bd .group', function() {
+                $suggestions.on('click', '.bd .group', function() {
                     var data = $(this).data('val').split('-');
                     $suggestions.prev().val(data[0])
-                            .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
-                            .closest('td').next().find('.ipt').val(data[2]).trigger('focus').end()
-                            .closest('td').next().find('.ipt').val(data[3]).trigger('focus');
+                    .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
+                    .closest('td').next().find('.ipt').val(data[2]).trigger('focus').end()
+                    .closest('td').next().find('.ipt').val(data[3]).trigger('focus');
                     $suggestions.hide();
                 })
 
@@ -389,13 +419,12 @@
                     $tbody.append(modal);
                     // 没有删除按钮时添加删除按钮
                     $(this).siblings().length === 0 && $(this).after(' <a class="remove c-red" href="javascript:;">删除</a>');
-
                 })
 
                 // 删除一行
                 $myform.on('click', '.remove', function() {
                     var $tr = $(this).closest('tr'),
-                            $btnRemove = $tbody.find('.remove');
+                        $btnRemove = $tbody.find('.remove');
 
                     if ($btnRemove.length < 2) {
                         return false;
@@ -493,7 +522,7 @@
                     self.timer && clearTimeout(self.timer);
                     self.timer = setTimeout(function() {
                         self.ajaxSearch(keywords);
-                    }, 500);
+                    }, 300);
                 }
             },
             ajaxSearch: function(keywords) {
@@ -505,26 +534,47 @@
                     success: function(result) {
                         // 显示查询结果
                         if (result.status === 'y') {
-                            self.toHtml(result.data);
+                            if (result.data.length === 0) {
+                                self.$suggestions.show().find('.bd').empty().html('暂无此商品:)');
+                            } else {
+                                self.toHtml(result.data, 0, 7);
+                            }
                         } else {
-                            $('#suggestions').hide();
+                            self.$suggestions.hide();
                         }
                     }
                 })
             },
             // 显示查询结果
-            toHtml: function(json) {
-                var modal = [];
-                $.each(json, function(i, item) {
-                    var val = item.name + '-' + item.spec + '-' + item.level + '-' + item.originOf;
+            toHtml: function(item, page_index, pageSize) {
+                var modal = [],
+                    maxPage = Math.min((page_index + 1) * pageSize, item.length),
+                    hasPage = pageSize < item.length;
+
+                for (var i = page_index * pageSize; i < maxPage; i++) {
+                    var val = item[i].name + '-' + item[i].spec + '-' + item[i].level + '-' + item[i].originOf;
                     modal.push('<div class="group" data-val="', val, '">');
-                    modal.push(     '<span class="w1">', item.name, '</span>');
-                    modal.push(     '<span class="w2">', item.spec, '</span>');
-                    modal.push(     '<span class="w3">', item.level, '</span>');
-                    modal.push(     '<span class="w4">', item.originOf, '</span>');
+                    modal.push(     '<span class="w1">', item[i].name, '</span>');
+                    modal.push(     '<span class="w2">', item[i].spec, '</span>');
+                    modal.push(     '<span class="w3">', item[i].level, '</span>');
+                    modal.push(     '<span class="w4">', item[i].originOf, '</span>');
                     modal.push('</div>');
+                }
+                hasPage && modal.push('<div class="jq-page"></div>');
+                this.$suggestions.show().find('.bd').empty().html(modal.join(''));
+                hasPage && this.showPage(item, page_index, pageSize);
+            },
+            showPage: function(item, page_index, pageSize) {
+                var self = this;
+                $('.jq-page').pagination(item.length, {
+                    items_per_page: pageSize, //pageSize 每页显示数量
+                    current_page: page_index, //默认pageIndex,0(默认),false(不加载)
+                    num_edge_entries: 2, //1(任何情况下都显示第一页和最后一页),0(不显示)
+                    callback: function(page_index) {
+                        self.toHtml(item, page_index, pageSize);
+                    }
                 })
-                $('#suggestions .bd').empty().html(modal.join('')).parent().show();
+                $('.jq-page').prepend('<div class="p-size">总共' + item.length + '条记录</div>')
             },
             formatTableData: function () {
                 var tableObj = $('#myform tbody tr').map(function (i) {
@@ -574,9 +624,9 @@
                         formObj.commodities=commodities;
                         //收货地址
                         var address={};
-                        address.consignee= $(".cnt input[name='consignee']").val()
-                        address.tel= $(".cnt input[name='tel']").val()
-                        address.detail= $(".cnt textarea[name='detail']").val()
+                        address.consignee= $("#consignee").val()
+                        address.tel= $("#tel").val()
+                        address.detail= $("#address").val()
                         address.areaId= $("#area").val()
                         address.userId= $("#userId").val()
                         formObj.shippingAddress = address;
@@ -635,52 +685,52 @@
                             price     = $.trim($price.val());
 
                     if (name) {
-                        $name.nextAll('.error').html('').hide();
+                        $name.nextAll('.error1').html('').hide();
                     } else {
-                        $name.nextAll('.error').html('不可空白').show();
+                        $name.nextAll('.error1').html('不可空白').show();
                         result.pass = false;
                     }
 
                     if (standard) {
-                        $standard.nextAll('.error').css('display','none').html('');
+                        $standard.nextAll('.error1').css('display','none').html('');
                     } else {
-                        $standard.nextAll('.error').css('display','block').html('不可空白');
+                        $standard.nextAll('.error1').css('display','block').html('不可空白');
                         result.pass = false;
                     }
 
                     if (level) {
-                        $level.nextAll('.error').css('display','none').html('');
+                        $level.nextAll('.error1').css('display','none').html('');
                     } else {
-                        $level.nextAll('.error').css('display','block').html('不可空白');
+                        $level.nextAll('.error1').css('display','block').html('不可空白');
                         result.pass = false;
                     }
 
                     if (origin) {
-                        $origin.nextAll('.error').css('display','none').html('');
+                        $origin.nextAll('.error1').css('display','none').html('');
                     } else {
-                        $origin.nextAll('.error').css('display','block').html('不可空白');
+                        $origin.nextAll('.error1').css('display','block').html('不可空白');
                         result.pass = false;
                     }
 
                     if (price) {
-                        $price.nextAll('.error').css('display','none').html('');
+                        $price.nextAll('.error1').css('display','none').html('');
                     } else {
-                        $price.nextAll('.error').css('display','block').html('不可空白');
+                        $price.nextAll('.error1').css('display','block').html('不可空白');
                         result.pass = false;
                     }
 
 
                     if (amount) {
-                        $amount.nextAll('.error').css('display','none').html('');
+                        $amount.nextAll('.error1').css('display','none').html('');
                     } else {
-                        $amount.nextAll('.error').css('display','block').html('不可空白');
+                        $amount.nextAll('.error1').css('display','block').html('不可空白');
                         result.pass = false;
                     }
                     /*
                     if (date) {
-                        $date.nextAll('.error').css('display','none').html('');
+                        $date.nextAll('.error1').css('display','none').html('');
                     } else {
-                        $date.nextAll('.error').css('display','block').html('不可空白');
+                        $date.nextAll('.error1').css('display','block').html('不可空白');
                         result.pass = false;
                     }*/
 
@@ -699,36 +749,6 @@
                     }
                 })
                 return result;
-            },
-            insertArea: function() {
-
-                // 地区选择
-                $('#pickArea').citys({
-                    provinceField: 'province',
-                    cityField: 'city',
-                    areaField: 'area'
-                });
-
-                // 从已有客户地址中选择
-                $("#order_address").change(function(){
-                    if(this.value){
-                        var $checked = $(this).find('option:selected');
-                        var data = $checked.data('val').split(',');
-                        var area = $checked.data('area').split(',');
-                        var timer;
-
-                        $(".cnt input[name='consignee']").val(data[0]);
-                        $(".cnt input[name='tel']").val(data[1]);
-                        $(".cnt textarea[name='detail']").val(data[2]);
-
-                        $('#pickArea').citys({
-                            provinceField: 'province',
-                            cityField: 'city',
-                            areaField: 'area',
-                            code: area[2]
-                        });
-                    }
-                })
             },
             batch: function() {
                 $("#importExcel").click(function(){

@@ -219,7 +219,7 @@
                         },
                         'focus': function() {
                             $(this).after($suggestions);
-                            $('#suggestions').find('.group').length > 1 && $suggestions.show();
+                            $suggestions.find('.group').length > 1 && $suggestions.show();
                         },
                         'input': function() {
                             self.getKeywords(this.value);                           
@@ -240,7 +240,7 @@
                         $suggestions.prev().val(data[0])
                         .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
                         .closest('td').next().find('.ipt').val(data[2]).trigger('focus').end()
-                        .closest('td').next().find('.ipt').val(data[3]).trigger('focus').end();
+                        .closest('td').next().find('.ipt').val(data[3]).trigger('focus');
                         $suggestions.hide().parent().next().val(data[4]);
                     })
 
@@ -249,7 +249,6 @@
     					$tbody.append(modal);
     					// 没有删除按钮时添加删除按钮
     					$(this).siblings().length === 0 && $(this).after(' <a class="remove c-red" href="javascript:;">删除</a>');
-    					
     				})
 
     				// 删除一行
@@ -298,10 +297,14 @@
                         url: 'center/enquiry/auto',
                         dataType: 'json',
 						data:{commodityName:keywords},
-                        success: function(data) {
+                        success: function(result) {
                             // 显示查询结果
-                            if (data.status === 'y') {
-                                self.toHtml(data.data, 0, 7);
+                            if (result.status === 'y') {
+                                if (result.data.length === 0) {
+                                    self.$suggestions.show().find('.bd').empty().html('暂无此商品:)');
+                                } else {
+                                    self.toHtml(result.data, 0, 7);
+                                }
                             } else {
                                 self.$suggestions.hide();
                             }
@@ -326,7 +329,6 @@
                     hasPage && modal.push('<div class="jq-page"></div>');
                     this.$suggestions.show().find('.bd').empty().html(modal.join(''));
                     hasPage && this.showPage(item, page_index, pageSize);
-
     			},
                 showPage: function(item, page_index, pageSize) {
                     var self = this;

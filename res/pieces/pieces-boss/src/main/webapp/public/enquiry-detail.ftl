@@ -71,11 +71,15 @@
                             <td>${commodity.level}</td>
                             <td>${commodity.origin}</td>
                             <td>
-                                <input type="text" name="id" style="display: none" value="${commodity.id}">
+                                <input type="hidden" name="id" value="${commodity.id}">
                                 <input type="text" name="myPrice" class="ipt ipt-price" value="${commodity.myPrice}">
                             </td>
                             <#if commodity_index == 0>
-                            <td rowspan="${enquiryBills.enquiryCommoditys?size}"><input type="text" id="expireDate" name="expireDate" class="ipt ipt-date" value="<#if enquiryBills.expireDate?exists>${enquiryBills.expireDate?date}</#if>"></td>
+                            <td rowspan="${enquiryBills.enquiryCommoditys?size}">
+                                <div class="pr">
+                                    <input type="text" id="expireDate" name="expireDate" class="ipt ipt-date" value="<#if enquiryBills.expireDate?exists>${enquiryBills.expireDate?date}</#if>">
+                                </div>
+                            </td>
                             </#if>
                             </tr>
                         </#list>
@@ -92,7 +96,6 @@
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
 <script src="js/laydate/laydate.js"></script>
-<script src="/js/common.js"></script>
 <script src="/js/layer/layer.js"></script>
 <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
 <script>
