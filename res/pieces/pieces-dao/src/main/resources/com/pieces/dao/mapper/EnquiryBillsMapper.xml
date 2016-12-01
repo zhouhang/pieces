@@ -195,7 +195,10 @@
             <if test="status != null">
                 and b.status = #{status}
             </if>
-            <if test="expireDate != null">
+            <if test="status == 1">
+                and b.expire_date <![CDATA[>=]]> DATE_FORMAT(#{expireDate},'%Y-%m-%d')
+            </if>
+            <if test="expireDate != null and status == null">
                 and b.expire_date <![CDATA[<]]> DATE_FORMAT(#{expireDate},'%Y-%m-%d')
             </if>
             <if test="commodityName != null">

@@ -107,6 +107,10 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
             enquiryRecordVo.setStatus(null);
             enquiryRecordVo.setExpireDate(new Date());
         }
+        if (enquiryRecordVo!= null && "1".equalsIgnoreCase(String.valueOf(enquiryRecordVo.getStatus()))){
+            enquiryRecordVo.setExpireDate(new Date());
+        }
+
         List<EnquiryBills> list = enquiryBillsDao.findByCommoditys(enquiryRecordVo);
         for (EnquiryBills enquiryBills : list) {
             List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysDao.findByBillId(enquiryBills.getId(),null, 10);
