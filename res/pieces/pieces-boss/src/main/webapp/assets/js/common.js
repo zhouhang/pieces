@@ -18,9 +18,51 @@ function currNav() {
 	})
 }
 
+function navMsg() {
+	$.ajax({
+        url: '/message/notHandle',
+        type: 'POST',
+        success: function (data) {
+            if(data.status=='y'){
+                var result = data.data;
+                var ACCOUNT_BILL_NUM = result['1'] || '';
+                var ENQUIRYBILL_NUM = result['2'] || '';
+                var CERTIFY_RECORD_NUM = result['3'] || '';
+                var ANON_ENQUIRY_NUM = result['4'] || '';
+                var PAY_RECORD_NUM = result['5'] || '';
+
+                if (ACCOUNT_BILL_NUM || ENQUIRYBILL_NUM || PAY_RECORD_NUM) {
+                	$('#salePage').append('<i></i>');
+                } else {
+                	$('#salePage').find('i').remove();
+                }
+
+                if (CERTIFY_RECORD_NUM || ANON_ENQUIRY_NUM) {
+                	$('#message').append('<i></i>');
+                } else{
+                    $('#message').find('i').remove();
+                }
+
+                $('#paymentIndex').find('b').html(PAY_RECORD_NUM);
+                $('#enquiryIndex').find('b').html(ENQUIRYBILL_NUM);
+                $('#accountIndex').find('b').html(ACCOUNT_BILL_NUM);
+                $("#certifyList").find('b').html(CERTIFY_RECORD_NUM); 
+                $("#anonEnquiry").find('b').html(ANON_ENQUIRY_NUM); 
+            }
+        }
+    });
+	
+	// 1分钟请求一次
+	setTimeout(function() {
+		navMsg();
+	}, 6e4);
+}
+
 function pageInit() {
 	// 用户中心导航高亮
 	currNav();
+	// 新消息提示
+	navMsg();
 }
 
 ;(function($){

@@ -12,6 +12,7 @@ ADD COLUMN `expire_date` DATETIME NULL COMMENT '询价单过期时间' AFTER `qu
 
 ALTER TABLE `pieces`.`order_form`
 ADD COLUMN `expire_date` DATETIME NULL COMMENT '订单过期时间' AFTER `delivery_date`;
+ALTER TABLE `pieces`.`home_weight` COMMENT = '控制首页显示' ;
 
 ## 准备数据回填方案
 1. 询价单 报价日期的数据从商品上回填到询价单上.

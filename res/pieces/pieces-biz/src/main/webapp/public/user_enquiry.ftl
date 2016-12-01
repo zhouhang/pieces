@@ -406,8 +406,6 @@
                 },
                 response:function(result){
                     if(result.status=='y'){
-                        this.$tbody.empty().html(this.modal).find('.remove').remove();
-                        $('#billId').val('');
                         window.location.href="/center/enquiry/success";
                     }else{
                         $.notify({

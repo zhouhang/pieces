@@ -52,7 +52,12 @@
                                 <div class="group">
                                     <div class="hd <#if bill.status==0>hd-1<#else ><#if bill.expireDate?exists&&bill.expireDate?is_date&& ((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>hd-2<#else >hd-3</#if></#if>" >
                                         <div class="td w7">
-                                            <#if bill.expireDate?exists&&bill.expireDate?is_date&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))><input class="cbx" type="checkbox"></#if>
+                                            
+                                            <#if bill.expireDate?exists&&bill.expireDate?is_date&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
+                                            <input class="cbx" type="checkbox">
+                                            <#else >
+                                            <input class="cbx" type="checkbox" disabled>
+                                            </#if>
                                             <span>询价单号：${bill.code!}</span>
                                             <span>询价日期：${(bill.createTime?date)!}</span>
                                             <#if bill.expireDate?exists&&bill.expireDate?is_date> <span>报价截止日期：${(bill.expireDate?date)!}</span></#if>
@@ -71,14 +76,18 @@
                                             </em>
                                         </div>
                                         <div class="td w6">
-                                            <a data-billid="${bill.id!}" data-status="${bill.status!}" class="buy" href="/center/enquiry/index?billId=${bill.id!}">重新询价</a>
+                                            <#if user_session_biz??&&user_session_biz.certifyStatus==1>
+                                                <#if  bill.status == 1 && bill.expireDate?exists&&bill.expireDate?is_date&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
+                                                    <a data-billid="${bill.id!}" data-status="${bill.status!}" class="buy" href="javascript:;">订购已选商品</a>
+                                                </#if>
+                                            </#if>
                                         </div>
                                     </div>
                                     <#if bill.status==0>
                                     <!-- 未报价 -->
                                         <#list bill.enquiryCommoditys as commodity>
                                             <div class="bd enable">
-                                                <div class="td w1"></div>
+                                                <div class="td w1"><input class="cbx" type="checkbox" name="commodity" value="" disabled></div>
                                                 <div class="td w2">${commodity.commodityName!}</div>
                                                 <div class="td w3">${commodity.specs!}</div>
                                                 <div class="td w4">${commodity.level!}</div>
@@ -93,6 +102,8 @@
                                                     <div class="td w1">
                                                         <#if user_session_biz??&&user_session_biz.certifyStatus==1>
                                                             <input class="cbx" type="checkbox" name="commodity" value="${commodity.id!}">
+                                                        <#else>
+                                                            <input class="cbx" type="checkbox" name="commodity" value="" disabled>
                                                         </#if>
                                                     </div>
                                                     <div class="td w2">${commodity.commodityName!}</div>
@@ -103,7 +114,7 @@
                                                 </div>
                                             <#else>
                                                 <div class="bd enable">
-                                                    <div class="td w1"></div>
+                                                    <div class="td w1"><input class="cbx" type="checkbox" name="commodity" value="" disabled></div>
                                                     <div class="td w2">${commodity.commodityName!}</div>
                                                     <div class="td w3">${commodity.specs!}</div>
                                                     <div class="td w4">${commodity.level!}</div>
@@ -216,7 +227,7 @@
 
                                     if (result.status=="y") {
                                         result.data.splice(0, 10); // 去掉前10条数据
-                                        $self.before(self.toHtml(result.data, $self));
+                                        $self.before(self.toHtml(result.data));
                                         $self.data('expand', '1').html(txt[1]).prev().slideDown();
                                         if(call) call();
                                     }else{
@@ -236,22 +247,19 @@
                         var $btnBuy = $(this).find('.hd .buy'),
                             $cbs = $(this).find('.w1 .cbx'),
                             status = $btnBuy.data("status");
-                        
-                        if ($cbs.length === 0) {
-                            if(status !='0'){
-                                $btnBuy.remove();
-                            }
-                            return true; // containue
-                        } else {
-                            <#if user_session_biz??&&user_session_biz.certifyStatus==1>
-                            $btnBuy.attr('href', 'javascript:;').html('订购已选商品');
-                            </#if>
-                        }
+
+                        <#--if (status == '0') {-->
+                            <#--// $btnBuy.remove();-->
+                        <#--} else {-->
+                        <#--<#if user_session_biz??&&user_session_biz.certifyStatus==1>-->
+                            <#--$btnBuy.attr('href', 'javascript:;').html('订购已选商品');-->
+                        <#--</#if>-->
+                        <#--}-->
                         
                         $btnBuy.on('click',function(){
                             var commodityStr = [],
                                 commodityIds = '';
-                                $cbxs = $(this).closest('.group').find('.w1 .cbx');
+                                $cbxs = $(this).closest('.group').find('.w1 .cbx:not(:disabled)');
 
                             $cbxs.each(function() {
                                 this.checked && commodityStr.push(this.value);
@@ -267,26 +275,23 @@
 
 
                     // 全选 &　反选
-                    $table.on('click', '.hd .cbx', function() {
+                    $table.on('click', '.hd .cbx:not(:disabled)', function() {
                         var that = $(this);
-                        if (this.checked) {
-                            // 全选 有加载更多选项 且缩起状态时才会触发事件
-                            var expand = $(this).closest('.group').find('.expand');
+                        var expand = $(this).closest('.group').find('.expand');
 
-                            if (expand.length > 0 && (expand.data('expand') === 0 || expand.data('expand')=== undefined)) {
-                                expand.trigger("click", function () {
-                                    that.closest('.group').find('.cbx').prop('checked', that[0].checked);
-                                })
-                            } else {
-                                that.closest('.group').find('.cbx').prop('checked', that[0].checked);
-                            }
+                        if (expand.length === 1 && expand.data('loader') !== 'true') {
+                            expand.trigger('click', function (){
+                                that.closest('.group').find('.w1 .cbx:not(:disabled)').prop('checked', that[0].checked);
+                            })
+                        } else {
+                            that.closest('.group').find('.w1 .cbx:not(:disabled)').prop('checked', that[0].checked);
                         }
                     })
 
                     // 单选
-                    $table.on('click', '.w1 .cbx', function() {
-                        var $cbxAll = $(this).closest('.group').find('.hd .cbx'),
-                            $cbxs = $(this).closest('.group').find('.w1 .cbx'),
+                    $table.on('click', '.w1 .cbx:not(:disabled)', function() {
+                        var $cbxAll = $(this).closest('.group').find('.hd .cbx:not(:disabled)'),
+                            $cbxs = $(this).closest('.group').find('.w1 .cbx:not(:disabled)'),
                             length = $cbxs.length,
                             count = 0;
 
@@ -299,19 +304,20 @@
                     })
                 },
                 // 插入html
-                toHtml: function(data, $expend) {
+                toHtml: function(data) {
                     var self = this,
                         modal = [];
                     modal.push('<div class="more" style="display:none;">');
                     $.each(data, function(i, item) {
 
                         var checkBox = '',
-                            myPrice = (item.myPrice != 0 &&item.myPrice!= null )? item.myPrice : '--';
+                            myPrice = (item.myPrice != 0 && item.myPrice!= null ) ? item.myPrice : '--';
 
                         if((item.myPrice != 0 &&item.myPrice!= null )&&item.expireDate!=null&&new Date(item.expireDate)>=new Date()){
                             checkBox = '<input class="cbx" type="checkbox" value="'+item.id+'">';
                             modal.push('<div class="bd">');
                         } else {
+                            checkBox = '<input class="cbx" type="checkbox" value="" disabled>';
                             modal.push('<div class="bd enable">');
                         }
                         modal.push('<div class="td w1">', checkBox, '</div>');

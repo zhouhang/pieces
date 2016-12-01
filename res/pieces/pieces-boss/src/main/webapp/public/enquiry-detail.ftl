@@ -35,7 +35,7 @@
                 <div class="caption">
                     <!-- id -->
                     <span>用户名：<em>${enquiryBills.userName}</em></span>
-                    <span>用户类型：<em><#if enquiryBills.userType == 1>终端 <#else >代理商 </#if></em></span>
+                    <span>用户类型：<em><#if enquiryBills.userType == 1>终端用户 <#else >代理商 </#if></em></span>
                     <span>认证状态：<em><#if enquiryBills.certifyStatus == 1>已认证<#else >未认证</#if></em></span>
                     <span>企业名称：<em>${enquiryBills.companyFullName}</em></span>
                     <span>企业类型：<em>${enquiryBills.companyType}</em></span>
