@@ -2,10 +2,13 @@ package com.pieces.service.utils;
 
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.vo.EnquiryBillsVo;
+import org.apache.poi.hssf.usermodel.DVConstraint;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
+import org.apache.poi.hssf.usermodel.HSSFDataValidation;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddressList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -99,6 +102,16 @@ public class ExcelParse {
         Cell c = null;
         String[] titles = null;
         wb.setSheetName(0, "报价表");
+        // 数据有效性约束
+        CellRangeAddressList addressList = new CellRangeAddressList(
+                0, 65535, 5, 5);
+        DVConstraint dvConstraint = DVConstraint.createNumericConstraint(
+                DVConstraint.ValidationType.INTEGER,
+                DVConstraint.OperatorType.BETWEEN, "0", "100000");
+        DataValidation dataValidation = new HSSFDataValidation
+                (addressList, dvConstraint);
+        s.addValidationData(dataValidation);
+
         // 设置询价单信息 cell title
         titles = new String[]{"ID", "商品名称", "片型", "规格等级", "产地", "单价(元/公斤)"};
         s.setColumnWidth(0, 5 * 256);
