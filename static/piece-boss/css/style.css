@@ -341,9 +341,9 @@ vertical-align:middle;
 
 /* user-table */
 .user-table{}
-.user-table .caption{line-height:34px;padding:7px 30px;background:#f0eff5;border:1px solid #e7e7e7;}
-.user-table .caption span{display:inline-block;margin-right:40px;color:#999;}
-.user-table .caption span em{color:#333;}
+.user-table .caption{line-height:34px;padding:7px 30px;background:#f0eff5;border:1px solid #e7e7e7;overflow:hidden;*zoom:1;}
+.user-table .caption li{float:left;width:33%;}
+.user-table .caption span{display:inline-block;width:70px;margin-right:10px;color:#999;}
 .user-table .chart{text-align:center;}
 .user-table .chart td{padding:4px 0;}
 .user-table .chart .ipt{width:100px;text-align:center;font-size:12px;}
