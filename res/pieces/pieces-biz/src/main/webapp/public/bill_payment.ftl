@@ -52,35 +52,7 @@
                                 <input type="text" id="money" name="actualPayment" autocomplete="off" value="" class="ipt">
                             </div>
                         </div>
-                        <div class="group">
-                            <div class="txt">开户银行：</div>
-                            <div class="cnt">
-                                <input type="text" id="payBank" name="payBank" autocomplete="off" value="" class="ipt">
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">开  户  人：</div>
-                            <div class="cnt">
-                                <input type="text" id="payAccount" name="payAccount" autocomplete="off" value="" class="ipt">
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">银行卡号：</div>
-                            <div class="cnt">
-                                <input type="text" id="payBankCard" name="payBankCard" autocomplete="off" value="" class="ipt" maxlength="23">
-                                <div class="bank-tip" id="J_bank_tip" style="display:none;">
-                                    <span class="icon-bank icon-CMB"></span>
-                                    <span class="bank-type">信用卡</span>
-                                </div>
 
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">付款时间：</div>
-                            <div class="cnt">
-                                <input type="text" id="date" name="paymentTime" autocomplete="off" value="" class="ipt" >
-                            </div>
-                        </div>
                         <div class="group">
                             <div class="txt">支付凭证：</div>
                             <div class="cnt">
@@ -121,7 +93,6 @@
                     this.formInit();
                     this.goodsImg();
                     this.payType();
-                    this.dateInit();
 
                     $("#cashSubmit").click(function(){
                         var bank=$('input:radio[name="bank"]:checked').val();
@@ -174,52 +145,20 @@
                     })
 
     			},
-                dateInit: function () {
-                    var start = {
-                        elem: '#date',
-                        format: 'YYYY-MM-DD hh:mm:ss',
-                        min: '2016-06-16 23:59:59', //设定最小日期为当前日期
-                        max: '2099-06-16 23:59:59', //最大日期
-                        istime: true,
-                        choose: function(date){
-                            $('#date').trigger('blur');
-                        }
-                    };
-
-                    laydate(start);
-                    $('body').on('click','#laydate_today',function(){
-                        $('#date').trigger('blur')
-                    })
-                },
                 formInit: function() {
                     var self = this;
                     $('#myform').validator({
                         rules: {
-                            bankNumber: [/^\d{12,19}$/, '银行卡号是12-19位数字'],
                             money: [/^-?\d+\.{0,}\d{0,}$/, '请输入正确的金额']
                         },
                         fields: {
                             actualPayment: 'required, money',
-                            payBank: 'required',
-                            payAccount: 'required',
-                            payBankCard: 'required, bankNumber',
-                            paymentTime: 'required',
-                            bank: 'required'
                         }
                     });
 
                     $('#myform2').validator({
                         fields: {
                             billtime: 'required'
-                        }
-                    });
-
-                    // 金额
-                    $('#freightPrice').on('keyup', function(e) {
-                        var val = this.value;
-                        if (!/^\d+\.?\d*$/.test(val)) {
-                            val = Math.abs(parseFloat(val));
-                            this.value = isNaN(val) ? '' : val;
                         }
                     });
                 },
