@@ -310,6 +310,7 @@
     <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
     <script src="/js/jquery.form.js"></script>
     <script src="js/jquery_util.js"></script>
+    <script src="js/area.js"></script>
     <script>
     	var _global = {
     		v: {
