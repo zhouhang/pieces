@@ -14,7 +14,7 @@
             <dl>
                 <dt>询价信息</dt>
                 <dd>
-                    <a class="curr" href="enquiry/index">询价信息</a>
+                    <a class="curr" href="/enquiry/index">询价信息</a>
                 </dd>
             </dl>
         </div>
@@ -22,8 +22,8 @@
             <div class="title">
                 <h3><i class="fa fa-chevron-right"></i>${enquiryBills.code}</h3>
                 <div class="extra">
-                    <a class="btn btn-gray" href="enquiry/index">返回</a>
-                    <a class="btn btn-gray" href="enquiry/download/${enquiryBills.id}">导出报价</a>
+                    <a class="btn btn-gray" href="/enquiry/index">返回</a>
+                    <a class="btn btn-gray" href="/enquiry/download/${enquiryBills.id}">导出报价</a>
                     <button class="btn btn-gray" id="importExcel">导入报价</button>
                     <@shiro.hasPermission name="enquiry:quote">
                     <button type="button" id="submit" class="btn btn-red"><#if enquiryBills.status ==1>保存<#else>报价</#if></button>
@@ -71,11 +71,15 @@
                             <td>${commodity.level}</td>
                             <td>${commodity.origin}</td>
                             <td>
-                                <input type="text" name="id" style="display: none" value="${commodity.id}">
+                                <input type="hidden" name="id" value="${commodity.id}">
                                 <input type="text" name="myPrice" class="ipt ipt-price" value="${commodity.myPrice}">
                             </td>
                             <#if commodity_index == 0>
-                            <td rowspan="${enquiryBills.enquiryCommoditys?size}"><input type="text" id="expireDate" name="expireDate" class="ipt ipt-date" value="<#if enquiryBills.expireDate?exists>${enquiryBills.expireDate?date}</#if>"></td>
+                            <td rowspan="${enquiryBills.enquiryCommoditys?size}">
+                                <div class="pr">
+                                    <input type="text" id="expireDate" name="expireDate" class="ipt ipt-date" value="<#if enquiryBills.expireDate?exists>${enquiryBills.expireDate?date}</#if>">
+                                </div>
+                            </td>
                             </#if>
                             </tr>
                         </#list>
@@ -92,7 +96,6 @@
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
 <script src="js/laydate/laydate.js"></script>
-<script src="/js/common.js"></script>
 <script src="/js/layer/layer.js"></script>
 <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
 <script>

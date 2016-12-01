@@ -134,7 +134,7 @@ public class AnonController {
      */
     @RequestMapping(value = "/enquirySuccess")
     public String enquiryMessage(){
-        return "message_enquiry";
+        return "anno_message_enquiry";
     }
 
 

@@ -53,6 +53,9 @@ public class OrderForm  implements Serializable {
 
 	// 发货时间
 	private Date deliveryDate;
+
+	// 订单过期时间
+	private Date expireDate;
 	
 	public OrderForm(){}
 	
@@ -182,5 +185,13 @@ public class OrderForm  implements Serializable {
 
 	public void setDeliveryDate(Date deliveryDate) {
 		this.deliveryDate = deliveryDate;
+	}
+
+	public Date getExpireDate() {
+		return expireDate;
+	}
+
+	public void setExpireDate(Date expireDate) {
+		this.expireDate = expireDate;
 	}
 }

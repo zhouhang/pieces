@@ -23,7 +23,7 @@
                     <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                     <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
-                <@p.pager pageInfo=pageInfo  pageUrl="commodity/index"  params=param />
+                <@p.pager pageInfo=pageInfo  pageUrl="/commodity/index"  params=param />
             </div>
             <div class="chart">
                 <table class="tc">

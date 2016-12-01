@@ -19,7 +19,7 @@
                 <button class="btn btn-blue" type="button" id="search"><i class="fa fa-search"></i><span>搜索</span>
                 </button>
             </div>
-            <@p.pager pageInfo=pageInfo  pageUrl="enquiry/index"  params=paramGet />
+            <@p.pager pageInfo=pageInfo  pageUrl="/enquiry/index"  params=paramGet />
         </div>
         <div class="chart">
             <table class="tc">

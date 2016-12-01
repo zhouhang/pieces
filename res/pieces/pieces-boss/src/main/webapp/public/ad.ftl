@@ -21,7 +21,7 @@
                     <a class="btn btn-gray" href="/ad/index">重置条件</a>
                     <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
-                <@p.pager pageInfo=adPage  pageUrl="ad/index"  params=adParams/>
+                <@p.pager pageInfo=adPage  pageUrl="/ad/index"  params=adParams/>
 
             </div>
             <div class="chart">

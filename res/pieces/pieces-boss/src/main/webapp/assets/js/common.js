@@ -1,18 +1,20 @@
 // 用户中心导航高亮
 function currNav() {
 	var $side = $('.nav'),
-		URL = document.URL.toLowerCase().split('#')[0].split('?')[0].split('/'),
-		urlBefore = URL[3] + URL[4];
+		URL = document.URL,
+		arr = URL.toLowerCase().split('#')[0].split('?')[0].split('/'),
+		pa = arr[3] + arr[4];
 
 	$side.find('.subnav a').each(function() {
-		var str = this.href.toLowerCase().split('#')[0].split('?')[0].split('/');
-		try {
-			var currUrl = str[3] + str[4];
-			if(urlBefore === currUrl){
-				$(this).addClass("on").parent().prev("a").addClass('curr');
-				return false; // break
-			}
-		} catch(err) {}
+		var url = this.href.toLowerCase(),
+			arr2 = url.toLowerCase().split('#')[0].split('?')[0].split('/'),
+			son = arr2[3] + arr2[4];
+
+        if (URL === url) {
+            $(this).addClass('on').parent().prev('a').addClass('curr');
+        } else if (pa === son) {
+        	$(this).parent().prev('a').addClass('curr');
+        }
 	})
 }
 

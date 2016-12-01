@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="fa-table">
-                	<div class="filter">
+                    <div class="filter">
                         <button id="search_btn" class="btn btn-red btn-submit" type="button">查询</button>
                         ${enquiryRecordVo.startDate!}
                             <span>商品名称：</span>
@@ -33,10 +33,10 @@
                                 <option value="0">未报价</option>
                                 <option value="2">已过期</option>
                             </select>
-                            <span>询价日期：</span>
+                            <span class="ml">询价日期：</span>
                             <input class="ipt date" name="startDate" type="text" id="start"  value="${enquiryRecordVo.startDate!}"><em>-</em><input class="ipt date" name="endDate" type="text" id="end"  value="${enquiryRecordVo.endDate!}">
-                	</div>
-                	<div class="fa-chart-d">
+                    </div>
+                    <div class="fa-chart-d">
                         <div class="group">
                             <div class="th">
                                 <div class="td w1">选择</div>
@@ -51,22 +51,28 @@
                             <#list billsPage.list as bill>
                                 <div class="group">
                                     <div class="hd <#if bill.status==0>hd-1<#else ><#if bill.expireDate?exists&&bill.expireDate?is_date&& ((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>hd-2<#else >hd-3</#if></#if>" >
-                                        <a data-billid="${bill.id!}" data-status="${bill.status!}" class="buy" href="/center/enquiry/index?billId=${bill.id!}">重新询价</a>
-                                        <#if bill.expireDate?exists&&bill.expireDate?is_date&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))><input class="cbx" type="checkbox"></#if>
-                                        <span>询价单号：${bill.code!}</span>
-                                        <span>询价日期：${(bill.createTime?date)!}</span>
-                                        <#if bill.expireDate?exists&&bill.expireDate?is_date> <span>报价截止日期：${(bill.expireDate?date)!}</span></#if>
-                                        <em>状态：
-                                            <#if bill.status==0>
-                                                未报价
-                                            <#else >
-                                                <#if bill.expireDate?exists&&bill.expireDate?is_date&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
-                                                    已报价
+                                        <div class="td w7">
+                                            <#if bill.expireDate?exists&&bill.expireDate?is_date&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))><input class="cbx" type="checkbox"></#if>
+                                            <span>询价单号：${bill.code!}</span>
+                                            <span>询价日期：${(bill.createTime?date)!}</span>
+                                            <#if bill.expireDate?exists&&bill.expireDate?is_date> <span>报价截止日期：${(bill.expireDate?date)!}</span></#if>
+                                        </div>
+                                        <div class="td w5">
+                                            <em>状态：
+                                                <#if bill.status==0>
+                                                    未报价
                                                 <#else >
-                                                    已过期
+                                                    <#if bill.expireDate?exists&&bill.expireDate?is_date&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
+                                                        已报价
+                                                    <#else >
+                                                        已过期
+                                                    </#if>
                                                 </#if>
-                                            </#if>
-                                        </em>
+                                            </em>
+                                        </div>
+                                        <div class="td w6">
+                                            <a data-billid="${bill.id!}" data-status="${bill.status!}" class="buy" href="/center/enquiry/index?billId=${bill.id!}">重新询价</a>
+                                        </div>
                                     </div>
                                     <#if bill.status==0>
                                     <!-- 未报价 -->
@@ -128,15 +134,15 @@
             </div>
         </div>
     </div><!-- member-box end -->
-	
-	<form action="/center/order/create" method="post" id="orderForm">
-		<input type="hidden" name="commodityIds" id="commodityIds" value="">
-	</form>
-	
+    
+    <form action="/center/order/create" method="post" id="orderForm">
+        <input type="hidden" name="commodityIds" id="commodityIds" value="">
+    </form>
+    
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
-	
+    
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
 
@@ -227,7 +233,7 @@
 
                     // 询价操作
                     $table.find('.group:gt(0)').each(function() {
-                    	var $btnBuy = $(this).find('.hd .buy'),
+                        var $btnBuy = $(this).find('.hd .buy'),
                             $cbs = $(this).find('.w1 .cbx'),
                             status = $btnBuy.data("status");
                         
@@ -243,19 +249,19 @@
                         }
                         
                         $btnBuy.on('click',function(){
-                        	var commodityStr = [],
+                            var commodityStr = [],
                                 commodityIds = '';
                                 $cbxs = $(this).closest('.group').find('.w1 .cbx');
 
-                        	$cbxs.each(function() {
-                        		this.checked && commodityStr.push(this.value);
-                        	})
-                        	
-                        	commodityIds = commodityStr.join(',');
-                        	if(commodityIds){
-                        		$("#commodityIds").val(commodityIds);
-                        		$("#orderForm").submit();
-                        	}
+                            $cbxs.each(function() {
+                                this.checked && commodityStr.push(this.value);
+                            })
+                            
+                            commodityIds = commodityStr.join(',');
+                            if(commodityIds){
+                                $("#commodityIds").val(commodityIds);
+                                $("#orderForm").submit();
+                            }
                         })
                     });
 
