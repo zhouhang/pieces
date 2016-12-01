@@ -22,7 +22,7 @@
                     <a class="fr c-blue" href="/center/order/detail/${order.id}">查看该订单</a>
                     <span>订单号：${order.code}</span>
                     <span>订单金额：<em>¥${order.amountsPayable}</em></span>
-                    <span>请在<em>10</em>个工作日内完成付款。</span>
+                    <span>请在<em>${order.expireDate?date}</em>前完成付款。</span>
                 </p>
             </div>
             <div class="bd">

@@ -1,5 +1,7 @@
 package com.pieces.dao.model;
 
+import com.pieces.dao.config.SystemConfig;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -188,6 +190,12 @@ public class OrderForm  implements Serializable {
 	}
 
 	public Date getExpireDate() {
+		if (expireDate == null && createrTime!= null) {
+			// 10天的间隔 转换成毫秒
+			Long intervals = Long.valueOf(SystemConfig.orderValidityPeriod * 24 * 60 * 60 * 1000L);
+			expireDate = new Date();
+			expireDate.setTime(this.getCreaterTime().getTime() + intervals);
+		}
 		return expireDate;
 	}
 

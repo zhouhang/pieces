@@ -234,13 +234,14 @@ public class OrderFormVo extends OrderForm {
      */
     public String getOrderValidityPeriod() {
         if (this.getCreaterTime() != null) {
-            if (this.getStatus().equals(OrderEnum.UNPAID.getValue()) && this.getExpireDate()!= null) {
+            if (this.getStatus().equals(OrderEnum.UNPAID.getValue())) {
+
                 Long day = 24 * 60 * 60 * 1000L;
                 Long hour = 60 * 60 * 1000L;
                 Long minute = 60 * 1000L;
                 Calendar now = Calendar.getInstance();
                 now.setTime(this.getExpireDate());
-                now.set(Calendar.HOUR, 23);
+                now.set(Calendar.HOUR_OF_DAY, 23);
                 now.set(Calendar.MINUTE,59);
                 now.set(Calendar.SECOND,59);
                 Long expireDate = now.getTime().getTime();
