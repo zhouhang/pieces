@@ -188,9 +188,9 @@ function showMessage(){
 
                 }
                 else{
-                    $("#message").html("消息<i></i>");
-                    $("#certifyList").html("企业资质审核<b>"+CERTIFY_RECORD_NUM+"</b>");
-                    $("#anonEnquiry").html("新客询价<b>"+ANON_ENQUIRY_NUM+"</b>");
+                    $("#message").html("消息");
+                    $("#certifyList").html("企业资质审核");
+                    $("#anonEnquiry").html("新客询价");
                 }
 
             }
