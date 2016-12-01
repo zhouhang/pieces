@@ -243,16 +243,13 @@
                         var $btnBuy = $(this).find('.hd .buy'),
                             $cbs = $(this).find('.w1 .cbx'),
                             status = $btnBuy.data("status");
-                        
-                        if ($cbs.length === 0) {
-                            if(status !='0'){
-                                $btnBuy.remove();
-                            }
-                            return true; // containue
+
+                        if (status == '0') {
+                            // $btnBuy.remove();
                         } else {
-                            <#if user_session_biz??&&user_session_biz.certifyStatus==1>
+                        <#if user_session_biz??&&user_session_biz.certifyStatus==1>
                             $btnBuy.attr('href', 'javascript:;').html('订购已选商品');
-                            </#if>
+                        </#if>
                         }
                         
                         $btnBuy.on('click',function(){
