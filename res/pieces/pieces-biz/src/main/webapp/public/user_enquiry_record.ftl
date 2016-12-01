@@ -222,6 +222,7 @@
                                     $self.data('loader', 'true');
 
                                     if (result.status=="y") {
+                                        result.data.splice(0, 10); // 去掉前10条数据
                                         $self.before(self.toHtml(result.data));
                                         $self.data('expand', '1').html(txt[1]).prev().slideDown();
                                         if(call) call();
