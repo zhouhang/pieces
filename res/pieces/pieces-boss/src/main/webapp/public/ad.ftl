@@ -14,14 +14,14 @@
         <div class="wrap">
             <div class="title title-btm">
                 <h3>广告管理</h3>
-                <div class="extra"><a class="btn btn-red" href="ad/add"><i class="fa fa-plus"></i>增加广告</a></div>
+                <div class="extra"><a class="btn btn-red" href="/contrive/add"><i class="fa fa-plus"></i>增加广告</a></div>
             </div>
             <div class="pagin">
                 <div class="extra">
-                    <a class="btn btn-gray" href="/ad/index">重置条件</a>
+                    <a class="btn btn-gray" href="/contrive/index">重置条件</a>
                     <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
-                <@p.pager pageInfo=adPage  pageUrl="/ad/index"  params=adParams/>
+                <@p.pager pageInfo=adPage  pageUrl="/contrive/index"  params=adParams/>
 
             </div>
             <div class="chart">
@@ -72,7 +72,7 @@
                                     未激活
                                 </#if>
                             </td>
-                            <td><a href="ad/edit/${ad.id!}">修改</a></td>
+                            <td><a href="/contrive/edit/${ad.id!}">修改</a></td>
                         </tr>
                     </#list>
                     </tbody>
@@ -105,7 +105,7 @@
                 // 筛选
                 filter: function() {
                     var $ipts = $('.chart .ipt, .chart select');
-                    var url="/ad/index?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
+                    var url="/contrive/index?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
 
                     $('#search_btn').on('click', function() {
                         var params = [];

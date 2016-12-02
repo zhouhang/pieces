@@ -28,7 +28,7 @@ import javax.validation.Valid;
  * Created by wangbin on 2016/8/3.
  */
 @Controller
-@RequestMapping("/ad")
+@RequestMapping("/contrive/")
 public class AdController extends BaseController{
 
 

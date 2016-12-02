@@ -73,7 +73,7 @@
                     <a href="javascript:;">促销</a>
                     <div class="subnav">
                     <@shiro.hasPermission name="ad:index">
-                        <a href="ad/index">广告管理</a>
+                        <a href="/contrive/index">广告管理</a>
                     </@shiro.hasPermission>
                     </div>
                 </li>

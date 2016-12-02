@@ -16,7 +16,7 @@
             <dl>
                 <dt>广告信息</dt>
                 <dd>
-                    <a class="curr" href="/ad/index">广告信息</a>
+                    <a class="curr" href="/contrive/index">广告信息</a>
                 </dd>
             </dl>
         </div>
@@ -25,7 +25,7 @@
                 <div class="title">
                     <h3><i class="fa fa-chevron-right"></i><#if ad??>修改"${ad.title!}"<#else>新增广告</#if></h3>
                     <div class="extra">
-                        <a  class="btn btn-gray" href="/ad/index">返回</a>
+                        <a  class="btn btn-gray" href="/contrive/index">返回</a>
                         <#if ad??>
                         <button id="delete" type="button" class="btn btn-gray">删除</button>
                         </#if>
@@ -192,7 +192,7 @@
                     valid: function(form) {
                         if ( $(form).isValid() ) {
                             $.ajax({
-                                url: 'ad/save',
+                                url: '/contrive/save',
                                 data: $(form).serialize(),
                                 type: 'POST',
                                 success: function(result){
@@ -268,7 +268,7 @@
                     layer.confirm('确认删除该广告？', {icon: 3, title:'提示'}, function(index){
                         layer.close(index);
                         $.ajax({
-                            url: "/ad/delete?id=" + iid,
+                            url: "/contrive/delete?id=" + iid,
                             type: "POST",
                             success: function(data){
                                 if(data.status == "y"){
@@ -279,7 +279,7 @@
                                         delay: 3e3,
                                         call: function() {
                                             setTimeout(function() {
-                                                location.href = '/ad/index';
+                                                location.href = '/contrive/index';
                                             }, 3e3);
                                         }
                                     });
