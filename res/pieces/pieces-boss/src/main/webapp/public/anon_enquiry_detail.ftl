@@ -87,7 +87,7 @@
             },
             initCommodity:function(){
                 var html = [];
-                $.each(detail.v.commodity, function (k,v) {
+                $.each(_global.v.commodity, function (k,v) {
                    html.push('<tr><td>', v.val1, '</td><td>', v.val2, '</td><td>', v.val3, '</td></tr>');
                 })
                 $('#commodity_body').html(html.join(''));
