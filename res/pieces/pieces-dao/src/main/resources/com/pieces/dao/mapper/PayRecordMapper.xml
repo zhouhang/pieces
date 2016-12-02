@@ -216,7 +216,7 @@
         from pay_record pr
         <where>
             (pr.status = 1 or  pr.status = 2)
-                and  pr.user_id = #{userId} and pr.agent_id=NULL
+                and  pr.user_id = #{userId} and pr.agent_id is NULL
 
         </where>
         ORDER BY pr.create_time DESC
