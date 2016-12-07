@@ -71,7 +71,6 @@
             checkForm: function() {
                 var c2 = this.checkPassword();
                 var c1 = this.checkUsername();
-
                 if (c2 || c1) {
                     this.showMsg(c1 && c2 ? '请输入用户名和密码' : c1 + c2);
                     return false;
@@ -82,24 +81,22 @@
             bindEvent: function() {
                 var self = this;
                 loginPage.v.$username.on('blur', function() {
-                    self.checkUsername();
+                    // self.checkUsername();
                     $(this).closest('.group').removeClass('on');
                 }).on('focus', function() {
                     $(this).closest('.group').addClass('on');
+                    self.showMsg('');
                 });
-
                 loginPage.v.$password.on('blur', function() {
-                    self.checkPassword();
+                    // self.checkPassword();
                     $(this).closest('.group').removeClass('on');
                 }).on('focus', function() {
                     $(this).closest('.group').addClass('on');
+                    self.showMsg('');
                 });
-
                 loginPage.v.$submit.on('click', function() {
                     if (self.checkForm()) {
                         self.login();
-                    } else {
-
                     }
                     return false;
                 });
@@ -118,11 +115,9 @@
             }
         }
     }
-
     $(function() {
         loginPage.fn.init();
     })
-
 </script>
 </body>
 </html>

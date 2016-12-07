@@ -133,13 +133,7 @@
 
 <#include "./inc/helper.ftl"/>
 
-<div class="elevator" id="jelevator">
-    <ul>
-        <#list categoryList as category>
-            <li <#if category_index==0>class="current"</#if>><a href="#floor${category_index}">${category.title!}</a></li>
-        </#list>
-    </ul>
-</div>
+<div class="elevator" id="jelevator"></div>
 
 
 <div class="gotop" id="jgotop">
