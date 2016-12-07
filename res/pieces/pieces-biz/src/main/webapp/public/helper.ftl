@@ -25,7 +25,7 @@
 <!-- member-box start -->
     <div class="member-box">
         <div class="wrap">
-            <div class="side side-helper">
+            <div class="side">
             <#list articleCategorylist as articleCategory>
                 <dl <#if (articleCategory.id == article.categoryId)>class="expand"</#if>>
                     <dt>${articleCategory.name}</dt>
