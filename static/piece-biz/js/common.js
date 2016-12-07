@@ -1,67 +1,6 @@
 /*! Lazy Load 1.9.7 - MIT license - Copyright 2010-2015 Mika Tuupola */
 !function(e,t,o,r){var n=e(t);e.fn.lazyload=function(i){function f(){var t=0;l.each(function(){var o=e(this);if(!c.skip_invisible||o.is(":visible"))if(e.abovethetop(this,c)||e.leftofbegin(this,c));else if(e.belowthefold(this,c)||e.rightoffold(this,c)){if(++t>c.failure_limit)return!1}else o.trigger("appear"),t=0})}var a,l=this,c={threshold:0,failure_limit:0,event:"scroll",effect:"show",container:t,data_attribute:"original",skip_invisible:!1,appear:null,load:null,defaultImg:"images/default-img.png",placeholder:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"};return i&&(r!==i.failurelimit&&(i.failure_limit=i.failurelimit,delete i.failurelimit),r!==i.effectspeed&&(i.effect_speed=i.effectspeed,delete i.effectspeed),e.extend(c,i)),a=c.container===r||c.container===t?n:e(c.container),0===c.event.indexOf("scroll")&&a.on(c.event,function(){return f()}),this.each(function(){var t=this,o=e(t);t.loaded=!1,(o.attr("src")===r||o.attr("src")===!1)&&o.is("img")&&o.attr("src",c.placeholder),o.one("appear",function(){if(!this.loaded){if(c.appear){var r=l.length;c.appear.call(t,r,c)}e("<img />").one("load",function(){var r=o.attr("data-"+c.data_attribute);o.hide(),o.is("img")?o.attr("src",r):o.css("background-image","url('"+r+"')"),o[c.effect](c.effect_speed),t.loaded=!0;var n=e.grep(l,function(e){return!e.loaded});if(l=e(n),c.load){var i=l.length;c.load.call(t,i,c)}}).one("error",function(){var r=c.defaultImg;o.hide(),o.is("img")?o.attr("src",r):o.css("background-image","url('"+r+"')"),o[c.effect](c.effect_speed),t.loaded=!0;var n=e.grep(l,function(e){return!e.loaded});if(l=e(n),c.load){var i=l.length;c.load.call(t,i,c)}}).attr("src",o.attr("data-"+c.data_attribute))}}),0!==c.event.indexOf("scroll")&&o.on(c.event,function(){t.loaded||o.trigger("appear")})}),n.on("resize",function(){f()}),/(?:iphone|ipod|ipad).*os 5/gi.test(navigator.appVersion)&&n.on("pageshow",function(t){t.originalEvent&&t.originalEvent.persisted&&l.each(function(){e(this).trigger("appear")})}),e(o).ready(function(){f()}),this},e.belowthefold=function(o,i){var f;return f=i.container===r||i.container===t?(t.innerHeight?t.innerHeight:n.height())+n.scrollTop():e(i.container).offset().top+e(i.container).height(),f<=e(o).offset().top-i.threshold},e.rightoffold=function(o,i){var f;return f=i.container===r||i.container===t?n.width()+n.scrollLeft():e(i.container).offset().left+e(i.container).width(),f<=e(o).offset().left-i.threshold},e.abovethetop=function(o,i){var f;return f=i.container===r||i.container===t?n.scrollTop():e(i.container).offset().top,f>=e(o).offset().top+i.threshold+e(o).height()},e.leftofbegin=function(o,i){var f;return f=i.container===r||i.container===t?n.scrollLeft():e(i.container).offset().left,f>=e(o).offset().left+i.threshold+e(o).width()},e.inviewport=function(t,o){return!(e.rightoffold(t,o)||e.leftofbegin(t,o)||e.belowthefold(t,o)||e.abovethetop(t,o))},e.extend(e.expr[":"],{"below-the-fold":function(t){return e.belowthefold(t,{threshold:0})},"above-the-top":function(t){return!e.belowthefold(t,{threshold:0})},"right-of-screen":function(t){return e.rightoffold(t,{threshold:0})},"left-of-screen":function(t){return!e.rightoffold(t,{threshold:0})},"in-viewport":function(t){return e.inviewport(t,{threshold:0})},"above-the-fold":function(t){return!e.belowthefold(t,{threshold:0})},"right-of-fold":function(t){return e.rightoffold(t,{threshold:0})},"left-of-fold":function(t){return!e.rightoffold(t,{threshold:0})}})}(jQuery,window,document);
 
-!(function($, window) {
-    var $window = $(window);
-    $.fn.lazyload2 = function(options) {
-        var elements = this;
-        var settings = {
-            threshold       : 80,
-            effectSpeed		: 700,
-            effect          : 'fadeIn',
-            dataAttribute  	: 'data-original',
-            defaultImg      : 'images/default-img.png'
-        };
-
-        $.extend(settings, options || {});
-
-        function update() {
-            var counter = 0;
-            var stop = $window.scrollTop();
-            var winHeight = window.innerHeight ? window.innerHeight : $window.height();
-
-            elements.each(function() {
-            	var y = $(this).offset().top,
-            		h = $(this).height();
-
-            	if (stop >= y + h + settings.threshold) {
-            		// 图片在可视区域的上面
-            	} else if (stop > y - winHeight - settings.threshold) {
-					counter = 0;
-                    $(this).trigger('appear');
-            	}
-            });
-        }
-
-        elements.each(function() {
-            var self = this;
-            var $self = $(this);
-            var original = $self.attr(settings.dataAttribute) || settings.defaultImg;
-            self.loaded = false;
-            $self.one('appear', function() {
-                if (!self.loaded) {
-		            self.loaded = true;
-		            var img = new Image();
-		            img.onload = function() {
-                		$self.attr('src', original).hide()[settings.effect](settings.effectSpeed);
-		            }
-		            img.src = original;
-		            var temp = $.grep(elements, function(element) {
-                        return !element.loaded;
-                    });
-                    elements = $(temp);
-                }
-            })
-        });
-
-        $window.on('resize scroll', function() {
-            update();
-        })
-        update();
-    };
-
-})(jQuery, window);
-
 $.easing.easeInOutExpo = function (x, t, b, c, d) {
 	if (t==0) return b;
 	if (t==d) return b+c;

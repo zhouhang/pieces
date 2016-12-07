@@ -82,17 +82,19 @@
             bindEvent: function() {
                 var self = this;
                 loginPage.v.$username.on('blur', function() {
-                    self.checkUsername();
+                    // self.checkUsername();
                     $(this).closest('.group').removeClass('on');
                 }).on('focus', function() {
                     $(this).closest('.group').addClass('on');
+                    self.showMsg('');
                 });
 
                 loginPage.v.$password.on('blur', function() {
-                    self.checkPassword();
+                    // self.checkPassword();
                     $(this).closest('.group').removeClass('on');
                 }).on('focus', function() {
                     $(this).closest('.group').addClass('on');
+                    self.showMsg('');
                 });
 
                 loginPage.v.$submit.on('click', function() {
