@@ -1,20 +1,21 @@
 package com.pieces.boss.controller;
 
-import java.awt.Color;
-import java.net.URLEncoder;
-import java.util.List;
-
-import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import com.github.bingoohuang.patchca.color.SingleColorFactory;
+import com.github.bingoohuang.patchca.custom.ConfigurableCaptchaService;
+import com.github.bingoohuang.patchca.filter.predefined.CurvesRippleFilterFactory;
+import com.github.bingoohuang.patchca.service.Captcha;
+import com.github.bingoohuang.patchca.word.RandomWordFactory;
+import com.github.pagehelper.PageInfo;
 import com.pieces.boss.commons.UEditorResult;
+import com.pieces.dao.model.Area;
+import com.pieces.service.AreaService;
 import com.pieces.service.CommodityService;
 import com.pieces.service.constant.BasicConstants;
+import com.pieces.service.impl.SmsService;
 import com.pieces.service.vo.CropInfo;
 import com.pieces.service.vo.CropResult;
+import com.pieces.tools.utils.GsonUtil;
+import com.pieces.tools.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,19 +24,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.github.bingoohuang.patchca.color.SingleColorFactory;
-import com.github.bingoohuang.patchca.custom.ConfigurableCaptchaService;
-import com.github.bingoohuang.patchca.filter.predefined.CurvesRippleFilterFactory;
-import com.github.bingoohuang.patchca.service.Captcha;
-import com.github.bingoohuang.patchca.word.RandomWordFactory;
-import com.github.pagehelper.PageInfo;
-import com.pieces.dao.model.Area;
-import com.pieces.service.AreaService;
-import com.pieces.service.impl.SmsService;
-import com.pieces.tools.bean.FileBo;
-import com.pieces.tools.upload.DefaultUploadFile;
-import com.pieces.tools.utils.GsonUtil;
-import com.pieces.tools.utils.WebUtil;
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.awt.*;
+import java.io.PrintWriter;
+import java.util.List;
 
 /**
  * 公共URL访问
@@ -182,14 +178,15 @@ public class GeneralController {
      * @throws Exception
      */
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    @ResponseBody
-    public UEditorResult updateUEditorFile(@RequestParam(required = false) MultipartFile upfile, HttpServletRequest request,HttpServletResponse response) throws Exception{
-        if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0 ||
-                request.getHeader("User-Agent").toUpperCase().indexOf("TRIDENT") > 0) {
-            response.setContentType("text/html");
-        }
+    public void updateUEditorFile(@RequestParam(required = false) MultipartFile upfile,HttpServletResponse response) throws Exception{
         CropResult cropResult = commodityService.uploadUeditorImage(upfile);
-        return UEditorResult.success(upfile.getOriginalFilename(),upfile.getOriginalFilename(),cropResult.getUrl() );
+        // 设置响应头
+        response.setContentType("text/html;charset=utf-8"); // 指定内容类型为 JSON 格式
+        // 向响应中写入数据
+        PrintWriter writer = response.getWriter();
+        writer.write(GsonUtil.toJson(UEditorResult.success(upfile.getOriginalFilename(),upfile.getOriginalFilename(),cropResult.getUrl()))); // 转为 JSON 字符串
+        writer.flush();
+        writer.close();
     }
 
 
