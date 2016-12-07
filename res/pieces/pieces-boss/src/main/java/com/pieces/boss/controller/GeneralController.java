@@ -1,6 +1,7 @@
 package com.pieces.boss.controller;
 
 import java.awt.Color;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -182,7 +183,11 @@ public class GeneralController {
      */
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
     @ResponseBody
-    public UEditorResult updateUEditorFile(@RequestParam(required = false) MultipartFile upfile) throws Exception{
+    public UEditorResult updateUEditorFile(@RequestParam(required = false) MultipartFile upfile, HttpServletRequest request,HttpServletResponse response) throws Exception{
+        if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0 ||
+                request.getHeader("User-Agent").toUpperCase().indexOf("TRIDENT") > 0) {
+            response.setContentType("text/html");
+        }
         CropResult cropResult = commodityService.uploadUeditorImage(upfile);
         return UEditorResult.success(upfile.getOriginalFilename(),upfile.getOriginalFilename(),cropResult.getUrl() );
     }
