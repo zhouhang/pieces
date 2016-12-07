@@ -27,19 +27,14 @@
         <div class="wrap">
             <div class="side side-helper">
             <#list articleCategorylist as articleCategory>
-
                 <dl <#if (articleCategory.id == article.categoryId)>class="expand"</#if>>
-                    <dt>                        
-                        <span>${articleCategory.name}</span>
-                        <i class="fa fa-chevron-right"></i>
-                    </dt>
+                    <dt>${articleCategory.name}</dt>
+                    <#list articleCategory.articles as articles>
                     <dd>
-                        <#list articleCategory.articles as articles>
-                            <a <#if (articles.id == article.id)>class="curr"</#if> href="/help/${articles.id}">${articles.title}</a>
-                        </#list>
+                        <a <#if (articles.id == article.id)>class="curr"</#if> href="/help/${articles.id}">${articles.title}</a>
                     </dd>
+                    </#list>
                 </dl>
-
             </#list>
             </div>
 
