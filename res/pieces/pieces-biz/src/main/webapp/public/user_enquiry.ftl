@@ -317,8 +317,7 @@
                         hasPage = pageSize < item.length;
 
                     for (var i = page_index * pageSize; i < maxPage; i++) {
-                        var val = item[i].name + '-' + item[i].spec + '-' + item[i].level + '-' + item[i].originOf + '-' + item[i].id;
-                        modal.push('<div class="group" data-val="', item[i].id, '">');
+                        modal.push('<div class="group" data-id="', item[i].id, '">');
                         modal.push(     '<span class="w1">', item[i].name, '</span>');
                         modal.push(     '<span class="w2">', item[i].spec, '</span>');
                         modal.push(     '<span class="w3">', item[i].level, '</span>');
@@ -405,7 +404,7 @@
                 },
                 response:function(result){
                     if(result.status=='y'){
-                        window.location.href="/center/enquiry/success";
+                        window.location.href = '/center/enquiry/success';
                     }else{
                         $.notify({
                             type: 'error',
