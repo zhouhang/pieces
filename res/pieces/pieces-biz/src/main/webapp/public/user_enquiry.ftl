@@ -236,12 +236,11 @@
 
                     // 关键字自动填充
                     $suggestions.on('click', '.bd .group', function() {
-                        var data = $(this).data('val').split('-');
-                        $suggestions.prev().val(data[0])
-                        .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
-                        .closest('td').next().find('.ipt').val(data[2]).trigger('focus').end()
-                        .closest('td').next().find('.ipt').val(data[3]).trigger('focus');
-                        $suggestions.hide().parent().next().val(data[4]);
+                        $suggestions.prev().val($(this).find('.w1').html()).prev().val($(this).data('id'))
+                        .closest('td').next().find('.ipt').val($(this).find('.w2').html()).trigger('focus').end()
+                        .closest('td').next().find('.ipt').val($(this).find('.w3').html()).trigger('focus').end()
+                        .closest('td').next().find('.ipt').val($(this).find('.w4').html()).trigger('focus').blur();
+                        $suggestions.hide();
                     })
 
     				// 新增一行
@@ -319,7 +318,7 @@
 
                     for (var i = page_index * pageSize; i < maxPage; i++) {
                         var val = item[i].name + '-' + item[i].spec + '-' + item[i].level + '-' + item[i].originOf + '-' + item[i].id;
-                        modal.push('<div class="group" data-val="', val, '">');
+                        modal.push('<div class="group" data-val="', item[i].id, '">');
                         modal.push(     '<span class="w1">', item[i].name, '</span>');
                         modal.push(     '<span class="w2">', item[i].spec, '</span>');
                         modal.push(     '<span class="w3">', item[i].level, '</span>');
