@@ -136,12 +136,9 @@
 <div class="elevator" id="jelevator"></div>
 
 
-<div class="gotop" id="jgotop">
-    <a href="javascript:;"><b class="fa fa-chevron-up"></b><em>返回顶部</em></a>
-</div>
 <#include "./inc/footer.ftl"/>
 
-<script src="js/jquery.nav.js"></script>
-<script src="js/index_2016.js"></script>
+<script src="/js/jquery.nav.js"></script>
+<script src="/js/index_2016.js"></script>
 </body>
 </html>

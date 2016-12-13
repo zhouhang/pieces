@@ -11,13 +11,14 @@
 <div class="header header-shadow">
     <div class="wrap">
         <div class="logo">
-            <a href="#">饮片B2B首页</a>
+            <a href="/">上工好药首页</a>
         </div>
         <div class="title">
             <h1>询价成功</h1>
         </div>
     </div>
 </div><!-- header end -->
+
 <!-- fa-message start -->
 <div class="fa-message">
     <div class="wrap">
@@ -30,10 +31,10 @@
         </div>
         <div class="ft">
             <a class="btn btn-red" href="/anon/enquiry">继续询价</a>
-            <a href="#">返回首页</a>
+            <a href="/">返回首页</a>
         </div>
     </div>
-</div><!-- fa-message start -->
+</div><!-- fa-message end -->
 
 <#include "./inc/footer.ftl"/>
 

@@ -31,7 +31,7 @@
                         <div class="ft">
                             <a class="btn btn-red" href="/center/enquiry/index">提交新询价单</a>
                         </div>
-                    </div><!-- fa-message start -->
+                    </div><!-- fa-message end -->
 
                 </div>
         </div>

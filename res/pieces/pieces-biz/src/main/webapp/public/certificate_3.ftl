@@ -31,26 +31,12 @@
                 <div class="ft">
                     <a class="btn btn-red" href="/center/enquiry/index">开始询价</a>
                 </div>
-            </div><!-- fa-message start -->
+            </div><!-- fa-message end -->
 
         </div>
     </div>
 </div><!-- member-box end -->
 
 <#include "./inc/footer.ftl"/>
-<script src="js/common.js"></script>
-<script>
-    var _global = {
-        v: {
-        },
-        fn: {
-            init: function() {
-            }
-        }
-    }
-    $(function() {
-        _global.fn.init();
-    })
-</script>
 </body>
 </html>

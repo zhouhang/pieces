@@ -49,9 +49,9 @@ $(function() {
         return true;
     }
 
-    $username.on('blur', _checkUsername);
+    // $username.on('blur', _checkUsername);
 
-    $pwd.on('blur', _checkPassword);
+    // $pwd.on('blur', _checkPassword);
 
     $submit.on('click', function() {
         return _checkForm();      

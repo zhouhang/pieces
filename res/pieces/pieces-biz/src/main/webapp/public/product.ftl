@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>${commodity.title!}-商品详情-上工好药</title>
+    <title>${commodity.title!}-上工好药</title>
 </head>
 
 <body>

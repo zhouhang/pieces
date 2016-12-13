@@ -134,7 +134,6 @@
     </div><!-- order-success end -->
 
 
-    <#include "./inc/footer.ftl"/>
 
     <!-- start 新增发票 -->
     <div class="fa-form fa-form-layer" id="jinvoiceBox">
@@ -303,7 +302,8 @@
             <button type="button" class="btn btn-gray cancel">取消</button>
         </div>
     </div>
-	
+    
+    <#include "./inc/footer.ftl"/>
 
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>

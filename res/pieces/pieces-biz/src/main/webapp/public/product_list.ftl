@@ -86,9 +86,9 @@
 
     <#include "./inc/helper.ftl"/>
     <#include "./inc/footer.ftl"/>
-    <script src="/js/jquery.form.js"></script>
+    <script src="/js/layer/layer.js"></script>
     <script>
-    var productPage = {
+    var _global = {
         fn: {
         	init: function(){
                 this.skip();
@@ -103,7 +103,7 @@
         }
     }
     $(function() {
-        productPage.fn.init();
+        // _global.fn.init();
     })
     </script>
 </body>

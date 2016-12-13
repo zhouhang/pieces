@@ -12,7 +12,7 @@
     <div class="wrap">
     <#if (commodityDocPage??&&commodityDocPage.totalElements>0)>
         <div class="sitemap">
-            <a href="#">搜索结果</a>
+            <a href="javascript:;">搜索结果</a>
             <em>&gt;</em>
             <span>${keyword!}</span>
         </div>
@@ -71,7 +71,5 @@
     <#include "./inc/helper.ftl"/>
     <#include "./inc/footer.ftl"/>
     <script src="/js/layer/layer.js"></script>
-
-
 </body>
 </html>

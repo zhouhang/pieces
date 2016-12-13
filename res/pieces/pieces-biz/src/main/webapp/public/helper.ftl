@@ -44,7 +44,7 @@
                     <div class="extra"></div>
                 </div>
 
-                <div class="article" id="article">
+                <div class="article">
                     ${article.content}
                 </div>
             </div>
@@ -54,11 +54,23 @@
 
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
-<script>
-    $(function () {
-        var article = $("#article").html();
-        $("#article").html(article.replace(/http:\/\/mailto:/g,"mailto:"));
-    })
-</script>
+
+    <script>
+        var _global = {
+            fn: {
+                init: function() {
+                    this.mailto();
+                },
+                mailto: function() {
+                    $('.article').find('a').each(function() {
+                        this.href = this.href.replace(/http:\/\/mailto:/g, 'mailto:');
+                    })
+                }
+            }
+        }
+        $(function () {
+            _global.fn.init();
+        })
+    </script>
 </body>
 </html>

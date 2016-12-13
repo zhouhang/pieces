@@ -11,7 +11,7 @@
 
     <#include "./inc/header-center.ftl"/>
 
-<div class="wrap">
+    <div class="wrap">
         <div class="payment">
             <div class="title">
                 <h3>支付</h3>
@@ -42,7 +42,5 @@
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
     
-    <div id="imgCropWrap"></div>
-
 </body>
 </html>
