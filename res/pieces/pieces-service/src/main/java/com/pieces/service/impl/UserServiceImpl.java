@@ -57,6 +57,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         user.setCreateTime(new Date());
         user.setCertifyStatus(CertifyStatusEnum.NOT_CERTIFY.getValue());
         //user.setSource(0);
+        user.setUpdateTime(new Date());
         return this.create(user);
 
     }
