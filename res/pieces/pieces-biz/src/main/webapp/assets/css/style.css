@@ -575,6 +575,10 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .activity li .txt h4{font-size:18px;font-weight:700;} 
 .activity li .txt p{margin:2px 0 15px;font-size:12px;color:#999;} 
 .activity li .txt span{padding:1px 4px;color:#fff;}
+.activity li:nth-child(1) .txt span{background:#fd8b2b;}
+.activity li:nth-child(2) .txt span{background:#01aafd;}
+.activity li:nth-child(3) .txt span{background:#f96188;}
+.activity li:nth-child(4) .txt span{background:#84d12b;}
 .activity li .txt .t-orange{background:#fd8b2b;}
 .activity li .txt .t-blue{background:#01aafd;}
 .activity li .txt .t-pink{background:#f96188;}
