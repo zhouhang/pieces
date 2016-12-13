@@ -2,8 +2,6 @@ package com.pieces.service.listener;
 
 import org.springframework.context.ApplicationEvent;
 
-import java.util.Date;
-
 /**
  * Author: koabs
  * 12/13/16.
