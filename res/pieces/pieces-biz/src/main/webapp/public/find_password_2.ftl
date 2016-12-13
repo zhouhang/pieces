@@ -12,7 +12,7 @@
 	<div class="header header-shadow">
 		<div class="wrap">
 			<div class="logo">
-				<a href="home.html">上工好药首页</a>
+				<a href="/">上工好药首页</a>
 			</div>
 			<div class="title">
 				<h1>找回密码</h1>

@@ -11,7 +11,7 @@
     <div class="header header-shadow">
         <div class="wrap">
             <div class="logo">
-                <a href="home.html">上工好药首页</a>
+                <a href="/">上工好药首页</a>
             </div>
             <div class="title">
                 <h1>找回密码</h1>
@@ -37,7 +37,7 @@
                 或 <a href="/">返回首页</a>
             </div>
         </div>
-    </div><!-- fa-message start -->
+    </div><!-- fa-message end -->
 
 
     <!-- footer start -->

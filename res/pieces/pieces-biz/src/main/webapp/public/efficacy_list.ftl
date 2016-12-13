@@ -14,7 +14,7 @@
 
     
     <div class="wrap">
-        <div class="pro-floor">
+        <div class="efficacy">
             <#list efficacies?keys as key >
                 <div class="hd">
                     <h2 id="${key}">${key}</h2>

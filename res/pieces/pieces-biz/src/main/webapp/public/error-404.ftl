@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>404-上工好药</title>
+    <title>您访问的页面不存在-上工好药</title>
 </head>
 
 <body>
@@ -31,19 +31,16 @@
             // 延迟跳转到首页
             jumpToHomePage: function() {
                 var count = document.getElementById('count');
-                var delay = parseInt(count.innerHTML, 5);
+                var delay = parseInt(count.innerHTML, 10);
                 if (isNaN(delay)) {
                     delay = 6;
                 }
-
-                var timer = setInterval(function() {
+                setInterval(function() {
                     if (delay < 2) {
-                        clearInterval(timer);
                         location.href = '/';
-                        return;
+                    } else {
+                        count.innerHTML = -- delay;
                     }
-                    delay === 1 && setInterval(timer);
-                    count.innerHTML = -- delay;
                 }, 1e3);
             }
         }

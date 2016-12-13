@@ -151,7 +151,7 @@
                                     <td>安徽省</td>
                                     <td>
                                         <a href="#" class="c-blue">询价</a>
-                                        <a href="#" class="c-red jdel">删除</a>
+                                        <a href="user_collect.html" class="c-red jdel">删除</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -162,7 +162,7 @@
                                     <td>安徽省</td>
                                     <td>
                                         <a href="#" class="c-blue">询价</a>
-                                        <a href="#" class="c-red jdel">删除</a>
+                                        <a href="user_collect.html" class="c-red jdel">删除</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -173,7 +173,7 @@
                                     <td>安徽省</td>
                                     <td>
                                         <a href="#" class="c-blue">询价</a>
-                                        <a href="#" class="c-red jdel">删除</a>
+                                        <a href="user_collect.html" class="c-red jdel">删除</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -184,7 +184,7 @@
                                     <td>安徽省</td>
                                     <td>
                                         <a href="#" class="c-blue">询价</a>
-                                        <a href="#" class="c-red jdel">删除</a>
+                                        <a href="user_collect.html" class="c-red jdel">删除</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -195,7 +195,7 @@
                                     <td>安徽省</td>
                                     <td>
                                         <a href="#" class="c-blue">询价</a>
-                                        <a href="#" class="c-red jdel">删除</a>
+                                        <a href="user_collect.html" class="c-red jdel">删除</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -206,7 +206,7 @@
                                     <td>安徽省</td>
                                     <td>
                                         <a href="#" class="c-blue">询价</a>
-                                        <a href="#" class="c-red jdel">删除</a>
+                                        <a href="user_collect.html" class="c-red jdel">删除</a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -217,7 +217,7 @@
                                     <td>安徽省</td>
                                     <td>
                                         <a href="#" class="c-blue">询价</a>
-                                        <a href="#" class="c-red jdel">删除</a>
+                                        <a href="user_collect.html" class="c-red jdel">删除</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -277,10 +277,10 @@
                 // 删除
                 delFav: function() {
                     $('.fa-chart').on('click', '.jdel', function() {
+                        var url = this.href;
                         layer.confirm('确认从收藏夹中删除这个商品吗？', {icon: 3, title:'提示'}, function(index){
-                            alert('删除成功')
-                            layer.close(index); // 关闭弹层
-                        });  
+                            window.location.href = url;
+                        });
                         return false; // 组织默认事件
                     })
                 }

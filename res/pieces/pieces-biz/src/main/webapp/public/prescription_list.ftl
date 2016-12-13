@@ -6,13 +6,10 @@
 </head>
 
 <body class="bg-gray">
-
 <#include "./inc/header.ftl"/>
-
-    
     <div class="main-body">
         <div class="wrap">
-            <div class="fa-pro-list">
+            <div class="prescription">
                 <ul>
                    <li id="guizhi">
                         <h3>桂枝汤</h3>

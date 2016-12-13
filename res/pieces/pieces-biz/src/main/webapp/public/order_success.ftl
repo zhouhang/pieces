@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<#include "./inc/meta.ftl"/>
+    <#include "./inc/meta.ftl"/>
     <title>订单列表-上工好药</title>
+    <link rel="stylesheet" href="/css/order.css">
 </head>
 
 <body>
 
 <#include "./inc/header-center.ftl"/>
-<link rel="stylesheet" href="css/order.css">
 <div class="wrap">
     <div class="order-wrap">
         <div class="title">

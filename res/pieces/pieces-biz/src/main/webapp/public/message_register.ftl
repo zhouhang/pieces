@@ -36,7 +36,7 @@
             </div>
 
         </div>
-    </div><!-- fa-message start --> 
+    </div><!-- fa-message end --> 
     
 
     <!-- fa-tips start --> 
