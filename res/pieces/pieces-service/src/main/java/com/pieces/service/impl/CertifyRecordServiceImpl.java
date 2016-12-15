@@ -18,7 +18,9 @@ import com.pieces.service.AbsCommonService;
 import com.pieces.service.CertifyRecordService;
 import com.pieces.service.UserCertificationService;
 import com.pieces.service.UserService;
+import com.pieces.service.listener.UserUpdateEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +45,9 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private ApplicationContext applicationContext;
 
 
 	@Override
@@ -100,6 +105,13 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 		userCertificationDao.updateByRecordId(userCertification);
 		userQualificationDao.updateByRecordId(userQualification);
 
+		/**
+		 * 更新user更新时间
+		 */
+		UserUpdateEvent userUpdateEvent=new UserUpdateEvent(certifyRecordVo.getUserId());
+
+		applicationContext.publishEvent(userUpdateEvent);
+
 	}
 
 	@Override
@@ -137,6 +149,12 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 		user.setCompanyFullName(certificationVo.getCompany());
 		user.setCertifyTime(new Date());
 		userService.update(user);
+		/**
+		 * 更新user更新时间
+		 */
+		UserUpdateEvent userUpdateEvent=new UserUpdateEvent(certificationVo.getUserId());
+
+		applicationContext.publishEvent(userUpdateEvent);
 	}
 
 	@Override

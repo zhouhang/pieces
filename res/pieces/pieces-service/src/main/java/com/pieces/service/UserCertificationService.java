@@ -10,5 +10,12 @@ public interface UserCertificationService extends ICommonService<UserCertificati
 
     public PageInfo<UserCertificationVo> findByParams(UserCertificationVo userCertificationVo,Integer pageNum,Integer pageSize);
 
+    /**
+     * 查询指定的资质
+     * @param userCertificationVo
+     * @return
+     */
     public UserCertificationVo  findAll(UserCertificationVo userCertificationVo);
+
+
 }

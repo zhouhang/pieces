@@ -60,7 +60,7 @@
                                 <i>*</i>有效期：
                             </div>
                             <div class="cnt">
-                                <input class="ipt date" value="" autocomplete="off" name="term" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                <input class="ipt date" value="" autocomplete="off" name="term" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
                                 <span class="error1"></span>
                                 <label><input type="checkbox" name="status" class="cbx">长期</label>
                             </div>
@@ -99,7 +99,7 @@
                                 <i>*</i>有效期：
                             </div>
                             <div class="cnt">
-                                <input class="ipt date" value="" autocomplete="off" name="term" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
                                 <span class="error1"></span>
                                 <label><input type="checkbox" name="status" class="cbx">长期</label>
                             </div>
@@ -138,7 +138,7 @@
                                 <i>*</i>有效期：
                             </div>
                             <div class="cnt">
-                                <input class="ipt date" value="" autocomplete="off" name="term" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
                                 <span class="error1"></span>
                                 <label><input type="checkbox" name="status" class="cbx">长期</label>
                             </div>
@@ -177,7 +177,7 @@
                                 <i>*</i>有效期：
                             </div>
                             <div class="cnt">
-                                <input class="ipt date" value="" autocomplete="off" name="term" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
                                 <span class="error1"></span>
                                 <label><input type="checkbox" name="status" class="cbx">长期</label>
                             </div>
@@ -217,7 +217,37 @@
                                 <i>*</i>有效期：
                             </div>
                             <div class="cnt">
-                                <input class="ipt date" value="" autocomplete="off" name="term" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                <span class="error1"></span>
+                                <label><input type="checkbox" name="status" class="cbx">长期</label>
+                            </div>
+                        </div>
+                        <div class="group group-up">
+                            <div class="txt">
+                                <i>*</i>证件照片：
+                            </div>
+                            <div class="cnt">
+                                <span class="up-img thumb"></span>
+                                <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
+                                <span class="error1"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box" type="7">
+                        <div class="group group-val">
+                            <div class="txt">
+                                <i>*</i>证件名称：
+                            </div>
+                            <div class="cnt">
+                                <span class="val">采购人员授权委托书</span>
+                            </div>
+                        </div>
+                        <div class="group group-a">
+                            <div class="txt">
+                                <i>*</i>有效期：
+                            </div>
+                            <div class="cnt">
+                                <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
                                 <span class="error1"></span>
                                 <label><input type="checkbox" name="status" class="cbx">长期</label>
                             </div>
@@ -259,7 +289,37 @@
                                    <i>*</i>有效期：
                                </div>
                                <div class="cnt">
-                                   <input class="ipt date" value="" autocomplete="off" name="term" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                   <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                   <span class="error1"></span>
+                                   <label><input type="checkbox" name="status" class="cbx">长期</label>
+                               </div>
+                           </div>
+                           <div class="group group-up">
+                               <div class="txt">
+                                   <i>*</i>证件照片：
+                               </div>
+                               <div class="cnt">
+                                   <span class="up-img thumb"></span>
+                                   <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
+                                   <span class="error1"></span>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="box" type="7">
+                           <div class="group group-val">
+                               <div class="txt">
+                                   <i>*</i>证件名称：
+                               </div>
+                               <div class="cnt">
+                                   <span class="val">采购人员授权委托书</span>
+                               </div>
+                           </div>
+                           <div class="group group-a">
+                               <div class="txt">
+                                   <i>*</i>有效期：
+                               </div>
+                               <div class="cnt">
+                                   <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
                                    <span class="error1"></span>
                                    <label><input type="checkbox" name="status" class="cbx">长期</label>
                                </div>
@@ -296,6 +356,7 @@
 <script src="js/layer/layer.js"></script>
 <script src="js/croppic.min.js"></script>
 <script src="js/lightbox.js"></script>
+<script src="js/laydate/laydate.js"></script>
 <script>
     var group=0;//是否三证合一
     var _global = {
@@ -309,6 +370,7 @@
                 this.bindEvent();
                 this.submitForm();
                 this.goodsImg();
+                this.dateInit();
             },
             bindEvent: function() {
                 var $myform = $('#myform');
@@ -393,7 +455,9 @@
                             }
                             var userQualification={};
                             userQualification.type=$(this).attr('type');
-                            userQualification.number=$(this).find("input[name='number']").val();
+                            if(userQualification.type!="7"){
+                                userQualification.number=$(this).find("input[name='number']").val();
+                            }
                             if(userQualification.status=$(this).find("input[name='status']").is(':checked')){
                                 userQualification.status=1;
                                 userQualification.term="";
@@ -428,6 +492,12 @@
                     }
                     return false;
                 })
+            },
+            dateInit: function () {
+                var start = {
+                    elem: '#myform .date'
+                }
+                laydate(start);
             },
             // 商品图片
             goodsImg: function() {

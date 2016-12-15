@@ -1,5 +1,6 @@
 package com.pieces.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -54,5 +55,12 @@ public interface UserService extends ICommonService<User>{
 	public void login(Subject subject, UsernamePasswordToken token);
 
 	UserVo findVoById(Integer id);
+
+	/**
+	 * 根据时间查找更新的user
+	 * @param updateTime
+	 * @return
+	 */
+	List<UserVo> findUpdateUser(Date updateTime);
 
 }

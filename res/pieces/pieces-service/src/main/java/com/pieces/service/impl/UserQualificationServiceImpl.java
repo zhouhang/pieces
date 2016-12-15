@@ -38,6 +38,14 @@ public class UserQualificationServiceImpl  extends AbsCommonService<UserQualific
 		return list;
 	}
 
+	@Override
+	public UserQualificationVo findByCondition(UserQualificationVo userQualificationVo) {
+		List<UserQualificationVo>  list = userQualificationDao.findByParams(userQualificationVo);
+		if(list.size()!=0){
+			return list.get(0);
+		}
+		return null;
+	}
 
 
 	@Override
