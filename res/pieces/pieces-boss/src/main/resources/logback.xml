@@ -79,7 +79,8 @@
 
     <!-- 日志级别 -->
     <root>
-        <level value="DEBUG" />
+        <level value="INFO" />
+        <level value="ERROR" />
         <appender-ref ref="file" />
         <appender-ref ref="error" />
         <appender-ref ref="console" />

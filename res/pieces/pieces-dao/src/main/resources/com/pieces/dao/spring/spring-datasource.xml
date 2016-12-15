@@ -17,9 +17,9 @@
 
 	<!--启用阿里连接池  -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">   
-	    <property name="url" value="jdbc:mysql://127.0.0.1:3307/pieces?characterEncoding=utf-8&amp;allowMultiQueries=true" />
-	    <property name="username" value="root" />
-	    <property name="password" value="root" />
+	    <property name="url" value="${db.jdbcUrl}" />  
+	    <property name="username" value="${db.user}" />  
+	    <property name="password" value="${db.password}" />
 	        
 	    <property name="initialSize" value="20" />
 	    <property name="minIdle" value="10" />
