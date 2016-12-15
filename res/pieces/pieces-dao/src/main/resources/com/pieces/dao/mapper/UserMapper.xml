@@ -406,6 +406,15 @@
 	</select>
 
 
-
+	<select id="findUpdateUser" parameterType="java.util.Date" resultMap="Vo">
+		select b.* ,m.name as serviceName,agent.contact_name as agentName,agent.id as agentId  from user b
+		LEFT JOIN member m ON b.service_id = m.id
+		LEFT JOIN  user_bind bind ON b.id = bind.terminal_id
+		LEFT JOIN  user agent ON bind.agent_id = agent.id
+		where  b.certify_status=1 and b.is_del=0
+		<if test="updateTime != null">
+		and DATE_FORMAT(b.update_time, '%Y-%m-%d %H:%i:%S') <![CDATA[>=]]> DATE_FORMAT(#{updateTime},'%Y-%m-%d %H:%i:%S')
+		</if>
+	</select>
 
 </mapper>

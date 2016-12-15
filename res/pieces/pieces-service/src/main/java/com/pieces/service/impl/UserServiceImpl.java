@@ -168,6 +168,11 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
     }
 
     @Override
+    public List<UserVo> findUpdateUser(Date updateTime) {
+        return userDao.findUpdateUser(updateTime);
+    }
+
+    @Override
     public ICommonDao<User> getDao() {
         return userDao;
     }

@@ -11,4 +11,6 @@ public interface UserQualificationService extends ICommonService<UserQualificati
     public PageInfo<UserQualificationVo> findByParams(UserQualificationVo userQualificationVo,Integer pageNum,Integer pageSize);
 
     public List<UserQualificationVo> findAll(UserQualificationVo userQualificationVo);
+
+    public UserQualificationVo findByCondition(UserQualificationVo userQualificationVo);
 }
