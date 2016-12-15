@@ -100,6 +100,11 @@ public class ApiController {
 
             UserQualificationVo param1=new UserQualificationVo();
             param1.setUserId(userVo.getId());
+            /**
+             * 默认值
+             */
+            companyInfoVo.setEntrust_licence("采购人员授权委托书");
+            companyInfoVo.setEntrust_licence_expire("");
 
             List<UserQualificationVo> userQualificationVos=userQualificationService.findAll(param1);
             for(UserQualificationVo userQualificationVo:userQualificationVos){
@@ -110,6 +115,10 @@ public class ApiController {
                 else if(userQualificationVo.getType()==QualificationTypeEnum.LIENSE_2.getValue()){
                     companyInfoVo.setGsp_licence(userQualificationVo.getNumber());
                     companyInfoVo.setGsp_licence_expire(userQualificationVo.getTerm());
+                }
+                else if(userQualificationVo.getType()==QualificationTypeEnum.LIENSE_7.getValue()){
+                    companyInfoVo.setEntrust_licence("采购人员授权委托书");
+                    companyInfoVo.setEntrust_licence_expire(userQualificationVo.getTerm());
                 }
                 else if(userQualificationVo.getType()==QualificationTypeEnum.LIENSE_6.getValue()){
                     if(userCertificationVo.getType()!= CertifyTypeEnum.SINGLE_DRUGSTORE.getValue()&&userCertificationVo.getType()!= CertifyTypeEnum.CHAIN_DRUGSTORE.getValue()){
@@ -125,8 +134,7 @@ public class ApiController {
                     }
                 }
             }
-            companyInfoVo.setEntrust_licence("采购人员授权委托书");
-            companyInfoVo.setEntrust_licence_expire("");
+
             retList.add(companyInfoVo);
         }
 

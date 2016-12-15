@@ -11,7 +11,10 @@ public enum QualificationTypeEnum {
     LIENSE_3(3, "生产/经营许可证"),
     LIENSE_4(4, "组织机构代码证"),
     LIENSE_5(5, "税务登记证"),
-    LIENSE_6(6, "医疗机构执业许可证");
+    LIENSE_6(6, "医疗机构执业许可证"),
+    LIENSE_7(7, "采购人员授权委托书");
+
+
 
     private Integer value;
 
