@@ -12,7 +12,13 @@ public enum QualificationTypeEnum {
     LIENSE_4(4, "组织机构代码证"),
     LIENSE_5(5, "税务登记证"),
     LIENSE_6(6, "医疗机构执业许可证"),
-    LIENSE_7(7, "采购人员授权委托书");
+    LIENSE_7(7, "采购人员授权委托书"),
+    LIENSE_8(8, "印章备案"),
+    LIENSE_9(9, "开票信息"),
+    LIENSE_10(10, "采购人员身份证正面"),
+    LIENSE_11(11, "采购人员身份证反面");
+
+
 
 
 
