@@ -48,6 +48,7 @@
                 qid = #{qid}
             </if>
         </where>
+        ORDER BY index_num
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
