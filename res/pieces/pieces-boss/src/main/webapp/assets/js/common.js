@@ -68,7 +68,7 @@ function pageInit() {
 ;(function($){
 	var defaults = {
 		clickToHide: true 	// 点击关闭
-		,delay: 5e3 		// 5秒后自动关闭，为0时不关闭
+		,delay: 3e3 		// 3秒后自动关闭，为0时不关闭
 		,title: '提示消息' 	// 文字
 		,text: '' 			// 说明
 		,type: 'warn' 		// 类型：错误(error)，正确(success)，警告(warn)
