@@ -81,6 +81,8 @@ public class UserCertificateController {
 
 
 
+
+
         model.put("userCertification",userCertificationService.findAll(userCertification));
         model.put("userQualification",userQualificationService.findAll(userQualification));
         model.put("certifyRecord",certifyRecordService.findById(id));

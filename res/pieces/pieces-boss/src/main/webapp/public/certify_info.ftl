@@ -114,10 +114,12 @@
                             证件照片：
                         </div>
                         <div class="cnt cnt-mul">
+                            <#list qualification.pictures as qualificationPicsVo>
                             <div class="goods-img thumb">
-                                <img src="${qualification.pictureUrl}" data-src="${qualification.pictureUrl}">
+                                <img src="${qualificationPicsVo.pictureUrl}" data-src="${qualificationPicsVo.pictureUrl}">
                             </div>
                             <input type="hidden" value="" id="imgUrl">
+                            </#list>
                         </div>
                     </div>
                 </div>

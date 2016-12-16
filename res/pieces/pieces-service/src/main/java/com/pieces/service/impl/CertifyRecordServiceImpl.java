@@ -7,17 +7,11 @@ import com.pieces.dao.CertifyRecordDao;
 import com.pieces.dao.UserCertificationDao;
 import com.pieces.dao.UserQualificationDao;
 import com.pieces.dao.enums.CertifyStatusEnum;
-import com.pieces.dao.model.CertifyRecord;
-import com.pieces.dao.model.User;
-import com.pieces.dao.model.UserCertification;
-import com.pieces.dao.model.UserQualification;
+import com.pieces.dao.model.*;
 import com.pieces.dao.vo.CertifyRecordVo;
 import com.pieces.dao.vo.UserCertificationVo;
 import com.pieces.dao.vo.UserQualificationVo;
-import com.pieces.service.AbsCommonService;
-import com.pieces.service.CertifyRecordService;
-import com.pieces.service.UserCertificationService;
-import com.pieces.service.UserService;
+import com.pieces.service.*;
 import com.pieces.service.listener.UserUpdateEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -49,6 +43,9 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 	@Autowired
 	private ApplicationContext applicationContext;
 
+	@Autowired
+	private QualificationPicsService qualificationPicsService;
+
 
 	@Override
 	public PageInfo<CertifyRecordVo> findByParams(CertifyRecordVo certifyRecordVo,Integer pageNum,Integer pageSize) {
@@ -71,10 +68,14 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 		userCertificationDao.create(certificationVo);
 		for(UserQualificationVo userQualificationVo:userQualificationVos){
 			userQualificationVo.setRecordId(certifyRecord.getId());
-			userQualificationVo.setPictureUrl(FileUtil.getAbsolutePath(userQualificationVo.getPictureUrl()));
 			userQualificationVo.setCreateTime(now);
 			userQualificationVo.setUpdateTime(now);
 			userQualificationDao.create(userQualificationVo);
+			for(QualificationPics qualificationPics:userQualificationVo.getPictures()){
+				qualificationPics.setQid(userQualificationVo.getId());
+				qualificationPics.setPictureUrl(FileUtil.getAbsolutePath(qualificationPics.getPictureUrl()));
+				qualificationPicsService.create(qualificationPics);
+			}
 		}
 	}
 

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.QualificationPicsDao">
+    <resultMap id="QualificationPicsResultMap" type="com.pieces.dao.model.QualificationPics">
+            <id column="id"  property="id" />
+            <result column="qid"  property="qid" />
+            <result column="picture_url"  property="pictureUrl" />
+            <result column="index_num"  property="indexNum" />
+            <result column="type"  property="type" />
+        
+    </resultMap>
+
+    <resultMap id="QualificationPicsResultMapVo" type="com.pieces.dao.vo.QualificationPicsVo">
+            <id column="id"  property="id" />
+            <result column="qid"  property="qid" />
+            <result column="picture_url"  property="pictureUrl" />
+            <result column="index_num"  property="indexNum" />
+            <result column="type"  property="type" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,qid,picture_url,index_num,type
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="QualificationPicsResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from qualification_pics
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="QualificationPicsResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from qualification_pics
+    </select>
+
+    <select id="findByParams" resultMap="QualificationPicsResultMapVo" parameterType="com.pieces.dao.vo.QualificationPicsVo">
+        select
+        <include refid="Base_Column_List" />
+        from qualification_pics
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="qid != null">
+                qid = #{qid}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from qualification_pics
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.QualificationPics">
+        insert into
+        qualification_pics (qid,picture_url,index_num,type)
+        values
+        (#{qid},#{pictureUrl},#{indexNum},#{type})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.QualificationPics">
+        update qualification_pics
+        <set>
+                                                        
+            <if test="qid != null">
+                qid = #{qid},
+            </if>
+                                            
+            <if test="pictureUrl != null">
+                picture_url = #{pictureUrl},
+            </if>
+                                            
+            <if test="indexNum != null">
+                index_num = #{indexNum},
+            </if>
+                                            
+            <if test="type != null">
+                type = #{type},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

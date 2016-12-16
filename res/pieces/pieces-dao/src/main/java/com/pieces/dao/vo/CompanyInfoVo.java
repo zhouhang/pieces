@@ -50,7 +50,7 @@ public class CompanyInfoVo {
     private String entrust_licence_expire;
 
     //企业类型
-    private String company_type;
+    private Integer company_type;
 
     //单条记录最后修改时间戳
     private Long timestamp;
@@ -168,11 +168,11 @@ public class CompanyInfoVo {
         this.entrust_licence_expire = entrust_licence_expire;
     }
 
-    public String getCompany_type() {
+    public Integer getCompany_type() {
         return company_type;
     }
 
-    public void setCompany_type(String company_type) {
+    public void setCompany_type(Integer company_type) {
         this.company_type = company_type;
     }
 

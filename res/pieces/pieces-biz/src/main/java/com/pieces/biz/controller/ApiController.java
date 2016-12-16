@@ -1,6 +1,7 @@
 package com.pieces.biz.controller;
 
 import com.pieces.dao.enums.CertifyTypeEnum;
+import com.pieces.dao.enums.ErpCompanyTypeEnum;
 import com.pieces.dao.enums.QualificationTypeEnum;
 import com.pieces.dao.model.UserQualification;
 import com.pieces.dao.vo.CompanyInfoVo;
@@ -93,7 +94,7 @@ public class ApiController {
 
             UserCertificationVo userCertificationVo=userCertificationService.findAll(param);
             companyInfoVo.setAddress(userCertificationVo.getAddress());
-            companyInfoVo.setCompany_type(userCertificationVo.getTypeText());
+            companyInfoVo.setCompany_type(ErpCompanyTypeEnum.findByStr(userCertificationVo.getTypeText()));
             companyInfoVo.setCorporation(userCertificationVo.getCorporation());
             companyInfoVo.setTimestamp(userVo.getUpdateTime().getTime());
 

@@ -30,13 +30,15 @@
                 </ol>
             </div>
             <form action="" id="myform">
-                <#if certificationVo.type==1||certificationVo.type==2>
+            <#if certificationVo.type!=3>
             <div class="tab">
                 <span class="curr">企业三证</span>
                 <span>三证合一</span>
                 <strong><em>提示：</em>如果您的营业执照是老证，选择企业三证，如果是新证，选择三证合一。</strong>
             </div>
+            </#if>
             <div class="tabcont fa-form">
+                   <#if certificationVo.type!=3>
                     <div class="box" type="1">
                         <div class="group group-val">
                             <div class="txt">
@@ -57,7 +59,7 @@
                         </div>
                         <div class="group group-a">
                             <div class="txt">
-                                <i>*</i>有效期：
+                                <i>*</i>有效期至：
                             </div>
                             <div class="cnt">
                                 <input class="ipt date" value="" autocomplete="off" name="term" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
@@ -96,7 +98,7 @@
                         </div>
                         <div class="group group-a">
                             <div class="txt">
-                                <i>*</i>有效期：
+                                <i>*</i>有效期至：
                             </div>
                             <div class="cnt">
                                 <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
@@ -135,7 +137,7 @@
                         </div>
                         <div class="group group-a">
                             <div class="txt">
-                                <i>*</i>有效期：
+                                <i>*</i>有效期至：
                             </div>
                             <div class="cnt">
                                 <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
@@ -154,13 +156,15 @@
                             </div>
                         </div>
                     </div>
+                   </#if>
+                   <#if certificationVo.type==1||certificationVo.type==2>
                     <div class="box" type="2">
                         <div class="group group-val">
                             <div class="txt">
                                 <i>*</i>证件名称：
                             </div>
                             <div class="cnt">
-                                <span class="val">GSP/GMP证书</span>
+                                <span class="val">药品GMP/GSP证书及变更记录</span>
                             </div>
                         </div>
                         <div class="group">
@@ -174,7 +178,7 @@
                         </div>
                         <div class="group group-a">
                             <div class="txt">
-                                <i>*</i>有效期：
+                                <i>*</i>有效期至：
                             </div>
                             <div class="cnt">
                                 <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
@@ -182,6 +186,7 @@
                                 <label><input type="checkbox" name="status" class="cbx">长期</label>
                             </div>
                         </div>
+
                         <div class="group group-up">
                             <div class="txt">
                                 <i>*</i>证件照片：
@@ -194,85 +199,13 @@
                         </div>
 
                     </div>
-                    <div class="box" type="3">
-                        <div class="group group-val">
-                            <div class="txt">
-                                <i>*</i>证件名称：
-                            </div>
-                            <div class="cnt">
-                                <span class="val">生产/经营许可证</span>
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">
-                                <i>*</i>证件号：
-                            </div>
-                            <div class="cnt">
-                                <input class="ipt" value="" autocomplete="off" name="number" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
-                                <span class="error1"></span>
-                            </div>
-                        </div>
-                        <div class="group group-a">
-                            <div class="txt">
-                                <i>*</i>有效期：
-                            </div>
-                            <div class="cnt">
-                                <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
-                                <span class="error1"></span>
-                                <label><input type="checkbox" name="status" class="cbx">长期</label>
-                            </div>
-                        </div>
-                        <div class="group group-up">
-                            <div class="txt">
-                                <i>*</i>证件照片：
-                            </div>
-                            <div class="cnt">
-                                <span class="up-img thumb"></span>
-                                <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
-                                <span class="error1"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box" type="7">
-                        <div class="group group-val">
-                            <div class="txt">
-                                <i>*</i>证件名称：
-                            </div>
-                            <div class="cnt">
-                                <span class="val">采购人员授权委托书</span>
-                            </div>
-                        </div>
-                        <div class="group group-a">
-                            <div class="txt">
-                                <i>*</i>有效期：
-                            </div>
-                            <div class="cnt">
-                                <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
-                                <span class="error1"></span>
-                                <label><input type="checkbox" name="status" class="cbx">长期</label>
-                            </div>
-                        </div>
-                        <div class="group group-up">
-                            <div class="txt">
-                                <i>*</i>证件照片：
-                            </div>
-                            <div class="cnt">
-                                <span class="up-img thumb"></span>
-                                <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
-                                <span class="error1"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                   <#else>
-                   <div class="tabcont fa-form">
-                       <div class="box" type="6">
+                       <div class="box" type="3">
                            <div class="group group-val">
                                <div class="txt">
                                    <i>*</i>证件名称：
                                </div>
                                <div class="cnt">
-                                   <span class="val">医疗机构执业许可证</span>
+                                   <span class="val">药品生产/经营许可证及变更记录</span>
                                </div>
                            </div>
                            <div class="group">
@@ -286,7 +219,7 @@
                            </div>
                            <div class="group group-a">
                                <div class="txt">
-                                   <i>*</i>有效期：
+                                   <i>*</i>有效期至：
                                </div>
                                <div class="cnt">
                                    <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
@@ -305,18 +238,48 @@
                                </div>
                            </div>
                        </div>
-                       <div class="box" type="7">
+                       <div class="box" type="8">
                            <div class="group group-val">
                                <div class="txt">
                                    <i>*</i>证件名称：
                                </div>
                                <div class="cnt">
-                                   <span class="val">采购人员授权委托书</span>
+                                   <span class="val">印鉴章备案</span>
+                               </div>
+                           </div>
+                           <div class="group group-up">
+                               <div class="txt">
+                                   <i>*</i>证件照片：
+                               </div>
+                               <div class="cnt">
+                                   <span class="up-img thumb"></span>
+                                   <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
+                                   <span class="error1"></span>
+                               </div>
+                           </div>
+                       </div>
+                   <#else>
+                       <div class="box" type="6">
+                           <div class="group group-val">
+                               <div class="txt">
+                                   <i>*</i>证件名称：
+                               </div>
+                               <div class="cnt">
+                                   <span class="val">医疗机构经营许可证及变更记录</span>
+                               </div>
+                           </div>
+                           <div class="group">
+                               <div class="txt">
+                                   <i>*</i>证件号：
+                               </div>
+                               <div class="cnt">
+                                   <input class="ipt" value="" autocomplete="off" name="number" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
+                                   <span class="error1"></span>
                                </div>
                            </div>
                            <div class="group group-a">
                                <div class="txt">
-                                   <i>*</i>有效期：
+                                   <i>*</i>有效期至：
                                </div>
                                <div class="cnt">
                                    <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
@@ -335,8 +298,81 @@
                                </div>
                            </div>
                        </div>
-                       </div>
-                    </#if>
+                   </#if>
+                   <#if certificationVo.type!=5>
+                <div class="box" type="9">
+                    <div class="group group-val">
+                        <div class="txt">
+                            <i>*</i>证件名称：
+                        </div>
+                        <div class="cnt">
+                            <span class="val">开票信息</span>
+                        </div>
+                    </div>
+                    <div class="group group-up">
+                        <div class="txt">
+                            <i>*</i>证件照片：
+                        </div>
+                        <div class="cnt">
+                            <span class="up-img thumb"></span>
+                            <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
+                            <span class="error1"></span>
+                        </div>
+                    </div>
+                </div>
+                   </#if>
+                <div class="box" type="7">
+                    <div class="group group-val">
+                        <div class="txt">
+                            <i>*</i>证件名称：
+                        </div>
+                        <div class="cnt">
+                            <span class="val">采购/收货人员委托书</span>
+                        </div>
+                    </div>
+                    <div class="group group-a">
+                        <div class="txt">
+                            <i>*</i>有效期至：
+                        </div>
+                        <div class="cnt">
+                            <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                            <span class="error1"></span>
+                            <label><input type="checkbox" name="status" class="cbx">长期</label>
+                        </div>
+                    </div>
+                    <div class="group group-up">
+                        <div class="txt">
+                            <i>*</i>证件照片：
+                        </div>
+                        <div class="cnt">
+                            <span class="up-img thumb"></span>
+                            <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
+                            <span class="error1"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="box" type="10">
+                    <div class="group group-val">
+                        <div class="txt">
+                            <i>*</i>证件名称：
+                        </div>
+                        <div class="cnt">
+                            <span class="val">被委托人身份证正反面</span>
+                        </div>
+                    </div>
+                    <div class="group group-up">
+                        <div class="txt">
+                            <i>*</i>证件照片：
+                        </div>
+                        <div class="cnt">
+                            <span class="up-img thumb"></span>
+                            <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
+                            <span class="error1"></span>
+                        </div>
+                    </div>
+                </div>
+
+
 
                     <div class="tabcont fa-form">
                         <div class="button">
@@ -467,7 +503,14 @@
                                 userQualification.term=$(this).find("input[name='term']").val();
                             }
 
-                            userQualification.pictureUrl=$(this).find("input[name='picture_url']").val();
+                            //userQualification.pictureUrl=$(this).find("input[name='picture_url']").val();
+                            var urls=$(this).find("input[name='picture_url']").val();
+                            var pics=[];
+                            var pic={};
+                            pic.pictureUrl=urls;
+                            pic.indexNum=0;
+                            pics.push(pic);
+                            userQualification.pictures=pics;
                             userQualificationVos.push(userQualification);
                             userQualification.isCombine=group;
                         });

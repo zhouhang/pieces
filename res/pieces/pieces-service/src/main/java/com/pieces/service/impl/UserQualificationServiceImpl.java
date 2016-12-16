@@ -3,8 +3,11 @@ package com.pieces.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
+import com.pieces.dao.QualificationPicsDao;
 import com.pieces.dao.UserQualificationDao;
+import com.pieces.dao.model.QualificationPics;
 import com.pieces.dao.model.UserQualification;
+import com.pieces.dao.vo.QualificationPicsVo;
 import com.pieces.dao.vo.UserQualificationVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.UserQualificationService;
@@ -19,6 +22,9 @@ public class UserQualificationServiceImpl  extends AbsCommonService<UserQualific
 	@Autowired
 	private UserQualificationDao userQualificationDao;
 
+	@Autowired
+	private QualificationPicsDao qualificationPicsDao;
+
 
 	@Override
 	public PageInfo<UserQualificationVo> findByParams(UserQualificationVo userQualificationVo,Integer pageNum,Integer pageSize) {
@@ -32,8 +38,13 @@ public class UserQualificationServiceImpl  extends AbsCommonService<UserQualific
 	public List<UserQualificationVo> findAll(UserQualificationVo userQualificationVo) {
 		List<UserQualificationVo>  list = userQualificationDao.findByParams(userQualificationVo);
 		for(UserQualificationVo userQualificationVo1:list){
-			userQualificationVo1.setPictureUrl(FileUtil.getUrl(userQualificationVo1.getPictureUrl()));
-			//userQualificationVo1.setTypeText(userQualificationVo1.getTypeText());
+			QualificationPicsVo param=new QualificationPicsVo();
+			param.setQid(userQualificationVo1.getId());
+			List<QualificationPicsVo> qualificationPicses=qualificationPicsDao.findByParams(param);
+			for(QualificationPicsVo qualificationPicsVo:qualificationPicses){
+				qualificationPicsVo.setPictureUrl(FileUtil.getUrl(qualificationPicsVo.getPictureUrl()));
+			}
+			userQualificationVo1.setPictures(qualificationPicses);
 		}
 		return list;
 	}
