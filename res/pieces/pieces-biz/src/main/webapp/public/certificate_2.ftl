@@ -72,7 +72,7 @@
                                 <i>*</i>证件照片：
                             </div>
                             <div class="cnt">
-                                <span class="up-img thumb"></span>
+                                <span class="up-img upimg thumb"></span>
                                 <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
                                 <span class="error1"></span>
                             </div>
@@ -111,7 +111,7 @@
                                 <i>*</i>证件照片：
                             </div>
                             <div class="cnt">
-                                <span class="up-img thumb"></span>
+                                <span class="up-img upimg thumb"></span>
                                 <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
                                 <span class="error1"></span>
                             </div>
@@ -150,7 +150,7 @@
                                 <i>*</i>证件照片：
                             </div>
                             <div class="cnt">
-                                <span class="up-img thumb"></span>
+                                <span class="up-img upimg thumb"></span>
                                 <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
                                 <span class="error1"></span>
                             </div>
@@ -192,12 +192,21 @@
                                 <i>*</i>证件照片：
                             </div>
                             <div class="cnt">
-                                <span class="up-img thumb"></span>
+                                <span class="up-img upimg thumb"></span>
                                 <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
                                 <span class="error1"></span>
                             </div>
                         </div>
-
+                        <div class="group group-up">
+                            <div class="txt">
+                                资质变更记录表：
+                            </div>
+                            <div class="cnt thumb">
+                                <span class="up-img upimgs"></span>
+                                <input type="hidden" name="picture_alter" class="ipt">
+                                <p class="notice">如果您变更过企业资质，请上传资质变更记录表。</p>
+                            </div>
+                        </div>
                     </div>
                        <div class="box" type="3">
                            <div class="group group-val">
@@ -232,11 +241,21 @@
                                    <i>*</i>证件照片：
                                </div>
                                <div class="cnt">
-                                   <span class="up-img thumb"></span>
+                                   <span class="up-img upimg thumb"></span>
                                    <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
                                    <span class="error1"></span>
                                </div>
                            </div>
+                            <div class="group group-up">
+                                <div class="txt">
+                                    资质变更记录表：
+                                </div>
+                                <div class="cnt thumb">
+                                    <span class="up-img upimgs"></span>
+                                    <input type="hidden" name="picture_alter" class="ipt">
+                                    <p class="notice">如果您变更过企业资质，请上传资质变更记录表。</p>
+                                </div>
+                            </div>
                        </div>
                        <div class="box" type="8">
                            <div class="group group-val">
@@ -252,7 +271,7 @@
                                    <i>*</i>证件照片：
                                </div>
                                <div class="cnt">
-                                   <span class="up-img thumb"></span>
+                                   <span class="up-img upimg thumb"></span>
                                    <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
                                    <span class="error1"></span>
                                </div>
@@ -292,7 +311,7 @@
                                    <i>*</i>证件照片：
                                </div>
                                <div class="cnt">
-                                   <span class="up-img thumb"></span>
+                                   <span class="up-img upimg thumb"></span>
                                    <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
                                    <span class="error1"></span>
                                </div>
@@ -314,7 +333,7 @@
                             <i>*</i>证件照片：
                         </div>
                         <div class="cnt">
-                            <span class="up-img thumb"></span>
+                            <span class="up-img upimg thumb"></span>
                             <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
                             <span class="error1"></span>
                         </div>
@@ -345,7 +364,7 @@
                             <i>*</i>证件照片：
                         </div>
                         <div class="cnt">
-                            <span class="up-img thumb"></span>
+                            <span class="up-img upimg thumb"></span>
                             <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
                             <span class="error1"></span>
                         </div>
@@ -365,7 +384,7 @@
                             <i>*</i>证件照片：
                         </div>
                         <div class="cnt">
-                            <span class="up-img thumb"></span>
+                            <span class="up-img upimg thumb"></span>
                             <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
                             <span class="error1"></span>
                         </div>
@@ -537,16 +556,25 @@
                 })
             },
             dateInit: function () {
-                var start = {
-                    elem: '#myform .date'
-                }
-                laydate(start);
+                $('#myform .date').each(function(i) {
+                    var id ='date_' + i;
+                    this.id = id;
+                    laydate({
+                        elem: '#' + id,
+                        choose: function() {
+                            $('#' + id).trigger('blur');
+                        }
+                    });
+                })
             },
             // 商品图片
             goodsImg: function() {
                 var self = this,
-                        $upImg = $('.up-img');
-
+                    split = '@@@',
+                    $wrap = $('.tabcont'),
+                    $upimgs = $('.upimgs'), // 多图
+                    $upimg = $('.upimg'); // 单图
+                    
                 // 删除图片
                 $upImg.on('click', '.del', function() {
                     var $self = $(this);
@@ -558,19 +586,17 @@
                     });
                     return false;
                 })
-                // 点击图片无效
-                $upImg.on('click', 'img', function() {
-                    return false;
-                })
 
                 // 证件照
                 $upfiles = $('<div id="upfiles"></div>').hide().appendTo($('body'));
                 $upImg.each(function(i) {
                     var $el = $(this),
-                            upId = 'upfile' + i,
-                            id = 'upfileBtn' + i;
+                        $ipt = $el.next('input:hidden'),
+                        upId = 'upfile' + i,
+                        id = 'upfileBtn' + i;
 
                     this.id = id;
+                    $ipt.val('');
                     $upfiles.append('<div id="' + upId + '"></div>');
 
                     new Croppic(upId, {
@@ -578,18 +604,79 @@
                         customUploadButtonId: id,
                         onAfterImgUpload: function(response){
                             $el.show().html('<img src="' + response.url + '" /><i class="del" title="删除"></i>');
-                            $el.next('input:hidden').val(response.url).trigger('blur');
+                            $ipt.val(response.url).trigger('validate');
                         },
                         onError:function(msg){
-                            $.notify({
-                                type: 'error',
-                                title: msg.title,   // 不允许的文件类型
-                                text: msg.message,     //'支持 jpg、jepg、png、gif等格式图片文件',
-                                delay: 3e3
-                            });
+                            self.showMsg(msg);
                         }
                     });
                 })
+
+                // 多图删除
+                $('.thumb').on('click', '.upimgs .del', function() {
+                    var $self = $(this);
+                    layer.confirm('确认删除商品图片？', {
+                        btn: ['确认','取消'] //按钮
+                    }, function(index){
+                        var $ipt = $self.closest('.thumb').find('input:hidden'),
+                            url = $self.prev().attr('src'),
+                            originImg = (split + $ipt.val()).replace(split + url, '').replace(split, '');
+
+                        $ipt.val(originImg);
+                        $self.parent().remove();
+                        if (originImg.split(split).length < 3) {
+                            $ipt.prev().show();
+                        }
+                        layer.close(index);
+                    });
+                })
+                $upimgs.each(function(k) {
+                    var $el = $(this),
+                        $ipt = $el.next('input:hidden'),
+                        upId = 'upfiles' + k,
+                        id = 'upfilesBtn' + k;
+
+                    this.id = id;
+                    $ipt.val('');
+                    $upfiles.append('<div id="' + upId + '"></div>');
+
+                    new Croppic(upId, {
+                        uploadUrl:'img_save_to_file.php',
+                        customUploadButtonId: id,
+                        onAfterImgUpload: function(response){
+                            var originImg = $ipt.val();
+                            if (originImg.split(split).length > 2) {
+                                $el.hide();
+                                self.showMsg({
+                                    title: '最多只能添加3张变更记录表',
+                                    text: ''
+                                })
+                                return false;
+                            }
+                            $el.show().before('<span class="up-img upimgs"><img src="' + response.url + '"><i class="del" title="删除"></span>');
+                            if (originImg) {
+                                originImg += split + response.url;
+                            } else {
+                                originImg = response.url;
+                            }
+                            if (originImg.split(split).length > 2) {
+                                $el.hide();
+                            }
+                            $ipt.val(originImg);
+                        },
+                        onError:function(msg){
+                            self.showMsg(msg);
+                        }
+                    });
+                })
+            },
+            showMsg: function(msg) {
+                $.notify({
+                    type: 'error', 
+                    title: msg.title,
+                    text: msg.message, 
+                    delay: 3e3
+                });
             }
         }
     }
