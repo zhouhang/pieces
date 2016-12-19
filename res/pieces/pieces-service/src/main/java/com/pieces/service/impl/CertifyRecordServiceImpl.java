@@ -134,15 +134,29 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 		}
 
 		for(UserQualificationVo userQualificationVo:userQualificationVos){
-			userQualificationVo.setPictureUrl(FileUtil.getAbsolutePath(userQualificationVo.getPictureUrl()));
+			//userQualificationVo.setPictureUrl(FileUtil.getAbsolutePath(userQualificationVo.getPictureUrl()));
 			userQualificationVo.setCreateTime(now);
 			userQualificationVo.setUpdateTime(now);
 			if(userQualificationVo.getId()==null){
 				certificationVo.setCreateTime(now);
 				userQualificationDao.create(userQualificationVo);
+				for(QualificationPics qualificationPics:userQualificationVo.getPictures()){
+					qualificationPics.setQid(userQualificationVo.getId());
+					qualificationPics.setPictureUrl(FileUtil.getAbsolutePath(qualificationPics.getPictureUrl()));
+					qualificationPicsService.create(qualificationPics);
+				}
 			}
 			else{
 				userQualificationDao.update(userQualificationVo);
+				/**
+				 * 删除以前的
+				 */
+				qualificationPicsService.deleteByQid(userQualificationVo.getId());
+				for(QualificationPics qualificationPics:userQualificationVo.getPictures()){
+					qualificationPics.setQid(userQualificationVo.getId());
+					qualificationPics.setPictureUrl(FileUtil.getAbsolutePath(qualificationPics.getPictureUrl()));
+					qualificationPicsService.create(qualificationPics);
+				}
 			}
 		}
 		User user=userService.findById(certificationVo.getUserId());

@@ -10,6 +10,8 @@ import com.pieces.service.AbsCommonService;
 import com.pieces.service.QualificationPicsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -25,6 +27,12 @@ public class QualificationPicsServiceImpl  extends AbsCommonService<Qualificatio
     	List<QualificationPicsVo>  list = qualificationPicsDao.findByParams(qualificationPicsVo);
         PageInfo page = new PageInfo(list);
         return page;
+	}
+
+	@Override
+	@Transactional
+	public void deleteByQid(Integer qid) {
+		qualificationPicsDao.deleteByQid(qid);
 	}
 
 

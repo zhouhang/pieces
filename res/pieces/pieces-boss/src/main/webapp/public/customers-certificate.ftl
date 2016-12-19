@@ -110,10 +110,10 @@
                                 </div>
                                 <div class="group group-a">
                                     <div class="txt">
-                                        <i>*</i>有效期：
+                                        <i>*</i>有效期至：
                                     </div>
                                     <div class="cnt">
-                                        <input class="ipt date" value="" autocomplete="off" name="term" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                        <input class="ipt date" value="" autocomplete="off" name="term" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
                                         <span class="error1"></span>
                                         <label><input type="checkbox" name="status" class="cbx">长期</label>
                                     </div>
@@ -149,10 +149,10 @@
                                 </div>
                                 <div class="group group-a">
                                     <div class="txt">
-                                        <i>*</i>有效期：
+                                        <i>*</i>有效期至：
                                     </div>
                                     <div class="cnt">
-                                        <input class="ipt date" value="" autocomplete="off" name="term" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                        <input class="ipt date" value="" autocomplete="off" name="term" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
                                         <span class="error1"></span>
                                         <label><input type="checkbox" name="status" class="cbx">长期</label>
                                     </div>
@@ -188,10 +188,10 @@
                                 </div>
                                 <div class="group group-a">
                                     <div class="txt">
-                                        <i>*</i>有效期：
+                                        <i>*</i>有效期至：
                                     </div>
                                     <div class="cnt">
-                                        <input class="ipt date" value="" autocomplete="off" name="term" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                        <input class="ipt date" value="" autocomplete="off" name="term" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
                                         <span class="error1"></span>
                                         <label><input type="checkbox" name="status" class="cbx">长期</label>
                                     </div>
@@ -214,7 +214,7 @@
                                         <i>*</i>证件名称：
                                     </div>
                                     <div class="cnt">
-                                        <span class="val">GSP/GMP证书</span>
+                                        <span class="val">药品GMP/GSP证书及变更记录</span>
                                     </div>
                                 </div>
                                 <div class="group">
@@ -228,10 +228,10 @@
                                 </div>
                                 <div class="group group-a">
                                     <div class="txt">
-                                        <i>*</i>有效期：
+                                        <i>*</i>有效期至：
                                     </div>
                                     <div class="cnt">
-                                        <input class="ipt date" value="" autocomplete="off" name="term" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                        <input class="ipt date" value="" autocomplete="off" name="term" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
                                         <span class="error1"></span>
                                         <label><input type="checkbox" name="status" class="cbx">长期</label>
                                     </div>
@@ -264,7 +264,7 @@
                                         <i>*</i>证件名称：
                                     </div>
                                     <div class="cnt">
-                                        <span class="val">生产/经营许可证</span>
+                                        <span class="val">药品生产/经营许可证及变更记录</span>
                                     </div>
                                 </div>
                                 <div class="group">
@@ -278,10 +278,10 @@
                                 </div>
                                 <div class="group group-a">
                                     <div class="txt">
-                                        <i>*</i>有效期：
+                                        <i>*</i>有效期至：
                                     </div>
                                     <div class="cnt">
-                                        <input class="ipt date" value="" autocomplete="off" name="term" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                        <input class="ipt date" value="" autocomplete="off" name="term" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
                                         <span class="error1"></span>
                                         <label><input type="checkbox" name="status" class="cbx">长期</label>
                                     </div>
@@ -296,6 +296,16 @@
                                         <span class="error1"></span>
                                     </div>
                                 </div>
+                                <div class="group group-up">
+                                    <div class="txt">
+                                        资质变更记录表：
+                                    </div>
+                                    <div class="cnt thumb">
+                                        <span class="goods-img upimgs"></span>
+                                        <input type="hidden" name="picture_alter" class="ipt">
+                                        <p class="tips">如果您变更过企业资质，请上传资质变更记录表。</p>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="box" type="6" cid="">
@@ -304,7 +314,7 @@
                                         <i>*</i>证件名称：
                                     </div>
                                     <div class="cnt">
-                                        <span class="val">医疗机构执业许可证</span>
+                                        <span class="val">医疗机构经营许可证及变更记录</span>
                                     </div>
                                 </div>
                                 <div class="group">
@@ -321,7 +331,7 @@
                                         <i>*</i>有效期：
                                     </div>
                                     <div class="cnt">
-                                        <input class="ipt date" value="" autocomplete="off" name="term" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                        <input class="ipt date" value="" autocomplete="off" name="term" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
                                         <span class="error1"></span>
                                         <label><input type="checkbox" name="status" class="cbx">长期</label>
                                     </div>
@@ -361,9 +371,71 @@
                                         <i>*</i>有效期：
                                     </div>
                                     <div class="cnt">
-                                        <input class="ipt date" value="" autocomplete="off" name="term" placeholder="2016/1/1 - 2016/5/8" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                        <input class="ipt date" value="" autocomplete="off" name="term"  type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
                                         <span class="error1"></span>
                                         <label><input type="checkbox" name="status" class="cbx">长期</label>
+                                    </div>
+                                </div>
+                                <div class="group group-up">
+                                    <div class="txt">
+                                        <i>*</i>证件照片：
+                                    </div>
+                                    <div class="cnt">
+                                        <span class="goods-img upimg thumb"></span>
+                                        <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
+                                        <span class="error1"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box" type="8" cid="">
+                                <div class="group group-val">
+                                    <div class="txt">
+                                        <i>*</i>证件名称：
+                                    </div>
+                                    <div class="cnt">
+                                        <span class="val">印鉴章备案</span>
+                                    </div>
+                                </div>
+                                <div class="group group-up">
+                                    <div class="txt">
+                                        <i>*</i>证件照片：
+                                    </div>
+                                    <div class="cnt">
+                                        <span class="goods-img upimg thumb"></span>
+                                        <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
+                                        <span class="error1"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="box" type="9" cid="">
+                                <div class="group group-val">
+                                    <div class="txt">
+                                        <i>*</i>证件名称：
+                                    </div>
+                                    <div class="cnt">
+                                        <span class="val">开票信息</span>
+                                    </div>
+                                </div>
+                                <div class="group group-up">
+                                    <div class="txt">
+                                        <i>*</i>证件照片：
+                                    </div>
+                                    <div class="cnt">
+                                        <span class="goods-img upimg thumb"></span>
+                                        <input type="hidden" name="picture_url" class="ipt" data-msg="{empty: '请上传证件照片'}">
+                                        <span class="error1"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box" type="10" cid="">
+                                <div class="group group-val">
+                                    <div class="txt">
+                                        <i>*</i>证件名称：
+                                    </div>
+                                    <div class="cnt">
+                                        <span class="val">被委托人身份证正反面</span>
                                     </div>
                                 </div>
                                 <div class="group group-up">
@@ -393,6 +465,7 @@
     <script src="js/lightbox.js"></script>
     <script src="js/layer/layer.js"></script>
     <script src="js/croppic.min.js"></script>
+    <script src="js/laydate/laydate.js"></script>
 
 <script>
     var group=0;//是否三证合一
@@ -408,42 +481,58 @@
                     this.bindEvent();
                     this.submitForm();
                     this.goodsImg();
+                    this.dateInit();
                 },
                 certificate: function() {
                     var $input = $('#myform').find('.cbx[name="type"]:checked'),
                             $box = $('.tabcont').find('.box'),
+                            $myform = $('#myform'),
                             $tab = $('.tab');
 
                     $box.hide();
                     switch($input.parent().index()) {
                         case 0:
-                            $box.eq(0).show();
-                            $box.eq(1).show();
-                            $box.eq(2).show();
-                            $box.eq(3).show();
-                            $box.eq(4).show();
-                            $box.eq(6).show();
+                            $myform.find(".box[type!='6']").show();
                             $tab.show();
+                            $myform.find("#combineTab :contains(企业三证)").click();
                             break;
                         case 1:
-                            $box.eq(0).show();
-                            $box.eq(1).show();
-                            $box.eq(2).show();
-                            $box.eq(3).show();
-                            $box.eq(4).show();
-                            $box.eq(6).show();
+                            $myform.find(".box[type!='6']").show();
                             $tab.show();
+                            $myform.find("#combineTab :contains(企业三证)").click();
                             break;
                         case 2:
-                        case 3:
-                        case 4:
-                        case 5:
-                            $box.eq(5).show();
-                            $box.eq(6).show();
+                            $myform.find(".box[type='6']").show();
+                            $myform.find(".box[type='9']").show();
+                            $myform.find(".box[type='7']").show();
+                            $myform.find(".box[type='10']").show();
                             $tab.hide();
+                            break;
+                        case 3:
+                        case 5:
+                            $myform.find(".box[type='1']").show();
+                            $myform.find(".box[type='4']").show();
+                            $myform.find(".box[type='5']").show();
+                            $myform.find(".box[type='6']").show();
+                            $myform.find(".box[type='7']").show();
+                            $myform.find(".box[type='9']").show();
+                            $myform.find(".box[type='10']").show();
+                            $tab.show();
+                            $myform.find("#combineTab :contains(企业三证)").click();
+                            break;
+                        case 4:
+                            $myform.find(".box[type='1']").show();
+                            $myform.find(".box[type='4']").show();
+                            $myform.find(".box[type='5']").show();
+                            $myform.find(".box[type='6']").show();
+                            $myform.find(".box[type='7']").show();
+                            $myform.find(".box[type='10']").show();
+                            $tab.show();
+                            $myform.find("#combineTab :contains(企业三证)").click();
                             break;
                             //  no default
                     };
+
                     <#if userQualification?size!=0>
                     <#list userQualification as q>
                         var showBox=$("#myform").find(".box[type='${q.type}']");
@@ -459,10 +548,22 @@
                         <#else>
                             group=0;
                         </#if>
-                        var $picture=showBox.find(".goods-img");
-                        var url='${q.pictureUrl?replace("\\",'/')}'
-                        $picture.show().html('<img src="' + url + '" /><i class="del" title="删除"></i>');
-                        $picture.next('input:hidden').val(url).trigger('blur');
+                        var $picture=showBox.find(".upimg");
+                        var $pictures=showBox.find(".thumb");
+                        var others=[];
+                        var otherPics="";
+                        <#list q.pictures as pics>
+                            var url='${pics.pictureUrl?replace("\\",'/')}';
+                        <#if pics.indexNum==0>
+                            $picture.show().html('<img src="' + url + '" /><i class="del" title="删除"></i>');
+                            $picture.next('input:hidden').val(url).trigger('blur');
+                        <#else >
+                            otherPics=otherPics+'<span class="goods-img upimgs"><img src="' + url + '" /><i class="del" title="删除"></i></span>';
+                            others.push(url);
+                        </#if>
+                        </#list>
+                            $pictures.find('.upimgs').before(otherPics);
+                            $pictures.find('input:hidden').val(others.join("<>"));
                     </#list>
                     </#if>
 
@@ -476,20 +577,14 @@
                     // 三证合一
                     $myform.on('click', '.tab span', function() {
                         $(this).addClass('curr').siblings().removeClass('curr');
-                        $box.hide();
+                        //$box.hide();
                         if ($(this).index() === 1) {
-                            $box.eq(0).show();
-                            $box.eq(3).show();
-                            $box.eq(4).show();
-                            $box.eq(6).show();
+                            $myform.find(".box[type='4']").hide();
+                            $myform.find(".box[type='5']").hide();
                             group=1;
                         } else {
-                            $box.eq(0).show();
-                            $box.eq(1).show();
-                            $box.eq(2).show();
-                            $box.eq(3).show();
-                            $box.eq(4).show();
-                            $box.eq(6).show();
+                            $myform.find(".box[type='4']").show();
+                            $myform.find(".box[type='5']").show();
                             group=0;
                         }
                     })
@@ -514,11 +609,13 @@
                                 tips = eval('(' + $(this).data('msg') + ')'),
                                 msg = '';
                         if (len == 0) {
-                            msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
+                            if($(this).attr("name")!="picture_alter") {
+                                msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
+                            }
                         }
 
                         else if (len < 2 || len > 50) {
-                            if($(this).attr("name")!="picture_url"){
+                            if($(this).attr("name")!="picture_url"&&$(this).attr("name")!="picture_alter"){
                                 msg = '<i class="fa fa-prompt"></i> ' + tips.error;
                             }
                         }
@@ -533,6 +630,18 @@
                     })
                     $('#companyRegion').on('blur', function() {
                         self.checkcompanyRegion();
+                    })
+                },
+                dateInit: function () {
+                    $('#myform .date').each(function(i) {
+                        var id ='date_' + i;
+                        this.id = id;
+                        laydate({
+                            elem: '#' + id,
+                            choose: function() {
+                                $('#' + id).trigger('blur');
+                            }
+                        });
                     })
                 },
                 checkCompName: function() {
@@ -554,8 +663,8 @@
                             msg = '';
                     if (length == 0) {
                         msg = '<i class="fa fa-prompt"></i> 请输入企业负责姓名';
-                    } else if (length < 4 || length > 50) {
-                        msg = '<i class="fa fa-prompt"></i> 企业责任人长度4-50位';
+                    } else if (length < 2 || length > 50) {
+                        msg = '<i class="fa fa-prompt"></i> 企业责任人长度2-50位';
                     }
                     $input.next().html(msg)[msg == '' ? 'hide' : 'show']();
                     msg && $input.focus();
@@ -567,8 +676,8 @@
                             msg = '';
                     if (length == 0) {
                         msg = '<i class="fa fa-prompt"></i> 请输入企业所在地地址';
-                    } else if (length < 4 || length > 50) {
-                        msg = '<i class="fa fa-prompt"></i> 企业责任人长度4-150位';
+                    } else if (length < 2 || length > 50) {
+                        msg = '<i class="fa fa-prompt"></i> 企业责任人长度2-150位';
                     }
                     $input.next().html(msg)[msg == '' ? 'hide' : 'show']();
                     msg && $input.focus();
@@ -608,10 +717,12 @@
                         if ($(this).prop('disabled')) {
                             // do nothing
                         } else if (len == 0) {
-                            msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
+                            if($(this).attr("name")!="picture_alter") {
+                                msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
+                            }
                         }
                         else if (len < 2 || len > 50) {
-                            if($(this).attr("name")!="picture_url"){
+                            if($(this).attr("name")!="picture_url"&&$(this).attr("name")!="picture_alter"){
                                 msg = '<i class="fa fa-prompt"></i> ' + tips.error;
                             }
                         }
@@ -656,7 +767,29 @@
                                     userQualification.term=$(this).find("input[name='term']").val();
                                 }
 
-                                userQualification.pictureUrl=$(this).find("input[name='picture_url']").val();
+                                //userQualification.pictureUrl=$(this).find("input[name='picture_url']").val();
+
+                                var firstUrl=$(this).find("input[name='picture_url']").val();
+                                var pics=[];
+                                var pic={};
+                                pic.pictureUrl=firstUrl;
+                                pic.indexNum=0;
+                                pics.push(pic);
+                                var split = '<>';
+                                var otherUrl=$(this).find("input[name='picture_alter']").val();
+                                if(otherUrl&&otherUrl!=""){
+                                    var urls=otherUrl.split(split);
+                                    if(urls.length>0){
+                                        $.each(urls,function(index,item){
+                                            var pic1={};
+                                            pic1.pictureUrl=item;
+                                            pic1.indexNum=index+1;
+                                            pics.push(pic1);
+                                        });
+                                    }
+
+                                }
+                                userQualification.pictures=pics;
                                 userQualificationVos.push(userQualification);
                                 userQualification.isCombine=group;
                             });
@@ -692,7 +825,7 @@
                 // 商品图片
                 goodsImg: function() {
                     var self = this,
-                        split = '@@@',
+                        split = '<>',
                         $wrap = $('.tabcont'),
                         $upimgs = $('.upimgs'), // 多图
                         $upimg = $('.upimg'); // 单图
@@ -718,7 +851,7 @@
                             id = 'upfileBtn' + i;
 
                         this.id = id;
-                        $ipt.val('');
+                        //$ipt.val('');
                         $upfiles.append('<div id="' + upId + '"></div>');
 
                         new Croppic(upId, {
@@ -757,13 +890,15 @@
                             $ipt = $el.next('input:hidden'),
                             upId = 'upfiles' + k,
                             id = 'upfilesBtn' + k;
-
+                        if($(this).html()!=""){
+                            return;
+                        }
                         this.id = id;
-                        $ipt.val('');
+                        //$ipt.val('');
                         $upfiles.append('<div id="' + upId + '"></div>');
 
                         new Croppic(upId, {
-                            uploadUrl:'img_save_to_file.php',
+                            uploadUrl:'gen/upload',
                             customUploadButtonId: id,
                             onAfterImgUpload: function(response){
                                 var originImg = $ipt.val();

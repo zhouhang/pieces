@@ -86,4 +86,8 @@
         </set>
         where id = #{id}
     </update>
+    <delete id="deleteByQid" parameterType="java.lang.Integer">
+        delete from qualification_pics
+        where qid = #{qid}
+    </delete>
 </mapper>
