@@ -48,6 +48,7 @@
                 qid = #{qid}
             </if>
         </where>
+        ORDER BY index_num
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
@@ -85,4 +86,8 @@
         </set>
         where id = #{id}
     </update>
+    <delete id="deleteByQid" parameterType="java.lang.Integer">
+        delete from qualification_pics
+        where qid = #{qid}
+    </delete>
 </mapper>

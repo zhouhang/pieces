@@ -316,6 +316,16 @@
                                    <span class="error1"></span>
                                </div>
                            </div>
+                           <div class="group group-up">
+                               <div class="txt">
+                                   资质变更记录表：
+                               </div>
+                               <div class="cnt thumb">
+                                   <span class="up-img upimgs"></span>
+                                   <input type="hidden" name="picture_alter" class="ipt">
+                                   <p class="notice">如果您变更过企业资质，请上传资质变更记录表。</p>
+                               </div>
+                           </div>
                        </div>
                    </#if>
                    <#if certificationVo.type!=5>
@@ -457,10 +467,12 @@
                             tips = eval('(' + $(this).data('msg') + ')'),
                             msg = '';
                     if (len == 0) {
-                        msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
+                        if($(this).attr("name")!="picture_alter") {
+                            msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
+                        }
                     }
                     else if (len < 2 || len > 50) {
-                        if($(this).attr("name")!="picture_url"){
+                        if($(this).attr("name")!="picture_url"&&$(this).attr("name")!="picture_alter"){
                             msg = '<i class="fa fa-prompt"></i> ' + tips.error;
                         }
                     }
@@ -480,11 +492,13 @@
                     if ($(this).prop('disabled')) {
                         // do nothing
                     } else if (len == 0) {
-                        msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
+                        if($(this).attr("name")!="picture_alter") {
+                            msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
+                        }
                     }
 
                     else if (len < 2 || len > 50) {
-                        if($(this).attr("name")!="picture_url"){
+                        if($(this).attr("name")!="picture_url"&&$(this).attr("name")!="picture_alter"){
                             msg = '<i class="fa fa-prompt"></i> ' + tips.error;
                         }
 
@@ -523,12 +537,26 @@
                             }
 
                             //userQualification.pictureUrl=$(this).find("input[name='picture_url']").val();
-                            var urls=$(this).find("input[name='picture_url']").val();
+                            var firstUrl=$(this).find("input[name='picture_url']").val();
                             var pics=[];
                             var pic={};
-                            pic.pictureUrl=urls;
+                            pic.pictureUrl=firstUrl;
                             pic.indexNum=0;
                             pics.push(pic);
+                            var split = '<>';
+                            var otherUrl=$(this).find("input[name='picture_alter']").val();
+                            if(otherUrl&&otherUrl!=""){
+                                var urls=otherUrl.split(split);
+                                if(urls.length>0){
+                                    $.each(urls,function(index,item){
+                                        var pic1={};
+                                        pic1.pictureUrl=item;
+                                        pic1.indexNum=index+1;
+                                        pics.push(pic1);
+                                    });
+                                }
+
+                            }
                             userQualification.pictures=pics;
                             userQualificationVos.push(userQualification);
                             userQualification.isCombine=group;
@@ -570,10 +598,10 @@
             // 商品图片
             goodsImg: function() {
                 var self = this,
-                    split = '@@@',
+                    split = '<>',
                     $wrap = $('.tabcont'),
                     $upimgs = $('.upimgs'), // 多图
-                    $upimg = $('.upimg'); // 单图
+                    $upImg = $('.upimg'); // 单图
                     
                 // 删除图片
                 $upImg.on('click', '.del', function() {
@@ -641,7 +669,7 @@
                     $upfiles.append('<div id="' + upId + '"></div>');
 
                     new Croppic(upId, {
-                        uploadUrl:'img_save_to_file.php',
+                        uploadUrl:'gen/img/upload',
                         customUploadButtonId: id,
                         onAfterImgUpload: function(response){
                             var originImg = $ipt.val();

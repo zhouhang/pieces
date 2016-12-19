@@ -10,4 +10,6 @@ public interface QualificationPicsDao extends ICommonDao<QualificationPics>{
 
     public List<QualificationPicsVo> findByParams(QualificationPicsVo qualificationPicsVo);
 
+    public void deleteByQid(Integer qid);
+
 }
