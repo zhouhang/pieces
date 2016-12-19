@@ -1,4 +1,15 @@
 
+DROP TABLE IF EXISTS `qualification_pics`;
+CREATE TABLE `qualification_pics` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `qid` int(11) DEFAULT NULL COMMENT 'user_qualification_id',
+  `picture_url` varchar(255) DEFAULT NULL COMMENT '图片地址',
+  `index_num` int(5) DEFAULT NULL COMMENT '图片顺序',
+  `type` int(5) DEFAULT NULL COMMENT '标记图片类型，暂为null',
+  PRIMARY KEY (`id`),
+  KEY `qualification_pics_ibfk` (`qid`),
+  CONSTRAINT `qualification_pics_ibfk` FOREIGN KEY (`qid`) REFERENCES `user_qualification` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 /**
 迁移老数据的存储过程
