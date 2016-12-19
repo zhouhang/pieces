@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.PaymentDao">
+    <resultMap id="PaymentResultMap" type="com.pieces.dao.model.Payment">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="pay_type"  property="payType" />
+            <result column="status"  property="status" />
+            <result column="money"  property="money" />
+            <result column="order_id"  property="orderId" />
+            <result column="tradeno"  property="tradeno" />
+            <result column="remark"  property="remark" />
+            <result column="in_param"  property="inParam" />
+            <result column="out_param"  property="outParam" />
+            <result column="create_time"  property="createTime" />
+            <result column="callback_time"  property="callbackTime" />
+        
+    </resultMap>
+
+    <resultMap id="PaymentResultMapVo" type="com.pieces.dao.vo.PaymentVo">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="pay_type"  property="payType" />
+            <result column="status"  property="status" />
+            <result column="money"  property="money" />
+            <result column="order_id"  property="orderId" />
+            <result column="tradeno"  property="tradeno" />
+            <result column="remark"  property="remark" />
+            <result column="in_param"  property="inParam" />
+            <result column="out_param"  property="outParam" />
+            <result column="create_time"  property="createTime" />
+            <result column="callback_time"  property="callbackTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,pay_type,status,money,order_id,tradeno,remark,in_param,out_param,create_time,callback_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="PaymentResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from payment
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="PaymentResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from payment
+    </select>
+
+    <select id="findByParams" resultMap="PaymentResultMapVo" parameterType="com.pieces.dao.vo.PaymentVo">
+        select
+        <include refid="Base_Column_List" />
+        from payment
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from payment
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Payment">
+        insert into
+        payment (user_id,pay_type,status,money,order_id,tradeno,remark,in_param,out_param,create_time,callback_time)
+        values
+        (#{userId},#{payType},#{status},#{money},#{orderId},#{tradeno},#{remark},#{inParam},#{outParam},#{createTime},#{callbackTime})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.Payment">
+        update payment
+        <set>
+                                                        
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+                                            
+            <if test="payType != null">
+                pay_type = #{payType},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                                            
+            <if test="money != null">
+                money = #{money},
+            </if>
+                                            
+            <if test="orderId != null">
+                order_id = #{orderId},
+            </if>
+                                            
+            <if test="tradeno != null">
+                tradeno = #{tradeno},
+            </if>
+                                            
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+                                            
+            <if test="inParam != null">
+                in_param = #{inParam},
+            </if>
+                                            
+            <if test="outParam != null">
+                out_param = #{outParam},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="callbackTime != null">
+                callback_time = #{callbackTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
