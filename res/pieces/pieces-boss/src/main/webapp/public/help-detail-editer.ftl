@@ -14,7 +14,7 @@
             <dl>
                 <dt>单页面信息</dt>
                 <dd>
-                    <a class="curr" href="cms/article/index?model=1">单页面信息</a>
+                    <a class="curr" href="/cms/article/index?model=1">单页面信息</a>
                 </dd>
             </dl>
         </div>
@@ -23,7 +23,7 @@
                 <div class="title">
                     <h3><i class="fa fa-chevron-right"></i>修改单页面</h3>
                     <div class="extra">
-                        <a class="btn btn-gray" href="cms/article/index?model=1">返回</a>
+                        <a class="btn btn-gray" href="/cms/article/index?model=1">返回</a>
                         <button type="button" id="delete" class="btn btn-gray">删除</button>
                         <button type="submit" id="submit" class="btn btn-red">保存</button>
                     </div>
@@ -99,48 +99,22 @@ ${article.content}
 </div>
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
-<link type="text/css" rel="stylesheet" href="/js/validator/jquery.validator.css"/>
-<script src="/js/validator/jquery.validator.min.js"></script>
-<script src="/js/validator/local/zh-CN.js"></script>
+<script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
+<script src="/js/layer/layer.js"></script>
 
 <!-- 编辑器相关 -->
 <link href="/js/umeditor1_2_2-utf8/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" charset="utf-8" src="/js/umeditor1_2_2-utf8/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="/js/umeditor1_2_2-utf8/umeditor.min.js"></script>
 <script type="text/javascript" src="/js/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js"></script>
-<script src="/js/layer/layer.js"></script>
-<link type="text/css" rel="stylesheet" href="/js/layer/skin/layer.css" />
 <!-- footer end -->
 <script>
-    var roleAddPage = {
+    var _global = {
         v: {},
         fn: {
             init: function () {
                 this.formValidate();
-                $("#delete").click(function() {
-
-                    layer.confirm('确认要删除该单页面？', {
-                        title: '删除单页面',
-                        btn: ['确认','取消'] //按钮
-                    }, function(index){
-                        $.post("cms/article/delete/${article.id}", function (data) {
-                            if (data.status == "y") {
-                                $.notify({
-                                    type: 'success',
-                                    title: '删除成功',
-                                    text: '3秒后自动跳转到单页面列表',
-                                    delay: 3e3,
-                                    call: function () {
-                                        setTimeout(function () {
-                                            location.href = 'cms/article/index?model=1';
-                                        }, 3e3);
-                                    }
-                                });
-                            }
-                        }, "json")
-                        layer.close(index);
-                    });
-                });
+                this.delete();
             },
             formValidate: function () {
                 $('#form').validator({
@@ -174,11 +148,40 @@ ${article.content}
                         }
                     }
                 });
+            },
+            delete: function() {
+                $("#delete").click(function() {
+                    layer.confirm('确认要删除该单页面？', {icon: 3, title:'提示'}, function(index){
+                        layer.close(index);
+                        $.post("cms/article/delete/${article.id}", function (data) {
+                            if (data.status == "y") {
+                                $.notify({
+                                    type: 'success',
+                                    title: '删除成功',
+                                    text: '3秒后自动跳转到单页面列表',
+                                    delay: 3e3,
+                                    call: function () {
+                                        setTimeout(function () {
+                                            location.href = 'cms/article/index?model=1';
+                                        }, 3e3);
+                                    }
+                                });
+                            } else {
+                                $.notify({
+                                    type: 'warn',
+                                    title: '删除失败',
+                                    text: data.info,
+                                    delay: 3e3
+                                });
+                            }
+                        }, "json")
+                    });
+                });
             }
         }
     }
     $(function () {
-        roleAddPage.fn.init();
+        _global.fn.init();
         var um = UM.getEditor('content');
         um.ready(function(){
             um.setContent($("#umeditorContent").html());

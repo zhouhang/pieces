@@ -19,7 +19,7 @@
         <div class="title title-btm">
             <h3>用户管理</h3>
             <@shiro.hasPermission name="member:add">
-                <div class="extra"><a class="btn btn-red" href="member/add"><i class="fa fa-plus"></i>增加新用户</a></div>
+                <div class="extra"><a class="btn btn-red" href="/member/add"><i class="fa fa-plus"></i>增加新用户</a></div>
             </@shiro.hasPermission>
         </div>
         <div class="pagin">
@@ -27,7 +27,7 @@
                 <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                 <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
             </div>
-            <@p.pager pageInfo=memberPage  pageUrl="member/index"  params=memberParams/>
+            <@p.pager pageInfo=memberPage  pageUrl="/member/index"  params=memberParams/>
         </div>
         <div class="chart">
             <table class="tc">
@@ -69,7 +69,7 @@
                         </td>
                         <td>
                             <@shiro.hasPermission name="member:edit">
-                                <a href="member/edit/${member.id}">修改</a>
+                                <a href="/member/edit/${member.id}">修改</a>
                             </@shiro.hasPermission>
                         </td>
                     </tr>

@@ -69,7 +69,6 @@
         </div>
     </div>
 </div><!-- member-box end -->
-<#include "./inc/footer.ftl"/>
 
 
 <!-- start 新增收货地址 -->
@@ -136,6 +135,7 @@
         </div>
     </form>
 </div><!-- end 新增收货地址 -->
+<#include "./inc/footer.ftl"/>
 
 <script src="js/layer/layer.js"></script>
 <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
@@ -168,7 +168,7 @@
                         }, "json");
                         layer.close(index);
                     });
-                    return false; // 组织默认事件
+                    return false;
                 })
             },
             // 新增 & 修改
@@ -292,7 +292,7 @@
                         }, "json");
                         layer.close(index);
                     });
-                    return false; // 组织默认事件
+                    return false;
                 })
             }
         }

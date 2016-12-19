@@ -22,7 +22,7 @@
 
                     <dt>应付金额：</dt>
                     <dd>
-                        <em>&yen;${orderForm.amountsPayable!}</em>
+                        <em>&yen;${orderForm.deposit!}</em>
                         <span>剩余付款时间：${orderForm.orderValidityPeriod}</span>
                     </dd>
 

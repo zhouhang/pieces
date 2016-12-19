@@ -22,19 +22,19 @@
             <li><a href="/">首页</a></li>
             <@shiro.hasPermission name="sales:index">
                 <li>
-                    <a href="javascript:;">销售</a>
+                    <a href="javascript:;" id="salePage">销售</a>
                     <div class="subnav">
                     <@shiro.hasPermission name="enquiry:index">
-                    <a href="/enquiry/index">询价管理</a>
+                    <a href="/enquiry/index" id="enquiryIndex">询价管理<b></b></a>
                     </@shiro.hasPermission>
                     <@shiro.hasPermission name="order:index">
                     <a href="/order/index">订单管理</a>
                     </@shiro.hasPermission>
                     <@shiro.hasPermission name="pay:index">
-                    <a href="/payment/index">支付管理</a>
+                    <a href="/payment/index" id="paymentIndex">支付管理<b></b></a>
                     </@shiro.hasPermission>
                     <@shiro.hasPermission name="bill:index">
-                    <a href="/account/bill/index">账单管理</a>
+                    <a href="/account/bill/index" id="accountIndex">账单管理<b></b></a>
                     </@shiro.hasPermission>
                     <@shiro.hasPermission name="logistical:index">
                     <a href="/logistics/index">物流管理</a>
@@ -73,20 +73,20 @@
                     <a href="javascript:;">促销</a>
                     <div class="subnav">
                     <@shiro.hasPermission name="ad:index">
-                        <a href="ad/index">广告管理</a>
+                        <a href="/contrive/index">广告管理</a>
                     </@shiro.hasPermission>
                     </div>
                 </li>
             </@shiro.hasPermission>
            <@shiro.hasPermission name="message:index">
             <li>
-                <a href="javascript:;">消息</a>
+                <a href="javascript:;" id="message">消息</a>
                 <div class="subnav">
                     <@shiro.hasPermission name="certify:index">
-                        <a href="certify/list">企业资质审核</a>
+                        <a href="certify/list" id="certifyList">企业资质审核<b></b></a>
                     </@shiro.hasPermission>
                     <@shiro.hasPermission name="anon:enquiry">
-                        <a href="anon/enquiry">新客询价</a>
+                        <a href="anon/enquiry" id="anonEnquiry">新客询价<b></b></a>
                     </@shiro.hasPermission>
                 </div>
             </li>
@@ -129,4 +129,3 @@
         </ul>
     </div>
 </div>
-<!-- nav end -->

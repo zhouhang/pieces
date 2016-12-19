@@ -111,7 +111,7 @@
                                     <dd>
                                         <a href="/commodity/${commodity.id!}"><img src="images/blank.gif" class="lazyload" data-original="${commodity.pictureUrl!}" width="180" height="180"></a>
                                         <a href="/commodity/${commodity.id!}">${commodity.name!}</a>
-                                        <span>切制规格：${commodity.spec!}</span>
+                                        <span>片型：${commodity.spec!}</span>
                                     </dd>
                                 </#list>
                             </#if>
@@ -133,21 +133,12 @@
 
 <#include "./inc/helper.ftl"/>
 
-<div class="elevator" id="jelevator">
-    <ul>
-        <#list categoryList as category>
-            <li <#if category_index==0>class="current"</#if>><a href="#floor${category_index}">${category.title!}</a></li>
-        </#list>
-    </ul>
-</div>
+<div class="elevator" id="jelevator"></div>
 
 
-<div class="gotop" id="jgotop">
-    <a href="javascript:;"><b class="fa fa-chevron-up"></b><em>返回顶部</em></a>
-</div>
 <#include "./inc/footer.ftl"/>
 
-<script src="js/jquery.nav.js"></script>
-<script src="js/index_2016.js"></script>
+<script src="/js/jquery.nav.js"></script>
+<script src="/js/index_2016.js"></script>
 </body>
 </html>

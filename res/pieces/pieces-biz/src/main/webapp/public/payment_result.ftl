@@ -3,7 +3,6 @@
 <head>
     <#include "./inc/meta.ftl"/>
     <title>支付结果-上工好药</title>
-    <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/order.css" />
 </head>
 
@@ -12,7 +11,7 @@
 
     <#include "./inc/header-center.ftl"/>
 
-<div class="wrap">
+    <div class="wrap">
         <div class="payment">
             <div class="title">
                 <h3>支付</h3>
@@ -43,7 +42,5 @@
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
     
-    <div id="imgCropWrap"></div>
-
 </body>
 </html>

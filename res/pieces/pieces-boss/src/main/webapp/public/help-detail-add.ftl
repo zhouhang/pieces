@@ -14,7 +14,7 @@
             <dl>
                 <dt>单页面信息</dt>
                 <dd>
-                    <a class="curr" href="cms/article/index?model=1">单页面信息</a>
+                    <a class="curr" href="/cms/article/index?model=1">单页面信息</a>
                 </dd>
             </dl>
         </div>
@@ -23,7 +23,7 @@
                 <div class="title">
                     <h3><i class="fa fa-chevron-right"></i>新增单页面</h3>
                     <div class="extra">
-                        <a class="btn btn-gray" href="cms/article/index?model=1">返回</a>
+                        <a class="btn btn-gray" href="/cms/article/index?model=1">返回</a>
                         <button type="submit" id="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
@@ -96,9 +96,7 @@
 
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
-<link type="text/css" rel="stylesheet" href="/js/validator/jquery.validator.css"/>
-<script src="/js/validator/jquery.validator.min.js"></script>
-<script src="/js/validator/local/zh-CN.js"></script>
+<script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
 
 <!-- 编辑器相关 -->
 <link href="/js/umeditor1_2_2-utf8/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">

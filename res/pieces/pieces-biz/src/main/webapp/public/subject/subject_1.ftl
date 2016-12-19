@@ -3,13 +3,46 @@
 <head>
     <#include "./../inc/meta.ftl"/>
     <title>上工好药</title>
+    <style>
+    .subject{color:#666;}
+    .subject h2{line-height:1;padding-top:75px;text-align:center;font-size:20px;}
+    .subject h2:after{content:"";display:block;width:50px;height:10px;margin:0 auto;border-bottom:2px solid #c3272b;overflow:hidden;}
+    .subject .text{line-height:1;padding-top:20px;text-align:center;}
+    .subject .text p{padding-top:20px;}
+    .subject .floor1{padding:70px 0 170px;background:#fff;}
+    .subject .floor2{background:#f7f7f7;}
+    .subject .floor2 li{float:left;width:25%;line-height:1;padding:60px 0 85px;text-align:center;}
+    .subject .floor2 li i{display:block;width:140px;height:140px;margin:0 auto;background:url(/images/sub-icon.png) no-repeat;}
+    .subject .floor2 li i.ico2{background-position:-140px 0;}
+    .subject .floor2 li i.ico3{background-position:-280px 0;}
+    .subject .floor2 li i.ico4{background-position:-420px 0;}
+    .subject .floor2 li h3{padding:35px 0 0;font-size:18px;}
+    .subject .floor2 li p{padding-top:18px;font-size:12px;}
+    .subject .floor3{padding:25px 0 0;background:#fff url(/images/bg-floor3.jpg) no-repeat 50% 100px;}
+    .subject .floor3 ul{position:relative;height:511px;color:#999;}
+    .subject .floor3 li{float:left;position:relative;}
+    .subject .floor3 .g1{margin:128px 0 0 26px;}
+    .subject .floor3 .g2{margin:150px 0 0 70px;}
+    .subject .floor3 .g3{margin:70px 0 0 100px;}
+    .subject .floor3 .g4{margin:104px 0 0 84px;}
+    .subject .floor3 .g5{margin:102px 0 0 162px;}
+    .subject .floor3 .g6{margin:116px 0 0 94px;}
+    .subject .floor3 .hd{width:114px;height:114px;line-height:114px;font-size:18px;color:#999;text-align:center;background:url(/images/circle.png) no-repeat -181px 0;}
+    .subject .floor3 .bd{position:absolute;top:100%;left:-36px;z-index:2;width:231px;height:119px;margin-top:12px;padding:58px 36px 0 36px;background:url(/images/pop-bg.png) no-repeat;display:none;}
+    .subject .floor3 .sml .hd{width:90px;height:90px;line-height:90px;background-position:0 0;}
+    .subject .floor3 .sml .bd{left:-48px;}
+    .subject .floor3 em{color:#666;}
+    .subject .floor3 li p{line-height:1;padding-bottom:14px;}
+    .subject .floor3 li:hover .hd{color:#fff;background-position:-295px 0;}
+    .subject .floor3 li.sml:hover .hd{background-position:-90px 0;}
+    </style>
 </head>
 
 <body class="bg-gray">
     <#include "./../inc/header.ftl"/>
 
     <!-- banner start -->
-    <div class="banner-slider" style="background:url(images/uploads/banner-05.jpg) no-repeat 50% 0;">
+    <div class="banner-slider" style="background:url(/images/uploads/banner-05.jpg) no-repeat 50% 0;">
     </div><!-- banner end -->
 
     <div class="subject">
@@ -77,13 +110,13 @@
                     <div class="bd">
                         <p>在首页进行快速询价；</p>
                         <p>在商品页面进行询价；</p>
-                        <p>我的供应链的询价模块进行询价。</p>
+                        <p>用户中心的询价模块进行询价。</p>
                     </div>
                 </li>
                 <li class="g4">
                     <div class="hd">一键下单</div>
                     <div class="bd">
-                        <p>我的供应链由报价单生成订单；</p>
+                        <p>用户中心由报价单生成订单；</p>
                         <p>填写收货地址及备注说明；</p>
                         <p>确认信息无误后提交订单。</p>
                     </div>
@@ -112,6 +145,31 @@
     <!-- footer start -->
     <#include "./../inc/footer.ftl"/>
     <!-- footer end -->
+
+    
+    <script>
+    var _global = {
+        fn: {
+            init: function() {
+                this.pop();
+            },
+            pop: function() {
+                $('.floor3').on({
+                    'mouseenter': function() {
+                        $(this).find('.bd').stop().fadeIn(300);
+                    },
+                    'mouseleave': function() {
+                        $(this).find('.bd').stop().fadeOut(300);
+
+                    }
+                }, 'li');
+            }
+        }
+    }
+    $(function() {
+        _global.fn.init();
+    })
+    </script>
 
 </body>
 </html>

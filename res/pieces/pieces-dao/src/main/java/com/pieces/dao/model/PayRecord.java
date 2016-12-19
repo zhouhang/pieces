@@ -25,6 +25,9 @@ public class PayRecord  implements Serializable {
 	
 	//实付金额
 	private Double actualPayment;
+
+	//支付保证金
+	private Double deposit;
 	
 	//开户行
 	private String payBank;
@@ -68,6 +71,14 @@ public class PayRecord  implements Serializable {
 	private Date createTime;
 	
 	public PayRecord(){}
+
+	public Double getDeposit() {
+		return deposit;
+	}
+
+	public void setDeposit(Double deposit) {
+		this.deposit = deposit;
+	}
 
 	public Integer getAgentId() {
 		return agentId;

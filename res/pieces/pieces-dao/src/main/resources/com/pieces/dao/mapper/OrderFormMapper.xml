@@ -18,6 +18,7 @@
             <result column="deposit"  property="deposit" />
             <result column="agent_id"  property="agentId" />
             <result column="delivery_date"  property="deliveryDate" />
+            <result column="expire_date"  property="expireDate" />
     </resultMap>
 
     <resultMap id="OrderFormResultMapVo" type="com.pieces.dao.vo.OrderFormVo" extends="OrderFormResultMap">
@@ -56,7 +57,6 @@
             <result column="c_spec"  property="spec" />
             <result column="c_level"  property="level" />
             <result column="c_originOf"  property="originOf" />
-            <result column="c_expectDate"  property="expectDate" />
             <result column="c_amount"  property="amount" />
             <result column="c_price"  property="price" />
             <result column="c_subtotal"  property="subtotal" />
@@ -67,13 +67,13 @@
 
     <sql id="Base_Column_List">
         id,code,shipping_costs,addr_history_id,user_id,remark,amounts_payable,
-        sum,invoice_id,status,create_member,creater_time,payment_date,deposit,agent_id,delivery_date
+        sum,invoice_id,status,create_member,creater_time,payment_date,deposit,agent_id,delivery_date,expire_date
     </sql>
 
     <sql id="Base_Column_List_Aliases">
         o.id as id,o.code as code,o.shipping_costs as shipping_costs,o.addr_history_id as addr_history_id,o.user_id as user_id,o.remark as remark,
         o.amounts_payable as amounts_payable,o.sum as sum,o.invoice_id as invoice_id,o.status as status,o.creater_time as creater_time,
-        o.payment_date as payment_date,o.deposit as deposit, o.agent_id as agent_id, delivery_date as delivery_date
+        o.payment_date as payment_date,o.deposit as deposit, o.agent_id as agent_id, o.delivery_date as delivery_date,o.expire_date as expire_date
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="OrderFormResultMap">
@@ -149,10 +149,10 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.OrderForm">
         insert into
-        order_form (code,shipping_costs,addr_history_id,user_id,remark,amounts_payable,sum,invoice_id,status,create_member,creater_time,payment_date,deposit,agent_id,delivery_date)
+        order_form (code,shipping_costs,addr_history_id,user_id,remark,amounts_payable,sum,invoice_id,status,create_member,creater_time,payment_date,deposit,agent_id,delivery_date,expire_date)
         values
         (#{code},#{shippingCosts},#{addrHistoryId},#{userId},#{remark},#{amountsPayable},#{sum},
-        #{invoiceId},#{status},#{createMember},#{createrTime},#{paymentDate},#{deposit},#{agentId},#{deliveryDate})
+        #{invoiceId},#{status},#{createMember},#{createrTime},#{paymentDate},#{deposit},#{agentId},#{deliveryDate},#{expireDate})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.OrderForm">
@@ -212,6 +212,9 @@
             <if test="deliveryDate != null">
                 delivery_date = #{deliveryDate},
             </if>
+            <if test="expireDate != null">
+                expire_date = #{expireDate},
+            </if>
         </set>
         where id = #{id}
     </update>
@@ -225,7 +228,7 @@
         i.identifier as i_identifier,i.registered_address as i_registered_address,
         i.registered_tel as i_registered_tel,i.bank_name as i_bank_name,i.bank_account as i_bank_account,
         c.id as c_id,c.name as c_name,c.spec as c_spec,c.level as c_level,c.originOf as c_originOf,
-        c.expectDate as c_expectDate,c.amount as c_amount,c.price as c_price,c.subtotal as c_subtotal,
+        c.amount as c_amount,c.price as c_price,c.subtotal as c_subtotal,
         c.enquiry_commodity_id as c_enquiry_commodity_id,c.order_id as c_order_id,c.guide_price as c_guide_price,
         u.contact_name as u_contact_name, u.company_full_name as u_company_full_name,u.contact_mobile as u_contact_mobile
         from order_form o

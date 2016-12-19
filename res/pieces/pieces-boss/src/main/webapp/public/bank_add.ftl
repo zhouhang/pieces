@@ -80,11 +80,7 @@
 
 
     <#include "./inc/footer.ftl"/>
-
-    <script src="js/jquery.min.js"></script>
-    <script src="/js/jquery.form.js"></script>
     <script src="/js/validator/jquery.validator.min.js?local=zh-CN"></script>
-    <script src="/js/common.js"></script>
     <script>
         var _global = {
             v: {},

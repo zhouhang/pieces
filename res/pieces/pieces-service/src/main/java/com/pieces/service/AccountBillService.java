@@ -2,6 +2,7 @@ package com.pieces.service;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.AccountBill;
+import com.pieces.dao.model.PayRecord;
 import com.pieces.dao.vo.AccountBillVo;
 
 import java.util.List;
@@ -48,5 +49,15 @@ public interface AccountBillService extends ICommonService<AccountBill>{
      * @param billId
      */
     public void refreshStatus(Integer billId);
+
+    /**
+     * 为用户生成3个月账期的账单
+     *
+     */
+
+    public void generateBill(PayRecord payRecord,Integer memberId);
+
+
+    public Integer getNotHandleCount();
 
 }

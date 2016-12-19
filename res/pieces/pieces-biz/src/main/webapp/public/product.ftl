@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>${commodity.title!}-商品详情-上工好药</title>
+    <title>${commodity.title!}-上工好药</title>
 </head>
 
 <body>
@@ -51,7 +51,7 @@
                             <dt>商品名称</dt>
                             <dd>${commodity.name!}</dd>
 
-                            <dt>切制规格</dt>
+                            <dt>片型</dt>
                             <dd>${commodity.spec!}</dd>
 
                             <dt>原药产地</dt>

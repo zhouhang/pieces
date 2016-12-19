@@ -94,15 +94,14 @@
                         <table class="tc">
                             <thead>
                             <tr>
-                                <th>商品名称</th>
-                                <th width="80">切制规格</th>
-                                <th width="80">规格等级</th>
-                                <th>产地</th>
-                                <th width="100">期望交货日期</th>
-                                <th width="120">数量（公斤）</th>
-                                <th width="90">指导价（元/公斤）</th>
-                                <th width="100">合同价（元/公斤）</th>
-                                <th width="120">合同价小计（元）</th>
+                                <th width="100">商品名称</th>
+                                <th width="80">片型</th>
+                                <th>规格等级</th>
+                                <th width="110">产地</th>
+                                <th>数量（公斤）</th>
+                                <th>指导价（元/公斤）</th>
+                                <th>合同价（元/公斤）</th>
+                                <th>合同价小计（元）</th>
                             </tr>
                             </thead>
                             <tfoot>
@@ -111,19 +110,15 @@
                                     <div class="summary">
                                         <div class="item">
                                             <span>商品合计：</span>
-                                            <em>￥${vo.sum}</em>
-                                        </div>
-                                        <div class="item">
-                                            <span>运&#12288;&#12288;费：</span>
-                                            <em>￥${vo.shippingCosts}</em>
+                                            <em>&yen; ${vo.sum}</em>
                                         </div>
                                         <div class="item">
                                             <span>实际应付：</span>
-                                            <em class="price">￥${vo.amountsPayable}</em>
+                                            <em class="price">&yen; ${vo.amountsPayable}</em>
                                         </div>
                                         <div class="item">
                                             <span>需支付保证金：</span>
-                                            <em class="price">￥<#if vo??>${vo.deposit!}</#if></em>
+                                            <em class="price"><#if vo??>&yen; ${vo.deposit!}</#if></em>
                                         </div>
                                     </div>
                                 </td>
@@ -136,7 +131,6 @@
                                 <td>${commoditie.spec}</td>
                                 <td>${commoditie.level}</td>
                                 <td>${commoditie.originOf}</td>
-                                <td>${commoditie.expectDate?date}</td>
                                 <td>${commoditie.amount}</td>
                                 <td>${commoditie.guidePrice!}</td>
                                 <td>${commoditie.price}</td>
@@ -185,7 +179,6 @@
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
 <!-- footer end -->
-    <script src="/js/common.js"></script>
     <script src="/js/layer/layer.js"></script>
 <script>
     var enquiryPage = {

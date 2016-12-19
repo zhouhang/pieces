@@ -76,6 +76,7 @@
                 AND anon.publish_time <![CDATA[ <= ]]> #{publishTimeEnd}
             </if>
         </where>
+        ORDER BY anon.id DESC
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
@@ -125,4 +126,10 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="getNotHandleCount"  resultType="java.lang.Integer">
+        select count(id)
+        from anon_enquiry WHERE status=1
+    </select>
+
 </mapper>

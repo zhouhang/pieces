@@ -185,15 +185,12 @@
                         elem: '#start',
                         choose: function(datas){
                              end.min = datas;
-                             end.start = datas;
-                             $('#start').attr('title', datas);
                         }
                     };
                     var end = {
                         elem: '#end',
                         choose: function(datas){
                             start.max = datas; 
-                            $('#end').attr('title', datas);
                         }
                     };
                     laydate(start);

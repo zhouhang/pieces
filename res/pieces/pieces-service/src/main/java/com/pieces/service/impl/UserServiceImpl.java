@@ -10,6 +10,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,8 @@ import com.pieces.service.utils.ValidUtils;
 @Service
 @Transactional(readOnly = true)
 public class UserServiceImpl extends AbsCommonService<User> implements UserService {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private UserDao userDao;
@@ -53,6 +57,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         user.setCreateTime(new Date());
         user.setCertifyStatus(CertifyStatusEnum.NOT_CERTIFY.getValue());
         //user.setSource(0);
+        user.setUpdateTime(new Date());
         return this.create(user);
 
     }
@@ -111,6 +116,14 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
     }
 
     @Override
+    public PageInfo<UserVo> findVoByCondition(UserVo userVo, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<UserVo> list = userDao.findVoByCondition(userVo);
+        PageInfo page = new PageInfo(list);
+        return page;
+    }
+
+    @Override
     @Transactional
     public int updateUserByCondition(User user) {
         return userDao.updateUserByCondition(user);
@@ -139,7 +152,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         try{
             subject.login(token);
         }catch(Exception e){
-            e.printStackTrace();
+            logger.info("login Exception {} ",e.getMessage());
             throw new RuntimeException("登入失败!");
         }
         User user = findByUserName(token.getUsername());
@@ -147,6 +160,11 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         user.setSalt(null);
         Session s = subject.getSession();
         s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), user);
+    }
+
+    @Override
+    public UserVo findVoById(Integer id) {
+        return userDao.findVoById(id);
     }
 
     @Override

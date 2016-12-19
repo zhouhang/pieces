@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
@@ -133,15 +134,24 @@ public class AnonController extends BaseController{
      * @throws IOException
      */
     @RequestMapping(value = "/download")
-    @ResponseBody
-    public void download(HttpServletResponse response, String url, String fileName) throws IOException {
-        response.setCharacterEncoding("utf-8");
-        response.setContentType("multipart/form-data");
-        response.setHeader("Content-Disposition", "attachment;fileName="
-                + URLEncoder.encode(fileName, "UTF-8"));
+    public void download(HttpServletResponse response, HttpServletRequest request, String url, String fileName) throws IOException {
         String path = FileUtil.getAbsolutePath(url);
-        //TODO: 文件不存在时的处理逻辑
-        InputStream inputStream = new FileInputStream(new File(path));
+        File file = new File(path);
+        if (!file.exists()) throw new RuntimeException("文件不存在");
+
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("application/octet-stream");
+
+        if (request.getHeader("User-Agent").toUpperCase().indexOf("MSIE") > 0 ||
+                request.getHeader("User-Agent").toUpperCase().indexOf("TRIDENT") > 0) {
+            fileName = URLEncoder.encode(fileName, "UTF-8");
+        } else {
+            fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
+        }
+
+        response.setHeader("Content-Disposition", "attachment;fileName="
+                + fileName);
+        InputStream inputStream = new FileInputStream(file);
         OutputStream os = response.getOutputStream();
         try {
             byte[] b = new byte[2048];

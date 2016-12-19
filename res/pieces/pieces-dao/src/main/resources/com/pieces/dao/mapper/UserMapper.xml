@@ -17,6 +17,7 @@
 		<result column="area_full"  property="areaFull" />
 		<result column="is_del"  property="isDel" />
 		<result column="type"  property="type" />
+		<result column="service_id"  property="serviceId" />
 		<result column="certify_status"  property="certifyStatus" />
 		<result column="certify_time"  property="certifyTime" />
 		<result column="create_time"  property="createTime" />
@@ -26,10 +27,11 @@
 	<resultMap id="Vo" type="com.pieces.dao.vo.UserVo" extends="BaseResultMap">
 		<result column="agentName"  property="agentName" />
 		<result column="agentId"  property="agentId" />
+		<result column="serviceName"  property="serviceName" />
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id,user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,type,certify_status,certify_time,create_time,update_time
+		id,user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,type,service_id,certify_status,certify_time,create_time,update_time
 	</sql>
 
 
@@ -53,9 +55,9 @@
 
 	<insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.User">
 		insert into
-		user (user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,type,certify_status,certify_time,create_time,update_time)
+		user (user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,type,service_id,certify_status,certify_time,create_time,update_time)
 		values
-		(#{userName},#{password},#{salt},#{companyFullName},#{areaId},#{contactName},#{contactMobile},#{onlineStatus},#{bindErp},#{source},#{areaFull},#{isDel},#{type},#{certifyStatus},#{certifyTime},#{createTime},#{updateTime})
+		(#{userName},#{password},#{salt},#{companyFullName},#{areaId},#{contactName},#{contactMobile},#{onlineStatus},#{bindErp},#{source},#{areaFull},#{isDel},#{type},#{serviceId},#{certifyStatus},#{certifyTime},#{createTime},#{updateTime})
 	</insert>
 
 	<update id="update" parameterType="com.pieces.dao.model.User">
@@ -112,6 +114,10 @@
 
 			<if test="type != null">
 				type = #{type},
+			</if>
+
+			<if test="serviceId != null">
+				service_id = #{serviceId},
 			</if>
 
 			<if test="certifyStatus != null">
@@ -181,7 +187,7 @@
 		<![CDATA[
 			insert into user
 			(user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,isDel,create_time,update_time
-			,online_status,bind_erp,source,area_full,type,certify_status,certify_time)
+			,online_status,bind_erp,source,area_full,type,service_id,certify_status,certify_time)
 			values (#{userName,jdbcType=VARCHAR},
 			#{password,jdbcType=VARCHAR},
 			#{salt,jdbcType=VARCHAR},
@@ -198,7 +204,8 @@
 			#{areaFull,jdbcType=VARCHAR},
 			#{type,jdbcType=INTEGER},
 			#{certifyStatus,jdbcType=INTEGER},
-			#{certifyTime}
+			#{certifyTime},
+			#{serviceId}
 			)
 		]]>
 	</insert>
@@ -242,6 +249,9 @@
 			<if test="certifyTime != null" >
 				certify_time = #{certifyTime}
 			</if>
+			<if test="serviceId!= null" >
+				service_id = #{serviceId}
+			</if>
 	    </set>
         WHERE id = #{id,jdbcType=NUMERIC}
   </update>
@@ -277,7 +287,8 @@
 		and b.is_del = 0
   </select>
 
-	<!-- 条件查询User-->
+
+	<!-- 条件查询User 老版查询，不确定是否在用，暂时不做删除-->
 	<select id="findByCondition" parameterType="com.pieces.dao.vo.UserVo" resultMap="BaseResultMap">
 		select * from user b
 		where 1=1
@@ -313,10 +324,58 @@
 		</if>
 	</select>
 
+
+	<!-- 条件查询User 新版查询vo-->
+	<select id="findVoByCondition" parameterType="com.pieces.dao.vo.UserVo" resultMap="Vo">
+		select b.* ,m.name as serviceName from user b
+		LEFT JOIN member m ON b.service_id = m.id
+		<where>
+			<if test="userName != null and userName != ''">
+				b.user_name like "%"#{userName}"%"
+			</if>
+			<if test="bindErp != null and bindErp != ''">
+				and b.bind_erp = #{bindErp}
+			</if>
+			<if test="areaFull != null and areaFull != ''">
+				and b.area_full like "%"#{areaFull}"%"
+			</if>
+			<if test="companyFullName != null and companyFullName != ''">
+				and b.company_full_name like "%"#{companyFullName}"%"
+			</if>
+			<if test="contactMobile != null and contactMobile != ''">
+				and b.contact_mobile like "%"#{contactMobile}"%"
+			</if>
+			<if test="contactName != null and contactName != ''">
+				and b.contact_name like "%"#{contactName}"%"
+			</if>
+			<if test="startDate != null and startDate != ''">
+				and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[>=]]> DATE_FORMAT(#{startDate},'%Y-%m-%d')
+			</if>
+			<if test="endDate != null and endDate != ''">
+				and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<=]]> DATE_FORMAT(#{endDate},'%Y-%m-%d')
+			</if>
+			<if test="type != null">
+				and b.type = #{type}
+			</if>
+			<if test="certifyStatus != null">
+				and b.certify_status = #{certifyStatus}
+			</if>
+			<if test="serviceId!= null">
+				and service_id = #{serviceId}
+			</if>
+			<if test="serviceName!= null">
+				and m.name like "%"#{serviceName}"%"
+			</if>
+		</where>
+	</select>
+
+
+
+
 	<!-- 条件查询User-->
 	<select id="findProxyUser" parameterType="com.pieces.dao.vo.UserVo" resultMap="Vo">
 		select b.id as id,b.user_name as user_name, b.company_full_name as company_full_name,
-		agent.user_name as agentName,agent.id as agentId
+		agent.contact_name as agentName,agent.id as agentId
 		from user b
 		LEFT JOIN  user_bind bind ON b.id = bind.terminal_id
 		LEFT JOIN  user agent ON bind.agent_id = agent.id
@@ -328,12 +387,25 @@
 				and b.company_full_name LIKE "%"#{bincompanyFullNamedErp}"%"
 			</if>
 			<if test="agentName != null and agentName != ''">
-				and agent.user_name like "%"#{agentName}"%"
+				and agent.contact_name like "%"#{agentName}"%"
 			</if>
 			<if test="true">
 				and b.type = 1
+				AND b.certify_status = 1
 			</if>
 		</where>
 	</select>
+
+
+	<select id="findVoById" parameterType="java.lang.Integer" resultMap="Vo">
+		select b.* ,m.name as serviceName,agent.contact_name as agentName,agent.id as agentId  from user b
+		LEFT JOIN member m ON b.service_id = m.id
+		LEFT JOIN  user_bind bind ON b.id = bind.terminal_id
+		LEFT JOIN  user agent ON bind.agent_id = agent.id
+		where b.id = #{id}
+	</select>
+
+
+
 
 </mapper>

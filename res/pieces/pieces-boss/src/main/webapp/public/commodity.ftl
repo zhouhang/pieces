@@ -23,7 +23,7 @@
                     <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                     <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
-                <@p.pager pageInfo=pageInfo  pageUrl="commodity/index"  params=param />
+                <@p.pager pageInfo=pageInfo  pageUrl="/commodity/index"  params=param />
             </div>
             <div class="chart">
                 <table class="tc">
@@ -32,7 +32,7 @@
                         <th width="70">编号</th>
                         <th width="220">原药品种</th>
                         <th width="240">商品名称</th>
-                        <th width="100">切制规格</th>
+                        <th width="100">片型</th>
                         <th width="100">原料产地</th>
                         <th>规格等级</th>
                         <th width="100">状态</th>

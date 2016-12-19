@@ -113,13 +113,28 @@
                                     代理商姓名：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="${userBind.agentName}" autocomplete="off" name="" id="agencyName" placeholder="">
+                                    <input type="text" class="ipt" value="${user.agentName}" autocomplete="off" name="" id="agencyName" placeholder="">
                                 </div>
-                                <input type="hidden" class="ipt" value="${userBind.agentId?default('')}" autocomplete="off" name="agentId" id="agentId" placeholder="">
+                                <input type="hidden" class="ipt" value="${user.agentId?default('')}" autocomplete="off" name="agentId" id="agentId" placeholder="">
                             </div>
                         </div>
                     </div>
                     </#if>
+                    <div class="user-info">
+                        <h3>跟单员</h3>
+
+                        <div class="fa-form">
+                            <div class="group">
+                                <div class="txt">
+                                    跟单员姓名：
+                                </div>
+                                <div class="cnt">
+                                    <input type="text" class="ipt" value="${user.serviceName}" autocomplete="off" name="" id="serviceName" placeholder="">
+                                </div>
+                                <input type="hidden" class="ipt" value="${user.serviceId?default('')}" autocomplete="off" name="serviceId" id="serviceId" placeholder="">
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -130,12 +145,8 @@
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
-
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.form.js"></script>
     <script src="js/jquery.autocomplete.min.js"></script>
     <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
-
 
 <script>
     var _global = {
@@ -144,12 +155,13 @@
             init: function() {
                 this.formValidate();
                 this.agency();
+                this.service();
             },
             formValidate: function() {
                 $('#myform').validator({
                     fields: {
-                        contactName: '会员名: required',
-                        contactMobile: '联系人姓名: required',
+                        contactName: '会员名: required;nickName',
+                        contactMobile: '联系人姓名: required, mobile',
                     },
                     valid: function(form) {
                         if ( $(form).isValid() ) {
@@ -207,6 +219,36 @@
                         $("#agentId").val(suggestion.data); // 保存品种id到隐藏文本域
                     }
                 })
+            },
+            service:function () {
+                // 跟单姓名联想
+                var $serviceName = $('#serviceName');
+                $serviceName.autocomplete({
+                    serviceUrl: '/user/searchMember',
+                    paramName: 'name',
+                    deferRequestBy: 100,
+                    type: 'POST',
+                    showNoSuggestionNotice: true,
+                    noSuggestionNotice: '没有该客服',
+                    transformResult: function (response) {
+                        response = JSON.parse(response);
+                        if (response.status == "y") {
+                            return {
+                                suggestions: $.map(response.data.list, function (dataItem) {
+                                    return {value: dataItem.name, data: dataItem.id};
+                                })
+                            };
+                        } else {
+                            return {
+                                suggestions: []
+                            }
+                        }
+                    },
+                    onSelect: function (suggestion) {
+                        $("#serviceId").val(suggestion.data); // 保存品种id到隐藏文本域
+                    }
+                })
+
             }
 
         }

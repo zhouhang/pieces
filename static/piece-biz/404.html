@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>404-饮片B2B</title>
+    <title>您访问的页面不存在-饮片B2B</title>
     <meta name="renderer" content="webkit" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -84,7 +84,7 @@
             <div class="text">
                 <h1 class="title">对不起，您访问的页面不存在！</h1>
                 <dl>
-                    <dd><em id="count">10</em> 秒之后返回首页...</dd>
+                    <dd><em id="count">5</em> 秒之后返回首页...</dd>
                 </dl>
             </div>
         </div>
@@ -171,15 +171,12 @@
                 if (isNaN(delay)) {
                     delay = 6;
                 }
-
-                var timer = setInterval(function() {
+                setInterval(function() {
                     if (delay < 2) {
-                        clearInterval(timer);
-                        location.href = 'home.html';
-                        return;
+                        // location.href = 'home.html';
+                    } else {
+                        count.innerHTML = -- delay;
                     }
-                    delay === 1 && setInterval(timer);
-                    count.innerHTML = -- delay;
                 }, 1e3);
             }
         }

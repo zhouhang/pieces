@@ -70,7 +70,6 @@
 
     <#include "./inc/footer.ftl"/>
 
-    <script src="js/jquery.min.js"></script>
     <script src="js/laydate/laydate.js"></script>
 </body>
 </html>
@@ -112,15 +111,9 @@
             	},
             	//日期选择
                 dateInit: function () {
-                    var date = {
-                        elem: '#date',
-                        format: 'YYYY-MM-DD',
-                        min: '', //设定最小日期为当前日期
-                        max: '2099-06-16', //最大日期
-                        istime: true,
-                        istoday: false
-                    };
-                    laydate(date);
+                    laydate({
+                        elem: '#date'
+                    });
                 }
             }
         }

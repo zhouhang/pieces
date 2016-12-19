@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>商品列表-上工好药</title>
+    <title>我的收藏-上工好药</title>
 </head>
 
 <body>
@@ -25,11 +25,11 @@
                             <thead>
                                 <tr>
                                     <th width="150">商品名称</th>
-                                    <th width="70">切制规格</th>
-                                    <th width="70">规格等级</th>
+                                    <th width="70">片型</th>
+                                    <th>规格等级</th>
                                     <th>外观描述</th>
-                                    <th width="120">产地</th>
-                                    <th width="120">操作</th>
+                                    <th width="90">产地</th>
+                                    <th width="90">操作</th>
                                 </tr>
                             </thead>
                             
@@ -44,7 +44,7 @@
 	                                    <td>${commodity.originOf}</td>
 	                                    <td>
 	                                        <#if commodity.status == 1><a href="/center/enquiry/index?commodityId=${commodity.id!}" class="c-blue">询价</a></#if>
-	                                        <a onclick="_global.fn.delFav(${commodity.id!});" href="javascript:;" class="c-red jdel">删除</a>
+	                                        <a href="/center/collect/delete/${commodity.id!}" class="c-red jdel">删除</a>
 	                                    </td>
 	                                </tr>
                                 </#list>
@@ -71,33 +71,25 @@
     </div><!-- member-box end -->
 
     <#include "./inc/footer.ftl"/>
-	
-	<!-- 输入框联想 start -->
-    <div class="suggestions" id="suggestions">
-		<div class="hd">
-			<div class="group">
-				<span class="w1">商品名称</span><span class="w2">切制规格</span><span class="w3">规格等级</span><span class="w4">产地</span>
-			</div>
-		</div>
-		<div class="bd"></div>
-	</div><!-- 输入框联想 end -->
 
     <script src="js/layer/layer.js"></script>
-    <script src="js/laydate/laydate.js"></script>
     <script>
         var _global = {
             v: {
             },
             fn: {
                 init: function() {
+                    this.delFav();
                 },
                 // 删除
                 delFav: function(id) {
+                    $('.fa-chart').on('click', '.jdel', function() {
+                        var url = this.href;
                         layer.confirm('确认从收藏夹中删除这个商品吗？', {icon: 3, title:'提示'}, function(index){
-                            window.location.href = '/center/collect/delete/' + id,
-                            layer.close(index); // 关闭弹层
-                        });  
-                        return false; // 组织默认事件
+                            window.location.href = url;
+                        });
+                        return false;
+                    })
                 }
             }
         }

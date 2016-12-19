@@ -2,7 +2,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
 <svg xmlns="http://www.w3.org/2000/svg">
 <metadata>
-Created by FontForge 20120731 at Thu Nov 17 11:21:20 2016
+Created by FontForge 20120731 at Thu Dec  1 11:27:56 2016
  By admin
 </metadata>
 <defs>
@@ -89,6 +89,8 @@ t-14.5 -34.5t14.5 -34.5t34.5 -14.5h149v-149q0 -20 14.5 -34.5t34.5 -14.5t34.5 14.
     <glyph glyph-name="question-circle" unicode="&#xe602;" 
 d="M493 774q-106 0 -195.5 -50.5t-142 -137t-51.5 -189.5q0 -110 62 -203q1 -2 4 -7q8 -13 8 -27l-42 -166l158 58q10 4 22 4q11 0 21 -3h1q1 -1 3 -2q73 -30 152 -30q106 0 196 50.5t142 137t52 189t-52 189t-142 137t-196 50.5zM516 168h-62v63h62v-63zM559 381
 q-49 -32 -47 -79v-18h-50v22q-2 62 54 101q67 43 62 88q-6 65 -77 69q-78 2 -99 -88l-56 13q28 127 166 123q116 -7 127 -112q4 -67 -80 -119z" />
+    <glyph glyph-name="li" unicode="&#xe61c;" 
+d="M511 16q-100 0 -185 49.5t-134 134.5t-49 185t49 185t134 134t185 49t185 -49t134.5 -134t49.5 -185t-49.5 -185t-134.5 -134.5t-185 -49.5v0v0zM511 569q-76 0 -130 -54t-54 -130.5t54 -130.5t130.5 -54t130.5 54t54 130.5t-54 130.5t-131 54v0v0z" />
     <glyph glyph-name="times" unicode="&#xe616;" 
 d="M872 671l-72 72l-288 -288l-288 288l-72 -72l288 -288l-288 -288l72 -72l288 288l288 -288l72 72l-288 288z" />
     <glyph glyph-name="menu" unicode="&#xe606;" 

@@ -19,12 +19,9 @@
 	</div>
 	<!-- header end -->
 
-
-	<!-- slide start -->
 	<div class="slide slide-full">
 		<div class="bd">
-			<div class="item"
-				style="background-image: url(/images/banner-login.jpg);"></div>
+			<div class="item" style="background-image: url(/images/banner-login.jpg);"></div>
 		</div>
 
 		<div class="login-box">
@@ -68,43 +65,49 @@
 			</div>
 		</div>
 	</div>
-	<!-- slide end -->
-
 
 	<#include "./inc/footer.ftl"/>
 	<script src="/js/login.js"></script>
 	<script>
-		$(function() {
-			var 
-				$submit = $('#submit'),
-				isSubmit = false;
-
-			$submit.on('click', function() {
-				if (!isSubmit && loginPage.fn.checkForm()) {
-					isSubmit = true;
-					$.ajax({
-						type : 'POST',
-						url : '/user/login',
-						data : {
-							userName : loginPage.v.$username.val(),
-							password : loginPage.v.$pwd.val()
-						},
-						dataType : 'json',
-						success : function(data) {
-							var status = data.status;
-							if (status != 'y') {
-								loginPage.fn.showMsg('用户名密码错误!');
-							} else {
-								window.location = data.info;
-							}
-						},
-						complete: function() {
-							isSubmit = false;
-						}
-					});
+		_global = {
+			fn: {
+				init: function() {
+					this.submit();
+				},
+				submit: function() {
+                	var isSubmit = false;
+					$('#submit').on('click', function() {
+		                if (!isSubmit && loginPage.fn.checkForm()) {
+		                    $.ajax({
+		                        url : '/user/login',
+		                        type : 'POST',
+		                        dataType : 'json',
+		                        data : {
+		                            userName : $('#username').val(),
+		                            password : $('#pwd').val()
+		                        },
+		                        success: function(result) {
+		                            if (result.status != 'y') {
+		                                loginPage.fn.showMsg('用户名密码错误!');
+		                            } else {
+		                                window.location.href = result.info;
+		                            }
+		                        },
+		                        beforeSend: function(){
+		                            isSubmit = true;
+		                        },
+		                        complete: function() {
+		                            isSubmit = false;
+		                        }
+		                    });
+		                }
+		                return false;
+		            })
 				}
-                return false;
-			})
+			}
+		}
+		$(function(){
+			_global.fn.init();
 		})
 	</script>
 </body>

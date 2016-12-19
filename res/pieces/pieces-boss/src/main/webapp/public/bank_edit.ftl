@@ -81,11 +81,7 @@
 
 
     <#include "./inc/footer.ftl"/>
-
-    <script src="js/jquery.min.js"></script>
-    <script src="/js/jquery.form.js"></script>
     <script src="/js/validator/jquery.validator.min.js?local=zh-CN"></script>
-    <script src="/js/common.js"></script>
     <script src="/js/layer/layer.js"></script>
     <script>
         var _global = {
@@ -93,41 +89,7 @@
             fn: {
                 init: function() {
                     this.formValidate();
-
-                    $('#delete').on('click', function() {
-                        var $self = $(this);
-                        layer.confirm('确认删除该账户？', {
-                            btn: ['确认','取消'] //按钮
-                        }, function(index){
-                            layer.close(index);
-                            $.ajax({
-                                url: "/bank/delete/" + $("#id").val(),
-                                type: "POST",
-                                success: function(data){
-                                    if(data.status == "y"){
-                                        $.notify({
-                                            type: 'success',
-                                            title: data.info,
-                                            text: '3秒后自动跳转到账户列表页',
-                                            delay: 3e3,
-                                            call: function() {
-                                                setTimeout(function() {
-                                                    location.href = '/bank/index';
-                                                }, 3e3);
-                                            }
-                                        });
-                                    }else{
-                                        $.notify({
-                                            type: 'error',
-                                            title: data.info,
-                                            delay: 3e3
-                                        });
-                                    }
-                                }
-                            });
-                        });
-                        return false;
-                    });
+                    this.delete();
                 },
                 formValidate: function() {
                     $('#myform').validator({
@@ -157,7 +119,39 @@
                             }
                         }
                     });
-
+                },
+                delete: function() {
+                    var iid = $("#id").val();
+                    $('#delete').on('click', function() {
+                        layer.confirm('确认删除该账户？', {icon: 3, title:'提示'}, function(index){
+                            layer.close(index);
+                            $.ajax({
+                                url: "/bank/delete/" + iid,
+                                type: "POST",
+                                success: function(data){
+                                    if(data.status == "y"){
+                                        $.notify({
+                                            type: 'success',
+                                            title: data.info,
+                                            text: '3秒后自动跳转到账户列表页',
+                                            delay: 3e3,
+                                            call: function() {
+                                                setTimeout(function() {
+                                                    location.href = '/bank/index';
+                                                }, 3e3);
+                                            }
+                                        });
+                                    }else{
+                                        $.notify({
+                                            type: 'error',
+                                            title: data.info,
+                                            delay: 3e3
+                                        });
+                                    }
+                                }
+                            });
+                        });
+                    });
                 }
             }
         }

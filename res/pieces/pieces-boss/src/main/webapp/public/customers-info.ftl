@@ -75,21 +75,25 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>是否与ERP关联：</th>
+                                    <th>代理商：</th>
                                     <td>
-                                    <#if (user.bindErp==1)>
-                                        已关联
+                                        <#if user.agentName?exists>
+                                            ${user.agentName!}
+                                        <#else>
+                                            -
+                                        </#if>
+                                    </td>
+                                    <th>跟单员：</th>
+                                    <td>
+                                    <#if user.serviceName?exists>
+                                        ${user.serviceName!}
                                     <#else>
-                                        未关联
+                                        -
                                     </#if>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th></th>
-                                    <td>
-                                    </td>
-                                    <th></th>
-                                    <td></td>
+
                                 </tr>
                             </tbody>
                         </table>
@@ -104,6 +108,5 @@
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
 
-    <script src="/js/jquery.min.js"></script>
 </body>
 </html>

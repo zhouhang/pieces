@@ -19,7 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -95,4 +98,22 @@ public class EnquiryController extends BaseController{
         return new Result(true).info("报价成功!");
     }
 
+    /**
+     * 上传报价附件
+     * @param file
+     */
+    @RequestMapping(value = "/excel/{id}")
+    public String importEnquiryExcel(@RequestParam(required = true) MultipartFile file, @PathVariable("id") Integer id, ModelMap modelMap){
+        EnquiryBillsVo vo = enquiryBillsService.importEnquiryExcel(file, id);
+        modelMap.put("enquiryBills", vo);
+        return "enquiry-detail";
+    }
+
+    /**
+     * 下载报价excel
+     */
+    @RequestMapping(value = "/download/{id}")
+    public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, @PathVariable("id") Integer id){
+        enquiryBillsService.exportEnquiryExcel(response, request, id);
+    }
 }

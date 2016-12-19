@@ -142,5 +142,10 @@
     </select>
 
 
+    <select id="getNotHandleCount"  resultType="java.lang.Integer">
+        select count(id)
+        from certify_record WHERE status=0
+    </select>
+
 
 </mapper>

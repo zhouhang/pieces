@@ -12,7 +12,7 @@
     <div class="wrap">
     <#if (commodityDocPage??&&commodityDocPage.totalElements>0)>
         <div class="sitemap">
-            <a href="#">搜索结果</a>
+            <a href="javascript:;">搜索结果</a>
             <em>&gt;</em>
             <span>${keyword!}</span>
         </div>
@@ -23,7 +23,7 @@
                     <th width="150"></th>
                     <th width="260">商品信息</th>
                     <th width="160">规格等级</th>
-                    <th width="110">切制规格</th>
+                    <th width="110">片型</th>
                     <th width="120">原药产地</th>
                     <th width="">执行标准</th>
                     <th width="140">操作</th>
@@ -71,7 +71,5 @@
     <#include "./inc/helper.ftl"/>
     <#include "./inc/footer.ftl"/>
     <script src="/js/layer/layer.js"></script>
-
-
 </body>
 </html>

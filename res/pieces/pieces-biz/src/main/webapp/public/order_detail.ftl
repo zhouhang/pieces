@@ -41,7 +41,6 @@
                         <#if user_session_biz?? && user_session_biz.type == 2>
                             <span>需支付保证金：<em class="price">¥${orderForm.deposit}</em></span>
                         </#if>
-                            <span>运　　费：<em class="price">¥${orderForm.shippingCosts}</em></span>
                         </td>
                         <td class="nl">
                         <#if user_session_biz?? && user_session_biz.type == 2>
@@ -81,10 +80,9 @@
                         <thead>
                         <tr>
                             <th width="130">商品名称</th>
-                            <th width="70">切制规格</th>
+                            <th width="70">片型</th>
                             <th width="70">规格等级</th>
                             <th width="100">产地</th>
-                            <th width="90">期望交货日期</th>
                             <th width="90">数量<span>（公斤）</span></th>
                         <#if user_session_biz?? && user_session_biz.type == 2>
                             <th width="80">指导价<span>（元/公斤）</span></th>
@@ -105,7 +103,6 @@
                             <td>${commodity.spec}</td>
                             <td>${commodity.level}</td>
                             <td>${commodity.originOf}</td>
-                            <td><#if commodity.expectDate??>${commodity.expectDate?date}</#if></td>
                             <td>${commodity.amount}</td>
                             <#if user_session_biz?? && user_session_biz.type == 2>
                                 <td><#if commodity.guidePrice??>¥${commodity.guidePrice}</#if></td>
@@ -124,7 +121,6 @@
         </div>
     </div><!-- member-box end -->
 
-<#include "./inc/footer.ftl"/>
     <!-- start 新增发票 -->
     <div class="fa-form fa-form-layer" id="jinvoiceBox">
         <form action="" id="invoiceForm">
@@ -204,7 +200,9 @@
             </div>
         </form>
     </div><!-- end 新增发票 -->
-</body>
+    
+<#include "./inc/footer.ftl"/>
+
 <script src="js/layer/layer.js"></script>
 <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
 <script src="/js/jquery.form.js"></script>
@@ -319,4 +317,5 @@
         })
     })
 </script>
+</body>
 </html>

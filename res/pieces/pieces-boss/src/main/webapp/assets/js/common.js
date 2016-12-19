@@ -1,30 +1,68 @@
 // 用户中心导航高亮
 function currNav() {
-	var $side = $('.wrap'),
-		URL = document.URL.split('#')[0].split('?')[0],
-		base = $('base').attr('href')+"/";
-		
-	$side.find('a').each(function() {
-		var str = this.href.toLowerCase();
-		str = str.replace(base,"");
-		if (str !== "") {
-			var urlBefore = URL.split('/')[3];
-			var hrefBefore = str.split('/')[0];
-			if(urlBefore === hrefBefore){
-				$(this).addClass("on").parent().prev("a").addClass('curr');
-				return false; // break
-			}
-		}
-	})
+	var $side = $('.nav'),
+		URL = document.URL,
+		arr = URL.toLowerCase().split('#')[0].split('?')[0].split('/'),
+		pa = arr[3] + arr[4];
 
-/*	$side.on('click', 'div a', function() {
-		$(this).parent().toggleClass('expand').siblings().removeClass('expand');
-	})*/
+	$side.find('.subnav a').each(function() {
+		var url = this.href.toLowerCase(),
+			arr2 = url.toLowerCase().split('#')[0].split('?')[0].split('/'),
+			son = arr2[3] + arr2[4];
+
+        if (URL === url) {
+            $(this).addClass('on').parent().prev('a').addClass('curr');
+        } else if (pa === son) {
+        	$(this).parent().prev('a').addClass('curr');
+        }
+	})
+}
+
+function navMsg() {
+	$.ajax({
+        url: '/message/notHandle',
+        type: 'POST',
+        success: function (data) {
+            if(data.status=='y'){
+                var result = data.data;
+                var ACCOUNT_BILL_NUM = result['1'] || '';
+                var ENQUIRYBILL_NUM = result['2'] || '';
+                var CERTIFY_RECORD_NUM = result['3'] || '';
+                var ANON_ENQUIRY_NUM = result['4'] || '';
+                var PAY_RECORD_NUM = result['5'] || '';
+
+                if (ACCOUNT_BILL_NUM || ENQUIRYBILL_NUM || PAY_RECORD_NUM) {
+                	$('#salePage').append('<i></i>');
+                } else {
+                	$('#salePage').find('i').remove();
+                }
+
+                if (CERTIFY_RECORD_NUM || ANON_ENQUIRY_NUM) {
+                	$('#message').append('<i></i>');
+                } else{
+                    $('#message').find('i').remove();
+                }
+
+                $('#paymentIndex').find('b').html(PAY_RECORD_NUM);
+                $('#enquiryIndex').find('b').html(ENQUIRYBILL_NUM);
+                $('#accountIndex').find('b').html(ACCOUNT_BILL_NUM);
+                $("#certifyList").find('b').html(CERTIFY_RECORD_NUM); 
+                $("#anonEnquiry").find('b').html(ANON_ENQUIRY_NUM); 
+            }
+        }
+    });
+	
+	// 1分钟请求一次
+	setTimeout(function() {
+		navMsg();
+	}, 6e4);
 }
 
 function pageInit() {
 	// 用户中心导航高亮
 	currNav();
+	// 新消息提示
+	navMsg();
 }
 
 ;(function($){
@@ -79,7 +117,55 @@ function pageInit() {
 			$self.remove();
 		});
 	})
-})(jQuery)
+})(jQuery);
+
+/**
+ * Created by kevin1 on 7/18/16.
+ */
+
+!(function($) {
+    $.fn.code = function (options) {
+        var url = $.fn.code.settings.url;
+        var $this = $(this);
+        $.getJSON(url,{beedId:options.beedId, typeId:options.typeId}, function (data){
+            if (data.status === "y") {
+                var html = "<option value='-1'>请选择</option>";
+                if (data.data != null) {
+                    $.each(data.data, function(k, v){
+                        html += "<option value='"+v.id+"'>"+ v.name+"</option>";
+                    });
+                }
+                $this.html(html);
+            }
+        })
+    }
+    $.fn.code.type = {
+        COMMODITY_SPECIFICATIONS: 'SPEC',//"片型"
+        COMMODITY_PLACE: 'ORIGIN',//"原药产地"
+        COMMODITY_LEVEL: 'LEVEL'//"规格等级"
+    }
+
+    $.fn.code.settings = {
+        url:"/code/query"
+    }
+
+    $.fn.serializeObject = function(){
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function(){
+            if (o[this.name]){
+                if(!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    }
+}(jQuery));
+
 
 $(function() {
 	pageInit();

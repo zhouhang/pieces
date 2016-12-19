@@ -1,5 +1,6 @@
 package com.pieces.dao.vo;
 
+import com.pieces.dao.enums.CertifyTypeEnum;
 import com.pieces.dao.model.EnquiryBills;
 
 import java.util.Date;
@@ -36,6 +37,15 @@ public class EnquiryBillsVo extends EnquiryBills{
 
     // 报价人名称
     private String quotedName;
+
+    //用户类型
+    private Integer userType;
+
+    //认证状态
+    private Integer certifyStatus;
+
+    //企业类型
+    private Integer companyType;
 
     public String getUserName() {
         return userName;
@@ -107,5 +117,29 @@ public class EnquiryBillsVo extends EnquiryBills{
 
     public void setQuotedName(String quotedName) {
         this.quotedName = quotedName;
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
+    public Integer getCertifyStatus() {
+        return certifyStatus;
+    }
+
+    public void setCertifyStatus(Integer certifyStatus) {
+        this.certifyStatus = certifyStatus;
+    }
+
+    public String getCompanyType() {
+        return CertifyTypeEnum.findByValue(companyType);
+    }
+
+    public void setCompanyType(Integer companyType) {
+        this.companyType = companyType;
     }
 }

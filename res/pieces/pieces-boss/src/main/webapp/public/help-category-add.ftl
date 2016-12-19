@@ -14,7 +14,7 @@
             <dl>
                 <dt>单页面分类信息</dt>
                 <dd>
-                    <a class="curr" href="cms/category/index?model=1">基本信息</a>
+                    <a class="curr" href="/cms/category/index?model=1">基本信息</a>
                 </dd>
             </dl>
         </div>
@@ -23,7 +23,7 @@
                 <div class="title">
                     <h3><i class="fa fa-chevron-right"></i>新增单页面分类</h3>
                     <div class="extra">
-                        <a class="btn btn-gray" href="cms/category/index?model=1">返回</a>
+                        <a class="btn btn-gray" href="/cms/category/index?model=1">返回</a>
                         <button id="submit" type="submit" class="btn btn-red">保存</button>
                     </div>
                 </div>
@@ -56,9 +56,7 @@
         </div>
     </div><!-- fa-floor end -->
 </div>
-<script src="js/jquery.min.js"></script>
 <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
-<script src="js/common.js"></script>
 
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>

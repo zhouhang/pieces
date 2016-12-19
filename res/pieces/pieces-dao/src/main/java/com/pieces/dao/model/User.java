@@ -72,6 +72,8 @@ public class User  implements Serializable {
 
 	//认证完成时间
 	private Date certifyTime;
+
+	private Integer serviceId;
 	
 	//创建时间
 	private Date createTime;
@@ -80,6 +82,14 @@ public class User  implements Serializable {
 	private Date updateTime;
 	
 	public User(){}
+
+	public Integer getServiceId() {
+		return serviceId;
+	}
+
+	public void setServiceId(Integer serviceId) {
+		this.serviceId = serviceId;
+	}
 
 	public Date getCertifyTime() {
 		return certifyTime;

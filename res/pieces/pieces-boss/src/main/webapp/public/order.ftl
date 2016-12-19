@@ -22,7 +22,7 @@
                     <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                     <button class="btn btn-blue" type="button" id="search_btn"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
-            <@p.pager pageInfo=pageInfo  pageUrl="order/index"  params=param />
+            <@p.pager pageInfo=pageInfo  pageUrl="/order/index"  params=param />
             </div>
             <div class="chart">
                 <table class="tc">
@@ -33,7 +33,7 @@
                         <th>订购用户</th>
                         <th>用药单位</th>
                         <th>订单金额</th>
-                        <th width="170">下单日期</th>
+                        <th width="200">下单日期</th>
                         <th width="80">状态</th>
                         <th width="100">操作</th>
                     </tr>
@@ -86,7 +86,6 @@
 <!-- footer start -->
     <#include "./inc/footer.ftl"/>
 <!-- footer end -->
-    <script src="js/jquery.min.js"></script>
     <script src="js/laydate/laydate.js"></script>
 <script>
 
@@ -127,27 +126,15 @@
                 dateInit: function () {
                     var start = {
                         elem: '#start',
-                        format: 'YYYY-MM-DD hh:mm:ss',
-                        min: laydate.now(), //设定最小日期为当前日期
-                        max: '2099-06-16 23:59:59', //最大日期
-                        istime: true,
-                        istoday: false,
                         choose: function(datas){
-                            end.min = datas; //开始日选好后，重置结束日的最小日期
-                            end.start = datas; //将结束日的初始值设定为开始日
-                            $('#start').attr('title', datas);
+                            end.min = datas;
+                            end.start = datas;
                         }
                     };
                     var end = {
                         elem: '#end',
-                        format: 'YYYY-MM-DD hh:mm:ss',
-                        min: laydate.now(),
-                        max: '2099-06-16 23:59:59',
-                        istime: true,
-                        istoday: false,
                         choose: function(datas){
-                            start.max = datas; //结束日选好后，重置开始日的最大日期
-                            $('#end').attr('title', datas);
+                            start.max = datas;
                         }
                     };
                     laydate(start);

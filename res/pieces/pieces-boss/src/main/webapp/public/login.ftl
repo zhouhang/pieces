@@ -26,22 +26,18 @@
                         <i class="fa fa-lock"></i>
                     </div>
                     <div class="cnt">
-                        <input onkeydown="loginPage.fn.keyDown()" type="password" placeholder="密码" id="password" name="password" autocomplete="off" value="" class="ipt">
+                        <input type="password" placeholder="密码" id="password" name="password" autocomplete="off" value="" class="ipt">
                     </div>
                 </div>
 
                 <div class="button">
-                    <button id="submit" class="btn btn-red" type="button">登 录</button>
+                    <button id="submit" class="btn btn-red" type="submit">登 录</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <script src="js/validform.min.js"></script>
-    <script src="js/jquery.form.js"></script>
-
-</body>
-
+<script src="/js/jquery.form.js"></script>
 <script type="text/javascript">
     var loginPage = {
         v: {
@@ -53,17 +49,6 @@
         fn: {
             init: function() {
                 this.bindEvent();
-
-                $("#submit").click(function(){
-                    loginPage.fn.login();
-                })
-
-            },
-            keyDown:function(){
-                if (event.keyCode == 13)
-                {
-                    $("#submit").click();
-                }
             },
             // 错误提示
             showMsg: function(msg) {
@@ -86,7 +71,6 @@
             checkForm: function() {
                 var c2 = this.checkPassword();
                 var c1 = this.checkUsername();
-
                 if (c2 || c1) {
                     this.showMsg(c1 && c2 ? '请输入用户名和密码' : c1 + c2);
                     return false;
@@ -97,23 +81,25 @@
             bindEvent: function() {
                 var self = this;
                 loginPage.v.$username.on('blur', function() {
-                    self.checkUsername();
+                    // self.checkUsername();
                     $(this).closest('.group').removeClass('on');
                 }).on('focus', function() {
                     $(this).closest('.group').addClass('on');
+                    self.showMsg('');
                 });
-
                 loginPage.v.$password.on('blur', function() {
-                    self.checkPassword();
+                    // self.checkPassword();
                     $(this).closest('.group').removeClass('on');
                 }).on('focus', function() {
                     $(this).closest('.group').addClass('on');
+                    self.showMsg('');
                 });
-
                 loginPage.v.$submit.on('click', function() {
-                    return self.checkForm();
+                    if (self.checkForm()) {
+                        self.login();
+                    }
+                    return false;
                 });
-
             },
             login:function(){
                 $("#loginForm").ajaxSubmit({
@@ -129,10 +115,9 @@
             }
         }
     }
-
     $(function() {
         loginPage.fn.init();
     })
-
 </script>
+</body>
 </html>

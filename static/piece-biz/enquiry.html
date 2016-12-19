@@ -128,7 +128,7 @@
                 <div class="batch">
                     <span class="btn" v-on:click="batch">&gt;&gt;批量询价</span>
                     <ul class="files">
-                        <li v-for="file in files"><i class="fa fa-attach"></i><span>{{file.filename}}</span><a href="javascript:;" v-on:click="delAttach(filename.name)">删除</a></li>
+                        <li v-for="file in files"><i class="fa fa-attach"></i><span>{{file.filename}}</span><a href="javascript:;" v-on:click="delAttach(file.filename)">删除</a></li>
                     </ul>
                 </div>
                 <div class="title">
@@ -233,6 +233,7 @@
             </div>
         </div>
     </div><!-- footer end -->
+
 
     <script src="js/vue.min.js"></script>
     <script src="js/jquery.min.js"></script>

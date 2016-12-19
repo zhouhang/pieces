@@ -6,6 +6,7 @@ import com.pieces.dao.ICommonDao;
 import com.pieces.dao.PayRecordDao;
 import com.pieces.dao.enums.OrderEnum;
 import com.pieces.dao.model.*;
+import com.pieces.dao.vo.AccountBillVo;
 import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.dao.vo.PayRecordVo;
 import com.pieces.service.AbsCommonService;
@@ -40,6 +41,7 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 
 	@Autowired
 	private SmsService smsService;
+
 
 
 	@Override
@@ -127,6 +129,7 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		OrderForm orderForm = orderFormService.findById(orderId);
 		payRecordVo.setOrderCode(orderForm.getCode());
 		payRecordVo.setAmountsPayable(orderForm.getAmountsPayable());
+		payRecordVo.setDeposit(orderForm.getDeposit());
 
 
 		//添加收款账户信息
@@ -189,6 +192,10 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 			smsService.sendPaySuccess(orderFormVo.getUser().getContactName(),payRecord.getActualPayment(),
 					orderFormVo.getUser().getContactMobile());
 		}
+		//为代理商用户生成三个月账期
+		if(payRecord.getAgentId()!=null){
+			accountBillService.generateBill(payRecord,member.getId());
+		}
 
 }
 
@@ -210,6 +217,21 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		OrderFormVo orderFormVo = orderFormService.findVoById(payRecord.getOrderId());
 		smsService.sendPayFail(orderFormVo.getUser().getContactName(),payRecord.getActualPayment(),
 				orderFormVo.getUser().getContactMobile());
+	}
+
+	@Override
+	public PageInfo<PayRecordVo> findByUserId(PayRecordVo payRecordVo, Integer pageNum, Integer pageSize) {
+		pageNum = pageNum == null ? 1 : pageNum;
+		pageSize = pageSize == null ? 10 : pageSize;
+		List<PayRecordVo>  list = payRecordDao.findByUserId(payRecordVo);
+		PageHelper.startPage(pageNum, pageSize);
+		PageInfo page = new PageInfo(list);
+		return page;
+	}
+
+	@Override
+	public Integer getNotHandleCount() {
+		return payRecordDao.getNotHandleCount();
 	}
 
 	@Override

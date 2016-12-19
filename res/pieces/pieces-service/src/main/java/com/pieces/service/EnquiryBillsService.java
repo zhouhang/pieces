@@ -6,7 +6,15 @@ import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.EnquiryBillsVo;
 import com.pieces.dao.vo.EnquiryRecordVo;
+import com.pieces.service.constant.bean.Result;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -33,4 +41,18 @@ public interface EnquiryBillsService extends ICommonService<EnquiryBills>{
     public PageInfo<EnquiryBillsVo> findByParam (EnquiryBillsVo enquiryBillsVO, Integer pageNum, Integer pageSize);
 
     public EnquiryBillsVo findVOById(Integer id);
+
+    /**
+     * 导入报价文件
+     * @param file
+     * @return
+     */
+    public  EnquiryBillsVo importEnquiryExcel(MultipartFile file, Integer id);
+
+    /**
+     * 下载报价excel
+     */
+    public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, Integer id);
+
+    public Integer getNotHandleCount();
 }

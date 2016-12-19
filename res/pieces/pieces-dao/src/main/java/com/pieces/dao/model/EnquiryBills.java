@@ -20,7 +20,7 @@ public class EnquiryBills  implements Serializable {
 	//管理员ID
 	private Integer memberId;
 	
-	//状态(0:未报价,1:已报价)
+	//状态(0:未报价,1:已报价 2:已过期(根据报价有效期来判断))
 	private Integer status;
 	
 	//创建时间
@@ -34,6 +34,9 @@ public class EnquiryBills  implements Serializable {
 
 	// 最后报价时间
 	private Date quotedTime;
+
+	// 报价截止日期
+	private Date expireDate;
 
 	private List<EnquiryCommoditys> enquiryCommoditys;
 
@@ -117,5 +120,13 @@ public class EnquiryBills  implements Serializable {
 
 	public void setEnquiryCommoditys(List<EnquiryCommoditys> enquiryCommoditys) {
 		this.enquiryCommoditys = enquiryCommoditys;
+	}
+
+	public Date getExpireDate() {
+		return expireDate;
+	}
+
+	public void setExpireDate(Date expireDate) {
+		this.expireDate = expireDate;
 	}
 }

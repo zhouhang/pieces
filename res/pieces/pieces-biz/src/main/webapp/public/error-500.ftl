@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>商品搜索-上工好药</title>
+    <title>系统忙！请稍后再试-上工好药</title>
 </head>
 
 <body>

@@ -40,6 +40,8 @@ public interface UserService extends ICommonService<User>{
 
 	PageInfo<User> findByCondition(UserVo userVo, Integer pageNum, Integer pageSize);
 
+	PageInfo<UserVo> findVoByCondition(UserVo userVo, Integer pageNum, Integer pageSize);
+
 	/**
 	 * 新建订单时选择客户来源
 	 * @param userVo
@@ -50,4 +52,7 @@ public interface UserService extends ICommonService<User>{
 	PageInfo<UserVo> findProxyUser(UserVo userVo, Integer pageNum, Integer pageSize);
 
 	public void login(Subject subject, UsernamePasswordToken token);
+
+	UserVo findVoById(Integer id);
+
 }

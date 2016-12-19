@@ -25,21 +25,16 @@
 <!-- member-box start -->
     <div class="member-box">
         <div class="wrap">
-            <div class="side side-helper">
+            <div class="side">
             <#list articleCategorylist as articleCategory>
-
                 <dl <#if (articleCategory.id == article.categoryId)>class="expand"</#if>>
-                    <dt>                        
-                        <span>${articleCategory.name}</span>
-                        <i class="fa fa-chevron-right"></i>
-                    </dt>
+                    <dt>${articleCategory.name}</dt>
+                    <#list articleCategory.articles as articles>
                     <dd>
-                        <#list articleCategory.articles as articles>
-                            <a <#if (articles.id == article.id)>class="curr"</#if> href="/help/${articles.id}">${articles.title}</a>
-                        </#list>
+                        <a <#if (articles.id == article.id)>class="curr"</#if> href="/help/${articles.id}">${articles.title}</a>
                     </dd>
+                    </#list>
                 </dl>
-
             </#list>
             </div>
 
@@ -59,5 +54,23 @@
 
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
+
+    <script>
+        var _global = {
+            fn: {
+                init: function() {
+                    this.mailto();
+                },
+                mailto: function() {
+                    $('.article').find('a').each(function() {
+                        this.href = this.href.replace(/http:\/\/mailto:/g, 'mailto:');
+                    })
+                }
+            }
+        }
+        $(function () {
+            _global.fn.init();
+        })
+    </script>
 </body>
 </html>

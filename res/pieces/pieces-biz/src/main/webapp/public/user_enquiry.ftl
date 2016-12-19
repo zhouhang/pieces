@@ -23,7 +23,7 @@
                 <div class="fa-table">
                 	<div class="caption">
                         <form id="excelForm" action="/center/enquiry/parseXsl" method="post" enctype="multipart/form-data">
-                        <p>请输入要询价的商品名称及对应数量，期望单价可以不输入。一次可以添加多个商品。</p>
+                        <p><strong>输入商品的名称，选择要询价的片型及规格等级。一次可添加多个商品。</strong></p>
                         <p>您还可以<a class="btn" href="/file/批量采购模版.xls">下载模板</a>填入内容后，
                             <span class="btn btn-file">上传文档<input type="file" id="excel" name="excel"></span>
                             到网站。</p>
@@ -37,25 +37,19 @@
 	                			<thead>
 	                				<tr>
 	                					<th width="180">商品名称</th>
-	                					<th>切制规格</th>
+	                					<th width="80">片型</th>
 	                					<th>规格等级</th>
-	                					<th>产地</th>
-	                					<th>数量<span>（公斤）</span></th>
-	                					<th width="130">期望单价<span>（元/公斤）</span></th>
-	                					<th width="110">期望交货日期</th>
+	                					<th width="110">产地</th>
 	                					<th width="100">操作</th>
 	                				</tr>
 	                			</thead>
 	                			<tfoot>
 	                				<tr>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="commodityName" autocomplete="off"><span class="error"></span></div>
-                                            <input name="commodityId" type="hidden" value="" /></td>
+	                            		<td><div class="ipt-wrap"><input name="commodityId" type="hidden" value="" /><input type="text" class="ipt ipt-name" value="" name="commodityName" autocomplete="off"><span class="error"></span></div>
+                                            </td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="specs" autocomplete="off"><span class="error"></span></div></td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"><span class="error"></span></div></td>
 	                            		<td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"><span class="error"></span></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"><span class="error"></span></div></td>
-	                            		<td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
 	                            		<td>
 	                            			<a class="add c-blue" href="javascript:;">添加</a>
 	                            			<a class="remove c-red" href="javascript:;">删除</a>
@@ -67,13 +61,10 @@
                                 <#if enquiryCommoditysList??>
                                     <#list enquiryCommoditysList as enquiryCommodity>
                                     <tr>
-                                        <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="${enquiryCommodity.commodityName!}" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="<#if enquiryCommodity??>${enquiryCommodity.id!}</#if>" /></td>
+                                        <td><div class="ipt-wrap"><input name="commodityId" type="hidden" value="<#if enquiryCommodity??>${enquiryCommodity.id!}</#if>" /><input type="text" class="ipt ipt-name" value="${enquiryCommodity.commodityName!}" name="commodityName" autocomplete="off"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text" class="ipt" value="${enquiryCommodity.specs!}" name="specs" autocomplete="off"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text" class="ipt" value="${enquiryCommodity.level!}" name="level" autocomplete="off"><span class="error"></span></div></td>
                                         <td><div class="ipt-wrap"><input type="text" class="ipt" value="${enquiryCommodity.origin!}" name="origin" autocomplete="off"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="${enquiryCommodity.amount!}" name="amount" autocomplete="off"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text" class="ipt price" value="${enquiryCommodity.expectPrice!}" name="expectPrice" autocomplete="off"><span class="error"></span></div></td>
-                                        <td><div class="ipt-wrap"><input type="text" class="ipt date" value="${enquiryCommodity.expectDate?string("yyyy-MM-dd")}" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                         <td>
                                             <a class="add c-blue" href="javascript:;">添加</a>
                                             <#if (enquiryCommoditysList?size>1)>
@@ -88,13 +79,10 @@
                                 <#if commodityList??&&commodityList?has_content>
                                     <#list commodityList as commodity>
                                         <tr>
-                                            <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="${commodity.name!}" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="<#if commodityList[0]??>${commodityList[0].id!}</#if>" /></td>
+                                            <td><div class="ipt-wrap"><input name="commodityId" type="hidden" value="<#if commodityList[0]??>${commodityList[0].id!}</#if>" /><input type="text" class="ipt ipt-name" value="${commodity.name!}" name="commodityName" autocomplete="off"><span class="error"></span></div></td>
                                             <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.spec!}" name="specs" autocomplete="off"><span class="error"></span></div></td>
                                             <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.level!}" name="level" autocomplete="off"><span class="error"></span></div></td>
                                             <td><div class="ipt-wrap"><input type="text" class="ipt" value="${commodity.originOf!}" name="origin" autocomplete="off"><span class="error"></span></div></td>
-                                            <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"><span class="error"></span></div></td>
-                                            <td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"><span class="error"></span></div></td>
-                                            <td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                             <td>
                                                 <a class="add c-blue" href="javascript:;">添加</a>
                                                 <#if (commodityList?size>1)>
@@ -106,13 +94,10 @@
                                     <#else>
                                         <#if !enquiryCommoditysList??>
                                             <tr>
-                                                <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="" /></td>
+                                                <td><div class="ipt-wrap"><input name="commodityId" type="hidden" value="" /><input type="text" class="ipt ipt-name" value="" name="commodityName" autocomplete="off"><span class="error"></span></div></td>
                                                 <td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="specs" autocomplete="off"><span class="error"></span></div></td>
                                                 <td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="level" autocomplete="off"><span class="error"></span></div></td>
                                                 <td><div class="ipt-wrap"><input type="text" class="ipt" value="" name="origin" autocomplete="off"><span class="error"></span></div></td>
-                                                <td><div class="ipt-wrap"><input type="text" class="ipt amount" value="" name="amount" autocomplete="off"><span class="error"></span></div></td>
-                                                <td><div class="ipt-wrap"><input type="text" class="ipt price" value="" name="expectPrice" autocomplete="off"><span class="error"></span></div></td>
-                                                <td><div class="ipt-wrap"><input type="text" class="ipt date" value="" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td>
                                                 <td>
                                                     <a class="add c-blue" href="javascript:;">添加</a>
                                                 </td>
@@ -137,7 +122,7 @@
     <div class="suggestions" id="suggestions">
 		<div class="hd">
 			<div class="group">
-				<span class="w1">商品名称</span><span class="w2">切制规格</span><span class="w3">规格等级</span><span class="w4">产地</span>
+				<span class="w1">商品名称</span><span class="w2">片型</span><span class="w3">规格等级</span><span class="w4">产地</span>
 			</div>
 		</div>
 		<div class="bd"></div>
@@ -146,6 +131,7 @@
     <script src="js/jquery.form.js"></script>
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
+    <script src="js/jquery.pagination.min.js"></script>
     <script>
 
     	var page = {
@@ -182,7 +168,7 @@
                             return true; // break
                         }
                         row ++;
-                        html.push('<tr><td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" value="', getVal(item.commodityName), '" name="commodityName" autocomplete="off"><span class="error"></span></div><input name="commodityId" type="hidden" value="', getVal(item.commodityId), '" /></td><td><div class="ipt-wrap"><input type="text" class="ipt" value="', getVal(item.specs), '" name="specs" autocomplete="off"><span class="error"></span></div></td><td><div class="ipt-wrap"><input type="text" class="ipt" value="', getVal(item.level), '" name="level" autocomplete="off"><span class="error"></span></div></td><td><div class="ipt-wrap"><input type="text" class="ipt" value="', getVal(item.origin), '" name="origin" autocomplete="off"><span class="error"></span></div></td><td><div class="ipt-wrap"><input type="text" class="ipt amount" value="', getVal(item.amount), '" name="amount" autocomplete="off"><span class="error"></span></div></td><td><div class="ipt-wrap"><input type="text" class="ipt price" value="', getVal(item.expectPrice), '" name="expectPrice" autocomplete="off"><span class="error"></span></div></td><td><div class="ipt-wrap"><input type="text" class="ipt date" value="', formatDate(item.expectDate), '" name="expectDate" autocomplete="off" onclick="laydate({min:laydate.now()})"><span class="error"></span></div></td><td><a class="add c-blue" href="javascript:;">添加</a><a class="remove c-red" href="javascript:;">删除</a></td></tr>');
+                        html.push('<tr> \n <td> \n <div class="ipt-wrap"> \n <input type="hidden" value="', getVal(item.commodityId), '" name="commodityId"> \n <input type="text" value="', getVal(item.commodityName), '" name="commodityName" class="ipt ipt-name" autocomplete="off"><span class="error"></span> \n </div> \n </td> \n <td> \n <div class="ipt-wrap"> \n <input type="text" value="', getVal(item.specs), '" name="specs" class="ipt" autocomplete="off"><span class="error"></span> \n </div> \n </td> \n <td> \n <div class="ipt-wrap"> \n     <input type="text" value="', getVal(item.level), '" name="level" class="ipt" autocomplete="off"><span class="error"></span></div> \n </td> \n <td> \n <div class="ipt-wrap"> \n     <input type="text" value="', getVal(item.origin), '" name="origin" class="ipt" autocomplete="off"><span class="error"></span></div> \n </td> \n <td><a class="add c-blue" href="javascript:;">添加</a><a class="remove c-red" href="javascript:;">删除</a></td> \n </tr>');
                     })
                     this.$tbody.empty().html(html.join(''));
                     row < 2 && this.$tbody.find('.remove').remove();
@@ -202,9 +188,6 @@
                     self.$tbody      = $tbody;
                     self.$suggestions = $suggestions;
     				$tfoot.empty();
-
-                    // 第一个输入框不为空时自动获取焦点
-                    $ipt.val() === '' && $ipt.focus() && $ipt.after($suggestions);
 
                     // 隐藏错误提示
                     $myform.on('focus', '.ipt', function() {
@@ -232,9 +215,11 @@
                     // 商品名联想
     				$myform.on({
                         'click': function(event) {
-                            $(this).after($suggestions);
-                            // self.getKeywords(this.value); // 获取焦点时查询一次
                             event.stopPropagation();
+                        },
+                        'focus': function() {
+                            $(this).after($suggestions);
+                            $suggestions.find('.group').length > 1 && $suggestions.show();
                         },
                         'input': function() {
                             self.getKeywords(this.value);                           
@@ -245,18 +230,17 @@
     				$body.on('click', function() {
     					$suggestions.hide();
     				})
-    				$body.on('click', '.suggestions', function(event) {
+    				$suggestions.on('click', function(event) {
     					event.stopPropagation();
     				})
 
                     // 关键字自动填充
-                    $body.on('click', '.suggestions .bd .group', function() {
-                        var data = $(this).data('val').split('-');
-                        $suggestions.prev().val(data[0])
-                        .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
-                        .closest('td').next().find('.ipt').val(data[2]).trigger('focus').end()
-                        .closest('td').next().find('.ipt').val(data[3]).trigger('focus').end();
-                        $suggestions.hide().parent().next().val(data[4]);
+                    $suggestions.on('click', '.bd .group', function() {
+                        $suggestions.prev().val($(this).find('.w1').html()).prev().val($(this).data('id'))
+                        .closest('td').next().find('.ipt').val($(this).find('.w2').html()).trigger('focus').end()
+                        .closest('td').next().find('.ipt').val($(this).find('.w3').html()).trigger('focus').end()
+                        .closest('td').next().find('.ipt').val($(this).find('.w4').html()).trigger('focus').blur();
+                        $suggestions.hide();
                     })
 
     				// 新增一行
@@ -264,7 +248,6 @@
     					$tbody.append(modal);
     					// 没有删除按钮时添加删除按钮
     					$(this).siblings().length === 0 && $(this).after(' <a class="remove c-red" href="javascript:;">删除</a>');
-    					
     				})
 
     				// 删除一行
@@ -304,7 +287,7 @@
                         self.timer && clearTimeout(self.timer);
                         self.timer = setTimeout(function() {
                             self.ajaxSearch(keywords);
-                        }, 500);                
+                        }, 300);                
 					}    			
     			},
                 ajaxSearch: function(keywords) {
@@ -313,10 +296,14 @@
                         url: 'center/enquiry/auto',
                         dataType: 'json',
 						data:{commodityName:keywords},
-                        success: function(data) {
+                        success: function(result) {
                             // 显示查询结果
-                            if (data.status === 'y') {
-                                self.toHtml(data.data);
+                            if (result.status === 'y') {
+                                if (result.data.length === 0) {
+                                    self.$suggestions.show().find('.bd').empty().html('暂无此商品:)');
+                                } else {
+                                    self.toHtml(result.data, 0, 7);
+                                }
                             } else {
                                 self.$suggestions.hide();
                             }
@@ -324,19 +311,35 @@
                     })
                 },
     			// 显示查询结果
-    			toHtml: function(json) {
-					var modal = [];
-					$.each(json, function(i, item) {
-                        var val = item.name + '-' + item.spec + '-' + item.level + '-' + item.originOf+'-'+item.id;
-						modal.push('<div class="group" data-val="', val, '">');
-						modal.push('<span class="w1">', item.name, '</span>');
-						modal.push('<span class="w2">', item.spec, '</span>');
-						modal.push('<span class="w3">', item.level, '</span>');
-						modal.push('<span class="w4">', item.originOf, '</span>');
-					 	modal.push('</div>');
-					})
-					this.$suggestions.find('.bd').empty().html(modal.join('')).parent().show();
+    			toHtml: function(item, page_index, pageSize) {
+					var modal = [],
+                        maxPage = Math.min((page_index + 1) * pageSize, item.length),
+                        hasPage = pageSize < item.length;
+
+                    for (var i = page_index * pageSize; i < maxPage; i++) {
+                        modal.push('<div class="group" data-id="', item[i].id, '">');
+                        modal.push(     '<span class="w1">', item[i].name, '</span>');
+                        modal.push(     '<span class="w2">', item[i].spec, '</span>');
+                        modal.push(     '<span class="w3">', item[i].level, '</span>');
+                        modal.push(     '<span class="w4">', item[i].originOf, '</span>');
+                        modal.push('</div>');
+                    }
+                    hasPage && modal.push('<div class="jq-page"></div>');
+                    this.$suggestions.show().find('.bd').empty().html(modal.join(''));
+                    hasPage && this.showPage(item, page_index, pageSize);
     			},
+                showPage: function(item, page_index, pageSize) {
+                    var self = this;
+                    $('.jq-page').pagination(item.length, {
+                        items_per_page: pageSize, //pageSize 每页显示数量
+                        current_page: page_index, //默认pageIndex,0(默认),false(不加载)
+                        num_edge_entries: 2, //1(任何情况下都显示第一页和最后一页),0(不显示)
+                        callback: function(page_index) {
+                            self.toHtml(item, page_index, pageSize);
+                        }
+                    })
+                    $('.jq-page').prepend('<div class="p-size">总共' + item.length + '条记录</div>')
+                },
                 submit: function() {
                     var self     = this;
                     var isSubmit = false;
@@ -401,13 +404,7 @@
                 },
                 response:function(result){
                     if(result.status=='y'){
-                        $.notify({
-                            type: 'success',
-                            title: '提交成功',
-                            text: result.info
-                        })
-                        this.$tbody.empty().html(this.modal).find('.remove').remove();
-                        $('#billId').val('');
+                        window.location.href = '/center/enquiry/success';
                     }else{
                         $.notify({
                             type: 'error',

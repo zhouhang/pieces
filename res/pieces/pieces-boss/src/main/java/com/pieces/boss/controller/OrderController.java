@@ -10,10 +10,12 @@ import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.utils.ExcelParse;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.WebUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +24,18 @@ import org.springframework.ui.ModelMap;
 import org.springframework.util.StreamUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Author: koabs
@@ -302,6 +308,25 @@ public class OrderController extends BaseController{
         model.put("billsPage",billsPageInfo);
         model.put("user",user);
     }
+
+    //解析上传的报价excel
+    @RequestMapping(value = "/importExcel")
+    @ResponseBody
+    private Result importExcel(@RequestParam("file") MultipartFile file){
+
+        List<EnquiryCommoditys> enquiryCommodityses= null;
+
+        try {
+            enquiryCommodityses = ExcelParse.importQuoteInfo(file.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+        }
+
+        return new Result(true).data(enquiryCommodityses);
+    }
+
 
 
 }

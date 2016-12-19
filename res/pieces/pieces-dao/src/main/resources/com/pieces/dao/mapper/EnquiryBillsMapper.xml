@@ -11,6 +11,7 @@
             <result column="update_time"  property="updateTime" />
             <result column="update_user"  property="updateUser" />
             <result column="quoted_time"  property="quotedTime" />
+            <result column="expire_date"  property="expireDate" />
     </resultMap>
 
     <resultMap id="EnquiryBillsVOResultMap" type="com.pieces.dao.vo.EnquiryBillsVo" extends="EnquiryBillsResultMap">
@@ -21,10 +22,19 @@
         <result column="contactName"  property="contactName" />
         <result column="updateUserName"  property="updateUserName" />
         <result column="quotedName"  property="quotedName" />
+        <result column="userType"  property="userType" />
+        <result column="certifyStatus"  property="certifyStatus" />
+        <result column="companyType"  property="companyType" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,code,user_id,member_id,status,create_time,update_time,update_user,quoted_time
+        id,code,user_id,member_id,status,create_time,update_time,update_user,quoted_time,expire_date
+    </sql>
+
+    <sql id="Base_Column_List_Alisa">
+        eb.id as id,eb.code as code,eb.user_id as user_id,eb.member_id as member_id,eb.status as status,
+        eb.create_time as create_time,eb.update_time as update_time,eb.update_user as update_user,
+        eb.quoted_time as quoted_time,eb.expire_date as expire_date
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="EnquiryBillsResultMap">
@@ -42,42 +52,41 @@
 
     <select id="findByParam" parameterType="com.pieces.dao.vo.EnquiryBillsVo" resultMap="EnquiryBillsVOResultMap">
         select
-        enquiry_bills.id as id,code,user_id,member_id,status,enquiry_bills.create_time as create_time,
-        enquiry_bills.update_time as update_time,update_user,quoted_time,
+        <include refid="Base_Column_List_Alisa"/>,
         user_name AS userName,company_full_name as companyFullName,area_full as areaFull,
         user.contact_mobile as contactMobile, user.contact_name as contactName
-        from enquiry_bills
+        from enquiry_bills eb
         left join user on user_id = user.id
         <where>
             <if test="id != null">
-                enquiry_bills.id = #{id}
+                eb.id = #{id}
             </if>
 
             <if test="code != null">
-                and code like "%"#{code}"%"
+                and eb.code like "%"#{code}"%"
             </if>
 
             <if test="userId != null">
-                and user_id = #{userId}
+                and eb.user_id = #{userId}
             </if>
 
             <if test="memberId != null">
-                and member_id = #{memberId}
+                and eb.member_id = #{memberId}
             </if>
 
             <if test="status != null">
-                and status = #{status}
+                and eb.status = #{status}
             </if>
 
             <if test="createTime != null">
-                and enquiry_bills.create_time = #{createTime}
+                and eb.create_time = #{createTime}
             </if>
             <if test="startTime != null">
-                and enquiry_bills.create_time <![CDATA[ >= ]]> #{startTime}
+                and eb.create_time <![CDATA[ >= ]]> #{startTime}
             </if>
 
             <if test="endTime != null">
-                and enquiry_bills.create_time <![CDATA[ <= ]]> #{endTime}
+                and eb.create_time <![CDATA[ <= ]]> #{endTime}
             </if>
 
             <if test="userName != null">
@@ -92,20 +101,22 @@
                 and area_full like "%"#{areaFull}"%"
             </if>
         </where>
-        order by create_time DESC
+        order by eb.create_time DESC
     </select>
 
     <select id="findVOById" parameterType="java.lang.Integer"  resultMap="EnquiryBillsVOResultMap">
          select
-        enquiry_bills.id as id,code,user_id,member_id,status,enquiry_bills.create_time as create_time,
-        enquiry_bills.update_time as update_time,update_user,quoted_time,
+        enquiry_bills.id as id,code,enquiry_bills.user_id as user_id,member_id,status,enquiry_bills.create_time as create_time,
+        enquiry_bills.update_time as update_time,update_user,quoted_time,expire_date,
         user_name AS userName,company_full_name as companyFullName,area_full as areaFull,
-        user.contact_mobile as contactMobile, user.contact_name as contactName,
-        updateUser.name as updateUserName, member.name as quotedName
+        user.contact_mobile as contactMobile, user.contact_name as contactName,user.type as userType, user.certify_status as certifyStatus,
+        updateUser.name as updateUserName, member.name as quotedName,
+        certification.type as companyType
         from enquiry_bills
-        left join user on user_id = user.id
+        left join user on enquiry_bills.user_id = user.id
         left join member updateUser on update_user = updateUser.id
         left join member on member_id = member.id
+        left join user_certification certification on enquiry_bills.user_id = certification.user_id
         WHERE enquiry_bills.id = #{id}
     </select>
 
@@ -116,9 +127,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.EnquiryBills">
         insert into
-        enquiry_bills (code,user_id,member_id,status,create_time)
+        enquiry_bills (code,user_id,member_id,status,create_time,expire_date)
         values
-        (#{code},#{userId},#{memberId},#{status},#{createTime})
+        (#{code},#{userId},#{memberId},#{status},#{createTime},#{expireDate})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.EnquiryBills">
@@ -156,6 +167,10 @@
             <if test="quotedTime != null">
                 quoted_time = #{quotedTime},
             </if>
+
+            <if test="expireDate != null">
+                expire_date = #{expireDate},
+            </if>
         </set>
         where id = #{id}
     </update>
@@ -168,7 +183,8 @@
             b.user_id,
             b.member_id,
             b.status,
-            b.create_time
+            b.create_time,
+            b.expire_date
         from
             enquiry_bills b
         left outer join enquiry_commoditys c on b.id = c.bills_id
@@ -178,6 +194,12 @@
             </if>
             <if test="status != null">
                 and b.status = #{status}
+            </if>
+            <if test="status == 1">
+                and b.expire_date <![CDATA[>=]]> DATE_FORMAT(#{expireDate},'%Y-%m-%d')
+            </if>
+            <if test="expireDate != null and status == null">
+                and b.expire_date <![CDATA[<]]> DATE_FORMAT(#{expireDate},'%Y-%m-%d')
             </if>
             <if test="commodityName != null">
                 and c.commodity_name like "%"#{commodityName}"%"
@@ -189,11 +211,13 @@
                 and DATE_FORMAT(b.create_time, '%Y-%m-%d') <![CDATA[<]]> DATE_FORMAT(DATE_ADD(#{endDate},INTERVAL 1 DAY),'%Y-%m-%d')
             </if>
         </where>
-
         order by  b.create_time DESC
     </select>
 
 
-
+    <select id="getNotHandleCount"  resultType="java.lang.Integer">
+        select count(id)
+        from enquiry_bills WHERE status=0
+    </select>
 
 </mapper>

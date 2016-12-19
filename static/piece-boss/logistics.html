@@ -110,7 +110,7 @@
                         <tr>
                             <td></td>
                             <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
-                            <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
+                            <td><div class="ipt-wrap" id="dataWrap"><input type="text" class="ipt" value="" id="date"></div></td>
                             <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
                             <td><div class="ipt-wrap"><input type="text" class="ipt" value=""></div></td>
                             <td></td>
@@ -215,6 +215,34 @@
     </div><!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
+    <script src="js/laydate/laydate.js"></script>
+    <script>
+      //定义根变量
+    !(function($) {
+        var page = {
+            //定义全局变量区
+            v: {
+            },
+            //定义方法区
+            fn: {
+                //初始化方法区
+                init: function () {
+                    page.fn.dateInit();
+                },
+                //日期选择
+                dateInit: function () {
+                    laydate({
+                        elem: '#date'
+                    });
+                }
+            }
+        }
+        //加载页面js
+        $(function() {
+            page.fn.init();
+        });
+    })(jQuery);
+    </script>
 </body>
 </html>
 

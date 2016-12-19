@@ -57,11 +57,10 @@
                         <table class="tc">
                             <thead>
                                 <tr>
-                                    <th>商品名称</th>
-                                    <th>切制规格</th>
+                                    <th width="110">商品名称</th>
+                                    <th width="80">片型</th>
                                     <th>规格等级</th>
-                                    <th>产地</th>
-                                    <th>期望交货日期</th>
+                                    <th width="120">产地</th>
                                     <th>数量（公斤）</th>
                                 </tr>
                             </thead>
@@ -73,7 +72,6 @@
                                     <td>${logisticCommodity.spec}</td>
                                     <td>${logisticCommodity.level}</td>
                                     <td>${logisticCommodity.originOf}</td>
-                                    <td>${logisticCommodity.expectDate?date}</td>
                                     <td>${logisticCommodity.oAmount}</td>
                                 </tr>
                             </#list>

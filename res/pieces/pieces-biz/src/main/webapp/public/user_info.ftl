@@ -30,7 +30,7 @@
                         <#elseif cerfiy==2>
                             <span>您的公司信息审核失败&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-red" href="/center/certificate/stepOne">继续提交资格审核</a></span>
                         <#elseif cerfiy==-1>
-                            <span>您的公司信息尚未提交审核，通过审核后方可进行询价、下单等操作&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-red" href="/center/certificate/stepOne">提交资格审核</a></span>
+                            <span>您的公司信息尚未提交审核，通过审核后方可进行下单等操作&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-red" href="/center/certificate/stepOne">提交资格审核</a></span>
                         </#if>
                         </div>
                         </#if>

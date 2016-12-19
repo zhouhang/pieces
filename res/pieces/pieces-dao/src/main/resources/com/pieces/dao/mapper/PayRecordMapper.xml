@@ -9,6 +9,7 @@
             <result column="account_bill_id"  property="accountBillId" />
             <result column="amounts_payable"  property="amountsPayable" />
             <result column="actual_payment"  property="actualPayment" />
+           <result column="deposit"  property="deposit" />
             <result column="pay_bank"  property="payBank" />
             <result column="pay_account"  property="payAccount" />
             <result column="pay_bank_card"  property="payBankCard" />
@@ -33,11 +34,12 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,pay_code,order_code,order_id,account_bill_id,amounts_payable,actual_payment,pay_bank,pay_account,pay_bank_card,receive_bank,receive_account,receive_bank_card,user_id,agent_id,payment_time,status,fail_reason,member_id,operation_time,create_time
+        id,pay_code,order_code,order_id,account_bill_id,amounts_payable,actual_payment,deposit,pay_bank,pay_account,pay_bank_card,receive_bank,receive_account,receive_bank_card,user_id,agent_id,payment_time,status,fail_reason,member_id,operation_time,create_time
     </sql>
     <sql id="Base_Column_List_AS">
         pr.id as id,pr.pay_code as pay_code, pr.order_code as order_code,pr.order_id as order_id,
-        pr.amounts_payable as amounts_payable, pr.actual_payment as actual_payment, pr.pay_bank as pay_bank,
+        pr.amounts_payable as amounts_payable, pr.actual_payment as actual_payment,pr.deposit as deposit,
+         pr.pay_bank as pay_bank,
         pr.pay_account as pay_account, pr.pay_bank_card as pay_bank_card, pr.receive_bank as receive_bank,
         pr.receive_account as receive_account, pr.receive_bank_card as receive_bank_card,
         pr.user_id as user_id,pr.agent_id as agent_id, pr.payment_time as payment_time, pr.status as status,
@@ -115,9 +117,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.PayRecord">
         insert into
-        pay_record (pay_code,order_code,order_id,account_bill_id,amounts_payable,actual_payment,pay_bank,pay_account,pay_bank_card,receive_bank,receive_account,receive_bank_card,user_id,agent_id,payment_time,status,fail_reason,member_id,operation_time,create_time)
+        pay_record (pay_code,order_code,order_id,account_bill_id,amounts_payable,actual_payment,deposit,pay_bank,pay_account,pay_bank_card,receive_bank,receive_account,receive_bank_card,user_id,agent_id,payment_time,status,fail_reason,member_id,operation_time,create_time)
         values
-        (#{payCode},#{orderCode},#{orderId},#{accountBillId},#{amountsPayable},#{actualPayment},#{payBank},#{payAccount},#{payBankCard},#{receiveBank},#{receiveAccount},#{receiveBankCard},#{userId},#{agentId},#{paymentTime},#{status},#{failReason},#{memberId},#{operationTime},#{createTime})
+        (#{payCode},#{orderCode},#{orderId},#{accountBillId},#{amountsPayable},#{actualPayment},#{deposit},#{payBank},#{payAccount},#{payBankCard},#{receiveBank},#{receiveAccount},#{receiveBankCard},#{userId},#{agentId},#{paymentTime},#{status},#{failReason},#{memberId},#{operationTime},#{createTime})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.PayRecord">
@@ -144,6 +146,10 @@
                 amounts_payable = #{amountsPayable},
             </if>
                                             
+            <if test="deposit != null">
+                deposit = #{deposit},
+            </if>
+
             <if test="actualPayment != null">
                 actual_payment = #{actualPayment},
             </if>
@@ -203,4 +209,23 @@
         </set>
         where id = #{id}
     </update>
+
+    <select id="findByUserId"    resultMap="PayRecordResultMapVo" parameterType="com.pieces.dao.vo.PayRecordVo">
+        select
+        <include refid="Base_Column_List" />
+        from pay_record pr
+        <where>
+            (pr.status = 1 or  pr.status = 2)
+                and  pr.user_id = #{userId} and pr.agent_id is NULL
+
+        </where>
+        ORDER BY pr.create_time DESC
+    </select>
+
+    <select id="getNotHandleCount"  resultType="java.lang.Integer">
+        select count(id)
+        from pay_record WHERE status=0
+    </select>
+
+
 </mapper>

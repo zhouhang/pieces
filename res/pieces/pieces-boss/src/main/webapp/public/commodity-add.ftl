@@ -67,7 +67,7 @@
                         </div>
                         <div class="group">
                             <div class="txt">
-                                <i>*</i>切制规格：
+                                <i>*</i>片型：
                             </div>
                             <div class="cnt">
                                 <input type="text" class="ipt" value="" name="spec" autocomplete="off" placeholder="">
@@ -214,17 +214,10 @@
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
-<script src="/js/jquery.autocomplete.js"></script>
-<link type="text/css" rel="stylesheet" href="/js/autocomplete/style.css"/>
-
-<script src="/js/code.js"></script>
-<script src="/js/common.js"></script>
+<script src="/js/jquery.autocomplete.min.js"></script>
 <script src="/js/croppic.min.js"></script>
 <script src="/js/layer/layer.js"></script>
-<link type="text/css" rel="stylesheet" href="/js/layer/skin/layer.css"/>
-<link type="text/css" rel="stylesheet" href="/js/validator/jquery.validator.css"/>
-<script src="/js/validator/jquery.validator.min.js"></script>
-<script src="/js/validator/local/zh-CN.js"></script>
+<script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
 
 <!-- 编辑器相关 -->
 <link href="/js/umeditor1_2_2-utf8/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
@@ -251,16 +244,14 @@
                 var categoryId = $('#categoryId').val();
                 var categoryIdV = $("#categoryIdV").val();
 
-                /**
-                 * 初始化自动提示框.
-                 */
                 $('#categoryId').autocomplete({
                     serviceUrl: '/breed/search',
                     paramName: 'name',
                     preventBadQueries: false,
-                    deferRequestBy: 0,
+                    deferRequestBy: 100,
+                    showNoSuggestionNotice: true,
+                    noSuggestionNotice: '没有此品种',
                     triggerSelectOnValidInput: false,
-//                    autoSelectFirst:true,
                     transformResult: function (response) {
                         response = JSON.parse(response);
                         if (response.status == "y") {
@@ -320,9 +311,7 @@
             // 提交事件
             submitEvent: function () {
                 $('#submit').on('click', function () {
-                    $('#form').isValid(function (v) {
-                        //console.log(v ? '表单验证通过' : '表单验证不通过');
-
+                    $('#form').isValid(function(v) {
                         if (v) {
                             var attr = {};
                             var trs = $("#attribute>tbody tr");
@@ -431,10 +420,8 @@
                         layer.closeAll();
                     },
                     onReset: function () {
-                        //console.log('onReset')
                     },
                     onError: function (msg) {
-                        // console.log(msg)
                         $.notify({
                             type: 'error',
                             title: msg.title,   // 不允许的文件类型

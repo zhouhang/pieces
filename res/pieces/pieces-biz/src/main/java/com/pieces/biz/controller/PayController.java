@@ -148,21 +148,32 @@ public class PayController extends BaseController{
                          Integer pageNum){
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         PayRecordVo payRecord=new PayRecordVo();
+        PageInfo<PayRecordVo> recordPage;
         if(user.getType()==1){
             payRecord.setUserId(user.getId());
+            recordPage = payRecordService.findByUserId(payRecord,pageNum,pageSize);
         }
         else{
             payRecord.setAgentId(user.getId());
+            recordPage = payRecordService.findByNormalRecord(payRecord,pageNum,pageSize);
         }
-        PageInfo<PayRecordVo> recordPage = payRecordService.findByNormalRecord(payRecord,pageNum,pageSize);
+
         for(PayRecordVo payRecordVo : recordPage.getList()){
             String orderCode =  payRecordVo.getOrderCode();
             OrderForm orderForm = orderFormService.findByOrderCode(orderCode);
             Integer orderId = orderForm.getId();
             payRecordVo.setCommodities(assignCommodity(orderId));
+            if(payRecordVo.getDeposit()==null){
+                payRecordVo.setDeposit(orderForm.getDeposit());
+            }
         }
         modelMap.put("recordPage",recordPage);
-        return "pay_record";
+        if(user.getType()==1) {
+            return "pay_record";
+        }
+        else{
+            return "pay_record_agent";
+        }
     }
 
 
@@ -187,10 +198,18 @@ public class PayController extends BaseController{
                 return "redirect:error/404";
             }
         }
-
+        OrderForm orderForm = orderFormService.findByOrderCode(payRecordVo.getOrderCode());
+        if(payRecordVo.getDeposit()==null){
+            payRecordVo.setDeposit(orderForm.getDeposit());
+        }
 
         modelMap.put("payRecordVo",payRecordVo);
-        return "pay_detail";
+        if(user.getType()==1){
+            return "pay_detail";
+        }
+        else{
+            return "pay_detail_agent";
+        }
     }
 
 

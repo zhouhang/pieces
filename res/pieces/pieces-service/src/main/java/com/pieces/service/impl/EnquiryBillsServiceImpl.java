@@ -13,13 +13,23 @@ import com.pieces.dao.vo.EnquiryRecordVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.EnquiryBillsService;
 import com.pieces.service.EnquiryCommoditysService;
+import com.pieces.service.constant.bean.Result;
+import com.pieces.service.utils.ExcelParse;
+import com.pieces.tools.utils.BeanUtils;
 import com.pieces.tools.utils.SeqNoUtil;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by wangbin on 2016/7/21.
@@ -87,15 +97,23 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     @Override
     public EnquiryBillsVo findVOById(Integer id) {
         EnquiryBillsVo vo = enquiryBillsDao.findVOById(id);
-        vo.setEnquiryCommoditys(enquiryCommoditysDao.findByBillId(id, null));
+        vo.setEnquiryCommoditys(enquiryCommoditysDao.findByBillId(id,null, null));
         return vo;
     }
     @Override
     public PageInfo<EnquiryBills> findByPage(int pageNum, int pageSize,EnquiryRecordVo enquiryRecordVo) {
         PageHelper.startPage(pageNum, pageSize);
+        if (enquiryRecordVo!= null && "2".equalsIgnoreCase(String.valueOf(enquiryRecordVo.getStatus()))){
+            enquiryRecordVo.setStatus(null);
+            enquiryRecordVo.setExpireDate(new Date());
+        }
+        if (enquiryRecordVo!= null && "1".equalsIgnoreCase(String.valueOf(enquiryRecordVo.getStatus()))){
+            enquiryRecordVo.setExpireDate(new Date());
+        }
+
         List<EnquiryBills> list = enquiryBillsDao.findByCommoditys(enquiryRecordVo);
         for (EnquiryBills enquiryBills : list) {
-            List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysDao.findByBillId(enquiryBills.getId(), 10);
+            List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysDao.findByBillId(enquiryBills.getId(),null, 10);
             enquiryBills.setEnquiryCommoditys(enquiryCommoditysList);
         }
         PageInfo page = new PageInfo(list);
@@ -113,4 +131,38 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
 
     }
 
+    @Override
+    public  EnquiryBillsVo importEnquiryExcel(MultipartFile file,Integer id) {
+        Map<Integer,EnquiryCommoditys> map = null;
+        try {
+            map = ExcelParse.importEnquiryInfo(file.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+        }
+
+        EnquiryBillsVo vo = findVOById(id);
+        for (EnquiryCommoditys commoditys : vo.getEnquiryCommoditys()) {
+            EnquiryCommoditys parse = map.get(commoditys.getId());
+            if (parse != null){
+                commoditys.setExpireDate(parse.getExpireDate());
+                commoditys.setMyPrice(parse.getMyPrice());
+            }
+        }
+
+        return vo;
+    }
+
+    @Override
+    public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, Integer id) {
+        EnquiryBillsVo vo = findVOById(id);
+        Workbook workbook = ExcelParse.exportEnquiryInfo(vo);
+        ExcelParse.returnExcel(response,request, workbook,"报价表"+ id);
+    }
+
+    @Override
+    public Integer getNotHandleCount() {
+        return enquiryBillsDao.getNotHandleCount();
+    }
 }

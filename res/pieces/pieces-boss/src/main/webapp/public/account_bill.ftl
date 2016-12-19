@@ -18,7 +18,7 @@
                     <button class="btn btn-gray" type="button" id="reset">重置条件</button>
                     <button class="btn btn-blue" type="button" id="submit"><i class="fa fa-search"></i><span>搜索</span></button>
                 </div>
-                <@p.pager pageInfo=pageInfo  pageUrl="account/bill/index"  params=paramGet />
+                <@p.pager pageInfo=pageInfo  pageUrl="/account/bill/index"  params=paramGet />
             </div>
             <div class="chart">
                 <table class="tc">
@@ -75,7 +75,6 @@
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
 <!-- footer end -->
-    <script src="js/jquery.min.js"></script>
     <script src="js/laydate/laydate.js"></script>
 <script>
 

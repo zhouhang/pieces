@@ -22,7 +22,7 @@
 				<h3>客户管理</h3>
 				<div class="extra">
 				<@shiro.hasPermission name="customer:add">
-    				<a class="btn btn-red" href="user/add"><i class="fa fa-plus"></i>增加新客户</a>
+    				<a class="btn btn-red" href="/user/add"><i class="fa fa-plus"></i>增加新客户</a>
 				</@shiro.hasPermission>
 				</div>
 			</div>
@@ -33,7 +33,7 @@
 						<i class="fa fa-search"></i><span>搜索</span>
 					</button>
 				</div>
-				<@p.pager pageInfo=userPage pageUrl="user/index" params=userParams/>
+				<@p.pager pageInfo=userPage pageUrl="/user/index" params=userParams/>
 			</div>
 			<div class="chart">
 				<table class="tc">
@@ -43,8 +43,10 @@
 							<th>会员名</th>
 							<th>联系人</th>
 							<th>手机号</th>
-							<th width="170">注册日期</th>
+							<th width="200">注册日期</th>
+                            <th width="80">是否认证</th>
 							<th width="80">客户类型</th>
+                            <th width="80">跟单员</th>
 							<th width="80">操作</th>
 						</tr>
 						<tr>
@@ -66,6 +68,16 @@
 									value="${userVo.startDate}" id="start"> - <input
 									name="endDate" type="text" class="ipt date"
 									value="${userVo.endDate}" id="end"></td>
+                                <td><select name="certifyStatus" id="certifyStatus">
+                                    <option <#if (!userVo.certifyStatus??)>selected</#if>
+                                            value=""></option>
+                                    <option <#if
+											(userVo.certifyStatus??&&userVo.certifyStatus==1)>selected</#if>
+                                            value="1">已认证</option>
+                                    <option <#if
+											(userVo.certifyStatus??&&userVo.certifyStatus==0)>selected</#if>
+                                            value="0">未认证</option>
+                                </select></td>
 								<td><select name="type" id="type">
 										<option <#if (!userVo.type??)>selected</#if>
                                                 value=""></option>
@@ -76,6 +88,10 @@
 											(userVo.type??&&userVo.type==2)>selected</#if>
 											value="2">代理商</option>
 								</select></td>
+                                <td><div class="ipt-wrap">
+                                    <input name="serviceName" type="text" class="ipt"
+                                           value="${userVo.serviceName!}">
+                                </div></td>
 								<td></td>
 							</form>
 						</tr>
@@ -89,7 +105,9 @@
 							<td>${user.contactName}</td>
 							<td>${user.contactMobile}</td>
 							<td>${user.createTime?date}</td>
+                            <td><#if user.certifyStatus==1>已认证 <#else>未认证</#if></td>
 							<td><#if user.type==1>终端用户 <#elseif user.type==2>代理商</#if></td>
+							<td>${user.serviceName!}</td>
 							<td>
 								<@shiro.hasPermission name="customer:edit">
 									<a href="user/info/${user.id}">修改</a>
@@ -150,27 +168,17 @@
                 dateInit: function () {
                     var start = {
                         elem: '#start',
-                        format: 'YYYY/MM/DD',
-                        min: '', //设定最小日期为当前日期
-                        max: '2099-06-16', //最大日期
-                        istime: true,
                         istoday: false,
                         choose: function(datas){
-                            end.min = datas; //开始日选好后，重置结束日的最小日期
-                            end.start = datas; //将结束日的初始值设定为开始日
-                            $('#start').attr('title', datas);
+                            end.min = datas;
+                            end.start = datas;
                         }
                     };
                     var end = {
                         elem: '#end',
-                        format: 'YYYY/MM/DD',
-                        min: '',
-                        max: '2099-06-16',
-                        istime: true,
                         istoday: false,
                         choose: function(datas){
-                            start.max = datas; //结束日选好后，重置开始日的最大日期
-                            $('#end').attr('title', datas);
+                            start.max = datas;
                         }
                     };
                     laydate(start);

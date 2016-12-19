@@ -47,19 +47,6 @@
 
     <#include "./inc/footer.ftl"/>
 
-    <div class="elevator" id="jelevator">
-        <ul>
-            <li><a href="#floor0">根茎类</a></li>
-            <li><a href="#floor1">果实籽仁类</a></li>
-            <li><a href="#floor2">全草类</a></li>
-            <li><a href="#floor3">花/叶类</a></li>
-            <li><a href="#floor4">树皮类</a></li>
-            <li><a href="#floor5">藤木类</a></li>
-            <li><a href="#floor6">矿物菌脂类</a></li>
-            <li><a href="#floor7">动物类</a></li>
-        </ul>
-    </div>
-
     <script>
     var _global = {
         fn: {

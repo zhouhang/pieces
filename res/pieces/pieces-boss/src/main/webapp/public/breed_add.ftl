@@ -39,7 +39,7 @@
                                     <i>*</i>所属分类：
                                 </div>
                                 <div class="cnt">
-                                    <select name="classifyId" id="classifyId">
+                                    <select name="classifyId" id="classifyId" class="wide">
                                         <option value="">--请选择--</option>
                                     </select>
                                 </div>
@@ -70,18 +70,15 @@
 
 
     <#include "./inc/footer.ftl"/>
-
-    
     <script src="/js/validator/jquery.validator.min.js?local=zh-CN"></script>
-    <script src="/js/common.js"></script>
     <script>
-        var roleAddPage = {
+        var _global = {
             v: {
             	
             },
             fn: {
                 init: function() {
-                	this.getCategory($("#classifyId"));
+                	this.getCategory();
                     this.formValidate();
                 },
                 formValidate: function() {
@@ -113,7 +110,7 @@
             			}
                     });
                 },
-                getCategory : function($wrap) {
+                getCategory : function() {
             		$.ajax({
             			type: 'POST',
             			url: '/category/list',
@@ -122,14 +119,14 @@
             				$.each(data,function(i, item){
                     			arr.push('<option value="', item.id, '"', '>', item.name, '</option>');
                     		});
-                    		$wrap.append(arr.join(''));
+                    		$("#classifyId").append(arr.join(''));
             			}
             		});
             	}
             }
         }
         $(function() {
-            roleAddPage.fn.init();
+            _global.fn.init();
         })
     </script>
 </body>

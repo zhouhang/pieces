@@ -16,6 +16,16 @@ public class UserVo  extends User{
 
     private String agentId;
 
+    private String serviceName;
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
     public String getStartDate() {
         return startDate;
     }

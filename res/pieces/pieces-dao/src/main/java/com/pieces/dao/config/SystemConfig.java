@@ -8,7 +8,7 @@ package com.pieces.dao.config;
 public class SystemConfig {
 
     // 订单有效付款时间
-    public final static Integer orderValidityPeriod =10;
+    public final static Integer orderValidityPeriod =9;
 
     // 发货后订单自动完成间隔
     public final static Integer deliveryValidityPeriod = 15;

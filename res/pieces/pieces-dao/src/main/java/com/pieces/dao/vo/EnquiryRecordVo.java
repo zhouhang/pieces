@@ -1,5 +1,6 @@
 package com.pieces.dao.vo;
 
+import javax.xml.crypto.Data;
 import java.lang.reflect.Field;
 import java.util.Date;
 
@@ -17,6 +18,9 @@ public class EnquiryRecordVo {
     private String startDate;
 
     private String endDate;
+
+    // 询价单过期时间 用来查询已过期的询价单
+    private Date expireDate;
 
 
     public String getCommodityName() {
@@ -58,6 +62,14 @@ public class EnquiryRecordVo {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Date getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(Date expireDate) {
+        this.expireDate = expireDate;
     }
 
     @Override

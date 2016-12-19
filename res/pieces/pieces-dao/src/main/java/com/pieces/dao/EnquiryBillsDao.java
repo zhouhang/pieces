@@ -28,4 +28,11 @@ public interface EnquiryBillsDao extends ICommonDao<EnquiryBills>{
 
 
     public List<EnquiryBills> findByCommoditys(EnquiryRecordVo enquiryRecordVo);
+
+    /**
+     * 未处理询价单数目
+     * @return
+     */
+    public Integer getNotHandleCount();
+
 }

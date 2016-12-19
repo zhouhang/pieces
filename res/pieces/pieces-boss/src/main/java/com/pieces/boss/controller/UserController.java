@@ -95,7 +95,7 @@ public class UserController extends  BaseController{
 							ModelMap model) {
 		pageNum=pageNum==null?1:pageNum;
 		pageSize=pageSize==null?10:pageSize;
-		PageInfo<User> userPage = userService.findByCondition(userVo,pageNum,pageSize);
+		PageInfo<UserVo> userPage = userService.findVoByCondition(userVo,pageNum,pageSize);
 		model.put("userPage",userPage);
 		model.put("userParams", Reflection.serialize(userVo));
 		model.put("advices",advices);
@@ -117,7 +117,7 @@ public class UserController extends  BaseController{
 						   HttpServletResponse response,
 						   @PathVariable("id") Integer id,
 						   ModelMap model){
-		User user = userService.findById(id);
+		UserVo user = userService.findVoById(id);
 		model.put("user",user);
 		return "customers-info";
 	}
@@ -290,9 +290,10 @@ public class UserController extends  BaseController{
 	@BizLog(type = LogConstant.user, desc = "修改会员信息页面")
 	public String edit(@PathVariable("id") Integer id,
 					   ModelMap model){
-		User user =	userService.findById(id);
+		UserVo user =	userService.findVoById(id);
 		//Area area =  areaService.findParentsById(user.getAreaId());
 		model.put("user",user);
+		/*
 		if(user.getType()==1){
 			UserBindVo userBindVo=new UserBindVo();
 			userBindVo.setTerminalId(id);
@@ -306,7 +307,7 @@ public class UserController extends  BaseController{
 
 
 			model.put("userBind",userBind);
-		}
+		}*/
 
 
 		return "customers-account";
@@ -315,8 +316,7 @@ public class UserController extends  BaseController{
 	@RequestMapping(value = "/search" ,method= RequestMethod.POST)
 	@ResponseBody
 	@BizLog(type = LogConstant.user, desc = "代理商搜索")
-	public Result searchUser(String name,
-					   ModelMap model){
+	public Result searchUser(String name){
 
         UserVo userVo=new UserVo();
 		userVo.setContactName(name);
@@ -324,6 +324,18 @@ public class UserController extends  BaseController{
 		PageInfo<User> userPage = userService.findByCondition(userVo,1,10);
 		return new Result(true).data(userPage);
 	}
+	@RequiresPermissions(value = "customer:edit")
+	@RequestMapping(value = "/searchMember" ,method= RequestMethod.POST)
+	@ResponseBody
+	@BizLog(type = LogConstant.user, desc = "后台客服人员搜索")
+	public Result searchMember(String name){
+
+		MemberVo memberVo=new MemberVo();
+		memberVo.setName(name);
+		PageInfo<Member>  memberVoPageInfo=memberService.findByCondition(memberVo,1,10);
+		return new Result(true).data(memberVoPageInfo);
+	}
+
 
 	@RequiresPermissions(value = "customer:edit")
 	@RequestMapping(value = "/certify/save" ,method= RequestMethod.POST)

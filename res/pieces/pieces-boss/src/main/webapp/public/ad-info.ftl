@@ -16,7 +16,7 @@
             <dl>
                 <dt>广告信息</dt>
                 <dd>
-                    <a class="curr" href="ad/index">广告信息</a>
+                    <a class="curr" href="/contrive/index">广告信息</a>
                 </dd>
             </dl>
         </div>
@@ -25,7 +25,7 @@
                 <div class="title">
                     <h3><i class="fa fa-chevron-right"></i><#if ad??>修改"${ad.title!}"<#else>新增广告</#if></h3>
                     <div class="extra">
-                        <a  class="btn btn-gray" href="ad/index">返回</a>
+                        <a  class="btn btn-gray" href="/contrive/index">返回</a>
                         <#if ad??>
                         <button id="delete" type="button" class="btn btn-gray">删除</button>
                         </#if>
@@ -145,78 +145,41 @@
 <script src="js/laydate/laydate.js"></script>
 <script src="js/layer/layer.js"></script>
 <script src="js/croppic.min.js"></script>
-<script src="js/common.js"></script>
 <script>
-    var roleAddPage = {
+    var _global = {
         v: {},
         fn: {
             init: function() {
                 this.dateInit();
                 this.formValidate();
                 this.goodsImg();
-                $('#delete').on('click', function() {
-                    var $self = $(this);
-                    layer.confirm('确认删除该广告？', {
-                        btn: ['确认','取消'] //按钮
-                    }, function(index){
-                        layer.close(index);
-                        $.ajax({
-                            url: "/ad/delete?id=" + $("#adId").val(),
-                            type: "POST",
-                            success: function(data){
-                                if(data.status == "y"){
-                                    $.notify({
-                                        type: 'success',
-                                        title: data.info,
-                                        text: '3秒后自动跳转到广告列表页',
-                                        delay: 3e3,
-                                        call: function() {
-                                            setTimeout(function() {
-                                                location.href = '/ad/index';
-                                            }, 3e3);
-                                        }
-                                    });
-                                }else{
-                                    $.notify({
-                                        type: 'error',
-                                        title: data.info,
-                                        delay: 3e3
-                                    });
-                                }
-                            }
-                        });
-                    });
-                    return false;
-                });
+                this.delete();
             },
             //日期选择
             dateInit: function () {
                 var start = {
                     elem: '#start',
                     format: 'YYYY-MM-DD hh:mm:ss',
-                    min: laydate.now(), //设定最小日期为当前日期
-                    max: '2099-06-16 23:59:59', //最大日期
+                    min: laydate.now(),
                     istime: true,
                     choose: function(datas){
-                        end.min = datas; //开始日选好后，重置结束日的最小日期
-                        end.start = datas; //将结束日的初始值设定为开始日
-                        $('#start').removeClass('n-invalid').next().html('');
+                        end.min = datas;
+                        end.start = datas;
+                        $('#start').trigger('validate');
                     }
                 };
                 var end = {
                     elem: '#end',
                     format: 'YYYY-MM-DD hh:mm:ss',
                     min: laydate.now(),
-                    max: '2099-06-16 23:59:59',
                     istime: true,
                     choose: function(datas){
-                        start.max = datas; //结束日选好后，重置开始日的最大日期
-                        $('#end').removeClass('n-invalid').next().html('');
+                        start.max = datas;
+                        $('#end').trigger('validate');
                     }
                 };
                 laydate(start);
                 laydate(end);
-
             },
             formValidate: function() {
                 $('#myform').validator({
@@ -229,7 +192,7 @@
                     valid: function(form) {
                         if ( $(form).isValid() ) {
                             $.ajax({
-                                url: 'ad/save',
+                                url: '/contrive/save',
                                 data: $(form).serialize(),
                                 type: 'POST',
                                 success: function(result){
@@ -298,11 +261,44 @@
                     }
                 }
                 var cropModal = new Croppic('imgCropWrap', options);
+            },
+            delete: function() {
+                var iid = $("#adId").val();
+                $('#delete').on('click', function() {
+                    layer.confirm('确认删除该广告？', {icon: 3, title:'提示'}, function(index){
+                        layer.close(index);
+                        $.ajax({
+                            url: "/contrive/delete?id=" + iid,
+                            type: "POST",
+                            success: function(data){
+                                if(data.status == "y"){
+                                    $.notify({
+                                        type: 'success',
+                                        title: data.info,
+                                        text: '3秒后自动跳转到广告列表页',
+                                        delay: 3e3,
+                                        call: function() {
+                                            setTimeout(function() {
+                                                location.href = '/contrive/index';
+                                            }, 3e3);
+                                        }
+                                    });
+                                }else{
+                                    $.notify({
+                                        type: 'error',
+                                        title: data.info,
+                                        delay: 3e3
+                                    });
+                                }
+                            }
+                        });
+                    });
+                });
             }
         }
     }
     $(function() {
-        roleAddPage.fn.init();
+        _global.fn.init();
     })
 </script>
 </body>

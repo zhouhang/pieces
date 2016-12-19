@@ -21,65 +21,110 @@
                 </div>
 
                 <div class="fa-table">
-                	<div class="filter">
-                        <form action="">
+                    <div class="filter">
                         <button id="search_btn" class="btn btn-red btn-submit" type="button">查询</button>
                         ${enquiryRecordVo.startDate!}
-                            <label><span>商品名称：</span><input class="ipt" value="${enquiryRecordVo.commodityName!}" name="commodityName" type="text"></label>
-                            <label><span>询价日期：</span><input class="ipt date" name="startDate" type="text" id="start"  value="${enquiryRecordVo.startDate!}"><em>-</em><input class="ipt date" name="endDate" type="text" id="end"  value="${enquiryRecordVo.endDate!}"></label>
-                        </form>     
-                	</div>
-                	<div class="fa-chart-d">
-                            <div class="group">
-                                <div class="tr th">
-                                    <div class="td w1">商品名称</div>
-                                    <div class="td w2">切制规格</div>
-                                    <div class="td w3">规格等级</div>
-                                    <div class="td w4">产地</div>
-                                    <div class="td w5">数量<span>（公斤）</span></div>
-                                    <div class="td w6">期望单价<span>（元/公斤）</span></div>
-                                    <div class="td w7">期望交货日期</div>
-                                    <div class="td w8">裸价<span>（元/公斤）</span></div>
-                                    <div class="td w9">报价有效期至</div>
-                                    <div class="td w10">操作</div>
-                                </div>
+                            <span>商品名称：</span>
+                            <input class="ipt" value="${enquiryRecordVo.commodityName!}" name="commodityName" type="text">
+                            <span class="ml">状态：</span>
+                            <select name="status" id="status" class="slt">
+                                <option value="">全部</option>
+                                <option value="1">已报价</option>
+                                <option value="0">未报价</option>
+                                <option value="2">已过期</option>
+                            </select>
+                            <span class="ml">询价日期：</span>
+                            <input class="ipt date" name="startDate" type="text" id="start"  value="${enquiryRecordVo.startDate!}"><em>-</em><input class="ipt date" name="endDate" type="text" id="end"  value="${enquiryRecordVo.endDate!}">
+                    </div>
+                    <div class="fa-chart-d">
+                        <div class="group">
+                            <div class="th">
+                                <div class="td w1">选择</div>
+                                <div class="td w2">商品名称</div>
+                                <div class="td w3">片型</div>
+                                <div class="td w4">规格等级</div>
+                                <div class="td w5">产地</div>
+                                <div class="td w6">单价<span>（元/公斤）</span></div>
                             </div>
+                        </div>
                         <#if billsPage??&&billsPage.list?has_content>
                             <#list billsPage.list as bill>
                                 <div class="group">
-                                    <div class="tr hd">
-                                        <a data-billid="${bill.id!}" data-status="${bill.status!}" class="fr c-blue" href="/center/enquiry/index?billId=${bill.id!}">重新询价</a>
-                                        <span>询价单号：${bill.code!}</span>
-                                        <span>询价日期：${bill.createTime?string("yyyy-MM-dd")}</span>
-                                    </div>
-
-                                    <#list bill.enquiryCommoditys as commodity>
-
-                                        <div class="tr">
-                                            <div class="td w1"><label>  <#if commodity.myPrice??&&commodity.expireDate??&&(commodity.expireDate?date>.now?date)><input class="cbx" type="checkbox" name="commodity" value="${commodity.id!}"> </#if>${commodity.commodityName!}</label></div>
-                                            <div class="td w2">${commodity.specs!}</div>
-                                            <div class="td w3">${commodity.level!}</div>
-                                            <div class="td w4">${commodity.origin!}</div>
-                                            <div class="td w5">${commodity.amount!}</div>
-                                            <div class="td w6">${commodity.expectPrice!}</div>
-                                            <div class="td w7">
-                                            <#if commodity.expectDate??>
-                                                ${commodity.expectDate?string("yyyy-MM-dd")}
+                                    <div class="hd <#if bill.status==0>hd-1<#else ><#if bill.expireDate?exists&&bill.expireDate?is_date&& ((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>hd-2<#else >hd-3</#if></#if>" >
+                                        <div class="td w7">
+                                            
+                                            <#if bill.expireDate?exists&&bill.expireDate?is_date&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
+                                            <input class="cbx" type="checkbox">
+                                            <#else >
+                                            <input class="cbx" type="checkbox" disabled>
                                             </#if>
-                                            </div>
-                                            <div class="td w8">${commodity.myPrice!}</div>
-                                            <div class="td w9">
-                                            <#if commodity.expireDate??>
-                                                ${commodity.expireDate?string("yyyy-MM-dd")}
-                                            </#if>
-                                            </div>
-                                            <div class="td w10">
-                                                <#if commodity.myPrice??&&commodity.expireDate??&&(commodity.expireDate?date>.now?date)>
-                                                    <a href="javascript:void(0);" onclick="page.fn.orderCommodity(${commodity.id!})">订购</a>
-                                                </#if>
-                                            </div>
+                                            <span>询价单号：${bill.code!}</span>
+                                            <span>询价日期：${(bill.createTime?date)!}</span>
+                                            <#if bill.expireDate?exists&&bill.expireDate?is_date> <span>报价截止日期：${(bill.expireDate?date)!}</span></#if>
                                         </div>
-                                    </#list>
+                                        <div class="td w5">
+                                            <em>状态：
+                                                <#if bill.status==0>
+                                                    未报价
+                                                <#else >
+                                                    <#if bill.expireDate?exists&&bill.expireDate?is_date&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
+                                                        已报价
+                                                    <#else >
+                                                        已过期
+                                                    </#if>
+                                                </#if>
+                                            </em>
+                                        </div>
+                                        <div class="td w6">
+                                            <#if user_session_biz??&&user_session_biz.certifyStatus==1>
+                                                <#if  bill.status == 1 && bill.expireDate?exists&&bill.expireDate?is_date&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
+                                                    <a data-billid="${bill.id!}" data-status="${bill.status!}" class="buy" href="javascript:;">订购已选商品</a>
+                                                </#if>
+                                            </#if>
+                                        </div>
+                                    </div>
+                                    <#if bill.status==0>
+                                    <!-- 未报价 -->
+                                        <#list bill.enquiryCommoditys as commodity>
+                                            <div class="bd enable">
+                                                <div class="td w1"><input class="cbx" type="checkbox" name="commodity" value="" disabled></div>
+                                                <div class="td w2">${commodity.commodityName!}</div>
+                                                <div class="td w3">${commodity.specs!}</div>
+                                                <div class="td w4">${commodity.level!}</div>
+                                                <div class="td w5">${commodity.origin!}</div>
+                                                <div class="td w6"></div>
+                                            </div>
+                                        </#list>
+                                    <#else >
+                                        <#list bill.enquiryCommoditys as commodity>
+                                            <#if commodity.myPrice??&&(commodity.myPrice != 0)&&commodity.expireDate??&&((commodity.expireDate?date gte .now?date) || (commodity.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
+                                                <div class="bd">
+                                                    <div class="td w1">
+                                                        <#if user_session_biz??&&user_session_biz.certifyStatus==1>
+                                                            <input class="cbx" type="checkbox" name="commodity" value="${commodity.id!}">
+                                                        <#else>
+                                                            <input class="cbx" type="checkbox" name="commodity" value="" disabled>
+                                                        </#if>
+                                                    </div>
+                                                    <div class="td w2">${commodity.commodityName!}</div>
+                                                    <div class="td w3">${commodity.specs!}</div>
+                                                    <div class="td w4">${commodity.level!}</div>
+                                                    <div class="td w5">${commodity.origin!}</div>
+                                                    <div class="td w6">${commodity.myPrice!}</div>
+                                                </div>
+                                            <#else>
+                                                <div class="bd enable">
+                                                    <div class="td w1"><input class="cbx" type="checkbox" name="commodity" value="" disabled></div>
+                                                    <div class="td w2">${commodity.commodityName!}</div>
+                                                    <div class="td w3">${commodity.specs!}</div>
+                                                    <div class="td w4">${commodity.level!}</div>
+                                                    <div class="td w5">${commodity.origin!}</div>
+                                                    <div class="td w6"><#if commodity.myPrice??&&commodity.myPrice == 0>
+                                                        --<#else>${commodity.myPrice!}</#if></div>
+                                                </div>
+                                            </#if>
+                                        </#list>
+                                    </#if>
                                     <#if (bill.enquiryCommoditys?size>=10) >
                                         <div data-val="${bill.id!}" class="expand">展开 <i class="fa fa-chevron-down"></i></div>
                                     </#if>
@@ -100,25 +145,15 @@
             </div>
         </div>
     </div><!-- member-box end -->
-	
-	<form action="/center/order/create" method="post" id="orderForm">
-		<input type="hidden" name="commodityIds" id="commodityIds" value="">
-	</form>
-	
+    
+    <form action="/center/order/create" method="post" id="orderForm">
+        <input type="hidden" name="commodityIds" id="commodityIds" value="">
+    </form>
+    
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
-	
-	<!-- 输入框联想 start -->
-    <div class="suggestions" id="suggestions">
-		<div class="hd">
-			<div class="group">
-				<span class="w1">商品名称</span><span class="w2">切制规格</span><span class="w3">规格等级</span><span class="w4">产地</span>
-			</div>
-		</div>
-		<div class="bd"></div>
-	</div><!-- 输入框联想 end -->
-
+    
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
 
@@ -137,39 +172,27 @@
                     this.dateInit();
                     this.filter();
                     this.expand();
-
+                    $("#status").val(${enquiryRecordVo.status!});
                 },
                 //日期选择
                 dateInit: function () {
                     var start = {
                         elem: '#start',
-                        format: 'YYYY/MM/DD',
-                        min: '2016-7-1', //设定最小日期为当前日期
-                        max: laydate.now(), //最大日期
-                        istime: true,
-                        istoday: false,
                         choose: function(datas){
-                             end.min = datas; //开始日选好后，重置结束日的最小日期
-                             end.start = datas; //将结束日的初始值设定为开始日
-                             $('#start').attr('title', datas);
+                             end.min = datas;
                         }
                     };
                     var end = {
                         elem: '#end',
-                        format: 'YYYY/MM/DD',
-                        min: '2016-7-1',
-                        max: laydate.now(),
-                        istime: true,
-                        istoday: false,
                         choose: function(datas){
-                            start.max = datas; //结束日选好后，重置开始日的最大日期
-                            $('#end').attr('title', datas);
+                            start.max = datas;
                         }
                     };
                     laydate(start);
                     laydate(end);
-                },filter: function() {
-                    var $ipts = $('.filter .ipt');
+                },
+                filter: function() {
+                    var $ipts = $('.filter .ipt,.slt');
                     var url="/center/enquiry/record?pageNum="+page.v.pageNum+"&pageSize="+page.v.pageSize;
 
                     $('#search_btn').on('click', function() {
@@ -180,17 +203,20 @@
                         })
                         location.href=url+"&"+params.join('&');
                     })
-                },expand: function() {
+                },
+                expand: function() {
                     var
-                            self = this,
-                            txt = ['展开 <i class="fa fa-chevron-down"></i>', '收起 <i class="fa fa-chevron-up"></i>'];
+                        $table = $('.fa-chart-d');
+                        self = this,
+                        txt = ['展开 <i class="fa fa-chevron-down"></i>', '收起 <i class="fa fa-chevron-up"></i>'];
 
-                    $('.fa-table').on('click', '.expand', function() {
+                    $table.on('click', '.expand', function(event, call) {
                         var $self = $(this);
                         var billId = $self.data("val")
                         if ($self.data('loader') === 'true') {
                             var status = $self.data('expand') === 0 ? 1 : 0;
                             $self.data('expand', status).html(txt[status]).prev().slideToggle();
+                            if(call) call();
                         } else {
                             $.ajax({
                                 url: 'center/enquiry/commodity',
@@ -201,8 +227,9 @@
 
                                     if (result.status=="y") {
                                         result.data.splice(0, 10); // 去掉前10条数据
-                                        $self.before(self.toHtml(result.data, $self));
+                                        $self.before(self.toHtml(result.data));
                                         $self.data('expand', '1').html(txt[1]).prev().slideDown();
+                                        if(call) call();
                                     }else{
                                         $.notify({
                                             type: 'error',
@@ -215,80 +242,95 @@
                         }
                     })
 
-
                     // 询价操作
-                    $('.fa-chart-d').find('.group:gt(0)').each(function() {
-                    	var $btnBuy = $(this).find('.hd .c-blue');
-                        var status = $btnBuy.data("status");
-                        var $AgaleTag  = $(this).find('.hd .c-blue');
-                        var $cbs = $(this).find('.cbx');
+                    $table.find('.group:gt(0)').each(function() {
+                        var $btnBuy = $(this).find('.hd .buy'),
+                            $cbs = $(this).find('.w1 .cbx'),
+                            status = $btnBuy.data("status");
                         
-                        if ($cbs.length === 0) {
-                            if(status=='0'){
-                                $btnBuy.attr("href","/center/enquiry/index?billId="+$btnBuy.data("billid")).html('重新询价');
-                            }else{
-                                $btnBuy.remove();
+                        $btnBuy.on('click',function(){
+                            var commodityStr = [],
+                                commodityIds = '';
+                                $cbxs = $(this).closest('.group').find('.w1 .cbx:not(:disabled)');
+
+                            $cbxs.each(function() {
+                                this.checked && commodityStr.push(this.value);
+                            })
+                            
+                            if (commodityStr.length === 0) {
+                                $.notify({
+                                    type: 'warn',
+                                    title: '提示',
+                                    text: '请先勾选要订购的商品',
+                                    delay: 3e3
+                                });
+                                return false;
+                            }   
+                            commodityIds = commodityStr.join(',');
+                            if(commodityIds){
+                                $("#commodityIds").val(commodityIds);
+                                $("#orderForm").submit();
                             }
-                        } else {
-                            $btnBuy.attr('href', 'javascript:;').html('订购已选商品');
-                        }
-                        
-                        $btnBuy.on("click",function(){
-                        	var commodityStr = [];
-                            var $cbs = $(this).parent().parent().find('.cbx');
-                        	$cbs.each(function(){
-                        		this.checked && commodityStr.push(this.value);
-                        	})
-                        	
-                        	var commodityIds = commodityStr.join(',');
-                        	if(commodityIds != ""){
-                        		$("#commodityIds").val(commodityIds);
-                        		$("#orderForm").submit();
-                        	}
                         })
                     });
+
+
+                    // 全选 &　反选
+                    $table.on('click', '.hd .cbx:not(:disabled)', function() {
+                        var that = $(this);
+                        var expand = $(this).closest('.group').find('.expand');
+
+                        if (expand.length === 1 && expand.data('loader') !== 'true') {
+                            expand.trigger('click', function (){
+                                that.closest('.group').find('.w1 .cbx:not(:disabled)').prop('checked', that[0].checked);
+                            })
+                        } else {
+                            that.closest('.group').find('.w1 .cbx:not(:disabled)').prop('checked', that[0].checked);
+                        }
+                    })
+
+                    // 单选
+                    $table.on('click', '.w1 .cbx:not(:disabled)', function() {
+                        var $cbxAll = $(this).closest('.group').find('.hd .cbx:not(:disabled)'),
+                            $cbxs = $(this).closest('.group').find('.w1 .cbx:not(:disabled)'),
+                            length = $cbxs.length,
+                            count = 0;
+
+                        if (this.checked) {
+                            $cbxs.each(function(i) {
+                                count += this.checked ? 1 : 0;
+                            })
+                        }
+                        $cbxAll.prop('checked', count === length);
+                    })
                 },
                 // 插入html
-                toHtml: function(data, $expend) {
-                    var
-                        self = this,
-                        flag = false, // 判断是否有复选框
+                toHtml: function(data) {
+                    var self = this,
                         modal = [];
-
                     modal.push('<div class="more" style="display:none;">');
                     $.each(data, function(i, item) {
-                        modal.push('<div class="tr">');
-                        var checkBox = "";
-                        var order = "";
-                        if(item.myPrice!=null&&item.expireDate!=null&&new Date(item.expireDate)>new Date()){
-                            checkBox = '<label><input class="cbx" type="checkbox" value="'+item.id+'">';
-                            order = '<a href="#">订购</a>';
-                            flag = true;
+
+                        var checkBox = '',
+                            myPrice = (item.myPrice != 0 && item.myPrice!= null ) ? item.myPrice : '--';
+
+                        if((item.myPrice != 0 &&item.myPrice!= null )&&item.expireDate!=null&&new Date(item.expireDate)>=new Date()){
+                            checkBox = '<input class="cbx" type="checkbox" value="'+item.id+'">';
+                            modal.push('<div class="bd">');
+                        } else {
+                            checkBox = '<input class="cbx" type="checkbox" value="" disabled>';
+                            modal.push('<div class="bd enable">');
                         }
-                        modal.push('<div class="td w1">'+checkBox, item.commodityName,'</label></div>');
-                        modal.push('<div class="td w2">', item.specs,'</div>');
-                        modal.push('<div class="td w3">', item.level,'</div>');
-                        modal.push('<div class="td w4">', item.origin,'</div>');
-                        modal.push('<div class="td w5">', item.amount,'</div>');
-                        modal.push('<div class="td w6">', item.expectPrice,'</div>');
-                        modal.push('<div class="td w7">', self.formatDate(item.expectDate),'</div>');
-                        modal.push('<div class="td w8">', item.myPrice,'</div>');
-                        modal.push('<div class="td w9">', self.formatDate(item.expireDate),'</div>');
-                        modal.push('<div class="td w10">'+order+'</div>');
+                        modal.push('<div class="td w1">', checkBox, '</div>');
+                        modal.push('<div class="td w2">', item.commodityName, '</div>');
+                        modal.push('<div class="td w3">', item.specs, '</div>');
+                        modal.push('<div class="td w4">', item.level, '</div>');
+                        modal.push('<div class="td w5">', item.origin, '</div>');
+                        modal.push('<div class="td w6">', myPrice, '</div>');
                         modal.push('</div>');
                     })
                     modal.push('</div>');
-                    $expend.parent().find('.hd .c-blue').html('订购已选商品');
                     return modal.join('');
-                },
-                formatDate: function(date) {
-                    return date ? date.split(' ')[0] : '';
-                },
-                orderCommodity: function(commodityId){
-                	if(commodityId != ""){
-                		$("#commodityIds").val(commodityId);
-                		$("#orderForm").submit();
-                	}
                 }
             }
         }

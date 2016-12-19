@@ -26,12 +26,12 @@
                 <dt>用户信息</dt>
                 <dd>
                     <#if member??>
-                        <a  class="curr" href="member/edit/${member.id}">账号信息</a>
+                        <a  class="curr" href="/member/edit/${member.id}">账号信息</a>
                     <#else>
-                        <a  class="curr" href="member/add">账号信息</a>
+                        <a  class="curr" href="/member/add">账号信息</a>
                     </#if>
                     <#if member??>
-                        <a  href="member/role/${member.id}">角色信息</a>
+                        <a  href="/member/role/${member.id}">角色信息</a>
                     </#if>
                 </dd>
             </dl>
