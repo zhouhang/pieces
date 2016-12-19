@@ -17,6 +17,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -41,6 +42,8 @@ public class HomeController extends BaseController{
 	private HomeWeightService homeWeightService;
 	@Autowired
 	private AdService adService;
+	@Autowired
+	private EnquiryBillsService enquiryBillsService;
 
 
 	/**
@@ -169,6 +172,16 @@ public class HomeController extends BaseController{
 
 	}
 
-
+	/**
+	 * 报价单H5页面
+	 * @param code 询价单id
+	 * @return
+     */
+	@RequestMapping(value = "/quote/{code}", method = RequestMethod.GET)
+	public String quote(@PathVariable("code") String code, ModelMap model){
+		EnquiryBillsVo vo = enquiryBillsService.findVoByCode(code);
+		model.put("vo",vo);
+		return "user_quote";
+	}
 
 }

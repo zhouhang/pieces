@@ -43,6 +43,13 @@ public interface EnquiryBillsService extends ICommonService<EnquiryBills>{
     public EnquiryBillsVo findVOById(Integer id);
 
     /**
+     * 根据询价单号查找
+     * @param code
+     * @return
+     */
+    public EnquiryBillsVo findVoByCode(String code);
+
+    /**
      * 导入报价文件
      * @param file
      * @return
