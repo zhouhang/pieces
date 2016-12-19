@@ -25,8 +25,11 @@ public class Payment  implements Serializable {
 	//订单id
 	private Integer orderId;
 	
+	//支付宝/微信交易号
+	private String tradeNo;
+	
 	//提供给第三方支付的订单号，必须唯一
-	private String tradeno;
+	private String outTradeNo;
 	
 	private String remark;
 	
@@ -92,12 +95,20 @@ public class Payment  implements Serializable {
 		this.orderId = orderId;
 	}
 	
-	public String getTradeno() {
-		return tradeno;
+	public String getTradeNo() {
+		return tradeNo;
 	}
 
-	public void setTradeno(String tradeno) {
-		this.tradeno = tradeno;
+	public void setTradeNo(String tradeNo) {
+		this.tradeNo = tradeNo;
+	}
+	
+	public String getOutTradeNo() {
+		return outTradeNo;
+	}
+
+	public void setOutTradeNo(String outTradeNo) {
+		this.outTradeNo = outTradeNo;
 	}
 	
 	public String getRemark() {
