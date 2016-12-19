@@ -109,29 +109,35 @@ public class ApiController {
 
             List<UserQualificationVo> userQualificationVos=userQualificationService.findAll(param1);
             for(UserQualificationVo userQualificationVo:userQualificationVos){
+                String expireDate="长期";
+
+                if(userQualificationVo.getStatus()==0) {
+                    expireDate=userQualificationVo.getTerm();
+                }
                 if(userQualificationVo.getType()==QualificationTypeEnum.LIENSE_1.getValue()){
                     companyInfoVo.setBusiness_licence(userQualificationVo.getNumber());
-                    companyInfoVo.setBusiness_licence_expire(userQualificationVo.getTerm());
+                    companyInfoVo.setBusiness_licence_expire(expireDate);
                 }
                 else if(userQualificationVo.getType()==QualificationTypeEnum.LIENSE_2.getValue()){
                     companyInfoVo.setGsp_licence(userQualificationVo.getNumber());
-                    companyInfoVo.setGsp_licence_expire(userQualificationVo.getTerm());
+                    companyInfoVo.setGsp_licence_expire(expireDate);
+
                 }
                 else if(userQualificationVo.getType()==QualificationTypeEnum.LIENSE_7.getValue()){
                     companyInfoVo.setEntrust_licence("采购人员授权委托书");
-                    companyInfoVo.setEntrust_licence_expire(userQualificationVo.getTerm());
+                    companyInfoVo.setEntrust_licence_expire(expireDate);
                 }
                 else if(userQualificationVo.getType()==QualificationTypeEnum.LIENSE_6.getValue()){
                     if(userCertificationVo.getType()!= CertifyTypeEnum.SINGLE_DRUGSTORE.getValue()&&userCertificationVo.getType()!= CertifyTypeEnum.CHAIN_DRUGSTORE.getValue()){
                         companyInfoVo.setMedical_licence(userQualificationVo.getNumber());
-                        companyInfoVo.setMedical_licence_expire(userQualificationVo.getTerm());
+                        companyInfoVo.setMedical_licence_expire(expireDate);
                     }
 
                 }
                 else if(userQualificationVo.getType()==QualificationTypeEnum.LIENSE_3.getValue()){
                     if(userCertificationVo.getType()== CertifyTypeEnum.SINGLE_DRUGSTORE.getValue()||userCertificationVo.getType()== CertifyTypeEnum.CHAIN_DRUGSTORE.getValue()){
                         companyInfoVo.setMedical_licence(userQualificationVo.getNumber());
-                        companyInfoVo.setMedical_licence_expire(userQualificationVo.getTerm());
+                        companyInfoVo.setMedical_licence_expire(expireDate);
                     }
                 }
             }
