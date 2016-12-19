@@ -15,6 +15,7 @@ public class CommodityDoc {
 
     @Id
     private Integer id;
+
     //商品名称
     @Field( type = FieldType.String,
             index=FieldIndex.analyzed,
