@@ -214,5 +214,24 @@ public class SmsService {
             }
         }
     }
+    //发送账号到手机
+    //【上工好药】尊敬的用户,您选择的付款帐号开户名称:{1}，开户行{2},账号:{3},本次应付{4}.
+    public void sendAccount(String mobile,String receiveAccount,String receiveBank,String receiveBankCard,Double money){
+        if (enable) {
+            try {
+                Map<String, Object> param = new HashMap<>();
+                param.put("apikey", apikey);
+                param.put("mobile", mobile);
+                param.put("text", TextTemplateEnum.SMS_BIZ_SENDACCOUNT_TEMPLATE.getText(receiveAccount,receiveBank, receiveBankCard, String.valueOf(money)));
+                String s=HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+            } catch (Exception e) {
+                throw new RuntimeException("发送账号到手机发送失败", e);
+            }
+        }
+    }
+
+
+
+
 
 }

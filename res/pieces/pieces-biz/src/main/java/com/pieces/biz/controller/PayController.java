@@ -9,7 +9,9 @@ import com.pieces.dao.vo.PayRecordVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.impl.SmsService;
 import com.pieces.tools.log.annotation.BizLog;
+import com.pieces.tools.utils.WebUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -42,6 +46,8 @@ public class PayController extends BaseController{
     private OrderCommodityService orderCommodityService;
     @Autowired
     private AccountBillService accountBillService;
+    @Autowired
+    private SmsService smsService;
 
     /**
      * 订单支付
@@ -211,6 +217,24 @@ public class PayController extends BaseController{
             return "pay_detail_agent";
         }
     }
+    @RequestMapping("/sendAccount")
+    @ResponseBody
+    @BizLog(type = LogConstant.pay, desc = "发送账号到手机")
+    public Result sendAccount(Integer payAccountId,Integer orderId){
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        PayAccount payAccount=payAccountService.findById(payAccountId);
+        OrderFormVo orderForm = orderFormService.findVoById(orderId);
+
+        try {
+            smsService.sendAccount(user.getContactMobile(),payAccount.getReceiveAccount(),payAccount.getReceiveBank(),payAccount.getReceiveBankCard(),orderForm.getAmountsPayable());
+        } catch (Exception e) {
+            return new Result(false).info("发送账号失败!");
+        }
+
+        return new Result(true).info("发送账号到手机成功!");
+    }
+
+
 
 
 
@@ -218,6 +242,8 @@ public class PayController extends BaseController{
         List<OrderCommodity>  commodityList = orderCommodityService.getCommodityByOrderId(orderId);
         return commodityList;
     }
+
+
 
 
 

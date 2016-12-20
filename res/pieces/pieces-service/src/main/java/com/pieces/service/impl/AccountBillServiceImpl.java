@@ -62,7 +62,7 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 
 		//计算还款时间
 		Integer billTime = accountBill.getBillTime();
-		Date repayTime = DateUtils.dateAddDay(new Date(),billTime);
+		Date repayTime = DateUtils.dateAddMonth(new Date(),billTime);
 		accountBill.setRepayTime(repayTime);
 		accountBill.setCreateDate(new Date());
 		this.create(accountBill);
