@@ -338,6 +338,9 @@ vertical-align:middle;
 .user-info .chart-form .msg-box{position:absolute;z-index:2;top:110%;left:0;line-height:15px;padding:5px;font-size:12px;color:#fa5468;border:1px solid #fa5468;background:#fff;border-radius:2px;white-space:nowrap;}
 .user-info .chart-form .msg-box:before{position:absolute;top:-16px;left:14px;content:"";border:8px dashed transparent;border-bottom:8px solid #fa5468;}
 .user-info .chart-form .msg-box:after{position:absolute;top:-13px;left:16px;content:"";border:6px dashed transparent;border-bottom:7px solid #fff;}
+.user-info .chart-form td i{display:inline-block;width:10px;height:11px;margin:0 5px;cursor:pointer;}
+.user-info .chart-form td .up{background-image:url(../images/up.png);}
+.user-info .chart-form td .down{background-image:url(../images/down.png);}
 
 /* user-table */
 .user-table{}
