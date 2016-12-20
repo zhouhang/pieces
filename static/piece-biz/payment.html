@@ -46,104 +46,51 @@
     <div class="wrap">
         <div class="payment">
             <div class="title">
-                <h3>支付</h3>
+                <h3>订购商品</h3>
             </div>
 
-            <div class="main">
-                <dl>
-                    <dt>订单号：</dt>
-                    <dd>201608101125001</dd>
+            <div class="cont">
+                <div class="info">
+                    <strong class="h1">您的订单已提交成功！</strong>
+                    <span>订单号：<em>201608101125001</em></span>
+                    <span>订单金额：<em class="red">&yen;21000.00</em></span>
+                    <span>请在<em class="red">10</em>个工作日内，完成付款。</span>
+                </div>
 
-                    <dt>应付金额：</dt>
-                    <dd>
-                        <em>&yen;21000.00</em>
-                        <span>剩余付款时间：9天23时20分</span>
-                    </dd>
+                <div class="paytype">
+                    <strong class="h2">支付货款</strong>
+                    <label class="checked"><input type="radio" name="type" value="alipay" checked><img height="38" src="images/alipay.png" alt=""><i></i></label>
+                    <label><input type="radio" name="type" value="wxpay"><img height="38" src="images/wxpay.png" alt=""><i></i></label>
+                    <label><input type="radio" name="type" value="bank">线下银行转账<i></i></label>
+                    <label><input type="radio" name="type" value="bill">账期支付<i></i></label>
+                </div>
 
-                    <dt>支付方式：</dt>
-                    <dd id="jpayType">
-                        <label><input type="radio" name="type" value="0" checked>现款支付</label>
-                        <label><input type="radio" name="type" value="1">账期支付</label>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>平台收款帐号：</dt>
-                    <dd>
-                        <p><label><input type="radio" name="bank">中国工商银行 XXX 6222 0210 0107 0070 872</label></p>
-                        <p><label><input type="radio" name="bank">中国工商银行 XXX 6222 0210 0107 0070 872</label></p>
-                    </dd>
-                </dl>
-                
-                <div class="fa-form">
+                <div class="bank">
+                    <p><label><input type="radio" name="bank" class="cbx"><em>亳州市沪谯药业有限公司</em> <em>开户行：</em>中国工商银行亳州分行 <em>账号：</em>1318 0400 1900 0124 418</label></p>
+                    <p><label><input type="radio" name="bank" class="cbx"><em>亳州市沪谯药业有限公司</em> <em>开户行：</em>中国工商银行亳州分行 <em>账号：</em>1318 0400 1900 0124 418</label></p>
+                    <span class="error"></span>
+                    <button type="button" class="send">将账号发送到手机</button>
+                    <strong class="h2">转账成功请上传支付凭证</strong>
+                    <span class="up-img" id="imgCrop"></span>
+                    <span class="tips">请上传银行开具的打款凭证照片。</span>
+                </div>
 
-                    <form action="" id="myform">
-                        <div class="hd">填写付款信息</div>
-                        <div class="group">
-                            <div class="txt">支付金额：</div>
-                            <div class="cnt">
-                                <input type="text" id="money" name="money" autocomplete="off" value="" class="ipt">
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">开户银行：</div>
-                            <div class="cnt">
-                                <input type="text" id="bank" name="bank" autocomplete="off" value="" class="ipt">
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">开  户  人：</div>
-                            <div class="cnt">
-                                <input type="text" id="name" name="name" autocomplete="off" value="" class="ipt">
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">银行卡号：</div>
-                            <div class="cnt">
-                                <input type="text" id="bankNumber" name="bankNumber" autocomplete="off" value="" class="ipt" maxlength="23">
-                                <div class="bank-tip" id="J_bank_tip" style="display:none;">
-                                    <span class="icon-bank icon-CMB"></span>
-                                    <span class="bank-type">信用卡</span>
-                                </div>
+                <div class="bill">
+                    <label>账期时间：</label>
+                    <select name="billtime" id="billtime">
+                        <option value="">请选择</option>
+                        <option value="1">1个月</option>
+                        <option value="2">2个月</option>
+                        <option value="3">3个月</option>
+                        <option value="6">6个月</option>
+                        <option value="12">1年</option>
+                    </select>
+                    <span class="error"></span>
+                </div>
 
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">付款时间：</div>
-                            <div class="cnt">
-                                <input type="text" id="date" name="date" autocomplete="off" value="" class="ipt">
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">支付凭证：</div>
-                            <div class="cnt">
-                                <span class="up-img" id="imgCrop"></span>
-                                <em class="tips">请上传银行开具的打款凭证照片。</em>
-                            </div>
-                        </div>
-                        <div class="group">
-                            <button type="submit" class="btn btn-red">确认</button>
-                        </div>
-                    </form>
-
-                    <form action="" id="myform2">
-                        <div class="hd">申请账期</div>
-                        <div class="group">
-                            <div class="txt">账期时间：</div>
-                            <div class="cnt">
-                                <select name="billtime" id="billtime" data-msg="请选择账期时间">
-                                    <option value="">请选择</option>
-                                    <option value="1">1个月</option>
-                                    <option value="2">2个月</option>
-                                    <option value="3">3个月</option>
-                                    <option value="6">6个月</option>
-                                    <option value="12">1年</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="group">
-                            <button type="submit" class="btn btn-red">确认</button>
-                        </div>
-                    </form>
+                <div class="button">
+                    <button type="submit" class="btn btn-red" id="stageSubmit">去付款</button>
+                    <span class="error"></span>
                 </div>
             </div>
         </div>
@@ -175,6 +122,22 @@
     
     <div id="imgCropWrap"></div>
 
+    <script type="temp" id="payModal">
+    <div class="pay-modal">     
+        <div class="hd"><i class="fa fa-prompt"></i>请在新打开的页面中完成付款</div>     
+        <p>付款完成前请不要关闭此窗口</p>        
+        <p>完成付款后请点击下面按钮</p>     
+        <div class="op">
+            <a class="btn btn-red success" href="#">已完成付款</a>
+            <a class="btn btn-gray fail" href="#">付款遇到问题</a>
+        </div>      
+        <div class="tc">
+            <span class="c-blue" id="changePaytype">选择其它支付方式</span>
+        </div>
+    </div>
+    </script>
+
+
     <script src="js/jquery.min.js"></script>
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
@@ -187,58 +150,10 @@
     		},
     		fn: {
     			init: function() {
-                    this.dateInit();
-                    this.formInit();
                     this.goodsImg();
-                    this.payType();
+                    this.bindEvent();
+                    // this.submit();
     			},
-                dateInit: function () {
-                    var start = {
-                        elem: '#date',
-                        format: 'YYYY-MM-DD hh:mm:ss',
-                        min: laydate.now(), //设定最小日期为当前日期
-                        max: '2099-06-16 23:59:59', //最大日期
-                        istime: true,
-                        choose: function(date){
-                            $('#date').trigger('blur');
-                        }
-                    };
-
-                    laydate(start);
-                    $('body').on('click', '#laydate_today', function() {
-                        $('#date').trigger('blur');
-                    })
-                },
-                formInit: function() {
-                    var self = this;
-                    $('#myform').validator({
-                        rules: {
-                            bankNumber: [/^\d{12,19}$/, '银行卡号是12-19位数字']
-                        },
-                        fields: {
-                            money: 'required, money',
-                            bank: 'required',
-                            name: 'required',
-                            bankNumber: 'required, bankNumber',
-                            date: 'required'
-                        }
-                    });
-
-                    $('#myform2').validator({
-                        fields: {
-                            billtime: 'required'
-                        }
-                    });
-
-                    // 金额
-                    $('#freightPrice').on('keyup', function(e) {
-                        var val = this.value;
-                        if (!/^\d+\.?\d*$/.test(val)) {
-                            val = Math.abs(parseFloat(val));
-                            this.value = isNaN(val) ? '' : val;
-                        }
-                    });
-                },
                 goodsImg: function() {
                     var self = this,
                         $myform = $('#myform');
@@ -282,29 +197,76 @@
                     }
                     var cropModal = new Croppic('imgCropWrap', options);
                 },
-                // 支付方式切换
-                payType: function() {
-                    var $el = $('#jpayType');
+                bindEvent: function() {
+                    var $bank = $('.bank'),
+                        $bill = $('.bill'),
+                        $billtime = $('#billtime'),
+                        $submit = $('#stageSubmit'),
+                        model = $('#payModal').html(),
+                        ptype = 'alipay';
 
-                    var changeForm = function($el) {
-                        var value = $el.val();
-
-                        if (value === '0') {
-                            $el.closest('dl').next().show();
-                            $('#myform').show();
-                            $('#myform2').hide();
-
+                    // 支付方式
+                    $('.paytype').on('click', 'input', function() {
+                        ptype = this.value;
+                        $(this).parent().addClass('checked').siblings().removeClass('checked');
+                        $('.error').empty();
+                        $bank[ptype === 'bank' ? 'show' : 'hide']();
+                        $bill[ptype === 'bill' ? 'show' : 'hide']();
+                        if (ptype === 'alipay' || ptype === "wxpay") {
+                            $submit.html('去付款');
                         } else {
-                            $el.closest('dl').next().hide();
-                            $('#myform').hide();
-                            $('#myform2').show();
+                            $submit.html('确认');
                         }
-                    }
+                    })
 
-                    $el.on('click', 'input', function() {
-                        changeForm($(this));
-                    });
-                    changeForm($el.find('input:checked'));
+                    // 提交
+                    $submit.on('click', function() {
+                        var pass = true;
+                        if (ptype == null) {
+                            $(this).next().html('请选择支付方式');
+                            pass = false;
+                        } else if (ptype === 'bank') {
+                            if ($bank.find('.cbx:checked').length === 0) {
+                                $bank.find('.error').html('请选择转账账号');
+                                pass = false;
+                            } else {
+                                $bank.find('.error').empty();
+                            }
+                        } else if (ptype === 'bill') {
+                            if ($billtime.val() == '') {
+                                $billtime.next().html('请选择账期时间');
+                                pass = false;
+                            } else {
+                                $billtime.next().empty();
+                            }
+                        }
+                        if (pass) {
+                            $(this).next().empty();
+                            if (ptype === 'alipay' || ptype === 'wxpay') {
+                                layer.open({
+                                    title: '支付货款',
+                                    area: ['490px', '295px'],
+                                    content: model,
+                                    type: 1,
+                                    cancel: function() {
+                                        $('#changePaytype').off();
+                                    }
+                                })
+
+                                $('#changePaytype').on('click', function() {
+                                    layer.closeAll();
+                                })
+                            }
+                        }
+                        return false;
+                    })
+
+                    $billtime.on('change', function() {
+                        $(this).next().empty();
+                    })
+                    $bank.find('.cbx').on('click', function() {
+                        $bank.find('.error').empty();
+                    })
                 }
     		}
     	}
