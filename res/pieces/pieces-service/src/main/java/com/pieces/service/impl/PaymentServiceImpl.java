@@ -27,6 +27,15 @@ public class PaymentServiceImpl  extends AbsCommonService<Payment> implements Pa
         return page;
 	}
 
+	@Override
+	public PaymentVo getByVo(PaymentVo paymentVo) {
+		List<PaymentVo>  list = paymentDao.findByParams(paymentVo);
+		if(list.size()!=0){
+			return list.get(0);
+		}
+		return null;
+	}
+
 
 	@Override
 	public ICommonDao<Payment> getDao() {

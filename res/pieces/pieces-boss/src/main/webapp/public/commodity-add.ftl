@@ -111,49 +111,57 @@
                             <thead>
                             <tr>
                                 <th width="200">属性名</th>
-                                <th width="380">属性值</th>
+                                <th width="300">属性值</th>
+                                <th width="80">排序</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tfoot>
                             <tr>
-                                <td colspan="3"><span class="c-blue" id="addAttribute">+增加新属性</span></td>
+                                <td colspan="4"><span class="c-blue" id="addAttribute">+增加新属性</span></td>
                             </tr>
                             </tfoot>
                             <tbody>
                             <tr>
                                 <td><div class="inner"><input name="attrN_1" type="text" class="ipt" value="年限" data-rule="required;length[1~20]"></div></td>
                                 <td><div class="inner"><input name="attrV_1" type="text" class="ipt" value="" data-rule="required;length[1~100]"></div></td>
+                                <td><i class="up"></i><i class="down"></i></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             <tr>
                                 <td><div class="inner"><input name="attrN_2" type="text" class="ipt" value="采收时间" data-rule="required;length[1~20]"></div></td>
                                 <td><div class="inner"><input name="attrV_2" type="text" class="ipt" value="" name="attr" data-rule="required;length[1~100]"></div></td>
+                                <td><i class="up"></i><i class="down"></i></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             <tr>
                                 <td><div class="inner"><input name="attrN_3" type="text" class="ipt" value="加工方式" data-rule="required;length[1~20]"></div></td>
                                 <td><div class="inner"><input name="attrV_3" type="text" class="ipt" value="" data-rule="required;length[1~100]"></div></td>
+                                <td><i class="up"></i><i class="down"></i></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             <tr>
                                 <td><div class="inner"><input name="attrN_4" type="text" class="ipt" value="含硫情况" data-rule="required;length[1~20]"></div></td>
                                 <td><div class="inner"><input name="attrV_4" type="text" class="ipt" value="" data-rule="required;length[1~100]"></div></td>
+                                <td><i class="up"></i><i class="down"></i></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             <tr>
                                 <td><div class="inner"><input name="attrN_5" type="text" class="ipt" value="含量" data-rule="required;length[1~20]"></div></td>
                                 <td><div class="inner"><input name="attrV_5" type="text" class="ipt" value="" data-rule="required;length[1~100]"></div></td>
+                                <td><i class="up"></i><i class="down"></i></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             <tr>
                                 <td><div class="inner"><input name="attrN_6" type="text" class="ipt" value="生产厂家" data-rule="required;length[1~20]"></div></td>
                                 <td><div class="inner"><input name="attrV_6" type="text" class="ipt" value="亳州市沪谯药业有限公司" data-rule="required;length[1~100]"></div></td>
+                                <td><i class="up"></i><i class="down"></i></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             <tr>
                                 <td><div class="inner"><input name="attrN_7" type="text" class="ipt" value="袋装规格" data-rule="required;length[1~20]"></div></td>
                                 <td><div class="inner"><input name="attrV_7" type="text" class="ipt" value="1公斤/袋" data-rule="required;length[1~100]"></div></td>
+                                <td><i class="up"></i><i class="down"></i></td>
                                 <td><span class="c-red">删除</span></td>
                             </tr>
                             </tbody>
@@ -239,6 +247,7 @@
                 this.goodsImg();
                 this.initAutocomplete();
                 this.parameter();
+                this.updateTable();
             },
             initAutocomplete: function () {
                 var categoryId = $('#categoryId').val();
@@ -435,20 +444,43 @@
             // 商品自定义参数
             parameter: function () {
                 var $table = $('#attribute').find('tbody');
+                var self = this;
+
 
                 // 新增
                 $('#addAttribute').on('click', function () {
                     var tr = '<tr> \n <td><div class="inner"><input name="attrN_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="" data-rule="required;length[1~20]"></div></td> ' +
                             '\n <td><div class="inner"><input name="attrV_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="" data-rule="required;length[1~100]"></div></td> ' +
+                            '\n <td><i class="up"></i><i class="down"></i></td>' +
                             '\n <td><span class="c-red">删除</span></td> \n </tr>';
                     commodityAddPage.v.attr_index += 1;
                     $table.append(tr);
+                    self.updateTable();
                 })
 
                 // 删除
                 $table.on('click', '.c-red', function () {
                     $(this).closest('tr').remove();
                 })
+
+                // 排序
+                $table.on('click', '.up', function() {
+                    var $tr = $(this).closest('tr');
+                    $tr.prev().before($tr);
+                    self.updateTable();
+                })
+                $table.on('click', '.down', function() {
+                    var $tr = $(this).closest('tr');
+                    $tr.next().after($tr);
+                    self.updateTable();
+
+                })
+            },
+            updateTable: function() {
+                var $table = $('#attribute').find('tbody');
+                $table.find('i').show();
+                $table.find('tr:first').find('.up').hide();
+                $table.find('tr:last').find('.down').hide();
             }
         }
     }

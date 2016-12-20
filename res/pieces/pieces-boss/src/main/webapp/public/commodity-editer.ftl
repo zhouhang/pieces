@@ -117,13 +117,14 @@
                             <thead>
                                 <tr>
                                     <th width="200"><div class="inner">属性名</div></th>
-                                    <th width="380"><div class="inner">属性值</div></th>
+                                    <th width="300"><div class="inner">属性值</div></th>
+                                    <th width="80">排序</th>
                                     <th class="tc">操作</th>
                                 </tr>
                             </thead>
                             <tfoot>
                                 <tr>
-                                    <td colspan="3"><span class="c-blue" id="addAttribute">+增加新属性</span></td>
+                                    <td colspan="4"><span class="c-blue" id="addAttribute">+增加新属性</span></td>
                                 </tr>
                             </tfoot>
                             <tbody></tbody>
@@ -251,6 +252,7 @@ ${commodity.details}
                 this.goodsImg();
                 this.parameter();
                 this.initParameter();
+                this.updateTable();
 
                 // 初始化详细信息
                 var um = UM.getEditor('details');
@@ -277,6 +279,7 @@ ${commodity.details}
                 $.each(parameter, function (k, v) {
                     html += '<tr> \n <td><div class="inner"><input name="attrN_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="' + k + '" data-rule="required;length[1~20]"></div></td> \n ' +
                             '<td><div class="inner"><input name="attrV_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="' + v + '" data-rule="required;length[1~100]"></div></td> \n ' +
+                            '\n <td><i class="up"></i><i class="down"></i></td>' +
                             '<td><span class="c-red">删除</span></td> \n </tr>';
                     commodityAddPage.v.attr_index += 1;
                 })
@@ -447,20 +450,42 @@ ${commodity.details}
             // 商品自定义参数
             parameter: function () {
                 var $table = $('#attribute').find('tbody');
+                var self = this;
+
 
                 // 新增
                 $('#addAttribute').on('click', function () {
                     var tr = '<tr> \n <td><div class="inner"><input name="attrN_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="" data-rule="required;length[1~20]"></div></td> ' +
                             '\n <td><div class="inner"><input name="attrV_'+commodityAddPage.v.attr_index+'" type="text" class="ipt" value="" data-rule="required;length[1~100]"></div></td> ' +
+                            '\n <td><i class="up"></i><i class="down"></i></td>' +
                             '\n <td><span class="c-red">删除</span></td> \n </tr>';
                     commodityAddPage.v.attr_index += 1;
                     $table.append(tr);
+                    self.updateTable();
                 })
 
                 // 删除
                 $table.on('click', '.c-red', function () {
                     $(this).closest('tr').remove();
                 })
+                // 排序
+                $table.on('click', '.up', function() {
+                    var $tr = $(this).closest('tr');
+                    $tr.prev().before($tr);
+                    self.updateTable();
+                })
+                $table.on('click', '.down', function() {
+                    var $tr = $(this).closest('tr');
+                    $tr.next().after($tr);
+                    self.updateTable();
+
+                })
+            },
+            updateTable: function() {
+                var $table = $('#attribute').find('tbody');
+                $table.find('i').show();
+                $table.find('tr:first').find('.up').hide();
+                $table.find('tr:last').find('.down').hide();
             }
         }
     }
