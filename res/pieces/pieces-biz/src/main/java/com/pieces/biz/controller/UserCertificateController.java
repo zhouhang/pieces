@@ -12,7 +12,10 @@ import com.pieces.service.UserCertificationService;
 import com.pieces.service.UserQualificationService;
 import com.pieces.service.UserService;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.service.enums.NotifyTemplateEnum;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.listener.NotifyEvent;
+import com.pieces.tools.utils.SpringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -118,6 +121,11 @@ public class UserCertificateController {
         certifyRecord.setStatus(CertifyRecordStatusEnum.NOT_HANDLE.getValue());
         certifyRecordService.saveRecord(certifyRecord,certificationVo,userQualificationVos);
         httpSession.removeAttribute(RedisEnum.USER_SESSION_CERTIFICATION.getValue());
+        // 通知管理员有新的资质审核请求提交
+        SpringUtil.getApplicationContext().
+                publishEvent(new NotifyEvent(NotifyTemplateEnum.certify.getTitle(String.valueOf(certificationVo.getId())),
+                        NotifyTemplateEnum.certify.getContent(String.valueOf(certificationVo.getId()))));
+
         return new Result(true).info("提交成功");
     }
 

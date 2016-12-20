@@ -69,7 +69,7 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
 
     @Override
     @Transactional
-    public void create(List<EnquiryCommoditys> enquiryCommoditysList, User user) {
+    public Integer create(List<EnquiryCommoditys> enquiryCommoditysList, User user) {
         EnquiryBills enquiryBills = new EnquiryBills();
         enquiryBills.setUserId(user.getId());
         enquiryBills.setCreateTime(new Date());
@@ -82,6 +82,8 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
 
         //创建报价单商品
         createCommoditys(enquiryCommoditysList,user.getId(),enquiryBills.getId());
+
+        return enquiryBills.getId();
     }
 
     @Override

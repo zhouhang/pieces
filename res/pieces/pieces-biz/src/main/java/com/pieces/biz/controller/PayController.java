@@ -8,9 +8,12 @@ import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.dao.vo.PayRecordVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.service.enums.NotifyTemplateEnum;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.listener.NotifyEvent;
 import com.pieces.service.impl.SmsService;
 import com.pieces.tools.log.annotation.BizLog;
+import com.pieces.tools.utils.SpringUtil;
 import com.pieces.tools.utils.WebUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,6 +117,10 @@ public class PayController extends BaseController{
         payRecordService.create(payRecordVo,img,user.getId());
         //清空令牌
         httpSession.setAttribute(SessionEnum.PAY_TOKEN.getKey(),null);
+        //支付成功后通知管理员审核
+        SpringUtil.getApplicationContext().
+                publishEvent(new NotifyEvent(NotifyTemplateEnum.payment.getTitle(String.valueOf(payRecordVo.getId())),
+                        NotifyTemplateEnum.payment.getContent(String.valueOf(payRecordVo.getId()))));
         return new Result(true).info("支付信息提交成功!");
     }
 
@@ -136,6 +143,11 @@ public class PayController extends BaseController{
         accountBill.setOrderId(orderId);
         accountBill.setBillTime(billtime);
         accountBillService.createBill(accountBill);
+        // 账单提交成功后通知管理员审核
+        SpringUtil.getApplicationContext().
+                publishEvent(new NotifyEvent(NotifyTemplateEnum.account_bill.getTitle(String.valueOf(accountBill.getId())),
+                        NotifyTemplateEnum.account_bill.getContent(String.valueOf(accountBill.getId()))));
+
         return new Result(true).info("账单提交成功!");
     }
 

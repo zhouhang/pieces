@@ -14,11 +14,14 @@ import com.pieces.service.EnquiryBillsService;
 import com.pieces.service.EnquiryCommoditysService;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.service.enums.NotifyTemplateEnum;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.listener.NotifyEvent;
 import com.pieces.service.utils.ExcelParse;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.CookieUtils;
 import com.pieces.tools.utils.GsonUtil;
+import com.pieces.tools.utils.SpringUtil;
 import com.pieces.tools.utils.WebUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -137,7 +140,7 @@ public class EnquiryController extends BaseController{
             String message = "您的询价提交成功!";
             User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
             if(billId==null){
-                enquiryBillsService.create(list,user);
+                billId = enquiryBillsService.create(list,user);
             }else{
                 try {
                     message="您的询价单重新修改成功!";
@@ -151,6 +154,10 @@ public class EnquiryController extends BaseController{
         //删除之前的询价记录
         CookieUtils.deleteCookie(request,response, BasicConstants.ENQUIRY_COOKIES);
 
+        //用户询价成功后通知管理员处理
+        SpringUtil.getApplicationContext().
+                publishEvent(new NotifyEvent(NotifyTemplateEnum.enquiry.getTitle(String.valueOf(billId)),
+                        NotifyTemplateEnum.enquiry.getContent(String.valueOf(billId))));
         WebUtil.print(response,new Result(true).info(message));
     }
 

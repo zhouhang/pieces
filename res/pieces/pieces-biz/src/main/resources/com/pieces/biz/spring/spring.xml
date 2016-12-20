@@ -45,6 +45,7 @@
 	<import resource="classpath*:com/pieces/service/properties/spring/spring-redis.xml"  />
 	<import resource="classpath*:com/pieces/biz/spring/spring-shiro-biz.xml"  />
 	<import resource="classpath*:com/pieces/service/properties/spring/spring-elasticsearch.xml"  />
+	<import resource="classpath*:com/pieces/service/properties/spring/spring-mail.xml"  />
 
 	<!-- 导入log 配置 -->
 	<import resource="classpath*:com/pieces/tools/log/config/spring-log.xml"/>
