@@ -69,7 +69,7 @@
                     <p><label><input type="radio" name="bank" class="cbx"><em>亳州市沪谯药业有限公司</em> <em>开户行：</em>中国工商银行亳州分行 <em>账号：</em>1318 0400 1900 0124 418</label></p>
                     <p><label><input type="radio" name="bank" class="cbx"><em>亳州市沪谯药业有限公司</em> <em>开户行：</em>中国工商银行亳州分行 <em>账号：</em>1318 0400 1900 0124 418</label></p>
                     <span class="error"></span>
-                    <button type="button" class="send">将账号发送到手机</button>
+                    <button type="button" class="send" id="send">将账号发送到手机</button>
                     <strong class="h2">转账成功请上传支付凭证</strong>
                     <span class="up-img" id="imgCrop"></span>
                     <span class="tips">请上传银行开具的打款凭证照片。</span>
@@ -266,6 +266,58 @@
                     })
                     $bank.find('.cbx').on('click', function() {
                         $bank.find('.error').empty();
+                    })
+
+                    this.SMSCodeEvent();
+                },
+                SMSCodeEvent: function() {
+                    var $send = $('#send'),
+                        $bank = $('.bank'),
+                        second = 0,
+                        txt = ' 秒后重试';
+
+                    var lock = function() {
+                        $send.html(second + txt).prop('disabled', true);
+                        if (second === 0) {
+                            $send.html('将账号发送到手机').prop('disabled', false);
+                        } else {
+                            second --;
+                            setTimeout(function() {
+                                lock();
+                            }, 1e3)
+                        }
+                    }
+                    var sendMSM = function() {
+                        $.ajax({
+                            url: 'json/getsmscode.php',
+                            dataType: 'json',
+                            beforeSend: function() {
+                                $send.html('短信发送中').prop('disabled', true);
+                            },
+                            success: function(data) {
+                                if (data.status === 'y') {
+                                    lock();
+                                } else {
+                                    alert(data.info);
+                                }
+                            },
+                            error: function() {
+                                $send.html('将账号发送到手机').prop('disabled', false);
+                            }
+                        })
+                    }
+
+                    // 发送到手机
+                    $send.prop('disabled', false).on('click', function() {
+                        if ($bank.find('.cbx:checked').length === 0) {
+                            $bank.find('.error').html('请选择转账账号');
+                        } else {
+                            $bank.find('.error').empty();
+                            if(second === 0) {
+                                second = 60; // 60秒倒计时
+                                sendMSM();
+                            } 
+                        }
                     })
                 }
     		}
