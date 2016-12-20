@@ -1,6 +1,5 @@
 package com.pieces.service.listener;
 
-import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimeUtility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 
 /**
  * Author: koabs
