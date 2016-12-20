@@ -9,8 +9,11 @@ import com.pieces.dao.vo.AnonEnquiryVo;
 import com.pieces.service.AnonEnquiryService;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.service.enums.NotifyTemplateEnum;
+import com.pieces.service.listener.NotifyEvent;
 import com.pieces.tools.bean.FileBo;
 import com.pieces.tools.upload.TempUploadFile;
+import com.pieces.tools.utils.SpringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,6 +82,10 @@ public class AnonController {
 
         if (!StringUtils.isEmpty(code) && code.equalsIgnoreCase(captcha)){
             result = anonEnquiryService.save(enquiry);
+            // 通知管理员
+            SpringUtil.getApplicationContext().
+                    publishEvent(new NotifyEvent(NotifyTemplateEnum.anon.getTitle(String.valueOf(enquiry.getId())),
+                            NotifyTemplateEnum.anon.getContent(String.valueOf(enquiry.getId()))));
         } else {
             result = new Result(false).info("验证码错误");
         }

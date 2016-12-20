@@ -64,3 +64,6 @@ com.pieces.service.impl.SmsService
 smsService.sendSmsCaptcha("18802345678")
 
 ```
+
+###7.系统邮箱
+system@sghaoyao.com / Sghy20161219

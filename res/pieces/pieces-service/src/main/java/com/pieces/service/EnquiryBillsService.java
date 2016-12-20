@@ -26,7 +26,7 @@ public interface EnquiryBillsService extends ICommonService<EnquiryBills>{
 
     public void update(List<EnquiryCommoditys> enquiryCommoditysList, User user,int billId);
 
-    public void create(List<EnquiryCommoditys> enquiryCommoditysList, User user);
+    public Integer create(List<EnquiryCommoditys> enquiryCommoditysList, User user);
 
     public PageInfo<EnquiryBills> findByPage(int pageNum, int pageSize, EnquiryRecordVo enquiryRecordVo);
 
