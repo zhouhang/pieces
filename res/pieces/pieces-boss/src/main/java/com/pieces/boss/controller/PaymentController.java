@@ -2,9 +2,12 @@ package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.boss.commons.LogConstant;
+import com.pieces.dao.enums.PayTypeEnum;
 import com.pieces.dao.model.Member;
+import com.pieces.dao.model.Payment;
 import com.pieces.dao.vo.PayRecordVo;
 import com.pieces.service.PayRecordService;
+import com.pieces.service.PaymentService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.log.annotation.BizLog;
@@ -35,6 +38,9 @@ public class PaymentController {
     @Autowired
     HttpSession httpSession;
 
+    @Autowired
+    private PaymentService paymentService;
+
     /**
      * 支付记录index
      * @return
@@ -61,6 +67,10 @@ public class PaymentController {
     @BizLog(type = LogConstant.pay, desc = "支付记录详情")
     public String detail(@PathVariable("id")Integer id, ModelMap modelMap) {
         PayRecordVo vo = payRecordService.findVoById(id);
+        if(vo.getPaymentId()!=null){
+            Payment payment=paymentService.findById(vo.getPaymentId());
+            vo.setPayTypeName(PayTypeEnum.findByValue(payment.getPayType()));
+        }
         modelMap.put("pay",vo);
         return "payment_detail";
     }

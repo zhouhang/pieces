@@ -33,6 +33,19 @@ public enum PayTypeEnum {
     public void setText(String text) {
         this.text = text;
     }
-
+    /**
+     * 通过ID来查询属性名称
+     *
+     * @param id
+     * @return
+     */
+    public static String findByValue(Integer id) {
+        for (PayTypeEnum payTypeEnum : PayTypeEnum.values()) {
+            if (payTypeEnum.getValue().equals(id)) {
+                return payTypeEnum.getText();
+            }
+        }
+        return null;
+    }
 
 }

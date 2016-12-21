@@ -50,7 +50,13 @@
                                 </tr>
                                 <tr>
                                     <td><em>应 付 金 额 ：</em>&yen; ${payRecordVo.amountsPayable!}</td>
-                                    <td><em>支付渠道：</em>线下打款</td>
+                                    <td><em>支付渠道：</em>
+                                       <#if payRecordVo.paymentId?exists>
+                                           ${payRecordVo.payTypeName}
+                                       <#else>
+                                           线下打款
+                                       </#if>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -58,6 +64,22 @@
 
                     <div class="info">
                         <div class="hd">付款信息</div>
+                        <#if payRecordVo.paymentId?exists>
+                            <div class="bd">
+                                <table>
+                                    <tr>
+                                        <td><em>付款金额：</em>
+                                            <#if payRecordVo.actualPayment?exists>
+                                            ${payRecordVo.actualPayment!}
+                                            <#else>
+                                            ${payRecordVo.amountsPayable!}
+                                            </#if>
+                                        </td>
+                                        <td><em>支付时间：</em>${(payRecordVo.paymentTime?datetime)!}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        <#else>
                         <div class="bd">
                             <table>
                                 <tr>
@@ -72,7 +94,7 @@
                                 <tr>
                                     <td><em>收款账号：</em>${payRecordVo.receiveBankCard!}</td>
                                     <td><em>付款金额：</em>
-                                    <#if payRecord.actualPayment?exists>
+                                    <#if payRecordVo.actualPayment?exists>
                                     ${payRecordVo.actualPayment!}
                                     <#else>
                                     ${payRecordVo.amountsPayable!}
@@ -117,7 +139,7 @@
                             </table>
                         </div>
                     </div>
-
+                        </#if>
                 </div>
 
 

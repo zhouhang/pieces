@@ -37,6 +37,15 @@ public class PayRecordVo extends PayRecord{
 
     private List<PayDocumentVo> imgs;
 
+    private String payTypeName;
+
+    public String getPayTypeName() {
+        return payTypeName;
+    }
+
+    public void setPayTypeName(String payTypeName) {
+        this.payTypeName = payTypeName;
+    }
 
     public String getOrderUserName() {
         return orderUserName;

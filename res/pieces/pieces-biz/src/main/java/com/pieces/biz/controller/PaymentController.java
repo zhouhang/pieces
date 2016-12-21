@@ -149,6 +149,7 @@ public class PaymentController extends BaseController{
         }else{
             modelMap.put("result","验证失败");
         }
+        modelMap.put("payType","alipay");
         return "payment_result";
     }
 
