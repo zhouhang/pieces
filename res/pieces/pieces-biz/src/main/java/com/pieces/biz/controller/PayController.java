@@ -238,7 +238,7 @@ public class PayController extends BaseController{
         OrderFormVo orderForm = orderFormService.findVoById(orderId);
 
         try {
-            smsService.sendAccount(user.getContactMobile(),payAccount.getReceiveAccount(),payAccount.getReceiveBank(),payAccount.getReceiveBankCard(),orderForm.getAmountsPayable());
+            smsService.sendAccount(user.getContactMobile(),payAccount.getReceiveAccount(),payAccount.getReceiveBank(),payAccount.getReceiveBankCard(),orderForm.getAmountsPayable(),orderForm.getCode());
         } catch (Exception e) {
             return new Result(false).info("发送账号失败!");
         }

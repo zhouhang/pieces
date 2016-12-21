@@ -235,6 +235,49 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 	}
 
 	@Override
+	@Transactional
+	public PayRecordVo paySuccess(PayRecordVo payRecordVo) {
+		Integer orderId =	payRecordVo.getOrderId();
+		//订单信息
+		OrderForm orderForm = orderFormService.findById(orderId);
+		payRecordVo.setOrderCode(orderForm.getCode());
+		payRecordVo.setAmountsPayable(orderForm.getAmountsPayable());
+		payRecordVo.setDeposit(orderForm.getDeposit());
+
+
+
+		payRecordVo.setPaymentTime(new Date());
+		payRecordVo.setStatus(1);
+		payRecordVo.setCreateTime(new Date());
+		payRecordDao.create(payRecordVo);
+		//生成支付流水号
+		payRecordVo.setPayCode(SeqNoUtil.get("", payRecordVo.getId(), 6));
+		payRecordDao.update(payRecordVo);
+
+
+		//改变订单状态
+		orderFormService.changeOrderStatus(payRecordVo.getOrderId(), OrderEnum.WAIT_DELIVERY.getValue());
+
+		OrderFormVo orderFormVo = orderFormService.findVoById(payRecordVo.getOrderId());
+
+		// 支付成功发送短信
+		if (payRecordVo.getAccountBillId() != null) {
+			accountBillService.refreshStatus(payRecordVo.getAccountBillId());
+			smsService.sendPayAccountSuccess(orderFormVo.getUser().getContactName(),payRecordVo.getActualPayment(),
+					orderFormVo.getUser().getContactMobile());
+		} else {
+			smsService.sendPaySuccess(orderFormVo.getUser().getContactName(),payRecordVo.getActualPayment(),
+					orderFormVo.getUser().getContactMobile());
+		}
+		//为代理商用户生成三个月账期
+		if(payRecordVo.getAgentId()!=null){
+			accountBillService.generateBill(payRecordVo,null);
+		}
+
+		return payRecordVo;
+	}
+
+	@Override
 	public ICommonDao<PayRecord> getDao() {
 		return payRecordDao;
 	}

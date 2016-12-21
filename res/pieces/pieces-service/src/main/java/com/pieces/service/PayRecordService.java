@@ -43,4 +43,12 @@ public interface PayRecordService extends ICommonService<PayRecord>{
     public Integer getNotHandleCount();
 
 
+    /**
+     * 第三方支付成功
+     * @param payRecordVo
+     * @return
+     */
+    public PayRecordVo paySuccess(PayRecordVo payRecordVo);
+
+
 }

@@ -19,6 +19,8 @@ public class PayRecord  implements Serializable {
 	private Integer accountBillId;
 
 	private Integer orderId;
+
+	private Integer paymentId;
 	
 	//应付金额
 	private Double amountsPayable;
@@ -246,5 +248,13 @@ public class PayRecord  implements Serializable {
 
 	public void setAccountBillId(Integer accountBillId) {
 		this.accountBillId = accountBillId;
+	}
+
+	public Integer getPaymentId() {
+		return paymentId;
+	}
+
+	public void setPaymentId(Integer paymentId) {
+		this.paymentId = paymentId;
 	}
 }

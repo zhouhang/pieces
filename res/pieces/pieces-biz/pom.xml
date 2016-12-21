@@ -217,7 +217,7 @@
 		<profile>
 			<id>dev-ff</id>
 			<properties>
-				<biz.base.url>http://127.0.0.1:8088</biz.base.url>
+				<biz.base.url>http://de29db5e.ngrok.io</biz.base.url>
 				<biz.upload.url>http://127.0.0.1:8088/files/</biz.upload.url>
 				<biz.upload.path>E:/Program Files/Apache Software Foundation/Tomcat 8.5/webapps/files/</biz.upload.path>
 			</properties>

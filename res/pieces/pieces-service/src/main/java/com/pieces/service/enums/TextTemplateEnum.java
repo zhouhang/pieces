@@ -9,7 +9,7 @@ import org.apache.commons.lang.ArrayUtils;
 public enum TextTemplateEnum {
 
     SMS_BIZ_CAPTCHA_TEMPLATE("{1}您的注册验证码是{2},该验证码在30分钟内有效.注册成功后即可询价."),
-    SMS_BIZ_SENDACCOUNT_TEMPLATE("【上工好药】尊敬的用户,您选择的付款帐号开户名称:{1}，开户行:{2},账号:{3},本次应付{4}."),
+    SMS_BIZ_SENDACCOUNT_TEMPLATE("【上工好药】尊敬的用户,您选择的付款帐号开户名称:{1}，开户行:{2},账号:{3},本次应付{4}元，付款时请备注订单号:{5}."),
     SMS_BOSS_ADDUSER_PASSWORD_TEMPLATE("{1}您的用户名是{2},密码是{3},请妥善保管."),
     SMS_BOSS_UPDATEUSER_PASSWORD_TEMPLATE("{1}{2}您好,您的新密码是{3},请妥善保管."),
     SMS_BOSS_QUOTED("【上工好药】{1} 您好,您的询价单 {2} (询价商品 {3} 等)已有报价,请在询价记录中查看.查看地址:http://sghaoyao.com/quote/{2}"),
