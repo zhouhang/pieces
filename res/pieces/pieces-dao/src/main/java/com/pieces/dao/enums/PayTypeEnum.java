@@ -5,6 +5,7 @@ package com.pieces.dao.enums;
  */
 public enum PayTypeEnum {
 
+    ORIGINPAY(0,"线下打款"),
     ALIPAY(1,"支付宝支付"),
     WXPAY(2,"微信支付");
 

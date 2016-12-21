@@ -1,6 +1,7 @@
 package com.pieces.dao.vo;
 
 import com.pieces.dao.enums.PayEnum;
+import com.pieces.dao.enums.PayTypeEnum;
 import com.pieces.dao.model.OrderCommodity;
 import com.pieces.dao.model.PayRecord;
 import org.apache.commons.lang3.StringUtils;
@@ -40,7 +41,7 @@ public class PayRecordVo extends PayRecord{
     private String payTypeName;
 
     public String getPayTypeName() {
-        return payTypeName;
+        return PayTypeEnum.findByValue(getPayType());
     }
 
     public void setPayTypeName(String payTypeName) {

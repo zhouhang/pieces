@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.PaymentDao;
 import com.pieces.dao.enums.PayEnum;
+import com.pieces.dao.enums.PayTypeEnum;
 import com.pieces.dao.model.Payment;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.OrderFormVo;
@@ -98,6 +99,7 @@ public class PaymentServiceImpl  extends AbsCommonService<Payment> implements Pa
 			payRecordVo.setOrderId(orderForm.getId());
 			payRecordVo.setPaymentId(oldPayment.getId());
 			payRecordVo.setActualPayment(oldPayment.getMoney());
+			payRecordVo.setPayType(PayTypeEnum.ALIPAY.getValue());
 
 			payRecordVo.setUserId(orderForm.getUserId());
 			//代理商的话加上agentId

@@ -59,6 +59,8 @@ public class PayRecord  implements Serializable {
 	
 	//0审核中，1支付成功，2支付失败
 	private Integer status;
+
+	private Integer payType;
 	
 	//失败原因
 	private String failReason;
@@ -73,6 +75,14 @@ public class PayRecord  implements Serializable {
 	private Date createTime;
 	
 	public PayRecord(){}
+
+	public Integer getPayType() {
+		return payType;
+	}
+
+	public void setPayType(Integer payType) {
+		this.payType = payType;
+	}
 
 	public Double getDeposit() {
 		return deposit;

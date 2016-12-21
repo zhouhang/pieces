@@ -116,12 +116,6 @@
                         });
                         return false;
                     })
-                    // 点击图片看大图
-                    $myform.on('click', 'img', function() {
-                        var url = this.src;
-                        window.open(url);
-                        return false;
-                    })
                     this.upImg();
                 },
                 upImg: function() {

@@ -54,3 +54,7 @@ CREATE TABLE `payment` (
 ALTER TABLE `pay_record`
 DROP COLUMN `payment_id`,
 ADD COLUMN `payment_id`  int(11) NULL DEFAULT NULL COMMENT '三方支付id' AFTER `account_bill_id`;
+
+ALTER TABLE `pay_record`
+DROP COLUMN `pay_type`,
+ADD COLUMN `pay_type`  int(5) NULL DEFAULT 0 COMMENT '0,线下打款，1支付宝支付' AFTER `fail_reason`;

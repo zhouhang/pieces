@@ -58,18 +58,20 @@ public class PaymentController extends BaseController{
 
     @RequestMapping(value = "alipay" )
     @BizLog(type = LogConstant.pay, desc = "支付宝支付")
-    public void alipay(Integer orderId,HttpServletResponse response) throws IOException {
+    public void alipay(Integer orderId,Integer accountBillId,Double money,HttpServletResponse response) throws IOException {
 
         OrderFormVo orderForm = orderFormService.findVoById(orderId);
 
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-        Double money;
-        //终端用户支付全款，代理商支付保证金
-        if(user.getType()==1){
-            money=orderForm.getAmountsPayable();
-        }
-        else{
-            money=orderForm.getDeposit();
+
+        if(money==null){
+            //终端用户支付全款，代理商支付保证金
+            if(user.getType()==1){
+                money=orderForm.getAmountsPayable();
+            }
+            else{
+                money=orderForm.getDeposit();
+            }
         }
         //money=0.01;
 
@@ -77,8 +79,7 @@ public class PaymentController extends BaseController{
         payment.setStatus(PayEnum.UNPAID.getValue());
         payment.setUserId(user.getId());
         payment.setOrderId(orderForm.getId());
-
-
+        payment.setAccountBillId(accountBillId);
 
         payment.setPayType(PayTypeEnum.ALIPAY.getValue());
         payment.setMoney(money);

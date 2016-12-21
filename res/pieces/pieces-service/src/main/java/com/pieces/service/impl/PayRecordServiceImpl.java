@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.ICommonDao;
 import com.pieces.dao.PayRecordDao;
 import com.pieces.dao.enums.OrderEnum;
+import com.pieces.dao.enums.PayTypeEnum;
 import com.pieces.dao.model.*;
 import com.pieces.dao.vo.AccountBillVo;
 import com.pieces.dao.vo.OrderFormVo;
@@ -103,6 +104,7 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		payRecordVo.setUserId(userId);
 		payRecordVo.setPaymentTime(new Date());
 		payRecordVo.setStatus(0);
+		payRecordVo.setPayType(PayTypeEnum.ORIGINPAY.getValue());
 		payRecordVo.setCreateTime(new Date());
 		payRecordDao.create(payRecordVo);
 		//生成支付流水号
@@ -145,6 +147,7 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		}
 		payRecordVo.setPaymentTime(new Date());
 		payRecordVo.setStatus(0);
+		payRecordVo.setPayType(PayTypeEnum.ORIGINPAY.getValue());
 		payRecordVo.setCreateTime(new Date());
 		payRecordDao.create(payRecordVo);
 		//生成支付流水号
@@ -257,7 +260,10 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 
 
 		//改变订单状态
-		orderFormService.changeOrderStatus(payRecordVo.getOrderId(), OrderEnum.WAIT_DELIVERY.getValue());
+		if (payRecordVo.getAccountBillId() == null){
+			orderFormService.changeOrderStatus(payRecordVo.getOrderId(), OrderEnum.WAIT_DELIVERY.getValue());
+		}
+
 
 		OrderFormVo orderFormVo = orderFormService.findVoById(payRecordVo.getOrderId());
 
