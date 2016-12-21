@@ -100,6 +100,7 @@ public class PaymentServiceImpl  extends AbsCommonService<Payment> implements Pa
 			payRecordVo.setPaymentId(oldPayment.getId());
 			payRecordVo.setActualPayment(oldPayment.getMoney());
 			payRecordVo.setPayType(PayTypeEnum.ALIPAY.getValue());
+			payRecordVo.setAccountBillId(oldPayment.getAccountBillId());
 
 			payRecordVo.setUserId(orderForm.getUserId());
 			//代理商的话加上agentId
