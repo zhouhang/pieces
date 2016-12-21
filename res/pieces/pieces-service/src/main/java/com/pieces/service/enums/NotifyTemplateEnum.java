@@ -1,18 +1,16 @@
 package com.pieces.service.enums;
 
-import org.apache.commons.lang.ArrayUtils;
-
 /**
  * Author: koabs
  * 12/20/16.
  * 通知邮件模板
  */
 public enum NotifyTemplateEnum {
-    certify("企业资质认证信息{1}","您好有新的企业资质信息需要审核,访问地址为: http://boss.sghaoyao.com/certify/info/{1}"),
-    anon("新客询价信息{1}","您好有新的匿名询价信息,访问地址为: http://boss.sghaoyao.com/anon/detail?id={1}"),
-    enquiry("询价信息{1}","您好有新的询价信息需要报价,访问地址为: http://boss.sghaoyao.com/enquiry/{1}"),
-    payment("支付审核信息{1}","您好有新的支付记录需要审核,请处理. 访问地址为: http://boss.sghaoyao.com/payment/detail/{1}"),
-    account_bill("账单审核{1}","您好有新的账单需要审核,请处理. 访问地址为: http://boss.sghaoyao.com/account/bill/detail?id={1}");
+    certify("企业资质审核","您好！\n\n有客户提交了一次企业资质审核，请尽快登录后台处理。"),
+    anon("匿名询价","您好！\n\n有客户提交了一次匿名询价，请尽快登录后台处理。"),
+    enquiry("会员询价","您好！\n\n有客户提交了一次询价，请尽快登录后台处理。"),
+    payment("用户完成线下支付","您好！\n\n有客户完成了一笔线下支付，请尽快登录后台处理。"),
+    account_bill("用户提交账期申请","您好！\n\n有客户提交了一次账期申请，请尽快登录后台处理。");
 
     private String content;
 
@@ -24,23 +22,11 @@ public enum NotifyTemplateEnum {
     }
 
     public String getContent(String... params ){
-        String text = new String(this.content);
-        return regxText(text,params);
+        return this.content;
     }
 
     public String getTitle(String... params ){
-        String text = new String(this.title);
-        return regxText(text,params);
+        return this.title;
     }
 
-    private String regxText(String text, String... params) {
-        if(!ArrayUtils.isEmpty(params)){
-            for(int i=0;i<params.length;i++){
-                String temKey = "{"+(i+1)+"}";
-                String temVal = params[i];
-                text = text.replace(temKey,temVal);
-            }
-        }
-        return text;
-    }
 }
