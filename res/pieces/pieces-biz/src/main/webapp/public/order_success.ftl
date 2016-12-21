@@ -16,6 +16,10 @@
         </div>
         <form action="" id="myform" method="post">
             <input type="hidden" name="orderId" value="${order.id!}">
+            <input type="hidden" name="orderId" value="${orderForm.id!}">
+            <input type="hidden" name="userId" value="${orderForm.userId!}">
+            <input type="hidden" name="agentId" value="${orderForm.agentId}">
+            <input type="hidden" name="token" value="${token!}">
         <div class="cont">
             <div class="info">
                 <strong class="h1">您的订单已提交成功！</strong>
@@ -124,7 +128,7 @@
             },
             upImg: function() {
                 var options = {
-                    uploadUrl:'img_save_to_file.php',
+                    uploadUrl:'gen/img/upload',
                     customUploadButtonId: 'imgCrop',
                     onAfterImgUpload: function(response){
                         cropModal.destroy();

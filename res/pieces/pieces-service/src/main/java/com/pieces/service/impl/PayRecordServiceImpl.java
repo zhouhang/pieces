@@ -132,6 +132,7 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		payRecordVo.setDeposit(orderForm.getDeposit());
 
 
+
 		//添加收款账户信息
 		PayAccount payAccount = payAccountService.findById(payRecordVo.getPayAccountId());
 		payRecordVo.setReceiveAccount(payAccount.getReceiveAccount());

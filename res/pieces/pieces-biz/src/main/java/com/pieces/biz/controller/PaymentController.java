@@ -71,7 +71,7 @@ public class PaymentController extends BaseController{
         else{
             money=orderForm.getDeposit();
         }
-        money=0.01;
+        //money=0.01;
 
         Payment payment=new Payment();
         payment.setStatus(PayEnum.UNPAID.getValue());
