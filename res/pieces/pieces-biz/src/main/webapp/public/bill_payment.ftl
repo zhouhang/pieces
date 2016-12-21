@@ -231,7 +231,7 @@
                             var bank=$('input:radio[name="bank"]:checked').val();
                             $("#myform").ajaxSubmit({
                                 data:{'payAccountId':bank},
-                                url:"/center/pay/create",
+                                url:"/center/bill/create",
                                 beforeSend: function() {
                                     var imgLength =  $('input[name="img"]').length;
                                     if(imgLength<=1){
