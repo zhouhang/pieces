@@ -62,6 +62,10 @@
         </div>
         
         <div class="tips">
+            <div>
+                * 旋转手机屏幕可以查看更多信息；<br>
+                * 本次报价仅于 <#if vo.expireDate?exists>${vo.expireDate?date}</#if> 前有效。
+            </div>
             <p>尊敬的<span>${vo.userName}</span>用户，如果您觉得价格合适，可以按以下步骤在线下单：</p>
             <ul>
                 <li>在电脑上打开上工好药电商平台（www.sghaoyao.com）并登录；</li>
