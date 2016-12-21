@@ -191,12 +191,12 @@
 				},
 				dataType : 'json',
 				success : function(data) {
-					if (typeof data.ok === 'string') {
+					if (data.result === 'ok') {
 						timeout = delay;
 						_clock();
 						$getMobileCode.text(timeout + txt).prop('disabled',
 								true);
-					} else if (typeof data.error === 'string') {
+					} else {
 						clearInterval(timer);
 						$getMobileCode.text('获取验证码').prop('disabled', false);
 						
