@@ -86,6 +86,10 @@
                         <option value="12">1年</option>
                     </select>
                     <span class="error"></span>
+                    <br>
+                    <br>
+                    <label>本次支付金额：</label>
+                    <input type="text" class="ipt">
                 </div>
 
                 <div class="button">
@@ -204,6 +208,15 @@
                         $submit = $('#stageSubmit'),
                         model = $('#payModal').html(),
                         ptype = 'alipay';
+
+                    // 金额
+                    $bill.find('.ipt').on('keyup', function() {
+                        var val = this.value;
+                        if (!/^\d+\.?\d*$/.test(val)) {
+                            val = Math.abs(parseFloat(val));
+                            this.value = isNaN(val) ? '' : val;
+                        }
+                    })
 
                     // 支付方式
                     $('.paytype').on('click', 'input', function() {
