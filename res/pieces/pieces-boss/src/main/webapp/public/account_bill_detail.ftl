@@ -108,7 +108,7 @@
                             <tr>
                                 <td>${record.id}</td>
                                 <td>${record.payCode}</td>
-                                <td>线下打款</td>
+                                <td>${record.payTypeName!}</td>
                                 <td>${record.paymentTime?date}</td>
                                 <td>&yen; ${record.actualPayment}</td>
                                 <td>${record.statusText}</td>

@@ -66,7 +66,7 @@
                                     <#list accountBillVo.payRecordVoList as payRecord>
                                     <tr>
                                         <td>${payRecord.payCode!}</td>
-                                        <td>线下打款</td>
+                                        <td>${payRecord.payTypeName!}</td>
                                         <td>${payRecord.paymentTime?string("yyyy-MM-dd")}</td>
                                         <td>&yen;${payRecord.actualPayment!}</td>
                                         <#if payRecord_index == 0>
