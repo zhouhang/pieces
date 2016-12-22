@@ -78,7 +78,7 @@ public class SmsService {
 
             Integer timer =  Integer.valueOf(timerStr);
             if(timer>=3){
-                throw new SmsOverException("同一手机号1小时内只能发送3次，请稍后在试。");
+                throw new SmsOverException("同一手机号1小时内只能发送3次，请稍后在试.");
             }else{
                 redisManager.set(RedisEnum.KEY_MOBILE_TIMER.getValue()+mobile,(timer+1)+"",SMS_EXPIRE_TIME);
             }
