@@ -185,7 +185,7 @@
 		var _sendMobileCode = function() {
 			$.ajax({
 				type : 'POST',
-				url : '/gen/code',
+				url : '/gen/find/code',
 				data : {
 					contactMobile : $mobile.val()
 				},

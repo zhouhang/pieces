@@ -318,7 +318,7 @@ public class UserController extends BaseController {
 			return;
 		}
 		
-		String code  = redisManager.get(RedisEnum.KEY_MOBILE_CAPTCHA.getValue()+user.getContactMobile());
+		String code  = redisManager.get(RedisEnum.KEY_MOBILE_FINDPASSWORD_CAPTCHA.getValue()+user.getContactMobile());
 		if (!StringUtils.isNotBlank(code)) {
 			Result result = new Result("10003").info("请获取验证码");
 			WebUtil.print(response, result);

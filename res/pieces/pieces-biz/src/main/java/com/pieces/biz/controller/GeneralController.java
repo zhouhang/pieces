@@ -185,6 +185,12 @@ public class GeneralController extends BaseController {
     }
 
 
+    /**
+     * 注册验证码
+     * @param contactMobile
+     * @param request
+     * @param response
+     */
 	@RequestMapping(value="/code")
 	public void getMobileCode(String contactMobile,
 						HttpServletRequest request,
@@ -201,6 +207,28 @@ public class GeneralController extends BaseController {
 		result.put("result", "ok");
         WebUtil.print(response,result);
 	}
+
+
+    /**
+     * 找回密码验证码
+     * @param contactMobile
+     * @param response
+     */
+    @RequestMapping(value="/find/code")
+    public void getMobileFindPasswordCode(String contactMobile,
+                              HttpServletResponse response){
+        try {
+            smsService.sendFindPasswordCaptcha(contactMobile);
+        } catch (Exception e) {
+            Map<String, String> result = new HashMap<String, String>();
+            result.put("error", e.getMessage());
+            WebUtil.print(response,result);
+            return;
+        }
+        Map<String, String> result = new HashMap<String, String>();
+        result.put("result", "ok");
+        WebUtil.print(response,result);
+    }
 
 
     @RequestMapping(value="/home/create")

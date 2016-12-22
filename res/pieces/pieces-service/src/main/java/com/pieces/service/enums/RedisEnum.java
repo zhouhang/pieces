@@ -9,7 +9,8 @@ public enum RedisEnum {
 	//用户认证基础信息
 	USER_SESSION_CERTIFICATION("user_session_certification"),
 	SITE_TAG_PINYIN_CATEGORY("site_tag_pinyin_category"),
-	KEY_MOBILE_CAPTCHA("mobile_captcha"),
+	KEY_MOBILE_CAPTCHA("mobile_captcha"), // 注册验证码
+	KEY_MOBILE_FINDPASSWORD_CAPTCHA("mobile_password_captcha"),
 	KEY_MOBILE_CAPTCHA_INTERVAL("mobile_captcha_interval"),
 	KEY_MOBILE_TIMER("mobile_timer");
 
