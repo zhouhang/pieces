@@ -1,15 +1,34 @@
 package com.pieces.biz.controller;
 
+import com.pieces.biz.controller.commons.LogConstant;
+import com.pieces.dao.enums.PayEnum;
+import com.pieces.dao.enums.PayTypeEnum;
+import com.pieces.dao.model.Payment;
+import com.pieces.dao.model.User;
+import com.pieces.dao.vo.OrderFormVo;
+import com.pieces.dao.vo.PaymentVo;
+import com.pieces.service.OrderFormService;
+import com.pieces.service.PaymentService;
+import com.pieces.service.UserService;
+import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.pay.alipay.AlipayNotify;
 import com.pieces.service.pay.alipay.AlipaySubmit;
 import com.pieces.service.pay.config.AlipayConfig;
+import com.pieces.tools.log.annotation.BizLog;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -21,35 +40,77 @@ import java.util.Map;
 @RequestMapping("/pay")
 public class PaymentController extends BaseController{
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    private AlipayConfig alipayConfig;
 
-    @RequestMapping(value = "alipay/test/index")
-    public String payTestIndex(){
-        return "alipay_test_index";
-    }
+    @Autowired
+    private HttpSession httpSession;
+
+    @Autowired
+    private OrderFormService orderFormService;
+
+    @Autowired
+    private PaymentService paymentService;
 
 
-    @RequestMapping(value = "alipay/test" )
-    public void payTest(@RequestParam(required = false,value = "WIDout_trade_no") String out_trade_no,
-                          @RequestParam(required = false,value = "WIDsubject") String subject,
-                          @RequestParam(required = false,value = "WIDtotal_fee") String total_fee,
-                          @RequestParam(required = false,value = "WIDbody") String body,
-                        HttpServletResponse response)throws Exception{
+
+
+    @RequestMapping(value = "alipay" )
+    @BizLog(type = LogConstant.pay, desc = "支付宝支付")
+    public void alipay(Integer orderId,Integer accountBillId,Double money,HttpServletResponse response) throws IOException {
+
+        OrderFormVo orderForm = orderFormService.findVoById(orderId);
+
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+
+        if(money==null){
+            //终端用户支付全款，代理商支付保证金
+            if(user.getType()==1){
+                money=orderForm.getAmountsPayable();
+            }
+            else{
+                money=orderForm.getDeposit();
+            }
+        }
+        //money=0.01;
+
+        Payment payment=new Payment();
+        payment.setStatus(PayEnum.UNPAID.getValue());
+        payment.setUserId(user.getId());
+        payment.setOrderId(orderForm.getId());
+        payment.setAccountBillId(accountBillId);
+
+        payment.setPayType(PayTypeEnum.ALIPAY.getValue());
+        payment.setMoney(money);
+        paymentService.save(payment);
+
+
         Map<String, String> sParaTemp = new HashMap<String, String>();
         sParaTemp.put("service", AlipayConfig.service);
         sParaTemp.put("partner", AlipayConfig.partner);
         sParaTemp.put("seller_id", AlipayConfig.seller_id);
         sParaTemp.put("_input_charset", AlipayConfig.input_charset);
         sParaTemp.put("payment_type", AlipayConfig.payment_type);
-        sParaTemp.put("notify_url", AlipayConfig.notify_url);
-        sParaTemp.put("return_url", AlipayConfig.return_url);
+        sParaTemp.put("notify_url", alipayConfig.getNotify_url());
+        sParaTemp.put("return_url", alipayConfig.getReturn_url());
         sParaTemp.put("anti_phishing_key", AlipayConfig.anti_phishing_key);
         sParaTemp.put("exter_invoke_ip", AlipayConfig.exter_invoke_ip);
-        sParaTemp.put("out_trade_no", out_trade_no);
-        sParaTemp.put("subject", subject);
-        sParaTemp.put("total_fee", total_fee);
-        sParaTemp.put("body", body);
+        sParaTemp.put("out_trade_no", payment.getOutTradeNo());
+        sParaTemp.put("subject", "上工好药订单支付");
+
+        sParaTemp.put("total_fee", money.toString());
+
+
+        sParaTemp.put("body", "上工好药订单支付");
+
+
+
+        payment.setOutParam(sParaTemp.toString());
+        paymentService.update(payment);
+
         String htmlOut = AlipaySubmit.buildRequest(sParaTemp,"get","确认");
-        System.out.println(htmlOut);
+        logger.info(htmlOut);
         response.setContentType("text/html;charset=UTF-8");
         response.getWriter().println(htmlOut);
     }
@@ -57,6 +118,7 @@ public class PaymentController extends BaseController{
 
 
     @RequestMapping(value = "alipay/result/page" )
+    @BizLog(type = LogConstant.pay, desc = "支付宝页面回调")
     public String resutlPage( HttpServletResponse response,
                               HttpServletRequest request,
                               ModelMap modelMap)throws Exception{
@@ -75,46 +137,29 @@ public class PaymentController extends BaseController{
 //            valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
             params.put(name, valueStr);
         }
+        logger.info("支付宝页面回调param="+params.toString());
 
-        //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
-        //商户订单号
-        String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
-        //支付宝交易号
-        String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
-
-        //交易状态
-        String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
-
-        //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
 
         //计算得出通知验证结果
         boolean verify_result = AlipayNotify.verify(params);
 
         if(verify_result){//验证成功
-            //////////////////////////////////////////////////////////////////////////////////////////
-            //请在这里加上商户的业务逻辑程序代码
-            //——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
-            if(trade_status.equals("TRADE_FINISHED") || trade_status.equals("TRADE_SUCCESS")){
-                //判断该笔订单是否在商户网站中已经做过处理
-                //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-                //如果有做过处理，不执行商户的业务程序
-            }
-            //该页面可做页面美工编辑
+            paymentService.handleResult(params);
             modelMap.put("result","验证成功");
-            //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
 
-            //////////////////////////////////////////////////////////////////////////////////////////
         }else{
-            //该页面可做页面美工编辑
             modelMap.put("result","验证失败");
         }
-        return "alipay_test_result";
+        modelMap.put("payType","alipay");
+        return "payment_result";
     }
 
 
 
     @RequestMapping(value = "alipay/result/notify" )
-    public void resutlNotify(HttpServletResponse response,
+    @ResponseBody
+    @BizLog(type = LogConstant.pay, desc = "支付宝通知回调")
+    public String resutlNotify(HttpServletResponse response,
                              HttpServletRequest request,
                              ModelMap modelMap)throws Exception{
         //获取支付宝POST过来反馈信息
@@ -128,56 +173,15 @@ public class PaymentController extends BaseController{
                 valueStr = (i == values.length - 1) ? valueStr + values[i]
                         : valueStr + values[i] + ",";
             }
-            //乱码解决，这段代码在出现乱码时使用。如果mysign和sign不相等也可以使用这段代码转化
-            //valueStr = new String(valueStr.getBytes("ISO-8859-1"), "gbk");
             params.put(name, valueStr);
         }
-
-        //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以下仅供参考)//
-        //商户订单号
-
-        String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"),"UTF-8");
-
-        //支付宝交易号
-
-        String trade_no = new String(request.getParameter("trade_no").getBytes("ISO-8859-1"),"UTF-8");
-
-        //交易状态
-        String trade_status = new String(request.getParameter("trade_status").getBytes("ISO-8859-1"),"UTF-8");
-
-        //获取支付宝的通知返回参数，可参考技术文档中页面跳转同步通知参数列表(以上仅供参考)//
-
+        logger.info("支付宝通知param="+params.toString());
         if(AlipayNotify.verify(params)){//验证成功
-            //////////////////////////////////////////////////////////////////////////////////////////
-            //请在这里加上商户的业务逻辑程序代码
+            paymentService.handleResult(params);
+            return "success";
 
-            //——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
-
-            if(trade_status.equals("TRADE_FINISHED")){
-                //判断该笔订单是否在商户网站中已经做过处理
-                //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-                //请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的
-                //如果有做过处理，不执行商户的业务程序
-
-                //注意：
-                //退款日期超过可退款期限后（如三个月可退款），支付宝系统发送该交易状态通知
-            } else if (trade_status.equals("TRADE_SUCCESS")){
-                //判断该笔订单是否在商户网站中已经做过处理
-                //如果没有做过处理，根据订单号（out_trade_no）在商户网站的订单系统中查到该笔订单的详细，并执行商户的业务程序
-                //请务必判断请求时的total_fee、seller_id与通知时获取的total_fee、seller_id为一致的
-                //如果有做过处理，不执行商户的业务程序
-
-                //注意：
-                //付款完成后，支付宝系统发送该交易状态通知
-            }
-
-            //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
-
-            System.out.print("success");	//请不要修改或删除
-
-            //////////////////////////////////////////////////////////////////////////////////////////
         }else{//验证失败
-            System.out.printf("fail");
+           return "fail";
         }
 
 

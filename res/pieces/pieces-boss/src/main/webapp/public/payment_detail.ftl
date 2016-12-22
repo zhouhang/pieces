@@ -51,7 +51,13 @@
                         </tr>
                         <tr>
                             <td><em>应 付 金 额 ：</em>&yen; ${pay.amountsPayable}</td>
-                            <td><em>支付渠道：</em>线下打款</td>
+                            <td><em>支付渠道：</em>
+                            <#if pay.paymentId?exists>
+                            ${pay.payTypeName}
+                            <#else>
+                                线下打款
+                            </#if>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -60,8 +66,35 @@
 
             <div class="user-info">
                 <h3>付款信息</h3>
+                <#if pay.paymentId?exists>
+                    <div class="info">
+                        <table>
+                            <tbody>
+                            <tr>
+                                <td><em>支付金额：</em>${pay.actualPayment!}</td>
+                                <td><em>支付时间：</em>${(pay.paymentTime?date)!}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                    <#if pay.status != 0>
+                        <div class="user-info">
+                            <h3>支付结果</h3>
+                            <div class="info">
+                                <table>
+                                    <tbody>
+                                    <tr>
+                                        <td><em>支付结果：</em>${pay.statusText!}</td>
 
-                <div class="info">
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </#if>
+                <#else>
+              <div class="info">
                     <table>
                         <tbody>
                         <tr>
@@ -73,11 +106,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><em>开&nbsp; 户&nbsp; 行：</em>${pay.receiveBank}</td>
-                            <td><em>开户人：</em>${pay.receiveAccount}</td>
+                            <td><em>开&nbsp; 户&nbsp; 行：</em>${pay.receiveBank!}</td>
+                            <td><em>开户人：</em>${pay.receiveAccount!}</td>
                         </tr>
                         <tr>
-                            <td><em>收款账号：</em>${pay.receiveBankCard}</td>
+                            <td><em>收款账号：</em>${pay.receiveBankCard!}</td>
                             <td>&nbsp;</td>
                         </tr>
                         <tr>
@@ -103,7 +136,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><em>支付时间：</em>${pay.paymentTime?date}</td>
+                            <td><em>支付时间：</em>${(pay.paymentTime?date)!}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -116,11 +149,11 @@
                     <table>
                         <tbody>
                         <tr>
-                            <td><em>支付结果：</em>${pay.statusText}</td>
-                            <td><em>操作人员：</em>${pay.memberName}</td>
+                            <td><em>支付结果：</em>${pay.statusText!}</td>
+                            <td><em>操作人员：</em>${pay.memberName!}</td>
                         </tr>
                         <tr>
-                            <td><em>记录时间：</em>${pay.operationTime?date}</td>
+                            <td><em>记录时间：</em>${(pay.operationTime?date)!}</td>
                             <td>
                                 <#if pay.failReason?exists>
                                     <em>失败原因：</em>${pay.failReason}
@@ -133,6 +166,7 @@
             </div>
         </#if>
 
+        </#if>
         </div>
     </div><!-- fa-floor end -->
 </div>

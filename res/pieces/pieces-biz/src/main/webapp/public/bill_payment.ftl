@@ -1,238 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <#include "./inc/meta.ftl"/>
+<#include "./inc/meta.ftl"/>
     <title>支付-上工好药</title>
     <link rel="stylesheet" href="css/order.css" />
 </head>
 
 <body>
-    <#include "./inc/header-center.ftl"/>
-
-    <div class="wrap">
-        <div class="payment">
-            <div class="title">
-                <h3>支付</h3>
-            </div>
-
-            <div class="main">
-                <dl>
-                    <dt>账单编号：</dt>
-                    <dd>${accountBill.code!}</dd>
-
-                    <dt>应付金额：</dt>
-                    <dd>
-                        <em>&yen;${accountBill.unPayable!}</em>
-                    </dd>
-
-                    <dt>支付方式：</dt>
-                    <dd id="jpayType">
-                        <label><input type="radio" name="type" value="0" checked>现款支付</label>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt>平台收款帐号：</dt>
-                    <dd>
-                        <#list payAccountList as payAccount>
-                            <p><label><input type="radio"  value="${payAccount.id!}" name="bank">${payAccount.receiveBank!} ${payAccount.receiveAccount!} ${payAccount.receiveBankCard!}</label></p>
-                        </#list>
-                    </dd>
-                </dl>
-                
-                <div class="fa-form">
-                    <form action="/center/bill/create" id="myform" method="post">
-
-                    <div class="hd">填写付款信息</div>
-                        <input type="hidden" name="accountBillId" value="${accountBill.id!}">
-                        <input type="hidden" name="orderId" value="${accountBill.orderId!}">
-                        <input type="hidden" name="token" value="${token!}">
-                        <div class="group">
-                            <div class="txt">支付金额：</div>
-                            <div class="cnt">
-                                <input type="text" id="money" name="actualPayment" autocomplete="off" value="" class="ipt">
-                            </div>
-                        </div>
-
-                        <div class="group">
-                            <div class="txt">支付凭证：</div>
-                            <div class="cnt">
-                                <span class="up-img" id="imgCrop"></span>
-                                <em class="tips">请上传银行开具的打款凭证照片。</em>
-                            </div>
-                        </div>
-                        <div class="group">
-                            <button  id="cashSubmit" type="button" class="btn btn-red">确认</button>
-                        </div>
-                    </form>
-
-
+<#include "./inc/header-center.ftl"/>
+<div class="wrap">
+    <div class="payment">
+        <div class="title">
+            <h3>支付</h3>
+        </div>
+        <form action="" id="myform" method="post">
+            <input type="hidden" name="accountBillId" value="${accountBill.id!}">
+            <input type="hidden" name="orderId" value="${accountBill.orderId!}">
+            <input type="hidden" name="token" value="${token!}">
+            <div class="cont">
+                <div class="info">
+                    <span>账单编号：<em>${accountBill.code!}</em></span>
+                    <span>应付金额：<em class="red">&yen;${accountBill.unPayable!}</em></span>
                 </div>
+
+                <div class="paytype">
+                    <strong class="h2">支付货款</strong>
+                    <label class="checked"><input type="radio" name="type" value="alipay" checked><img height="38" src="images/alipay.png" alt=""><i></i></label>
+                    <!--<label><input type="radio" name="type" value="wxpay"><img height="38" src="images/wxpay.png" alt=""><i></i></label>-->
+                    <label><input type="radio" name="type" value="bank">线下银行转账<i></i></label>
+                </div>
+                <div class="bank">
+                <#list payAccountList as payAccount>
+                    <p><label><input type="radio" value="${payAccount.id!}" name="bank" class="cbx"><em>${payAccount.receiveAccount!}</em> <em>开户行：</em>${payAccount.receiveBank!}  <em>账号：</em>${payAccount.receiveBankCard!}</label></p>
+                </#list>
+                    <span class="error"></span>
+                    <button type="button" class="send" id="send">将账号发送到手机</button>
+                    <strong class="h2">转账成功请上传支付凭证</strong>
+                    <span class="up-img" id="imgCrop"></span>
+                    <span class="tips">请上传银行开具的打款凭证照片。</span>
+                </div>
+
+
+                <div class="button" id="submitForm">
+                    <label>本次支付金额：</label>
+                    <input type="text" class="ipt" id="money" name="actualPayment">
+                    <em></em>
+                    <button type="buttond" class="btn btn-red" id="stageSubmit">去付款</button>
+                    <span class="error"></span>
+                </div>
+
             </div>
+        </form>
+    </div>
+</div>
+
+<div id="imgCropWrap"></div>
+<form action="/pay/alipay/" id="payform" target="_blank" method="POST" target="_blank">
+    <input type="hidden" name="accountBillId" value="${accountBill.id!}">
+    <input type="hidden" name="orderId" value="${accountBill.orderId!}">
+    <input type="hidden" id="paymoney"name="money" value="">
+</form>
+<script type="temp" id="payModal">
+    <div class="pay-modal">
+        <div class="hd"><i class="fa fa-prompt"></i>请在新打开的页面中完成付款</div>
+        <p>付款完成前请不要关闭此窗口</p>
+        <p>完成付款后请点击下面按钮</p>
+        <div class="op">
+            <a class="btn btn-red success" href="/center/order/list">已完成付款</a>
+            <a class="btn btn-gray fail" href="/help/25">付款遇到问题</a>
+        </div>
+        <div class="tc">
+            <span class="c-blue" id="changePaytype">选择其它支付方式</span>
         </div>
     </div>
-
-
-    <!-- footer start -->
-    <#include "./inc/footer.ftl"/>
-    <!-- footer end -->
-    
-    <div id="imgCropWrap"></div>
-
-    <script src="js/layer/layer.js"></script>
-    <script src="js/laydate/laydate.js"></script>
-    <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
-    <script src="js/croppic.min.js"></script>
-    <script src="/js/jquery.form.js"></script>
-
-    <script>
-    	var _global = {
-    		v: {
-    		},
-    		fn: {
-    			init: function() {
-                    this.formInit();
-                    this.goodsImg();
-                    this.payType();
-
-                    $("#cashSubmit").click(function(){
-                        var bank=$('input:radio[name="bank"]:checked').val();
-                        if(!bank){
-                            $.notify({
-                                type: 'error',
-                                title: '',
-                                text: '请选择平台收款账号!',
-                                delay: 3e3
-                            });
-                            return false;
-                        }
-
-
-                        $("#myform").ajaxSubmit({
-                            data:{'payAccountId':bank},
-                            beforeSend: function() {
-                                if(!$("#myform").isValid()){
-                                    return false;
-                                }
-                                var imgLength =  $('input[name="img"]').length;
-                                if(imgLength<=1){
-                                    $.notify({
-                                        type: 'error',
-                                        title: '',
-                                        text: '请至少上传一张支付凭证!',
-                                        delay: 3e3
-                                    });
-                                    return false;
-                                }
-                            },
-                            success: function(result) {
-                                if(result.status=="y"){
-                                    location.href="/center/pay/success?state=payment&way=bill"
-                                }else{
-                                    $.notify({
-                                        type: 'error',
-                                        title: '错误信息',   // 不允许的文件类型
-                                        text: result.info,     //'支持 jpg、jepg、png、gif等格式图片文件',
-                                        delay: 3e3,
-                                        call:function(){
-                                            setTimeout(function () {
-                                                location.href = '/center/order/list';
-                                            }, 3e3);
-                                        }
-                                    });
-                                }
-                            }
-                        })
-                    })
-
-    			},
-                formInit: function() {
-                    var self = this;
-                    $('#myform').validator({
-                        rules: {
-                            money: [/^-?\d+\.{0,}\d{0,}$/, '请输入正确的金额']
-                        },
-                        fields: {
-                            actualPayment: 'required, money',
-                        }
-                    });
-
-                    $('#myform2').validator({
-                        fields: {
-                            billtime: 'required'
-                        }
-                    });
-                },
-                goodsImg: function() {
-                    var self = this,
+    </script>
+<#include "./inc/footer.ftl"/>
+<script src="js/layer/layer.js"></script>
+<script src="js/laydate/laydate.js"></script>
+<script src="js/validator/jquery.validator.js?local=zh-CN"></script>
+<script src="js/croppic.min.js"></script>
+<script src="/js/jquery.form.js"></script>
+<script>
+    var _global = {
+        v: {
+        },
+        fn: {
+            init: function() {
+                this.goodsImg();
+                this.bindEvent();
+                // this.submit();
+            },
+            goodsImg: function() {
+                var self = this,
                         $myform = $('#myform');
 
-                    // 删除图片
-                    $myform.on('click', '.del', function() {
-                        var $self = $(this);
-                        layer.confirm('确认删除图片？', {
-                            btn: ['确认','取消'] //按钮
-                        }, function(index){
-                            $self.parent().remove();
-                            layer.close(index);
-                        });
-                        return false;
-                    })
-                    // 点击图片看大图
-                    $myform.on('click', 'img', function() {
-                        var url = this.src;
-                        window.open(url);
-                        return false;
-                    })
-                    this.upImg();
-                },
-                upImg: function() {
-                    var options = {
-                        uploadUrl:'gen/img/upload',
-                        customUploadButtonId: 'imgCrop',
-                        onAfterImgUpload: function(response){
-                            cropModal.destroy();
-                            $('#imgCrop').before('<span class="up-img"><img src="' + response.url + '" title="点击图片看大图" /><i class="del" title="删除"></i><input type="hidden" name="img" value="' + response.url + '"></span>');
-                            cropModal = new Croppic('imgCropWrap', options);
-                        },
-                        onError:function(msg){
-                            $.notify({
-                                type: 'error', 
-                                text: msg.info,     //'支持 jpg、jepg、png、gif等格式图片文件',
-                                delay: 3e3
-                            });
-                        }
-                    }
-                    var cropModal = new Croppic('imgCropWrap', options);
-                },
-                // 支付方式切换
-                payType: function() {
-                    var $el = $('#jpayType');
-
-                    var changeForm = function($el) {
-                        var value = $el.val();
-
-                        if (value === '0') {
-                            $el.closest('dl').next().show();
-                            $('#myform').show();
-                            $('#myform2').hide();
-
-                        } else {
-                            $el.closest('dl').next().hide();
-                            $('#myform').hide();
-                            $('#myform2').show();
-                        }
-                    }
-
-                    $el.on('click', 'input', function() {
-                        changeForm($(this));
+                // 删除图片
+                $myform.on('click', '.del', function() {
+                    var $self = $(this);
+                    layer.confirm('确认删除图片？', {
+                        btn: ['确认','取消'] //按钮
+                    }, function(index){
+                        $self.parent().remove();
+                        layer.close(index);
                     });
-                    changeForm($el.find('input:checked'));
+                    return false;
+                })
+
+                this.upImg();
+            },
+            upImg: function() {
+                var options = {
+                    uploadUrl:'gen/img/upload',
+                    customUploadButtonId: 'imgCrop',
+                    onAfterImgUpload: function(response){
+                        cropModal.destroy();
+                        $('#imgCrop').before('<span class="up-img"><img src="' + response.url + '" title="点击图片看大图" /><i class="del" title="删除"></i><input type="hidden" name="img" value="' + response.url + '"></span>');
+                        cropModal = new Croppic('imgCropWrap', options);
+                    },
+                    onError:function(msg){
+                        $.notify({
+                            type: 'error',
+                            title: msg.title,   // 不允许的文件类型
+                            text: msg.message,     //'支持 jpg、jepg、png、gif等格式图片文件',
+                            delay: 3e3
+                        });
+                    }
                 }
-    		}
-    	}
-    	$(function() {
-    		_global.fn.init();
-    	})
-    </script>
+                var cropModal = new Croppic('imgCropWrap', options);
+            },
+            bindEvent: function() {
+                var $bank = $('.bank'),
+                        $bill = $('.bill'),
+                        $billtime = $('#billtime'),
+                        $submit = $('#stageSubmit'),
+                        model = $('#payModal').html(),
+                        ptype = 'alipay';
+                $('#money').on('keyup', function() {
+                    var val = this.value;
+                    if (!/^\d+\.?\d*$/.test(val)) {
+                        val = Math.abs(parseFloat(val));
+                        this.value = isNaN(val) ? '' : val;
+                    }
+                })
+                // 支付方式
+                $('.paytype').on('click', 'input', function() {
+                    ptype = this.value;
+                    $(this).parent().addClass('checked').siblings().removeClass('checked');
+                    $('.error').empty();
+                    $bank[ptype === 'bank' ? 'show' : 'hide']();
+                    $bill[ptype === 'bill' ? 'show' : 'hide']();
+                    if (ptype === 'alipay' || ptype === "wxpay") {
+                        $submit.html('去付款');
+                    } else {
+                        $submit.html('确认');
+                    }
+                })
+
+                // 提交
+                $submit.on('click', function() {
+                    var pass = true;
+                    if (ptype == null) {
+                        $(this).next().html('请选择支付方式');
+                        pass = false;
+                    } else if (ptype === 'bank') {
+                        if ($bank.find('.cbx:checked').length === 0) {
+                            $bank.find('.error').html('请选择转账账号');
+                            pass = false;
+                        } else {
+                            $bank.find('.error').empty();
+                        }
+                    } else if (ptype === 'bill') {
+                        if ($billtime.val() == '') {
+                            $billtime.next().html('请选择账期时间');
+                            pass = false;
+                        } else {
+                            $billtime.next().empty();
+                        }
+                    }
+                    if (pass) {
+                        $(this).next().empty();
+                        if (ptype === 'alipay' || ptype === 'wxpay') {
+                            if($("#money").val()==""){
+                                $("#submitForm").find('.error').html('请输入支付金额');
+                                return;
+                            }
+                            layer.open({
+                                title: '支付货款',
+                                area: ['490px', '295px'],
+                                content: model,
+                                type: 1,
+                                cancel: function() {
+                                    $('#changePaytype').off();
+                                }
+                            })
+
+                            $('#changePaytype').on('click', function() {
+                                layer.closeAll();
+                            })
+
+                            $("#paymoney").val($("#money").val());
+
+                            $('#payform').submit();
+
+                        }
+                        else if(ptype ==="bill"){
+                            $("#myform").ajaxSubmit({
+                                url:"/center/pay/bill",
+                                success:function(result) {
+
+                                    if(result.status=="y"){
+                                        location.href="/center/pay/success?state=bill"
+                                    }else{
+                                        $.notify({
+                                            type: 'error',
+                                            title: '错误信息',   // 不允许的文件类型
+                                            text: result.info,     //'支持 jpg、jepg、png、gif等格式图片文件',
+                                            delay: 3e3,
+                                            call:function(){
+                                                setTimeout(function () {
+                                                    location.href = '/center/order/list';
+                                                }, 3e3);
+                                            }
+                                        });
+                                    }
+
+                                }
+                            })
+                        }
+                        else if(ptype ==="bank"){
+                            var bank=$('input:radio[name="bank"]:checked').val();
+                            $("#myform").ajaxSubmit({
+                                data:{'payAccountId':bank},
+                                url:"/center/bill/create",
+                                beforeSend: function() {
+                                    var imgLength =  $('input[name="img"]').length;
+                                    if(imgLength<=1){
+                                        $.notify({
+                                            type: 'error',
+                                            title: '',
+                                            text: '请至少上传一张支付凭证!',
+                                            delay: 3e3
+                                        });
+                                        return false;
+                                    }
+                                },
+                                success: function(result) {
+                                    if(result.status=="y"){
+                                        location.href="/center/pay/success?state=payment"
+                                    }else{
+                                        $.notify({
+                                            type: 'error',
+                                            title: '错误信息',   // 不允许的文件类型
+                                            text: result.info,     //'支持 jpg、jepg、png、gif等格式图片文件',
+                                            delay: 3e3,
+                                            call:function(){
+                                                setTimeout(function () {
+                                                    location.href = '/center/order/list';
+                                                }, 3e3);
+                                            }
+                                        });
+                                    }
+                                }
+                            })
+                        }
+                    }
+                    return false;
+                })
+
+                $billtime.on('change', function() {
+                    $(this).next().empty();
+                })
+                $bank.find('.cbx').on('click', function() {
+                    $bank.find('.error').empty();
+                })
+                this.SMSCodeEvent();
+            },
+            SMSCodeEvent: function() {
+                var $send = $('#send'),
+                        $bank = $('.bank'),
+                        second = 0,
+                        txt = ' 秒后重试';
+
+                var lock = function() {
+                    $send.html(second + txt).prop('disabled', true);
+                    if (second === 0) {
+                        $send.html('将账号发送到手机').prop('disabled', false);
+                    } else {
+                        second --;
+                        setTimeout(function() {
+                            lock();
+                        }, 1e3)
+                    }
+                }
+                var sendMSM = function() {
+                    var bank=$('input:radio[name="bank"]:checked').val();
+                    var orderId=$('input:hidden[name="orderId"]').val();
+                    $.ajax({
+                        url: '/center/pay/sendAccount',
+                        data:{'payAccountId':bank,"orderId":orderId},
+                        dataType: 'json',
+                        type:"POST",
+                        beforeSend: function() {
+                            $send.html('短信发送中').prop('disabled', true);
+                        },
+                        success: function(data) {
+                            if (data.status === 'y') {
+                                lock();
+                            } else {
+                                alert(data.info);
+                            }
+                        },
+                        error: function() {
+                            $send.html('将账号发送到手机').prop('disabled', false);
+                        }
+                    })
+                }
+
+                // 发送到手机
+                $send.prop('disabled', false).on('click', function() {
+                    if ($bank.find('.cbx:checked').length === 0) {
+                        $bank.find('.error').html('请选择转账账号');
+                    } else {
+                        $bank.find('.error').empty();
+                        if(second === 0) {
+                            second = 60; // 60秒倒计时
+                            sendMSM();
+                        }
+                    }
+                })
+            }
+        }
+    }
+    $(function() {
+        _global.fn.init();
+    })
+</script>
 </body>
 </html>

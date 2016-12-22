@@ -198,6 +198,7 @@
 		<profile>
 			<id>dev-wb</id>
 			<properties>
+				<biz.base.url>http://3j651.free.natapp.cc</biz.base.url>
 				<boss.base.url>http://localhost:81</boss.base.url>
 				<boss.upload.url>http://localhost:81/files/</boss.upload.url>
 				<boss.upload.path>E:\development\apache-tomcat-8.0.361\webapps\files\</boss.upload.path>
@@ -206,6 +207,7 @@
 		<profile>
 			<id>dev-ff</id>
 			<properties>
+				<biz.base.url>http://127.0.0.1:8088</biz.base.url>
 				<boss.base.url>http://127.0.0.1:8089</boss.base.url>
 				<boss.upload.url>http://127.0.0.1:8089/files/</boss.upload.url>
 				<boss.upload.path>E:/Program Files/Apache Software Foundation/Tomcat 8.5/webapps/files/</boss.upload.path>
@@ -217,6 +219,7 @@
 		<profile>
 			<id>dev-ppc</id>
 			<properties>
+				<biz.base.url>http://127.0.0.1:8081</biz.base.url>
 				<boss.base.url>http://127.0.0.1:8080</boss.base.url>
 				<boss.upload.url>http://127.0.0.1:8080/files/</boss.upload.url>
 				<boss.upload.path>/Software/JAVAEE/apache-tomcat-8.0.23/webapps/files/</boss.upload.path>
@@ -225,6 +228,7 @@
 		<profile>
 			<id>test</id>
 			<properties>
+				<biz.base.url>http://www.sghaoyao.com</biz.base.url>
 				<boss.base.url>http://boss.sghaoyao.com</boss.base.url>
 				<boss.upload.url>http://static.sghaoyao.com/</boss.upload.url>
 				<boss.upload.path>E:\uploadfiles\sghaoyao\</boss.upload.path>
@@ -233,6 +237,7 @@
 		<profile>
 			<id>prod</id>
 			<properties>
+				<biz.base.url>http://www.sghaoyao.com</biz.base.url>
 				<boss.base.url>http://boss.sghaoyao.com</boss.base.url>
 				<boss.upload.url>http://static.sghaoyao.com/</boss.upload.url>
 				<boss.upload.path>/opt/resources/sghaoyao/</boss.upload.path>

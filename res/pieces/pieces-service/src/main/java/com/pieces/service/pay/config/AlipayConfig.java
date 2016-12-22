@@ -1,5 +1,8 @@
 package com.pieces.service.pay.config;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 /* *
  *类名：AlipayConfig
  *功能：基础配置类
@@ -10,7 +13,7 @@ package com.pieces.service.pay.config;
  *以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
  *该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
  */
-
+@Component
 public class AlipayConfig {
 	
 //↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
@@ -25,10 +28,12 @@ public class AlipayConfig {
     public static String key = "lgi51j13w8yl29wj6m88rka0h5quxozk";
 
 	// 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String notify_url = "http://3j651.free.natapp.cc/pay/alipay/result/notify";
+	@Value("${biz.base.url}"+"/pay/alipay/result/notify")
+	public  String notify_url;
 
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String return_url = "http://3j651.free.natapp.cc/pay/alipay/result/page";
+	@Value("${biz.base.url}"+"/pay/alipay/result/page")
+	public  String return_url;
 
 	// 签名方式
 	public static String sign_type = "MD5";
@@ -57,6 +62,18 @@ public class AlipayConfig {
 	public static String exter_invoke_ip = "";
 		
 //↑↑↑↑↑↑↑↑↑↑请在这里配置防钓鱼信息，如果没开通防钓鱼功能，为空即可 ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
-	
+
+
+	public String getNotify_url() {
+		return notify_url;
+	}
+
+
+
+	public String getReturn_url() {
+		return return_url;
+	}
+
+
 }
 

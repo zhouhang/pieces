@@ -20,10 +20,13 @@ public class Payment  implements Serializable {
 	private Integer status;
 	
 	//支付金额
-	private Float money;
+	private Double money;
 	
 	//订单id
 	private Integer orderId;
+	
+	//账单id
+	private Integer accountBillId;
 	
 	//支付宝/微信交易号
 	private String tradeNo;
@@ -33,10 +36,10 @@ public class Payment  implements Serializable {
 	
 	private String remark;
 	
-	//传入参数
+	//返回参数
 	private String inParam;
 	
-	//返回参数
+	//传出参数
 	private String outParam;
 	
 	//创建时间
@@ -78,21 +81,29 @@ public class Payment  implements Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
-	public Float getMoney() {
+
+	public Double getMoney() {
 		return money;
 	}
 
-	public void setMoney(Float money) {
+	public void setMoney(Double money) {
 		this.money = money;
 	}
-	
+
 	public Integer getOrderId() {
 		return orderId;
 	}
 
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
+	}
+	
+	public Integer getAccountBillId() {
+		return accountBillId;
+	}
+
+	public void setAccountBillId(Integer accountBillId) {
+		this.accountBillId = accountBillId;
 	}
 	
 	public String getTradeNo() {

@@ -16,6 +16,9 @@
         </div>
         <form action="" id="myform" method="post">
             <input type="hidden" name="orderId" value="${order.id!}">
+            <input type="hidden" name="orderId" value="${orderForm.id!}">
+            <input type="hidden" name="userId" value="${orderForm.userId!}">
+            <input type="hidden" name="agentId" value="${orderForm.agentId}">
             <input type="hidden" name="token" value="${token!}">
         <div class="cont">
             <div class="info">
@@ -67,15 +70,17 @@
     </div>
 </div>
 <div id="imgCropWrap"></div>
-
+<form action="/pay/alipay/" id="payform" target="_blank" method="POST" target="_blank">
+    <input type="hidden" name="orderId" value="${order.id!}">
+</form>
 <script type="temp" id="payModal">
     <div class="pay-modal">
         <div class="hd"><i class="fa fa-prompt"></i>请在新打开的页面中完成付款</div>
         <p>付款完成前请不要关闭此窗口</p>
         <p>完成付款后请点击下面按钮</p>
         <div class="op">
-            <a class="btn btn-red success" href="#">已完成付款</a>
-            <a class="btn btn-gray fail" href="#">付款遇到问题</a>
+            <a class="btn btn-red success" href="/center/order/list">已完成付款</a>
+            <a class="btn btn-gray fail" href="/help/25">付款遇到问题</a>
         </div>
         <div class="tc">
             <span class="c-blue" id="changePaytype">选择其它支付方式</span>
@@ -113,17 +118,11 @@
                     });
                     return false;
                 })
-                // 点击图片看大图
-                $myform.on('click', 'img', function() {
-                    var url = this.src;
-                    window.open(url);
-                    return false;
-                })
                 this.upImg();
             },
             upImg: function() {
                 var options = {
-                    uploadUrl:'img_save_to_file.php',
+                    uploadUrl:'gen/img/upload',
                     customUploadButtonId: 'imgCrop',
                     onAfterImgUpload: function(response){
                         cropModal.destroy();
@@ -200,6 +199,8 @@
                             $('#changePaytype').on('click', function() {
                                 layer.closeAll();
                             })
+                            $('#payform').submit();
+
                         }
                         else if(ptype ==="bill"){
                                 $("#myform").ajaxSubmit({

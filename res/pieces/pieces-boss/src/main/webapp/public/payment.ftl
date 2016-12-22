@@ -42,9 +42,10 @@
                     <td><div class="ipt-wrap"><input type="text" class="ipt" name="userName" value="${param.userName}"></div></td>
                     <td><div class="ipt-wrap"><input type="text" class="ipt" name="companyFullName" value="${param.companyFullName}"></div></td>
                     <td>
-                        <select name="" id="">
+                        <select name="payType" id="payType">
                             <option value=""></option>
                             <option value="">线下打款</option>
+                            <option value="1">支付宝支付</option>
                         </select>
                     </td>
                     <td>
@@ -67,7 +68,7 @@
                     <td>${pay.orderCode}</td>
                     <td>${pay.orderUserName}</td>
                     <td>${pay.companyFullName}</td>
-                    <td>线下打款</td>
+                    <td>${pay.payTypeName}</td>
                     <td>${pay.statusText}</td>
                     <td>
                     <@shiro.hasPermission name="pay:info">
@@ -86,7 +87,8 @@
 <!-- footer end -->
 <script>
     $(function () {
-        $("#status").val(${vo.param});
+        $("#status").val(${param.status});
+        $("#payType").val(${param.payType});
         var payment = {
             url:"/payment/index?"
         };

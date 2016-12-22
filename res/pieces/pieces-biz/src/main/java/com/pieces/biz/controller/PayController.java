@@ -2,6 +2,7 @@ package com.pieces.biz.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.biz.controller.commons.LogConstant;
+import com.pieces.dao.enums.PayTypeEnum;
 import com.pieces.dao.enums.SessionEnum;
 import com.pieces.dao.model.*;
 import com.pieces.dao.vo.OrderFormVo;
@@ -52,6 +53,9 @@ public class PayController extends BaseController{
     @Autowired
     private SmsService smsService;
 
+    @Autowired
+    private PaymentService paymentService;
+
     /**
      * 订单支付
      * @param modelMap
@@ -91,6 +95,8 @@ public class PayController extends BaseController{
                           String state){
         modelMap.put("state",state);
         modelMap.put("way",way);
+        //线下支付
+        modelMap.put("payType","outPay");
         return "payment_result";
     }
 
@@ -220,6 +226,10 @@ public class PayController extends BaseController{
         if(payRecordVo.getDeposit()==null){
             payRecordVo.setDeposit(orderForm.getDeposit());
         }
+        if(payRecordVo.getPaymentId()!=null){
+            Payment payment=paymentService.findById(payRecordVo.getPaymentId());
+            payRecordVo.setPayTypeName(PayTypeEnum.findByValue(payment.getPayType()));
+        }
 
         modelMap.put("payRecordVo",payRecordVo);
         if(user.getType()==1){
@@ -238,7 +248,7 @@ public class PayController extends BaseController{
         OrderFormVo orderForm = orderFormService.findVoById(orderId);
 
         try {
-            smsService.sendAccount(user.getContactMobile(),payAccount.getReceiveAccount(),payAccount.getReceiveBank(),payAccount.getReceiveBankCard(),orderForm.getAmountsPayable());
+            smsService.sendAccount(user.getContactMobile(),payAccount.getReceiveAccount(),payAccount.getReceiveBank(),payAccount.getReceiveBankCard(),orderForm.getAmountsPayable(),orderForm.getCode());
         } catch (Exception e) {
             return new Result(false).info("发送账号失败!");
         }

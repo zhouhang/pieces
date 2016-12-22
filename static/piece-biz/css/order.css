@@ -101,9 +101,12 @@
 .payment .cont .paytype label input{position:absolute;opacity:0;}
 .payment .cont .paytype label.checked{border-color:#c3272b;}
 .payment .cont .paytype label.checked i{position:absolute;bottom:0;right:-7px;border:7px dashed transparent;border-bottom:7px solid #c3272b;}
-.payment .cont .button{margin-top:50px;}
+.payment .cont .button{margin-top:30px;}
 .payment .cont .button .btn{width:140px;margin-right:10px;}
-.payment .cont .bank{display:none;margin:30px 0 -10px;}
+.payment .cont .button label{display:inline-block;width:86px;color:#999;}
+.payment .cont .button em{display:block;height:50px;}
+.payment .cont .button .ipt{width:200px;padding:9px;}
+.payment .cont .bank{display:none;margin:30px 0 0;}
 .payment .cont .bank .cbx{margin-right:-4px;}
 .payment .cont .bank p{height:34px;}
 .payment .cont .bank em{margin-left:14px;font-weight:700;}
@@ -111,8 +114,9 @@
 .payment .cont .bank .send:hover{opacity:.8;filter:alpha(opacity=80);}
 .payment .cont .bank .h2{margin-top:30px;padding-top:30px;border-top:1px solid #e7e7e7;}
 .payment .cont .bank .tips{display:block;margin-top:20px;color:#999;}
-.payment .cont .bill{display:none;margin:30px 0 -10px;padding-top:30px;border-top:1px solid #e7e7e7;color:#999;}
+.payment .cont .bill{display:none;margin:30px 0 0;padding-top:30px;border-top:1px solid #e7e7e7;color:#999;}
 .payment .cont .bill select{width:220px;height:40px;line-height:40px;margin-right:10px;}
+.payment .cont .bill label{display:inline-block;width:86px;}
 .payment .cont .error{color:#c3272b;}
 .pay-modal{line-height:24px;padding:0 40px;}
 .pay-modal .hd{padding:35px 0 4px 34px;font-size:16px;}

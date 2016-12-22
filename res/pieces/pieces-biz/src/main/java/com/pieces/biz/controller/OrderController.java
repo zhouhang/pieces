@@ -3,6 +3,7 @@ package com.pieces.biz.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -249,6 +250,10 @@ public class OrderController extends BaseController {
     public String success(@PathVariable("id")Integer id,ModelMap modelMap) {
 		OrderForm order=orderFormService.findVoById(id);
 		List<PayAccount> payAccountList = payAccountService.findAll();
+
+		String token = UUID.randomUUID().toString();
+		httpSession.setAttribute(SessionEnum.PAY_TOKEN.getKey(),token);
+		modelMap.put("token",token);
 		modelMap.put("payAccountList",payAccountList);
 		modelMap.put("order", order);
 		return "order_success";

@@ -19,6 +19,8 @@ public class PayRecord  implements Serializable {
 	private Integer accountBillId;
 
 	private Integer orderId;
+
+	private Integer paymentId;
 	
 	//应付金额
 	private Double amountsPayable;
@@ -57,6 +59,8 @@ public class PayRecord  implements Serializable {
 	
 	//0审核中，1支付成功，2支付失败
 	private Integer status;
+
+	private Integer payType;
 	
 	//失败原因
 	private String failReason;
@@ -71,6 +75,14 @@ public class PayRecord  implements Serializable {
 	private Date createTime;
 	
 	public PayRecord(){}
+
+	public Integer getPayType() {
+		return payType;
+	}
+
+	public void setPayType(Integer payType) {
+		this.payType = payType;
+	}
 
 	public Double getDeposit() {
 		return deposit;
@@ -246,5 +258,13 @@ public class PayRecord  implements Serializable {
 
 	public void setAccountBillId(Integer accountBillId) {
 		this.accountBillId = accountBillId;
+	}
+
+	public Integer getPaymentId() {
+		return paymentId;
+	}
+
+	public void setPaymentId(Integer paymentId) {
+		this.paymentId = paymentId;
 	}
 }

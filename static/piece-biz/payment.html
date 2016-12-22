@@ -89,6 +89,9 @@
                 </div>
 
                 <div class="button">
+                    <label>本次支付金额：</label>
+                    <input type="text" class="ipt" id="money">
+                    <em></em>
                     <button type="submit" class="btn btn-red" id="stageSubmit">去付款</button>
                     <span class="error"></span>
                 </div>
@@ -204,6 +207,15 @@
                         $submit = $('#stageSubmit'),
                         model = $('#payModal').html(),
                         ptype = 'alipay';
+
+                    // 金额
+                    $('#money').on('keyup', function() {
+                        var val = this.value;
+                        if (!/^\d+\.?\d*$/.test(val)) {
+                            val = Math.abs(parseFloat(val));
+                            this.value = isNaN(val) ? '' : val;
+                        }
+                    })
 
                     // 支付方式
                     $('.paytype').on('click', 'input', function() {
