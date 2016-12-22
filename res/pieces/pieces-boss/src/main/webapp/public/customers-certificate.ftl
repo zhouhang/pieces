@@ -562,7 +562,11 @@
                             others.push(url);
                         </#if>
                         </#list>
+                            var addPic=$pictures.find('.upimgs');
                             $pictures.find('.upimgs').before(otherPics);
+                            <#if q.pictures?size==4>
+                                addPic.remove();
+                            </#if>
                             $pictures.find('input:hidden').val(others.join("<>"));
                     </#list>
                     </#if>
