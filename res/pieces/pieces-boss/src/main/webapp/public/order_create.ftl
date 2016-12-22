@@ -591,26 +591,23 @@
                 var self     = this;
 
                 $('#submitOrder').on('click', function() {
-                    self.submitOrder();
+                    self.submitOrder()
                 })
 
                 $('#submitOrder2').on('click',function(){
                     self.submitOrder();
+
                 })
 
             },
             submitOrder:function () {
 
                 var self     = this;
-                var isSubmit = false;
 
-                if (!isSubmit&&$("#myform").isValid()) {
-
+                if (!self.isSubmit&&$("#myform").isValid()) {
                     var result = self.checkForm();
 
                     if (result.pass) {
-                        isSubmit = true;
-
                         var formObj = {};
 
                         // 代理商id
@@ -647,21 +644,18 @@
                             contentType : 'application/json',
                             data :formData,
                             dataType : 'json',
+                            beforeSend: function () {
+                              self.isSubmit = true;
+                            },
                             success : function(result) {
-                                isSubmit = false;
                                 location.href="/order/index";
                             },
-                            complete: function() {
-                                isSubmit = false;
+                            error: function() {
+                                self.isSubmit = false;
                             }
                         });
-                    }else{
-                        isSubmit = false;
                     }
-                    return false;
-
                 }
-
             },
             checkForm: function() {
                 var result = {
