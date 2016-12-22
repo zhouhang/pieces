@@ -47,27 +47,7 @@ public class SmsService {
      * @throws Exception
      */
     public String sendSmsCaptcha(String mobile) throws Exception {
-        String timerStr = redisManager.get(RedisEnum.KEY_MOBILE_TIMER.getValue()+mobile);
-        String intervalTimeStr = redisManager.get(RedisEnum.KEY_MOBILE_CAPTCHA_INTERVAL.getValue()+mobile);
-        if(StringUtils.isNotBlank(timerStr)){
-            if(StringUtils.isNotBlank(intervalTimeStr)){
-                Long intervalTime =  Long.valueOf(intervalTimeStr) + SMS_INTERVAL_TIME;
-                if(new Date().getTime()<intervalTime){
-                    throw new SmsOverException("'"+mobile+"',该手机号请求短信间隔太快!");
-                }
-            }
-
-
-            Integer timer =  Integer.valueOf(timerStr);
-            if(timer>=3){
-                throw new SmsOverException("'"+mobile+"',该手机号短信发送次数超标!");
-            }else{
-                redisManager.set(RedisEnum.KEY_MOBILE_TIMER.getValue()+mobile,(timer+1)+"",SMS_EXPIRE_TIME);
-            }
-        }else{
-            redisManager.set(RedisEnum.KEY_MOBILE_TIMER.getValue()+mobile,"1",SMS_EXPIRE_TIME);
-        }
-
+        checkCaptcha(mobile);
         //生成并发送验证码
         String code = SeqNoUtil.getRandomNum(5);
 
@@ -81,6 +61,45 @@ public class SmsService {
         redisManager.set(RedisEnum.KEY_MOBILE_CAPTCHA_INTERVAL.getValue()+mobile,new Date().getTime()+"");
         //验证码存储在redis缓存里
         redisManager.set(RedisEnum.KEY_MOBILE_CAPTCHA.getValue()+mobile,code,SMS_EXPIRE_TIME);
+        return code;
+    }
+
+    private void checkCaptcha(String mobile){
+        String timerStr = redisManager.get(RedisEnum.KEY_MOBILE_TIMER.getValue()+mobile);
+        String intervalTimeStr = redisManager.get(RedisEnum.KEY_MOBILE_CAPTCHA_INTERVAL.getValue()+mobile);
+        if(StringUtils.isNotBlank(timerStr)){
+            if(StringUtils.isNotBlank(intervalTimeStr)){
+                Long intervalTime =  Long.valueOf(intervalTimeStr) + SMS_INTERVAL_TIME;
+                if(new Date().getTime()<intervalTime){
+                    throw new SmsOverException("60秒内仅能获取一次验证码，请稍后重试.");
+                }
+            }
+
+
+            Integer timer =  Integer.valueOf(timerStr);
+            if(timer>=3){
+                throw new SmsOverException("'"+mobile+"',该手机号短信发送次数超标!");
+            }else{
+                redisManager.set(RedisEnum.KEY_MOBILE_TIMER.getValue()+mobile,(timer+1)+"",SMS_EXPIRE_TIME);
+            }
+        }else{
+            redisManager.set(RedisEnum.KEY_MOBILE_TIMER.getValue()+mobile,"1",SMS_EXPIRE_TIME);
+        }
+    }
+
+    public String sendFindPasswordCaptcha(String mobile) throws Exception {
+        checkCaptcha(mobile);
+        //生成并发送验证码
+        String code = SeqNoUtil.getRandomNum(5);
+        Map<String, Object> param = new HashMap<>();
+        param.put("apikey", apikey);
+        param.put("mobile", mobile);
+        param.put("text", TextTemplateEnum.SMS_BIZ_FINDPASSWORD_CAPTCHA.getText("【上工好药】", code));
+        HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+        //记录发送成功的时间
+        redisManager.set(RedisEnum.KEY_MOBILE_CAPTCHA_INTERVAL.getValue()+mobile,new Date().getTime()+"");
+        //验证码存储在redis缓存里
+        redisManager.set(RedisEnum.KEY_MOBILE_FINDPASSWORD_CAPTCHA.getValue()+mobile,code,SMS_EXPIRE_TIME);
         return code;
     }
 

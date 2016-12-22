@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>上工好药</title>
+    <title>报价单-上工好药</title>
     <style>
         *{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
         html{font-size:62.5%;font-family:'Microsoft Yahei',sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0, 0, 0, 0);}

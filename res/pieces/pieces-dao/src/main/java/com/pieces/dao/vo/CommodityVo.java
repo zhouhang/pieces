@@ -3,6 +3,7 @@ package com.pieces.dao.vo;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -80,7 +81,7 @@ public class CommodityVo extends Commodity {
 		if(StringUtils.isBlank(getAttribute())){
 			return null;
 		}
-		return GsonUtil.jsonToEntity(getAttribute(),Map.class);
+		return GsonUtil.jsonToEntity(getAttribute(),LinkedHashMap.class);
 	}
 
 	public void setAttributeView(Map<String, String> attributeView) {
