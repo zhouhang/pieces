@@ -153,8 +153,8 @@ function navMsg(notification) {
                 $("#certifyList").find('b').html(CERTIFY_RECORD_NUM); 
                 $("#anonEnquiry").find('b').html(ANON_ENQUIRY_NUM);
                 notification && t && showNotification({
-                    title: '药优优消息',
-                    body: '您有新的任务未处理'
+                    title: '上工好药',
+                    body: '后台有新的任务待处理'
                 });
             }
         }

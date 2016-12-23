@@ -120,7 +120,6 @@ function currNav() {
 	})
 }
 
-
 function navMsg(notification) {
     $.ajax({
         url: '/message/notHandle',
@@ -154,8 +153,8 @@ function navMsg(notification) {
                 $("#certifyList").find('b').html(CERTIFY_RECORD_NUM); 
                 $("#anonEnquiry").find('b').html(ANON_ENQUIRY_NUM);
                 notification && t && showNotification({
-                    title: '药优优消息',
-                    body: '您有新的任务未处理'
+                    title: '上工好药',
+                    body: '后台有新的任务待处理'
                 });
             }
         }
@@ -176,7 +175,7 @@ function showNotification(options) {
 
     var defaults = {
         body: options.body || '',
-        icon: options.icon || 'http://boss.sghaoyao.com/assets/images/slogan.png',
+        icon: options.icon || 'http://boss.sghaoyao.com/images/slogan.png',
         tag: options.tag || (new Date).getTime()
     }
     if (defaults.body.length > 40) {
@@ -185,7 +184,7 @@ function showNotification(options) {
     var t = new Notification(options.title || '消息', defaults);
 
     t.onshow = function(){
-        $('body').append('<audio src="/assets/media/voice.mp3" id="notification-audio" preload="auto" autoplay></audio>');
+        $('body').append('<audio src="/media/voice.mp3" id="notification-audio" preload="auto" autoplay></audio>');
     }
     setTimeout(function() {
         $('#notification-audio').remove();
