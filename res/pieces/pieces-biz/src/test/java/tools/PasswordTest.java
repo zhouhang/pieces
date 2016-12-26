@@ -2,6 +2,7 @@ package tools;
 
 import com.pieces.service.dto.Password;
 import com.pieces.service.utils.EncryptUtil;
+import com.pieces.tools.utils.MD5Util;
 
 /**
  * Created by wangbin on 2016/7/8.
@@ -9,11 +10,9 @@ import com.pieces.service.utils.EncryptUtil;
 public class PasswordTest {
 
     public static void main(String[] args) {
-        Password pass = EncryptUtil.PiecesEncode("123456");
 
-        System.out.println(pass.getPassword());
-        System.out.println(pass.getSalt());
-
-
+        String text =  MD5Util.sign("0","fe68a821107c34bf9863348831e26755","utf-8");
+        System.out.println(System.currentTimeMillis());
+        System.out.println((System.currentTimeMillis()+"").length());
     }
 }
