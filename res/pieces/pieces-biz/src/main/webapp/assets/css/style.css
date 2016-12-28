@@ -181,10 +181,10 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 /* 分步向导 */
 .fa-guide{padding-bottom:90px;text-align:center;}
 .fa-guide li{display:inline-block;*display:inline;*zoom:1;color:#999;}
-.fa-guide li i{margin:0 40px;}
-.fa-guide li span{display:inline-block;width:30px;line-height:30px;margin-right:10px;font-size:16px;color:#fff;text-align:center;background:#ccc;border-radius:100%;}
+.fa-guide li i{margin:0 20px;}
+.fa-guide li span{display:inline-block;width:20px;line-height:20px;margin-right:10px;font-size:12px;color:#fff;text-align:center;background:#ccc;border-radius:100%;}
 .fa-guide .curr{color:#333;}
-.fa-guide .curr span{background:#ffa902;}
+.fa-guide .curr span{background:#c3272b;}
 
 .fa-step{padding:70px 100px 20px;}
 .fa-step li{display:inline-block;*display:inline;*zoom:1;color:#999;}
@@ -464,7 +464,11 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .reg-box .side .ft{margin-top:10px;padding-top:20px;line-height:24px;font-size:14px;color:#333;border-top:1px solid #e7e7e7;}
 .reg-box .side .ft span{margin-left:4px;font-weight:700;}
 .reg-box .side .ft i{line-height:1;font-size:18px;}
-.reg-box .fa-form{float:left;width:490px;padding:0 110px 0 170px;color:#333;}
+.reg-box .fa-form{float:left;width:490px;padding:0 0 0 150px;color:#333;}
+.reg-box .fa-form .ipt-code{width:200px;}
+.reg-box .fa-form .img{position:absolute;top:0;right:0;width:110px;height:50px;}
+.reg-box .fa-form .val{line-height:50px;}
+.reg-box .fa-guide{margin-right:-70px;}
 
 /* 用户中心 */
 .member-box{margin-top:30px;}      
