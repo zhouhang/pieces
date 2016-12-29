@@ -14,6 +14,7 @@ import com.pieces.service.UserQualificationService;
 import com.pieces.service.UserService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.impl.SmsService;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -51,6 +52,9 @@ public class UserCertificateController {
 
     @Autowired
     HttpSession httpSession;
+
+    @Autowired
+    SmsService smsService;
 
     @RequiresPermissions(value = "certify:index" )
     @RequestMapping(value = "/list")
@@ -107,6 +111,8 @@ public class UserCertificateController {
 
            if(certifyRecordVo.getStatus()== CertifyRecordStatusEnum.CERTIFY_FAIL.getValue()){
                certifyRecordService.update(certifyRecordVo);
+               User user=userService.findById(certifyRecordVo.getUserId());
+               smsService.sendCertifyFail(user.getContactMobile(),certifyRecordVo.getResult());
            }else if(certifyRecordVo.getStatus()== CertifyRecordStatusEnum.CERTIFY_SUCESS.getValue()){
               //是否已经有验证通过的记录
                User user=userService.findById(certifyRecordVo.getUserId());
@@ -116,6 +122,7 @@ public class UserCertificateController {
                }
                else{
                    certifyRecordService.passCertify(certifyRecordVo);
+                   smsService.sendCertifySuccess(user.getContactMobile());
                }
 
            }

@@ -11,6 +11,8 @@ public enum TextTemplateEnum {
     SMS_BIZ_CAPTCHA_TEMPLATE("{1}您的注册验证码是{2},该验证码在30分钟内有效.注册成功后即可询价."),
     SMS_BIZ_FINDPASSWORD_CAPTCHA("{1}验证码为{2}，该验证码在30分钟内有效，请在页面中输入以完成验证。"),
     SMS_BIZ_SENDACCOUNT_TEMPLATE("【上工好药】尊敬的用户,您选择的付款帐号开户名称:{1}，开户行:{2},账号:{3},本次应付{4}元，付款时请备注订单号:{5}."),
+    SMS_BIZ_CERTIFYSUCCESS_TEMPLATE("【上工好药】尊敬的用户，您提交的企业资质审核已通过，您已获得在线下单的权限，立即开始采购吧。"),
+    SMS_BIZ_CERTIFYFAIL_TEMPLATE("【上工好药】尊敬的用户，您的企业资质审核未通过，不通过原因：{1}，请整理好资料后重新提交。有问题请致电 0558-5120088。"),
     SMS_BOSS_ADDUSER_PASSWORD_TEMPLATE("{1}您的用户名是{2},密码是{3},请妥善保管."),
     SMS_BOSS_UPDATEUSER_PASSWORD_TEMPLATE("{1}{2}您好,您的新密码是{3},请妥善保管."),
     SMS_BOSS_QUOTED("【上工好药】尊敬的用户: 您的询价单 {2} 已有回复.点击 http://sghaoyao.com/quote/{2} 查看详细"),

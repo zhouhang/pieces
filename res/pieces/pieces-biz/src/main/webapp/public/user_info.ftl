@@ -26,11 +26,13 @@
                             <div class="state">
                             <i class="fa fa-prompt"></i>
                         <#if cerfiy==0>
-                            <span>您的公司信息正在审核中，通过审核后方可进行询价、下单等操作，如需帮助请拨打0558-5120088</span>
+                            <span>您的企业资质正在审核中，审核结果将以短信的形式发送给您，如有问题请致电0558-5120088。</span>
                         <#elseif cerfiy==2>
-                            <span>您的公司信息审核失败&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-red" href="/center/certificate/stepOne">继续提交资格审核</a></span>
+                            <span>您的公司信息审核失败</span>
+                            <em>不通过原因：${reason!}</em>
+                            <a class="btn btn-red" href="/center/certificate/stepOne">重新提交资质审核</a></span>
                         <#elseif cerfiy==-1>
-                            <span>您的公司信息尚未提交审核，通过审核后方可进行下单等操作&nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-red" href="/center/certificate/stepOne">提交资格审核</a></span>
+                            <span>您尚未提交企业资质审核，通过审核后方可进行在线下单。<a class="btn btn-red" href="/center/certificate/stepOne">提交资格审核</a></span>
                         </#if>
                         </div>
                         </#if>
