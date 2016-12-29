@@ -249,6 +249,36 @@ public class SmsService {
         }
     }
 
+    //审核成功短信
+    //【上工好药】尊敬的用户，您提交的企业资质审核已通过， 您已获得在线下单的权限，立即开始采购吧。
+    public void sendCertifySuccess(String mobile){
+        if (enable) {
+            try {
+                Map<String, Object> param = new HashMap<>();
+                param.put("apikey", apikey);
+                param.put("mobile", mobile);
+                param.put("text", TextTemplateEnum.SMS_BIZ_CERTIFYSUCCESS_TEMPLATE.getText());
+                HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+            } catch (Exception e) {
+                throw new RuntimeException("发送账号到手机发送失败", e);
+            }
+        }
+    }
+    //审核失败短信
+    //【上工好药】尊敬的用户，您的企业资质审核未通过，不通过原因：{1}，请整理好资料后重新提交。有问题请致电 0558-5120088。
+    public void sendCertifyFail(String mobile,String reason){
+        if (enable) {
+            try {
+                Map<String, Object> param = new HashMap<>();
+                param.put("apikey", apikey);
+                param.put("mobile", mobile);
+                param.put("text", TextTemplateEnum.SMS_BIZ_CERTIFYFAIL_TEMPLATE.getText(reason));
+                HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+            } catch (Exception e) {
+                throw new RuntimeException("发送账号到手机发送失败", e);
+            }
+        }
+    }
 
 
 

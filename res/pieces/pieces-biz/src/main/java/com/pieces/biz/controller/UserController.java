@@ -396,6 +396,7 @@ public class UserController extends BaseController {
 			CertifyRecordVo certifyRecordVo=certifyRecordService.getLatest(user.getId());
 			if(certifyRecordVo!=null){
 				model.put("cerfiy", certifyRecordVo.getStatus());
+				model.put("reason",certifyRecordVo.getResult());
 			}
 			else{
 				model.put("cerfiy", -1);
