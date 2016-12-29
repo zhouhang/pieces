@@ -181,6 +181,8 @@ public class OrderController extends BaseController {
 		orderFormVo.setCommodities(orderCommoditysList);
 		orderFormService.save(orderFormVo, user);
 		request.getSession().removeAttribute(SessionEnum.ORDER_TOKEN.getKey());
+
+
         return new Result(true).data(orderFormVo.getId());
 	}
 	

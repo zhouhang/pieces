@@ -11,6 +11,9 @@ import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.utils.ExcelParse;
+import com.pieces.tools.annotation.SameUrlData;
+import com.pieces.tools.annotation.TokenHold;
+import com.pieces.tools.annotation.TokenVerify;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.WebUtil;
@@ -225,6 +228,7 @@ public class OrderController extends BaseController{
     @RequestMapping(value = "submit")
     @ResponseBody
     @BizLog(type = LogConstant.order, desc = "提交订单")
+    @SameUrlData
     public Result save(@Valid @RequestBody OrderFormVo orderFormVo){
         List<OrderCommodity> commodities = orderFormVo.getCommodities();
         //计算商品金额
@@ -257,7 +261,7 @@ public class OrderController extends BaseController{
         }else{
             orderFormService.create(orderFormVo,orderFormVo.getOrderId());
         }
-        return new Result(true).data(orderFormVo);
+        return new Result(true).data(orderFormVo).info("订单提交成功!");
     }
 
 
@@ -313,9 +317,7 @@ public class OrderController extends BaseController{
     @RequestMapping(value = "/importExcel")
     @ResponseBody
     private Result importExcel(@RequestParam("file") MultipartFile file){
-
         List<EnquiryCommoditys> enquiryCommodityses= null;
-
         try {
             enquiryCommodityses = ExcelParse.importQuoteInfo(file.getInputStream());
         } catch (IOException e) {
@@ -323,7 +325,6 @@ public class OrderController extends BaseController{
         } catch (InvalidFormatException e) {
             e.printStackTrace();
         }
-
         return new Result(true).data(enquiryCommodityses);
     }
 

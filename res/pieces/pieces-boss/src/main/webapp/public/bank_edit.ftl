@@ -109,11 +109,32 @@
                                     type: "POST",
                                     success: function(data){
                                         //$(form)[0].reset();
-                                        $.notify({
-                                            type: 'success',
-                                            title: data.info,
-                                            delay: 3e3
-                                        });
+                                        if(data.status=="y"){
+                                            $.notify({
+                                                type: 'success',
+                                                title: data.info,
+                                                delay: 3e3,
+                                                call: function() {
+                                                    setTimeout(function() {
+                                                        location.reload();
+                                                    }, 3e3);
+                                                }
+                                            });
+                                        }else{
+                                            $.notify({
+                                                type: 'error',
+                                                title: data.info,
+                                                delay: 3e3,
+                                                call: function() {
+                                                    setTimeout(function() {
+                                                        //location.reload();
+
+                                                    }, 3e3);
+                                                }
+                                            });
+
+                                        }
+
                                     }
                                 });
                             }
@@ -136,9 +157,7 @@
                                             text: '3秒后自动跳转到账户列表页',
                                             delay: 3e3,
                                             call: function() {
-                                                setTimeout(function() {
-                                                    location.href = '/bank/index';
-                                                }, 3e3);
+
                                             }
                                         });
                                     }else{
