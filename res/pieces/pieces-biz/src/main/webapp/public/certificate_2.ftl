@@ -622,13 +622,12 @@
                         $ipt = $el.next('input:hidden'),
                         upId = 'upfile' + i,
                         id = 'upfileBtn' + i;
-
                     this.id = id;
                     $ipt.val('');
                     $upfiles.append('<div id="' + upId + '"></div>');
 
                     new Croppic(upId, {
-                        uploadUrl:'gen/img/upload',
+                        uploadUrl:'/gen/img/upload',
                         customUploadButtonId: id,
                         onAfterImgUpload: function(response){
                             $el.show().html('<img src="' + response.url + '" /><i class="del" title="删除"></i>');
@@ -639,6 +638,7 @@
                         }
                     });
                 })
+
 
                 // 多图删除
                 $('.thumb').on('click', '.upimgs .del', function() {
@@ -669,9 +669,10 @@
                     $upfiles.append('<div id="' + upId + '"></div>');
 
                     new Croppic(upId, {
-                        uploadUrl:'gen/img/upload',
+                        uploadUrl:'/gen/img/upload',
                         customUploadButtonId: id,
                         onAfterImgUpload: function(response){
+
                             var originImg = $ipt.val();
                             if (originImg.split(split).length > 2) {
                                 $el.hide();

@@ -13,6 +13,14 @@
 
 	<mvc:annotation-driven />
 
+	<!--<mvc:interceptors>-->
+		<!--&lt;!&ndash; 配置Token拦截器，防止用户重复提交数据 &ndash;&gt;-->
+		<!--<mvc:interceptor>-->
+			<!--<mvc:mapping path="/**"/>-->
+			<!--<bean class="com.pieces.boss.controller.interceptors.SameUrlDataInterceptor"/>-->
+		<!--</mvc:interceptor>-->
+	<!--</mvc:interceptors>-->
+
 	<!-- 导致重复代理 -->
 	<!--<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">-->
 		<!--<property name="proxyTargetClass" value="true" />-->

@@ -201,7 +201,7 @@
 		<profile>
 			<id>dev-wb</id>
 			<properties>
-				<biz.base.url>http://localhost</biz.base.url>
+				<biz.base.url>http://3j651.free.natapp.cc</biz.base.url>
 				<biz.upload.url>http://localhost/files/</biz.upload.url>
 				<biz.upload.path>E:\development\apache-tomcat-8.0.361\webapps\files\</biz.upload.path>
 			</properties>
