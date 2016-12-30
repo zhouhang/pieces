@@ -26,19 +26,18 @@
     <div class="reg-box">
         <div class="wrap">
             <div class="fa-form">
-
                 <ul class="fa-guide">
                     <li>
                         <span>1</span>
                         <strong>验证手机</strong>
                         <i class="fa fa-chevron-right"></i>
                     </li>
-                    <li class="curr">
+                    <li>
                         <span>2</span>
                         <strong>验证身份</strong>
                         <i class="fa fa-chevron-right"></i>
                     </li>
-                    <li>
+                    <li class="curr">
                         <span>3</span>
                         <strong>设置新密码</strong>
                         <i class="fa fa-chevron-right"></i>
@@ -49,43 +48,32 @@
                     </li>
                 </ul>
                 <form action="" id="myform">
-                    <div class="group">
-                        <div class="txt">
-                            用户名：
-                        </div>
-                        <div class="val">
-                            <span>${username!}</span>
-                        </div>
-                    </div>
 
                     <div class="group">
                         <div class="txt">
-                            手机号：
-                        </div>
-                        <div class="val">
-                            <span>${phone!}</span>
-                        </div>
-                    </div>
-
-                    <div class="group">
-                        <div class="txt">
-                            <i>*</i>验证码：
+                            <i>*</i>新密码：
                         </div>
                         <div class="cnt">
-                            <input type="text" class="ipt" value="" autocomplete="off" name="code" id="code" placeholder="请填写短信验证码">
-                            <button type="button" class="btn btn-gray btn-inside" id="send">获取验证码</button>
-                            <span class="Validform_wrong" style="display:none;"></span>
+                            <input type="password" class="ipt" value="" autocomplete="off" name="pwd" id="pwd" placeholder="请输入新密码">
+                        </div>
+                    </div>
+
+                    <div class="group">
+                        <div class="txt">
+                            <i>*</i>确认新密码：
+                        </div>
+                        <div class="cnt">
+                            <input type="password" class="ipt" value="" autocomplete="off" name="pwdRepeat" id="pwdRepeat" placeholder="请再次输入新密码">
                         </div>
                     </div>
 
                     <div class="ft">
                         <div class="cnt">
-                            <button type="submit" class="btn btn-red btn-wide" id="submit">下一步</button>
+                            <button type="submit" class="btn btn-red btn-wide">提交修改</button>
                         </div>
                     </div>
                 </form>
             </div>
-
 
             <div class="side">
                 <div class="hd">
@@ -123,6 +111,7 @@
 	<!-- footer start -->
 	<#include "./inc/footer.ftl"/>
     <!-- footer end -->
+
 	<script src="/js/validator/jquery.validator.js?local=zh-CN"></script>
 	<script src="/js/jquery.form.js"></script>
     <script>
@@ -130,28 +119,40 @@
             v: {},
             fn: {
                 init: function() {
-                    this.SMSCode();
-					this.formValidate();
+                    this.formValidate();
                 },
-                formValidate: function () {
+                formValidate: function() {
                     $('#myform').validator({
                         fields: {
-                            code: 'required'
+                            pwd: {
+                                rule: 'required, pwd',
+                                msg: {
+                                    required: "请输入新密码",
+                                    pwd: "密码由数字、字母或下划线组成，长度为6-20位",
+                                }
+                            },
+                            pwdRepeat: {
+                                rule: 'required, match(pwd)',
+                                msg: {
+                                    required: '请再次输入新密码',
+                                    match: '确认新密码与新密码不一致'
+                                }
+                            }
                         },
                         valid: function (form) {
                             myfromValid = this;
                             if ($(form).isValid()) {
                                 $.ajax({
-                                    url: "/user/findpwd/steptwo",
+                                    url: "/user/findpwd/stepthree",
                                     data: $(form).formSerialize(),
                                     type: "POST",
                                     success: function (data) {
                                         var status = data.status;
                                         var info = data.info;
                                         if (status == 'y') {
-                                            window.location.href = '/user/findpwd/stepthree';
+                                            window.location.href = '/user/findpwd/success';
                                         }else {
-                                            myfromValid.showMsg("#code", {
+                                            myfromValid.showMsg("#pwdRepeat", {
                                                 type: "error",
                                                 msg: info
                                             })
@@ -162,70 +163,12 @@
                             }
                         }
                     })
-                },
-                SMSCode: function() {
-                    var $send = $('#send'),
-                            $msg = $send.next(),
-                            self = this;
-                    wait = 0,
-                            txt = ' 秒后重试';
-
-                    var showMsg = function(msg) {
-                        if (msg) {
-                            $msg.html(msg).show();
-                        } else {
-                            $msg.hide();
-                        }
-                    }
-
-                    var lock = function() {
-                        $send.text(wait + txt).prop('disabled', true);
-                        wait--;
-                        if (wait === 0) {
-                            $send.text("获取验证码").prop('disabled', false);
-                        } else {
-                            setTimeout(function() {
-                                lock(wait);
-                            }, 1e3);
-                        }
-                    }
-
-                    var sendMSM = function() {
-                        $.ajax({
-                            url: '/gen/find/code',
-                            dataType: 'json',
-                            beforeSend: function() {
-                                $send.text('发送中...').prop('disabled', true);
-                            },
-                            success: function(data) {
-                                if (data.status === 'y') {
-                                    lock();
-                                    showMsg();
-                                } else {
-                                    wait = 0;
-                                    $send.text('获取验证码').prop('disabled', false);
-                                    showMsg('发送失败');
-                                }
-                            },
-                            error: function() {
-                                wait = 0;
-                                $send.text('获取验证码').prop('disabled', false);
-                            }
-                        })
-                    }
-                    $send.prop('disabled', false).on('click', function() {
-                        if(wait === 0) {
-                            wait = 60; // 60秒倒计时
-                            sendMSM();
-                        }
-                    })
                 }
             }
         }
         $(function() {
             _global.fn.init();
         })
-
     </script>
 </body>
 </html>

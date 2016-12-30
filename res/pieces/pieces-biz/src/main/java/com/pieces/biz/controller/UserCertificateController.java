@@ -65,6 +65,9 @@ public class UserCertificateController {
     @RequestMapping(value = "/stepTwo", method = RequestMethod.GET)
     public String stepTwo(ModelMap model){
         UserCertificationVo certificationVo=( UserCertificationVo)httpSession.getAttribute(RedisEnum.USER_SESSION_CERTIFICATION.getValue());
+        if(certificationVo==null){
+            return "redirect:error/404";
+        }
         model.put("certificationVo",certificationVo);
         return "certificate_2";
     }

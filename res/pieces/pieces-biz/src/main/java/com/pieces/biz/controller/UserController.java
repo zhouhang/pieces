@@ -26,6 +26,7 @@ import com.pieces.service.ShippingAddressService;
 import com.pieces.service.UserCertificationService;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.tools.log.annotation.BizLog;
+import com.pieces.tools.utils.httpclient.common.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -96,8 +97,6 @@ public class UserController extends BaseController {
 
 	/**
 	 * 用户注册信息保存
-	 * 
-	 * @param model
 	 * @param user
 	 *            用户参数
 	 * @param mobileCode
@@ -281,7 +280,7 @@ public class UserController extends BaseController {
 	}
 
 	/**
-	 * 进入修改密码页
+	 * 进入找回密码页
 	 * @return
 	 */
 	@RequestMapping(value = "/findpwd/stepone", method = RequestMethod.GET)
@@ -291,94 +290,141 @@ public class UserController extends BaseController {
 	}
 
 	/**
-	 * 修改密码第一步
-	 * 
-	 * @param request
-	 * @param response
+	 * 找回密码第一步
 	 * @param username
-	 * @param mobile
-	 * @param mobileCode
+	 * @param code
 	 */
 	@RequestMapping(value = "/findpwd/stepone", method = RequestMethod.POST)
 	@BizLog(type = LogConstant.user, desc = "修改密码One")
-	public void findPasswordOne(HttpServletRequest request, HttpServletResponse response, String username,
-			String mobile, String mobileCode) {
+	@ResponseBody
+	public Result findPasswordOne(String username, String code) {
+
+		Result result = new Result(true).info("验证成功!");
 		User user = userService.findByUserName(username);
-
 		if (user == null) {
-			Result result = new Result("10001").info("系统找不到该用户名，请确认用户名是否正确");
-			WebUtil.print(response, result);
-			return;
-		}
-
-		// 验证页面mobile与数据库mobile是否相同
-		if (!user.getContactMobile().equals(mobile)) {
-			Result result = new Result("10002").info("手机号与用户名不匹配，请重新输入");
-			WebUtil.print(response, result);
-			return;
+			result = new Result("10001").info("系统找不到该用户名，请确认用户名是否正确");
 		}
 		
-		String code  = redisManager.get(RedisEnum.KEY_MOBILE_FINDPASSWORD_CAPTCHA.getValue()+user.getContactMobile());
-		if (!StringUtils.isNotBlank(code)) {
-			Result result = new Result("10003").info("请获取验证码");
-			WebUtil.print(response, result);
-			return;
-		}
-
+		String sessionCode  = (String) httpSession.getAttribute(BasicConstants.KAPTCHA_SESSION_KEY);
 		// 验证页面验证码与session验证码是否相同
-		if (!code.equals(mobileCode)) {
-			Result result = new Result("10003").info("验证码错误");
-			WebUtil.print(response, result);
-			return;
+		if (StringUtils.isEmpty(sessionCode) || !sessionCode.equals(code)) {
+			result = new Result("10002").info("验证码错误");
 		}
 
-		Result result = new Result(true);
-		WebUtil.print(response, result);
+		if (result.getStatus().equals("y")) {
+			// 验证通过把用户名存到session中用于下一步判断
+			httpSession.setAttribute("findpwd_name",username);
+		}
+
+		return result;
 	}
 
 	/**
 	 * 进入修改密码第二步
 	 * 
 	 * @param model
-	 * @param request
-	 * @param userName
 	 * @return
 	 */
 	@RequestMapping(value = "/findpwd/steptwo", method = RequestMethod.GET)
-	public String toFindPasswordTwo(ModelMap model, HttpServletRequest request, String userName) {
-		model.put("userName", userName);
+	public String toFindPasswordTwo(ModelMap model) {
+		String username = (String) httpSession.getAttribute("findpwd_name");
+		if (StringUtils.isEmpty(username)) {
+			throw new RuntimeException("无权限访问");
+		}
+		User user = userService.findByUserName(username);
+		String usernameSub = username.substring(0,username.length()-3);
+		username = username.replace(usernameSub,"***");
+		String phone = user.getContactMobile();
+		String phoneSub = phone.substring(0,phone.length()-3);
+		phone = phone.replace(phoneSub,"********");
+		model.put("username",username);
+		model.put("phone", phone);
+		httpSession.setAttribute("findpwd_phone",user.getContactMobile());
 		return "find_password_2";
 	}
 
 	/**
-	 * 修改密码第二步
-	 * @param pwd
-	 * @param userName
+	 * 找回密码第二步
 	 * @return
 	 */
 	@RequestMapping(value = "/findpwd/steptwo", method = RequestMethod.POST)
 	@BizLog(type = LogConstant.user, desc = "修改密码Two")
-	public void findPasswordTwo(String pwd, String userName,HttpServletRequest request,HttpServletResponse response) {
-		User user = userService.findByUserName(userName);
-		user.setPassword(pwd);
-		user.setUpdateTime(new Date());
-		user = userService.createPwdAndSaltMd5(user);
-		userService.updateUserByCondition(user);
-		
-		//清除缓存
-		bizRealm.removeAuthenticationCacheInfo();
-		
-		Result result = new Result(true);
-		WebUtil.print(response, result);
+	@ResponseBody
+	public Result findPasswordTwo(String code) {
+		String username = (String) httpSession.getAttribute("findpwd_name");
+		if (StringUtils.isEmpty(username)) {
+			throw new RuntimeException("无权限访问");
+		}
+		User user = userService.findByUserName(username);
+		Result result = new Result(true).info("验证成功!");
+		// 判断用户是否有点击发送验证码
+		// 输入验证码与发送给手机的验证码是否相等
+		String sessionCode  = redisManager.get(RedisEnum.KEY_MOBILE_FINDPASSWORD_CAPTCHA.getValue()+user.getContactMobile());
+		if (!StringUtils.isNotBlank(code)) {
+			result = new Result("10001").info("请获取验证码");
+		} else if (!sessionCode.equals(code)) {
+			// 验证页面验证码与session验证码是否相同
+			result = new Result("10002").info("验证码错误");
+		}
+		// 验证通过设置 findpwd_code 到session 中用来判断用是否能修改密码
+		if (result.getStatus().equals("y")) {
+			// 验证通过把用户名存到session中用于下一步判断
+			httpSession.setAttribute("findpwd_code",sessionCode);
+		}
+		return  result;
 	}
-	
+
 	/**
-	 * 修改密码成功
+	 * 进入修改密码第三步
+	 *
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value = "/findpwd/stepthree", method = RequestMethod.GET)
+	public String toFindPasswordThree(ModelMap model) {
+		String username = (String) httpSession.getAttribute("findpwd_name");
+		String code = (String) httpSession.getAttribute("findpwd_code");
+		if (StringUtils.isEmpty(username) || StringUtils.isEmpty(code)) {
+			throw new RuntimeException("无权限访问");
+		}
+		return "find_password_3";
+	}
+
+	/**
+	 * 修改密码第三步
+	 * @return
+     */
+	@RequestMapping(value = "/findpwd/stepthree", method = RequestMethod.POST)
+	@ResponseBody
+	public Result findPasswordThree(String pwd, String pwdRepeat) {
+		String username = (String) httpSession.getAttribute("findpwd_name");
+		String code = (String) httpSession.getAttribute("findpwd_code");
+		if (StringUtils.isEmpty(username) || StringUtils.isEmpty(code)) {
+			throw new RuntimeException("无权限访问");
+		}
+		Result result = new Result(true).info("验证成功!");
+		if (pwd == null || !pwd.equals(pwdRepeat)) {
+			result = new Result("10001").info("两次输入的密码不一致");
+		} else {
+			User user = userService.findByUserName(username);
+			user.setPassword(pwd);
+			user.setUpdateTime(new Date());
+			user = userService.createPwdAndSaltMd5(user);
+			userService.updateUserByCondition(user);
+			//清除缓存
+			bizRealm.removeAuthenticationCacheInfo();
+			httpSession.invalidate();
+		}
+		return result;
+	}
+
+	/**
+	 * 找回密码成功
 	 * @return
 	 */
 	@RequestMapping(value = "/findpwd/success", method = RequestMethod.GET)
 	public String findpwdSuccess() {
-		return "message_find_pwd";
+		return "find_pwd_success";
 	}
 
 	/**
