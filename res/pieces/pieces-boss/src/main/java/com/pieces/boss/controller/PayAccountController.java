@@ -2,17 +2,15 @@ package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.boss.commons.LogConstant;
-import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.model.*;
 import com.pieces.dao.vo.*;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
-import com.pieces.service.enums.RedisEnum;
-import com.pieces.service.utils.ValidUtils;
+import com.pieces.tools.annotation.SameUrlData;
+import com.pieces.tools.annotation.TokenHold;
+import com.pieces.tools.annotation.TokenVerify;
 import com.pieces.tools.log.annotation.BizLog;
-import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.WebUtil;
-import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Author: koabs
@@ -89,6 +83,7 @@ public class PayAccountController extends BaseController{
     @RequestMapping(value = "/save")
     @RequiresPermissions(value = {"bank:add","bank:edit"},logical = Logical.OR)
     @BizLog(type = LogConstant.pay, desc = "保存银行账号")
+    @SameUrlData
     public void save(HttpServletRequest request,
                              HttpServletResponse response,
                              @Valid PayAccount payAccount,

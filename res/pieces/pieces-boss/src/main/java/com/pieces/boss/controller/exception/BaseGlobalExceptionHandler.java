@@ -2,6 +2,7 @@ package com.pieces.boss.controller.exception;
 
 import com.google.common.base.Throwables;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.tools.exception.PiecesBaseException;
 import com.pieces.tools.log.util.JSONUtils;
 import com.pieces.tools.utils.WebUtil;
 import org.slf4j.Logger;
@@ -44,14 +45,13 @@ public class BaseGlobalExceptionHandler {
         if (AnnotationUtils.findAnnotation(e.getClass(), ResponseStatus.class) != null){
             throw e;
         }
-
         String errorMsg =  DEFAULT_ERROR_MESSAGE;
         String errorStack = Throwables.getStackTraceAsString(e);
-
         getLogger().error("Request: {} raised {}", req.getRequestURI(), errorStack);
         if (isAjaxRequest(req)) {
             return handleAjaxError(rsp, e);
         }
+
         return handleViewError(req.getRequestURL().toString(), errorStack, errorMsg, viewName);
     }
 
@@ -66,15 +66,17 @@ public class BaseGlobalExceptionHandler {
     }
 
     protected ModelAndView handleAjaxError(HttpServletResponse rsp, Exception e) {
-        String msg = DEFAULT_ERROR_MESSAGE;
         if (isValidAndBindException(e)) {
             WebUtil.print(rsp,new Result(false).data(formatVaildAndBindError(e)));
         } else {
+            String msg = DEFAULT_ERROR_MESSAGE;
+            if(e instanceof PiecesBaseException){
+                msg = e.getMessage();
+            }
             WebUtil.print(rsp,new Result(false).info(msg));
         }
         return null;
     }
-
 
 
     public static boolean isAjaxRequest(HttpServletRequest request) {
