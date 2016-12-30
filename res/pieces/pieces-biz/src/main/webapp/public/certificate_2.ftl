@@ -599,10 +599,23 @@
             goodsImg: function() {
                 var self = this,
                     split = '<>',
-                    $wrap = $('.tabcont'),
-                    $upimgs = $('.upimgs'), // 多图
-                    $upImg = $('.upimg'); // 单图
-                    
+                    wait = false,
+                    type = 1,
+                    $el,
+                    $upimg = $('.up-img');
+                
+                $upimg.each(function() {
+                    $(this).next().val('');
+                    $(this).on('click', function() {
+                      if (wait) {
+                          return;
+                      }
+                      type = $(this).hasClass('upimgs') ? 2 : 1;
+                      $el = $(this);
+                      $('.cropControlUpload').trigger('click');
+                    })
+                })
+
                 // 删除图片
                 $upImg.on('click', '.del', function() {
                     var $self = $(this);
@@ -614,32 +627,6 @@
                     });
                     return false;
                 })
-
-                // 证件照
-                $upfiles = $('<div id="upfiles"></div>').hide().appendTo($('body'));
-                $upImg.each(function(i) {
-                    var $el = $(this),
-                        $ipt = $el.next('input:hidden'),
-                        upId = 'upfile' + i,
-                        id = 'upfileBtn' + i;
-
-                    this.id = id;
-                    $ipt.val('');
-                    $upfiles.append('<div id="' + upId + '"></div>');
-
-                    new Croppic(upId, {
-                        uploadUrl:'gen/img/upload',
-                        customUploadButtonId: id,
-                        onAfterImgUpload: function(response){
-                            $el.show().html('<img src="' + response.url + '" /><i class="del" title="删除"></i>');
-                            $ipt.val(response.url).trigger('validate');
-                        },
-                        onError:function(msg){
-                            self.showMsg(msg);
-                        }
-                    });
-                })
-
                 // 多图删除
                 $('.thumb').on('click', '.upimgs .del', function() {
                     var $self = $(this);
@@ -658,20 +645,21 @@
                         layer.close(index);
                     });
                 })
-                $upimgs.each(function(k) {
-                    var $el = $(this),
-                        $ipt = $el.next('input:hidden'),
-                        upId = 'upfiles' + k,
-                        id = 'upfilesBtn' + k;
 
-                    this.id = id;
-                    $ipt.val('');
-                    $upfiles.append('<div id="' + upId + '"></div>');
+                $('body').append('<div id="upImgForm" style="position:fixed;bottom:0;left:0;visibility:hidden;"></div>');
 
-                    new Croppic(upId, {
-                        uploadUrl:'gen/img/upload',
-                        customUploadButtonId: id,
-                        onAfterImgUpload: function(response){
+
+                var upfile = new Croppic('upImgForm', {
+                    uploadUrl:'/gen/img/upload',
+                    onBeforeImgUpload: function() {
+                        wait = true;
+                        $el.html('<span class="loader">图片上传中...</span>');
+                    },
+                    onAfterImgUpload: function(response){
+                        if (type === 1) {
+                            $el.show().html('<img src="' + response.url + '" /><i class="del" title="删除"></i>').next().val(response.url).trigger('validate');
+                        } else {
+                            var $ipt = $el.next();
                             var originImg = $ipt.val();
                             if (originImg.split(split).length > 2) {
                                 $el.hide();
@@ -681,7 +669,7 @@
                                 })
                                 return false;
                             }
-                            $el.show().before('<span class="up-img upimgs"><img src="' + response.url + '"><i class="del" title="删除"></span>');
+                            $el.empty('').show().before('<span class="up-img upimgs"><img src="' + response.url + '"><i class="del" title="删除"></i></span>');
                             if (originImg) {
                                 originImg += split + response.url;
                             } else {
@@ -691,12 +679,17 @@
                                 $el.hide();
                             }
                             $ipt.val(originImg);
-                        },
-                        onError:function(msg){
-                            self.showMsg(msg);
                         }
-                    });
-                })
+                        upfile.reset();
+                        wait = false;
+                    },
+                    onError:function(msg) {
+                        self.showMsg(msg);
+                        $el.empty('');
+                        wait = false;
+                    }
+                });
+
             },
             showMsg: function(msg) {
                 $.notify({
