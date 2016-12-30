@@ -617,7 +617,7 @@
                 })
 
                 // 删除图片
-                $upImg.on('click', '.del', function() {
+                $upimg.on('click', '.del', function() {
                     var $self = $(this);
                     layer.confirm('确认删除商品图片？', {
                         btn: ['确认','取消'] //按钮
