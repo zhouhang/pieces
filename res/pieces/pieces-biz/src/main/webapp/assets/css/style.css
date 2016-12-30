@@ -725,6 +725,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .up-img{position:relative;display:inline-block;width:78px;height:78px;line-height:78px;margin-right:20px;border:1px dashed #ccc;background:#fff url(../images/upfile.png) no-repeat 50%;cursor:pointer;text-align:center;}
 .up-img img{position:absolute;top:-1px;left:-1px;width:100%;height:100%;border:1px solid #ccc;cursor:default;}
 .up-img .del{position:absolute;top:-9px;right:-9px;width:18px;height:18px;background:url(../images/close.png) no-repeat;}
+.up-img .loader{position:absolute;top:0;right:0;width:100%;height:100%;line-height:150px;background:#fff url(../images/loader.gif) no-repeat 50%;text-align:center;font-size:12px;cursor:default;}
 .img-upload-main{padding:40px 0 90px;background:#fff;overflow:hidden;*zoom:1;}
 .img-upload-main .clip{position:relative;width:360px;height:360px;margin:0 auto;border:1px dashed #999;}
 .img-upload-main .clip img{width:100%;height:100%;}
