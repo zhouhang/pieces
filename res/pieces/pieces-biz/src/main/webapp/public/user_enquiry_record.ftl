@@ -313,7 +313,7 @@
 
                         var checkBox = '',
                             myPrice = (item.myPrice != 0 && item.myPrice!= null ) ? item.myPrice : '--';
-                        if((item.myPrice != 0 &&item.myPrice!= null )&&item.expireDate!=null&&new Date(item.expireDate.replace(/-/g,'/'))>=new Date()){
+                        if((item.myPrice != 0 &&item.myPrice!= null )&&item.expireDate!=null&&new Date(item.expireDate.replace(/-/g,'/').split(' ')[0] + ' 23:59:59')>=new Date()){
                             checkBox = '<input class="cbx" type="checkbox" value="'+item.id+'">';
                             modal.push('<div class="bd">');
                         } else {

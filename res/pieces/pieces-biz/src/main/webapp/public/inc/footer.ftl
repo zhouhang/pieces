@@ -19,7 +19,7 @@
 </div><!-- footer end -->
 
 <#--<script src="/js/jquery.min.js"></script>-->
-<script src="/js/jquery-1.11.1.js"></script>
+<script src="/js/jquery.min.js"></script>
 <script src="/js/jquery.autocomplete.min.js"></script>
 <script src="/js/common.js"></script>
 <script src="//hm.baidu.com/hm.js?61c7936d47deb868315f8a231034f0cb"></script>
