@@ -442,8 +442,10 @@
                                             },
                                         ]
                                     };
-                                    if (data.list) {
-                                        $self.before(self.toHtml(data.list));
+                                    data = {"status":"y","info":"","data":[{"id":427,"userId":100,"billsId":152,"commodityName":"龙胆(北)","specs":"段","level":"段5-10mm、2号筛","origin":"吉林","myPrice":268.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":411,"userId":100,"billsId":152,"commodityName":"天冬","specs":"厚片","level":"2","origin":"安徽","myPrice":235.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":410,"userId":100,"billsId":152,"commodityName":"制没药","specs":"块","level":"3","origin":"安徽","myPrice":186.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":421,"userId":100,"billsId":152,"commodityName":"茜草","specs":"段","level":"2","origin":"安徽","myPrice":150.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":412,"userId":100,"billsId":152,"commodityName":"拳参","specs":"薄片","level":"2","origin":"安徽","myPrice":117.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":415,"userId":100,"billsId":152,"commodityName":"前胡","specs":"薄片","level":"2","origin":"安徽","myPrice":99.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":420,"userId":100,"billsId":152,"commodityName":"制黄精","specs":"厚片","level":"2","origin":"安徽","myPrice":87.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":419,"userId":100,"billsId":152,"commodityName":"蛇床子","specs":"个","level":"2","origin":"安徽","myPrice":73.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":424,"userId":100,"billsId":152,"commodityName":"麸炒枳壳","specs":"薄片","level":"2","origin":"安徽","myPrice":65.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":425,"userId":100,"billsId":152,"commodityName":"菟丝子","specs":"个","level":"水洗，过1号筛","origin":"内蒙古","myPrice":53.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":413,"userId":100,"billsId":152,"commodityName":"麸炒白术","specs":"圆厚片","level":"圆厚片3-6mm、8号筛","origin":"浙江","myPrice":41.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":418,"userId":100,"billsId":152,"commodityName":"制山茱萸","specs":"个","level":"2","origin":"安徽","myPrice":40.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":428,"userId":100,"billsId":152,"commodityName":"炒苦杏仁","specs":"个","level":"2","origin":"安徽","myPrice":34.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":426,"userId":100,"billsId":152,"commodityName":"白花蛇舌草","specs":"段","level":"段长3cm、水洗、1.5号筛","origin":"江西","myPrice":32.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":423,"userId":100,"billsId":152,"commodityName":"盐车前子","specs":"个","level":"净、风选，0.5号筛","origin":"江西","myPrice":30.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":414,"userId":100,"billsId":152,"commodityName":"炒莱菔子","specs":"个","level":"2","origin":"安徽","myPrice":20.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":422,"userId":100,"billsId":152,"commodityName":"地榆","specs":"厚片","level":"2","origin":"安徽","myPrice":20.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":417,"userId":100,"billsId":152,"commodityName":"蜜枇杷叶","specs":"丝","level":"丝8-10mm、无碎沫 蜜枇杷叶","origin":"广东","myPrice":13.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":416,"userId":100,"billsId":152,"commodityName":"制女贞子","specs":"个","level":"卵圆形、净、2号筛","origin":"安徽","myPrice":9.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"}]};
+
+                                    if (data.data) {
+                                        $self.before(self.toHtml(data.data));
                                         $self.data('expand', '1').html(txt[1]).prev().slideDown();
                                     }
                                 }
@@ -463,6 +465,34 @@
                             modal.push('<div class="td w4">', item.level,'</div>');
                             modal.push('<div class="td w5">', item.origin,'</div>');
                             modal.push('<div class="td w6">', item.price,'</div>');
+                        modal.push('</div>');
+                    })
+                    modal.push('</div>');
+                    return modal.join('');
+                },
+                // 插入html
+                toHtml2: function(data) {
+                    var self = this,
+                        modal = [];
+                    modal.push('<div class="more" style="display:none;">');
+                    $.each(data, function(i, item) {
+
+                        var checkBox = '',
+                            myPrice = (item.myPrice != 0 && item.myPrice!= null ) ? item.myPrice : '--';
+
+                        if((item.myPrice != 0 &&item.myPrice!= null )&&item.expireDate!=null&&new Date(item.expireDate.replace(/-/g,'/'))>=new Date()){
+                            checkBox = '<input class="cbx" type="checkbox" value="'+item.id+'">';
+                            modal.push('<div class="bd">');
+                        } else {
+                            checkBox = '<input class="cbx" type="checkbox" value="" disabled>';
+                            modal.push('<div class="bd enable">');
+                        }
+                        modal.push('<div class="td w1">', checkBox, '</div>');
+                        modal.push('<div class="td w2">', item.commodityName, '</div>');
+                        modal.push('<div class="td w3">', item.specs, '</div>');
+                        modal.push('<div class="td w4">', item.level, '</div>');
+                        modal.push('<div class="td w5">', item.origin, '</div>');
+                        modal.push('<div class="td w6">', myPrice, '</div>');
                         modal.push('</div>');
                     })
                     modal.push('</div>');

@@ -26,7 +26,7 @@ $.easing.easeInOutExpo = function (x, t, b, c, d) {
 	var $wrapper = $('<div class="notify-wrapper" />').prependTo($('body'));
 
 	$.notify = function(options) {
-		var settings = $.extend({}, defaults, options);
+		var settings = $.extend({}, defaults, options || {});
 		var modal = [];
 		modal.push('<div class="message ', settings.type, settings.clickToHide ? ' hidable' : '', '">');
 		modal.push(	   '<div class="inner">');
@@ -50,7 +50,7 @@ $.easing.easeInOutExpo = function (x, t, b, c, d) {
 				$modal.remove();			
 			});
 		}
-		typeof options.call === 'function' && options.call();
+		typeof settings.call === 'function' && settings.call();
 	};
 
 	// 点击关闭

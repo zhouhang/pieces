@@ -19,13 +19,13 @@ public class AlipayConfig {
 //↓↓↓↓↓↓↓↓↓↓请在这里配置您的基本信息↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
 	// 合作身份者ID，签约账号，以2088开头由16位纯数字组成的字符串，查看地址：https://b.alipay.com/order/pidAndKey.htm
-	public static String partner = "2088521469439302";
+	public static String partner = "2088521449772708";
 	
 	// 收款支付宝账号，以2088开头由16位纯数字组成的字符串，一般情况下收款账号就是签约账号
 	public static String seller_id = partner;
 
 	// MD5密钥，安全检验码，由数字和字母组成的32位字符串，查看地址：https://b.alipay.com/order/pidAndKey.htm
-    public static String key = "lgi51j13w8yl29wj6m88rka0h5quxozk";
+    public static String key = "lpqrbg6113zf685iewpu7yph6otsur2b";
 
 	// 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
 	@Value("${biz.base.url}"+"/pay/alipay/result/notify")
