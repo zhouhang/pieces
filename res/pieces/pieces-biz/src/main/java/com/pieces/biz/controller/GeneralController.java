@@ -18,6 +18,7 @@ import com.pieces.dao.exception.SmsOverException;
 import com.pieces.service.CommodityService;
 import com.pieces.service.impl.CreateHtmlService;
 import com.pieces.service.vo.CropResult;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,9 @@ public class GeneralController extends BaseController {
     private CommodityService commodityService;
     @Autowired
     private CreateHtmlService createHtmlService;
+
+    @Autowired
+    private HttpSession httpSession;
 
 
     private final static ConfigurableCaptchaService captchaService = new ConfigurableCaptchaService();
@@ -211,23 +215,20 @@ public class GeneralController extends BaseController {
 
     /**
      * 找回密码验证码
-     * @param contactMobile
-     * @param response
      */
     @RequestMapping(value="/find/code")
-    public void getMobileFindPasswordCode(String contactMobile,
-                              HttpServletResponse response){
-        try {
-            smsService.sendFindPasswordCaptcha(contactMobile);
-        } catch (Exception e) {
-            Map<String, String> result = new HashMap<String, String>();
-            result.put("error", e.getMessage());
-            WebUtil.print(response,result);
-            return;
+    @ResponseBody
+    public Result getMobileFindPasswordCode(){
+        String phone = (String) httpSession.getAttribute("findpwd_phone");
+        if (StringUtils.isEmpty(phone)) {
+            throw new RuntimeException("无权限访问");
         }
-        Map<String, String> result = new HashMap<String, String>();
-        result.put("result", "ok");
-        WebUtil.print(response,result);
+        try {
+            smsService.sendFindPasswordCaptcha(phone);
+        } catch (Exception e) {
+            return new Result(false);
+        }
+        return new Result(true);
     }
 
 
