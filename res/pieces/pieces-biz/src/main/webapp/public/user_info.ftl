@@ -83,17 +83,7 @@
                 </div>
             </div>
 
-            <div class="txtinfo">
-                <h3>注册资料</h3>
-                <div class="item">
-                    <label>用户名：</label>
-                    <span>***nky</span>
-                </div>
-                <div class="item">
-                    <label>密码：</label>
-                    <span>******</span>
-                </div>
-            </div>
+
 
         </div>
     </div><!-- member-box end --><!-- member-box end -->
