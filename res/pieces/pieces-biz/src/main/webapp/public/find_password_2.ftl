@@ -30,7 +30,7 @@
                 <ul class="fa-guide">
                     <li>
                         <span>1</span>
-                        <strong>验证手机</strong>
+                        <strong>填写账户名</strong>
                         <i class="fa fa-chevron-right"></i>
                     </li>
                     <li class="curr">
