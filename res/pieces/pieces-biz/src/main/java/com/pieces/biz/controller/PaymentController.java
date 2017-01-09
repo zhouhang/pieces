@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -157,9 +158,8 @@ public class PaymentController extends BaseController{
 
 
     @RequestMapping(value = "alipay/result/notify" )
-    @ResponseBody
     @BizLog(type = LogConstant.pay, desc = "支付宝通知回调")
-    public String resutlNotify(HttpServletResponse response,
+    public void resutlNotify(HttpServletResponse response,
                              HttpServletRequest request,
                              ModelMap modelMap)throws Exception{
         //获取支付宝POST过来反馈信息
@@ -176,12 +176,13 @@ public class PaymentController extends BaseController{
             params.put(name, valueStr);
         }
         logger.info("支付宝通知param="+params.toString());
+        PrintWriter out=response.getWriter();
         if(AlipayNotify.verify(params)){//验证成功
             paymentService.handleResult(params);
-            return "success";
+            out.print("success");
 
         }else{//验证失败
-           return "fail";
+            out.print("fail");
         }
 
 
