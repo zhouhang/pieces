@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>  <#if (category??&&category.name??)>${category.name!}-<#else><#if (parent??&&parent.name??)>${parent.name!}-</#if></#if>商品列表-上工好药</title>
+    <title>  <#if (category??&&category.name??)>${category.name!}-${parent.name!}-<#else><#if (parent??&&parent.name??)>${parent.name!}-</#if></#if>商品列表-上工好药</title>
+
+    <meta name="description" content="上工好药sghaoyao.com是国内最专业中药饮片采购平台，本频道提供<#if (category??&&category.name??)>${category.name!}-<#else><#if (parent??&&parent.name??)>${parent.name!}</#if></#if>的规格等地、片型、产地、执行标准、图片等相关信息。" />
+    <meta name="Keywords" content="<#if (category??&&category.name??)>${category.name!},${parent.name!}<#else><#if (parent??&&parent.name??)>${parent.name!},</#if></#if>样品,询价,图片" />
+
 </head>
 
 <body>
@@ -53,11 +57,11 @@
                     <#if (pageInfo??&&pageInfo.list?size>0)>
 	                    <#list pageInfo.list as commodity>
 	                        <tr>
-	                            <td><a href="/commodity/${commodity.id }"><img class="lazyload" src="images/blank.gif" data-original="${commodity.pictureUrl!}" width="130" height="130" alt=""></a></td>
+	                            <td><a href="/commodity/${commodity.id }"><img class="lazyload" src="images/blank.gif" data-original="${commodity.pictureUrl!}" width="130" height="130" alt="${commodity.title!}"></a></td>
 	                            <td class="tl">                                
 	                                <div class="desc">
 	                                    <h3><a href="/commodity/${commodity.id}">${commodity.name }</a></h3>
-	                                    <p>${commodity.title}</p>
+	                                    <p>${commodity.title!}</p>
 	                                </div>
 	                            </td>
 	                            <td>${commodity.level}</td>

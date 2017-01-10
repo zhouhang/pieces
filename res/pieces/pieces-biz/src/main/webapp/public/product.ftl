@@ -3,6 +3,8 @@
 <head>
     <#include "./inc/meta.ftl"/>
     <title>${commodity.title!}-上工好药</title>
+    <meta name="description" content="上工好药sghaoyao.com提供${commodity.title!}的优质货源，为合作伙伴提供安全有保障、高效周到、高性价比的服务，采购饮片就来上工好药。"/>
+    <meta name="Keywords" content="${commodity.title!},${commodity.name!}"/>
 </head>
 
 <body>
@@ -28,7 +30,7 @@
                     <#list featured as commodity>
                         <dd>
                             <div class="pic">
-                                <a href="/commodity/${commodity.id}"><img class="lazyload" src="images/blank.gif" data-original="${commodity.pictureUrl!}" width="80" height="80" alt=""></a>
+                                <a href="/commodity/${commodity.id}"><img class="lazyload" src="images/blank.gif" data-original="${commodity.pictureUrl!}" width="80" height="80" alt="${commodity.title!}"></a>
                             </div>
                             <div class="desc">
                                 <h3><a href="/commodity/${commodity.id}">${commodity.name}</a></h3>
@@ -42,11 +44,10 @@
             <div class="main">
                 <div class="product-summary">
                     <div class="preview">
-                        <img src="${commodity.pictureUrl!}"  width="360" height="360" alt="">
+                        <img src="${commodity.pictureUrl!}"  width="360" height="360" alt="${commodity.title!}">
                     </div>
                     <div class="ext-info">
                         <h1 class="name">${commodity.title!}</h1>
-
                         <dl>
                             <dt>商品名称</dt>
                             <dd>${commodity.name!}</dd>
