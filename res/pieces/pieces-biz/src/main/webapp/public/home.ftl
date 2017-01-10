@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>上工好药</title>
+    <title>上工好药sghaoyao.com - 中药饮片采购首选 - 正品底价、品质保障、配送及时、轻松采购！</title>
+    <meta name="description" content="上工好药sghaoyao.com - 专业的中药饮片采购平台，整合中药饮片各品种优势货源，为合作伙伴提供安全有保障、高效周到、高性价比的服务，采购饮片就来上工好药。" />
+    <meta name="Keywords" content="中药,饮片,中药饮片,饮片采购,饮片批发,精致饮片,毒性饮片,药食同源,炮制,古法炮制,上工好药" />
 </head>
 <body  class="bg-gray">
 
@@ -35,7 +37,7 @@
                 <div class="col" index="0">
                     <#list AD_MANUFACTURERS as ad>
                         <#if ad_index<4>
-                        <a target="_blank" href="${ad.link!"#!"}"><img src="${ad.pictureUrl!}" alt=""></a>
+                        <a target="_blank" href="${ad.link!"#!"}"><img src="${ad.pictureUrl!}" alt="${ad.title!}"></a>
                         </#if>
                     </#list>
                 </div>
@@ -43,7 +45,7 @@
                     <div class="col" index="1">
                         <#list AD_MANUFACTURERS as ad>
                             <#if (ad_index>3)&&ad_index<8>
-                                <a href="${ad.link!"#!"}"><img src="${ad.pictureUrl!}" alt=""></a>
+                                <a href="${ad.link!"#!"}"><img src="${ad.pictureUrl!}" alt="${ad.title!}"></a>
                             </#if>
                         </#list>
                     </div>
@@ -69,7 +71,7 @@
                             <p><span class="t-orange">热销</span></p>
                         </div>
                         <div class="img">
-                            <img src="${commodity.pictureUrl!}" width="180" height="180">
+                            <img src="${commodity.pictureUrl!}" width="180" height="180" alt="${commodity.title!}">
                         </div>
                     </a>
                 </li>
@@ -90,12 +92,12 @@
                         <ul>
                             <#if category.breedList??>
                                 <#list category.breedList as breed>
-                                    <li><a href="commodity/index?breedId=${breed.id!}">${breed.name!}</a></li>
+                                    <li><a href="commodity/index?breedId=${breed.id!}" >${breed.name!}</a></li>
                                 </#list>
                             </#if>
                         </ul>
                         <div class="img">
-                            <img src="images/blank.gif" class="lazyload" data-original="${category.pictureUrl!}" width="200" height="270">
+                            <img src="images/blank.gif" alt="${category.title!}" class="lazyload" data-original="${category.pictureUrl!}" width="200" height="270">
                         </div>
                     </div>
 
@@ -103,13 +105,13 @@
                         <dl>
                             <dt>
                                 <#if category.showcase??>
-                                    <a href="${category.showcase.link!}"><img src="images/blank.gif" class="lazyload" data-original="${category.showcase.pictureUrl!}" width="400" height="270"></a>
+                                    <a href="${category.showcase.link!}"><img alt="${category.title!}" src="images/blank.gif" class="lazyload" data-original="${category.showcase.pictureUrl!}" width="400" height="270"></a>
                                 </#if>
                             </dt>
                             <#if category.breedList??>
                                 <#list category.commodityList as commodity>
                                     <dd>
-                                        <a href="/commodity/${commodity.id!}"><img src="images/blank.gif" class="lazyload" data-original="${commodity.pictureUrl!}" width="180" height="180"></a>
+                                        <a href="/commodity/${commodity.id!}"><img src="images/blank.gif" alt="${commodity.title!}" class="lazyload" data-original="${commodity.pictureUrl!}" width="180" height="180"></a>
                                         <a href="/commodity/${commodity.id!}">${commodity.name!}</a>
                                         <span>片型：${commodity.spec!}</span>
                                     </dd>
@@ -123,7 +125,7 @@
             <#assign adindex=(category_index/2)>
             <#if AD_SHOWCASE_BAR[adindex]?? >
                 <div class="wide-banner">
-                    <a href="${AD_SHOWCASE_BAR[adindex?int].link!}"><img src="images/blank.gif" class="lazyload" data-original="${AD_SHOWCASE_BAR[adindex?int].pictureUrl!}" width="1200" height="90"></a>
+                    <a href="${AD_SHOWCASE_BAR[adindex?int].link!}"><img alt="${AD_SHOWCASE_BAR[adindex?int].title!}" src="images/blank.gif" class="lazyload" data-original="${AD_SHOWCASE_BAR[adindex?int].pictureUrl!}" width="1200" height="90"></a>
                 </div>
             </#if>
         </#if>
