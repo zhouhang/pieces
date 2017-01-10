@@ -11,6 +11,7 @@ import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.model.Commodity;
 import com.pieces.dao.model.User;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import org.apache.commons.lang.StringUtils;
@@ -62,6 +63,7 @@ public class CommodityController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/index")
+	@SecurityToken(generateToken = true)
 	public String index(Integer pageSize, Integer pageNum, CommodityVo commodityVO, ModelMap model) {
 		pageNum = pageNum == null ? 1 : pageNum;
 		pageSize = pageSize == null ? 10 : pageSize;

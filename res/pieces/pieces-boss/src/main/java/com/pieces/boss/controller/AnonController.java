@@ -12,6 +12,7 @@ import com.pieces.service.AnonFollowRecordService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.AnonEnquiryEnum;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.FileUtil;
 import com.pieces.tools.utils.Reflection;
@@ -95,6 +96,7 @@ public class AnonController extends BaseController{
     @RequiresPermissions(value = "anon:trail")
     @BizLog(type = LogConstant.anon, desc = "跟踪记录")
     @RequestMapping(value = "/trail", method = RequestMethod.GET)
+    @SecurityToken(generateToken = true)
     public String trail(Integer anonId, ModelMap model){
        List<AnonFollowRecordVo> list =  followRecordService.findByAnonId(anonId);
         AnonEnquiry anon = anonEnquiryService.findById(anonId);
@@ -111,6 +113,7 @@ public class AnonController extends BaseController{
     @BizLog(type = LogConstant.anon, desc = "保存跟踪记录")
     @RequestMapping(value = "/trail", method = RequestMethod.POST)
     @ResponseBody
+    @SecurityToken(validateToken=true)
     public Result trailSave(AnonFollowRecord record){
         Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         record.setFollowerId(mem.getId());

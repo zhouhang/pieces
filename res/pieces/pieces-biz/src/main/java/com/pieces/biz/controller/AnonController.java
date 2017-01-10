@@ -11,6 +11,7 @@ import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.NotifyTemplateEnum;
 import com.pieces.service.listener.NotifyEvent;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.bean.FileBo;
 import com.pieces.tools.upload.TempUploadFile;
 import com.pieces.tools.utils.SpringUtil;
@@ -64,6 +65,7 @@ public class AnonController {
     }
 
     @RequestMapping(value = "/enquiry", method = RequestMethod.GET)
+    @SecurityToken(generateToken = true)
     public String index(){
         return "anon_enquiry";
     }
@@ -75,6 +77,7 @@ public class AnonController {
      */
     @RequestMapping(value = "/enquiry", method = RequestMethod.POST)
     @ResponseBody
+    @SecurityToken(validateToken=true)
     public Result create(@Valid @RequestBody AnonEnquiryVo enquiry, String captcha){
         Result result = null;
 

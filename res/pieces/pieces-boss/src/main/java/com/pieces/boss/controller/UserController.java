@@ -24,6 +24,7 @@ import com.pieces.service.impl.SmsService;
 import com.pieces.service.redis.RedisManager;
 import com.pieces.service.utils.EncryptUtil;
 import com.pieces.service.utils.SerializeUtils;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.SeqNoUtil;
@@ -124,6 +125,7 @@ public class UserController extends  BaseController{
 	@RequiresPermissions(value = {"customer:add","customer:edit"} ,logical = Logical.OR)
 	@RequestMapping(value = "/certify/{id}")
 	@BizLog(type = LogConstant.user, desc = "会员详细信息页面")
+	@SecurityToken(generateToken = true)
 	public String userCertify(@PathVariable("id") Integer id,
 						   ModelMap model){
 		User user = userService.findById(id);
@@ -148,6 +150,7 @@ public class UserController extends  BaseController{
 	@RequiresPermissions(value = "customer:add" )
 	@RequestMapping(value = "/add" ,method= RequestMethod.GET)
 	@BizLog(type = LogConstant.user, desc = "添加会员页面")
+	@SecurityToken(generateToken = true,validateToken=true)
 	public String userAdd(){
 
 		return "customers-add";
@@ -163,6 +166,7 @@ public class UserController extends  BaseController{
 	@RequiresPermissions(value = {"customer:add","customer:edit"} ,logical = Logical.OR)
 	@RequestMapping(value = "/save" ,method= RequestMethod.POST)
 	@BizLog(type = LogConstant.user, desc = "保存会员信息")
+	@SecurityToken(generateToken = true,validateToken=true)
 	public void userSubmit(HttpServletRequest request,
 						   HttpServletResponse response,
 						   String random,
@@ -288,6 +292,7 @@ public class UserController extends  BaseController{
 	@RequiresPermissions(value = "customer:edit" )
 	@RequestMapping(value = "/edit/{id}" ,method= RequestMethod.GET)
 	@BizLog(type = LogConstant.user, desc = "修改会员信息页面")
+	@SecurityToken(generateToken = true)
 	public String edit(@PathVariable("id") Integer id,
 					   ModelMap model){
 		UserVo user =	userService.findVoById(id);
@@ -341,6 +346,7 @@ public class UserController extends  BaseController{
 	@RequestMapping(value = "/certify/save" ,method= RequestMethod.POST)
 	@ResponseBody
 	@BizLog(type = LogConstant.user, desc = "修改认证信息")
+	@SecurityToken(generateToken = true,validateToken=true)
 	public Result saveCertify(@RequestBody CertifyParamVo certifyParamVo,
 							  ModelMap model){
 

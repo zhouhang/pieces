@@ -18,6 +18,7 @@ import com.pieces.service.enums.NotifyTemplateEnum;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.listener.NotifyEvent;
 import com.pieces.service.utils.ExcelParse;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.CookieUtils;
 import com.pieces.tools.utils.GsonUtil;
@@ -67,6 +68,7 @@ public class EnquiryController extends BaseController{
      */
     @RequestMapping(value = "index")
     @BizLog(type = LogConstant.enquiry, desc = "客户询价页面")
+    @SecurityToken(generateToken = true)
     public String index(HttpServletRequest request,
                         HttpServletResponse response,
                         ModelMap modelMap,
@@ -133,6 +135,7 @@ public class EnquiryController extends BaseController{
      */
     @RequestMapping(value = "submit")
     @BizLog(type = LogConstant.enquiry, desc = "提交询价单")
+    @SecurityToken(validateToken=true)
     public void submit(HttpServletRequest request,
                        HttpServletResponse response,
                        Integer billId,

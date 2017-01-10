@@ -25,6 +25,7 @@ import com.pieces.service.CertifyRecordService;
 import com.pieces.service.ShippingAddressService;
 import com.pieces.service.UserCertificationService;
 import com.pieces.service.constant.BasicConstants;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.httpclient.common.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
@@ -91,6 +92,7 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	@SecurityToken(generateToken = true)
 	public String toRegister() {
 		return "register";
 	}
@@ -106,6 +108,7 @@ public class UserController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	@SecurityToken(generateToken = true,validateToken=true)
 	public void register(User user, String mobileCode,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
@@ -512,6 +515,7 @@ public class UserController extends BaseController {
 	 * @return
      */
 	@RequestMapping(value = "/shippingaddress/index", method = RequestMethod.GET)
+	@SecurityToken(generateToken = true)
 	public String shippingAddress(ModelMap modelMap){
 
 		User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
