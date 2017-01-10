@@ -9,6 +9,7 @@ import com.pieces.service.ShippingAddressHistoryService;
 import com.pieces.service.ShippingAddressService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,7 @@ public class AddressController extends BaseController{
     @RequestMapping("/save")
     @ResponseBody
     @BizLog(type = LogConstant.address, desc = "保存收货地址")
+    @SecurityToken(validateToken=true)
     public Result save(ShippingAddress shippingAddress){
         User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         shippingAddress.setUserId(user.getId());

@@ -7,6 +7,7 @@ import com.pieces.dao.vo.*;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.annotation.SameUrlData;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.annotation.TokenHold;
 import com.pieces.tools.annotation.TokenVerify;
 import com.pieces.tools.log.annotation.BizLog;
@@ -57,6 +58,7 @@ public class PayAccountController extends BaseController{
     @RequestMapping("/add")
     @RequiresPermissions(value = "bank:add")
     @BizLog(type = LogConstant.pay, desc = "支付添加银行账号页面")
+    @SecurityToken(generateToken = true)
     public String add(ModelMap modelMap){
         return  "bank_add";
     }
@@ -68,6 +70,7 @@ public class PayAccountController extends BaseController{
     @RequestMapping(value = "/edit/{id}")
     @RequiresPermissions(value = "bank:edit")
     @BizLog(type = LogConstant.pay, desc = "支付编辑银行账号页面")
+    @SecurityToken(generateToken = true)
     public String edit(HttpServletRequest request,
                                HttpServletResponse response,
                                @PathVariable("id") Integer id,
@@ -83,7 +86,7 @@ public class PayAccountController extends BaseController{
     @RequestMapping(value = "/save")
     @RequiresPermissions(value = {"bank:add","bank:edit"},logical = Logical.OR)
     @BizLog(type = LogConstant.pay, desc = "保存银行账号")
-    @SameUrlData
+    @SecurityToken(validateToken=true)
     public void save(HttpServletRequest request,
                              HttpServletResponse response,
                              @Valid PayAccount payAccount,

@@ -5,6 +5,7 @@ import com.pieces.dao.model.Commodity;
 import com.pieces.dao.vo.CommodityVo;
 import com.pieces.service.CommodityService;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import org.apache.shiro.authz.annotation.Logical;
@@ -49,6 +50,7 @@ public class CommodityController extends BaseController{
     @RequiresPermissions(value = "commodity:add")
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     @BizLog(type = "", desc = "新增商品信息页面")
+    @SecurityToken(generateToken = true)
     public String addPage() {
        return "commodity-add";
     }
@@ -57,6 +59,7 @@ public class CommodityController extends BaseController{
     @RequiresPermissions(value = "commodity:add")
     @RequestMapping(value = "/add/{id}", method = RequestMethod.GET)
     @BizLog(type = "", desc = "根据已有商品新增商品信息页面")
+    @SecurityToken(generateToken = true)
     public String copyPage(@PathVariable("id")Integer id, ModelMap model) {
         CommodityVo vo = commodityService.findVoById(id);
         model.put("commodity", vo);
@@ -66,6 +69,7 @@ public class CommodityController extends BaseController{
     @RequiresPermissions(value = "commodity:edit")
     @RequestMapping(value = "/editer/{id}", method = RequestMethod.GET)
     @BizLog(type = "", desc = "编辑商品信息页面")
+    @SecurityToken(generateToken = true)
     public String editerPage(@PathVariable("id")Integer id, ModelMap model) {
         CommodityVo vo = commodityService.findVoById(id);
         model.put("commodity", vo);
@@ -76,6 +80,7 @@ public class CommodityController extends BaseController{
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     @BizLog(type = "商品信息", desc = "保存商品信息")
+    @SecurityToken(validateToken=true)
     public Result save(@Valid Commodity commodity) throws IOException {
         Integer id = commodityService.saveOrUpdate(commodity);
         return new Result(true).data(id).info("商品信息保存成功!");

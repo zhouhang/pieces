@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.pieces.boss.commons.LogConstant;
 import com.pieces.service.enums.CategoryEnum;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import org.apache.commons.lang.StringUtils;
@@ -101,6 +102,7 @@ public class CategoryController {
 	@RequiresPermissions(value = "category:add")
 	@RequestMapping(value = "/category/add")
 	@BizLog(type = LogConstant.category, desc = "添加商品分类页面")
+	@SecurityToken(generateToken = true)
 	public String addCategory(HttpServletRequest request,
 							  HttpServletResponse response){
 		return "category_add";
@@ -117,6 +119,7 @@ public class CategoryController {
 	@RequiresPermissions(value = "category:edit")
 	@RequestMapping(value = "/category/edit/{id}")
 	@BizLog(type = LogConstant.category, desc = "修改商品分类页面")
+	@SecurityToken(generateToken = true)
 	public String editCategory(HttpServletRequest request,
 							  HttpServletResponse response,
 							  @PathVariable("id") Integer id,
@@ -163,6 +166,7 @@ public class CategoryController {
 	@RequiresPermissions(value = {"category:add","category:edit"},logical = Logical.OR)
 	@RequestMapping(value = "/category/save")
 	@BizLog(type = LogConstant.category, desc = "保存商品分类")
+	@SecurityToken(generateToken = true,validateToken=true)
 	public void saveCategory(HttpServletRequest request,
 							  HttpServletResponse response,
 							  Integer id,
@@ -221,6 +225,7 @@ public class CategoryController {
 	@RequiresPermissions(value = "breed:add")
 	@RequestMapping(value = "/breed/add")
 	@BizLog(type = LogConstant.category, desc = "添加商品品种页面")
+	@SecurityToken(generateToken = true)
 	public String addBreed(HttpServletRequest request,
 							  HttpServletResponse response,
 							  ModelMap model){
@@ -238,6 +243,7 @@ public class CategoryController {
 	@RequiresPermissions(value = "breed:edit")
 	@RequestMapping(value = "/breed/edit/{id}")
 	@BizLog(type = LogConstant.category, desc = "修改商品品种页面")
+	@SecurityToken(generateToken = true)
 	public String editBreed(HttpServletRequest request,
 							  HttpServletResponse response,
 							  @PathVariable("id") Integer id,
@@ -257,6 +263,7 @@ public class CategoryController {
 	@RequiresPermissions(value = {"breed:add","breed:edit"} ,logical = Logical.OR)
 	@RequestMapping(value = "/breed/save")
 	@BizLog(type = LogConstant.category, desc = "保存品种")
+	@SecurityToken(generateToken = true,validateToken=true)
 	public void saveBreed(HttpServletRequest request,
 							  HttpServletResponse response,
 						      @Valid BreedVo bvo,
