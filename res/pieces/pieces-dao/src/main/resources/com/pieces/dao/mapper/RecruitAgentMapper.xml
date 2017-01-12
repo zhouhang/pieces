@@ -21,12 +21,19 @@
             <result column="create_time"  property="createTime" />
             <result column="last_follow_time"  property="lastFollowTime" />
             <result column="last_follow_id"  property="lastFollowId" />
+            <result column="lastFollowName"  property="lastFollowName" />
             <result column="status"  property="status" />
         
     </resultMap>
 
     <sql id="Base_Column_List">
         id,name,phone,area_id,create_time,last_follow_time,last_follow_id,status
+    </sql>
+
+    <sql id="LEFT_JOIN_Column_List">
+        re.id as id,re.name as name,re.phone as phone,re.area_id as area_id ,
+        re.create_time as create_time ,re.last_follow_time as last_follow_time,
+        re.last_follow_id as last_follow_id,re.status as status
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="RecruitAgentResultMap">
@@ -44,13 +51,42 @@
 
     <select id="findByParams" resultMap="RecruitAgentResultMapVo" parameterType="com.pieces.dao.vo.RecruitAgentVo">
         select
-        <include refid="Base_Column_List" />
-        from recruit_agent
+        <include refid="LEFT_JOIN_Column_List" />
+        mem.name as lastFollowName
+        from recruit_agent re
+        LEFT JOIN member mem on re.last_follow_id = mem.id
         <where>
             <if test="id != null">
-                id = #{id}
+            re.id = #{id}
+            </if>
+            <if test="name != null">
+                AND re.name = "%"#{name}"%"
+            </if>
+            <if test="phone != null">
+                AND re.phone LIKE "%"#{phone}"%"
+            </if>
+            <if test="status != null">
+                AND re.status = #{status}
+            </if>
+            <if test="lastFollowName != null">
+                AND mem.name LIKE "%"#{lastFollowName}"%"
+            </if>
+            <if test="lastFollowTimeStart != null">
+                AND re.last_follow_time <![CDATA[ >= ]]> #{lastFollowTimeStart}
+            </if>
+
+            <if test="lastFollowTimeEnd != null">
+                AND re.last_follow_time <![CDATA[ <= ]]> #{lastFollowTimeEnd}
+            </if>
+            <if test="publishTimeStart != null">
+                AND re.create_time <![CDATA[ >= ]]> #{publishTimeStart}
+            </if>
+
+            <if test="publishTimeEnd != null">
+                AND re.create_time <![CDATA[ <= ]]> #{publishTimeEnd}
             </if>
         </where>
+        ORDER BY re.id DESC
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
@@ -100,4 +136,16 @@
         </set>
         where id = #{id}
     </update>
+    <select id="findVoById" parameterType="java.lang.Integer" resultMap="RecruitAgentResultMapVo">
+        select
+        <include refid="LEFT_JOIN_Column_List" />
+        mem.name as lastFollowName
+        from recruit_agent re
+        LEFT JOIN member mem on re.last_follow_id = mem.id
+        where re.id = #{id}
+    </select>
+    <select id="getNotHandleCount"  resultType="java.lang.Integer">
+        select count(id)
+        from recruit_agent WHERE status=0
+    </select>
 </mapper>
