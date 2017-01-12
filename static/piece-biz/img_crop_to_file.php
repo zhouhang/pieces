@@ -2,7 +2,7 @@
 /*
 *	!!! THIS IS JUST AN EXAMPLE !!!, PLEASE USE ImageMagick or some other quality image processing libraries
 */
-// sleep(7);
+// sleep(2);
 $imgUrl = $_POST['imgUrl'];
 // original sizes
 $imgInitW = $_POST['imgInitW'];
@@ -21,7 +21,8 @@ $angle = $_POST['rotation'];
 
 $jpeg_quality = 100;
 
-$output_filename = "uploads/croppedImg_".rand();
+// $output_filename = "uploads/croppedImg_".rand();
+$output_filename = "uploads/thumb_" . md5(uniqid());
 
 // uncomment line below to save the cropped image in the same location as the original image.
 //$output_filename = dirname($imgUrl). "/croppedImg_".rand();

@@ -319,7 +319,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .fa-form .group-cbx .cnt{width:400px;}
 .fa-form .group-val .cnt{height:60px;}
 .fa-form .group-up .cnt{height:150px;}
-.fa-form .group-up .cnt .up-img{width:100px;height:100px;line-height:100px;border-style:solid;vertical-align:middle;}
+.fa-form .group-up .cnt .up-img{border-style:solid;vertical-align:middle;}
 .fa-form .group-a .cnt{height:auto;margin-bottom:26px;}
 .fa-form .group-a label{display:block;width:60px;margin-top:16px;}
 .fa-form .group-t{position:relative;padding-left:140px;}
@@ -722,10 +722,10 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .efficacy .bd li .title{max-height:52px;padding:0 11px;overflow:hidden;}
 
 /* 上传图片 */
-.up-img{position:relative;display:inline-block;width:78px;height:78px;line-height:78px;margin-right:20px;border:1px dashed #ccc;background:#fff url(../images/upfile.png) no-repeat 50%;cursor:pointer;text-align:center;}
+.up-img{position:relative;display:inline-block;width:100px;height:100px;line-height:100px;margin-right:20px;border:1px dashed #ccc;background:#fff url(../images/upfile.png) no-repeat 50%;cursor:pointer;text-align:center;}
 .up-img img{position:absolute;top:-1px;left:-1px;width:100%;height:100%;border:1px solid #ccc;cursor:default;}
-.up-img .del{position:absolute;top:-9px;right:-9px;width:18px;height:18px;background:url(../images/close.png) no-repeat;}
-.up-img .loader{position:absolute;top:0;right:0;width:100%;height:100%;line-height:150px;background:#fff url(../images/loader.gif) no-repeat 50%;text-align:center;font-size:12px;cursor:default;}
+.up-img .del{position:absolute;top:0;right:0;width:30px;height:30px;background:url(../images/cropperIcons.png) no-repeat -270px 0;}
+.up-img .loader{position:absolute;top:0;right:0;width:100%;height:100%;line-height:150px;background:#fff url(../images/loader.gif) no-repeat 50%;text-align:center;font-size:12px;cursor:default;z-index:2;}
 .img-upload-main{padding:40px 0 90px;background:#fff;overflow:hidden;*zoom:1;}
 .img-upload-main .clip{position:relative;width:360px;height:360px;margin:0 auto;border:1px dashed #999;}
 .img-upload-main .clip img{width:100%;height:100%;}
@@ -734,6 +734,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .img-upload-main .side .preview{width:108px;height:108px;padding:5px;border:1px solid #ddd;overflow:hidden;}
 .img-upload-main .side .preview img{width:100%;height:100%;}
 .img-upload-main .side .btn-file{line-height:32px;margin-top:10px;color:#fff;background:#009f95;}
+.upimg-msg{position:absolute;bottom:0;left:0;right:0;line-height:18px;padding:5px;background-color:#000;color:#fff;font-size:12px;text-align:center;z-index:2;}
 
 /* artilce */
 .article p{margin:1em 0;}
