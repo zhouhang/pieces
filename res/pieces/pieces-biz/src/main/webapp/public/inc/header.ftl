@@ -38,6 +38,7 @@
                 <li <#if CURRENT_PAGE??&&CURRENT_PAGE=='commodity'>class="current"</#if>><a href="/commodity/index">产品</a></li>
                 <li <#if CURRENT_PAGE??&&CURRENT_PAGE=='prescription'>class="current"</#if>><a href="/channel/prescription">经方</a></li>
                 <li <#if CURRENT_PAGE??&&CURRENT_PAGE=='efficacy'>class="current"</#if>><a href="/efficacy">功效</a></li>
+                <li <#if CURRENT_PAGE??&&CURRENT_PAGE=='recruit'>class="current"</#if>><a href="/recruit/index">合作伙伴计划</a></li>
             </ul>
         </div>
         <div class="plus">
