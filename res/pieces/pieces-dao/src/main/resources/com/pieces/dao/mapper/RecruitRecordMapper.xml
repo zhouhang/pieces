@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.RecruitRecordDao">
+    <resultMap id="RecruitRecordResultMap" type="com.pieces.dao.model.RecruitRecord">
+            <id column="id"  property="id" />
+            <result column="recruit_agent_id"  property="recruitAgentId" />
+            <result column="follow_id"  property="followId" />
+            <result column="create_time"  property="createTime" />
+            <result column="result"  property="result" />
+        
+    </resultMap>
+
+    <resultMap id="RecruitRecordResultMapVo" type="com.pieces.dao.vo.RecruitRecordVo">
+            <id column="id"  property="id" />
+            <result column="recruit_agent_id"  property="recruitAgentId" />
+            <result column="follow_id"  property="followId" />
+            <result column="create_time"  property="createTime" />
+            <result column="result"  property="result" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,recruit_agent_id,follow_id,create_time,result
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="RecruitRecordResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from recruit_record
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="RecruitRecordResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from recruit_record
+    </select>
+
+    <select id="findByParams" resultMap="RecruitRecordResultMapVo" parameterType="com.pieces.dao.vo.RecruitRecordVo">
+        select
+        <include refid="Base_Column_List" />
+        from recruit_record
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from recruit_record
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.RecruitRecord">
+        insert into
+        recruit_record (recruit_agent_id,follow_id,create_time,result)
+        values
+        (#{recruitAgentId},#{followId},#{createTime},#{result})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.RecruitRecord">
+        update recruit_record
+        <set>
+                                                        
+            <if test="recruitAgentId != null">
+                recruit_agent_id = #{recruitAgentId},
+            </if>
+                                            
+            <if test="followId != null">
+                follow_id = #{followId},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="result != null">
+                result = #{result},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.RecruitAgentDao">
+    <resultMap id="RecruitAgentResultMap" type="com.pieces.dao.model.RecruitAgent">
+            <id column="id"  property="id" />
+            <result column="name"  property="name" />
+            <result column="phone"  property="phone" />
+            <result column="area_id"  property="areaId" />
+            <result column="create_time"  property="createTime" />
+            <result column="last_follow_time"  property="lastFollowTime" />
+            <result column="last_follow_id"  property="lastFollowId" />
+            <result column="status"  property="status" />
+        
+    </resultMap>
+
+    <resultMap id="RecruitAgentResultMapVo" type="com.pieces.dao.vo.RecruitAgentVo">
+            <id column="id"  property="id" />
+            <result column="name"  property="name" />
+            <result column="phone"  property="phone" />
+            <result column="area_id"  property="areaId" />
+            <result column="create_time"  property="createTime" />
+            <result column="last_follow_time"  property="lastFollowTime" />
+            <result column="last_follow_id"  property="lastFollowId" />
+            <result column="status"  property="status" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,phone,area_id,create_time,last_follow_time,last_follow_id,status
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="RecruitAgentResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from recruit_agent
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="RecruitAgentResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from recruit_agent
+    </select>
+
+    <select id="findByParams" resultMap="RecruitAgentResultMapVo" parameterType="com.pieces.dao.vo.RecruitAgentVo">
+        select
+        <include refid="Base_Column_List" />
+        from recruit_agent
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from recruit_agent
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.RecruitAgent">
+        insert into
+        recruit_agent (name,phone,area_id,create_time,last_follow_time,last_follow_id,status)
+        values
+        (#{name},#{phone},#{areaId},#{createTime},#{lastFollowTime},#{lastFollowId},#{status})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.RecruitAgent">
+        update recruit_agent
+        <set>
+                                                        
+            <if test="name != null">
+                name = #{name},
+            </if>
+                                            
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+                                            
+            <if test="areaId != null">
+                area_id = #{areaId},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="lastFollowTime != null">
+                last_follow_time = #{lastFollowTime},
+            </if>
+                                            
+            <if test="lastFollowId != null">
+                last_follow_id = #{lastFollowId},
+            </if>
+                                            
+            <if test="status != null">
+                status = #{status},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
