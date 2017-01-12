@@ -190,11 +190,24 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		// 支付成功发送短信
 		if (payRecord.getAccountBillId() != null) {
 			accountBillService.refreshStatus(payRecord.getAccountBillId());
-			smsService.sendPayAccountSuccess(orderFormVo.getUser().getContactName(),payRecord.getActualPayment(),
-					orderFormVo.getUser().getContactMobile());
+			if(payRecord.getActualPayment()==null){
+				smsService.sendPayAccountSuccess(orderFormVo.getUser().getContactName(),payRecord.getAmountsPayable(),
+						orderFormVo.getUser().getContactMobile());
+			}
+			else{
+				smsService.sendPayAccountSuccess(orderFormVo.getUser().getContactName(),payRecord.getActualPayment(),
+						orderFormVo.getUser().getContactMobile());
+			}
+
 		} else {
-			smsService.sendPaySuccess(orderFormVo.getUser().getContactName(),payRecord.getActualPayment(),
-					orderFormVo.getUser().getContactMobile());
+			if(payRecord.getActualPayment()==null){
+				smsService.sendPaySuccess(orderFormVo.getUser().getContactName(),payRecord.getAmountsPayable(),
+						orderFormVo.getUser().getContactMobile());
+			}else{
+				smsService.sendPaySuccess(orderFormVo.getUser().getContactName(),payRecord.getActualPayment(),
+						orderFormVo.getUser().getContactMobile());
+			}
+
 		}
 		//为代理商用户生成三个月账期
 		if(payRecord.getAgentId()!=null){
@@ -219,8 +232,15 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 
 		// 支付失败发送短信
 		OrderFormVo orderFormVo = orderFormService.findVoById(payRecord.getOrderId());
-		smsService.sendPayFail(orderFormVo.getUser().getContactName(),payRecord.getActualPayment(),
-				orderFormVo.getUser().getContactMobile());
+		if(payRecord.getActualPayment()==null){
+			smsService.sendPayFail(orderFormVo.getUser().getContactName(),payRecord.getAmountsPayable(),
+					orderFormVo.getUser().getContactMobile());
+		}
+		else{
+			smsService.sendPayFail(orderFormVo.getUser().getContactName(),payRecord.getActualPayment(),
+					orderFormVo.getUser().getContactMobile());
+		}
+
 	}
 
 	@Override
@@ -270,11 +290,24 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		// 支付成功发送短信
 		if (payRecordVo.getAccountBillId() != null) {
 			accountBillService.refreshStatus(payRecordVo.getAccountBillId());
-			smsService.sendPayAccountSuccess(orderFormVo.getUser().getContactName(),payRecordVo.getActualPayment(),
-					orderFormVo.getUser().getContactMobile());
+			if(payRecordVo.getActualPayment()==null){
+				smsService.sendPayAccountSuccess(orderFormVo.getUser().getContactName(),payRecordVo.getAmountsPayable(),
+						orderFormVo.getUser().getContactMobile());
+			}else{
+				smsService.sendPayAccountSuccess(orderFormVo.getUser().getContactName(),payRecordVo.getActualPayment(),
+						orderFormVo.getUser().getContactMobile());
+			}
+
 		} else {
-			smsService.sendPaySuccess(orderFormVo.getUser().getContactName(),payRecordVo.getActualPayment(),
-					orderFormVo.getUser().getContactMobile());
+			if(payRecordVo.getActualPayment()==null){
+				smsService.sendPaySuccess(orderFormVo.getUser().getContactName(),payRecordVo.getAmountsPayable(),
+						orderFormVo.getUser().getContactMobile());
+			}
+			else{
+				smsService.sendPaySuccess(orderFormVo.getUser().getContactName(),payRecordVo.getActualPayment(),
+						orderFormVo.getUser().getContactMobile());
+			}
+
 		}
 		//为代理商用户生成三个月账期
 		if(payRecordVo.getAgentId()!=null){
