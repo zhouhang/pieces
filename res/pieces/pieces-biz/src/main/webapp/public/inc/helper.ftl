@@ -29,7 +29,6 @@
             <dl>
                 <dt>服务说明</dt>
                 <dd><a href="/help/27">配送服务</a></dd>
-                <dd><a href="/help/28">售后服务</a></dd>
                 <dd><a href="/help/29">法律声明</a></dd>
             </dl>
         </div>

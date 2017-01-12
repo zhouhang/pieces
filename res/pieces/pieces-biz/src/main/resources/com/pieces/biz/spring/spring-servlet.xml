@@ -143,6 +143,7 @@
 	<mvc:resources mapping="/images/**" location="/assets/images/" />
 	<mvc:resources mapping="/error/**" location="/assets/error/" />
 	<mvc:resources mapping="/favicon.ico" location="/assets/images/favicon.ico" />
+	<mvc:resources mapping="/robots.txt" location="/assets/robots.txt" />
 
 	<bean id="log" class="com.pieces.tools.log.aop.LogAspect"></bean>
 	<aop:config>

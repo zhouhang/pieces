@@ -150,7 +150,7 @@ public class UserController extends  BaseController{
 	@RequiresPermissions(value = "customer:add" )
 	@RequestMapping(value = "/add" ,method= RequestMethod.GET)
 	@BizLog(type = LogConstant.user, desc = "添加会员页面")
-	@SecurityToken(generateToken = true,validateToken=true)
+	@SecurityToken(generateToken = true)
 	public String userAdd(){
 
 		return "customers-add";

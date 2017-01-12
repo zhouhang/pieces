@@ -434,7 +434,7 @@
             init: function() {
                 this.bindEvent();
                 this.submitForm();
-                this.goodsImg();
+                this.upfileImg();
                 this.dateInit();
             },
             bindEvent: function() {
@@ -596,54 +596,57 @@
                 })
             },
             // 商品图片
-            goodsImg: function() {
+            upfileImg: function() {
                 var self = this,
                     split = '<>',
                     wait = false,
                     type = 1,
                     $el,
                     $upimg = $('.up-img');
-                
-                $upimg.each(function() {
-                    $(this).next().val('');
-                    $(this).on('click', function() {
-                      if (wait) {
-                          return;
-                      }
-                      type = $(this).hasClass('upimgs') ? 2 : 1;
-                      $el = $(this);
-                      $('.cropControlUpload').trigger('click');
-                    })
+
+                // 多图删除
+                $('.thumb').on('click', '.upimgs .del', function() {
+                    var $self = $(this);
+                    layer.confirm('确认删除图片？', function(index) {
+                        var $ipt = $self.closest('.thumb').find('input:hidden'),
+                            url = $self.prev().attr('src'),
+                            originImg = (split + $ipt.val()).replace(split + url, '').replace(split, '');
+                        $ipt.val(originImg).prev().show();;
+                        $self.parent().remove();
+                        layer.close(index);
+                    });
                 })
 
                 // 删除图片
                 $upimg.on('click', '.del', function() {
                     var $self = $(this);
-                    layer.confirm('确认删除商品图片？', {
-                        btn: ['确认','取消'] //按钮
-                    }, function(index){
+                    layer.confirm('确认删除图片？', function(index){
                         $self.parent().empty().next(':hidden').val('');
                         layer.close(index);
                     });
                     return false;
                 })
-                // 多图删除
-                $('.thumb').on('click', '.upimgs .del', function() {
-                    var $self = $(this);
-                    layer.confirm('确认删除商品图片？', {
-                        btn: ['确认','取消'] //按钮
-                    }, function(index){
-                        var $ipt = $self.closest('.thumb').find('input:hidden'),
-                            url = $self.prev().attr('src'),
-                            originImg = (split + $ipt.val()).replace(split + url, '').replace(split, '');
 
-                        $ipt.val(originImg);
-                        $self.parent().remove();
-                        if (originImg.split(split).length < 3) {
-                            $ipt.prev().show();
+                $upimg.each(function() {
+                    $(this).next().val('');
+                    $(this).on('click', function() {
+                        if (wait) {
+                            return;
                         }
-                        layer.close(index);
-                    });
+                        type = $(this).hasClass('upimgs') ? 2 : 1;
+                        if (type === 2 && $(this).next().val().split(split).length > 2) {
+                            $el = $('<div></div>');
+                            $(this).hide();
+                            $.notify({
+                                type: 'error',
+                                title: '最多只能添加3张变更记录表',
+                                delay: 3e3
+                            });
+                            return false;
+                        }
+                        $el = $(this);
+                        $('#upImgForm').find('.cropControlUpload').trigger('click');
+                    })
                 })
 
                 $('body').append('<div id="upImgForm" style="position:fixed;bottom:0;left:0;visibility:hidden;"></div>');
@@ -661,15 +664,7 @@
                         } else {
                             var $ipt = $el.next();
                             var originImg = $ipt.val();
-                            if (originImg.split(split).length > 2) {
-                                $el.hide();
-                                self.showMsg({
-                                    title: '最多只能添加3张变更记录表',
-                                    text: ''
-                                })
-                                return false;
-                            }
-                            $el.empty('').show().before('<span class="up-img upimgs"><img src="' + response.url + '"><i class="del" title="删除"></i></span>');
+                            $el.empty().show().before('<span class="up-img upimgs"><img src="' + response.url + '"><i class="del" title="删除"></i></span>');
                             if (originImg) {
                                 originImg += split + response.url;
                             } else {
@@ -680,23 +675,12 @@
                             }
                             $ipt.val(originImg);
                         }
-                        upfile.reset();
                         wait = false;
                     },
-                    onError:function(msg) {
-                        self.showMsg(msg);
-                        $el.empty('');
+                    onError: function(msg) {
+                        $el.html('<span class="upimg-msg">' + msg + '</span>');
                         wait = false;
                     }
-                });
-
-            },
-            showMsg: function(msg) {
-                $.notify({
-                    type: 'error', 
-                    title: msg.title,
-                    text: msg.message, 
-                    delay: 3e3
                 });
             }
         }
