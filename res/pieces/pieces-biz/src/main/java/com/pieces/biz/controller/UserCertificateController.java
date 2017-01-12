@@ -15,6 +15,7 @@ import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.NotifyTemplateEnum;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.listener.NotifyEvent;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.utils.SpringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,7 @@ public class UserCertificateController {
     }
 
     @RequestMapping(value = "/stepTwo", method = RequestMethod.GET)
+    @SecurityToken(generateToken = true)
     public String stepTwo(ModelMap model){
         UserCertificationVo certificationVo=( UserCertificationVo)httpSession.getAttribute(RedisEnum.USER_SESSION_CERTIFICATION.getValue());
         if(certificationVo==null){
@@ -111,6 +113,7 @@ public class UserCertificateController {
 
     @RequestMapping(value = "/stepTwo", method = RequestMethod.POST)
     @ResponseBody
+    @SecurityToken(validateToken=true)
     public Result stepTwoPost(@RequestBody List<UserQualificationVo> userQualificationVos){
         UserCertificationVo certificationVo=( UserCertificationVo)httpSession.getAttribute(RedisEnum.USER_SESSION_CERTIFICATION.getValue());
         User user = (User)httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());

@@ -7,6 +7,7 @@ import java.util.List;
 import com.github.pagehelper.PageInfo;
 import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.service.utils.ValidUtils;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,7 @@ public class CommodityCollectController {
 	@RequestMapping(value = "/collect/add/{id}")
 	@ResponseBody
 	@BizLog(type = LogConstant.collect, desc = "添加商品收藏")
+	@SecurityToken(generateToken = true,validateToken=true)
 	public Result addCollect(@PathVariable("id") Integer cid, ModelMap model) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		CommodityCollectVo commodityCollectVo = new CommodityCollectVo();

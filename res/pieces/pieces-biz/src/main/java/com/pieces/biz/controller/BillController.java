@@ -15,6 +15,7 @@ import com.pieces.service.PayAccountService;
 import com.pieces.service.PayRecordService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,7 @@ public class BillController  extends BaseController{
 
     @RequestMapping("/pay/{billId}")
     @BizLog(type = LogConstant.bill, desc = "账单支付页面")
+    @SecurityToken(generateToken = true)
     public String billPay(ModelMap modelMap,
                           @PathVariable("billId")Integer billId){
 
@@ -87,6 +89,7 @@ public class BillController  extends BaseController{
     @RequestMapping(value = "/create")
     @ResponseBody
     @BizLog(type = LogConstant.bill, desc = "创建账单支付记录")
+    @SecurityToken(validateToken=true)
     public Result create(PayRecordVo payRecordVo,
                          String token,
                          String[] img){

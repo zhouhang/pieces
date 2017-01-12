@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.model.*;
 import com.pieces.service.*;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
@@ -63,6 +64,7 @@ public class OrderController extends BaseController {
 
 	@RequestMapping(value = "/order/create")
 	@BizLog(type = LogConstant.order, desc = "创建订单页面")
+	@SecurityToken(generateToken = true)
 	public String orderCreate(HttpServletRequest request,
             HttpServletResponse response,
             ModelMap modelMap,
@@ -133,6 +135,7 @@ public class OrderController extends BaseController {
 	@RequestMapping(value = "/order/save",consumes = MediaType.APPLICATION_JSON_VALUE)
 	@BizLog(type = LogConstant.order, desc = "保存订单")
 	@ResponseBody
+	@SecurityToken(generateToken = true,validateToken=true)
 	public Result orderSave(HttpServletRequest request,
             HttpServletResponse response,
             @RequestBody  OrderFormVo orderFormVo){
@@ -181,6 +184,8 @@ public class OrderController extends BaseController {
 		orderFormVo.setCommodities(orderCommoditysList);
 		orderFormService.save(orderFormVo, user);
 		request.getSession().removeAttribute(SessionEnum.ORDER_TOKEN.getKey());
+
+
         return new Result(true).data(orderFormVo.getId());
 	}
 	

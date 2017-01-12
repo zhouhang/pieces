@@ -647,8 +647,30 @@
                             beforeSend: function () {
                               self.isSubmit = true;
                             },
-                            success : function(result) {
-                                location.href="/order/index";
+                            success : function(data) {
+                                if(data.status=='y'){
+                                    $.notify({
+                                        type: 'success',
+                                        title: data.info,
+                                        delay: 3e3,
+                                        call: function() {
+                                            setTimeout(function() {
+                                                location.href="/order/index";
+                                            }, 3e3);
+                                        }
+                                    });
+                                }else{
+                                    $.notify({
+                                        type: 'error',
+                                        title: data.info,
+                                        delay: 3e3,
+                                        call: function() {
+                                            setTimeout(function() {
+//                                                location.reload();
+                                            }, 3e3);
+                                        }
+                                    });
+                                }
                             },
                             error: function() {
                                 self.isSubmit = false;

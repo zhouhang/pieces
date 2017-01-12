@@ -105,12 +105,33 @@
                                     data: $(form).formSerialize(),
                                     type: "POST",
                                     success: function(data){
-                                        $(form)[0].reset();
-                                        $.notify({
-                                            type: 'success',
-                                            title: data.info,
-                                            delay: 3e3
-                                        });
+                                        if(data.status=='y'){
+                                            $(form)[0].reset();
+                                            $.notify({
+                                                type: 'success',
+                                                title: data.info,
+                                                delay: 3e3,
+                                                call: function() {
+                                                    setTimeout(function() {
+                                                        location.reload();
+                                                    }, 3e3);
+                                                }
+                                            });
+                                        }else{
+                                            $.notify({
+                                                type: 'error',
+                                                title: data.info,
+                                                delay: 3e3,
+                                                call: function() {
+                                                    setTimeout(function() {
+                                                        location.reload();
+                                                    }, 3e3);
+                                                }
+                                            });
+                                        }
+
+
+
                                     }
                                 });
                             }

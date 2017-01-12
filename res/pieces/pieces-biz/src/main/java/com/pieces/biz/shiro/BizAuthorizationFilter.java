@@ -20,6 +20,7 @@ public class BizAuthorizationFilter extends AuthorizationFilter {
 		Subject subject = getSubject(request, response);
 		// 先判断是否需要重新登录
 		if (subject.getPrincipal() == null) {
+
 			return false;
 		}
 //		String url = WebUtils.getPathWithinApplication(req);

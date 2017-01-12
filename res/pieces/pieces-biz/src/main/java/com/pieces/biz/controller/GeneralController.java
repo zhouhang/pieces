@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.pieces.dao.exception.SmsOverException;
+
 import com.pieces.service.CommodityService;
 import com.pieces.service.impl.CreateHtmlService;
-import com.pieces.service.vo.CropResult;
+import com.pieces.tools.log.util.JSONUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -105,11 +105,11 @@ public class GeneralController extends BaseController {
      * @throws Exception
      */
     @RequestMapping(value = "/img/upload")
-    @ResponseBody
-    public CropResult imgUpload(HttpServletRequest request,
+    public void imgUpload(HttpServletRequest request,
                                 HttpServletResponse response,
                                 @RequestParam(required = false) MultipartFile img)throws Exception {
-        return commodityService.uploadImage(img);
+        String  result =   JSONUtils.toJson(commodityService.uploadImage(img));
+        WebUtil.printHtml(response,result);
     }
 
 

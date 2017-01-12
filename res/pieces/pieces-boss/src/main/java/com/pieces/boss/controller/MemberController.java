@@ -10,6 +10,7 @@ import com.pieces.service.MemberService;
 import com.pieces.service.RoleMemberService;
 import com.pieces.service.RoleService;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.WebUtil;
 import org.apache.shiro.authz.annotation.Logical;
@@ -74,6 +75,7 @@ public class MemberController extends BaseController{
      */
     @RequiresPermissions(value = "member:add")
     @RequestMapping(value = "/add",method = RequestMethod.GET)
+    @SecurityToken(generateToken = true)
     public String add(HttpServletRequest request,
                        HttpServletResponse response,
                        ModelMap model){
@@ -90,6 +92,7 @@ public class MemberController extends BaseController{
      */
     @RequiresPermissions(value = "member:edit")
     @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
+    @SecurityToken(generateToken = true)
     public String edit(HttpServletRequest request,
                        HttpServletResponse response,
                        ModelMap model,
@@ -110,6 +113,7 @@ public class MemberController extends BaseController{
      */
     @RequiresPermissions(value = {"member:add","member:edit"},logical = Logical.OR)
     @RequestMapping(value = "/save",method = RequestMethod.POST)
+    @SecurityToken(generateToken = true,validateToken=true)
     public void save(HttpServletRequest request,
                      HttpServletResponse response,
                      Member member){

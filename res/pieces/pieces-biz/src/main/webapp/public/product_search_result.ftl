@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>${keyword!}-搜索结果-上工好药</title>
+    <title>${keyword!}- 商品搜索-上工好药</title>
+    <meta name="description" content="在上工好药找到了<#if commodityDocPage??>${commodityDocPage.totalElements!}</#if>个与${keyword!}相关的商品，其中包含了<#if (commodityDocPage??&&commodityDocPage.totalElements>0)><#list commodityDocPage.content as commodityDoc ><#if commodityDoc_index<2 > ${commodityDoc.categoryName!}</#if></#list></#if> 等品种的饮片。"/>
+    <meta name="Keywords" content="${keyword!},上工好药,${keyword!}"/>
 </head>
 
 <body>
     <#include "./inc/header.ftl"/>
 
 <div class="main-body">
+
     <div class="wrap">
     <#if (commodityDocPage??&&commodityDocPage.totalElements>0)>
         <div class="sitemap">
@@ -33,7 +36,7 @@
                 <tbody>
                     <#list commodityDocPage.content as commodityDoc>
                         <tr>
-                            <td><a href="/commodity/${commodityDoc.id!}"><img class="lazyload" src="images/blank.gif" data-original="${commodityDoc.pictureUrl!}" width="130" height="130" alt=""></a></td>
+                            <td><a href="/commodity/${commodityDoc.id!}"><img class="lazyload" src="images/blank.gif" data-original="${commodityDoc.pictureUrl!}" width="130" height="130" alt="${commodityDoc.title!}"></a></td>
                             <td class="tl">
                                 <div class="desc">
                                     <h3><a href="/commodity/${commodityDoc.id!}">${commodityDoc.name!}</a></h3>

@@ -11,6 +11,7 @@ import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.ModelEnum;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.enums.StatusEnum;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import org.apache.shiro.authz.annotation.Logical;
@@ -81,6 +82,7 @@ public class CMSController extends BaseController{
     @RequiresPermissions(value = {"single:index","post:index"},logical = Logical.OR)
     @RequestMapping(value = "article/add", method = RequestMethod.GET)
     @BizLog(type = LogConstant.cms, desc = "添加文章")
+    @SecurityToken(generateToken = true)
     public String add(Integer model, ModelMap modelMap){
         String url = "";
 
@@ -101,6 +103,7 @@ public class CMSController extends BaseController{
     @RequiresPermissions(value = {"single:index","post:index"},logical = Logical.OR)
     @RequestMapping(value = "article/detail/{id}", method = RequestMethod.GET)
     @BizLog(type = LogConstant.cms, desc = "文章详情")
+    @SecurityToken(generateToken = true)
     public String detail(@PathVariable("id") Integer id, ModelMap modelMap){
 
         Article article = articleService.findArticleById(id);
@@ -135,6 +138,7 @@ public class CMSController extends BaseController{
     @RequestMapping(value = "article/save", method = RequestMethod.POST)
     @ResponseBody
     @BizLog(type = LogConstant.cms, desc = "保存文章")
+    @SecurityToken(validateToken=true)
     public Result save (@Valid Article article){
         Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         articleService.saveOrUpdateArticle(article, mem.getId());
@@ -170,6 +174,7 @@ public class CMSController extends BaseController{
     @RequiresPermissions(value = {"single:category","post:category"},logical = Logical.OR)
     @RequestMapping(value = "category/add", method = RequestMethod.GET)
     @BizLog(type = LogConstant.cms, desc = "新增文章类别页面")
+    @SecurityToken(generateToken = true)
     public String addCategory(Integer model, ModelMap modelMap) {
         modelMap.put("model", model);
 
@@ -186,6 +191,7 @@ public class CMSController extends BaseController{
     @RequestMapping(value = "category/save", method = RequestMethod.POST)
     @ResponseBody
     @BizLog(type = LogConstant.cms, desc = "保存文章类别信息")
+    @SecurityToken(validateToken=true)
     public Result saveCategory(@Valid ArticleCategory category) {
         Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         articleService.saveOrUpdateCategory(category, mem.getId());
@@ -199,6 +205,7 @@ public class CMSController extends BaseController{
     @RequiresPermissions(value = {"single:category","post:category"},logical = Logical.OR)
     @RequestMapping(value = "category/detail/{id}", method = RequestMethod.GET)
     @BizLog(type = LogConstant.cms, desc = "修改文章类别")
+    @SecurityToken(generateToken = true)
     public String categoryDetail(@PathVariable("id")Integer id, ModelMap modelMap){
         ArticleCategory category = articleService.getCategoryById(id);
         modelMap.put("category", category);

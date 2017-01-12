@@ -13,6 +13,7 @@ import com.pieces.service.enums.NotifyTemplateEnum;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.listener.NotifyEvent;
 import com.pieces.service.impl.SmsService;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.SpringUtil;
 import com.pieces.tools.utils.WebUtil;
@@ -64,6 +65,7 @@ public class PayController extends BaseController{
      */
     @RequestMapping(value = "/go/{orderId}")
     @BizLog(type = LogConstant.pay, desc = "订单支付界面")
+    @SecurityToken(generateToken = true)
     public String go(ModelMap modelMap,
                      @PathVariable("orderId")Integer orderId){
 
@@ -109,6 +111,7 @@ public class PayController extends BaseController{
     @RequestMapping(value = "/create")
     @ResponseBody
     @BizLog(type = LogConstant.pay, desc = "创建支付记录")
+    @SecurityToken(validateToken=true)
     public Result create(PayRecordVo payRecordVo,
                          String token,
                          String[] img){
@@ -140,6 +143,7 @@ public class PayController extends BaseController{
     @RequestMapping(value = "/bill")
     @ResponseBody
     @BizLog(type = LogConstant.pay, desc = "提交账单")
+    @SecurityToken(validateToken=true)
     public Result bill(Integer billtime,
                        Integer orderId){
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());

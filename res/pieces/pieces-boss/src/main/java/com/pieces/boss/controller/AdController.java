@@ -9,6 +9,7 @@ import com.pieces.service.AdService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.CodeEnum;
 import com.pieces.boss.upload.AdUploadFile;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import org.apache.shiro.authz.annotation.Logical;
@@ -66,6 +67,7 @@ public class AdController extends BaseController{
     @RequiresPermissions(value = "ad:add")
     @RequestMapping("add")
     @BizLog(type = LogConstant.ad, desc = "广告添加")
+    @SecurityToken(generateToken = true)
     public String add(ModelMap model){
         List<CodeEnum> adTypeList = CodeEnum.findByType(CodeEnum.Type.AD);
         model.put("typeList",adTypeList);
@@ -81,6 +83,7 @@ public class AdController extends BaseController{
     @RequiresPermissions(value = "ad:edit")
     @RequestMapping("edit/{id}")
     @BizLog(type = LogConstant.ad, desc = "广告详情")
+    @SecurityToken(generateToken = true)
     public String info(@PathVariable("id") Integer id,
                        ModelMap model){
         List<CodeEnum> adTypeList = CodeEnum.findByType(CodeEnum.Type.AD);
@@ -103,6 +106,7 @@ public class AdController extends BaseController{
     @RequestMapping("save")
     @ResponseBody
     @BizLog(type = LogConstant.ad, desc = "广告保存")
+    @SecurityToken(generateToken = true,validateToken=true)
     public Result save(@Valid Ad ad){
         String message;
         if(ad.getId()==null){
@@ -129,6 +133,7 @@ public class AdController extends BaseController{
         adService.deleteById(id);
         return new Result(true).info("删除成功!");
     }
+
 
 
 

@@ -116,9 +116,8 @@
                                 'Content-Type': 'application/json;charset=utf-8'
                             }
                         });
-
                         //                    $(this).attr("disabled", "disabled");
-                        $.post("<#if enquiryBills.status ==1>enquiry/quotedUpdate<#else>enquiry/quoted</#if>?billsId=${enquiryBills.id}", JSON.stringify(enquiryPage.fn.formatTableData()), function (data) {
+                        $.post("<#if enquiryBills.status ==1>enquiry/quotedUpdate<#else>enquiry/quoted</#if>?billsId=${enquiryBills.id}&token=${enquiryToken}", JSON.stringify(enquiryPage.fn.formatTableData()), function (data) {
                             if (data.status == "y") {
                                 $.notify({
                                     type: 'success',
@@ -126,7 +125,20 @@
                                     text: data.info,
                                     delay: 3e3,
                                     call: function () {
-                                        window.location.href = "/enquiry/${enquiryBills.id}"
+                                        setTimeout(function() {
+                                            location.reload();
+                                        }, 3e3);
+                                    }
+                                });
+                            }else{
+                                $.notify({
+                                    type: 'error',
+                                    title:data.info,
+                                    delay: 3e3,
+                                    call: function () {
+                                        setTimeout(function() {
+                                            location.reload();
+                                        }, 3e3);
                                     }
                                 });
                             }

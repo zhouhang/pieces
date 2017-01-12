@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>站点地图-上工好药</title>
+    <title>站点地图-上工好药sghaoyao.com </title>
 </head>
 
 <body>

@@ -11,6 +11,10 @@ import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.utils.ExcelParse;
+import com.pieces.tools.annotation.SameUrlData;
+import com.pieces.tools.annotation.SecurityToken;
+import com.pieces.tools.annotation.TokenHold;
+import com.pieces.tools.annotation.TokenVerify;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.WebUtil;
@@ -163,6 +167,7 @@ public class OrderController extends BaseController{
     @RequiresPermissions(value = "order:edit")
     @RequestMapping(value = "anew/{orderId}")
     @BizLog(type = LogConstant.order, desc = "重新下单页面")
+    @SecurityToken(generateToken = true)
     public String anewOrder(@PathVariable("orderId") Integer orderId,
                             ModelMap model){
         orderModel(null,orderId,model);
@@ -179,6 +184,7 @@ public class OrderController extends BaseController{
     @RequiresPermissions(value = "order:edit")
     @RequestMapping(value = "edit/{orderId}")
     @BizLog(type = LogConstant.order, desc = "修改订单页面")
+    @SecurityToken(generateToken = true)
     public String updateOrder(@PathVariable("orderId") Integer orderId,
                               ModelMap model){
         orderModel(null,orderId,model);
@@ -195,6 +201,7 @@ public class OrderController extends BaseController{
     @RequiresPermissions(value = "order:add")
     @RequestMapping(value = "create/{customerId}")
     @BizLog(type = LogConstant.order, desc = "创建订单页面")
+    @SecurityToken(generateToken = true)
     public String createOrder(@PathVariable("customerId") Integer customerId, Integer agentId,
                               ModelMap model){
         orderModel(customerId,null,model);
@@ -225,6 +232,7 @@ public class OrderController extends BaseController{
     @RequestMapping(value = "submit")
     @ResponseBody
     @BizLog(type = LogConstant.order, desc = "提交订单")
+    @SecurityToken(validateToken=true)
     public Result save(@Valid @RequestBody OrderFormVo orderFormVo){
         List<OrderCommodity> commodities = orderFormVo.getCommodities();
         //计算商品金额
@@ -257,7 +265,7 @@ public class OrderController extends BaseController{
         }else{
             orderFormService.create(orderFormVo,orderFormVo.getOrderId());
         }
-        return new Result(true).data(orderFormVo);
+        return new Result(true).data(orderFormVo).info("订单提交成功!");
     }
 
 
@@ -313,9 +321,7 @@ public class OrderController extends BaseController{
     @RequestMapping(value = "/importExcel")
     @ResponseBody
     private Result importExcel(@RequestParam("file") MultipartFile file){
-
         List<EnquiryCommoditys> enquiryCommodityses= null;
-
         try {
             enquiryCommodityses = ExcelParse.importQuoteInfo(file.getInputStream());
         } catch (IOException e) {
@@ -323,7 +329,6 @@ public class OrderController extends BaseController{
         } catch (InvalidFormatException e) {
             e.printStackTrace();
         }
-
         return new Result(true).data(enquiryCommodityses);
     }
 
