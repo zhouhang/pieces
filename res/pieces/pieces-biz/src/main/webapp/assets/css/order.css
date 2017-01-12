@@ -91,10 +91,10 @@
 /*2016.12.20*/
 .payment .cont{line-height:1;padding:30px;font-size:12px;}
 .payment .cont .info{margin-bottom:30px;padding-bottom:30px;border-bottom:1px solid #e7e7e7;}
+.payment .cont .info span{margin-right:14px;color:#999;}
 .payment .cont .h1{margin-bottom:14px;font-size:18px;font-weight:700;}
 .payment .cont .h2{margin-bottom:30px;font-size:14px;font-weight:700;}
 .payment .cont strong{display:block;}
-.payment .cont span{margin-right:14px;color:#999;}
 .payment .cont em{color:#333;}
 .payment .cont .red{color:#c3272b;}
 .payment .cont .paytype label{position:relative;display:inline-block;width:148px;height:38px;line-height:38px;margin-right:16px;font-size:14px;font-weight:700;border:1px solid #ccc;text-align:center;cursor:pointer;overflow:hidden;}
