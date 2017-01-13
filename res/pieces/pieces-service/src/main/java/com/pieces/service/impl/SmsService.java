@@ -49,7 +49,7 @@ public class SmsService {
     public String sendSmsCaptcha(String mobile) throws Exception {
         checkCaptcha(mobile);
         //生成并发送验证码
-        String code = SeqNoUtil.getRandomNum(5);
+        String code = SeqNoUtil.getRandomNum(4);
 
         Map<String, Object> param = new HashMap<>();
         param.put("apikey", apikey);
@@ -90,7 +90,7 @@ public class SmsService {
     public String sendFindPasswordCaptcha(String mobile) throws Exception {
         checkCaptcha(mobile);
         //生成并发送验证码
-        String code = SeqNoUtil.getRandomNum(5);
+        String code = SeqNoUtil.getRandomNum(4);
         Map<String, Object> param = new HashMap<>();
         param.put("apikey", apikey);
         param.put("mobile", mobile);
