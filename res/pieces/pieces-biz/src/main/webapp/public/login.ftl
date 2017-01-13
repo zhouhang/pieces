@@ -29,7 +29,7 @@
 			<div class="form">
 				<form action="" id="myform">
 					<div class="msg" id="msg">
-						<i class="fa fa-prompt"></i> <span>用户名与密码不匹配</span>
+						<i class="fa fa-prompt"></i> <span>账户名与密码不匹配</span>
 					</div>
 
 					<div class="group">
@@ -38,7 +38,7 @@
 						</div>
 						<div class="cnt">
 							<input type="text" class="ipt" value="" autocomplete="off"
-								name="userName" id="username" placeholder="用户名">
+								name="userName" id="username" placeholder="用户名/手机号">
 						</div>
 					</div>
 
@@ -88,7 +88,7 @@
 		                        },
 		                        success: function(result) {
 		                            if (result.status != 'y') {
-		                                loginPage.fn.showMsg('用户名密码错误!');
+		                                loginPage.fn.showMsg('账户名与密码错误!');
 		                            } else {
 		                                window.location.href = result.info;
 		                            }

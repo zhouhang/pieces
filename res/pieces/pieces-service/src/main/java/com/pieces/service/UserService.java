@@ -63,4 +63,11 @@ public interface UserService extends ICommonService<User>{
 	 */
 	List<UserVo> findUpdateUser(Date updateTime);
 
+	/**
+	 * 根据手机号或用户名查找user
+	 * @param accountName
+	 * @return
+	 */
+	User findByAccount(String accountName);
+
 }

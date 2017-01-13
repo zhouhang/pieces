@@ -199,6 +199,8 @@
 				<redis.host>192.168.1.41</redis.host>
 				<redis.port>6379</redis.port>
 				<elasticsearch.host>192.168.1.41:9300</elasticsearch.host>
+				<send.mail>heh@sghaoyao.com</send.mail>
+				<boss.base.url>http://localhost:81</boss.base.url>
 			</properties>
 		</profile>
 		<profile>
@@ -207,6 +209,8 @@
 				<redis.host>192.168.1.41</redis.host>
 				<redis.port>6379</redis.port>
 				<elasticsearch.host>192.168.1.41:9300</elasticsearch.host>
+				<send.mail>heh@sghaoyao.com</send.mail>
+				<boss.base.url>>http://127.0.0.1:8080</boss.base.url>
 			</properties>
 		</profile>
 		<profile>
@@ -215,6 +219,8 @@
 				<redis.host>192.168.1.41</redis.host>
 				<redis.port>6379</redis.port>
 				<elasticsearch.host>192.168.1.41:9300</elasticsearch.host>
+				<send.mail>xiaochch@sghaoyao.com,xiaochch@yaocai.pro</send.mail>
+				<boss.base.url>http://127.0.0.1:8089</boss.base.url>
 			</properties>
 		</profile>
 		<profile>
@@ -223,6 +229,8 @@
 				<redis.host>192.168.1.41</redis.host>
 				<redis.port>6379</redis.port>
 				<elasticsearch.host>192.168.1.41:9300</elasticsearch.host>
+				<send.mail>heh@sghaoyao.com</send.mail>
+				<boss.base.url>http://boss.sghaoyao.com</boss.base.url>
 			</properties>
 		</profile>
 		<profile>
@@ -231,6 +239,8 @@
 				<redis.host>localhost</redis.host>
 				<redis.port>6379</redis.port>
 				<elasticsearch.host>localhost:9300</elasticsearch.host>
+				<send.mail>cs@sghaoyao.com,heh@sghaoyao.com</send.mail>
+				<boss.base.url>http://boss.sghaoyao.com</boss.base.url>
 			</properties>
 		</profile>
 	</profiles>

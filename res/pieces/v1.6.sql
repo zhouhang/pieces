@@ -28,3 +28,7 @@ INSERT INTO `pieces`.`resources` (`id`, `name`, `type`, `path`, `pid`, `permissi
 INSERT INTO `pieces`.`resources` (`id`, `name`, `type`, `path`, `pid`, `permission`, `create_date`) VALUES ('68', '合作伙伴申请详情', 'button', '', '60', 'recruit:detail', '2017-01-13 10:03:36');
 INSERT INTO `pieces`.`resources` (`id`, `name`, `type`, `path`, `pid`, `permission`, `create_date`) VALUES ('69', '合作伙伴申请记录', 'button', '', '60', 'recruit:trail', '2017-01-13 10:04:06');
 
+
+ALTER TABLE `user`
+ADD UNIQUE INDEX `phone` (`contact_mobile`) USING BTREE ;
+

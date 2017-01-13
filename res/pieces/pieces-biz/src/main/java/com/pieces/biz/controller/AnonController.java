@@ -30,6 +30,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.awt.*;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Author: koabs
@@ -52,6 +54,8 @@ public class AnonController {
     private AnonEnquiryService anonEnquiryService;
 
     private final static ConfigurableCaptchaService captchaService = new ConfigurableCaptchaService();
+
+
 
     static {
         //生成验证码
@@ -86,9 +90,10 @@ public class AnonController {
         if (!StringUtils.isEmpty(code) && code.equalsIgnoreCase(captcha)){
             result = anonEnquiryService.save(enquiry);
             // 通知管理员
+            SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             SpringUtil.getApplicationContext().
                     publishEvent(new NotifyEvent(NotifyTemplateEnum.anon.getTitle(String.valueOf(enquiry.getId())),
-                            NotifyTemplateEnum.anon.getContent(String.valueOf(enquiry.getId()))));
+                            NotifyTemplateEnum.anon.getContent(enquiry.getContacts(),time.format(new Date())),NotifyTemplateEnum.anon.getType(),enquiry.getId()));
         } else {
             result = new Result(false).info("验证码错误");
         }

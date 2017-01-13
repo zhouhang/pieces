@@ -27,4 +27,5 @@ public class BizToken extends UsernamePasswordToken {
 		super(username, password, rememberMe, host);
 		this.validationCode = validationCode;
 	}
+
 }
