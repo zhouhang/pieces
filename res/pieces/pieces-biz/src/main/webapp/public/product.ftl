@@ -87,7 +87,9 @@
                         <#if commodity.attributeView??>
                             <ul>
                                 <#list commodity.attributeView?keys as key>
-                                    <li title="${commodity.attributeView[key]}">${key}：${commodity.attributeView[key]}</li>
+                                    <#if key!="生产厂家">
+                                        <li title="${commodity.attributeView[key]}">${key}：${commodity.attributeView[key]}</li>
+                                    </#if>
                                 </#list>
                             </ul>
                         </#if>
