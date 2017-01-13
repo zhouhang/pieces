@@ -303,9 +303,9 @@ public class UserController extends BaseController {
 	public Result findPasswordOne(String username, String code) {
 
 		Result result = new Result(true).info("验证成功!");
-		User user = userService.findByUserName(username);
+		User user = userService.findByAccount(username);
 		if (user == null) {
-			result = new Result("10001").info("系统找不到该用户名，请确认用户名是否正确");
+			result = new Result("10001").info("系统找不到该用户，请确认账户名是否正确");
 		}
 		
 		String sessionCode  = (String) httpSession.getAttribute(BasicConstants.KAPTCHA_SESSION_KEY);
@@ -334,7 +334,9 @@ public class UserController extends BaseController {
 		if (StringUtils.isEmpty(username)) {
 			throw new RuntimeException("无权限访问");
 		}
-		User user = userService.findByUserName(username);
+
+		User user = userService.findByAccount(username);
+		username=user.getUserName();
 		String usernameSub = username.substring(0,username.length()-3);
 		username = username.replace(usernameSub,"***");
 		String phone = user.getContactMobile();
@@ -358,7 +360,7 @@ public class UserController extends BaseController {
 		if (StringUtils.isEmpty(username)) {
 			throw new RuntimeException("无权限访问");
 		}
-		User user = userService.findByUserName(username);
+		User user = userService.findByAccount(username);
 		Result result = new Result(true).info("验证成功!");
 		// 判断用户是否有点击发送验证码
 		// 输入验证码与发送给手机的验证码是否相等
@@ -409,7 +411,7 @@ public class UserController extends BaseController {
 		if (pwd == null || !pwd.equals(pwdRepeat)) {
 			result = new Result("10001").info("两次输入的密码不一致");
 		} else {
-			User user = userService.findByUserName(username);
+			User user = userService.findByAccount(username);
 			user.setPassword(pwd);
 			user.setUpdateTime(new Date());
 			user = userService.createPwdAndSaltMd5(user);
