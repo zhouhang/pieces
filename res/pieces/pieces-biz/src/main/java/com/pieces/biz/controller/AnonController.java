@@ -77,7 +77,7 @@ public class AnonController {
      */
     @RequestMapping(value = "/enquiry", method = RequestMethod.POST)
     @ResponseBody
-    @SecurityToken(validateToken=true)
+    @SecurityToken(generateToken = true,validateToken=true)
     public Result create(@Valid @RequestBody AnonEnquiryVo enquiry, String captcha){
         Result result = null;
 
