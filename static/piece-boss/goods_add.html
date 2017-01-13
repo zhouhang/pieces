@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>新增分类-boss-饮片B2B</title>
+    <title>新增商品-boss-饮片B2B</title>
     <meta name="renderer" content="webkit" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -303,7 +303,7 @@
                 init: function() {
                     this.formValidate();
                     this.submitEvent();
-                    this.goodsImg();
+                    this.cropImg();
                     this.parameter();
                     this.updateTable();
                 },
@@ -333,30 +333,23 @@
                     })
                 },
                 // 商品图片
-                goodsImg: function() {
+                cropImg: function() {
                     var self = this;
+
                     // 删除图片
                     $('.goods-img').on('click', '.del', function() {
                         var $self = $(this);
-                        layer.confirm('确认删除商品图片？', {
-                            btn: ['确认','取消'] //按钮
-                        }, function(index){
-                            $self.prev().remove();
-                            $self.prev().val('');
-                            $self.remove();
+                        layer.confirm('确认删除图片？', function(index){
+                            $self.parent().empty().next(':hidden').val('');
                             layer.close(index);
                         });
-                        return false;
-                    })
-                    // 点击图片无效
-                    $('.goods-img').on('click', 'img', function() {
                         return false;
                     })
 
                     // 图片裁剪弹层框
                     $('.goods-img').on('click', function() {
                         layer.open({
-                            skin: 'layui-layer-molv', 
+                            skin: 'layui-layer-molv',
                             area: ['600px'],
                             closeBtn: 1,
                             type: 1,
@@ -367,39 +360,32 @@
                                 self.cropModal.destroy();
                             }
                         });
-
-                        self.croppic();
-                    });
+                        self.croppic($(this));
+                    })
                 },
-                croppic: function() {
-                    var options = {
+                croppic: function($el) {
+                    var self = this;
+
+                    self.cropModal = new Croppic('imgCrop', {
+                        hideButton: true,
                         uploadUrl:'img_save_to_file.php',
                         cropUrl:'img_crop_to_file.php',
-                        outputUrlId:'imgUrl',
-                        imgEyecandyOpacity:0.5,
-                        loaderHtml:'<span class="loader">正在上传图片，请稍后...</span>',
-                        onBeforeImgUpload: function(){},
-                        onAfterImgUpload: function(){},
-                        onImgDrag: function(){},
-                        onImgZoom: function(){},
-                        onBeforeImgCrop: function(){},
-                        onAfterImgCrop:function(response){ 
-                            $('.goods-img').html('<img src="' + response.url + '" /><i class="del" title="删除"></i>');
-                            // 关闭弹层
-                            layer.closeAll();
+                        onBeforeImgUpload: function() {
+                            $('#imgCrop').find('.upimg-msg').remove();
                         },
-                        onReset:function(){ console.log('onReset') },
-                        onError:function(msg){
-                            console.log(msg)
-                            $.notify({
-                                type: 'error', 
-                                title: msg.title,   // 不允许的文件类型
-                                text: msg.message,     //'支持 jpg、jepg、png、gif等格式图片文件', 
-                                delay: 3e3
-                            });
+                        onBeforeImgCrop: function() {
+                            $('#imgCrop').append('<span class="upimg-msg">图片剪裁中...</span>');
+                        },
+                        onAfterImgCrop:function(response){ 
+                            if (response.status && response.status === 'success') {
+                                $el.html('<img src="' + response.url + '" /><i class="del" title="删除"></i>').next(':hidden').val(response.url);
+                                layer.closeAll();
+                            }
+                        },
+                        onError: function(msg) {
+                            $('#imgCrop').append('<span class="upimg-msg">' + msg + '</span>');
                         }
-                    }
-                    this.cropModal = new Croppic('imgCrop', options);
+                    });
                 },
                 // 商品自定义参数
                 parameter: function() {

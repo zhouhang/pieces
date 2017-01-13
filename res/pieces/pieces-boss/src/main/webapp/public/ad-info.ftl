@@ -81,7 +81,7 @@
                                 图片：
                             </div>
                             <div class="cnt cnt-mul">
-                                <div class="goods-img" id="imgCrop">
+                                <div class="goods-img" id="upfile1">
                                     <#if ad??&&ad.pictureUrl??&&ad.pictureUrl!="">
                                      <img src="${ad.pictureUrl}"><i class="del"></i>
                                     </#if>
@@ -152,7 +152,7 @@
             init: function() {
                 this.dateInit();
                 this.formValidate();
-                this.goodsImg();
+                this.upfileImg();
                 this.delete();
             },
             //日期选择
@@ -220,47 +220,37 @@
                 });
             },
             // 商品图片
-            goodsImg: function() {
-                var self = this;
+            upfileImg: function() {
+                $('body').append('<div id="upload" style="position:fixed;bottom:0;left:0;width:0;height:0;visibility:hidden;"></div>');
+
+
+                new Croppic('upload', {
+                    uploadUrl:'/gen/upload',
+                    onBeforeImgUpload: function() {
+                        $('#upfile1').html('<span class="loader">图片上传中...</span>');
+                    },
+                    onAfterImgUpload: function(response){
+                        $('#upfile1').html('<img src="' + response.url + '"><i class="del" title="删除"></i>').next(':hidden').val(response.url);
+                    },
+                    onError: function(msg){
+                        $('#upfile1').html('<span class="upimg-msg">' + msg + '</span>');
+                    }
+                });
+
+                
                 // 删除图片
                 $('.goods-img').on('click', '.del', function() {
                     var $self = $(this);
-                    layer.confirm('确认删除图片？', {
-                        btn: ['确认','取消'] //按钮
-                    }, function(index){
-                        $self.parent().empty().next().val('none');
+                    layer.confirm('确认删除商品图片？', function(index){
+                        $self.parent().empty().next(':hidden').val('');
                         layer.close(index);
-                        self.upImg();
                     });
                     return false;
                 })
-                // 点击图片看大图
-                $('.goods-img').on('click', 'img', function() {
-                    var url = this.src;
-                    window.open(url);
-                    return false;
+
+                $('#upfile1').on('click', function() {
+                    $('#upload').find('.cropControlUpload').trigger('click');
                 })
-                $('#imgCrop').find('img').length === 0 && self.upImg();
-            },
-            upImg: function() {
-                var options = {
-                    uploadUrl:'/gen/upload',
-                    customUploadButtonId: 'imgCrop',
-                    onAfterImgUpload: function(response){
-                        cropModal.destroy();
-                        $('#imgCrop').html('<img src="' + response.url + '" title="点击图片看大图" /><i class="del" title="删除"></i>')
-                                .next().val(response.url);
-                    },
-                    onError:function(msg){
-                        $.notify({
-                            type: 'error',
-                            title: "上传错误",   // 不允许的文件类型
-                            text: msg.info,     //'支持 jpg、jepg、png、gif等格式图片文件',
-                            delay: 3e3
-                        });
-                    }
-                }
-                var cropModal = new Croppic('imgCropWrap', options);
             },
             delete: function() {
                 var iid = $("#adId").val();

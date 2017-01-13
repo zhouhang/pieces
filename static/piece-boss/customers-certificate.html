@@ -439,7 +439,7 @@
                     this.certificate();
                     this.bindEvent();
                     this.submitForm();
-                    this.goodsImg();
+                    this.upfileImg();
                 },
                 certificate: function() {
                     var $input = $('#myform').find('.cbx[name="category"]:checked'),
@@ -626,92 +626,74 @@
                     })
                 },
                 // 商品图片
-                goodsImg: function() {
+                upfileImg: function() {
                     var self = this,
                         split = '@@@',
-                        $wrap = $('.tabcont'),
-                        $upimgs = $('.upimgs'), // 多图
-                        $upimg = $('.upimg'); // 单图
+                        wait = false,
+                        type = 1,
+                        $el,
+                        $upimg = $('.goods-img');
+
+                    // 多图删除
+                    $('.thumb').on('click', '.upimgs .del', function() {
+                        var $self = $(this);
+                        layer.confirm('确认删除商品图片？', function(index) {
+                            var $ipt = $self.closest('.thumb').find('input:hidden'),
+                                url = $self.prev().attr('src'),
+                                originImg = (split + $ipt.val()).replace(split + url, '').replace(split, '');
+                            $ipt.val(originImg).prev().show();;
+                            $self.parent().remove();
+                            layer.close(index);
+                        });
+                    })
 
                     // 删除图片
                     $upimg.on('click', '.del', function() {
                         var $self = $(this);
-                        layer.confirm('确认删除商品图片？', {
-                            btn: ['确认','取消'] //按钮
-                        }, function(index){
+                        layer.confirm('确认删除商品图片？', function(index){
                             $self.parent().empty().next(':hidden').val('');
                             layer.close(index);
                         });
                         return false;
                     })
 
-                    // 证件照          
-                    $upfiles = $('<div id="upfiles"></div>').hide().appendTo($('body'));
-                    $upimg.each(function(i) {
-                        var $el = $(this),
-                            $ipt = $el.next('input:hidden'),
-                            upId = 'upfile' + i,
-                            id = 'upfileBtn' + i;
-
-                        this.id = id;
-                        $ipt.val('');
-                        $upfiles.append('<div id="' + upId + '"></div>');
-
-                        new Croppic(upId, {
-                            uploadUrl:'img_save_to_file.php',
-                            customUploadButtonId: id,
-                            onAfterImgUpload: function(response){
-                                $el.show().html('<img src="' + response.url + '" /><i class="del" title="删除"></i>');
-                                $ipt.val(response.url).trigger('validate');
-                            },
-                            onError:function(msg){
-                                self.showMsg(msg);
+                    $upimg.each(function() {
+                        $(this).next().val('');
+                        $(this).on('click', function() {
+                            if (wait) {
+                                return;
                             }
-                        });
+                            type = $(this).hasClass('upimgs') ? 2 : 1;
+                            if (type === 2 && $(this).next().val().split(split).length > 2) {
+                                $el = $('<div></div>');
+                                $(this).hide();
+                                $.notify({
+                                    type: 'error',
+                                    title: '最多只能添加3张变更记录表',
+                                    delay: 3e3
+                                });
+                                return false;
+                            }
+                            $el = $(this);
+                            $('#upImgForm').find('.cropControlUpload').trigger('click');
+                        })
                     })
 
-                    // 多图删除
-                    $('.thumb').on('click', '.upimgs .del', function() {
-                        var $self = $(this);
-                        layer.confirm('确认删除商品图片？', {
-                            btn: ['确认','取消'] //按钮
-                        }, function(index){
-                            var $ipt = $self.closest('.thumb').find('input:hidden'),
-                                url = $self.prev().attr('src'),
-                                originImg = (split + $ipt.val()).replace(split + url, '').replace(split, '');
+                    $('body').append('<div id="upImgForm" style="position:fixed;bottom:0;left:0;visibility:hidden;"></div>');
 
-                            $ipt.val(originImg);
-                            $self.parent().remove();
-                            if (originImg.split(split).length < 3) {
-                                $ipt.prev().show();
-                            }
-                            layer.close(index);
-                        });
-                    })
-                    $upimgs.each(function(k) {
-                        var $el = $(this),
-                            $ipt = $el.next('input:hidden'),
-                            upId = 'upfiles' + k,
-                            id = 'upfilesBtn' + k;
-
-                        this.id = id;
-                        $ipt.val('');
-                        $upfiles.append('<div id="' + upId + '"></div>');
-
-                        new Croppic(upId, {
-                            uploadUrl:'img_save_to_file.php',
-                            customUploadButtonId: id,
-                            onAfterImgUpload: function(response){
+                    var upfile = new Croppic('upImgForm', {
+                        uploadUrl: 'img_save_to_file.php',
+                        onBeforeImgUpload: function() {
+                            wait = true;
+                            $el.html('<span class="loader">图片上传中...</span>');
+                        },
+                        onAfterImgUpload: function(response) {
+                            if (type === 1) {
+                                $el.show().html('<img src="' + response.url + '" /><i class="del" title="删除"></i>').next().val(response.url).trigger('validate');
+                            } else {
+                                var $ipt = $el.next();
                                 var originImg = $ipt.val();
-                                if (originImg.split(split).length > 2) {
-                                    $el.hide();
-                                    self.showMsg({
-                                        title: '最多只能添加3张变更记录表',
-                                        text: ''
-                                    })
-                                    return false;
-                                }
-                                $el.show().before('<span class="goods-img upimgs"><img src="' + response.url + '"><i class="del" title="删除"></span>');
+                                $el.empty().show().before('<span class="goods-img upimgs"><img src="' + response.url + '"><i class="del" title="删除"></i></span>');
                                 if (originImg) {
                                     originImg += split + response.url;
                                 } else {
@@ -721,19 +703,13 @@
                                     $el.hide();
                                 }
                                 $ipt.val(originImg);
-                            },
-                            onError:function(msg){
-                                self.showMsg(msg);
                             }
-                        });
-                    })
-                },
-                showMsg: function(msg) {
-                    $.notify({
-                        type: 'error', 
-                        title: msg.title,
-                        text: msg.message, 
-                        delay: 3e3
+                            wait = false;
+                        },
+                        onError: function(msg) {
+                            $el.html('<span class="upimg-msg">' + msg + '</span>');
+                            wait = false;
+                        }
                     });
                 }
             }
