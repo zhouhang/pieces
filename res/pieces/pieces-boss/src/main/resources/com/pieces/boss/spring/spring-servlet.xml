@@ -156,6 +156,7 @@
 	<mvc:resources mapping="/js/**" location="/assets/js/" />
 	<mvc:resources mapping="/images/**" location="/assets/images/" />
 	<mvc:resources mapping="/fonts/**" location="/assets/fonts/" />
+	<mvc:resources mapping="/robots.txt" location="/assets/robots.txt" />
 
 	<aop:config proxy-target-class="false" />
 
