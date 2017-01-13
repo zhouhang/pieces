@@ -31,4 +31,7 @@ public interface UserDao extends ICommonDao<User>{
 
 	List<UserVo> findUpdateUser(@Param("updateTime")Date updateTime);
 
+	User findByAccount(String accountName);
+
+
 }
