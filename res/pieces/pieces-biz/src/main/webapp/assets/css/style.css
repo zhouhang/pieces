@@ -173,6 +173,13 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .fa-message .links{margin-top:30px;}
 .fa-message .links a{color:#1769ff;}
 
+.fa-msg{margin-bottom:20px;padding:2px 40px;border:1px solid #ccc;background:#fff8e5;} 
+.fa-msg i{margin-right:10px;font-size:36px;}
+.fa-msg .fa-prompt{color:#fca31d;} 
+.fa-msg .fa-check-circle{color:#58c805;} 
+.fa-msg .fa-times-circle{color:#c3272b;} 
+.fa-msg span{vertical-align:middle;} 
+
 /* 灰色背景说明 */
 .fa-tips{padding:50px 0;background:#f0eff5;}
 .fa-tips dt{margin-bottom:10px;}
