@@ -270,9 +270,7 @@
                             commodityIds = commodityStr.join(',');
                             if(commodityIds){
                                 if ($(this).data("down")== 'down') {
-                                    $.post("/center/enquiry/download",{ids:commodityIds},function(){
-
-                                    })
+                                    window.location.href = "/center/enquiry/download?ids=" +commodityIds;
                                 } else {
                                     $("#commodityIds").val(commodityIds);
                                     $("#orderForm").submit();

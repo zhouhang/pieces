@@ -92,10 +92,10 @@ public class ExcelParse {
 
     /**
      * 导出询价信息excel
-     * @param enquiryBillsVo
+     * @param list
      * @return
      */
-    public static Workbook  exportEnquiryInfo(EnquiryBillsVo enquiryBillsVo){
+    public static Workbook  exportEnquiryInfo( List<EnquiryCommoditys> list){
         Workbook wb = new HSSFWorkbook();
         Sheet s = wb.createSheet();
         Row r = null;
@@ -134,7 +134,6 @@ public class ExcelParse {
         CellStyle numberStyle = wb.createCellStyle();
         numberStyle.setDataFormat(format.getFormat("0.00"));
 
-        List<EnquiryCommoditys> list = enquiryBillsVo.getEnquiryCommoditys();
         for (int rownum = (short) 1; rownum < list.size()+1; rownum++) {
 
             r = s.createRow(rownum);
@@ -157,6 +156,7 @@ public class ExcelParse {
             c.setCellStyle(cellStyle);
             c = r.createCell(5);
             c.setCellStyle(numberStyle);
+            c.setCellValue(commodity.getMyPrice());
         }
 //        Sheet s1 = wb.createSheet();
 //        wb.setSheetName(1, "报价表");
