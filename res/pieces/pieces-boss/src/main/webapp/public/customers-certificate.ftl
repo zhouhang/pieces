@@ -556,7 +556,7 @@
                             var url='${pics.pictureUrl?replace("\\",'/')}';
                         <#if pics.indexNum==0>
                             $picture.show().html('<img src="' + url + '" /><i class="del" title="删除"></i>');
-                            $picture.next().val(url);
+                            $picture.next('input:hidden').val(url).trigger('blur');
                         <#else >
                             otherPics=otherPics+'<span class="goods-img upimgs"><img src="' + url + '" /><i class="del" title="删除"></i></span>';
                             others.push(url);
@@ -814,7 +814,7 @@
                                             text: '资质保存成功',
                                             delay: 3e3,
                                             call: function () {
-                                                $("#submit1").attr("disabled", "disabled");
+                                                // $("#submit").attr("disabled", "disabled");
                                             }
                                         });
                                     }
@@ -860,7 +860,7 @@
 
 
                     $upimg.each(function() {
-                        //$(this).next().val('');
+                        ///$(this).next().val('');
                         $(this).on('click', function() {
                             if (wait) {
                                 return;
