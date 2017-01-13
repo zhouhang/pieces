@@ -1,6 +1,7 @@
 package com.pieces.boss.controller;
 
 import com.pieces.dao.enums.NotHandleTypeEnum;
+import com.pieces.dao.model.RecruitAgent;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class NotifyMessageController {
      @Autowired
      private PayRecordService payRecordService;
 
+     @Autowired
+     private RecruitAgentService recruitAgentService;
+
     @RequestMapping(value = "/notHandle",method = RequestMethod.POST)
     @ResponseBody
     public Result notHandle(){
@@ -45,6 +49,7 @@ public class NotifyMessageController {
         result.put(NotHandleTypeEnum.CERTIFY_RECORD_NUM.getValue().toString(),certifyRecordService.getNotHandleCount());
         result.put(NotHandleTypeEnum.ENQUIRYBILL_NUM.getValue().toString(),enquiryBillsService.getNotHandleCount());
         result.put(NotHandleTypeEnum.PAY_RECORD_NUM.getValue().toString(),payRecordService.getNotHandleCount());
+        result.put(NotHandleTypeEnum.RECRUIT_AGENT_NUM.getValue().toString(),recruitAgentService.getNotHandleCount());
 
         return new Result(true).data(result);
     }

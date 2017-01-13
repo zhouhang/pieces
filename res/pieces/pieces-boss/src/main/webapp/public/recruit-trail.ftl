@@ -14,7 +14,7 @@
             <dl>
                 <dt>合作伙伴申请</dt>
                 <dd>
-                    <a href="/recruit/detail?id=${anon.id}">详情</a>
+                    <a href="/recruit/detail?id=${agent.id}">详情</a>
                     <a class="curr" href="#!">跟进记录</a>
                 </dd>
             </dl>
@@ -23,8 +23,10 @@
             <div class="title">
                 <h3><i class="fa fa-chevron-right"></i>${agent.name} 合作申请</h3>
                 <div class="extra">
-                    <a href="" class="btn btn-gray">返回</a>
+                    <a href="/recruit/index" class="btn btn-gray">返回</a>
+                     <@shiro.hasPermission name="recruit:trail">
                     <button type="button" id="submit" class="btn btn-red">保存</button>
+                     </@shiro.hasPermission>
                 </div>
             </div>
             <div class="chart-info">
@@ -68,7 +70,7 @@
     $(function () {
         $("#submit").click(function(){
             var msg = $("#msg").val();
-            $.post("/recruit/trail",{result:msg,recruitAgentId:${agent.id}}, function (result) {
+            $.post("/recruit/save",{result:msg,recruitAgentId:${agent.id}}, function (result) {
                 if (result.status == "y") {
                     window.location.reload()
                 }

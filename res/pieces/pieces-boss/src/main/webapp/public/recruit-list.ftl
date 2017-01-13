@@ -21,7 +21,7 @@
                 <button class="btn btn-blue" type="button" id="search_btn"><i
                         class="fa fa-search"></i><span>搜索</span></button>
             </div>
-        <@p.pager pageInfo=anonPage  pageUrl="/recruit/index"  params=params/>
+        <@p.pager pageInfo=recruitPage  pageUrl="/recruit/index"  params=params/>
         </div>
         <div class="chart">
             <table class="tc">
@@ -30,9 +30,9 @@
                     <th width="70">编号</th>
                     <th>联系人</th>
                     <th>电话</th>
-                    <th>跟进人</th>
                     <th width="200">申请时间</th>
                     <th width="100">状态</th>
+                    <th>跟进人</th>
                     <th width="200">最后一次跟进时间</th>
                     <th width="100">操作</th>
                 </tr>
@@ -40,16 +40,16 @@
                     <td></td>
                     <td><div class="ipt-wrap"><input type="text" class="ipt" value="${recruitAgentVo.name!}" name="name"></div></td>
                     <td><div class="ipt-wrap"><input type="text" class="ipt" value="${recruitAgentVo.phone!}" name="phone"></div></td>
-                    <td><div class="ipt-wrap"><input type="text" class="ipt" value="${recruitAgentVo.lastFollowName!}" name="lastFollowName"></div></td>
+                    <td><input type="text" class="ipt date" value="<#if recruitAgentVo.publishTimeStart?? && recruitAgentVo.publishTimeStart?is_date>${recruitAgentVo.publishTimeStart?date!}</#if>" id="start" name="publishTimeStart"> -
+                        <input type="text" class="ipt date" name="publishTimeEnd" value="<#if recruitAgentVo.publishTimeEnd?? && recruitAgentVo.publishTimeEnd?is_date>${recruitAgentVo.publishTimeEnd?date!}</#if>" id="end"></td>
                     <td>
                         <select name="status" id="status">
                             <option value=""></option>
-                            <option value="2">已处理</option>
-                            <option value="1">未处理</option>
+                            <option value="1">已处理</option>
+                            <option value="0">未处理</option>
                         </select>
                     </td>
-                    <td><input type="text" class="ipt date" value="<#if recruitAgentVo.publishTimeStart?? && recruitAgentVo.publishTimeStart?is_date>${recruitAgentVo.publishTimeStart?date!}</#if>" id="start" name="publishTimeStart"> -
-                        <input type="text" class="ipt date" name="publishTimeEnd" value="<#if recruitAgentVo.publishTimeEnd?? && recruitAgentVo.publishTimeEnd?is_date>${recruitAgentVo.publishTimeEnd?date!}</#if>" id="end"></td>
+                    <td><div class="ipt-wrap"><input type="text" class="ipt" value="${recruitAgentVo.lastFollowName!}" name="lastFollowName"></div></td>
                     <td><input type="text" class="ipt date" value="<#if recruitAgentVo.lastFollowTimeStart?? && recruitAgentVo.lastFollowTimeStart?is_date>${recruitAgentVo.lastFollowTimeStart?date!}</#if>" id="start2" name="lastFollowTimeStart"> -
                         <input type="text" class="ipt date" name="lastFollowTimeEnd" value="<#if recruitAgentVo.lastFollowTimeEnd?? && recruitAgentVo.lastFollowTimeEnd?is_date>${recruitAgentVo.lastFollowTimeEnd?date!}</#if>" id="end2"></td>
                     <td></td>
@@ -57,12 +57,11 @@
                 </thead>
                 <tfoot></tfoot>
                 <tbody>
-                <#list recruitAgentVo.list as recruit>
+                <#list recruitPage.list as recruit>
                 <tr>
                     <td>${recruit.id!}</td>
                     <td>${recruit.name!}</td>
                     <td>${recruit.phone!}</td>
-                    <td>${recruit.lastFollowName!}</td>
                     <td>${(recruit.createTime?datetime)!}</td>
                     <td>
                         <#if recruit.status == 0>
@@ -71,7 +70,7 @@
                             已处理
                         </#if>
                     </td>
-
+                    <td>${recruit.lastFollowName!}</td>
                     <td><#if recruit.lastFollowTime! && recruit.lastFollowTime?is_date>${recruit.lastFollowTime?datetime}</#if></td>
                     <td><a href="/recruit/detail?id=${recruit.id}">查看</a></td>
                 </tr>

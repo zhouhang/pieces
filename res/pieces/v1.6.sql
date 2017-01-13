@@ -23,3 +23,8 @@ CREATE TABLE `recruit_record` (
   CONSTRAINT `recruit_fk_2` FOREIGN KEY (`follow_id`) REFERENCES `member` (`id`),
   CONSTRAINT `recruit_fk_1` FOREIGN KEY (`recruit_agent_id`) REFERENCES `recruit_agent` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='招募代理商跟踪记录';
+
+INSERT INTO `pieces`.`resources` (`id`, `name`, `type`, `path`, `pid`, `permission`, `create_date`) VALUES ('67', '合作伙伴申请', 'menu', 'recruit/index', '60', 'recruit:index', '2017-01-13 10:02:59');
+INSERT INTO `pieces`.`resources` (`id`, `name`, `type`, `path`, `pid`, `permission`, `create_date`) VALUES ('68', '合作伙伴申请详情', 'button', '', '60', 'recruit:detail', '2017-01-13 10:03:36');
+INSERT INTO `pieces`.`resources` (`id`, `name`, `type`, `path`, `pid`, `permission`, `create_date`) VALUES ('69', '合作伙伴申请记录', 'button', '', '60', 'recruit:trail', '2017-01-13 10:04:06');
+

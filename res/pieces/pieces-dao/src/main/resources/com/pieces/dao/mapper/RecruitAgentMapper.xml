@@ -33,7 +33,7 @@
     <sql id="LEFT_JOIN_Column_List">
         re.id as id,re.name as name,re.phone as phone,re.area_id as area_id ,
         re.create_time as create_time ,re.last_follow_time as last_follow_time,
-        re.last_follow_id as last_follow_id,re.status as status
+        re.last_follow_id as last_follow_id,re.status as status,
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="RecruitAgentResultMap">
@@ -60,7 +60,7 @@
             re.id = #{id}
             </if>
             <if test="name != null">
-                AND re.name = "%"#{name}"%"
+                AND re.name like "%"#{name}"%"
             </if>
             <if test="phone != null">
                 AND re.phone LIKE "%"#{phone}"%"

@@ -88,7 +88,9 @@
                     <@shiro.hasPermission name="anon:enquiry">
                         <a href="anon/enquiry" id="anonEnquiry">新客询价<b></b></a>
                     </@shiro.hasPermission>
-                    <a href="anon/enquiry" id="anonEnquiry">合作伙伴申请<b></b></a>
+                    <@shiro.hasPermission name="recruit:index">
+                    <a href="/recruit/index" id="recruit">合作伙伴申请<b></b></a>
+                    </@shiro.hasPermission>
                 </div>
             </li>
            </@shiro.hasPermission>

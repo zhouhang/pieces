@@ -24,10 +24,10 @@
         id,recruit_agent_id,follow_id,create_time,result
     </sql>
 
-    <sql id="Left_Join_Column_List">
+    <sql id="LEFT_JOIN_Column_List">
         rr.id as id, rr.recruit_agent_id as recruit_agent_id,
         rr.follow_id as follow_id,rr.create_time as create_time ,
-        rr.result as result
+        rr.result as result,
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="RecruitRecordResultMap">

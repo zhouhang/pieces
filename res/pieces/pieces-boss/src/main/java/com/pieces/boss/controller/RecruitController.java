@@ -43,7 +43,7 @@ public class RecruitController {
     @Autowired
     HttpSession httpSession;
 
-
+    @RequiresPermissions(value = "recruit:index")
     @BizLog(type = LogConstant.recruit, desc = "合作伙伴列表")
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String index(Integer pageSize,
@@ -54,9 +54,11 @@ public class RecruitController {
         String params =  Reflection.serialize(recruitAgentVo);
         model.put("params",params);
         model.put("recruitPage",recruitPage);
+        model.put("recruitAgentVo",recruitAgentVo);
         return "recruit-list";
     }
 
+    @RequiresPermissions(value = "recruit:detail")
     @BizLog(type = LogConstant.recruit, desc = "合作伙伴详情")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     public String detail(Integer id, ModelMap model){
@@ -65,6 +67,8 @@ public class RecruitController {
         return "recruit-detail";
     }
 
+    @RequiresPermissions(value = "recruit:trail")
+    @BizLog(type = LogConstant.recruit, desc = "合作伙伴跟踪")
     @RequestMapping(value = "/trail", method = RequestMethod.GET)
     @SecurityToken(generateToken = true)
     public String trail(Integer recruitAgentId, ModelMap model){
@@ -75,6 +79,8 @@ public class RecruitController {
         return "recruit-trail";
     }
 
+    @RequiresPermissions(value = "recruit:trail")
+    @BizLog(type = LogConstant.recruit, desc = "保存跟踪记录")
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     @ResponseBody
     @SecurityToken(validateToken=true)

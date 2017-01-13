@@ -9,7 +9,8 @@ public  enum NotHandleTypeEnum {
     ENQUIRYBILL_NUM(2,"未处理询价数目"),
     CERTIFY_RECORD_NUM(3,"未处理认证数目"),
     ANON_ENQUIRY_NUM(4,"未处理新客询价数目"),
-    PAY_RECORD_NUM(5,"未处理支付记录数目");
+    PAY_RECORD_NUM(5,"未处理支付记录数目"),
+    RECRUIT_AGENT_NUM(6,"未处理合作伙伴申请数目");
 
 
     private Integer value;
