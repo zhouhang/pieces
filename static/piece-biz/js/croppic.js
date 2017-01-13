@@ -193,6 +193,7 @@
 				}
 				img.onerror = function() {
 					that.hideLoader();
+					that.onError('\u56FE\u7247\u4E0A\u4F20\u5931\u8D25');
 				}
 				img.src = response.url;
 				that.imgUrl = response.url;

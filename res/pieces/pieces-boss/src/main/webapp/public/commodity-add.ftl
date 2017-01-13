@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <#include "./inc/meta.ftl"/>
-    <title>新增分类-boss-上工好药</title>
+    <title>新增商品-boss-上工好药</title>
 </head>
 <body>
 <#include "./inc/header.ftl">
@@ -244,7 +244,7 @@
             init: function () {
                 this.formValidate();
                 this.submitEvent();
-                this.goodsImg();
+                this.cropImg();
                 this.initAutocomplete();
                 this.parameter();
                 this.updateTable();
@@ -354,28 +354,21 @@
 
             },
             // 商品图片
-            goodsImg: function () {
+            cropImg: function () {
                 var self = this;
+
                 // 删除图片
-                $('.goods-img').on('click', '.del', function () {
+                $('.goods-img').on('click', '.del', function() {
                     var $self = $(this);
-                    layer.confirm('确认删除商品图片？', {
-                        btn: ['确认', '取消'] //按钮
-                    }, function (index) {
-                        $self.prev().remove();
-                        $self.prev().val('');
-                        $self.remove();
+                    layer.confirm('确认删除图片？', function(index){
+                        $self.parent().empty().next(':hidden').val('');
                         layer.close(index);
                     });
                     return false;
                 })
-                // 点击图片无效
-                $('.goods-img').on('click', 'img', function () {
-                    return false;
-                })
 
                 // 图片裁剪弹层框
-                $('.goods-img').on('click', function () {
+                $('.goods-img').on('click', function() {
                     layer.open({
                         skin: 'layui-layer-molv',
                         area: ['600px'],
@@ -384,62 +377,33 @@
                         moveType: 1,
                         content: '<div class="img-upload-main"><div class="clip" id="imgCrop"></div></div>',
                         title: '上传图片',
-                        cancel: function () {
+                        cancel: function() {
                             self.cropModal.destroy();
                         }
                     });
-
-                    self.croppic();
-                });
+                    self.croppic($(this));
+                })
             },
-            croppic: function () {
+            croppic: function($el) {
                 var self = this;
-                var options = {
+                self.cropModal = new Croppic('imgCrop', {
+                    hideButton: true,
                     uploadUrl: '/gen/upload',
                     cropUrl: '/gen/clipping',
-                    outputUrlId: 'pictureUrl',
-                    imgEyecandyOpacity: 0.5, // Transparent image showing current img zoom
-                    loaderHtml: '<span class="loader">正在上传图片，请稍后...</span>',
-                    onBeforeImgUpload: function () {
-
-                        // 检查图片大小
-                        var size = $("#imgCrop_imgUploadField")[0].files[0].size;
-                        if (size && size / (1024 * 1024) > 2) {
-                            $.notify({
-                                type: 'error',
-                                title: "提示消息",   // 不允许的文件类型
-                                text: "上传的图片大小不能超过2M.",     //'支持 jpg、jepg、png、gif等格式图片文件',
-                                delay: 3e3
-                            });
-                            self.cropModal.reset();
-                            throw new Error("图片超过2M无法上传!");
-                        }
+                    onBeforeImgUpload: function() {
+                        $('#imgCrop').find('.upimg-msg').remove();
                     },
-                    onAfterImgUpload: function () {
+                    onBeforeImgCrop: function() {
+                        $('#imgCrop').append('<span class="upimg-msg">图片剪裁中...</span>');
                     },
-                    onImgDrag: function () {
-                    },
-                    onImgZoom: function () {
-                    },
-                    onBeforeImgCrop: function () {
-                    },
-                    onAfterImgCrop: function (response) {
-                        $('.goods-img').html('<img src="' + response.url + '" /><i class="del" title="删除"></i>');
-                        // 关闭弹层
+                    onAfterImgCrop:function(response){ 
+                        $el.html('<img src="' + response.url + '" /><i class="del" title="删除"></i>').next(':hidden').val(response.url);
                         layer.closeAll();
                     },
-                    onReset: function () {
-                    },
-                    onError: function (msg) {
-                        $.notify({
-                            type: 'error',
-                            title: msg.title,   // 不允许的文件类型
-                            text: msg.message,     //'支持 jpg、jepg、png、gif等格式图片文件',
-                            delay: 3e3
-                        });
+                    onError: function(msg) {
+                        $('#imgCrop').append('<span class="upimg-msg">' + msg + '</span>');
                     }
-                }
-                this.cropModal = new Croppic('imgCrop', options);
+                });
             },
             // 商品自定义参数
             parameter: function () {

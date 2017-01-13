@@ -42,7 +42,7 @@ public class NotifyListener implements ApplicationListener<NotifyEvent> {
             //邮件内容，简单的邮件信息只能添加文本信息
             messageHelper.setText(event.getContent(), true);
             //邮件接收人的邮箱地址
-            messageHelper.setTo(new String[]{"cs@sghaoyao.com","heh@sghaoyao.com","zhangj@sghaoyao.com"});
+            messageHelper.setTo(new String[]{"cs@sghaoyao.com","heh@sghaoyao.com"});
             //发送邮件
             mailSender.send(mailMessage);
         } catch (Exception e){
