@@ -41,6 +41,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -158,9 +159,10 @@ public class EnquiryController extends BaseController{
         CookieUtils.deleteCookie(request,response, BasicConstants.ENQUIRY_COOKIES);
 
         //用户询价成功后通知管理员处理
+        SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SpringUtil.getApplicationContext().
                 publishEvent(new NotifyEvent(NotifyTemplateEnum.enquiry.getTitle(String.valueOf(billId)),
-                        NotifyTemplateEnum.enquiry.getContent(String.valueOf(billId))));
+                        NotifyTemplateEnum.enquiry.getContent(user.getContactName(),time.format(new Date())),NotifyTemplateEnum.enquiry.getType(),billId));
         WebUtil.print(response,new Result(true).info(message));
     }
 
