@@ -132,6 +132,7 @@ function navMsg(notification) {
                 var CERTIFY_RECORD_NUM = result.data['3'] || '';
                 var ANON_ENQUIRY_NUM = result.data['4'] || '';
                 var PAY_RECORD_NUM = result.data['5'] || '';
+                var RECRUIT_AGENT_NUM = result.data['6'] || '';
 
                 if (ACCOUNT_BILL_NUM || ENQUIRYBILL_NUM || PAY_RECORD_NUM) {
                     $('#salePage').append('<i></i>');
@@ -140,7 +141,7 @@ function navMsg(notification) {
                     $('#salePage').find('i').remove();
                 }
 
-                if (CERTIFY_RECORD_NUM || ANON_ENQUIRY_NUM) {
+                if (CERTIFY_RECORD_NUM || ANON_ENQUIRY_NUM||RECRUIT_AGENT_NUM) {
                     $('#message').append('<i></i>');
                     t = true;
                 } else{
@@ -152,6 +153,7 @@ function navMsg(notification) {
                 $('#accountIndex').find('b').html(ACCOUNT_BILL_NUM);
                 $("#certifyList").find('b').html(CERTIFY_RECORD_NUM); 
                 $("#anonEnquiry").find('b').html(ANON_ENQUIRY_NUM);
+                $("#recruit").find('b').html(RECRUIT_AGENT_NUM);
                 notification && t && showNotification({
                     title: '上工好药',
                     body: '后台有新的任务待处理'

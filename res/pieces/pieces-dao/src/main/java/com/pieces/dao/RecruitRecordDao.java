@@ -10,4 +10,8 @@ public interface RecruitRecordDao extends ICommonDao<RecruitRecord>{
 
     public List<RecruitRecordVo> findByParams(RecruitRecordVo recruitRecordVo);
 
+    public List<RecruitRecordVo> findByRecruitId(Integer recruitAgentId);
+
+
+
 }

@@ -9,5 +9,11 @@ import java.util.List;
 public interface RecruitAgentDao extends ICommonDao<RecruitAgent>{
 
     public List<RecruitAgentVo> findByParams(RecruitAgentVo recruitAgentVo);
+    public RecruitAgentVo findVoById(Integer id);
+    /**
+     * 未处理数目
+     * @return
+     */
+    public Integer getNotHandleCount();
 
 }

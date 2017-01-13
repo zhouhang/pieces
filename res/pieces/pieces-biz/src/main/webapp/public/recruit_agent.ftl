@@ -5,6 +5,7 @@
         <title>招商代理-上工好药 - 中药饮片采购首选 - 正品底价、品质保障、配送及时、轻松采购！</title>
         <meta name="description" content="上工好药sghaoyao.com - 专业的中药饮片采购平台，整合中药饮片各品种优势货源，为合作伙伴提供安全有保障、高效周到、高性价比的服务，采购饮片就来上工好药。" />
         <meta name="Keywords" content="中药,饮片,中药饮片,饮片采购,饮片批发,精致饮片,毒性饮片,药食同源,炮制,古法炮制,上工好药" />
+            <link rel="stylesheet" href="css/h5.css" />
 </head>
 <body>
 <#include "./inc/header.ftl"/>
@@ -173,7 +174,7 @@
         <div class="title">申请合作</div>
         <div class="close">×</div>
         <div class="cont">
-            <form action="">
+            <form action="" method="post">
                 <div class="item">
                     <label class="for">您的姓名：</label>
                     <span class="error"></span>
@@ -269,12 +270,12 @@
             getCity: function(id) {
                 var self = this;
                 $.ajax({
-                    url: '../json/',
-                    data: {'parentid': id},
-                    url: 'json/' + id + '.json',
-                    // dataType: 'jsonp',
+                    url: '/gen/area',
+                    data: {'parentId': id},
+                    dataType: 'json',
                     success: function(response) {
                         // if (response.status === 'success') {
+                        console.log(response);
                         self.toHtml(response);
                         // }
                     }
@@ -282,9 +283,9 @@
             },
             toHtml: function(json) {
                 var model = [];
-                model.push('<option value="0">所在城市</option>');
+                console.log(json);
                 $.each(json, function(i, object) {
-                    model.push('<option value="' , object.i , '">' , object.n, '</option>');
+                    model.push('<option value="' , object.id , '">' , object.areaname, '</option>');
                 })
                 this.$el.html(model.join(''));
             },
@@ -368,7 +369,24 @@
                 $model.on('click', '.submit', function(e) {
                     var pass = checkForm();
                     if (pass) {
-                        $model.find('.suc').show().prev().remove();
+                        $.ajax({
+                            url: '/recruit/submit',
+                            type: 'POST',
+                            data:{"name":$name.val(),"phone":$mobile.val(),"areaId":$city.val()},
+                            success: function(result) {
+                                if(result.status=='y'){
+                                    $model.find('.suc').show().prev().remove();
+                                }else{
+                                    $.notify({
+                                        type: 'error',
+                                        title: '提交错误',
+                                        text: result.info
+                                    })
+                                }
+                            }
+                        })
+
+
                     } else {
                     }
                     e.preventDefault(); // 阻止表单默认提交
