@@ -30,10 +30,7 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -250,6 +247,19 @@ public class EnquiryController extends BaseController{
         }
         WebUtil.print(response,list);
 
+    }
+
+
+    /**
+     * 导出勾选的商品报价
+     * @param response
+     * @param request
+     * @param ids 勾选的商品ID
+     */
+    @RequestMapping(value = "/download")
+    public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, String ids){
+        // TODO: 导出勾选商品
+        //enquiryBillsService.exportEnquiryExcel(response, request, id);
     }
 
 }

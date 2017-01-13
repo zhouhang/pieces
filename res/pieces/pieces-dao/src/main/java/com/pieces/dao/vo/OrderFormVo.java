@@ -64,6 +64,12 @@ public class OrderFormVo extends OrderForm {
     // 1 用户前台搜索 不显示已删除的订单.
     private Integer isUserSearch;
 
+    // 代理商名称
+    private String agentName;
+
+    // 代理商电话
+    private String agentTel;
+
 
     /**
      * 创建订单时候传递的参数
@@ -134,6 +140,22 @@ public class OrderFormVo extends OrderForm {
 
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
+    }
+
+    public String getAgentName() {
+        return agentName;
+    }
+
+    public void setAgentName(String agentName) {
+        this.agentName = agentName;
+    }
+
+    public String getAgentTel() {
+        return agentTel;
+    }
+
+    public void setAgentTel(String agentTel) {
+        this.agentTel = agentTel;
     }
 
     /**

@@ -22,6 +22,8 @@
     </resultMap>
 
     <resultMap id="OrderFormResultMapVo" type="com.pieces.dao.vo.OrderFormVo" extends="OrderFormResultMap">
+        <result column="agentName"  property="agentName" />
+        <result column="agentTel"  property="agentTel" />
         <association property="address" javaType="com.pieces.dao.model.ShippingAddressHistory">
             <id column="a_id"  property="id" />
             <result column="a_user_id"  property="userId" />
@@ -230,12 +232,14 @@
         c.id as c_id,c.name as c_name,c.spec as c_spec,c.level as c_level,c.originOf as c_originOf,
         c.amount as c_amount,c.price as c_price,c.subtotal as c_subtotal,
         c.enquiry_commodity_id as c_enquiry_commodity_id,c.order_id as c_order_id,c.guide_price as c_guide_price,
-        u.contact_name as u_contact_name, u.company_full_name as u_company_full_name,u.contact_mobile as u_contact_mobile
+        u.contact_name as u_contact_name, u.company_full_name as u_company_full_name,u.contact_mobile as u_contact_mobile,
+        agent.contact_name as agentName, agent.contact_mobile as agentTel
         from order_form o
         left join shipping_address_history a on o.addr_history_id = a.id
         left join order_commodity c on o.id = c.order_id
         left join order_invoice i on o.invoice_id = i.id
         left join user u on u.id = o.user_id
+        left join user agent on agent.id = o.agent_id
         where o.id = #{id}
     </select>
 

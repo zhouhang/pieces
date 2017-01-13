@@ -53,6 +53,15 @@
     </#if>
     <#if user_session_biz?? && user_session_biz.type == 2>
     <dl>
+        <dt><i class="fa fa-question-circle"></i>询价</dt>
+        <dd>
+            <a href="center/enquiry/index"><i class="fa fa-li"></i>我要询价</a>
+        </dd>
+        <dd>
+            <a href="center/enquiry/record"><i class="fa fa-li"></i>询价记录</a>
+        </dd>
+    </dl>
+    <dl>
         <dt><i class="fa fa-menu"></i>订单</dt>
         <dd>
             <a href="/center/order/agent"><i class="fa fa-li"></i>我的订单</a>
@@ -77,6 +86,9 @@
         </dd>
         <dd>
             <a href="user/pwd/update"><i class="fa fa-li"></i>修改密码</a>
+        </dd>
+        <dd>
+            <a href="user/shippingaddress/index"><i class="fa fa-li"></i>收货地址</a>
         </dd>
     </dl>
     </#if>
