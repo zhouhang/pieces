@@ -26,6 +26,7 @@ public class NotifyListener implements ApplicationListener<NotifyEvent> {
     // 3.用户提交询价单
     // 4.用户支付时
     // 5.用户提交账单
+    //6.合作伙伴申请
     // SpringUtil.getApplicationContext().publishEvent(new OrderStatusEvent(getId(), OrderEnum.COMPLETE.getValue()));
 
     @Override
