@@ -198,9 +198,9 @@
 		<profile>
 			<id>dev-wb</id>
 			<properties>
-				<biz.base.url>http://3j651.free.natapp.cc</biz.base.url>
-				<boss.base.url>http://localhost:81</boss.base.url>
-				<boss.upload.url>http://localhost:81/files/</boss.upload.url>
+				<biz.base.url>http://test.sankobuy.com:8080</biz.base.url>
+				<boss.base.url>http://192.168.1.179:81</boss.base.url>
+				<boss.upload.url>http://192.168.1.179:81/files/</boss.upload.url>
 				<boss.upload.path>E:\development\apache-tomcat-8.0.361\webapps\files\</boss.upload.path>
 			</properties>
 		</profile>
