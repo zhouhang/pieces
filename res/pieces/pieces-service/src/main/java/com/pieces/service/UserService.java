@@ -52,6 +52,14 @@ public interface UserService extends ICommonService<User>{
      */
 	PageInfo<UserVo> findProxyUser(UserVo userVo, Integer pageNum, Integer pageSize);
 
+	/**
+	 * 根据代理商ID 查询代理的所有用户
+	 * @param proxId
+	 * @return
+     */
+	List<UserVo> findUserByProxy(Integer proxId);
+
+
 	public void login(Subject subject, UsernamePasswordToken token);
 
 	UserVo findVoById(Integer id);

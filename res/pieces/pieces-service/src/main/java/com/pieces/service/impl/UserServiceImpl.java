@@ -148,6 +148,14 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
     }
 
     @Override
+    public List<UserVo> findUserByProxy(Integer proxId) {
+        UserVo userVo = new UserVo();
+        userVo.setAgentId(String.valueOf(proxId));
+        List<UserVo> list = userDao.findProxyUser(userVo);
+        return list;
+    }
+
+    @Override
     public void login(Subject subject, UsernamePasswordToken token) {
         try{
             subject.login(token);

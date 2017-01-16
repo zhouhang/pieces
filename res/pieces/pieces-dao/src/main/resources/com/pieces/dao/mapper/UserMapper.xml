@@ -389,6 +389,9 @@
 			<if test="agentName != null and agentName != ''">
 				and agent.contact_name like "%"#{agentName}"%"
 			</if>
+			<if test="agentId != null and agentId != ''">
+				and agent.id = #{agentId}
+			</if>
 			<if test="true">
 				and b.type = 1
 				AND b.certify_status = 1

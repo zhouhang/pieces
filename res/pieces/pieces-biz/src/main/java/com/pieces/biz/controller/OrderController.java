@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.model.*;
+import com.pieces.dao.vo.UserVo;
 import com.pieces.service.*;
 import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
@@ -61,6 +62,9 @@ public class OrderController extends BaseController {
 	@Autowired
 	private PayAccountService payAccountService;
 
+	@Autowired
+	private UserService userService;
+
 
 	@RequestMapping(value = "/order/create")
 	@BizLog(type = LogConstant.order, desc = "创建订单页面")
@@ -100,7 +104,12 @@ public class OrderController extends BaseController {
         modelMap.put("totalPrice", totalPrice);
         modelMap.put("token", token);
 
-		// TODO: 根据用户类型来判断ga该跳转到那个下单页面
+		//根据用户类型来判断该跳转到那个下单页面并获取代理商代理的用户信息
+		if (user.getType()==2) {
+			List<UserVo> agentUser = userService.findUserByProxy(user.getId());
+			modelMap.put("agentUser",agentUser);
+			return "order_agent";
+		}
 		return "order";
 	}
 	
@@ -159,6 +168,7 @@ public class OrderController extends BaseController {
 
 		List<OrderCommodity> orderCommoditysList = new ArrayList<OrderCommodity>();
 		Double total = 0.0d;
+		Double deposit = 0.0D;
 		Integer billsId = null; // 询价单id
 		for(EnquiryCommoditys enquiryCommoditys:orderFormVo.getCommodityses()){
 			EnquiryCommoditys ec=enquiryCommoditysService.findById(enquiryCommoditys.getId());
@@ -168,12 +178,20 @@ public class OrderController extends BaseController {
 			oc.setLevel(ec.getLevel());
 			oc.setOriginOf(ec.getOrigin());
 			oc.setAmount(enquiryCommoditys.getAmount());
-			oc.setPrice(ec.getMyPrice());
+			if (user.getType()==1) {
+				oc.setGuidePrice(ec.getMyPrice());
+				oc.setPrice(ec.getMyPrice());
+			} else {
+				oc.setGuidePrice(ec.getMyPrice());
+				oc.setPrice(enquiryCommoditys.getMyPrice());
+			}
 			oc.setSubtotal(oc.getAmount()*oc.getPrice());
 			oc.setEnquiryCommodityId(ec.getId());
 			oc.setOrderId(null);
+			oc.setGuidePrice(ec.getMyPrice());
 			orderCommoditysList.add(oc);
 			total = total + oc.getSubtotal();
+			deposit += oc.getGuidePrice()*oc.getAmount();
 			// 询价单id
 			billsId = ec.getBillsId();
 		}
@@ -181,6 +199,7 @@ public class OrderController extends BaseController {
 		orderFormVo.setExpireDate(enquiryBillsService.findById(billsId).getExpireDate());
 
 		orderFormVo.setSum(total);
+		orderFormVo.setDeposit(deposit);
 		//total = total + orderFormVo.getShippingCosts();
 		orderFormVo.setAmountsPayable(total);
 		orderFormVo.setCommodities(orderCommoditysList);
