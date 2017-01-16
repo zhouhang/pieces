@@ -75,7 +75,7 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
         
         OrderInvoice orderInvoice = orderFormVo.getInvoice();
         Integer invoiceId = null;
-        if(orderInvoice != null && !orderInvoice.getName().equals("")){
+        if(orderInvoice != null && !"".equals(orderInvoice.getName())){
         	orderInvoiceService.create(orderInvoice);
             invoiceId = orderFormVo.getInvoice().getId();
         }
