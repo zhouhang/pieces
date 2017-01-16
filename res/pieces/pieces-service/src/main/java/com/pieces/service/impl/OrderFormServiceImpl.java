@@ -65,13 +65,17 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
         // 3. 订单商品
         // 4. 发票信息
         String orderCode = serialNumberService.generateOrderCode();
+        if (user.getType() ==2) {
+            orderFormVo.setAgentId(user.getId());
+        } else {
+            orderFormVo.setUserId(user.getId());
+        }
 
-        orderFormVo.setUserId(user.getId());
         shippingAddressHistoryService.create(orderFormVo.getAddress());
         
         OrderInvoice orderInvoice = orderFormVo.getInvoice();
         Integer invoiceId = null;
-        if(orderInvoice != null && !orderInvoice.getName().equals("")){
+        if(orderInvoice != null && !"".equals(orderInvoice.getName())){
         	orderInvoiceService.create(orderInvoice);
             invoiceId = orderFormVo.getInvoice().getId();
         }
