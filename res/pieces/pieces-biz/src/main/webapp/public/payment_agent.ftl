@@ -76,7 +76,7 @@
         <p>付款完成前请不要关闭此窗口</p>
         <p>完成付款后请点击下面按钮</p>
         <div class="op">
-            <a class="btn btn-red success" href="/center/order/list">已完成付款</a>
+            <a class="btn btn-red success" href="/center/order/agent">已完成付款</a>
             <a class="btn btn-gray fail" href="/help/25">付款遇到问题</a>
         </div>
         <div class="tc">
