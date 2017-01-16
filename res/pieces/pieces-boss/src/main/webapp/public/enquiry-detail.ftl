@@ -154,6 +154,9 @@
                         val = Math.abs(parseFloat(val));
                         this.value = isNaN(val) ? '' : val;
                     }
+                    if (e.keyCode === 13) {
+                        $(this).closest('tr').next().find('.ipt-price').focus();
+                    }
                 });
             },
             //日期选择
