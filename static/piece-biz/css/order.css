@@ -39,14 +39,18 @@
 .order .summary .price{font-size:18px;font-weight:700;color:#c3272b;}
 .order .submit{padding-bottom:50px;text-align:right;}
 .order .submit .btn{padding:10px 60px;font-size:16px;}
+.order .submit p{padding:30px 66px 0 0;font-size:12px;}
 
 
 /* 收货地址 */
+
+.consignee{position:relative;}
+.consignee label{display:block;line-height:24px;}
 .consignee li{position:relative;line-height:24px;padding:0 110px 0 0;}
 .consignee span{color:#999;}
 .consignee .empty{padding:60px 0;text-align:center;}
-.consignee .extra{position:absolute;bottom:0;right:0;text-align:right;}
-.consignee .extra .btn{display:block;margin-top:12px;}
+.consignee .extra{position:absolute;top:0;right:0;text-align:right;}
+.consignee .extra a{display:block;margin-bottom:12px;}
 .consignee-list{display:none;padding:10px 30px 30px;font-size:12px;}
 .consignee-list ul{height:248px;overflow:hidden;overflow-y:auto;}
 .consignee-list li{margin-top:20px;padding:15px 21px;border:1px solid #ccc;cursor:pointer;}

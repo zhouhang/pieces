@@ -260,8 +260,7 @@ public class EnquiryController extends BaseController{
      */
     @RequestMapping(value = "/download")
     public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, String ids){
-        // TODO: 导出勾选商品
-        //enquiryBillsService.exportEnquiryExcel(response, request, id);
+        enquiryBillsService.exportEnquiryExcel(response, request, ids);
     }
 
 }

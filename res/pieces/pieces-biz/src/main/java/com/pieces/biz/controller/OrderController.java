@@ -99,7 +99,9 @@ public class OrderController extends BaseController {
         modelMap.put("commodityIds", commodityIds);
         modelMap.put("totalPrice", totalPrice);
         modelMap.put("token", token);
-        return "order";
+
+		// TODO: 根据用户类型来判断ga该跳转到那个下单页面
+		return "order";
 	}
 	
 	@RequestMapping(value = "/address/add")

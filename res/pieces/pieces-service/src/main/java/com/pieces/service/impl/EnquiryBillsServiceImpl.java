@@ -170,8 +170,15 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     @Override
     public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, Integer id) {
         EnquiryBillsVo vo = findVOById(id);
-        Workbook workbook = ExcelParse.exportEnquiryInfo(vo);
+        Workbook workbook = ExcelParse.exportEnquiryInfo(vo.getEnquiryCommoditys());
         ExcelParse.returnExcel(response,request, workbook,"报价表"+ id);
+    }
+
+    @Override
+    public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, String ids) {
+        List<EnquiryCommoditys>list = enquiryCommoditysService.findByIds(ids);
+        Workbook workbook = ExcelParse.exportEnquiryInfo(list);
+        ExcelParse.returnExcel(response,request, workbook,"报价表");
     }
 
     @Override

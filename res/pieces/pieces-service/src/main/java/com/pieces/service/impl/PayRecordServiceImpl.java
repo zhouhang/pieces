@@ -186,28 +186,29 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 		orderFormService.changeOrderStatus(payRecord.getOrderId(), OrderEnum.WAIT_DELIVERY.getValue());
 
 		OrderFormVo orderFormVo = orderFormService.findVoById(payRecord.getOrderId());
+		// 获取代理商信息
+		String smsName = orderFormVo.getUser().getContactName(),smsTel =orderFormVo.getUser().getContactMobile();
+		if (orderFormVo.getAgentId() != null) {
+			smsName = orderFormVo.getAgentName();
+			smsTel = orderFormVo.getAgentTel();
+		}
 
 		// 支付成功发送短信
 		if (payRecord.getAccountBillId() != null) {
 			accountBillService.refreshStatus(payRecord.getAccountBillId());
 			if(payRecord.getActualPayment()==null){
-				smsService.sendPayAccountSuccess(orderFormVo.getUser().getContactName(),payRecord.getAmountsPayable(),
-						orderFormVo.getUser().getContactMobile());
+				smsService.sendPayAccountSuccess(smsName,payRecord.getAmountsPayable(), smsTel);
 			}
 			else{
-				smsService.sendPayAccountSuccess(orderFormVo.getUser().getContactName(),payRecord.getActualPayment(),
-						orderFormVo.getUser().getContactMobile());
+				smsService.sendPayAccountSuccess(smsName,payRecord.getActualPayment(), smsTel);
 			}
 
 		} else {
 			if(payRecord.getActualPayment()==null){
-				smsService.sendPaySuccess(orderFormVo.getUser().getContactName(),payRecord.getAmountsPayable(),
-						orderFormVo.getUser().getContactMobile());
+				smsService.sendPaySuccess(smsName,payRecord.getAmountsPayable(), smsTel);
 			}else{
-				smsService.sendPaySuccess(orderFormVo.getUser().getContactName(),payRecord.getActualPayment(),
-						orderFormVo.getUser().getContactMobile());
+				smsService.sendPaySuccess(smsName,payRecord.getActualPayment(), smsTel);
 			}
-
 		}
 		//为代理商用户生成三个月账期
 		if(payRecord.getAgentId()!=null){
@@ -232,13 +233,17 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 
 		// 支付失败发送短信
 		OrderFormVo orderFormVo = orderFormService.findVoById(payRecord.getOrderId());
+		// 获取代理商信息
+		String smsName = orderFormVo.getUser().getContactName(),smsTel =orderFormVo.getUser().getContactMobile();
+		if (orderFormVo.getAgentId() != null) {
+			smsName = orderFormVo.getAgentName();
+			smsTel = orderFormVo.getAgentTel();
+		}
 		if(payRecord.getActualPayment()==null){
-			smsService.sendPayFail(orderFormVo.getUser().getContactName(),payRecord.getAmountsPayable(),
-					orderFormVo.getUser().getContactMobile());
+			smsService.sendPayFail(smsName,payRecord.getAmountsPayable(), smsTel);
 		}
 		else{
-			smsService.sendPayFail(orderFormVo.getUser().getContactName(),payRecord.getActualPayment(),
-					orderFormVo.getUser().getContactMobile());
+			smsService.sendPayFail(smsName,payRecord.getActualPayment(), smsTel);
 		}
 
 	}
@@ -287,25 +292,27 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 
 		OrderFormVo orderFormVo = orderFormService.findVoById(payRecordVo.getOrderId());
 
+		// 获取代理商信息
+		String smsName = orderFormVo.getUser().getContactName(),smsTel =orderFormVo.getUser().getContactMobile();
+		if (orderFormVo.getAgentId() != null) {
+			smsName = orderFormVo.getAgentName();
+			smsTel = orderFormVo.getAgentTel();
+		}
 		// 支付成功发送短信
 		if (payRecordVo.getAccountBillId() != null) {
 			accountBillService.refreshStatus(payRecordVo.getAccountBillId());
 			if(payRecordVo.getActualPayment()==null){
-				smsService.sendPayAccountSuccess(orderFormVo.getUser().getContactName(),payRecordVo.getAmountsPayable(),
-						orderFormVo.getUser().getContactMobile());
+				smsService.sendPayAccountSuccess(smsName,payRecordVo.getAmountsPayable(), smsTel);
 			}else{
-				smsService.sendPayAccountSuccess(orderFormVo.getUser().getContactName(),payRecordVo.getActualPayment(),
-						orderFormVo.getUser().getContactMobile());
+				smsService.sendPayAccountSuccess(smsName,payRecordVo.getActualPayment(), smsTel);
 			}
 
 		} else {
 			if(payRecordVo.getActualPayment()==null){
-				smsService.sendPaySuccess(orderFormVo.getUser().getContactName(),payRecordVo.getAmountsPayable(),
-						orderFormVo.getUser().getContactMobile());
+				smsService.sendPaySuccess(smsName,payRecordVo.getAmountsPayable(), smsTel);
 			}
 			else{
-				smsService.sendPaySuccess(orderFormVo.getUser().getContactName(),payRecordVo.getActualPayment(),
-						orderFormVo.getUser().getContactMobile());
+				smsService.sendPaySuccess(smsName,payRecordVo.getActualPayment(), smsTel);
 			}
 
 		}
