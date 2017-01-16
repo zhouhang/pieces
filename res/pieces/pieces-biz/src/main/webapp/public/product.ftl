@@ -52,7 +52,7 @@
                             <dt>商品名称</dt>
                             <dd>${commodity.name!}</dd>
 
-                            <dt>片型</dt>
+                            <dt>片&#12288;&#12288;型</dt>
                             <dd>${commodity.spec!}</dd>
 
                             <dt>原药产地</dt>
@@ -98,6 +98,9 @@
                         <div class="item">
                             ${commodity.details!}
                         </div>
+                    </div>
+                    <div class="guide">
+                        <img src="images/uploads/quality_170116.jpg" alt="">
                     </div>
                     <div class="guide">
                         <img src="images/uploads/guide.jpg" alt="">

@@ -42,7 +42,12 @@
             </ul>
         </div>
         <div class="plus">
-            <a href="/anon/enquiry" class="btn btn-gray"><i class="fa fa-question-circle"></i>快速询价</a>
+   <#if user_session_biz??>
+   <a href="/center/enquiry/index" class="btn btn-gray">
+    <#else>
+    <a href="/anon/enquiry" class="btn btn-gray">
+    </#if>
+           <i class="fa fa-question-circle"></i>快速询价</a>
         </div>
     </div>
 </div><!-- nav end -->

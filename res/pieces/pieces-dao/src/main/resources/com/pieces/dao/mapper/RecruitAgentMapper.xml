@@ -86,7 +86,7 @@
                 AND re.create_time <![CDATA[ <= ]]> #{publishTimeEnd}
             </if>
         </where>
-        ORDER BY re.id DESC
+        ORDER BY re.id DESC,status ASC
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">

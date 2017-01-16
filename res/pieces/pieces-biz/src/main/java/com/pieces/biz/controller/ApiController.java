@@ -97,6 +97,9 @@ public class ApiController {
 
 
             UserCertificationVo userCertificationVo=userCertificationService.findAll(param);
+            if(null==userCertificationVo){
+                continue;
+            }
             companyInfoVo.setAddress(userCertificationVo.getAddress());
             companyInfoVo.setCompany_type(ErpCompanyTypeEnum.findByStr(userCertificationVo.getTypeText()));
             companyInfoVo.setCorporation(userCertificationVo.getCorporation());
