@@ -262,7 +262,7 @@
                                 $.notify({
                                     type: 'warn',
                                     title: '提示',
-                                    text: '请先勾选要订购的商品',
+                                    text: $(this).data("down")== 'down'?'请先勾选要导出的商品':'请先勾选要订购的商品',
                                     delay: 3e3
                                 });
                                 return false;
