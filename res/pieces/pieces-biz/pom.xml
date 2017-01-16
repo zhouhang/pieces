@@ -201,8 +201,8 @@
 		<profile>
 			<id>dev-wb</id>
 			<properties>
-				<biz.base.url>http://test.sankobuy.com:8080</biz.base.url>
-				<biz.upload.url>http://test.sankobuy.com:8080/files/</biz.upload.url>
+				<biz.base.url>http://localhost</biz.base.url>
+				<biz.upload.url>http://localhost/files/</biz.upload.url>
 				<biz.upload.path>E:\development\apache-tomcat-8.0.361\webapps\files\</biz.upload.path>
 			</properties>
 		</profile>
