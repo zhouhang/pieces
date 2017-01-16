@@ -72,12 +72,12 @@
                             <td>${commodity.origin}</td>
                             <td>
                                 <input type="hidden" name="id" value="${commodity.id}">
-                                <input type="text" name="myPrice" class="ipt ipt-price" value="${commodity.myPrice}">
+                                <input type="text" name="myPrice" class="ipt ipt-price" value="${commodity.myPrice}" tabindex="1">
                             </td>
                             <#if commodity_index == 0>
                             <td rowspan="${enquiryBills.enquiryCommoditys?size}">
                                 <div class="pr">
-                                    <input type="text" id="expireDate" name="expireDate" class="ipt ipt-date" value="<#if enquiryBills.expireDate?exists>${enquiryBills.expireDate?date}</#if>">
+                                    <input type="text" id="expireDate" name="expireDate" class="ipt ipt-date" value="<#if enquiryBills.expireDate?exists>${enquiryBills.expireDate?date}</#if>" tabindex="2">
                                 </div>
                             </td>
                             </#if>
@@ -153,6 +153,9 @@
                     if (!/^\d+\.?\d*$/.test(val)) {
                         val = Math.abs(parseFloat(val));
                         this.value = isNaN(val) ? '' : val;
+                    }
+                    if (e.keyCode === 13) {
+                        $(this).closest('tr').next().find('.ipt-price').focus();
                     }
                 });
             },
