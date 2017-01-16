@@ -25,11 +25,14 @@ import com.pieces.service.CertifyRecordService;
 import com.pieces.service.ShippingAddressService;
 import com.pieces.service.UserCertificationService;
 import com.pieces.service.constant.BasicConstants;
+import com.pieces.service.shiro.ShiroRedisCacheManager;
+import com.pieces.service.utils.SerializeUtils;
 import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.httpclient.common.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.cache.Cache;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
@@ -85,6 +88,9 @@ public class UserController extends BaseController {
 
 	@Autowired
 	HttpSession httpSession;
+
+	@Autowired
+	ShiroRedisCacheManager shiroRedisCacheManager;
 
 	/**
 	 * 进入注册页面
@@ -303,9 +309,9 @@ public class UserController extends BaseController {
 	public Result findPasswordOne(String username, String code) {
 
 		Result result = new Result(true).info("验证成功!");
-		User user = userService.findByUserName(username);
+		User user = userService.findByAccount(username);
 		if (user == null) {
-			result = new Result("10001").info("系统找不到该用户名，请确认用户名是否正确");
+			result = new Result("10001").info("系统找不到该用户，请确认账户名是否正确");
 		}
 		
 		String sessionCode  = (String) httpSession.getAttribute(BasicConstants.KAPTCHA_SESSION_KEY);
@@ -334,7 +340,9 @@ public class UserController extends BaseController {
 		if (StringUtils.isEmpty(username)) {
 			throw new RuntimeException("无权限访问");
 		}
-		User user = userService.findByUserName(username);
+
+		User user = userService.findByAccount(username);
+		username=user.getUserName();
 		String usernameSub = username.substring(0,username.length()-3);
 		username = username.replace(usernameSub,"***");
 		String phone = user.getContactMobile();
@@ -358,7 +366,7 @@ public class UserController extends BaseController {
 		if (StringUtils.isEmpty(username)) {
 			throw new RuntimeException("无权限访问");
 		}
-		User user = userService.findByUserName(username);
+		User user = userService.findByAccount(username);
 		Result result = new Result(true).info("验证成功!");
 		// 判断用户是否有点击发送验证码
 		// 输入验证码与发送给手机的验证码是否相等
@@ -409,13 +417,25 @@ public class UserController extends BaseController {
 		if (pwd == null || !pwd.equals(pwdRepeat)) {
 			result = new Result("10001").info("两次输入的密码不一致");
 		} else {
-			User user = userService.findByUserName(username);
+			User user = userService.findByAccount(username);
 			user.setPassword(pwd);
 			user.setUpdateTime(new Date());
 			user = userService.createPwdAndSaltMd5(user);
 			userService.updateUserByCondition(user);
+
+
+
 			//清除缓存
-			bizRealm.removeAuthenticationCacheInfo();
+			//bizRealm.removeAuthenticationCacheInfo();
+
+
+
+			byte[] byteKey = SerializeUtils.serialize(user.getUserName());
+			redisManager.removeInHash("biz:shiro_cache:authenticationCache".getBytes(), byteKey);
+
+			byteKey = SerializeUtils.serialize(user.getContactMobile());
+			redisManager.removeInHash("biz:shiro_cache:authenticationCache".getBytes(), byteKey);
+
 			httpSession.invalidate();
 		}
 		return result;

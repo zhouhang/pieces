@@ -49,12 +49,12 @@
 				<form id="myform">
 					<div class="group">
 						<div class="txt">
-							<i>*</i>用户名：
+							<i>*</i>账户名：
 						</div>
 						<div class="cnt">
 							<input type="text" class="ipt" value="" autocomplete="off"
-								name="username" id="username" placeholder="已注册的用户名"
-								data-msg-required="请输入用户名">
+								name="username" id="username" placeholder="用户名/手机号"
+								data-msg-required="请输入用户名/手机号">
 						</div>
 					</div>
                     <div class="group">
