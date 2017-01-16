@@ -51,7 +51,7 @@ public class BizRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authToken) throws AuthenticationException {
 		BizToken token = (BizToken) authToken;
-		User user = userService.findByUserName(token.getUsername());
+		User user = userService.findByAccount(token.getUsername());
 		if(user == null){
 			throw new AuthenticationException();
 		}

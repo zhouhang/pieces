@@ -14,12 +14,25 @@ public class NotifyEvent extends ApplicationEvent {
 
     private String content;
 
+    private Integer type;
+
+    private Integer eventId;
+
     public NotifyEvent(String title, String content) {
         super(title);
         this.title = title;
         this.content = content;
     }
 
+
+    public NotifyEvent(String title, String content, Integer type, Integer eventId) {
+        super(title);
+        this.title = title;
+        this.content = content;
+
+        this.type=type;
+        this.eventId=eventId;
+    }
     public String getTitle() {
         return title;
     }
@@ -27,4 +40,13 @@ public class NotifyEvent extends ApplicationEvent {
     public String getContent() {
         return content;
     }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public Integer getEventId() {
+        return eventId;
+    }
+
 }

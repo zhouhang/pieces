@@ -417,4 +417,12 @@
 		</if>
 	</select>
 
+	<!-- 通过用户名查找用户-->
+	<select id="findByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from user
+		where user_name = #{accountName} or contact_mobile=#{accountName}
+	</select>
+
 </mapper>

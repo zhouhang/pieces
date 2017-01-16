@@ -1,6 +1,8 @@
 package com.pieces.service.listener;
 
+import com.pieces.service.enums.NotifyTemplateEnum;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -21,8 +23,15 @@ public class NotifyListener implements ApplicationListener<NotifyEvent> {
     @Autowired
     JavaMailSenderImpl mailSender;
 
-    // 1. 提交匿名询价时
-    // 2.企业提交资质审核
+    @Value("${send.mail}")
+    public String sendMails;
+
+
+    @Value("${boss.base.url}")
+    public String bossUrl;
+
+    // 1.企业提交资质审核
+    // 2. 提交匿名询价时
     // 3.用户提交询价单
     // 4.用户支付时
     // 5.用户提交账单
@@ -41,9 +50,35 @@ public class NotifyListener implements ApplicationListener<NotifyEvent> {
             //邮件主题
             mailMessage.setSubject(event.getTitle());
             //邮件内容，简单的邮件信息只能添加文本信息
-            messageHelper.setText(event.getContent(), true);
+            //加链接
+            String url="";
+            switch (event.getType()){
+                case 1:
+                    url=bossUrl+"/certify/info/"+event.getEventId();
+                    break;
+                case 2:
+                    url=bossUrl+"/anon/detail?id="+event.getEventId();
+                    break;
+                case 3:
+                    url=bossUrl+"/enquiry/"+event.getEventId();;
+                    break;
+                case 4:
+                    url=bossUrl+"/payment/detail/"+event.getEventId();
+                    break;
+                case 5:
+                    url=bossUrl+"/account/bill/detail?id="+event.getEventId();
+                    break;
+                case 6:
+                    url=bossUrl+"/recruit/detail?id="+event.getEventId();
+                    break;
+
+                default:break;
+            }
+
+
+            messageHelper.setText(event.getContent()+"<a href='"+url+"'>链接</a>", true);
             //邮件接收人的邮箱地址
-            messageHelper.setTo(new String[]{"cs@sghaoyao.com","heh@sghaoyao.com"});
+            messageHelper.setTo(sendMails.split(","));
             //发送邮件
             mailSender.send(mailMessage);
         } catch (Exception e){

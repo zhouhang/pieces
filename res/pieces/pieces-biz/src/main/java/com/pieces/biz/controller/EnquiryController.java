@@ -30,10 +30,7 @@ import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -158,9 +156,10 @@ public class EnquiryController extends BaseController{
         CookieUtils.deleteCookie(request,response, BasicConstants.ENQUIRY_COOKIES);
 
         //用户询价成功后通知管理员处理
+        SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SpringUtil.getApplicationContext().
                 publishEvent(new NotifyEvent(NotifyTemplateEnum.enquiry.getTitle(String.valueOf(billId)),
-                        NotifyTemplateEnum.enquiry.getContent(String.valueOf(billId))));
+                        NotifyTemplateEnum.enquiry.getContent(user.getContactName(),time.format(new Date())),NotifyTemplateEnum.enquiry.getType(),billId));
         WebUtil.print(response,new Result(true).info(message));
     }
 
@@ -250,6 +249,18 @@ public class EnquiryController extends BaseController{
         }
         WebUtil.print(response,list);
 
+    }
+
+
+    /**
+     * 导出勾选的商品报价
+     * @param response
+     * @param request
+     * @param ids 勾选的商品ID
+     */
+    @RequestMapping(value = "/download")
+    public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, String ids){
+        enquiryBillsService.exportEnquiryExcel(response, request, ids);
     }
 
 }

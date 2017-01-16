@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -128,9 +129,10 @@ public class UserCertificateController {
         certifyRecordService.saveRecord(certifyRecord,certificationVo,userQualificationVos);
         httpSession.removeAttribute(RedisEnum.USER_SESSION_CERTIFICATION.getValue());
         // 通知管理员有新的资质审核请求提交
+        SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SpringUtil.getApplicationContext().
                 publishEvent(new NotifyEvent(NotifyTemplateEnum.certify.getTitle(String.valueOf(certificationVo.getId())),
-                        NotifyTemplateEnum.certify.getContent(String.valueOf(certificationVo.getId()))));
+                        NotifyTemplateEnum.certify.getContent(certificationVo.getCompany(),time.format(new Date())),NotifyTemplateEnum.certify.getType(),certificationVo.getRecordId()));
 
         return new Result(true).info("提交成功");
     }

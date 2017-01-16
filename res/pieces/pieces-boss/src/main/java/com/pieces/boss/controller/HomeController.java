@@ -17,6 +17,7 @@ import com.pieces.tools.utils.WebUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,7 +88,11 @@ public class HomeController extends BaseController{
 		Session s = subject.getSession();
 		s.setAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue(), mem);
 		Result result = new Result(true);
-		WebUtil.print(response, result);
+        String url="/";
+        if ( WebUtils.getSavedRequest(request) != null) {
+            url =  WebUtils.getSavedRequest(request).getRequestUrl();;
+        }
+		WebUtil.print(response, result.data(url));
     }
 
 

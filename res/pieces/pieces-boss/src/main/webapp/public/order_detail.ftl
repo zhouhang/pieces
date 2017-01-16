@@ -57,6 +57,10 @@
                                 <p>用药单位：${vo.user.companyFullName}</p>
                                 <p>联&nbsp;&nbsp;系&nbsp;&nbsp;人：${vo.user.contactName}</p>
                                 <p>联系电话：${vo.user.contactMobile}</p>
+                                <#if vo.agentId?exists>
+                                    <p>代&nbsp;&nbsp;理&nbsp;&nbsp;商：${vo.agentName}</p>
+                                    <p>联系电话：${vo.agentTel}</p>
+                                </#if>
                             </dd>
                         </dl>
                     </div>

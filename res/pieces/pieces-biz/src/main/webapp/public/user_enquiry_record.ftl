@@ -78,7 +78,8 @@
                                         <div class="td w6">
                                             <#if user_session_biz??&&user_session_biz.certifyStatus==1>
                                                 <#if  bill.status == 1 && bill.expireDate?exists&&bill.expireDate?is_date&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
-                                                    <a data-billid="${bill.id!}" data-status="${bill.status!}" class="buy" href="javascript:;">订购已选商品</a>
+                                                    <a data-billid="${bill.id!}" data-status="${bill.status!}" class="buy" href="javascript:;">订购</a>
+                                                    <a data-billid="${bill.id!}" data-status="${bill.status!}" class="buy" data-down="down" href="javascript:;">导出</a>
                                                 </#if>
                                             </#if>
                                         </div>
@@ -268,8 +269,12 @@
                             }   
                             commodityIds = commodityStr.join(',');
                             if(commodityIds){
-                                $("#commodityIds").val(commodityIds);
-                                $("#orderForm").submit();
+                                if ($(this).data("down")== 'down') {
+                                    window.location.href = "/center/enquiry/download?ids=" +commodityIds;
+                                } else {
+                                    $("#commodityIds").val(commodityIds);
+                                    $("#orderForm").submit();
+                                }
                             }
                         })
                     });

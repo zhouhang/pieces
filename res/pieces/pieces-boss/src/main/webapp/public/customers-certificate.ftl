@@ -860,7 +860,7 @@
 
 
                     $upimg.each(function() {
-                        $(this).next().val('');
+                        ///$(this).next().val('');
                         $(this).on('click', function() {
                             if (wait) {
                                 return;

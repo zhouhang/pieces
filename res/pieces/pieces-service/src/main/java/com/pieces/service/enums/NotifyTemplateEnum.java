@@ -1,33 +1,58 @@
 package com.pieces.service.enums;
 
+import org.apache.commons.lang.ArrayUtils;
+
 /**
  * Author: koabs
  * 12/20/16.
  * 通知邮件模板
  */
 public enum NotifyTemplateEnum {
-    certify("待处理业务提醒","您好！\n\n有客户提交了一次企业资质审核，请尽快登录后台处理。"),
-    anon("待处理业务提醒","您好！\n\n有客户提交了一次匿名询价，请尽快登录后台处理。"),
-    enquiry("待处理业务提醒","您好！\n\n有客户提交了一次询价，请尽快登录后台处理。"),
-    payment("待处理业务提醒","您好！\n\n有客户完成了一笔线下支付，请尽快登录后台处理。"),
-    account_bill("待处理业务提醒","您好！\n\n有客户提交了一次账期申请，请尽快登录后台处理。"),
-    recruit_agent("待处理业务提醒","您好！\n\n有合作伙伴申请，请尽快登录后台处理。");
+    certify("待处理业务提醒","您好！\n\n客户{1}于{2}，提交了会员提交资质审核，请点击以下链接前往处理：\n",1),
+    anon("待处理业务提醒","您好！\n\n客户{1}于{2}，提交了新客询价，请点击以下链接前往处理：\n",2),
+    enquiry("待处理业务提醒","您好！\n\n客户{1}于{2}，提交了会员询价，请点击以下链接前往处理：\n",3),
+    payment("待处理业务提醒","您好！\n\n客户{1}于{2}，提交了会员提交支付凭证，请点击以下链接前往处理：\n",4),
+    account_bill("待处理业务提醒","您好！\n\n客户{1}于{2}，提交了会员申请账期支付，请点击以下链接前往处理：\n。",5),
+    recruit_agent("待处理业务提醒","您好！\n\n客户{1}于{2}，提交了合作伙伴申请，请点击以下链接前往处理：\n",6);
 
     private String content;
 
     private String title;
+
+    private Integer type;
+
+
+
 
     NotifyTemplateEnum(String title,String content) {
         this.content = content;
         this.title = title;
     }
 
+    NotifyTemplateEnum(String title,String content,Integer type) {
+        this.content = content;
+        this.title = title;
+        this.type=type;
+    }
+
     public String getContent(String... params ){
-        return this.content;
+        String text = new String(this.content);
+        if(!ArrayUtils.isEmpty(params)){
+            for(int i=0;i<params.length;i++){
+                String temKey = "{"+(i+1)+"}";
+                String temVal = params[i];
+                text = text.replace(temKey,temVal);
+            }
+        }
+
+        return text;
     }
 
     public String getTitle(String... params ){
         return this.title;
     }
 
+    public Integer getType() {
+        return type;
+    }
 }

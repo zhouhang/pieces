@@ -260,7 +260,7 @@ public class UserController extends BaseController {
 			userService.login(subject,token);
 		}catch(Exception e){
 			logger.info("userService.login Exception {} ",e.getMessage());
-			Result result = new Result(false).info("用户名密码错误");
+			Result result = new Result(false).info("账户名密码错误");
 			WebUtil.print(response, result);
 			return;
 		}

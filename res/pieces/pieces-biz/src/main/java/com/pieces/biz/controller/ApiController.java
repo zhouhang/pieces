@@ -86,11 +86,15 @@ public class ApiController {
             companyInfoVo.setId(userVo.getId());
             companyInfoVo.setContacts_mobile(userVo.getContactMobile());
             companyInfoVo.setSeller(userVo.getServiceName());
+            if(userVo.getType()==2){
+                continue;
+            }
             /**
              * 获取企业资质
              */
             UserCertificationVo param =new UserCertificationVo();
             param.setUserId(userVo.getId());
+
 
             UserCertificationVo userCertificationVo=userCertificationService.findAll(param);
             if(null==userCertificationVo){

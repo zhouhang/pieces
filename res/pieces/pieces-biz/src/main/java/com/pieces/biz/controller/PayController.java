@@ -26,10 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 /**
@@ -127,9 +125,10 @@ public class PayController extends BaseController{
         //清空令牌
         httpSession.setAttribute(SessionEnum.PAY_TOKEN.getKey(),null);
         //支付成功后通知管理员审核
+        SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SpringUtil.getApplicationContext().
                 publishEvent(new NotifyEvent(NotifyTemplateEnum.payment.getTitle(String.valueOf(payRecordVo.getId())),
-                        NotifyTemplateEnum.payment.getContent(String.valueOf(payRecordVo.getId()))));
+                        NotifyTemplateEnum.payment.getContent(user.getContactName(),time.format(new Date())),NotifyTemplateEnum.payment.getType(),payRecordVo.getId()));
         return new Result(true).info("支付信息提交成功!");
     }
 
@@ -154,9 +153,10 @@ public class PayController extends BaseController{
         accountBill.setBillTime(billtime);
         accountBillService.createBill(accountBill);
         // 账单提交成功后通知管理员审核
+        SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SpringUtil.getApplicationContext().
                 publishEvent(new NotifyEvent(NotifyTemplateEnum.account_bill.getTitle(String.valueOf(accountBill.getId())),
-                        NotifyTemplateEnum.account_bill.getContent(String.valueOf(accountBill.getId()))));
+                        NotifyTemplateEnum.account_bill.getContent(user.getContactName(),time.format(new Date())),NotifyTemplateEnum.account_bill.getType(),accountBill.getId()));
 
         return new Result(true).info("账单提交成功!");
     }

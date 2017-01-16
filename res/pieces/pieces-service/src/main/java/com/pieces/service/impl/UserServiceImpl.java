@@ -155,7 +155,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
             logger.info("login Exception {} ",e.getMessage());
             throw new RuntimeException("登入失败!");
         }
-        User user = findByUserName(token.getUsername());
+        User user = findByAccount(token.getUsername());
         user.setPassword(null);
         user.setSalt(null);
         Session s = subject.getSession();
@@ -170,6 +170,11 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
     @Override
     public List<UserVo> findUpdateUser(Date updateTime) {
         return userDao.findUpdateUser(updateTime);
+    }
+
+    @Override
+    public User findByAccount(String accountName) {
+        return userDao.findByAccount(accountName);
     }
 
     @Override
