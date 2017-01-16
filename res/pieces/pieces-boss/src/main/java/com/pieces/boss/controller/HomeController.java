@@ -26,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * BOSS系统首页和登录
@@ -68,7 +69,8 @@ public class HomeController extends BaseController{
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @BizLog(type = LogConstant.user, desc = "用户登入")
-    public void loginSubmit(HttpServletRequest request,
+    @ResponseBody
+    public Result loginSubmit(HttpServletRequest request,
                             HttpServletResponse response,
                             @RequestParam(required = true) String username,
                             @RequestParam(required = true) String password) {
@@ -79,8 +81,7 @@ public class HomeController extends BaseController{
             subject.login(token);
         } catch (Exception e) {
             logger.info("subject.login Exception {} ",e.getMessage());
-            WebUtil.print(response, new Result(false).info("用户名密码错误!"));
-            return;
+            return  new Result(false).info("用户名密码错误!");
         }
 
         // 存入用户信息到session
@@ -92,7 +93,7 @@ public class HomeController extends BaseController{
         if ( WebUtils.getSavedRequest(request) != null) {
             url =  WebUtils.getSavedRequest(request).getRequestUrl();;
         }
-		WebUtil.print(response, result.data(url));
+		return result.data(url);
     }
 
 

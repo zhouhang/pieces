@@ -55,7 +55,13 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         user.setOnlineStatus(false);
         user.setBindErp(false);
         user.setCreateTime(new Date());
-        user.setCertifyStatus(CertifyStatusEnum.NOT_CERTIFY.getValue());
+        if(user.getType()==1){//终端客户
+            user.setCertifyStatus(CertifyStatusEnum.NOT_CERTIFY.getValue());
+        }
+        else{//代理商(默认认证通过)
+            user.setCertifyStatus(CertifyStatusEnum.CERTIFY_SUCESS.getValue());
+        }
+
         //user.setSource(0);
         user.setUpdateTime(new Date());
         return this.create(user);
