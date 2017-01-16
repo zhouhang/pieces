@@ -25,11 +25,14 @@ import com.pieces.service.CertifyRecordService;
 import com.pieces.service.ShippingAddressService;
 import com.pieces.service.UserCertificationService;
 import com.pieces.service.constant.BasicConstants;
+import com.pieces.service.shiro.ShiroRedisCacheManager;
+import com.pieces.service.utils.SerializeUtils;
 import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.httpclient.common.util.StringUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.cache.Cache;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
@@ -85,6 +88,9 @@ public class UserController extends BaseController {
 
 	@Autowired
 	HttpSession httpSession;
+
+	@Autowired
+	ShiroRedisCacheManager shiroRedisCacheManager;
 
 	/**
 	 * 进入注册页面
@@ -416,8 +422,20 @@ public class UserController extends BaseController {
 			user.setUpdateTime(new Date());
 			user = userService.createPwdAndSaltMd5(user);
 			userService.updateUserByCondition(user);
+
+
+
 			//清除缓存
-			bizRealm.removeAuthenticationCacheInfo();
+			//bizRealm.removeAuthenticationCacheInfo();
+
+
+
+			byte[] byteKey = SerializeUtils.serialize(user.getUserName());
+			redisManager.removeInHash("biz:shiro_cache:authenticationCache".getBytes(), byteKey);
+
+			byteKey = SerializeUtils.serialize(user.getContactMobile());
+			redisManager.removeInHash("biz:shiro_cache:authenticationCache".getBytes(), byteKey);
+
 			httpSession.invalidate();
 		}
 		return result;
