@@ -80,6 +80,7 @@
 
 
         </where>
+        ORDER BY id DESC,status ASC
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
