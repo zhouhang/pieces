@@ -635,7 +635,7 @@
                         content: '<p>您还没有绑定终端客户，暂时无法进行下单</p><p>如果您已提交终端客户资料，请联系客服人员帮您进行绑定。客服电话：0558-5120088。</p>',
                         yes: function(index) {
                             layer.close(index);
-                            window.location.href = '';
+                            window.location.href = '/center/enquiry/record';
                         }
                     })
                 }
