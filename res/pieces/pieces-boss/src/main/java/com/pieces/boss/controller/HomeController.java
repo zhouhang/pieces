@@ -91,7 +91,10 @@ public class HomeController extends BaseController{
 		Result result = new Result(true);
         String url="/";
         if ( WebUtils.getSavedRequest(request) != null) {
-            url =  WebUtils.getSavedRequest(request).getRequestUrl();;
+            url =  WebUtils.getSavedRequest(request).getRequestUrl();
+            if(url.equals("/favicon.ico")){
+                url="/";
+            }
         }
 		return result.data(url);
     }
