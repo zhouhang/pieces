@@ -10,6 +10,11 @@
     <div class="main-body">
 
         <div class="wrap">
+         <div class="fa-msg">
+             <i class="fa fa-prompt"></i>
+             <span>如果您已经注册过账号，请 <a href="/center/enquiry/index" class="c-blue">点击这里</a> 进入会员专属询价通道。</span>
+         </div>
+
             <div class="enquiry" id="app">
                 <div class="hd">
                     <h2>询价单</h2>
