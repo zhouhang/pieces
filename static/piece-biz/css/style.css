@@ -149,8 +149,8 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .nav .cat .bd .on .cat-list{display:block;}
 .nav .cat-show .bd{display:block;}
 .nav .menu{float:left;font-size:16px;}
-.nav .menu li{float:left;text-align:center;}
-.nav .menu a{display:block;min-width:100px;height:40px;line-height:40px;}
+.nav .menu li{float:left;padding-left:50px;}
+.nav .menu a{display:block;height:40px;line-height:40px;}
 .nav .menu .current a{color:#c3272b;}
 .nav .plus{float:right;padding-top:2px;}
 .nav .plus a{padding:2px 11px;}
