@@ -260,7 +260,14 @@ public class OrderController extends BaseController {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         PageInfo<OrderFormVo> pageInfo = orderFormService.findOrderByUserId(user.getId(),pageNum, pageSize);
         modelMap.put("pageInfo", pageInfo);
-        return "order_list";
+		if (user.getType()==2){
+			return "redirect:/center/order/agent";
+		}
+		else{
+			return "order_list";
+		}
+
+
     }
 
     /**

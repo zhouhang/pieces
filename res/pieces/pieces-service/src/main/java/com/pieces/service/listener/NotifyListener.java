@@ -76,7 +76,7 @@ public class NotifyListener implements ApplicationListener<NotifyEvent> {
             }
 
 
-            messageHelper.setText(event.getContent()+"<a href='"+url+"'>链接</a>", true);
+            messageHelper.setText(event.getContent()+"<a href='"+url+"'>"+url+"</a>", true);
             //邮件接收人的邮箱地址
             messageHelper.setTo(sendMails.split(","));
             //发送邮件
