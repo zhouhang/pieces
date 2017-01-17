@@ -14,8 +14,12 @@ import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.model.*;
 import com.pieces.dao.vo.UserVo;
 import com.pieces.service.*;
+import com.pieces.service.dto.Password;
+import com.pieces.service.utils.EncryptUtil;
 import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
+import com.pieces.tools.utils.MD5Util;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +69,12 @@ public class OrderController extends BaseController {
 	@Autowired
 	private UserService userService;
 
+	@RequestMapping(value = "/order/md5")
+	public String redictOrder(String commodityIds){
+		String md5 = EncryptUtil.getSHA1(commodityIds,"UTF-8");
+		httpSession.setAttribute(md5,commodityIds);
+		return "redirect:/center/order/create?omd5=" + md5;
+	}
 
 	@RequestMapping(value = "/order/create")
 	@BizLog(type = LogConstant.order, desc = "创建订单页面")
@@ -73,9 +83,11 @@ public class OrderController extends BaseController {
             HttpServletResponse response,
             ModelMap modelMap,
             String commodityIds,
-            Integer currentid){
+            Integer currentid, String omd5){
+		if (omd5 != null) {
+			commodityIds = (String) httpSession.getAttribute(omd5);
+		}
 		// 判断是否全选 获取询价单商品id 去除无效报价
-
 		List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysService.findByIds(commodityIds);
 		double totalPrice = 0.00;
 		for(EnquiryCommoditys ec : enquiryCommoditysList){
