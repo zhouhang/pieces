@@ -18,7 +18,7 @@ var loginPage = {
                 msg = '';
             if (!val) {
             	$username.closest('.group').addClass('error');
-                msg = '请输入用户名';
+                msg = '请输入账户名';
             } else {
             	$username.closest('.group').removeClass('error');
             }
@@ -43,7 +43,7 @@ var loginPage = {
             var c1 = this.checkUsername();
 
             if (c2 || c1) {
-                this.showMsg(c1 && c2 ? '请输入用户名和密码' : c1 + c2);
+                this.showMsg(c1 && c2 ? '请输入账户名和密码' : c1 + c2);
                 return false;
             }
             this.showMsg();

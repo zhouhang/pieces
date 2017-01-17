@@ -21,7 +21,7 @@
             <div class="cont">
                 <div class="info">
                     <span>订单号：<em>${orderForm.code}</em></span>
-                    <span>订单金额：<em class="red">&yen;${orderForm.deposit}</em></span>
+                    <span>需支付保证金：<em class="red">&yen;${orderForm.deposit}</em></span>
                     <span>请在<em class="red">${orderForm.expireDate?date}</em>前完成付款。</span>
                 </div>
 
