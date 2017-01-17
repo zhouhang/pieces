@@ -88,7 +88,7 @@
                 </form>
                 <div class="suc">
                     <h3>您已提交成功！</h3>
-                    <p>（请您保持手机畅通，我们的工作人员将在三天内与您联系）</p>
+                    <p>（请您保持手机畅通，我们的工作人员将在3小时内与您联系）</p>
                 </div>
                 <div class="hotline">服务热线：<a href="tel:0558-5120088">0558-5120088</a></div>
             </div>
@@ -238,7 +238,7 @@
 
         <div class="suc">
             <h3>您已提交成功！</h3>
-            <p>（请您保持手机畅通，我们的工作人员将在三天内与您联系）</p>
+            <p>（请您保持手机畅通，我们的工作人员将在3小时内与您联系）</p>
             <button type="button" class="button close2">关闭</button>
         </div>
         <div class="hotline">服务热线：0558-5120088</div>
