@@ -230,7 +230,7 @@
 				<redis.port>6379</redis.port>
 				<elasticsearch.host>192.168.1.41:9300</elasticsearch.host>
 				<send.mail>heh@sghaoyao.com</send.mail>
-				<boss.base.url>http://boss.sghaoyao.com</boss.base.url>
+				<boss.base.url>http://boss.sankobuy.com:8080</boss.base.url>
 			</properties>
 		</profile>
 		<profile>
