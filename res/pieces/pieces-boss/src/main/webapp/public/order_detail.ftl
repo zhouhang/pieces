@@ -50,6 +50,18 @@
                             </dd>
                         </dl>
                     </div>
+
+                    <div class="group">
+                        <dl>
+                            <dt>配送信息</dt>
+                            <dd>
+                                <p>收&nbsp;&nbsp;货&nbsp;&nbsp;人：${vo.address.consignee}</p>
+                                <p>联系电话：${vo.address.tel}</p>
+                                <p>收货地址：${vo.address.area}${vo.address.detail}</p>
+                            </dd>
+                        </dl>
+                    </div>
+
                     <div class="group">
                         <dl>
                             <dt>客户信息</dt>
@@ -64,16 +76,7 @@
                             </dd>
                         </dl>
                     </div>
-                    <div class="group">
-                        <dl>
-                            <dt>配送信息</dt>
-                            <dd>
-                                <p>收&nbsp;&nbsp;货&nbsp;&nbsp;人：${vo.address.consignee}</p>
-                                <p>联系电话：${vo.address.tel}</p>
-                                <p>收货地址：${vo.address.area}${vo.address.detail}</p>
-                            </dd>
-                        </dl>
-                    </div>
+
                     <#if vo.invoice?exists>
                         <div class="group">
                             <dl>

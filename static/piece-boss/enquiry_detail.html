@@ -85,7 +85,7 @@
                     <h3><i class="fa fa-chevron-right"></i>E20160620170402</h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                        <button type="submit" class="btn btn-red">报价</button>
+                        <button type="submit" class="btn btn-red" id="submit">报价</button>
                     </div>
                 </div>
 
@@ -125,7 +125,7 @@
                                     <td>1</td>
                                     <td>安徽省</td>
                                     <td><input type="text" class="ipt ipt-price" value="" tabindex="1"></td>
-                                    <td rowspan="10"><input type="text" class="ipt ipt-date" id="expireDate" value="" tabindex="2"></td>
+                                    <td rowspan="10"><div class="pr"><input type="text" class="ipt ipt-date" name="expireDate" id="expireDate" value="" tabindex="2"></div></td>
                                 </tr>
                                 <tr>
                                     <td>天南星</td>
@@ -212,6 +212,8 @@
 
     <script src="js/jquery.min.js"></script>
     <script src="js/laydate/laydate.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
     <script>
         var enquiryPage = {
             v: {},
@@ -219,6 +221,7 @@
                 init: function() {
                     this.pirceInput();
                     this.dateInit();
+                    this.formValidate();
                 },
                 // 裸价
                 pirceInput: function() {
@@ -235,22 +238,36 @@
                 },
                 //日期选择
                 dateInit: function () {
-                    // 重新定位
                     laydate({
                         elem: '#expireDate',
+                        event: 'focus',
                         istime: true,
-                        min: laydate.now()
+                        min: laydate.now(),
+                        choose: function() {
+                            $('#expireDate').trigger('validate')
+                        }
                     })
-
-                    $('.ipt-date').on('click', function() {
-                        var 
-                            posX = $(this).offset().left,
+                    $('#expireDate').on('focus', function() {
+                        var posX = $(this).offset().left,
                             w = this.offsetWidth,
                             obj = document.getElementById('laydate_box');
+
                         obj.style.left = posX + w - obj.offsetWidth + 'px';
                     })
-
                 },
+                formValidate: function () {
+                    $('#myform').validator({
+                        fields: {
+                            expireDate: 'required'
+                        }
+                    })
+
+                    $('#submit').on('click', function() {
+                        if ($('#myform').isValid()) {
+                        } else {
+                        }
+                    })
+                }
             }
         }
         $(function() {

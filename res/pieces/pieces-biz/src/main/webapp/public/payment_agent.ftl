@@ -21,7 +21,7 @@
             <div class="cont">
                 <div class="info">
                     <span>订单号：<em>${orderForm.code}</em></span>
-                    <span>订单金额：<em class="red">&yen;${orderForm.deposit}</em></span>
+                    <span>需支付保证金：<em class="red">&yen;${orderForm.deposit}</em></span>
                     <span>请在<em class="red">${orderForm.expireDate?date}</em>前完成付款。</span>
                 </div>
 
@@ -76,7 +76,7 @@
         <p>付款完成前请不要关闭此窗口</p>
         <p>完成付款后请点击下面按钮</p>
         <div class="op">
-            <a class="btn btn-red success" href="/center/order/list">已完成付款</a>
+            <a class="btn btn-red success" href="/center/order/agent">已完成付款</a>
             <a class="btn btn-gray fail" href="/help/25">付款遇到问题</a>
         </div>
         <div class="tc">

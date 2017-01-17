@@ -147,14 +147,14 @@
         </div>
     </div><!-- member-box end -->
     
-    <form action="/center/order/create" method="post" id="orderForm">
+    <form action="/center/order/md5" method="post" id="orderForm">
         <input type="hidden" name="commodityIds" id="commodityIds" value="">
     </form>
     
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
-    
+
     <script src="js/layer/layer.js"></script>
     <script src="js/laydate/laydate.js"></script>
 
@@ -274,6 +274,7 @@
                                 } else {
                                     $("#commodityIds").val(commodityIds);
                                     $("#orderForm").submit();
+//                                    window.location.href = "/center/order/create?commodityIds=" + commodityIds;
                                 }
                             }
                         })

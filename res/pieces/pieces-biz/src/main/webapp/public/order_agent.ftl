@@ -39,20 +39,19 @@
                         <h3>收货信息</h3>
                     </div>
                     <div class="consignee">
-                        <#if shippingAddressList?exists && shippingAddressList?size gt 0 >
-                            <div class="list" id="jconsigneeList">
+
+                            <div class="list" id="jconsigneeList" <#if !(shippingAddressList?exists && shippingAddressList?size gt 0) >style="display: none"</#if>>
                                 <#list shippingAddressList as addr>
                                 <label><input type="radio" name="addrHistoryId" class="cbx" value="${addr.id}" <#if addr.isDefault>checked</#if>>${addr.fullAdd!}${addr.detail!}</label>
                                 </#list>
                             </div>
-                            <div class="extra">
+                            <div class="extra" <#if !(shippingAddressList?exists && shippingAddressList?size gt 0 )>style="display: none"</#if>>
                                 <div class="btn btn-lgray jaddConsignee">新增收货地址</div>
                             </div>
-                        <#else >
-                            <div class="empty">
+
+                            <div id="consigneeEmpty" class="empty" <#if shippingAddressList?exists && shippingAddressList?size gt 0 >style="display: none"</#if>>
                                 <button class="btn btn-lgray jaddConsignee" type="button">新建收货地址</button>
                             </div>
-                        </#if>
                     </div>
                 </div><!-- end 收货信息 -->
 
@@ -493,6 +492,9 @@
                                                     $("#consigneeAddress").val();
                                             var html = '<label><input type="radio" name="addrHistoryId" class="cbx" value="'+result.info+
                                             '" checked>'+add +'</label>';
+                                            $(".consignee .list").css("display","block");
+                                            $(".consignee .extra").css("display","block");
+                                            $(".consignee .empty").css("display","none");
                                             $("#jconsigneeList").append(html);
                                         }else{
                                             layer.msg(result.info, {icon: 5});

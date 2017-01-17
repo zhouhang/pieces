@@ -1,8 +1,6 @@
 .button{display:inline-block;width:240px;line-height:60px;color:#fff;font-size:22px;text-decoration:none;border-radius:15px;background-color:#475086;background-image:-webkit-gradient(linear,left top,left bottom,from(#575f8e),to(#565e8d));background-image:-webkit-linear-gradient(top,#575f8e 0, #565e8d 100%);background-image:linear-gradient(to bottom,#575f8e 0,#565e8d 100%);box-shadow:0 30px 50px rgba(134,133,176,0.5);border:0;overflow:hidden;}
 .button:hover{background-color:#3071a9;color:#fff;text-decoration:none;}
 .button:active{opacity:.8;}
-
-
 /*
 .section .button{display:inline-block;width:240px;line-height:60px;color:#fff;font-size:22px;text-decoration:none;background-image:url(../images/h5/button.png);box-shadow:0 30px 50px rgba(134,133,176,0.5);overflow:hidden;}
 .section .button:hover{color:#fff;text-decoration:none;}*/
@@ -53,8 +51,8 @@
 .cont .error{position:absolute;top:90%;left:5px;padding:2px 5px;margin:0;margin;background:#c3272b;color:#fff;z-index:2;display:none;}
 .cont .error:after{content:"";position:absolute;top:-10px;left:10px;border:5px dashed transparent;border-bottom:5px solid #c3272b;}
 .cont .for{position:absolute;left:1px;top:1px;*top:2px;line-height:38px;padding-left:9px;color:#333;background:#fff;}
-.cont .ipt{width:100%;height:38px;text-indent:80px;color:#333;border:1px solid #ccc;}
-.cont .slt{width:46%;height:40px;line-height:40px;text-indent:2px;}
+.cont .ipt{width:100%;height:38px;text-indent:80px;color:#333;border:1px solid #ccc;background:#fff;-webkit-appearance:none;}
+.cont .slt{width:46%;height:40px;line-height:40px;text-indent:2px;-webkit-appearance:none;}
 .cont .ft{clear:both;padding-top:30px;text-align:center;}
 .suc{height:290px;padding:30px;text-align:center;display:none;}
 .suc h3{height:50px;padding-top:70px;font-size:26px;}

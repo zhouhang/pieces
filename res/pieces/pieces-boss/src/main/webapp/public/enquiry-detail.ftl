@@ -163,17 +163,15 @@
             dateInit: function () {
                 laydate({
                     elem: '#expireDate',
+                    event: 'focus',
                     istime: true,
                     min: laydate.now(),
                     choose: function() {
                         $('#expireDate').trigger('validate')
                     }
                 })
-                
-                // 重新定位
-                $('.ipt-date').on('click', function() {
-                    var 
-                        posX = $(this).offset().left,
+                $('#expireDate').on('focus', function() {
+                    var posX = $(this).offset().left,
                         w = this.offsetWidth,
                         obj = document.getElementById('laydate_box');
                     obj.style.left = posX + w - obj.offsetWidth + 'px';
