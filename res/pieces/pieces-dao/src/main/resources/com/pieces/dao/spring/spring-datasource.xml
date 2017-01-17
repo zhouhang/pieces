@@ -15,7 +15,12 @@
 					 http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 
-	<!--启用阿里连接池  -->
+	<bean id="testProperties"  class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:com/pieces/dao/properties/jdbc.properties"/>
+	</bean>
+
+
+		<!--启用阿里连接池  -->
 	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">   
 	    <property name="url" value="${db.jdbcUrl}" />  
 	    <property name="username" value="${db.user}" />  

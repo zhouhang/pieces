@@ -210,53 +210,55 @@
 		<profile>
 			<id>dev-wb</id>
 			<properties>
-				<pieces.env>dev-wb</pieces.env>
+				<profiles.active>dev-wb</profiles.active>
 			</properties>
 		</profile>
 		<profile>
 			<id>dev-ppc</id>
 			<properties>
-				<pieces.env>dev</pieces.env>
+				<profiles.active>dev-ppc</profiles.active>
 			</properties>
 		</profile>
 		<profile>
-			<id>dev-ff</id>
+			<id>dev-ccx</id>
 			<properties>
-				<pieces.env>dev</pieces.env>
+				<profiles.active>dev-ccx</profiles.active>
 			</properties>
 		</profile>
 		<profile>
 			<id>test</id>
 			<properties>
-				<pieces.env>test</pieces.env>
+				<profiles.active>test</profiles.active>
 			</properties>
 		</profile>
 		<profile>
 			<id>prod</id>
 			<properties>
-				<pieces.env>prod</pieces.env>
+				<profiles.active>prod</profiles.active>
 			</properties>
 		</profile>
 	</profiles>
+
 
 
 	<build>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
-				<filtering>false</filtering>
+				<!-- 资源根目录排除各环境的配置，使用单独的资源目录来指定 -->
 				<excludes>
-					<exclude>**/preConfig.properties</exclude>
+					<exclude>config/**</exclude>
 				</excludes>
 			</resource>
 			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-				<includes>
-					<include>**/preConfig.properties</include>
-				</includes>
+				<!-- 根据参数指定资源目录 -->
+				<directory>src/main/resources/config/config-${profiles.active}/</directory>
+				<!-- 指定编译后的目录即生成文件位置（默认为WEB-INF/class） -->
+				<targetPath>./com/pieces/dao/properties/</targetPath>
 			</resource>
 		</resources>
 	</build>
+
+
 
 </project>

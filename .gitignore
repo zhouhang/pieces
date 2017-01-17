@@ -31,3 +31,4 @@ out/
 Thumbs.db
 /static/json
 /static-boss/json
+**/config-prod/*

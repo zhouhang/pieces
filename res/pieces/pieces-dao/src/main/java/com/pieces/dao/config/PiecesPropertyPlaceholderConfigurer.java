@@ -16,8 +16,7 @@ import org.springframework.core.io.support.PropertiesLoaderUtils;
 import com.pieces.dao.utils.SpringConfigUtil;
 
 
-public class PiecesPropertyPlaceholderConfigurer extends
-		PropertyPlaceholderConfigurer {
+public class PiecesPropertyPlaceholderConfigurer extends PropertyPlaceholderConfigurer {
 	
 	private Resource[] matchedlocations;
 	private String preConfigLocation;

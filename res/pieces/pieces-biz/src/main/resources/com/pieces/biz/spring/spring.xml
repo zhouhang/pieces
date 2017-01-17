@@ -24,11 +24,11 @@
 	<bean id="springUtil" class="com.pieces.tools.utils.SpringUtil"></bean>
 
 	<!-- 下面的变量从配置文件里面拿出来,子系统可以覆盖公共的 -->
-    <bean id="scPropertyPlaceholderConfigurer"   
-        class="com.pieces.dao.config.PiecesPropertyPlaceholderConfigurer">
+    <bean id="scPropertyPlaceholderConfigurer"
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	    <property name="locations">
 	        <list>
-	            <value>classpath:com/pieces/dao/properties/**/*.properties</value>
+	            <value>classpath:com/pieces/dao/properties/*.properties</value>
 	            <value>classpath:com/pieces/service/properties/*.properties</value>
 	            <value>classpath:com/pieces/biz/properties/*.properties</value>
 	        </list>
@@ -41,11 +41,11 @@
 	
 	<!-- 此处引入 dao项目下所有的spring配置文件管理器 -->
 	<import resource="classpath*:com/pieces/dao/spring/spring-contextmanager.xml"  />
-	<import resource="classpath*:com/pieces/service/properties/spring/spring-shiro.xml"  />
-	<import resource="classpath*:com/pieces/service/properties/spring/spring-redis.xml"  />
+	<import resource="classpath*:com/pieces/service/spring/spring-shiro.xml"  />
+	<import resource="classpath*:com/pieces/service/spring/spring-redis.xml"  />
 	<import resource="classpath*:com/pieces/biz/spring/spring-shiro-biz.xml"  />
-	<import resource="classpath*:com/pieces/service/properties/spring/spring-elasticsearch.xml"  />
-	<import resource="classpath*:com/pieces/service/properties/spring/spring-mail.xml"  />
+	<import resource="classpath*:com/pieces/service/spring/spring-elasticsearch.xml"  />
+	<import resource="classpath*:com/pieces/service/spring/spring-mail.xml"  />
 
 	<!-- 导入log 配置 -->
 	<import resource="classpath*:com/pieces/tools/log/config/spring-log.xml"/>
