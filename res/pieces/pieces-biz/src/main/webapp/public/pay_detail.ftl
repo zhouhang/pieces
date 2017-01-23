@@ -21,14 +21,14 @@
 
                 <div class="mybill">
                     <#if payRecordVo.status == 1>
-                        <div class="state">
+                        <div class="fa-msg">
                             <i class="fa fa-check-circle"></i>
                             <span>支付成功！</span>
                         </div>
                     </#if>
 
                     <#if payRecordVo.status == 2>
-                        <div class="state">
+                        <div class="fa-msg">
                             <i class="fa fa-times-circle"></i>
                             <span>支付失败！<em>（失败原因：${payRecordVo.failReason!}）</em></span>
                         </div>

@@ -23,7 +23,7 @@
                     <#if user.type==1>
 
                         <#if user.certifyStatus==0 >
-                            <div class="state">
+                            <div class="fa-msg">
                             <i class="fa fa-prompt"></i>
                         <#if cerfiy==0>
                             <span>您的企业资质正在审核中，审核结果将以短信的形式发送给您，如有问题请致电0558-5120088。</span>
