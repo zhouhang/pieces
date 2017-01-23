@@ -165,6 +165,10 @@
                     },
                     valid: function(form) {
                         if ( $(form).isValid() ) {
+                            if($("#agencyName").val()==""){
+                                //为空删除代理商
+                                $("#agentId").val("");
+                            }
                             $.ajax({
                                 url: '/user/save',
                                 data: $(form).formSerialize(),
