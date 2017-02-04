@@ -95,7 +95,7 @@
                     </div>
                     <div class="group">
                         <div class="txt">
-                            有效期
+                            有效期：
                         </div>
                         <#if qualification.status=1>
                         <div class="cnt">
