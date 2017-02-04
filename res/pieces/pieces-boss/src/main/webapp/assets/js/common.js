@@ -168,7 +168,7 @@ function navMsg(notification) {
     // 5分钟请求一次
     setTimeout(function() {
         navMsg(true);
-    }, 3e4);
+    }, 3e5);
 }
 
 

@@ -83,14 +83,14 @@ public class NotifyMessageController {
                 if(NotHandleTypeEnum.ACCOUNT_BILL_NUM.getValue()==i){
                     if(!(StringUtils.join(billIds,",").equals(lastResult.get(Integer.toString(i))))){
                         //如果有处理的也不弹框提示
-                        if(!lastResult.get(Integer.toString(i)).contains(StringUtils.join(billIds,","))){
+                        if(!(lastResult.get(Integer.toString(i)).contains(StringUtils.join(billIds,",")))){
                             hasNew=1;
                             break;//有新任务直接返回
                         }
                     }
                 }else if(NotHandleTypeEnum.ANON_ENQUIRY_NUM.getValue()==i){
                     if(!(StringUtils.join(anonIds,",").equals(lastResult.get(Integer.toString(i))))){
-                        if(!lastResult.get(Integer.toString(i)).contains(StringUtils.join(anonIds,","))){
+                        if(!(lastResult.get(Integer.toString(i)).contains(StringUtils.join(anonIds,",")))){
                             hasNew=1;
                             break;
                         }
@@ -98,28 +98,28 @@ public class NotifyMessageController {
                 }
                 else if(NotHandleTypeEnum.CERTIFY_RECORD_NUM.getValue()==i){
                     if(!(StringUtils.join(certifyIds,",").equals(lastResult.get(Integer.toString(i))))){
-                        if(!lastResult.get(Integer.toString(i)).contains(StringUtils.join(certifyIds,","))){
+                        if(!(lastResult.get(Integer.toString(i)).contains(StringUtils.join(certifyIds,",")))){
                             hasNew=1;
                             break;
                         }
                     }
                 }else if(NotHandleTypeEnum.ENQUIRYBILL_NUM.getValue()==i){
                     if(!(StringUtils.join(equiryBillIds,",").equals(lastResult.get(Integer.toString(i))))){
-                        if(!lastResult.get(Integer.toString(i)).contains(StringUtils.join(equiryBillIds,","))){
+                        if(!(lastResult.get(Integer.toString(i)).contains(StringUtils.join(equiryBillIds,",")))){
                             hasNew=1;
                             break;
                         }
                     }
                 }else if(NotHandleTypeEnum.PAY_RECORD_NUM.getValue()==i){
                     if(!(StringUtils.join(payIds,",").equals(lastResult.get(Integer.toString(i))))){
-                        if(!lastResult.get(Integer.toString(i)).contains(StringUtils.join(payIds,","))){
+                        if(!(lastResult.get(Integer.toString(i)).contains(StringUtils.join(payIds,",")))){
                             hasNew=1;
                             break;
                         }
                     }
                 }else if(NotHandleTypeEnum.RECRUIT_AGENT_NUM.getValue()==i){
                     if(!(StringUtils.join(recruitIds,",").equals(lastResult.get(Integer.toString(i))))){
-                        if(!lastResult.get(Integer.toString(i)).contains(StringUtils.join(recruitIds,","))){
+                        if(!(lastResult.get(Integer.toString(i)).contains(StringUtils.join(recruitIds,",")))){
                             hasNew=1;
                             break;
                         }
