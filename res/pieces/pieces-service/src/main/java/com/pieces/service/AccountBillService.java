@@ -60,4 +60,7 @@ public interface AccountBillService extends ICommonService<AccountBill>{
 
     public Integer getNotHandleCount();
 
+
+    public List<Integer> getNotHandleIds();
+
 }

@@ -240,5 +240,10 @@
         from pay_record WHERE status=0
     </select>
 
+    <select id="getNotHandleIds"  resultType="java.lang.Integer">
+        select id
+        from pay_record WHERE status=0 ORDER BY id
+    </select>
+
 
 </mapper>

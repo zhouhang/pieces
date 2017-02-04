@@ -185,4 +185,9 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     public Integer getNotHandleCount() {
         return enquiryBillsDao.getNotHandleCount();
     }
+
+    @Override
+    public List<Integer> getNotHandleIds() {
+        return enquiryBillsDao.getNotHandleIds();
+    }
 }

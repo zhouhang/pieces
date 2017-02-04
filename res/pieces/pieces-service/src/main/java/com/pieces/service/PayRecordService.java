@@ -50,5 +50,7 @@ public interface PayRecordService extends ICommonService<PayRecord>{
      */
     public PayRecordVo paySuccess(PayRecordVo payRecordVo);
 
+    public List<Integer> getNotHandleIds();
+
 
 }

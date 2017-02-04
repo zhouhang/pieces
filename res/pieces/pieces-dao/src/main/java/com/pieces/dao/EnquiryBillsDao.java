@@ -35,4 +35,6 @@ public interface EnquiryBillsDao extends ICommonDao<EnquiryBills>{
      */
     public Integer getNotHandleCount();
 
+    public List<Integer> getNotHandleIds();
+
 }
