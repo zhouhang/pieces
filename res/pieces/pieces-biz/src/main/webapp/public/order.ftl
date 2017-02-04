@@ -314,7 +314,8 @@
     <script>
     	var _global = {
     		v: {
-    			totalPrice : ${totalPrice}
+    			totalPrice : ${totalPrice},
+                invoice:null
     		},
     		fn: {
     			init: function() {
@@ -414,23 +415,16 @@
                                 html.push('<em>', $invoiceBox.find('input[name="invoice.bankAccount"]').val(), '</em>');
                                 html.push('<a href="javascript:;" class="c-blue jinvoiceEdit">修改</a>');
                                 $invoice.html(html.join(''));
-                                //
-                                var htmlV = [];
-                                htmlV.push("<input type='hidden' id='' name='invoice.type' value='",
-                                        $('#jinvoiceBox input[name="invoice.type"]').val(),"'>")
-                                htmlV.push("<input type='hidden' id='' name='invoice.name' value='",
-                                        $('#jinvoiceBox input[name="invoice.name"]').val(),"'>")
-                                htmlV.push("<input type='hidden' id='' name='invoice.identifier' value='",
-                                        $('#jinvoiceBox input[name="invoice.identifier"]').val(),"'>")
-                                htmlV.push("<input type='hidden' id='' name='invoice.registeredAddress' value='",
-                                        $('#jinvoiceBox input[name="invoice.registeredAddress"]').val(),"'>")
-                                htmlV.push("<input type='hidden' id='' name='invoice.registeredTel' value='",
-                                        $('#jinvoiceBox input[name="invoice.registeredTel"]').val(),"'>")
-                                htmlV.push("<input type='hidden' id='' name='invoice.bankName' value='",
-                                        $('#jinvoiceBox input[name="invoice.bankName"]').val(),"'>")
-                                htmlV.push("<input type='hidden' id='' name='invoice.bankAccount' value='",
-                                        $('#jinvoiceBox input[name="invoice.bankAccount"]').val(),"'>")
-                                $("#invoiceValue").html(htmlV.join(''));
+
+                                _global.v.invoice = {
+                                type: $('#jinvoiceBox input[name="invoice.type"]:checked').val(),
+                                        name : $('#jinvoiceBox input[name="invoice.name"]').val(),
+                                        identifier: $('#jinvoiceBox input[name="invoice.identifier"]').val(),
+                                        registeredAddress: $('#jinvoiceBox input[name="invoice.registeredAddress"]').val(),
+                                        registeredTel: $('#jinvoiceBox input[name="invoice.registeredTel"]').val(),
+                                        bankName: $('#jinvoiceBox input[name="invoice.bankName"]').val(),
+                                        bankAccount: $('#jinvoiceBox input[name="invoice.bankAccount"]').val()
+                                }
 
                                 closeLayer();
                             }
@@ -445,6 +439,7 @@
                             $invoiceBox.find('.submit').attr('type', 'button').addClass('jinvoiceDel');
                             $invoiceBox.find('.msg-box').html('').hide();
                             $invoiceBox.find('.ipt').removeClass('n-invalid');
+                            _global.v.invoice = null;
                         } else {
                             $invoiceBox.find('.submit').attr('type', 'submit').removeClass('jinvoiceDel');
                         }
@@ -624,6 +619,9 @@
 
                         var param=$("#orderSave").serializeObject();
                         param.commodityses=commodityses;
+                        if (_global.v.invoice) {
+                            param.invoice = _global.v.invoice;
+                        }
                         $.ajax({
                             type : 'POST',
                             url : '/center/order/save',
