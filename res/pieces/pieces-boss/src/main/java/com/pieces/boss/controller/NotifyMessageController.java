@@ -52,10 +52,11 @@ public class NotifyMessageController {
 
     @RequestMapping(value = "/notHandle",method = RequestMethod.POST)
     @ResponseBody
+    @SuppressWarnings("unchecked")
     public Result notHandle(){
 
         String sessionId=httpSession.getId();
-        HashMap<String,String> lastResult=(HashMap)httpSession.getAttribute(RedisEnum.NOT_HANDLE_ID_MAP.getValue()+sessionId);
+        HashMap<String,String> lastResult=(HashMap<String,String>)httpSession.getAttribute(RedisEnum.NOT_HANDLE_ID_MAP.getValue()+sessionId);
         Integer hasNew=0;
         List<Integer> billIds=accountBillService.getNotHandleIds();
         List<Integer> anonIds=anonEnquiryService.getNotHandleIds();
