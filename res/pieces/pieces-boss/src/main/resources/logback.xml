@@ -18,11 +18,10 @@
     <!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 -->
     <appender name="log" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <Encoding>UTF-8</Encoding>
-        <File>${catalina.home}/logs/pieces_boos_handle.log</File>
+        <File>${boss.logs.path}logs/pieces_boss_handle.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${catalina.home}/logs/pieces_boos_handle-%d{yyyy-MM-dd}.log
+            <FileNamePattern>${boss.logs.path}logs/pieces_boss_handle-%d{yyyy-MM-dd}.log
             </FileNamePattern>
-            <MaxHistory>10</MaxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <MaxFileSize>5MB</MaxFileSize>
