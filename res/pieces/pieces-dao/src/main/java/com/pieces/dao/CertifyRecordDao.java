@@ -18,4 +18,6 @@ public interface CertifyRecordDao extends ICommonDao<CertifyRecord>{
      */
     public Integer getNotHandleCount();
 
+    public List<Integer> getNotHandleIds();
+
 }

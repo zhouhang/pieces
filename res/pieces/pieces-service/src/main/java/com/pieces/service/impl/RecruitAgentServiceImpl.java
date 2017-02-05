@@ -48,6 +48,11 @@ public class RecruitAgentServiceImpl  extends AbsCommonService<RecruitAgent> imp
 		return recruitAgentDao.getNotHandleCount();
 	}
 
+	@Override
+	public List<Integer> getNotHandleIds() {
+		return recruitAgentDao.getNotHandleIds();
+	}
+
 
 	@Override
 	public ICommonDao<RecruitAgent> getDao() {

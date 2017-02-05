@@ -22,4 +22,6 @@ public interface AccountBillDao extends ICommonDao<AccountBill>{
      * @return
      */
     public Integer getNotHandleCount();
+
+    public List<Integer> getNotHandleIds();
 }

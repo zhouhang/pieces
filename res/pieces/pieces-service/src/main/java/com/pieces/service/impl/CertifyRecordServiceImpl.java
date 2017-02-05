@@ -177,6 +177,11 @@ public class CertifyRecordServiceImpl  extends AbsCommonService<CertifyRecord> i
 		return certifyRecordDao.getNotHandleCount();
 	}
 
+	@Override
+	public List<Integer> getNotHandleIds() {
+		return certifyRecordDao.getNotHandleIds();
+	}
+
 
 	@Override
 	public ICommonDao<CertifyRecord> getDao() {

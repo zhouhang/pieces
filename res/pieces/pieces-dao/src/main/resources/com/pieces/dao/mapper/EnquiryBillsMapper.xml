@@ -220,4 +220,10 @@
         from enquiry_bills WHERE status=0
     </select>
 
+
+    <select id="getNotHandleIds"  resultType="java.lang.Integer">
+        select count(id)
+        from enquiry_bills WHERE status=0
+    </select>
+
 </mapper>

@@ -22,4 +22,6 @@ public interface PayRecordDao extends ICommonDao<PayRecord>{
      */
     public Integer getNotHandleCount();
 
+    public List<Integer> getNotHandleIds();
+
 }

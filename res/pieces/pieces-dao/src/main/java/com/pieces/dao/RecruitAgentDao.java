@@ -16,4 +16,6 @@ public interface RecruitAgentDao extends ICommonDao<RecruitAgent>{
      */
     public Integer getNotHandleCount();
 
+    public List<Integer> getNotHandleIds();
+
 }

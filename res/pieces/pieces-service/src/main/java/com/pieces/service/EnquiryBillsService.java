@@ -70,4 +70,6 @@ public interface EnquiryBillsService extends ICommonService<EnquiryBills>{
     public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, String ids);
 
     public Integer getNotHandleCount();
+
+    public List<Integer> getNotHandleIds();
 }
