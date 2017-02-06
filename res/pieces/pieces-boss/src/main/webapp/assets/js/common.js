@@ -189,7 +189,7 @@ function showNotification(options) {
     var t = new Notification(options.title || '消息', defaults);
 
     t.onshow = function(){
-        $('body').append('<audio src="/media/voice.mp3" id="notification-audio" preload="auto" autoplay></audio>');
+        $('body').append('<audio src="/assets/media/voice.mp3" id="notification-audio" preload="auto" autoplay></audio>');
     }
     setTimeout(function() {
         $('#notification-audio').remove();
