@@ -279,10 +279,10 @@
     </script>
 
 <script src="/js/validator/jquery.validator.js?local=zh-CN"></script>
-<script src="js/laydate/laydate.js"></script>
-<script src="js/layer/layer.js"></script>
-<script src="js/area.js"></script>
-<script src="js/jquery.pagination.min.js"></script>
+<script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
+<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
+<script src="${urls.getForLookupPath('/js/area.js')}"></script>
+<script src="${urls.getForLookupPath('/js/jquery.pagination.min.js')}"></script>
 <script>
     var _global = {
         v: {},

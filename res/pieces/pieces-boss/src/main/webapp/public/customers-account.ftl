@@ -145,8 +145,8 @@
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
-    <script src="js/jquery.autocomplete.min.js"></script>
-    <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
+    <script src="${urls.getForLookupPath('/js/jquery.autocomplete.min.js')}"></script>
+    <script src="/js/validator/jquery.validator.min.js?local=zh-CN"></script>
 
 <script>
     var _global = {

@@ -97,14 +97,14 @@
 
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
-<script src="js/laydate/laydate.js"></script>
-<script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
+<script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
+<script src="/js/validator/jquery.validator.min.js?local=zh-CN')}"></script>
 
 <!-- 编辑器相关 -->
-<link href="/js/umeditor1_2_2-utf8/themes/default/css/umeditor.css" rel="stylesheet">
-<script src="/js/umeditor1_2_2-utf8/umeditor.config.js"></script>
-<script src="/js/umeditor1_2_2-utf8/umeditor.min.js"></script>
-<script src="/js/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js"></script>
+<link href="${urls.getForLookupPath('/js/umeditor1_2_2-utf8/themes/default/css/umeditor.css')}" rel="stylesheet">
+<script src="${urls.getForLookupPath('/js/umeditor1_2_2-utf8/umeditor.config.js')}"></script>
+<script src="${urls.getForLookupPath('/js/umeditor1_2_2-utf8/umeditor.min.js')}"></script>
+<script src="${urls.getForLookupPath('/js/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js')}"></script>
 
 <!-- footer end -->
 <script>

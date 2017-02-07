@@ -81,7 +81,7 @@
 
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
-<script src="js/laydate/laydate.js"></script>
+<script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
 <!-- footer end -->
 <script>
     //定义根变量

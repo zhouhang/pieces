@@ -74,8 +74,8 @@
 
     <#include "./inc/footer.ftl"/>
 
-    <script src="js/jquery.ztree.min.js"></script>
-    <script src="js/layer/layer.js"></script>
+    <script src="${urls.getForLookupPath('/js/jquery.ztree.min.js')}"></script>
+    <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 
     <script>
     var _global = {

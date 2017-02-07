@@ -186,7 +186,7 @@
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
 <!-- footer end -->
-    <script src="/js/layer/layer.js"></script>
+    <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 <script>
     var enquiryPage = {
         v: {},

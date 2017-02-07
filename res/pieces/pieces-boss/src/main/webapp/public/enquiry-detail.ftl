@@ -95,9 +95,9 @@
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
-<script src="js/laydate/laydate.js"></script>
-<script src="/js/layer/layer.js"></script>
-<script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
+<script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
+<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
+<script src="/js/validator/jquery.validator.min.js?local=zh-CN"></script>
 <script>
 
     var enquiryPage = {
