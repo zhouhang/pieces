@@ -34,7 +34,7 @@ public class GlobalExceptionHandler  extends BaseGlobalExceptionHandler{
     @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ModelAndView handle404Error(HttpServletRequest req, HttpServletResponse rsp, Exception e) throws Exception {
-        return handleError(req, rsp, e, "error-404", HttpStatus.NOT_FOUND,GlobalExceptionHandler.LOG_LEVEL_NONE);
+        return handleError(req, rsp, e, "error-404", HttpStatus.NOT_FOUND,GlobalExceptionHandler.LOG_LEVEL_NONE).addObject("urls",urls());
     }
 
 
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler  extends BaseGlobalExceptionHandler{
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ModelAndView handleError(HttpServletRequest req, HttpServletResponse rsp, Exception e) throws Exception {
-        return handleError(req, rsp, e, "error-500", HttpStatus.INTERNAL_SERVER_ERROR,GlobalExceptionHandler.LOG_LEVEL_ERROR);
+        return handleError(req, rsp, e, "error-500", HttpStatus.INTERNAL_SERVER_ERROR,GlobalExceptionHandler.LOG_LEVEL_ERROR).addObject("urls",urls());
     }
 
 
