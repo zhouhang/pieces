@@ -418,10 +418,10 @@
 
 
 <#include "./inc/footer.ftl"/>
-<script src="js/layer/layer.js"></script>
-<script src="js/croppic.min.js"></script>
-<script src="js/lightbox.js"></script>
-<script src="js/laydate/laydate.js"></script>
+<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
+<script src="${urls.getForLookupPath('/js/croppic.min.js')}"></script>
+<script src="${urls.getForLookupPath('/js/lightbox.js')}"></script>
+<script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
 <script>
     var group=0;//是否三证合一
     var _global = {

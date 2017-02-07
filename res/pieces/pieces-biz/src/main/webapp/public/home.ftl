@@ -140,7 +140,7 @@
 
 <#include "./inc/footer.ftl"/>
 
-<script src="/js/jquery.nav.js"></script>
-<script src="/js/index_2016.js"></script>
+<script src="${urls.getForLookupPath('/js/jquery.nav.js')}"></script>
+<script src="${urls.getForLookupPath('/js/index_2016.js')}"></script>
 </body>
 </html>

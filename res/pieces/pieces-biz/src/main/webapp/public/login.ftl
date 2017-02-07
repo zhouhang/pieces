@@ -67,7 +67,7 @@
 	</div>
 
 	<#include "./inc/footer.ftl"/>
-	<script src="/js/login.js"></script>
+	<script src="${urls.getForLookupPath('/js/login.js')}"></script>
 	<script>
 		_global = {
 			fn: {

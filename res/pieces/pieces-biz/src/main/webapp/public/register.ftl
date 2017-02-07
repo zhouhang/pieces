@@ -151,8 +151,8 @@
     <!-- footer end -->
 
 	<script src="/js/validator/jquery.validator.js?local=zh-CN"></script>
-	<script src="/js/area.js"></script>
-	<script src="/js/jquery.form.js"></script>
+	<script src="${urls.getForLookupPath('/js/area.js')}"></script>
+	<script src="${urls.getForLookupPath('/js/jquery.form.js')}"></script>
 	<script>
 		var roleAddPage = {
 			v : {},

@@ -3,7 +3,7 @@
 <head>
 <#include "./inc/meta.ftl"/>
     <title>收货地址-上工好药</title>
-    <link rel="stylesheet" href="/css/order.css"/>
+    <link rel="stylesheet" href="${urls.getForLookupPath('/css/order.css')}"/>
 </head>
 
 <body>
@@ -137,10 +137,10 @@
 </div><!-- end 新增收货地址 -->
 <#include "./inc/footer.ftl"/>
 
-<script src="js/layer/layer.js"></script>
+<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
-<script src="js/area.js"></script>
-<script src="js/jquery_util.js"></script>
+<script src="${urls.getForLookupPath('/js/area.js')}"></script>
+<script src="${urls.getForLookupPath('/js/jquery_util.js')}"></script>
 <script>
     var _global = {
         v: {

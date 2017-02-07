@@ -44,8 +44,8 @@
 			</form>
 		</div>
 	</div>
-	<script src="/js/jquery.min.js"></script>
-	<script src="/js/login.js"></script>
+	<script src="${urls.getForLookupPath('/js/jquery.min.js')}"></script>
+	<script src="${urls.getForLookupPath('/js/login.js')}"></script>
 	<script>
 		_global = {
 			fn: {
