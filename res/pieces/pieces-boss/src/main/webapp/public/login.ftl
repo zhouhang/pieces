@@ -37,7 +37,7 @@
         </div>
     </div>
 
-<script src="/js/jquery.form.js"></script>
+<script src="${urls.getForLookupPath('/js/jquery.form.js')}"></script>
 <script type="text/javascript">
     var loginPage = {
         v: {

@@ -202,6 +202,7 @@
 				<boss.base.url>http://localhost:81</boss.base.url>
 				<boss.upload.url>http://localhost:81/files/</boss.upload.url>
 				<boss.upload.path>E:\development\apache-tomcat-8.0.361\webapps\files\</boss.upload.path>
+				<boss.logs.path>E:\development\apache-tomcat-8.0.361\logs\</boss.logs.path>
 			</properties>
 		</profile>
 		<profile>
@@ -211,6 +212,7 @@
 				<boss.base.url>http://127.0.0.1:8089</boss.base.url>
 				<boss.upload.url>http://127.0.0.1:8089/files/</boss.upload.url>
 				<boss.upload.path>E:/Program Files/Apache Software Foundation/Tomcat 8.5/webapps/files/</boss.upload.path>
+				<boss.logs.path>E:/Program Files/Apache Software Foundation/Tomcat 8.5/logs/</boss.logs.path>
 			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -223,6 +225,7 @@
 				<boss.base.url>http://127.0.0.1:8080</boss.base.url>
 				<boss.upload.url>http://127.0.0.1:8080/files/</boss.upload.url>
 				<boss.upload.path>/Software/JAVAEE/apache-tomcat-8.0.23/webapps/files/</boss.upload.path>
+				<boss.logs.path>/Software/JAVAEE/</boss.logs.path>
 			</properties>
 		</profile>
 		<profile>
@@ -236,6 +239,7 @@
 				<boss.base.url>http://boss.sankobuy.com:8080</boss.base.url>
 				<boss.upload.url>http://static.sankobuy.com:8080/</boss.upload.url>
 				<boss.upload.path>E:\uploadfiles\sghaoyao\</boss.upload.path>
+				<boss.logs.path>E:\uploadfiles\logs\</boss.logs.path>
 			</properties>
 		</profile>
 		<profile>
@@ -245,6 +249,7 @@
 				<boss.base.url>http://boss.sghaoyao.com</boss.base.url>
 				<boss.upload.url>http://static.sghaoyao.com/</boss.upload.url>
 				<boss.upload.path>/opt/resources/sghaoyao/</boss.upload.path>
+				<boss.logs.path>/opt/</boss.logs.path>
 			</properties>
 		</profile>
 	</profiles>

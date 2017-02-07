@@ -168,4 +168,10 @@
         from account_bill WHERE status=0
     </select>
 
+
+    <select id="getNotHandleIds"  resultType="java.lang.Integer">
+        select id
+        from account_bill WHERE status=0 order by id
+    </select>
+
 </mapper>

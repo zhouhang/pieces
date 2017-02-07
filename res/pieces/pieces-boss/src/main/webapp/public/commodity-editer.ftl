@@ -187,16 +187,16 @@ ${commodity.details}
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
-<script src="/js/jquery.autocomplete.min.js"></script>
-<script src="/js/croppic.min.js"></script>
-<script src="/js/layer/layer.js"></script>
-<script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
+<script src="${urls.getForLookupPath('/js/jquery.autocomplete.min.js')}"></script>
+<script src="${urls.getForLookupPath('/js/croppic.min.js')}"></script>
+<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
+<script src="/js/validator/jquery.validator.min.js?local=zh-CN"></script>
 
 <!-- 编辑器相关 -->
-<link href="/js/umeditor1_2_2-utf8/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" charset="utf-8" src="/js/umeditor1_2_2-utf8/umeditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="/js/umeditor1_2_2-utf8/umeditor.min.js"></script>
-<script type="text/javascript" src="/js/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js"></script>
+<link href="${urls.getForLookupPath('/js/umeditor1_2_2-utf8/themes/default/css/umeditor.css')}" type="text/css" rel="stylesheet">
+<script type="text/javascript" charset="utf-8" src="${urls.getForLookupPath('/js/umeditor1_2_2-utf8/umeditor.config.js')}"></script>
+<script type="text/javascript" charset="utf-8" src="${urls.getForLookupPath('/js/umeditor1_2_2-utf8/umeditor.min.js')}"></script>
+<script type="text/javascript" src="${urls.getForLookupPath('/js/umeditor1_2_2-utf8/lang/zh-cn/zh-cn.js')}"></script>
 
 <script>
     var categoryId = $('#categoryId').val();

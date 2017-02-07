@@ -179,10 +179,10 @@
 
 <#include "./inc/footer.ftl"/>
 
-<script src="js/layer/layer.js"></script>
+<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
-<script src="/js/jquery.form.js"></script>
-<script src="/js/jquery_util.js"></script>
+<script src="${urls.getForLookupPath('/js/jquery.form.js')}"></script>
+<script src="${urls.getForLookupPath('/js/jquery_util.js')}"></script>
 <script>
     $(function () {
         $("a.status").on("click", function () {

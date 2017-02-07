@@ -33,8 +33,9 @@ public class UserBindServiceImpl  extends AbsCommonService<UserBind> implements 
 	}
 
 	@Override
+	@Transactional
 	public Integer deleteByTerminalId(Integer terminalId) {
-		return null;
+		return userBindDao.deleteByTerminalId(terminalId);
 	}
 
 	@Override

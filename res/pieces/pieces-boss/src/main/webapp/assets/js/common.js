@@ -133,17 +133,20 @@ function navMsg(notification) {
                 var ANON_ENQUIRY_NUM = result.data['4'] || '';
                 var PAY_RECORD_NUM = result.data['5'] || '';
                 var RECRUIT_AGENT_NUM = result.data['6'] || '';
+                (result.data["7"]=='1')?t=true:t=false;
+
+
 
                 if (ACCOUNT_BILL_NUM || ENQUIRYBILL_NUM || PAY_RECORD_NUM) {
                     $('#salePage').append('<i></i>');
-                    t = true;
+                    //t = true;
                 } else {
                     $('#salePage').find('i').remove();
                 }
 
                 if (CERTIFY_RECORD_NUM || ANON_ENQUIRY_NUM||RECRUIT_AGENT_NUM) {
                     $('#message').append('<i></i>');
-                    t = true;
+                    //t = true;
                 } else{
                     $('#message').find('i').remove();
                 }
@@ -186,7 +189,7 @@ function showNotification(options) {
     var t = new Notification(options.title || '消息', defaults);
 
     t.onshow = function(){
-        $('body').append('<audio src="/media/voice.mp3" id="notification-audio" preload="auto" autoplay></audio>');
+        $('body').append('<audio src="/assets/media/voice.mp3" id="notification-audio" preload="auto" autoplay></audio>');
     }
     setTimeout(function() {
         $('#notification-audio').remove();

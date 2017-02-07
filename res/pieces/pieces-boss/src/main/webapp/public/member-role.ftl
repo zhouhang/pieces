@@ -84,7 +84,7 @@
 
 
     <#include "./inc/footer.ftl"/>
-    <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
+    <script src="/js/validator/jquery.validator.min.js?local=zh-CN"></script>
     <script>
         var roleAddPage = {
             v: {},

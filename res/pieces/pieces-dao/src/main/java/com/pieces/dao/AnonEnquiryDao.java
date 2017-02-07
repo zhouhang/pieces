@@ -16,4 +16,6 @@ public interface AnonEnquiryDao extends ICommonDao<AnonEnquiry>{
      */
     public Integer getNotHandleCount();
 
+    public List<Integer> getNotHandleIds();
+
 }

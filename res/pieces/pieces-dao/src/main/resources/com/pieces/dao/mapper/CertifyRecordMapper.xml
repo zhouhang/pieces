@@ -149,4 +149,10 @@
     </select>
 
 
+    <select id="getNotHandleIds"  resultType="java.lang.Integer">
+        select id
+        from certify_record WHERE status=0 ORDER BY id
+    </select>
+
+
 </mapper>

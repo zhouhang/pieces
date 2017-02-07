@@ -21,4 +21,6 @@ public interface CertifyRecordService extends ICommonService<CertifyRecord>{
     public void saveCertify(UserCertificationVo certificationVo,List<UserQualificationVo> userQualificationVos);
 
     public Integer getNotHandleCount();
+
+    public List<Integer> getNotHandleIds();
 }

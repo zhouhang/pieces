@@ -95,7 +95,7 @@
                     </div>
                     <div class="group">
                         <div class="txt">
-                            有效期
+                            有效期：
                         </div>
                         <#if qualification.status=1>
                         <div class="cnt">
@@ -143,7 +143,7 @@
 
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
-<script src="/js/lightbox.js"></script>
+<script src="${urls.getForLookupPath('/js/lightbox.js')}"></script>
 <script>
     $(function() {
            var recordId=${certifyRecord.id};

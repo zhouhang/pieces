@@ -325,6 +325,11 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 	}
 
 	@Override
+	public List<Integer> getNotHandleIds() {
+		return payRecordDao.getNotHandleIds();
+	}
+
+	@Override
 	public ICommonDao<PayRecord> getDao() {
 		return payRecordDao;
 	}

@@ -104,6 +104,11 @@ public class AnonEnquiryServiceImpl  extends AbsCommonService<AnonEnquiry> imple
 	}
 
 	@Override
+	public List<Integer> getNotHandleIds() {
+		return anonEnquiryDao.getNotHandleIds();
+	}
+
+	@Override
 	public ICommonDao<AnonEnquiry> getDao() {
 		return anonEnquiryDao;
 	}

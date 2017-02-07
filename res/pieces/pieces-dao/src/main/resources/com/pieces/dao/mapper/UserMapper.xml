@@ -366,7 +366,9 @@
 			<if test="serviceName!= null">
 				and m.name like "%"#{serviceName}"%"
 			</if>
+			and b.is_del = 0
 		</where>
+		ORDER BY b.create_time desc
 	</select>
 
 

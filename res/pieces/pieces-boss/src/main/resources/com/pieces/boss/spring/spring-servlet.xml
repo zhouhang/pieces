@@ -5,7 +5,7 @@
 	   xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd 
-				http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+				http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<context:component-scan base-package="com.pieces.boss.controller">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
@@ -152,8 +152,24 @@
 
 
 	<!-- css,js路径 -->
-	<mvc:resources mapping="/css/**" location="/assets/css/" />
-	<mvc:resources mapping="/js/**" location="/assets/js/" />
+	<mvc:resources mapping="/css/**" location="/assets/css/">
+		<mvc:resource-chain resource-cache="false">
+			<mvc:resolvers>
+				<mvc:version-resolver>
+					<mvc:content-version-strategy patterns="/**"/>
+				</mvc:version-resolver>
+			</mvc:resolvers>
+		</mvc:resource-chain>
+	</mvc:resources>
+	<mvc:resources mapping="/js/**" location="/assets/js/">
+		<mvc:resource-chain resource-cache="false">
+			<mvc:resolvers>
+				<mvc:version-resolver>
+					<mvc:content-version-strategy patterns="/**"/>
+				</mvc:version-resolver>
+			</mvc:resolvers>
+		</mvc:resource-chain>
+	</mvc:resources>
 	<mvc:resources mapping="/images/**" location="/assets/images/" />
 	<mvc:resources mapping="/fonts/**" location="/assets/fonts/" />
 	<mvc:resources mapping="/robots.txt" location="/assets/robots.txt" />

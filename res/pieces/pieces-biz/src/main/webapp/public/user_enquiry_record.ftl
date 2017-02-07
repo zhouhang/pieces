@@ -155,8 +155,8 @@
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
 
-    <script src="js/layer/layer.js"></script>
-    <script src="js/laydate/laydate.js"></script>
+    <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
+    <script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
 
     <script>
         var page = {

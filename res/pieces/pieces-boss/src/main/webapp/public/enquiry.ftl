@@ -76,7 +76,7 @@
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
 <!-- footer end -->
-<script src="js/laydate/laydate.js"></script>
+<script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
 <script>
     //定义根变量
     !(function ($) {

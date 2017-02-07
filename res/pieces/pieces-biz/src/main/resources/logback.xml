@@ -25,7 +25,6 @@
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>${catalina.home}/logs/pieces_biz_handle-%d{yyyy-MM-dd}.log
             </FileNamePattern>
-            <MaxHistory>10</MaxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy
                     class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <MaxFileSize>5MB</MaxFileSize>

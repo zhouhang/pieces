@@ -148,4 +148,10 @@
         select count(id)
         from recruit_agent WHERE status=0
     </select>
+    <select id="getNotHandleIds"  resultType="java.lang.Integer">
+        select id
+        from recruit_agent WHERE status=0 ORDER  BY id
+    </select>
+
+
 </mapper>

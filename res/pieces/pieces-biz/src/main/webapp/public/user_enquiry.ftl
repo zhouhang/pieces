@@ -128,10 +128,10 @@
 		<div class="bd"></div>
 	</div><!-- 输入框联想 end -->
 
-    <script src="js/jquery.form.js"></script>
-    <script src="js/layer/layer.js"></script>
-    <script src="js/laydate/laydate.js"></script>
-    <script src="js/jquery.pagination.min.js"></script>
+    <script src="${urls.getForLookupPath('/js/jquery.form.js')}"></script>
+    <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
+    <script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
+    <script src="${urls.getForLookupPath('/js/jquery.pagination.min.js')}"></script>
     <script>
 
     	var page = {

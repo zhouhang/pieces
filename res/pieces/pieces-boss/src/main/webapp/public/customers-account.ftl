@@ -145,8 +145,8 @@
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
-    <script src="js/jquery.autocomplete.min.js"></script>
-    <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
+    <script src="${urls.getForLookupPath('/js/jquery.autocomplete.min.js')}"></script>
+    <script src="/js/validator/jquery.validator.min.js?local=zh-CN"></script>
 
 <script>
     var _global = {
@@ -165,6 +165,10 @@
                     },
                     valid: function(form) {
                         if ( $(form).isValid() ) {
+                            if($("#agencyName").val()==""){
+                                //为空删除代理商
+                                $("#agentId").val("");
+                            }
                             $.ajax({
                                 url: '/user/save',
                                 data: $(form).formSerialize(),

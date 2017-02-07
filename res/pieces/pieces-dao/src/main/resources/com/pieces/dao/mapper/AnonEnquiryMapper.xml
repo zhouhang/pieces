@@ -132,4 +132,9 @@
         from anon_enquiry WHERE status=1
     </select>
 
+    <select id="getNotHandleIds"  resultType="java.lang.Integer">
+        select id
+        from anon_enquiry WHERE status=1 ORDER by id
+    </select>
+
 </mapper>
