@@ -2,18 +2,15 @@ package com.pieces.boss.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.pieces.boss.commons.LogConstant;
 import com.pieces.boss.shiro.BossToken;
 import com.pieces.dao.model.Member;
-import com.pieces.dao.model.User;
 import com.pieces.service.MemberService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
-import com.pieces.service.utils.CommonUtils;
+import com.pieces.tools.utils.CommonUtils;
 import com.pieces.tools.log.annotation.BizLog;
-import com.pieces.tools.utils.WebUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -21,7 +18,6 @@ import org.apache.shiro.web.util.WebUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.xml.ParserContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

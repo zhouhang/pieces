@@ -9,7 +9,10 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
 /**
@@ -28,7 +31,7 @@ public class LogAspect {
         Boolean cut = false;
 
         Signature signature = ponint.getSignature();
-
+        // HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         // 判断方法有没有BizLog注解
         if(signature instanceof MethodSignature) {
             MethodSignature returnValue = (MethodSignature)signature;

@@ -10,6 +10,7 @@ import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 
+import com.pieces.tools.log.api.LogAuditing;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -176,6 +177,8 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
             Integer time = Integer.parseInt(code[1])+1;
             orderFormVo.setCode(code[0]+"-"+time);
         }
+        // 取消订单
+        LogAuditing.audit(origOrderId,null,"订单","修改订单取消原来订单重新下单");
         return create(orderFormVo);
     }
 
@@ -190,6 +193,7 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
             form.setDeliveryDate(new Date());
         }
         orderFormDao.update(form);
+        LogAuditing.audit(orderFormDao.findById(orderId),form,"订单","修改订单状态");
         return new Result(true).info("");
     }
 

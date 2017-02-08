@@ -33,6 +33,24 @@
         </layout>
     </appender>
 
+    <!-- ch.qos.logback.core.rolling.RollingFileAppender 文件日志输出 -->
+    <appender name="audit" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <Encoding>UTF-8</Encoding>
+        <File>${boss.logs.path}logs/pieces_boss_audit.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${boss.logs.path}logs/pieces_boss_audit-%d{yyyy-MM-dd}.log
+            </FileNamePattern>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>5MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>[%-5level] %d{HH:mm:ss.SSS} [%thread] %logger{36} - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!--<Encoding>UTF-8</Encoding>-->
         <File>${catalina.home}/logs/pieces_boss.log</File>
@@ -90,6 +108,10 @@
         <appender-ref ref="log" />
     </logger>
 
+    <logger name="com.pieces.tools.log.api.LogAuditing" additivity="false">
+        <level value="info" />
+        <appender-ref ref="audit" />
+    </logger>
 
 	
 </configuration>

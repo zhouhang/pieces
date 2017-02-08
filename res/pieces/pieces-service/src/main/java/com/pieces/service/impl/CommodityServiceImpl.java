@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import com.github.pagehelper.PageHelper;
 import com.pieces.service.utils.ValidUtils;
+import com.pieces.tools.log.api.LogAuditing;
 import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,15 +81,20 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     @Override
     @Transactional
     public Integer saveOrUpdate(Commodity commodity) throws IOException {
+        // 商品审计日志
+
 //        commodity.setPictureUrl(commodity.getPictureUrl().replace(defaultUploadFile.getUrl(), ""));
         // 把文件从临时目录保存
         commodity.setPictureUrl(FileUtil.saveFileFromTemp(commodity.getPictureUrl(), PathEnum.COMMODITY.getValue()));
 
         if(commodity.getId()!= null) {
+            LogAuditing.audit(commodityDao.findById(commodity.getId()),commodity,"商品","修改商品");
             commodityDao.update(commodity);
+
         } else {
             commodity.setCreateTime(new Date());
             commodityDao.create(commodity);
+            LogAuditing.audit(null,commodity,"商品","新增商品");
         }
         commoditySearchService.save(commodity);
         return commodity.getId();
