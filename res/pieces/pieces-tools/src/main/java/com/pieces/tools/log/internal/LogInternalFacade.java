@@ -5,16 +5,19 @@ import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.log.api.LogConfig;
 import com.pieces.tools.log.api.LogUser;
 import com.pieces.tools.log.pojo.LogInfo;
-import com.pieces.tools.log.util.CommonsUtils;
 import com.pieces.tools.log.util.JSONUtils;
 import com.pieces.tools.log.util.SystemUtil;
+import com.pieces.tools.utils.CommonUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.HashMap;
@@ -50,6 +53,11 @@ public class LogInternalFacade implements ILogInternalFacade{
             logInfo.setBizDesc(logInfo.getBiz().desc());
             logInfo.setBizType(logInfo.getBiz().type());
             LogUser user = LogConfig.user.getLogUser();
+
+            // 设置请求者的IP
+            HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            logInfo.setRequestIp(CommonUtils.getRemoteHost(request));
+            logInfo.setRequestUrl(request.getRequestURI());
 
             // 设置登入用户信息
             if (user != null) {
@@ -91,9 +99,9 @@ public class LogInternalFacade implements ILogInternalFacade{
 
         String globalId;
         if (throwable != null) {
-            globalId = CommonsUtils.getRawClassName(throwable);
+            globalId = CommonUtils.getRawClassName(throwable);
             logInfo.setExceptionClassname(globalId);
-            String exceptionDesc = CommonsUtils.getStackTrace(throwable);
+            String exceptionDesc = CommonUtils.getStackTrace(throwable);
             logInfo.setExceptionDesc(exceptionDesc);
             logInfo.setSuccessed(SUCCESSED_FAIL);
         } else {
@@ -102,7 +110,7 @@ public class LogInternalFacade implements ILogInternalFacade{
 
         logInfo.setCostTime(Integer.valueOf(Long.valueOf(costTme).intValue()));
 
-        String className = CommonsUtils.getRawClassName(joinPoint.getTarget());
+        String className = CommonUtils.getRawClassName(joinPoint.getTarget());
         logInfo.setActionClassname(className);
         String methodSignature = this.getSignatureSimpleDesc(logInfo, className, joinPoint);
         logInfo.setActionMethod(methodSignature);
@@ -133,7 +141,7 @@ public class LogInternalFacade implements ILogInternalFacade{
                 logInfo.setBiz(blog);
             }
 
-            String methodNameWithClassName = CommonsUtils.getMethodNameWithClassName(className, method.getName());
+            String methodNameWithClassName = CommonUtils.getMethodNameWithClassName(className, method.getName());
             sb.append(methodNameWithClassName);
         } else {
             sb.append(signature.toLongString());
