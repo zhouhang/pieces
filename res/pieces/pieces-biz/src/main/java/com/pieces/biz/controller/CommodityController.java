@@ -157,6 +157,7 @@ public class CommodityController extends BaseController {
 		commodityVO.setCategoryIds(breedIds);// 查询分页数据
 		Integer cid = commodityVO.getCategoryId();
 		commodityVO.setCategoryId(null);
+		commodityVO.setStatus(1);
 		if(!breedIds.equals("")){
 			pageInfo = new PageInfo<CommodityVo>(commodityService.query(commodityVO, pageNum, pageSize).getList());
 			commodityVO.setCategoryId(cid);
