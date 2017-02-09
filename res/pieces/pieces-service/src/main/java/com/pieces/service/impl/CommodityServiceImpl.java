@@ -86,17 +86,20 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 //        commodity.setPictureUrl(commodity.getPictureUrl().replace(defaultUploadFile.getUrl(), ""));
         // 把文件从临时目录保存
         commodity.setPictureUrl(FileUtil.saveFileFromTemp(commodity.getPictureUrl(), PathEnum.COMMODITY.getValue()));
-
         if(commodity.getId()!= null) {
             LogAuditing.audit(commodityDao.findById(commodity.getId()),commodity,"商品","修改商品");
             commodityDao.update(commodity);
-
         } else {
             commodity.setCreateTime(new Date());
             commodityDao.create(commodity);
             LogAuditing.audit(null,commodity,"商品","新增商品");
         }
-        commoditySearchService.save(commodity);
+        //如果更改商品状态为不显示则删除索引
+        if(commodity.getStatus()==0){
+            commoditySearchService.deleteByCommodityId(commodity.getId());
+        }else{
+            commoditySearchService.save(commodity);
+        }
         return commodity.getId();
     }
 
