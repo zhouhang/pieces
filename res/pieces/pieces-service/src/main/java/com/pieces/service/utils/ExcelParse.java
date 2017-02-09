@@ -156,7 +156,7 @@ public class ExcelParse {
             c.setCellStyle(cellStyle);
             c = r.createCell(5);
             c.setCellStyle(numberStyle);
-            c.setCellValue(commodity.getMyPrice());
+            c.setCellValue(commodity.getMyPrice()==null?0:commodity.getMyPrice());
         }
 //        Sheet s1 = wb.createSheet();
 //        wb.setSheetName(1, "报价表");

@@ -21,6 +21,12 @@
                 </div>
 
                 <div class="fa-table">
+                     <#if user_session_biz??&&user_session_biz.certifyStatus!=1>
+                         <div class="fa-msg">
+                             <i class="fa fa-prompt"></i>
+                             <span>您尚未提交企业资质审核，通过审核后方可进行在线下单。<a class="btn btn-red" href="/center/certificate/stepOne">提交资质审核</a></span>
+                         </div>
+                        </#if>
                     <div class="filter">
                         <button id="search_btn" class="btn btn-red btn-submit" type="button">查询</button>
                         ${enquiryRecordVo.startDate!}
