@@ -160,6 +160,7 @@
 	<mvc:resources mapping="/error/**" location="/assets/error/" />
 	<mvc:resources mapping="/favicon.ico" location="/assets/images/favicon.ico" />
 	<mvc:resources mapping="/robots.txt" location="/assets/robots.txt" />
+	<mvc:resources mapping="/sitemap.xml" location="/assets/sitemap.xml" />
 
 	<bean id="log" class="com.pieces.tools.log.aop.LogAspect"></bean>
 	<aop:config>

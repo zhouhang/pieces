@@ -160,7 +160,6 @@
                             <div id="detailsError" style="padding-top: 10px;" class="clear">
                             </div>
                         </div>
-
                         <div class="group">
                             <div class="txt">
                                 <i>*</i>状态：
@@ -168,8 +167,8 @@
                             <div class="cnt">
                                 <select name="status" id="status" class="wide">
                                     <option value="-1">请选择</option>
-                                    <option value="1" selected="selected">激活</option>
-                                    <option value="0">禁用</option>
+                                    <option value="1" <#if commodity.status==1>selected="selected"</#if> >激活</option>
+                                    <option value="0" <#if commodity.status==0>selected="selected"</#if>>禁用</option>
                                 </select>
                             </div>
                         </div>

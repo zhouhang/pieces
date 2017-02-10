@@ -232,7 +232,6 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
                 List<CommodityVo> commodityVOs = this.findByIds(ids);
                 list.addAll(commodityVOs);
             }
-
         }
 
         if (list.size() < 5) {
