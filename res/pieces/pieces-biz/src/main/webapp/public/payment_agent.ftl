@@ -3,7 +3,7 @@
 <head>
 <#include "./inc/meta.ftl"/>
     <title>支付-上工好药</title>
-    <link rel="stylesheet" href="${urls.getForLookupPath('css/order.css')}" />
+    <link rel="stylesheet" href="${urls.getForLookupPath('/css/order.css')}" />
 </head>
 
 <body>
