@@ -77,7 +77,7 @@
 <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 <script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
 <script src="/js/validator/jquery.validator.js?local=zh-CN"></script>
-<script src="${urls.getForLookupPath('/js/croppic.min.js"')}></script>
+<script src="${urls.getForLookupPath('/js/croppic.min.js')}"></script>
 <script src="${urls.getForLookupPath('/js/jquery.form.js')}"></script>
 <script>
     var _global = {
