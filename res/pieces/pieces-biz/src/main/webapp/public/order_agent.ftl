@@ -288,7 +288,7 @@
     <script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
     <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
     <script src="${urls.getForLookupPath('/js/jquery.form.js')}"></script>
-    <script src="${urls.getForLookupPath('js/jquery_util.js')}"></script>
+    <script src="${urls.getForLookupPath('/js/jquery_util.js')}"></script>
     <script src="${urls.getForLookupPath('/js/area.js')}"></script>
     <script>
         var _global = {
