@@ -5,7 +5,7 @@
         <title>招商代理-上工好药 - 中药饮片采购首选 - 正品底价、品质保障、配送及时、轻松采购！</title>
         <meta name="description" content="上工好药sghaoyao.com - 专业的中药饮片采购平台，整合中药饮片各品种优势货源，为合作伙伴提供安全有保障、高效周到、高性价比的服务，采购饮片就来上工好药。" />
         <meta name="Keywords" content="中药,饮片,中药饮片,饮片采购,饮片批发,精致饮片,毒性饮片,药食同源,炮制,古法炮制,上工好药" />
-        <link rel="stylesheet" href="${urls.getForLookupPath('/css/h5.css')}" />
+            <link rel="stylesheet" href="${urls.getForLookupPath('/css/h5.css')}" />
 </head>
 <body>
 <#include "./inc/header.ftl"/>
