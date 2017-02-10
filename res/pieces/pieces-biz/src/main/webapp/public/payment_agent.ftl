@@ -43,7 +43,6 @@
                     <span class="up-img" id="upfile1"></span>
                     <span class="tips">请上传银行开具的打款凭证照片。</span>
                 </div>
-
                 <div class="bill">
                     <label>账期时间：</label>
                     <select name="billtime" id="billtime">
@@ -56,12 +55,10 @@
                     </select>
                     <span class="error"></span>
                 </div>
-
                 <div class="button">
                     <button type="button" class="btn btn-red" id="stageSubmit">去付款</button>
                     <span class="error"></span>
                 </div>
-
             </div>
         </form>
     </div>
