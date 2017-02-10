@@ -222,8 +222,8 @@
 
 
     <select id="getNotHandleIds"  resultType="java.lang.Integer">
-        select count(id)
-        from enquiry_bills WHERE status=0
+        select id
+        from enquiry_bills WHERE status=0 order by id
     </select>
 
 </mapper>
