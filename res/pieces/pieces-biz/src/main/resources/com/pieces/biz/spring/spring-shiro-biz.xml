@@ -9,9 +9,9 @@
  <bean id="bizRealm" class="com.pieces.biz.shiro.BizRealm">
      <property name="cachingEnabled" value="true"/>
      <property name="authenticationCachingEnabled" value="true"/>
-     <property name="authenticationCacheName" value="authenticationCache"/>
+     <property name="authenticationCacheName" value="${pieces.shiro.defaultRealm.authenticationCacheName}"/>
      <property name="authorizationCachingEnabled" value="true"/>
-     <property name="authorizationCacheName" value="authorizationCache"/>
+     <property name="authorizationCacheName" value="${pieces.shiro.defaultRealm.authorizationCacheName}"/>
      <property name="credentialsMatcher" ref="credentialsMatcher"/>
  </bean>
     
