@@ -127,6 +127,19 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .header-red .plus .back{display:inline-block;margin-top:37px;padding:4px 11px;font-size:12px;color:#c3272b;background:#e7e7e7;}
 .header-red .plus .back:hover{text-decoration:none;}
 .header-shadow{margin-bottom:-20px;padding-bottom:20px;background:url(../images/header-shadow.png) repeat-x;}
+.search-fixed{width:100%;position:fixed;left:0;top:0;z-index:9;box-shadow:0 1px 6px rgba(0,0,0,.15);*border-bottom:1px solid #d5d5d5;border-bottom:1px solid #d5d5d5\9;display:none;}
+.search-fixed .logo{height:80px;}
+.search-animated{display:block;-webkit-animation: menufixedEf .3s ease;animation: menufixedEf .3s ease;}
+.search-animated .search{width:auto;margin:0;padding:20px 0 0 410px;}
+.search-animated .search .ipt{width:500px;}
+@-webkit-keyframes menufixedEf {
+    0% {top: -100px;}
+    100% {top: 0;}
+}
+@keyframes menufixedEf {
+    0% {top: -100px;}
+    100% {top: 0px;}
+}
 
 /* nav */
 .nav{height:38px;background:#fff;border-bottom:2px solid #333;}
