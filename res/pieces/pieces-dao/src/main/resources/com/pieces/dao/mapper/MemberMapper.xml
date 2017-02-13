@@ -112,6 +112,7 @@
         <if test="isDel != null ">
             and b.is_del = #{isDel}
         </if>
+        order by b.create_date desc
     </select>
 
     <select id="findResourcesByUserName" parameterType="java.lang.String" resultType="com.pieces.dao.model.Resources">
