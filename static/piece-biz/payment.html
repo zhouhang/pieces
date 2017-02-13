@@ -61,8 +61,8 @@
                     <strong class="h2">支付货款</strong>
                     <label class="checked"><input type="radio" name="type" value="alipay" checked><img height="38" src="images/alipay.png" alt=""><i></i></label>
                     <label><input type="radio" name="type" value="wxpay"><img height="38" src="images/wxpay.png" alt=""><i></i></label>
-                    <label><input type="radio" name="type" value="bank">线下银行转账<i></i></label>
-                    <label><input type="radio" name="type" value="bill">账期支付<i></i></label>
+                    <label><input type="radio" name="type" value="bank">银行转账<i></i></label>
+                    <label><input type="radio" name="type" value="bill">申请账期<i></i></label>
                 </div>
 
                 <div class="bank">
@@ -86,11 +86,14 @@
                         <option value="12">1年</option>
                     </select>
                     <span class="error"></span>
+                    <p>账期支付需要通过平台审核</p>
                 </div>
 
                 <div class="button">
-                    <label>本次支付金额：</label>
-                    <input type="text" class="ipt" id="money">
+                    <div id="payInput">
+                        <label>本次支付金额：</label>
+                        <input type="text" class="ipt" id="money">
+                    </div>
                     <em></em>
                     <button type="submit" class="btn btn-red" id="stageSubmit">去付款</button>
                     <span class="error"></span>
@@ -192,6 +195,7 @@
                     var $bank = $('.bank'),
                         $bill = $('.bill'),
                         $billtime = $('#billtime'),
+                        $payInput = $('#payInput'),
                         $submit = $('#stageSubmit'),
                         model = $('#payModal').html(),
                         ptype = 'alipay';
@@ -212,6 +216,7 @@
                         $('.error').empty();
                         $bank[ptype === 'bank' ? 'show' : 'hide']();
                         $bill[ptype === 'bill' ? 'show' : 'hide']();
+                        $payInput[ptype === 'bill' ? 'hide' : 'show']();
                         if (ptype === 'alipay' || ptype === "wxpay") {
                             $submit.html('去付款');
                         } else {
