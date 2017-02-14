@@ -259,6 +259,7 @@ public class CommodityController extends BaseController {
 
 	@RequestMapping(value = "/{id}")
 	@BizLog(type = LogConstant.commodity, desc = "商品详情页面")
+	@SecurityToken(generateToken = true)
 	public String detail(@PathVariable("id") Integer id, ModelMap model) {
 		CommodityVo commodity = commodityService.findVoById(id);
 		if (commodity == null) {
