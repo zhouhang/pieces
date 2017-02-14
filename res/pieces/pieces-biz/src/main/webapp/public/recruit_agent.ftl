@@ -163,7 +163,7 @@
     <div class="section sec3">
         <div class="wrap">
             <h2>心动了？点击按钮马上加入！</h2>
-            <p><a href="javascript:;" class="button">开始合作</a></p>
+            <p><a href="javascript:;" id="recruit_btn" class="button">开始合作</a></p>
         </div>
     </div>
 </div>
