@@ -8,13 +8,11 @@
 				http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
-
 	<context:component-scan base-package="com.pieces.biz.controller">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
 	<mvc:annotation-driven/>
-
 
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -158,14 +156,12 @@
 	<mvc:resources mapping="/fonts/**" location="/assets/fonts/" />
 	<mvc:resources mapping="/images/**" location="/assets/images/" />
 	<mvc:resources mapping="/error/**" location="/assets/error/" />
-	<mvc:resources mapping="/favicon.ico" location="/assets/images/favicon.ico" />
-	<mvc:resources mapping="/robots.txt" location="/assets/robots.txt" />
-	<mvc:resources mapping="/sitemap.xml" location="/assets/sitemap.xml" />
+	<mvc:resources mapping="/*" location="/assets/" />
 
 	<bean id="log" class="com.pieces.tools.log.aop.LogAspect"></bean>
+
 	<aop:config>
 		<aop:pointcut id="asp" expression="execution(* com.pieces.biz.controller.*.*(..))"/>
-
 		<aop:aspect id="b" ref="log"><!--调用日志类-->
 			<aop:around method="doAroundMethodCall" pointcut-ref="asp" />
 		</aop:aspect>
