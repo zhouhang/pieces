@@ -108,7 +108,7 @@ function throttle(func, wait, mustRun) {
 };
 
 function bindSearch() {
-	var $searchForm = $('#_search_form'),	
+	var $searchForm = $('#_search_form'),$searchForm2 = $('#_search_form2'),
 		$fixed = $('.search-fixed');
 
 	$('#_search_ipt').autocomplete({
@@ -128,6 +128,27 @@ function bindSearch() {
             $searchForm.submit();
         }
     });
+	if ($searchForm2) {
+		$('#_search_ipt2').autocomplete({
+			serviceUrl: '/commodity/search/auto',
+			paramName: 'keyword',
+			groupBy: 'category',
+			transformResult: function (response) {
+				response = JSON.parse(response);
+				return {
+					suggestions: $.map(response, function (dataItem) {
+						return {
+							value: (dataItem.category ? dataItem.category + '：' : '') + dataItem.value,
+							data: {'category': dataItem.category}
+						}
+					})
+				};
+			},
+			onSelect: function (suggestion) {
+				$searchForm2.submit();
+			}
+		});
+	}
 
     $(window).on('scroll', function() {
     	if ($(window).scrollTop() > 129) {
