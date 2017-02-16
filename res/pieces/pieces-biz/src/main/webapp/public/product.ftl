@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>${commodity.title!}-上工好药</title>
+    <title><#if commodity.title??>${commodity.name!} 无硫 <#else>${commodity.title!}</#if>-上工好药</title>
     <meta name="description" content="上工好药sghaoyao.com提供${commodity.title!}的优质货源，为合作伙伴提供安全有保障、高效周到、高性价比的服务，采购饮片就来上工好药。"/>
     <meta name="Keywords" content="${commodity.title!},${commodity.name!}"/>
 </head>
@@ -47,7 +47,7 @@
                         <img src="${commodity.pictureUrl!}"  width="360" height="360" alt="${commodity.title!}">
                     </div>
                     <div class="ext-info">
-                        <h1 class="name">${commodity.title!}</h1>
+                        <h1 class="name"> <#if commodity.title??>${commodity.name!} 无硫 <#else>${commodity.title!}</#if></h1>
                         <dl>
                             <dt>商品名称</dt>
                             <dd>${commodity.name!}</dd>
