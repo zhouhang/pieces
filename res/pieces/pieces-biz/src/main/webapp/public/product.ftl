@@ -44,7 +44,7 @@
             <div class="main">
                 <div class="product-summary">
                     <div class="preview">
-                        <img src="${commodity.pictureUrl!}"  width="360" height="360" alt="${commodity.title!}">
+                        <img src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>"  width="360" height="360" alt="${commodity.title!}">
                     </div>
                     <div class="ext-info">
                         <h1 class="name">${commodity.title!}</h1>
