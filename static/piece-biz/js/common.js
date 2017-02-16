@@ -258,7 +258,7 @@ function pageInit() {
     // gotop
     gotop();
 	// search
-	bindSearch();
+	// bindSearch();
 	// 用户中心导航高亮
 	currNav();
 	// 询价按钮
