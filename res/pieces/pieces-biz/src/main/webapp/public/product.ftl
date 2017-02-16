@@ -134,6 +134,18 @@
             fn: {
                 init: function() {
                     this.addFav();
+                    this.imgerror();
+                },
+                imgerror: function () {
+                    var img = new Image(),
+                            $img = $('.preview img');
+
+                    img.onerror = function () {
+                        img.onerror = null;
+                        $img[0].src = 'images/blank.gif';
+                        $img.addClass('miss');
+                    }
+                    img.src = $img[0].src;
                 },
                 // 收藏
                 addFav: function() {
