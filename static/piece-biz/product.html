@@ -526,7 +526,7 @@
             <div class="main">
                 <div class="product-summary">
                     <div class="preview">
-                        <img src="uploads/p4.jpg" width="360" height="360" alt="">
+                        <img src="/opt/resources/sghaoyao/commodity/2016/12/52973f7c-550c-4e6e-b37c-1eee65addf30Crop.png" width="360" height="360" alt="">
                     </div>
                     <div class="ext-info">
                         <h1 class="name">亳白芍选片20-24号筛  趁鲜加工  芍药苷3.0%  5年生  无硫</h1>
@@ -684,11 +684,23 @@
         fn: {
             init: function() {
                 this.rank();
+                this.imgerror();
             },
             rank: function() {
                 $('#rank').on('click', 'a', function() {
                     $(this).addClass('current').siblings().removeClass('current');
                 })
+            },
+            imgerror: function() {
+                var img = new Image(),
+                    $img = $('.preview img');
+
+                img.onerror = function() {
+                    img.onerror = null;
+                    $img[0].src = 'images/blank.gif';
+                    $img.addClass('miss');
+                }
+                img.src = $img[0].src;
             }
         }
     }

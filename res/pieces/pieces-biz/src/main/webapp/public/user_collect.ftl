@@ -37,7 +37,7 @@
                             <tbody>
 								<#list commodityVoList as commodity>
 	                                <tr>
-	                                    <td>${commodity.name}</td>
+	                                    <td><a href="/commodity/${commodity.id}" class="c-blue">${commodity.name}</a></td>
 	                                    <td>${commodity.spec}</td>
 	                                    <td>${commodity.level}</td>
 	                                    <td>${commodity.exterior}</td>

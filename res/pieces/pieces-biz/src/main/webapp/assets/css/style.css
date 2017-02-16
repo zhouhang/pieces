@@ -430,6 +430,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 /* 商品详情 */
 .product-summary{padding:20px;border:1px solid #e7e7e7;overflow:hidden;*zoom:1;}
 .product-summary .preview{float:left;width:360px;height:360px;overflow:hidden;}
+.product-summary .preview .miss{background:url(../images/default-img.png) no-repeat 50% 50%;}
 .product-summary .ext-info{margin-left:400px;}
 .product-summary .name{line-height:60px;font-size:18px;font-weight:700;border-bottom:1px solid #e7e7e7;}
 .product-summary dl{margin:10px 0;line-height:30px;font-size:12px;overflow:hidden;*zoom:1;}

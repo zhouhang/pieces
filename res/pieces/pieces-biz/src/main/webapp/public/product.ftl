@@ -44,7 +44,7 @@
             <div class="main">
                 <div class="product-summary">
                     <div class="preview">
-                        <img src="${commodity.pictureUrl!}"  width="360" height="360" alt="${commodity.title!}">
+                        <img src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>"  width="360" height="360" alt="${commodity.title!}">
                     </div>
                     <div class="ext-info">
                         <h1 class="name"> <#if commodity.title??>${commodity.name!} 无硫 <#else>${commodity.title!}</#if></h1>
@@ -134,6 +134,18 @@
             fn: {
                 init: function() {
                     this.addFav();
+                    this.imgerror();
+                },
+                imgerror: function () {
+                    var img = new Image(),
+                            $img = $('.preview img');
+
+                    img.onerror = function () {
+                        img.onerror = null;
+                        $img[0].src = 'images/blank.gif';
+                        $img.addClass('miss');
+                    }
+                    img.src = $img[0].src;
                 },
                 // 收藏
                 addFav: function() {

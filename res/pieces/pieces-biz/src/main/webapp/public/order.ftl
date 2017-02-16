@@ -324,6 +324,12 @@
                     this.chooseConsignee();
                     this.computePrice();
                     this.orderSubmit();
+                <#if !(shippingAddressList?exists && shippingAddressList?size gt 0) >
+                    layer.confirm('您还没有收货地址,是否立即新建一个？', {icon: 3, title:'提示'}, function(index){
+                        layer.close(index);
+                        $('.jaddConsignee').eq(0).trigger("click");
+                    });
+                </#if>
     			},
                 // 新增发票
                 addInvoice: function() {

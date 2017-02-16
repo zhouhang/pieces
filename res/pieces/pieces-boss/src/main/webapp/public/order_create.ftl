@@ -390,6 +390,15 @@
                     'focus': function() {
                         $(this).after($suggestions);
                         $suggestions.find('.group').length > 1 && $suggestions.show();
+                        // 关键字自动填充
+                        $suggestions.on('click', '.bd .group', function() {
+                            var data = $(this).data('val').split('-');
+                            $suggestions.prev().val(data[0])
+                                    .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
+                                    .closest('td').next().find('.ipt').val(data[2]).trigger('focus').end()
+                                    .closest('td').next().find('.ipt').val(data[3]).trigger('focus');
+                            $suggestions.hide();
+                        })
                     },
                     'input': function() {
                         self.getKeywords(this.value);                           
@@ -403,16 +412,7 @@
                 $suggestions.on('click', function(event) {
                     event.stopPropagation();
                 })
-
-                // 关键字自动填充
-                $suggestions.on('click', '.bd .group', function() {
-                    var data = $(this).data('val').split('-');
-                    $suggestions.prev().val(data[0])
-                    .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
-                    .closest('td').next().find('.ipt').val(data[2]).trigger('focus').end()
-                    .closest('td').next().find('.ipt').val(data[3]).trigger('focus');
-                    $suggestions.hide();
-                })
+                
 
                 // 新增一行
                 $myform.on('click', '.add', function() {
