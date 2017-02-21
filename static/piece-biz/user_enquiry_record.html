@@ -108,207 +108,67 @@
 
             <div class="main">
                 <div class="title">
-                    <h3>询价记录</h3>
+                    <h3>我的询价</h3>
                     <div class="extra"></div>
                 </div>
 
-                <div class="fa-table">
-                	<div class="filter">
-                        <form action="">
-                            <button class="btn btn-red btn-submit" type="button">查询</button>
-                            <span>商品名称：</span>
-                            <input class="ipt" type="text">
-                            <span class="ml">状态：</span>
-                            <select name="" id="" class="slt">
-                                <option value="0">全部</option>
-                                <option value="1">已报价</option>
-                                <option value="2">未报价</option>
-                                <option value="3">已过期</option>
-                            </select>
-                            <span class="ml">询价日期：</span>
-                            <input class="ipt date" type="text" id="start"  value=""><em>-</em><input class="ipt date" type="text" id="end"  value="">
-                        </form>     
-                	</div>
-				
-                	<div class="fa-chart-d">
-                        <div class="group">
-                            <div class="th">
-                                <div class="td w1">选择</div>
-                                <div class="td w2">商品名称</div>
-                                <div class="td w3">片型</div>
-                                <div class="td w4">规格等级</div>
-                                <div class="td w5">产地</div>
-                                <div class="td w6">单价<span>（元/公斤）</span></div>
-                            </div>
-                        </div> 
+                <div class="enquity-list">
+                    <div class="fa-msg">
+                        <i class="fa fa-prompt"></i>
+                        <span>您尚未提交企业资质审核，通过审核后方可进行在线下单</span>
+                        <a class="btn-ghost" href="/center/certificate/stepOne">提交资格审核</a>
+                    </div>
 
-                        <div class="empty">
-                            <p>您还没有询价记录，现在<a href="#">立即询价</a>吧！</p>
-                        </div>
+                    <div class="tab">
+                        <span class="curr"><a href="#">全部</a></span>
+                        <span><a href="#">已报价</a></span>
+                        <span><a href="#">未报价</a></span>
+                        <span><a href="#">已过期</a></span>
+                    </div>
 
-                        <div class="group">
-                            <div class="hd hd-1">
-                                <div class="td w7">
-                                    <input class="cbx" type="checkbox">
-                                    <span>询价单号：E201606201024001</span>
-                                    <span>询价日期：2016-06-20</span>
-                                </div>
-                                <div class="td w5"><em>状态：未报价</em></div>
-                                <div class="td w6"><a class="buy" href="#">重新询价</a></div>
-                            </div>
-                            <div class="bd">
-                                <div class="td w1"><input type="checkbox" class="cbx"></div>
-                                <div class="td w2">艾绒</div>
-                                <div class="td w3">个</div>
-                                <div class="td w4">过20-24号筛，直径2.0-2.4cm，厚度2-3mm</div>
-                                <div class="td w5">湖北省</div>
-                                <div class="td w6"></div>
-                            </div>
-                            <div class="bd">
-                                <div class="td w1"><input type="checkbox" class="cbx"></div>
-                                <div class="td w2">艾绒</div>
-                                <div class="td w3">个</div>
-                                <div class="td w4">过20-24号筛，直径2.0-2.4cm，厚度2-3mm</div>
-                                <div class="td w5">湖北省</div>
-                                <div class="td w6"></div>
-                            </div>
-                        </div> 
-
-                        <div class="group">
-                            <div class="hd hd-3">
-                                <div class="td w7">
-                                    <input class="cbx" type="checkbox">
+                	<div class="list">
+                        <ul>
+                            <li>
+                                <div class="hd">
                                     <span>询价单号：E201606201024001</span>
                                     <span>询价日期：2016-06-20</span>
                                     <span>报价截止日期：2016-07-11</span>
                                 </div>
-                                <div class="td w5"><em>状态：已过期</em></div>
-                                <div class="td w6"><a class="buy" href="#">订购已选商品</a></div>
-                            </div>
-                            <div class="bd">
-                                <div class="td w1"><input class="cbx" type="checkbox"></div>
-                                <div class="td w2">艾绒</div>
-                                <div class="td w3">个</div>
-                                <div class="td w4">2年生毫州223</div>
-                                <div class="td w5">湖北省</div>
-                                <div class="td w6">90</div>
-                            </div>
-                        </div>
-
-                        <div class="group">
-                            <div class="hd hd-2">
-                                <div class="td w7">
-                                    <input class="cbx" type="checkbox">
+                                <div class="col1">
+                                    <span class="name">海马、天冬、天麻、党参、煅人中白、制马钱子...</span>
+                                    <i class="fa fa-new"></i>
+                                    <span class="count">共10个商品</span>
+                                </div>
+                                <div class="col2"><span class="c1">已报价</span></div>
+                                <div class="col2"><a href="user_enquiry.html" class="c-blue">去下单</a></div>
+                            </li>
+                            <li>
+                                <div class="hd">
                                     <span>询价单号：E201606201024001</span>
                                     <span>询价日期：2016-06-20</span>
                                     <span>报价截止日期：2016-07-11</span>
                                 </div>
-                                <div class="td w5"><em>状态：已报价</em></div>
-                                <div class="td w6"><a class="buy" href="#">订购已选商品</a></div>
-                            </div>
-                            <div class="bd enable">
-                                <div class="td w1"></div>
-                                <div class="td w2">艾绒</div>
-                                <div class="td w3">个</div>
-                                <div class="td w4">2年生毫州223</div>
-                                <div class="td w5">湖北省</div>
-                                <div class="td w6">暂不出售此商品</div>
-                            </div>
-                        </div>
-
-                        <div class="group">
-                            <div class="hd hd-2">
-                                <div class="td w7">
-                                    <input class="cbx" type="checkbox">
+                                <div class="col1">
+                                    <span class="name">海马、天冬、天麻、党参、煅人中白、制马钱子...</span>
+                                    <span class="count">共10个商品</span>
+                                </div>
+                                <div class="col2"><span class="c2">未报价</span></div>
+                                <div class="col2"><a href="user_enquiry.html" class="c-blue">查看详情</a></div>
+                            </li>
+                            <li>
+                                <div class="hd">
                                     <span>询价单号：E201606201024001</span>
                                     <span>询价日期：2016-06-20</span>
                                     <span>报价截止日期：2016-07-11</span>
                                 </div>
-                                <div class="td w5"><em>状态：已报价</em></div>
-                                <div class="td w6"><a class="buy" href="#">订购已选商品</a></div>
-                            </div>
-                            <div class="bd enable">
-                                <div class="td w1"><input class="cbx" type="checkbox" disabled></div>
-                                <div class="td w2">艾绒</div>
-                                <div class="td w3">个</div>
-                                <div class="td w4">2年生毫州223</div>
-                                <div class="td w5">湖北省</div>
-                                <div class="td w6">--</div>
-                            </div>
-                            <div class="bd">
-                                <div class="td w1"><input class="cbx" type="checkbox"></div>
-                                <div class="td w2">艾绒</div>
-                                <div class="td w3">个</div>
-                                <div class="td w4">2年生毫州223</div>
-                                <div class="td w5">湖北省</div>
-                                <div class="td w6">90</div>
-                            </div>
-                            <div class="bd">
-                                <div class="td w1"><input class="cbx" type="checkbox"></div>
-                                <div class="td w2">艾绒</div>
-                                <div class="td w3">个</div>
-                                <div class="td w4">2年生毫州223</div>
-                                <div class="td w5">湖北省</div>
-                                <div class="td w6">90</div>
-                            </div>
-                            <div class="bd">
-                                <div class="td w1"><input class="cbx" type="checkbox"></div>
-                                <div class="td w2">艾绒</div>
-                                <div class="td w3">个</div>
-                                <div class="td w4">2年生毫州223</div>
-                                <div class="td w5">湖北省</div>
-                                <div class="td w6">90</div>
-                            </div>
-                            <div class="bd">
-                                <div class="td w1"><input class="cbx" type="checkbox"></div>
-                                <div class="td w2">艾绒</div>
-                                <div class="td w3">个</div>
-                                <div class="td w4">2年生毫州223</div>
-                                <div class="td w5">湖北省</div>
-                                <div class="td w6">90</div>
-                            </div>
-                            <div class="bd">
-                                <div class="td w1"><input class="cbx" type="checkbox"></div>
-                                <div class="td w2">艾绒</div>
-                                <div class="td w3">个</div>
-                                <div class="td w4">2年生毫州223</div>
-                                <div class="td w5">湖北省</div>
-                                <div class="td w6">90</div>
-                            </div>
-                            <div class="bd">
-                                <div class="td w1"><input class="cbx" type="checkbox"></div>
-                                <div class="td w2">艾绒</div>
-                                <div class="td w3">个</div>
-                                <div class="td w4">2年生毫州223</div>
-                                <div class="td w5">湖北省</div>
-                                <div class="td w6">90</div>
-                            </div>
-                            <div class="bd">
-                                <div class="td w1"><input class="cbx" type="checkbox"></div>
-                                <div class="td w2">艾绒</div>
-                                <div class="td w3">个</div>
-                                <div class="td w4">2年生毫州223</div>
-                                <div class="td w5">湖北省</div>
-                                <div class="td w6">90</div>
-                            </div>
-                            <div class="bd">
-                                <div class="td w1"><input class="cbx" type="checkbox"></div>
-                                <div class="td w2">艾绒</div>
-                                <div class="td w3">个</div>
-                                <div class="td w4">2年生毫州223</div>
-                                <div class="td w5">湖北省</div>
-                                <div class="td w6">90</div>
-                            </div>
-                            <div class="bd">
-                                <div class="td w1"><input class="cbx" type="checkbox"></div>
-                                <div class="td w2">艾绒</div>
-                                <div class="td w3">个</div>
-                                <div class="td w4">2年生毫州223</div>
-                                <div class="td w5">湖北省</div>
-                                <div class="td w6">90</div>
-                            </div>
-                            <div class="expand">展开 <i class="fa fa-chevron-down"></i></div>
-                        </div>
+                                <div class="col1">
+                                    <span class="name">海马、天冬、天麻、党参、煅人中白、制马钱子...</span>
+                                    <span class="count">共10个商品</span>
+                                </div>
+                                <div class="col2"><span class="c3">已过期</span></div>
+                                <div class="col2"><a href="user_enquiry.html" class="c-blue">查看详情</a></div>
+                            </li>
+                        </ul>
                     </div>
 
                     <div class="pagin">
@@ -365,197 +225,14 @@
     <script src="js/laydate/laydate.js"></script>
     <script src="js/common.js"></script>
     <script>
-        var page = {
-            //定义全局变量区
-            v: {
-                id: "page"
-            },
-            //定义方法区
+        var _blobal = {
             fn: {
-                //初始化方法区
                 init: function () {
-                    this.dateInit();
-                    this.expand();
-                    this.handle();
-                },
-                //日期选择
-                dateInit: function () {
-                    var start = {
-                        elem: '#start',
-                        // istoday: false,
-                        choose: function(datas){
-                             end.min = datas; //开始日选好后，重置结束日的最小日期
-                             $('#start').attr('title', datas);
-                        }
-                    };
-                    var end = {
-                        elem: '#end',
-                        // istoday: false,
-                        choose: function(datas){
-                            start.max = datas; //结束日选好后，重置开始日的最大日期
-                            $('#end').attr('title', datas);
-                        }
-                    };
-                    laydate(start);
-                    laydate(end);
-                },
-                // 展开更多询价商品
-                expand: function() {
-                    var 
-                        self = this,
-                        txt = ['展开 <i class="fa fa-chevron-down"></i>', '收起 <i class="fa fa-chevron-up"></i>'];
-
-                    $('.fa-table').on('click', '.expand', function() {
-                        var $self = $(this);
-                        if ($self.data('loader') === 'true') {
-                            var status = $self.data('expand') === 0 ? 1 : 0;
-                            $self.data('expand', status).html(txt[status]).prev().slideToggle();
-                        } else {
-                            $.ajax({
-                                url: '',
-                                // dataType: 'json',
-                                data: {key: 1},
-                                success: function(data) {
-                                    $self.data('loader', 'true');
-                                    data = {
-                                        list: [
-                                            {
-                                                'name': '艾绒1',
-                                                'standard': '个',
-                                                'level': '1',
-                                                'origin': '湖北省',
-                                                'price': '20'
-                                            },
-                                            {
-                                                'name': '艾绒2',
-                                                'standard': '个',
-                                                'level': '2',
-                                                'origin': '亳州市',
-                                                'price': '120'
-                                            },
-                                            {
-                                                'name': '艾绒3',
-                                                'standard': '个',
-                                                'level': '2',
-                                                'origin': '亳州市',
-                                                'price': '120'
-                                            },
-                                        ]
-                                    };
-                                    data = {"status":"y","info":"","data":[{"id":427,"userId":100,"billsId":152,"commodityName":"龙胆(北)","specs":"段","level":"段5-10mm、2号筛","origin":"吉林","myPrice":268.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":411,"userId":100,"billsId":152,"commodityName":"天冬","specs":"厚片","level":"2","origin":"安徽","myPrice":235.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":410,"userId":100,"billsId":152,"commodityName":"制没药","specs":"块","level":"3","origin":"安徽","myPrice":186.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":421,"userId":100,"billsId":152,"commodityName":"茜草","specs":"段","level":"2","origin":"安徽","myPrice":150.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":412,"userId":100,"billsId":152,"commodityName":"拳参","specs":"薄片","level":"2","origin":"安徽","myPrice":117.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":415,"userId":100,"billsId":152,"commodityName":"前胡","specs":"薄片","level":"2","origin":"安徽","myPrice":99.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":420,"userId":100,"billsId":152,"commodityName":"制黄精","specs":"厚片","level":"2","origin":"安徽","myPrice":87.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":419,"userId":100,"billsId":152,"commodityName":"蛇床子","specs":"个","level":"2","origin":"安徽","myPrice":73.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":424,"userId":100,"billsId":152,"commodityName":"麸炒枳壳","specs":"薄片","level":"2","origin":"安徽","myPrice":65.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":425,"userId":100,"billsId":152,"commodityName":"菟丝子","specs":"个","level":"水洗，过1号筛","origin":"内蒙古","myPrice":53.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":413,"userId":100,"billsId":152,"commodityName":"麸炒白术","specs":"圆厚片","level":"圆厚片3-6mm、8号筛","origin":"浙江","myPrice":41.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":418,"userId":100,"billsId":152,"commodityName":"制山茱萸","specs":"个","level":"2","origin":"安徽","myPrice":40.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":428,"userId":100,"billsId":152,"commodityName":"炒苦杏仁","specs":"个","level":"2","origin":"安徽","myPrice":34.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":426,"userId":100,"billsId":152,"commodityName":"白花蛇舌草","specs":"段","level":"段长3cm、水洗、1.5号筛","origin":"江西","myPrice":32.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":423,"userId":100,"billsId":152,"commodityName":"盐车前子","specs":"个","level":"净、风选，0.5号筛","origin":"江西","myPrice":30.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":414,"userId":100,"billsId":152,"commodityName":"炒莱菔子","specs":"个","level":"2","origin":"安徽","myPrice":20.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":422,"userId":100,"billsId":152,"commodityName":"地榆","specs":"厚片","level":"2","origin":"安徽","myPrice":20.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":417,"userId":100,"billsId":152,"commodityName":"蜜枇杷叶","specs":"丝","level":"丝8-10mm、无碎沫 蜜枇杷叶","origin":"广东","myPrice":13.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"},{"id":416,"userId":100,"billsId":152,"commodityName":"制女贞子","specs":"个","level":"卵圆形、净、2号筛","origin":"安徽","myPrice":9.0,"expireDate":"2017-01-04 08:00:00","createTime":"2016-12-28 10:54:21"}]};
-
-                                    if (data.data) {
-                                        $self.before(self.toHtml(data.data));
-                                        $self.data('expand', '1').html(txt[1]).prev().slideDown();
-                                    }
-                                }
-                            })
-                        }
-                    })
-                },
-                // 插入html
-                toHtml: function(data) {
-                    var modal = [];
-                    modal.push('<div class="more" style="display:none;">');
-                    $.each(data, function(i, item) {
-                        modal.push('<div class="bd">');
-                            modal.push('<div class="td w1"><input class="cbx" type="checkbox"></div>');
-                            modal.push('<div class="td w2">', item.name,'</div>');
-                            modal.push('<div class="td w3">', item.standard,'</div>');
-                            modal.push('<div class="td w4">', item.level,'</div>');
-                            modal.push('<div class="td w5">', item.origin,'</div>');
-                            modal.push('<div class="td w6">', item.price,'</div>');
-                        modal.push('</div>');
-                    })
-                    modal.push('</div>');
-                    return modal.join('');
-                },
-                // 插入html
-                toHtml2: function(data) {
-                    var self = this,
-                        modal = [];
-                    modal.push('<div class="more" style="display:none;">');
-                    $.each(data, function(i, item) {
-
-                        var checkBox = '',
-                            myPrice = (item.myPrice != 0 && item.myPrice!= null ) ? item.myPrice : '--';
-
-                        if((item.myPrice != 0 &&item.myPrice!= null )&&item.expireDate!=null&&new Date(item.expireDate.replace(/-/g,'/').split(' ')[0] + ' 23:59:59')>=new Date()){
-                            checkBox = '<input class="cbx" type="checkbox" value="'+item.id+'">';
-                            modal.push('<div class="bd">');
-                        } else {
-                            checkBox = '<input class="cbx" type="checkbox" value="" disabled>';
-                            modal.push('<div class="bd enable">');
-                        }
-                        modal.push('<div class="td w1">', checkBox, '</div>');
-                        modal.push('<div class="td w2">', item.commodityName, '</div>');
-                        modal.push('<div class="td w3">', item.specs, '</div>');
-                        modal.push('<div class="td w4">', item.level, '</div>');
-                        modal.push('<div class="td w5">', item.origin, '</div>');
-                        modal.push('<div class="td w6">', myPrice, '</div>');
-                        modal.push('</div>');
-                    })
-                    modal.push('</div>');
-                    return modal.join('');
-                },
-                // 操作
-                handle: function() {
-                    var $table = $('.fa-chart-d');
-
-                    $table.find('.group:gt(0)').each(function() {
-                        if ($(this).find('.cbx').length <= 1) {
-                            $(this).find('.buy').html('重新询价');
-                        } else {
-                            $(this).find('.buy').html('订购已选商品');
-                        }
-                    })
-
-                    // 全选 &　反选
-                    $table.on('click', '.hd .cbx:not(:disabled)', function() {
-                        $(this).closest('.group').find('.cbx:not(:disabled)').prop('checked', this.checked);
-                    })
-
-                    // 单选
-                    $table.on('click', '.w1 .cbx:not(:disabled)', function() {
-                        var $cbxAll = $(this).closest('.group').find('.hd .cbx:not(:disabled)'),
-                            $cbxs = $(this).closest('.group').find('.w1 .cbx:not(:disabled)'),
-                            length = $cbxs.length,
-                            count = 0;
-
-                        if (this.checked) {
-                            $cbxs.each(function(i) {
-                                count += this.checked ? 1 : 0;
-                            })
-                        }
-                        $cbxAll.prop('checked', count === length);
-                    })
-
-                    $table.on('click', '.buy', function(){
-                        var commodityStr = [],
-                            commodityIds = '';
-                            $cbxs = $(this).closest('.group').find('.w1 .cbx:not(:disabled)');
-
-                        $cbxs.each(function() {
-                            this.checked && commodityStr.push(this.value);
-                        })
-                        
-                        if (commodityStr.length === 0) {
-                            $.notify({
-                                type: 'warn',
-                                title: '提示',
-                                text: '请先勾选要订购的商品',
-                                delay: 3e3
-                            });
-                            return false;
-                        }   
-                    })
-
                 }
             }
         }
-        //加载页面js
         $(function() {
-            page.fn.init();
+            _blobal.fn.init();
         });
     </script>
 </body>
