@@ -29,6 +29,15 @@
             <div class="logo">
                 <a href="home.html">饮片B2B首页</a>
             </div>
+
+            <div class="cart">
+                <div class="hd">
+                    <i class="fa fa-cartlist"></i>
+                    <span>我的购物车</span>
+                    <em class="count">0</em>
+                </div>
+                <div class="bd"></div>
+            </div>
             <div class="search">
                 <div class="form">
                     <input class="ipt" name="" id="" placeholder="输入关键字" value="" type="text">
@@ -51,6 +60,33 @@
         </div>
     </div><!-- header end -->
 
+    <!-- 悬浮框 start -->
+    <div class="header search-fixed">
+        <div class="wrap">
+            <div class="logo">
+                <a href="/">上工好药首页</a>
+            </div>
+
+            <div class="cart">
+                <div class="hd">
+                    <i class="fa fa-cartlist"></i>
+                    <span>我的购物车</span>
+                    <em class="count">0</em>
+                </div>
+                <div class="bd"></div>
+            </div>
+
+            <div class="search">
+                <div class="form">
+                    <form id="searchFollow" action="commodity/search" method="get">
+                        <input id="_search_ipt2" class="ipt" name="keyword" placeholder="请输入原药名称或饮片名称" value="" type="text">
+                        <button class="btn" type="submit">搜索</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 悬浮 end -->
 
     <!-- nav start -->
     <div class="nav">
@@ -562,7 +598,7 @@
                             </dd>
                         </dl>
                         <div class="buttons">
-                            <a class="btn btn-red" href="#">询价</a>
+                            <a class="btn btn-red" href="javascript:;" id="buying" data-s="1|白芍|圆片、厚2-3mm、直径1.8cm以上、14#-18#、无空心片、异形片、黑片">加入订货单</a>
                             <a class="btn btn-gray faved" href="#"><i class="fa fa-heart"></i>已收藏</a>
                         </div>
                     </div>
@@ -677,6 +713,7 @@
     </div><!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
+    <script src="js/layer/layer.js"></script>
     <script src="js/jquery.autocomplete.min.js"></script>
     <script src="js/common.js"></script>
     <script>
@@ -684,8 +721,50 @@
         v: {},
         fn: {
             init: function() {
+                this.addToCart();
                 this.rank();
                 this.imgerror();
+            },
+            // 加入询价单
+            addToCart: function() {
+                $('#buying').on('click', function() {
+                    var cart = shopcart.getCart(),
+                        data = ($(this).data('s') || '').split('|'), // data-s = "id|name|norms"
+                        id = data[0],
+                        count = 1,
+                        model = [];
+
+                    if (cart.indexOf('@' + id) >= 0 || cart.indexOf(id + '@') >= 0) {
+                        $(this).html('已加入询价单');
+                        layer.alert('该商品已加入询价单',{icon: 1});
+                        return false;
+                    } else if (cart == '') {
+                        cart = id;
+                        model = [{
+                            "id": id,
+                            "name": data[1],
+                            "norms": data[2],
+                            "url": "/commodity/" + id
+                        }]
+                        shopcart.toHtml(model);
+                    } else {
+                        cart = cart.replace('@' + id, '').replace(id + '@', '');
+                        cart = id + '@' + cart;
+
+                        model.push('<li>');
+                        model.push('<a href="/commodity/' , id ,'" class="name">', data[1] , '</a>');
+                        model.push('<span class="norms">', data[2], '</span>');
+                        model.push('<a href="javascript:;" data-id="', id, '" class="fa fa-times"></a>');
+                        model.push('</li>');
+
+                        $('.header').find('.cart ul').prepend(model.join(''));
+                    }
+                    shopcart.saveCart(cart);
+                    shopcart.calcCount(count);
+                    $(this).html('已加入询价单');
+                    return false;
+                    
+                })
             },
             rank: function() {
                 $('#rank').on('click', 'a', function() {

@@ -408,7 +408,7 @@ var shopcart = {
 				$ul = $li.parent(),
 				id = $(this).data('id');
 
-			layer.confirm('确认删除商品？', {icon: 3, title:'提示'}, function(index){
+			layer.confirm('您确定要将该商品从购物清单中删除吗？', {icon: 3, title:'提示'}, function(index){
 				$li.remove();
 				$header.find('.cart ul').html($ul.html());
 				that.delCart(id);
@@ -419,7 +419,7 @@ var shopcart = {
 		// 加入询价单
 		$('.fa-pro-list').on('click', '.btn-white', function() {
 			var cart = that.getCart(),
-				data = $(this).data('s').split('|'), // data-s = "id|name|norms"
+				data = ($(this).data('s') || '').split('|'), // data-s = "id|name|norms"
 				id = data[0],
 				count = 1,
 				model = [];
@@ -453,7 +453,7 @@ var shopcart = {
 			
 		}).find('.btn-white').each(function() {
 			var cart = that.getCart(),
-				data = $(this).data('s').split('|'),
+				data = ($(this).data('s') || '').split('|'),
 				id = data[0];
 			if (cart.indexOf('@' + id) >= 0 || cart.indexOf(id + '@') >= 0) {
 				$(this).removeClass('.btn-white').addClass('btn-gray').prop('disabled', true).html('已加入询价单');
@@ -485,8 +485,20 @@ var shopcart = {
 		this.calcCount(-1);
 	},
 	calcCount: function(num) {
+		var $count = $('.header').find('.cart .count'),
+			anmi = '';
+
+		if (num < 0) {
+			anmi = '<i>-' + num + '</i>';
+		} else if (num > 0) {
+			anmi = '<i>+' + num + '</i>';
+		} else {
+			anmi = '';
+		}
+
 		this.count += num;
-		$('.header').find('.cart .count').html(this.count);
+		$count.html(this.count + anmi);
+		$count.find('i').animate({top: '-30px', 'opacity': 0}, 1e3);
 	},
 	empty: function() {
 		$('.header').find('.cart .bd').html('<div class="arrow"></div><div class="empty">询价单中还没有商品，立即挑选吧！</div>');

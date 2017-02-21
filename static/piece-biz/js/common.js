@@ -486,8 +486,20 @@ var shopcart = {
 		this.calcCount(-1);
 	},
 	calcCount: function(num) {
+		var $count = $('.header').find('.cart .count'),
+			anmi = '';
+
+		if (num < 0) {
+			anmi = '<i>-' + num + '</i>';
+		} else if (num > 0) {
+			anmi = '<i>+' + num + '</i>';
+		} else {
+			anmi = '';
+		}
+
 		this.count += num;
-		$('.header').find('.cart .count').html(this.count);
+		$count.html(this.count + anmi);
+		$count.find('i').animate({top: '-30px', 'opacity': 0}, 1e3);
 	},
 	empty: function() {
 		$('.header').find('.cart .bd').html('<div class="arrow"></div><div class="empty">询价单中还没有商品，立即挑选吧！</div>');
