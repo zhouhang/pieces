@@ -324,40 +324,40 @@ var shopcart = {
 			success: function(res) {
 				res = {
 					"list": [{
-						"id": "1944",
+						"id": "1",
 						"name": "壁虎（天龙）",
 						"norms": "净",
-						"url": "/commodity/1944"
+						"url": "/commodity/1"
 					},{
-						"id": "1939",
+						"id": "2",
 						"name": "白芍",
 						"norms": "直径1.6-1.8cm，厚度2-3mm,16-18号筛",
-						"url": "/commodity/1939"
+						"url": "/commodity/2"
 					},{
-						"id": "1941",
+						"id": "3",
 						"name": "白芍",
 						"norms": "圆片、厚2-3mm、直径0.6cm-1.8cm以上、 无空心片、异形片、黑片 6-18号筛",
-						"url": "/commodity/1941"
+						"url": "/commodity/3"
 					},{
-						"id": "1922",
+						"id": "4",
 						"name": "紫菀",
 						"norms": "厚片4-6mm、 1号筛",
-						"url": "/commodity/1922"
+						"url": "/commodity/4"
 					},{
-						"id": "1904",
+						"id": "5",
 						"name": "煅紫石英",
 						"norms": "2",
-						"url": "/commodity/1904"
+						"url": "/commodity/5"
 					},{
-						"id": "42",
+						"id": "6",
 						"name": "安息香",
 						"norms": "小块、成团块、表面橙黄色、具蜡样光泽",
-						"url": "/commodity/42"
+						"url": "/commodity/6"
 					},{
-						"id": "37",
+						"id": "7",
 						"name": "艾叶",
 						"norms": "除去杂质，长梗，2号筛",
-						"url": "/commodity/37"
+						"url": "/commodity/7"
 					}]
 				};
 				that.toHtml(res.list);
@@ -408,7 +408,7 @@ var shopcart = {
 				$ul = $li.parent(),
 				id = $(this).data('id');
 
-			layer.confirm('确认删除商品？', {icon: 3, title:'提示'}, function(index){
+			layer.confirm('您确定要将该商品从购物清单中删除吗？', {icon: 3, title:'提示'}, function(index){
 				$li.remove();
 				$header.find('.cart ul').html($ul.html());
 				that.delCart(id);
