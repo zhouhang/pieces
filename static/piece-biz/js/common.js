@@ -108,7 +108,7 @@ function throttle(func, wait, mustRun) {
 };
 
 function bindSearch() {
-	var $searchForm = $('#_search_form'),	
+	var $searchForm = $('#_search_form'),$searchForm2 = $('#_search_form2'),
 		$fixed = $('.search-fixed');
 
 	$('#_search_ipt').autocomplete({
@@ -128,15 +128,42 @@ function bindSearch() {
             $searchForm.submit();
         }
     });
+	if ($searchForm2) {
+		$('#_search_ipt2').autocomplete({
+			serviceUrl: '/commodity/search/auto',
+			paramName: 'keyword',
+			groupBy: 'category',
+			transformResult: function (response) {
+				response = JSON.parse(response);
+				return {
+					suggestions: $.map(response, function (dataItem) {
+						return {
+							value: (dataItem.category ? dataItem.category + '：' : '') + dataItem.value,
+							data: {'category': dataItem.category}
+						}
+					})
+				};
+			},
+			onSelect: function (suggestion) {
+				$searchForm2.submit();
+			}
+		});
+	}
 
-    $(window).on('scroll', function() {
-    	if ($(window).scrollTop() > 129) {
-    		$fixed.addClass('search-animated');
-    	} else {
-    		$fixed.removeClass('search-animated');
-    	}
-    })
-	
+	var searchBarFixed = function() {
+		if ($(window).scrollTop() > 129) {
+			$fixed.addClass('search-animated');
+		} else {
+			$fixed.removeClass('search-animated');
+		}
+	}
+
+
+	$(window).on('scroll', function() {
+		searchBarFixed();
+	})
+
+	searchBarFixed();
 }
 
 // 用户中心导航高亮
@@ -248,6 +275,225 @@ function gotop() {
 	});
 }
 
+
+var cookieFn = {
+	set: function(key, val, day) {
+		var str = key + "=" + escape(val);
+		if(day > 0){
+            var date = new Date();
+            var ms = day * 24 * 3600 * 1e3;
+            date.setTime(date.getTime() + ms);
+            str += "; expires=" + date.toGMTString();
+        }
+		str += '; path=/';
+		// str += '; path=/; domain=lppz.com';
+		document.cookie = str;
+	},
+	get: function(key) {
+		var arrStr = document.cookie.split("; ");
+		for (var i = 0; i < arrStr.length; i++) {
+			var temp = arrStr[i].split("=");
+			if (temp[0] == key) return unescape(temp[1]);
+		}
+	},
+	delete: function(key) {
+		var date = new Date();
+		date.setTime(date.getTime() - 1e4);
+		document.cookie = key + "=v; expires =" + date.toGMTString();
+	}
+}
+
+// 购物车
+var shopcart = {
+	init: function() {
+		this.count = 0;
+		this.initCart();
+		this.bindEvent();
+	},
+	initCart: function() {
+		var that = this,
+			cart = this.getCart(),
+			$header = $('.header');
+
+		$.ajax({
+			url: '',
+			data: {id: cart.split('@').join()},
+			beforeSend: function() {
+				$header.find('.cart .bd').html('<div class="arrow"></div><div class="loading"></div>');
+			},
+			success: function(res) {
+				res = {
+					"list": [{
+						"id": "1944",
+						"name": "壁虎（天龙）",
+						"norms": "净",
+						"url": "/commodity/1944"
+					},{
+						"id": "1939",
+						"name": "白芍",
+						"norms": "直径1.6-1.8cm，厚度2-3mm,16-18号筛",
+						"url": "/commodity/1939"
+					},{
+						"id": "1941",
+						"name": "白芍",
+						"norms": "圆片、厚2-3mm、直径0.6cm-1.8cm以上、 无空心片、异形片、黑片 6-18号筛",
+						"url": "/commodity/1941"
+					},{
+						"id": "1922",
+						"name": "紫菀",
+						"norms": "厚片4-6mm、 1号筛",
+						"url": "/commodity/1922"
+					},{
+						"id": "1904",
+						"name": "煅紫石英",
+						"norms": "2",
+						"url": "/commodity/1904"
+					},{
+						"id": "42",
+						"name": "安息香",
+						"norms": "小块、成团块、表面橙黄色、具蜡样光泽",
+						"url": "/commodity/42"
+					},{
+						"id": "37",
+						"name": "艾叶",
+						"norms": "除去杂质，长梗，2号筛",
+						"url": "/commodity/37"
+					}]
+				};
+				that.toHtml(res.list);
+			}
+		})
+	},
+	toHtml: function(data) {
+		var that = this,
+			model = [];
+			
+		that.count = data.length;
+
+		if (that.count > 0) {
+			model.push('<div class="arrow"></div><div class="tb">');
+			model.push('<ul>');
+			$.each(data, function(i, item) {
+				model.push('<li>');
+				model.push('<a href="' , item.url ,'" class="name">', item.name , '</a>');
+				model.push('<span class="norms">', item.norms, '</span>');
+				model.push('<a href="javascript:;" data-id="', item.id, '" class="fa fa-times"></a>');
+				model.push('</li>');
+			})
+			model.push('</ul></div>');
+			model.push('<div class="tf">');
+			model.push('<a href="#" class="btn btn-red">查看询价单</a>');
+			model.push('共 <em class="count">', that.count, '</em> 件商品 ');
+			model.push('</div>');
+			$('.header').find('.cart .bd').html(model.join(''));
+			that.calcCount(0);
+		} else {
+			that.empty();	// 购物车为空
+		}
+	},
+	bindEvent: function() {
+		var that = this,
+			$header = $('.header');
+
+		// 开关
+		$header.find('.cart').on('mouseenter', function() {
+			$(this).addClass('cart-hover');
+		}).on('mouseleave', function() {
+			$(this).removeClass('cart-hover');
+		})
+
+		// 删除购物车商品
+		$header.on('click', '.fa-times', function() {
+			var $li = $(this).parent(),
+				$ul = $li.parent(),
+				id = $(this).data('id');
+
+			layer.confirm('确认删除商品？', {icon: 3, title:'提示'}, function(index){
+				$li.remove();
+				$header.find('.cart ul').html($ul.html());
+				that.delCart(id);
+	            layer.close(index);
+	        });  
+		})
+
+		// 加入询价单
+		$('.fa-pro-list').on('click', '.btn-white', function() {
+			var cart = that.getCart(),
+				data = ($(this).data('s') || '').split('|'), // data-s = "id|name|norms"
+				id = data[0],
+				count = 1,
+				model = [];
+
+			if (cart == '') {
+				cart = id;
+				model = [{
+					"id": id,
+					"name": data[1],
+					"norms": data[2],
+					"url": "/commodity/" + id
+				}]
+				that.toHtml(model);
+			} else {
+				cart = cart.replace('@' + id, '').replace(id + '@', '');
+				cart = id + '@' + cart;
+
+				model.push('<li>');
+				model.push('<a href="/commodity/' , id ,'" class="name">', data[1] , '</a>');
+				model.push('<span class="norms">', data[2], '</span>');
+				model.push('<a href="javascript:;" data-id="', id, '" class="fa fa-times"></a>');
+				model.push('</li>');
+
+				$header.find('.cart ul').prepend(model.join(''));
+				// count = cart.split('@').length - that.count; // 重复添加时，数量不变
+			}
+			that.saveCart(cart);
+			that.calcCount(count);
+			$(this).removeClass('.btn-white').addClass('btn-gray').prop('disabled', true).html('已加入询价单');
+			return false;
+			
+		}).find('.btn-white').each(function() {
+			var cart = that.getCart(),
+				data = ($(this).data('s') || '').split('|'),
+				id = data[0];
+
+			if (cart.indexOf('@' + id) >= 0 || cart.indexOf(id + '@') >= 0) {
+				$(this).removeClass('.btn-white').addClass('btn-gray').prop('disabled', true).html('已加入询价单');
+			} else {
+				$(this).prop('disabled', false).html('加入询价单');
+			}
+		})
+
+		// 已加入
+		$('.fa-pro-list').on('click', '.btn-gray', function() {
+			return false;
+		})
+	},
+	getCart: function() {
+		return cookieFn.get('cart') || '';
+	},
+	saveCart: function(val) {
+		cookieFn.set('cart', val, 30); // 保存30天
+	},
+	delCart: function(id) {
+		var cart = this.getCart();
+		if (this.count < 2) {
+			this.saveCart('');
+			this.empty();
+		} else {
+			cart = cart.replace('@' + id, '').replace(id + '@', '');
+			this.saveCart(cart);
+		}
+		this.calcCount(-1);
+	},
+	calcCount: function(num) {
+		this.count += num;
+		$('.header').find('.cart .count').html(this.count);
+	},
+	empty: function() {
+		$('.header').find('.cart .bd').html('<div class="arrow"></div><div class="empty">询价单中还没有商品，立即挑选吧！</div>');
+	}
+}
+
 function pageInit() {
 	// 开启图片懒加载
     lazyload({
@@ -258,13 +504,13 @@ function pageInit() {
     // gotop
     gotop();
 	// search
-	// bindSearch();
+	bindSearch();
 	// 用户中心导航高亮
 	currNav();
-	// 询价按钮
-	quoteEvent();
 	// 商品分类
 	cat();
+	// 购物车
+	shopcart.init();
 }
 
 $(function() {

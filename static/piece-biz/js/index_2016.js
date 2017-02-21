@@ -151,10 +151,6 @@ $(function(){
 	$('#jslide').carousel({
 		easing: EASING
 	});
-	$('#jbrands').slide({
-		// autoPlay: false,
-		speed: 300
-	});
 
 	// 楼层导航
 	var 
