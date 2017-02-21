@@ -15,6 +15,14 @@
             <div class="logo">
                 <a href="/">上工好药首页</a>
             </div>
+            <div class="cart">
+                <div class="hd">
+                    <i class="fa fa-cartlist"></i>
+                    <span>我的询价单</span>
+                    <em class="count">0</em>
+                </div>
+                <div class="bd"></div>
+            </div>
             <div class="search">
                 <div class="form">
                     <form id="_search_form2" action="commodity/search" method="get">
@@ -83,7 +91,10 @@
                                 <td>${commodity.spec}</td>
 	                            <td>${commodity.originOf}</td>
 	                            <td>${commodity.executiveStandard}</td>
-	                            <td><a href="/center/enquiry/index?commodityId=${commodity.id!}" class="btn btn-white btn-quote j_pop_login">立即询价</a></td>
+	                            <td>
+                                    <button data-s="${commodity.id}|${commodity.name}|${commodity.spec}" class="btn btn-white btn-cart">加入询价单</button>
+                                    <a href="/commodity/${commodity.id }" class="link">查看详情</a>
+                                </td>
 	                        </tr>
 	                    </#list>
 	                </#if>

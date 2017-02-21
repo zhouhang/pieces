@@ -74,7 +74,7 @@
                             </dd>
                         </dl>
                         <div class="buttons">
-                            <a class="btn btn-red j_pop_login" href="/center/enquiry/index?commodityId=${commodity.id!}">询价</a>
+                            <a class="btn btn-red" href="#">加入询价单</a>
                             <a class="btn btn-gray j_pop_login_collect" ajaxurl="/center/collect/add/${commodity.id!}" url="/commodity/${commodity.id!}"><i class="fa fa-heart"></i>收藏</a>
                         </div>
                     </div>

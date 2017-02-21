@@ -16,6 +16,14 @@
         <div class="logo">
             <a href="/">上工好药首页</a>
         </div>
+        <div class="cart">
+            <div class="hd">
+                <i class="fa fa-cartlist"></i>
+                <span>我的购物车</span>
+                <em class="count">0</em>
+            </div>
+            <div class="bd"></div>
+        </div>
         <div class="search">
             <div class="form">
                 <form id="_search_form2" action="commodity/search" method="get">
@@ -41,6 +49,13 @@
     </div>
     <div class="hd"></div>
     <div class="side-notice">
+        <div class="quick">
+            <a href="#" class="btn btn-red"><i class="fa fa-question-circle"></i>我要询价</a>
+            <span>挑选商品，提交询价单</span>
+            <hr />
+            <a href="#" class="btn btn-primary"><i class="fa fa-cart"></i>我要下单</a>
+            <span>登录，在询价记录中下单</span>
+        </div>
         <h3>服务公告</h3>
         <ul>
             <#list articles as article>
@@ -159,5 +174,7 @@
 
 <script src="${urls.getForLookupPath('/js/jquery.nav.js')}"></script>
 <script src="${urls.getForLookupPath('/js/index_2016.js')}"></script>
+<script src="${urls.getForLookupPath('/js/index_2016.js')}"></script>
+<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 </body>
 </html>

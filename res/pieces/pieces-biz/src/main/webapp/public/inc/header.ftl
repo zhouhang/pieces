@@ -6,6 +6,14 @@
         <div class="logo">
             <a href="/">上工好药首页</a>
         </div>
+        <div class="cart">
+            <div class="hd">
+                <i class="fa fa-cartlist"></i>
+                <span>我的询价单</span>
+                <em class="count">0</em>
+            </div>
+            <div class="bd"></div>
+        </div>
         <div class="search">
             <div class="form">
                 <form id="_search_form" action="commodity/search" method="get">
