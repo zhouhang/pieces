@@ -104,6 +104,24 @@ public class SmsService {
     }
 
 
+    public String sendEnquiryCaptcha(String mobile) throws Exception {
+        checkCaptcha(mobile);
+        //生成并发送验证码
+        String code = SeqNoUtil.getRandomNum(4);
+        Map<String, Object> param = new HashMap<>();
+        param.put("apikey", apikey);
+        param.put("mobile", mobile);
+        param.put("text", TextTemplateEnum.SMS_BIZ_FINDPASSWORD_CAPTCHA.getText("【上工好药】", code));
+        HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+        //记录发送成功的时间
+        redisManager.set(RedisEnum.KEY_MOBILE_CAPTCHA_INTERVAL.getValue()+mobile,new Date().getTime()+"");
+        //验证码存储在redis缓存里
+        redisManager.set(RedisEnum.KEY_MOBILE_EQUIRY_CAPTCHA.getValue()+mobile,code,SMS_EXPIRE_TIME);
+        return code;
+    }
+
+
+
     public void sendAddUserAccount(String passWord,String mobile,String username)throws Exception{
         //生成六位数密码
         Map<String, Object> param = new HashMap<>();

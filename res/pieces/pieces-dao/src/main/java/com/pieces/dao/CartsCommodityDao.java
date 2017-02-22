@@ -10,4 +10,8 @@ public interface CartsCommodityDao extends ICommonDao<CartsCommodity>{
 
     public List<CartsCommodityVo> findByParams(CartsCommodityVo cartsCommodityVo);
 
+    public Integer deleteByVo(CartsCommodityVo cartsCommodityVo);
+
+    public void combine(List<CartsCommodityVo> cartsCommodityVos);
+
 }

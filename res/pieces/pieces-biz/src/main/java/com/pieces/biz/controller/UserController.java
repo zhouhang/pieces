@@ -18,14 +18,13 @@ import com.pieces.dao.model.ShippingAddress;
 import com.pieces.dao.vo.CertifyRecordVo;
 import com.pieces.dao.vo.ShippingAddressVo;
 import com.pieces.dao.vo.UserCertificationVo;
-import com.pieces.service.CertifyRecordService;
-import com.pieces.service.ShippingAddressService;
-import com.pieces.service.UserCertificationService;
+import com.pieces.service.*;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.shiro.ShiroRedisCacheManager;
 import com.pieces.service.utils.SerializeUtils;
 import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
+import com.pieces.tools.utils.CookieUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -43,13 +42,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.pieces.biz.shiro.BizRealm;
 import com.pieces.biz.shiro.BizToken;
 import com.pieces.dao.model.User;
-import com.pieces.service.UserService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.redis.RedisManager;
 import com.pieces.tools.utils.CommonUtils;
 import com.pieces.tools.utils.WebUtil;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 /**
  * 用户控制器 包括用户注册，用户登录和用户中心
@@ -85,6 +84,9 @@ public class UserController extends BaseController {
 
 	@Autowired
 	ShiroRedisCacheManager shiroRedisCacheManager;
+
+	@Autowired
+	CartsCommodityService cartsCommodityService;
 
 	/**
 	 * 进入注册页面
@@ -166,6 +168,14 @@ public class UserController extends BaseController {
 		Subject subject = SecurityUtils.getSubject();
 		BizToken token = new BizToken(user.getUserName(), passWord, false, CommonUtils.getRemoteHost(request), "");
 		userService.login(subject,token);
+
+		//合并cookie和购物车里面商品
+
+		String cookieValue = CookieUtils.getCookieValue(request, "cart");
+		String ids=StringUtils.join(StringUtils.split("@"),",");
+
+		cartsCommodityService.combine(StringUtils.split("@"),user);
+
 
 
 
@@ -252,7 +262,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(String userName, String password, String url, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws Exception {
 		// 登陆验证
 		Subject subject = SecurityUtils.getSubject();
 		BizToken token = new BizToken(userName, password, false, CommonUtils.getRemoteHost(request), "");
@@ -269,6 +279,13 @@ public class UserController extends BaseController {
 			url = WebUtils.getSavedRequest(request) != null ? WebUtils.getSavedRequest(request).getRequestUrl() : "/user/info";
 		}
 
+
+		String cookieValue = CookieUtils.getCookieValue(request, "cart");
+		String ids=StringUtils.join(StringUtils.split("@"),",");
+
+       //合并cookie和购物车里面商品
+		User user=userService.findByAccount(userName);
+		cartsCommodityService.combine(StringUtils.split("@"),user);
 		Result result = new Result(true).info(url);
 		WebUtil.print(response, result);
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import com.github.pagehelper.PageHelper;
 import com.pieces.dao.enums.CertifyStatusEnum;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.tools.utils.SeqNoUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
@@ -35,6 +36,9 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private SerialNumberService serialNumberService;
 
     @Override
     public List<User> findUserByCondition(User user) {
@@ -189,6 +193,17 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
     @Override
     public User findByAccount(String accountName) {
         return userDao.findByAccount(accountName);
+    }
+
+    @Override
+    @Transactional
+    public int generateUser(User user) {
+        //默认type=1
+        user.setType(1);
+        user.setUserName("sg"+serialNumberService.getTensTimestamp()+SeqNoUtil.getRandomNum(2));
+        user.setPassword(user.getContactMobile().substring(6,11));
+        return addUser(user);
+
     }
 
     @Override

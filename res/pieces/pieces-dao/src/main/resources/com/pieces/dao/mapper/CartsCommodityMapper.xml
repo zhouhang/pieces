@@ -43,7 +43,7 @@
                 id = #{id}
             </if>
             <if test="userId!= null">
-                user_id = #{userId}
+                and user_id = #{userId}
             </if>
         </where>
     </select>
@@ -79,4 +79,32 @@
         </set>
         where id = #{id}
     </update>
+    <delete id="deleteByVo" parameterType="com.pieces.dao.vo.CartsCommodityVo">
+        delete from carts_commodity
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="userId!= null">
+                and user_id = #{userId}
+            </if>
+            <if test="commodityId != null">
+                and commodity_id = #{commodityId},
+            </if>
+        </where>
+    </delete>
+
+    <update id='combine'>
+        insert into
+        carts_commodity (user_id,commodity_id,create_time)
+        VALUES
+        <foreach collection="list" index="index" item="item"
+                        separator=",">
+        (#{item.userId},#{item.commodityId},#{item.createTime}
+        </foreach>
+              ON DUPLICATE KEY UPDATE
+              user_id = VALUES(user_id),
+              commodity_id = VALUES(commodity_id)
+    </update>
+
 </mapper>

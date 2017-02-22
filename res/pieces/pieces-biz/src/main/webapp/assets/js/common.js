@@ -332,7 +332,6 @@ var shopcart = {
 			model = [];
 			
 		that.count = data.length;
-		console.log(that.count);
 
 
 		if (that.count > 0) {

@@ -187,10 +187,18 @@
 
                     // 询价
                     $('#submit').on('click', function() {
-                        if (that.isLogin) {
+
+                       <#if user_session_biz??>
                             // 已登录
-                            // window.location.href = '';
-                        } else {
+                           $.ajax({
+                               url: '/cart/submit',
+                               type:"POST",
+                               data: {ids: cart.split('@').join(',')},
+                               success: function(res) {
+                                   window.location.href = '/center/enquiry/index';
+                               }
+                           })
+                        <#else >
                             // 未登录
                             layer.open({
                                 area: ['540px'],
@@ -199,7 +207,9 @@
                                 content: $contact,
                                 title: '联系方式'
                             });
-                        }
+                        </#if>
+
+
                     })
 
                     // 关闭弹层
@@ -216,8 +226,15 @@
                         valid: function(form) {
                             var myfromValid = this;
                             if ( $(form).isValid() ) {
-                                alert(9)
-                                window.location.href = 'message_enquiry-2.html';
+                                $.ajax({
+                                    url: '/cart/submit',
+                                    type:"POST",
+                                    data: $(form).formSerialize()+"&ids="+shopcart.getCart().split('@').join(','),
+                                    success: function(res) {
+                                        window.location.href = '/center/enquiry/index';
+                                    }
+                                })
+
                             }
                         }
                     });
@@ -253,7 +270,7 @@
 
                     var sendMSM = function() {
                         $.ajax({
-                            url : 'json/getMobileCode.php',
+                            url : '/code/enquiry',
                             dataType: 'json',
                             beforeSend: function() {
                                 $send.text('发送中...').prop('disabled', true);

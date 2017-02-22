@@ -78,4 +78,9 @@ public interface UserService extends ICommonService<User>{
 	 */
 	User findByAccount(String accountName);
 
+
+	/**
+	 *姓名和手机后台自动生成一个新用户
+	 */
+	int generateUser(User user);
 }
