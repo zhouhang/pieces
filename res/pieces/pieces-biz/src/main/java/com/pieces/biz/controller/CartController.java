@@ -1,5 +1,7 @@
 package com.pieces.biz.controller;
 
+import com.pieces.dao.model.Commodity;
+import com.pieces.dao.vo.CommodityVo;
 import com.pieces.service.CartsCommodityService;
 import com.pieces.service.CommodityService;
 import com.pieces.service.EnquiryBillsService;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by xiao on 2017/2/21.
@@ -27,7 +31,7 @@ public class CartController {
 
 
 
-       private static final int COOKIE_EXPIRE = 3600;
+       private static final int COOKIE_EXPIRE = 3600*24*30;//默认30天
 
        @Autowired
        HttpSession httpSession;
@@ -58,15 +62,35 @@ public class CartController {
 
        /**
         * 获取购物车列表
-        * @param modelMap
+        * @param ids
         * @return
         */
        @RequestMapping(value = "/list",method = RequestMethod.POST)
        @ResponseBody
-       public Result list(ModelMap modelMap){
-              return new Result(true).info("list");
+       public Result list(String ids){
+              List<CommodityVo> commodityVos=new ArrayList<CommodityVo>();
+              if(!ids.equals("")){
+                     commodityVos=commodityService.findVoByIds(ids);
+              }
+              return new Result(true).data(commodityVos);
        }
 
+       /**
+        * 添加商品
+        * @param commodityId
+        * @return
+        */
+       @RequestMapping(value = "/add",method = RequestMethod.POST)
+       @ResponseBody
+       public Result add(Integer commodityId){
+              return new Result(true).info("添加成功");
+       }
+
+       /**
+        * 删除商品
+        * @param commodityId
+        * @return
+        */
        @RequestMapping(value = "/delete",method = RequestMethod.POST)
        @ResponseBody
        public Result delete(Integer commodityId){
@@ -74,6 +98,11 @@ public class CartController {
        }
 
 
+       /**
+        * 提交询价单
+        * @param commodityId
+        * @return
+        */
        @RequestMapping(value = "/submit",method = RequestMethod.POST)
        @ResponseBody
        public Result submit(Integer commodityId){

@@ -100,7 +100,6 @@
 
 <script src="${urls.getForLookupPath('/js/jquery.min.js')}"></script>
 <script src="${urls.getForLookupPath('/js/jquery.autocomplete.min.js')}"></script>
-<script src="${urls.getForLookupPath('/js/common.js')}"></script>
 <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 <script src="/js/validator/jquery.validator.js?local=zh-CN"></script>
 <script>
@@ -117,49 +116,11 @@
                             cart = shopcart.getCart();
 
                     $.ajax({
-                        url: '',
-                        data: {id: cart.split('@').join()},
+                        url: '/cart/list',
+                        type:"POST",
+                        data: {ids: cart.split('@').join(',')},
                         success: function(res) {
-                            res = {
-                                "list": [{
-                                    "id": "1",
-                                    "name": "壁虎（天龙）",
-                                    "norms": "净",
-                                    "url": "/commodity/1"
-                                },{
-                                    "id": "2",
-                                    "name": "白芍",
-                                    "norms": "直径1.6-1.8cm，厚度2-3mm,16-18号筛",
-                                    "url": "/commodity/2"
-                                },{
-                                    "id": "3",
-                                    "name": "白芍",
-                                    "norms": "圆片、厚2-3mm、直径0.6cm-1.8cm以上、 无空心片、异形片、黑片 6-18号筛",
-                                    "url": "/commodity/3"
-                                },{
-                                    "id": "4",
-                                    "name": "紫菀",
-                                    "norms": "厚片4-6mm、 1号筛",
-                                    "url": "/commodity/4"
-                                },{
-                                    "id": "5",
-                                    "name": "煅紫石英",
-                                    "norms": "2",
-                                    "url": "/commodity/5"
-                                },{
-                                    "id": "6",
-                                    "name": "安息香",
-                                    "norms": "小块、成团块、表面橙黄色、具蜡样光泽",
-                                    "url": "/commodity/6"
-                                },{
-                                    "id": "7",
-                                    "name": "艾叶",
-                                    "norms": "除去杂质，长梗，2号筛",
-                                    "url": "/commodity/7"
-                                }],
-                                "list2": []
-                            };
-                            that.toHtml(res.list);
+                            that.toHtml(res.data);
                         }
                     })
                 },
@@ -168,14 +129,15 @@
                             model = [];
 
                     that.count = data.length;
+                    console.log()
 
                     if (that.count > 0) {
                         $.each(data, function(i, item) {
                             model.push('<tr>');
                             model.push('<td><a href="' , item.url ,'" class="c-blue">', item.name , '</a></td>');
                             model.push('<td>', item.spec, '</td>');
-                            model.push('<td>', item.norms, '</td>');
-                            model.push('<td>', item.origin, '</td>');
+                            model.push('<td>', item.level,'</td>');
+                            model.push('<td>', item.originOf, '</td>');
                             model.push('<td><a href="javascript:;" data-id="', item.id, '" class="del">删除</a></td>');
                             model.push('</tr>');
                         })

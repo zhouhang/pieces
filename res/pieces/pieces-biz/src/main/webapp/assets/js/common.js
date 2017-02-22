@@ -316,51 +316,14 @@ var shopcart = {
 			$header = $('.header');
 
 		$.ajax({
-			url: '',
-			data: {id: cart.split('@').join()},
+			url: '/cart/list',
+			type:"POST",
+			data: {ids: cart.split('@').join(",")},
 			beforeSend: function() {
 				$header.find('.cart .bd').html('<div class="arrow"></div><div class="loading"></div>');
 			},
 			success: function(res) {
-				res = {
-					"list": [{
-						"id": "1944",
-						"name": "壁虎（天龙）",
-						"norms": "净",
-						"url": "/commodity/1944"
-					},{
-						"id": "1939",
-						"name": "白芍",
-						"norms": "直径1.6-1.8cm，厚度2-3mm,16-18号筛",
-						"url": "/commodity/1939"
-					},{
-						"id": "1941",
-						"name": "白芍",
-						"norms": "圆片、厚2-3mm、直径0.6cm-1.8cm以上、 无空心片、异形片、黑片 6-18号筛",
-						"url": "/commodity/1941"
-					},{
-						"id": "1922",
-						"name": "紫菀",
-						"norms": "厚片4-6mm、 1号筛",
-						"url": "/commodity/1922"
-					},{
-						"id": "1904",
-						"name": "煅紫石英",
-						"norms": "2",
-						"url": "/commodity/1904"
-					},{
-						"id": "42",
-						"name": "安息香",
-						"norms": "小块、成团块、表面橙黄色、具蜡样光泽",
-						"url": "/commodity/42"
-					},{
-						"id": "37",
-						"name": "艾叶",
-						"norms": "除去杂质，长梗，2号筛",
-						"url": "/commodity/37"
-					}]
-				};
-				that.toHtml(res.list);
+				that.toHtml(res.data);
 			}
 		})
 	},
@@ -369,6 +332,8 @@ var shopcart = {
 			model = [];
 			
 		that.count = data.length;
+		console.log(that.count);
+
 
 		if (that.count > 0) {
 			model.push('<div class="arrow"></div><div class="tb">');
@@ -376,7 +341,7 @@ var shopcart = {
 			$.each(data, function(i, item) {
 				model.push('<li>');
 				model.push('<a href="' , item.url ,'" class="name">', item.name , '</a>');
-				model.push('<span class="norms">', item.norms, '</span>');
+				model.push('<span class="norms">', item.spec, '</span>');
 				model.push('<a href="javascript:;" data-id="', item.id, '" class="fa fa-times"></a>');
 				model.push('</li>');
 			})
@@ -429,7 +394,7 @@ var shopcart = {
 				model = [{
 					"id": id,
 					"name": data[1],
-					"norms": data[2],
+					"spec": data[2],
 					"url": "/commodity/" + id
 				}]
 				that.toHtml(model);
