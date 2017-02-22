@@ -13,11 +13,13 @@
 <div class="main-body">
     <div class="wrap">
 
+         <#if !user_session_biz??>
         <div class="fa-msg">
             <i class="fa fa-prompt"></i>
             <span>您还没有登录！登录后订货单的商品将保存到您的账号中。</span>
-            <a class="btn-ghost" href="/center/certificate/stepOne">立即登录</a>
+            <a class="btn-ghost" href="/user/login">立即登录</a>
         </div>
+           </#if>
 
 
         <div class="enquiry" id="app">
@@ -46,7 +48,7 @@
                 </table>
 
                 <div class="tf">
-                    共 <em class="count">6</em> 件商品 <button type="button" class="btn btn-red" id="submit">询价</button>
+                    共 <em class="count" id="c_count">6</em> 件商品 <button type="button" class="btn btn-red" id="submit">询价</button>
                 </div>
             </div>
         </div>
@@ -192,8 +194,10 @@
                     model.push('<div class="text">');
                     model.push('<h1 class="title">', title, '</h1>');
                     model.push('<dl><dd>');
-                    !this.isLogin && model.push('<a href="login.html" class="btn btn-red">登录</a>');
-                    model.push('<a href="product_list.html">挑选商品&gt;</a>');
+                   <#if !user_session_biz??>
+                    model.push('<a href="/user/login" class="btn btn-red">登录</a>');
+                   </#if>
+                    model.push('<a href="/commodity/index">挑选商品&gt;</a>');
                     model.push('</dd></dl></div></div>');
                     $('.main-body').html(model.join(''));
                 },
@@ -211,9 +215,11 @@
                             shopcart.delCart(id);
                             layer.close(index);
                             that.count --;
+                            $("#c_count").html(that.count);
                             if (that.count < 1) {
                                 that.empty();
                             }
+
                         });
                     })
 

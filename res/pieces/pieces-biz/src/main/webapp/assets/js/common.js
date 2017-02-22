@@ -382,7 +382,7 @@ var shopcart = {
 			})
 			model.push('</ul></div>');
 			model.push('<div class="tf">');
-			model.push('<a href="#" class="btn btn-red">查看询价单</a>');
+			model.push('<a href="/cart/index" class="btn btn-red">查看询价单</a>');
 			model.push('共 <em class="count">', that.count, '</em> 件商品 ');
 			model.push('</div>');
 			$('.header').find('.cart .bd').html(model.join(''));

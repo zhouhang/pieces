@@ -6,6 +6,7 @@
         <div class="logo">
             <a href="/">上工好药首页</a>
         </div>
+     <#if !cartHide??>
         <div class="cart">
             <div class="hd">
                 <i class="fa fa-cartlist"></i>
@@ -14,6 +15,7 @@
             </div>
             <div class="bd"></div>
         </div>
+         </#if>
         <div class="search">
             <div class="form">
                 <form id="_search_form" action="commodity/search" method="get">
