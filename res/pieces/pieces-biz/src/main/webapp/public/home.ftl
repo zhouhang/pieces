@@ -171,10 +171,6 @@
 
 
 <#include "./inc/footer.ftl"/>
-
-<script src="${urls.getForLookupPath('/js/jquery.nav.js')}"></script>
 <script src="${urls.getForLookupPath('/js/index_2016.js')}"></script>
-<script src="${urls.getForLookupPath('/js/index_2016.js')}"></script>
-<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 </body>
 </html>

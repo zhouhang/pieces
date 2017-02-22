@@ -598,7 +598,7 @@
                             </dd>
                         </dl>
                         <div class="buttons">
-                            <a class="btn btn-red" href="javascript:;" id="buying" data-s="1|白芍|圆片、厚2-3mm、直径1.8cm以上、14#-18#、无空心片、异形片、黑片">加入订货单</a>
+                            <a class="btn btn-red" href="javascript:;" id="buying" data-s="131|白芷|片2-3mm、3号筛">加入询价单</a>
                             <a class="btn btn-gray faved" href="#"><i class="fa fa-heart"></i>已收藏</a>
                         </div>
                     </div>
@@ -727,43 +727,23 @@
             },
             // 加入询价单
             addToCart: function() {
-                $('#buying').on('click', function() {
-                    var cart = shopcart.getCart(),
-                        data = ($(this).data('s') || '').split('|'), // data-s = "id|name|norms"
-                        id = data[0],
-                        count = 1,
-                        model = [];
+                var $buying = $('#buying'),
+                    data    = ($buying.data('s') || '').split('|'), // data-s = "id|name|norms"
+                    id      = data[0];
 
-                    if (cart.indexOf('@' + id) >= 0 || cart.indexOf(id + '@') >= 0) {
-                        $(this).html('已加入询价单');
-                        layer.alert('该商品已加入询价单',{icon: 1});
-                        return false;
-                    } else if (cart == '') {
-                        cart = id;
-                        model = [{
-                            "id": id,
-                            "name": data[1],
-                            "norms": data[2],
-                            "url": "/commodity/" + id
-                        }]
-                        shopcart.toHtml(model);
+                if (id != '' && shopcart.isInCart(id)) {
+                    $buying.html('已加入询价单');
+                    // $buying.addClass('btn-gray').html('已加入询价单');
+                } else {
+                    $buying.html('加入询价单');
+                }
+                $buying.on('click', function() {
+                    if (data.length === 3) {
+                        shopcart.addToCart(data);
+                        $buying.html('已加入询价单');
                     } else {
-                        cart = cart.replace('@' + id, '').replace(id + '@', '');
-                        cart = id + '@' + cart;
-
-                        model.push('<li>');
-                        model.push('<a href="/commodity/' , id ,'" class="name">', data[1] , '</a>');
-                        model.push('<span class="norms">', data[2], '</span>');
-                        model.push('<a href="javascript:;" data-id="', id, '" class="fa fa-times"></a>');
-                        model.push('</li>');
-
-                        $('.header').find('.cart ul').prepend(model.join(''));
+                        layer.alert('加入询价单失败',{icon: 2});
                     }
-                    shopcart.saveCart(cart);
-                    shopcart.calcCount(count);
-                    $(this).html('已加入询价单');
-                    return false;
-                    
                 })
             },
             rank: function() {

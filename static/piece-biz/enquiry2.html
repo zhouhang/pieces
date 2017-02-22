@@ -101,19 +101,11 @@
                                 <th>操作</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td><a href="#" class="c-blue">壁虎（天龙）</a></td>
-                                <td>个</td>
-                                <td>净</td>
-                                <td>湖北</td>
-                                <td><a href="javascript:;" class="del">删除</a></td>
-                            </tr>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
 
                     <div class="tf">
-                        共 <em class="count">6</em> 件商品 <button type="button" class="btn btn-red" id="submit">询价</button>
+                        共 <em class="count">0</em> 件商品 <button type="button" class="btn btn-red" id="submit">询价</button>
                     </div>
                 </div>
             </div>
@@ -221,12 +213,15 @@
     </div><!-- end 新增收货地址 -->
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.autocomplete.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/layer/layer.js"></script>
     <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
     <script>
+
     !(function($, window){
+        shopcart = shopcart || {};
+        shopcart.init = function(){};
+        shopcart.empty = function(){};
 
         var _global = {
             fn: {
@@ -236,62 +231,22 @@
                 },
                 initCart: function() {
                     var that = this,
-                        cart = shopcart.getCart();
+                        cart = shopcart.getCart().split('@');
 
                     $.ajax({
-                        url: '',
-                        data: {id: cart.split('@').join()},
+                        url: 'json/cart.php',
+                        data: {ids: cart.join()},
                         success: function(res) {
-                            res = {
-                                "list": [{
-                                    "id": "1",
-                                    "name": "壁虎（天龙）",
-                                    "norms": "净",
-                                    "url": "/commodity/1"
-                                },{
-                                    "id": "2",
-                                    "name": "白芍",
-                                    "norms": "直径1.6-1.8cm，厚度2-3mm,16-18号筛",
-                                    "url": "/commodity/2"
-                                },{
-                                    "id": "3",
-                                    "name": "白芍",
-                                    "norms": "圆片、厚2-3mm、直径0.6cm-1.8cm以上、 无空心片、异形片、黑片 6-18号筛",
-                                    "url": "/commodity/3"
-                                },{
-                                    "id": "4",
-                                    "name": "紫菀",
-                                    "norms": "厚片4-6mm、 1号筛",
-                                    "url": "/commodity/4"
-                                },{
-                                    "id": "5",
-                                    "name": "煅紫石英",
-                                    "norms": "2",
-                                    "url": "/commodity/5"
-                                },{
-                                    "id": "6",
-                                    "name": "安息香",
-                                    "norms": "小块、成团块、表面橙黄色、具蜡样光泽",
-                                    "url": "/commodity/6"
-                                },{
-                                    "id": "7",
-                                    "name": "艾叶",
-                                    "norms": "除去杂质，长梗，2号筛",
-                                    "url": "/commodity/7"
-                                }],
-                                "list2": []
-                            };
-                            that.toHtml(res.list);
+                            shopcart.count = res.data.length;
+                            that.toHtml(res.data);
                         }
                     })
                 },
                 toHtml: function(data) {
                     var that = this,
                         model = [];
-                        
-                    that.count = data.length;
 
-                    if (that.count > 0) {
+                    if (data.length > 0) {
                         $.each(data, function(i, item) {
                             model.push('<tr>');
                             model.push('<td><a href="' , item.url ,'" class="c-blue">', item.name , '</a></td>');
@@ -324,22 +279,6 @@
                 bindEvent: function() {
                     var that = this,
                         $contact = $('#jcontact');
-
-                    // 删除商品
-                    $('.list').on('click', '.del', function() {
-                        var $tr = $(this).closest('tr'),
-                            id = $(this).data('id');
-
-                        layer.confirm('您确定要将该商品从购物清单中删除吗？', {icon: 3, title:'提示'}, function(index){
-                            $tr.remove();
-                            shopcart.delCart(id);
-                            layer.close(index);
-                            that.count --;
-                            if (that.count < 1) {
-                                that.empty();
-                            }
-                        });
-                    })
 
                     // 询价
                     $('#submit').on('click', function() {
@@ -377,6 +316,28 @@
                             } 
                         }
                     });
+
+                    // 删除商品
+                    $('.list').on('click', '.del', function() {
+                        var $tr = $(this).closest('tr'),
+                            id = $(this).data('id');
+
+                        layer.confirm('您确定要将该商品从购物清单中删除吗？', {icon: 3, title:'提示'}, function(index){
+                            layer.close(index);
+                            if (shopcart.count < 2) {
+                                shopcart.count = 0;
+                                shopcart.saveCart('');
+                                that.empty();
+                            } else {
+                                var cart = shopcart.getCart();
+                                cart = cart.replace('@' + id, '').replace(id + '@', '');
+                                shopcart.saveCart(cart);
+                                shopcart.count --;
+                                $tr.remove();
+                            }
+                        });
+                    })
+
                     this.SMSCode();
                 },
                 // 短信验证码

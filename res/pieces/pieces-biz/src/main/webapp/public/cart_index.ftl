@@ -36,27 +36,16 @@
                         <th>操作</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td><a href="#" class="c-blue">壁虎（天龙）</a></td>
-                        <td>个</td>
-                        <td>净</td>
-                        <td>湖北</td>
-                        <td><a href="javascript:;" class="del">删除</a></td>
-                    </tr>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
 
                 <div class="tf">
-                    共 <em class="count" id="c_count">6</em> 件商品 <button type="button" class="btn btn-red" id="submit">询价</button>
+                    共 <em class="count" id="c_count">0</em> 件商品 <button type="button" class="btn btn-red" id="submit">询价</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<#include "./inc/helper.ftl"/>
-<#include "./inc/footer.ftl"/>
 
 <!-- start 联系方式 -->
 <div class="fa-form fa-form-layer" id="jcontact">
@@ -98,12 +87,15 @@
     </form>
 </div><!-- end 新增收货地址 -->
 
-<script src="${urls.getForLookupPath('/js/jquery.min.js')}"></script>
-<script src="${urls.getForLookupPath('/js/jquery.autocomplete.min.js')}"></script>
-<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
-<script src="/js/validator/jquery.validator.js?local=zh-CN"></script>
+<#include "./inc/helper.ftl"/>
+<#include "./inc/footer.ftl"/>
+<script src="js/validator/jquery.validator.js?local=zh-CN"></script>
 <script>
     !(function($, window){
+
+        shopcart = shopcart || {};
+        shopcart.init = function(){};
+        shopcart.empty = function(){};
 
         var _global = {
             fn: {
@@ -113,28 +105,26 @@
                 },
                 initCart: function() {
                     var that = this,
-                            cart = shopcart.getCart();
+                        cart = shopcart.getCart().split('@');
 
                     $.ajax({
                         url: '/cart/list',
-                        type:"POST",
-                        data: {ids: cart.split('@').join(',')},
+                        type: 'POST',
+                        data: {ids: cart.join()},
                         success: function(res) {
+                            shopcart.count = res.data.length;
                             that.toHtml(res.data);
                         }
                     })
                 },
                 toHtml: function(data) {
                     var that = this,
-                            model = [];
+                        model = [];
 
-                    that.count = data.length;
-                    console.log()
-
-                    if (that.count > 0) {
+                    if (data.length > 0) {
                         $.each(data, function(i, item) {
                             model.push('<tr>');
-                            model.push('<td><a href="' , item.url ,'" class="c-blue">', item.name , '</a></td>');
+                            model.push('<td><a href="/commodity/' , item.id ,'" class="c-blue">', item.name , '</a></td>');
                             model.push('<td>', item.spec, '</td>');
                             model.push('<td>', item.level,'</td>');
                             model.push('<td>', item.originOf, '</td>');
@@ -148,42 +138,28 @@
                     }
                 },
                 empty: function() {
-                    var title = this.isLogin ? '订货单内暂时没有商品，去挑选需要的商品吧' : '订货单内暂时没有商品，登录后将显示您之前加入的商品',
-                            model = [];
+                    var title = '订货单内暂时没有商品，去挑选需要的商品吧',
+                        loginBtn = '',
+                        model = [];
+
+                    <#if !user_session_biz??>
+                        title = '订货单内暂时没有商品，登录后将显示您之前加入的商品';
+                        loginBtn = '<a href="/user/login" class="btn btn-red">登录</a>';
+                    </#if>
 
                     model.push('<div class="fa-pro-empty">');
                     model.push('<div class="fa fa-frown"></div>');
                     model.push('<div class="text">');
                     model.push('<h1 class="title">', title, '</h1>');
                     model.push('<dl><dd>');
-                   <#if !user_session_biz??>
-                    model.push('<a href="/user/login" class="btn btn-red">登录</a>');
-                   </#if>
+                    model.push(loginBtn);
                     model.push('<a href="/commodity/index">挑选商品&gt;</a>');
                     model.push('</dd></dl></div></div>');
                     $('.main-body').html(model.join(''));
                 },
                 bindEvent: function() {
                     var that = this,
-                            $contact = $('#jcontact');
-
-                    // 删除商品
-                    $('.list').on('click', '.del', function() {
-                        var $tr = $(this).closest('tr'),
-                                id = $(this).data('id');
-
-                        layer.confirm('您确定要将该商品从购物清单中删除吗？', {icon: 3, title:'提示'}, function(index){
-                            $tr.remove();
-                            shopcart.delCart(id);
-                            layer.close(index);
-                            that.count --;
-                            $("#c_count").html(that.count);
-                            if (that.count < 1) {
-                                that.empty();
-                            }
-
-                        });
-                    })
+                        $contact = $('#jcontact');
 
                     // 询价
                     $('#submit').on('click', function() {
@@ -221,6 +197,29 @@
                             }
                         }
                     });
+
+                    // 删除商品
+                    $('.list').on('click', '.del', function() {
+                        var $tr = $(this).closest('tr'),
+                            id = $(this).data('id');
+
+                        layer.confirm('您确定要将该商品从购物清单中删除吗？', {icon: 3, title:'提示'}, function(index){
+                            layer.close(index);
+                            if (shopcart.count < 2) {
+                                shopcart.count = 0;
+                                shopcart.saveCart('');
+                                that.empty();
+                            } else {
+                                var cart = shopcart.getCart();
+                                cart = cart.replace('@' + id, '').replace(id + '@', '');
+                                shopcart.saveCart(cart);
+                                shopcart.count --;
+                                $tr.remove();
+                                $("#c_count").html(shopcart.count);
+                            }
+                        });
+                    })
+
                     this.SMSCode();
                 },
                 // 短信验证码
