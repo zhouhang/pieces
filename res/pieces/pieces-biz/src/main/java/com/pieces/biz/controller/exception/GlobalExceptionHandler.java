@@ -3,6 +3,7 @@ package com.pieces.biz.controller.exception;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pieces.tools.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class GlobalExceptionHandler  extends BaseGlobalExceptionHandler{
     }
 
     //404的异常就会被这个方法捕获
-    @ExceptionHandler(NoHandlerFoundException.class)
+    @ExceptionHandler({NoHandlerFoundException.class, NotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ModelAndView handle404Error(HttpServletRequest req, HttpServletResponse rsp, Exception e) throws Exception {
         return handleError(req, rsp, e, "error-404", HttpStatus.NOT_FOUND,GlobalExceptionHandler.LOG_LEVEL_NONE).addObject("urls",urls());

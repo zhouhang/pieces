@@ -12,6 +12,7 @@ import com.pieces.dao.model.Commodity;
 import com.pieces.dao.model.User;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.annotation.SecurityToken;
+import com.pieces.tools.exception.NotFoundException;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import org.apache.commons.lang.StringUtils;
@@ -33,6 +34,7 @@ import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
 import com.pieces.service.utils.ValidUtils;
 import com.pieces.tools.utils.WebUtil;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 /**
  * Author: ff 7/19/16. 商品信息
@@ -263,8 +265,7 @@ public class CommodityController extends BaseController {
 	public String detail(@PathVariable("id") Integer id, ModelMap model) {
 		CommodityVo commodity = commodityService.findVoById(id);
 		if (commodity == null) {
-			// TODO: 商品不存在
-			return "redirect:error/404";
+			throw new NotFoundException();
 		}
 
 		List<Commodity> commodityList =	commodityService.findByName(commodity.getName());

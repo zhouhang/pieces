@@ -156,22 +156,24 @@ public class FileUtil {
     }
 
     public static Object convertAbsolutePathToUrl(Object object, String params) {
-        try {
-            String[] props = params.split(",");
+        if (object != null) {
+            try {
+                String[] props = params.split(",");
 
-            for (int i = 0; i < props.length; i++) {
-                props[i] = props[i].substring(0, 1).toUpperCase() + props[i].substring(1);
-                Method m = object.getClass().getMethod("get" + props[i]);
-                String value = (String) m.invoke(object); // 调用getter方法获取属性值
-                if (value != null) {
-                    m = object.getClass().getMethod("set" + props[i], String.class);
-                    m.invoke(object, getUrl(value));
+                for (int i = 0; i < props.length; i++) {
+                    props[i] = props[i].substring(0, 1).toUpperCase() + props[i].substring(1);
+                    Method m = object.getClass().getMethod("get" + props[i]);
+                    String value = (String) m.invoke(object); // 调用getter方法获取属性值
+                    if (value != null) {
+                        m = object.getClass().getMethod("set" + props[i], String.class);
+                        m.invoke(object, getUrl(value));
+                    }
                 }
+            } catch (Exception e) {
+                e.printStackTrace();
+                logger.error(e.getMessage());
+                logger.error("绝对路径转换成url失败!");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
-            logger.error("绝对路径转换成url失败!");
         }
         return object;
     }
