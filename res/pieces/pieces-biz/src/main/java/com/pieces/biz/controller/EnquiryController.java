@@ -7,6 +7,7 @@ import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.CommodityVo;
+import com.pieces.dao.vo.EnquiryBillsVo;
 import com.pieces.dao.vo.EnquiryRecordVo;
 import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
@@ -181,14 +182,12 @@ public class EnquiryController extends BaseController{
     /**
      * 询价记录页面
      * @param request
-     * @param response
      * @param modelMap
      * @return
      */
     @RequestMapping(value = "record")
     @BizLog(type = LogConstant.enquiry, desc = "询价记录页面")
     public String enquiryRecord(HttpServletRequest request,
-                                HttpServletResponse response,
                                 ModelMap modelMap,
                                 Integer pageSize,
                                 Integer pageNum,
@@ -197,17 +196,32 @@ public class EnquiryController extends BaseController{
         pageSize=pageSize==null?10:pageSize;
         User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         enquiryRecordVo.setUserId(user.getId());
+        modelMap.put("status",enquiryRecordVo.getStatus());
         //查询用户的询价单
         PageInfo<EnquiryBills> billsPageInfo =  enquiryBillsService.findByPage(pageNum,pageSize,enquiryRecordVo);
         modelMap.put("billsPage",billsPageInfo);
         enquiryRecordVo.setUserId(null);
-        String enquiryRecordParam = enquiryRecordVo.toString();
-        if(StringUtils.isNotBlank(enquiryRecordParam)){
-            enquiryRecordParam = enquiryRecordVo.toString().substring(1);
-        }
-        modelMap.put("enquiryRecordParam",enquiryRecordParam);
+
         return "user_enquiry_record";
     }
+
+    /**
+     * 询价记录详情页面
+     * @param request
+     * @param modelMap
+     * @return
+     */
+    @RequestMapping(value = "detail")
+    @BizLog(type = LogConstant.enquiry, desc = "询价记录详情页面")
+    public String enquiryRecordDetail(HttpServletRequest request,
+                                ModelMap modelMap,Integer billId){
+        User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        // 用户只能看到他自己的询价单 TODO:
+        EnquiryBillsVo vo =  enquiryBillsService.findVOById(billId);
+        modelMap.put("bill", vo);
+        return "user_enquiry_record_detail";
+    }
+
 
     /**
      * 查询询价单下所有订购商品
@@ -256,11 +270,11 @@ public class EnquiryController extends BaseController{
      * 导出勾选的商品报价
      * @param response
      * @param request
-     * @param ids 勾选的商品ID
+     * @param billId 询价单Id
      */
     @RequestMapping(value = "/download")
-    public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, String ids){
-        enquiryBillsService.exportEnquiryExcel(response, request, ids);
+    public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, Integer billId){
+        enquiryBillsService.exportEnquiryExcel(response, request, billId);
     }
 
 }
