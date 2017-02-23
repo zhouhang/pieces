@@ -85,9 +85,6 @@
                     <@shiro.hasPermission name="certify:index">
                         <a href="certify/list" id="certifyList">企业资质审核<b></b></a>
                     </@shiro.hasPermission>
-                    <@shiro.hasPermission name="anon:enquiry">
-                        <a href="anon/enquiry" id="anonEnquiry">新客询价<b></b></a>
-                    </@shiro.hasPermission>
                     <@shiro.hasPermission name="recruit:index">
                     <a href="/recruit/index" id="recruit">合作伙伴申请<b></b></a>
                     </@shiro.hasPermission>
