@@ -89,7 +89,7 @@
                 and user_id = #{userId}
             </if>
             <if test="commodityId != null">
-                and commodity_id = #{commodityId},
+                and commodity_id = #{commodityId}
             </if>
         </where>
     </delete>

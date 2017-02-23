@@ -25,6 +25,8 @@ public interface BasicConstants {
 	//账号创建渠道：后台
 	public static final int USER_CREATECHANNEL_BOSS = 1;
 
+	public static final int USER_ENQUIRY_BIZ=2;//用户询价自动生成的用户
+
 
 	String KAPTCHA_SESSION_KEY = "kaptcha_session_key";  //验证码Session的key
 
