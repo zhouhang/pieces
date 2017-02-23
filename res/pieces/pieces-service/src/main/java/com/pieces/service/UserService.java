@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.User;
@@ -83,4 +84,9 @@ public interface UserService extends ICommonService<User>{
 	 *姓名和手机后台自动生成一个新用户
 	 */
 	int generateUser(User user);
+
+	/**
+	 * 增加合并前台cookie和后台数据的功能
+	 */
+	public void loginNew(Subject subject, UsernamePasswordToken token,HttpServletRequest request, HttpServletResponse response);
 }

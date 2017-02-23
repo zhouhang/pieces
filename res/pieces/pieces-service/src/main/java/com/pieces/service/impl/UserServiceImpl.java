@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.github.pagehelper.PageHelper;
 import com.pieces.dao.enums.CertifyStatusEnum;
+import com.pieces.service.CartsCommodityService;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.tools.utils.CookieUtils;
 import com.pieces.tools.utils.SeqNoUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -29,9 +31,17 @@ import com.pieces.service.dto.Password;
 import com.pieces.service.utils.EncryptUtil;
 import com.pieces.service.utils.ValidUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @Service
 @Transactional(readOnly = true)
 public class UserServiceImpl extends AbsCommonService<User> implements UserService {
+
+
+    private static final int CART_EXPIRE = 3600*24*30;//默认30天
+
+    private static final String CART_NAME ="cart";
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -40,6 +50,10 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 
     @Autowired
     private SerialNumberService serialNumberService;
+
+    @Autowired
+    CartsCommodityService cartsCommodityService;
+
 
     @Override
     public List<User> findUserByCondition(User user) {
@@ -205,6 +219,40 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         user.setUserName("sg"+serialNumberService.getTensTimestamp()+SeqNoUtil.getRandomNum(2));
         user.setPassword(user.getContactMobile().substring(5,11));
         return addUser(user);
+
+    }
+
+    @Override
+    @Transactional
+    public void loginNew(Subject subject, UsernamePasswordToken token, HttpServletRequest request, HttpServletResponse response) {
+        try{
+            subject.login(token);
+        }catch(Exception e){
+            logger.info("login Exception {} ",e.getMessage());
+            throw new RuntimeException("登入失败!");
+        }
+        User user = findByAccount(token.getUsername());
+        user.setPassword(null);
+        user.setSalt(null);
+        Session s = subject.getSession();
+        s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), user);
+
+        //合并cookie和购物车里面商品
+
+        String cookieValue = null;
+        try {
+            cookieValue = CookieUtils.getCookieValue(request, CART_NAME);
+            if(cookieValue!=null&&!cookieValue.equals("")){
+                cartsCommodityService.combine(org.apache.commons.lang3.StringUtils.split(cookieValue,"@"),user);
+            }
+            List<Integer> ids=cartsCommodityService.getIds(user.getId());
+            if(ids.size()!=0){
+                CookieUtils.setCookie(response, CART_NAME, org.apache.commons.lang3.StringUtils.join(ids,"@") ,CART_EXPIRE);
+            }
+        } catch (Exception e) {
+            logger.info("合并cookies数据 Exception {} ",e.getMessage());
+            e.printStackTrace();
+        }
 
     }
 

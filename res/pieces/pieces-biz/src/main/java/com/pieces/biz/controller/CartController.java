@@ -136,7 +136,14 @@ public class CartController {
               return new Result(true).info("删除成功");
        }
 
-
+       /**
+        * 重新询价
+        * @param request
+        * @param response
+        * @param billId
+        * @return
+        * @throws Exception
+        */
        @RequestMapping(value="/reEnquiry",method=RequestMethod.GET)
        public String reEnquiry(HttpServletRequest request,HttpServletResponse response,Integer billId) throws Exception {
               User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());

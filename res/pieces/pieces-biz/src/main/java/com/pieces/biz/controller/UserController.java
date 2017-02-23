@@ -61,10 +61,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(value = "/user")
 public class UserController extends BaseController {
 
-	private static final int CART_EXPIRE = 3600*24*30;//默认30天
-
-	private static final String CART_NAME ="cart";
-
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private UserService userService;
@@ -90,8 +86,6 @@ public class UserController extends BaseController {
 	@Autowired
 	ShiroRedisCacheManager shiroRedisCacheManager;
 
-	@Autowired
-	CartsCommodityService cartsCommodityService;
 
 	/**
 	 * 进入注册页面
@@ -172,26 +166,7 @@ public class UserController extends BaseController {
 
 		Subject subject = SecurityUtils.getSubject();
 		BizToken token = new BizToken(user.getUserName(), passWord, false, CommonUtils.getRemoteHost(request), "");
-		userService.login(subject,token);
-
-
-		//合并cookie和购物车里面商品
-
-		String cookieValue = CookieUtils.getCookieValue(request, CART_NAME);
-		if(cookieValue!=null&&!cookieValue.equals("")){
-			cartsCommodityService.combine(StringUtils.split(cookieValue,"@"),user);
-		}
-		List<Integer> ids=cartsCommodityService.getIds(user.getId());
-		if(ids.size()!=0){
-			CookieUtils.setCookie(response, CART_NAME,StringUtils.join(ids,"@") ,CART_EXPIRE);
-		}
-
-
-
-
-
-
-
+		userService.loginNew(subject,token,request,response);
 
 		Result result = new Result(true);
 		WebUtil.print(response, result);
@@ -281,7 +256,7 @@ public class UserController extends BaseController {
 		Subject subject = SecurityUtils.getSubject();
 		BizToken token = new BizToken(userName, password, false, CommonUtils.getRemoteHost(request), "");
 		try{
-			userService.login(subject,token);
+			userService.loginNew(subject,token,request,response);
 		}catch(Exception e){
 			logger.info("userService.login Exception {} ",e.getMessage());
 			Result result = new Result(false).info("账户名密码错误");
@@ -292,26 +267,6 @@ public class UserController extends BaseController {
 		if(StringUtils.isBlank(url)){
 			url = WebUtils.getSavedRequest(request) != null ? WebUtils.getSavedRequest(request).getRequestUrl() : "/user/info";
 		}
-
-        //合并cookie和购物车里面商品
-		User user=userService.findByAccount(userName);
-
-		String cookieValue = CookieUtils.getCookieValue(request, CART_NAME);
-
-		if(cookieValue!=null&&!cookieValue.equals("")){
-			cartsCommodityService.combine(StringUtils.split(cookieValue,"@"),user);
-		}
-		List<Integer> ids=cartsCommodityService.getIds(user.getId());
-		if(ids.size()!=0){
-			CookieUtils.setCookie(response, CART_NAME,StringUtils.join(ids,"@") ,CART_EXPIRE);
-		}
-
-
-
-
-
-
-
 
 
 		Result result = new Result(true).info(url);
