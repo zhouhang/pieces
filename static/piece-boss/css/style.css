@@ -186,6 +186,7 @@ vertical-align:middle;
 .chart a:hover{color:#155ee5;}
 .chart .link{color:#666;}
 .chart .link:hover{color:#333;}
+.chart .tl em{margin-left:5px;padding:1px 3px;background:#f00;color:#ff9;border-radius:3px;}
 .chart .tl{text-align:left;padding-left:27px;}
 .chart .tr{text-align:right;padding-right:10px;}
 .chart .caption{}
