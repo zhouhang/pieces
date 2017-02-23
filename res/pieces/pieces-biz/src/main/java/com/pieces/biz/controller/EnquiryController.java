@@ -129,40 +129,6 @@ public class EnquiryController extends BaseController{
         WebUtil.print(response,new Result(true));
     }
 
-    /**
-     * 提交询价单
-     */
-    @RequestMapping(value = "submit")
-    @BizLog(type = LogConstant.enquiry, desc = "提交询价单")
-    @SecurityToken(validateToken=true)
-    public void submit(HttpServletRequest request,
-                       HttpServletResponse response,
-                       Integer billId,
-                       @RequestBody List<EnquiryCommoditys> list)throws Exception{
-            String message = "您的询价提交成功!";
-            User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-            if(billId==null){
-                billId = enquiryBillsService.create(list,user);
-            }else{
-                try {
-                    message="您的询价单重新修改成功!";
-                    enquiryBillsService.update(list,user,billId);
-                }catch (Exception e){
-                    e.printStackTrace();
-                    WebUtil.print(response,new Result(false).info(e.getMessage()));
-                    return;
-                }
-            }
-        //删除之前的询价记录
-        CookieUtils.deleteCookie(request,response, BasicConstants.ENQUIRY_COOKIES);
-
-        //用户询价成功后通知管理员处理
-        SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        SpringUtil.getApplicationContext().
-                publishEvent(new NotifyEvent(NotifyTemplateEnum.enquiry.getTitle(String.valueOf(billId)),
-                        NotifyTemplateEnum.enquiry.getContent(user.getContactName(),time.format(new Date())),NotifyTemplateEnum.enquiry.getType(),billId));
-        WebUtil.print(response,new Result(true).info(message));
-    }
 
     /**
      * 联想输入
