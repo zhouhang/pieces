@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.github.pagehelper.PageHelper;
 import com.pieces.dao.enums.CertifyStatusEnum;
+import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.utils.SeqNoUtil;
 import org.apache.commons.lang.StringUtils;
@@ -199,9 +200,10 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
     @Transactional
     public int generateUser(User user) {
         //默认type=1
+        user.setSource(BasicConstants.USER_ENQUIRY_BIZ);
         user.setType(1);
         user.setUserName("sg"+serialNumberService.getTensTimestamp()+SeqNoUtil.getRandomNum(2));
-        user.setPassword(user.getContactMobile().substring(6,11));
+        user.setPassword(user.getContactMobile().substring(5,11));
         return addUser(user);
 
     }

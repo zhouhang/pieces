@@ -90,6 +90,7 @@
 <#include "./inc/helper.ftl"/>
 <#include "./inc/footer.ftl"/>
 <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
+<script src="${urls.getForLookupPath('/js/jquery.form.js')}"></script>
 <script>
     !(function($, window){
 
@@ -169,9 +170,8 @@
                            $.ajax({
                                url: '/cart/submit',
                                type:"POST",
-                               data: {ids: cart.split('@').join(',')},
                                success: function(res) {
-                                   window.location.href = '/center/enquiry/index';
+                                   window.location.href = '/anon/enquirySuccess';
                                    shopcart.saveCart("");
                                }
                            })
@@ -206,10 +206,15 @@
                                 $.ajax({
                                     url: '/cart/submit',
                                     type:"POST",
-                                    data: $(form).formSerialize()+"&ids="+shopcart.getCart().split('@').join(','),
+                                    data: $(form).formSerialize(),
                                     success: function(res) {
-                                        window.location.href = '/center/enquiry/index';
-                                        shopcart.saveCart("");
+                                        if(res.status=="y"){
+                                            window.location.href = '/anon/enquirySuccess';
+                                            shopcart.saveCart("");
+                                        }else{
+                                            $msg.html(res.info).show();
+                                        }
+
                                     }
                                 })
 
@@ -223,19 +228,27 @@
                             id = $(this).data('id');
 
                         layer.confirm('您确定要将该商品从购物清单中删除吗？', {icon: 3, title:'提示'}, function(index){
-                            layer.close(index);
-                            if (shopcart.count < 2) {
-                                shopcart.count = 0;
-                                shopcart.saveCart('');
-                                that.empty();
-                            } else {
-                                var cart = shopcart.getCart();
-                                cart = cart.replace('@' + id, '').replace(id + '@', '');
-                                shopcart.saveCart(cart);
-                                shopcart.count --;
-                                $tr.remove();
-                                $("#c_count").html(shopcart.count);
-                            }
+                            $.ajax({
+                                url: '/cart/delete',
+                                type:"POST",
+                                data: {commodityId: id},
+                                success: function(res) {
+                                    layer.close(index);
+                                    if (shopcart.count < 2) {
+                                        shopcart.count = 0;
+                                        shopcart.saveCart('');
+                                        that.empty();
+                                    } else {
+                                        var cart = shopcart.getCart();
+                                        cart = cart.replace('@' + id, '').replace(id + '@', '');
+                                        shopcart.saveCart(cart);
+                                        shopcart.count --;
+                                        $tr.remove();
+                                        $("#c_count").html(shopcart.count);
+                                    }
+                                }
+                            })
+
                         });
                     })
 
@@ -271,8 +284,9 @@
 
                     var sendMSM = function() {
                         $.ajax({
-                            url : '/code/enquiry',
+                            url : '/gen/code/enquiry',
                             dataType: 'json',
+                            data:{"phone":$("#mobile").val()},
                             beforeSend: function() {
                                 $send.text('发送中...').prop('disabled', true);
                             },

@@ -364,10 +364,18 @@ var shopcart = {
 				id = $(this).data('id');
 
 			layer.confirm('您确定要将该商品从购物清单中删除吗？', {icon: 3, title:'提示'}, function(index){
-				$li.remove();
-				that.$header.find('.cart ul').html($ul.html());
-				that.delCart(id);
-	            layer.close(index);
+				$.ajax({
+					url: '/cart/delete',
+					type:"POST",
+					data: {commodityId: id},
+					success: function(res) {
+						$li.remove();
+						that.$header.find('.cart ul').html($ul.html());
+						that.delCart(id);
+						layer.close(index);
+					}
+				})
+
 	        });  
 		})
 	},
@@ -385,19 +393,26 @@ var shopcart = {
 	    	layer.alert('已加入询价单',{icon: 1});
 	    	return that;
 	    }
+		$.ajax({
+			url: '/cart/add',
+			type:"POST",
+			data: {commodityId: id},
+			success: function(res) {
+				if (cart === '') {
+					// 第一次添加购物车
+					cart = id;
+					that.toHtml(model);
+				} else {
+					// 添加相同商品时，调整前后顺序，保证新添加的商品在最前面
+					cart = id + '@' + cart;
+					that.$header.find('.cart ul').prepend(that.addList(model));
+				}
 
-        if (cart === '') {	
-        	// 第一次添加购物车
-        	cart = id;
-            that.toHtml(model);
-        } else {
-        	// 添加相同商品时，调整前后顺序，保证新添加的商品在最前面
-            cart = id + '@' + cart;
-            that.$header.find('.cart ul').prepend(that.addList(model));
-        }
+				that.saveCart(cart);
+				that.calcCount(1);
+			}
+		})
 
-        that.saveCart(cart);
-        that.calcCount(1);
 	},
 	getCart: function() {
 		return cookieFn.get('cart') || '';

@@ -144,15 +144,15 @@ public class CartController {
               String ids=StringUtils.join(StringUtils.split(cookieValue,"@"),",");
 
               User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-              List<EnquiryCommoditys> list=null;
+              List<EnquiryCommoditys> list=new ArrayList<EnquiryCommoditys>();
               if(user==null){
                    //帮用户注册生成询价单
-                     String sessionCode  = redisManager.get(RedisEnum.KEY_MOBILE_FINDPASSWORD_CAPTCHA.getValue()+mobile);
+                     String sessionCode  = redisManager.get(RedisEnum.KEY_MOBILE_EQUIRY_CAPTCHA.getValue()+mobile);
                      if (!StringUtils.isNotBlank(code)) {
-                            return new Result(true).info("请获取验证码");
+                            return new Result(false).info("请获取验证码");
                      }
                      if (!code.equals(sessionCode)) {
-                            return new Result(true).info("验证码错误");
+                            return new Result(false).info("验证码错误");
                      }
 
                      if(!userService.ifExistMobile(mobile)){
@@ -175,7 +175,7 @@ public class CartController {
               }
 
 
-              if(list!=null){
+              if(list.size()!=0){
                      Integer billId = enquiryBillsService.create(list,user);
                      /**
                       * 清空购物车
