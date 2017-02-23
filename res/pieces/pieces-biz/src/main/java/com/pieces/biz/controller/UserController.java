@@ -25,7 +25,8 @@ import com.pieces.service.utils.SerializeUtils;
 import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.CookieUtils;
-import org.apache.commons.lang.StringUtils;
+import com.pieces.tools.utils.GsonUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
@@ -59,6 +60,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping(value = "/user")
 public class UserController extends BaseController {
+
+	private static final int CART_EXPIRE = 3600*24*30;//默认30天
+
+	private static final String CART_NAME ="cart";
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
@@ -169,12 +174,25 @@ public class UserController extends BaseController {
 		BizToken token = new BizToken(user.getUserName(), passWord, false, CommonUtils.getRemoteHost(request), "");
 		userService.login(subject,token);
 
+
 		//合并cookie和购物车里面商品
 
-		String cookieValue = CookieUtils.getCookieValue(request, "cart");
-		String ids=StringUtils.join(StringUtils.split("@"),",");
+		String cookieValue = CookieUtils.getCookieValue(request, CART_NAME);
+		if(cookieValue!=null&&!cookieValue.equals("")){
+			cartsCommodityService.combine(StringUtils.split(cookieValue,"@"),user);
+		}
 
-		cartsCommodityService.combine(StringUtils.split("@"),user);
+		List<Integer> ids=cartsCommodityService.getIds(user.getId());
+
+		int size = ids.size();
+		if(size!=0){
+			CookieUtils.setCookie(response, CART_NAME,StringUtils.join(ids,"@") ,CART_EXPIRE);
+
+		}
+
+
+
+
 
 
 
@@ -279,13 +297,29 @@ public class UserController extends BaseController {
 			url = WebUtils.getSavedRequest(request) != null ? WebUtils.getSavedRequest(request).getRequestUrl() : "/user/info";
 		}
 
-
-		String cookieValue = CookieUtils.getCookieValue(request, "cart");
-		String ids=StringUtils.join(StringUtils.split("@"),",");
-
-       //合并cookie和购物车里面商品
+        //合并cookie和购物车里面商品
 		User user=userService.findByAccount(userName);
-		cartsCommodityService.combine(StringUtils.split("@"),user);
+		String cookieValue = CookieUtils.getCookieValue(request, CART_NAME);
+
+		if(cookieValue!=null&&!cookieValue.equals("")){
+			cartsCommodityService.combine(StringUtils.split(cookieValue,"@"),user);
+		}
+		List<Integer> ids=cartsCommodityService.getIds(user.getId());
+
+		int size = ids.size();
+
+		if(size!=0){
+			CookieUtils.setCookie(response, CART_NAME,StringUtils.join(ids,"@") ,CART_EXPIRE);
+		}
+
+
+
+
+
+
+
+
+
 		Result result = new Result(true).info(url);
 		WebUtil.print(response, result);
 	}

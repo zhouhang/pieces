@@ -14,4 +14,6 @@ public interface CartsCommodityDao extends ICommonDao<CartsCommodity>{
 
     public void combine(List<CartsCommodityVo> cartsCommodityVos);
 
+    public List<Integer> getIds(Integer userId);
+
 }

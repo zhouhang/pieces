@@ -47,7 +47,7 @@ public class CartController {
 
 
 
-       private static final int COOKIE_EXPIRE = 3600*24*30;//默认30天
+
 
        @Autowired
        HttpSession httpSession;
@@ -141,7 +141,7 @@ public class CartController {
        @ResponseBody
        public Result submit(HttpServletRequest request,String username,String mobile,String code) throws Exception {
               String cookieValue = CookieUtils.getCookieValue(request, "cart");
-              String ids=StringUtils.join(StringUtils.split("@"),",");
+              String ids=StringUtils.join(StringUtils.split(cookieValue,"@"),",");
 
               User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
               List<EnquiryCommoditys> list=null;

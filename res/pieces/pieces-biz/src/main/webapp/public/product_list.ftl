@@ -116,13 +116,36 @@
 
     <#include "./inc/helper.ftl"/>
     <#include "./inc/footer.ftl"/>
-    <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
     <script>
     var _global = {
         fn: {
-        	init: function(){
-                this.skip();
-        	},
+            init: function(){
+                this.addToCart();
+                // this.skip();
+            },
+            addToCart: function() {
+                // 加入询价单
+                $('.fa-pro-list').on('click', '.btn-white', function() {
+                    var data = ($(this).data('s') || '').split('|'); // data-s = "id|name|norms"
+                    if (data.length === 3) {
+                        shopcart.addToCart(data);
+                        $(this).addClass('btn-gray').prop('disabled', true).html('已加入询价单');
+                    } else {
+                        layer.alert('加入询价单失败',{icon: 2});
+                    }
+                    return false;
+                    
+                }).find('.btn-white').each(function() {
+                    var data = ($(this).data('s') || '').split('|'),
+                        id = data[0];
+
+                    if (id != '' && shopcart.isInCart(id)) {
+                        $(this).addClass('btn-gray').prop('disabled', true).html('已加入询价单');
+                    } else {
+                        $(this).prop('disabled', false).html('加入询价单');
+                    }
+                })
+            },
             skip: function() {
                 // 页面跳转
                 $('.fa-pro-list').on('click', 'tr', function() {
@@ -133,7 +156,7 @@
         }
     }
     $(function() {
-        // _global.fn.init();
+        _global.fn.init();
     })
     </script>
 </body>

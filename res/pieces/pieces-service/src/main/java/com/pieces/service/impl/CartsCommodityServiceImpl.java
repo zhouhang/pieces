@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -55,14 +56,23 @@ public class CartsCommodityServiceImpl  extends AbsCommonService<CartsCommodity>
 	@Override
 	@Transactional
 	public void combine(String [] ids,User user) {
-		List<CartsCommodityVo> cartsCommodityVos=null;
+		List<CartsCommodityVo> cartsCommodityVos=new ArrayList<CartsCommodityVo>();
 		for(String id:ids){
 			CartsCommodityVo cartsCommodityVo=new CartsCommodityVo();
 			cartsCommodityVo.setUserId(user.getId());
 			cartsCommodityVo.setCommodityId(Integer.parseInt(id));
+			cartsCommodityVo.setCreateTime(new Date());
 			cartsCommodityVos.add(cartsCommodityVo);
 		}
-		cartsCommodityDao.combine(cartsCommodityVos);
+		if(cartsCommodityVos.size()!=0){
+			cartsCommodityDao.combine(cartsCommodityVos);
+		}
+
+	}
+
+	@Override
+	public List<Integer> getIds(Integer userId) {
+		return cartsCommodityDao.getIds(userId);
 	}
 
 

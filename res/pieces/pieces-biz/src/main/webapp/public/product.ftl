@@ -74,7 +74,7 @@
                             </dd>
                         </dl>
                         <div class="buttons">
-                            <a class="btn btn-red" href="#">加入询价单</a>
+                            <a class="btn btn-red" href="javascript:;" id="buying" data-s="${commodity.id}|${commodity.name}|${commodity.spec}">加入询价单</a>
                             <a class="btn btn-gray j_pop_login_collect" ajaxurl="/center/collect/add/${commodity.id!}" url="/commodity/${commodity.id!}"><i class="fa fa-heart"></i>收藏</a>
                         </div>
                     </div>
@@ -114,9 +114,6 @@
     <#include "./inc/helper.ftl"/>
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
-
-    <!-- footer end -->
-    <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
     <script>
 
         // 收藏结果回调
@@ -133,14 +130,35 @@
             },
             fn: {
                 init: function() {
+                    this.addToCart();
                     this.addFav();
                     this.imgerror();
                 },
+                // 加入询价单
+                addToCart: function() {
+                    var $buying = $('#buying'),
+                        data    = ($buying.data('s') || '').split('|'), // data-s = "id|name|norms"
+                        id      = data[0];
+
+                    if (id != '' && shopcart.isInCart(id)) {
+                        $buying.html('已加入询价单');
+                    } else {
+                        $buying.html('加入询价单');
+                    }
+                    $buying.on('click', function() {
+                        if (data.length === 3) {
+                            shopcart.addToCart(data);
+                            $buying.html('已加入询价单');
+                        } else {
+                            layer.alert('加入询价单失败',{icon: 2});
+                        }
+                    })
+                },
                 imgerror: function () {
                     var img = new Image(),
-                            $img = $('.preview img');
+                        $img = $('.preview img');
 
-                    img.onerror = function () {
+                    img.onerror = function() {
                         img.onerror = null;
                         $img[0].src = 'images/blank.gif';
                         $img.addClass('miss');

@@ -20,4 +20,13 @@ public interface CartsCommodityService extends ICommonService<CartsCommodity>{
      * @param ids
      */
     public void combine(String[] ids ,User user);
+
+    /**
+     * 获取用户购物车商品ids
+     */
+    public List<Integer> getIds(Integer userId);
+
+
+
+
 }

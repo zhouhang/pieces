@@ -100,6 +100,5 @@
 </div>
     <#include "./inc/helper.ftl"/>
     <#include "./inc/footer.ftl"/>
-    <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 </body>
 </html>

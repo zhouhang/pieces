@@ -114,6 +114,5 @@
     <script src="${urls.getForLookupPath('/js/vue.min.js')}"></script>
     <script src="${urls.getForLookupPath('/js/jquery.form.js')}"></script>
     <script src="${urls.getForLookupPath('/js/enquiry.js')}"></script>
-    <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 </body>
 </html>
