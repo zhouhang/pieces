@@ -9,12 +9,10 @@ import com.pieces.dao.model.User;
 import com.pieces.dao.vo.CommodityVo;
 import com.pieces.dao.vo.EnquiryBillsVo;
 import com.pieces.dao.vo.EnquiryRecordVo;
-import com.pieces.service.CommoditySearchService;
-import com.pieces.service.CommodityService;
-import com.pieces.service.EnquiryBillsService;
-import com.pieces.service.EnquiryCommoditysService;
+import com.pieces.service.*;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.service.dto.UserValidate;
 import com.pieces.service.enums.NotifyTemplateEnum;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.listener.NotifyEvent;
@@ -27,18 +25,19 @@ import com.pieces.tools.utils.SpringUtil;
 import com.pieces.tools.utils.WebUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -60,6 +59,10 @@ public class EnquiryController extends BaseController{
     private CommoditySearchService commoditySearchService;
     @Autowired
     private EnquiryCommoditysService enquiryCommoditysService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private HttpSession httpSession;
 
 
     /**
@@ -181,27 +184,27 @@ public class EnquiryController extends BaseController{
 
     /**
      * 询价记录页面
-     * @param request
      * @param modelMap
      * @return
      */
     @RequestMapping(value = "record")
     @BizLog(type = LogConstant.enquiry, desc = "询价记录页面")
-    public String enquiryRecord(HttpServletRequest request,
-                                ModelMap modelMap,
+    public String enquiryRecord(ModelMap modelMap,
                                 Integer pageSize,
                                 Integer pageNum,
                                 EnquiryRecordVo enquiryRecordVo){
         pageNum=pageNum==null?1:pageNum;
         pageSize=pageSize==null?10:pageSize;
-        User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        User user = (User)httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+
         enquiryRecordVo.setUserId(user.getId());
         modelMap.put("status",enquiryRecordVo.getStatus());
         //查询用户的询价单
-        PageInfo<EnquiryBills> billsPageInfo =  enquiryBillsService.findByPage(pageNum,pageSize,enquiryRecordVo);
+        PageInfo<EnquiryBillsVo> billsPageInfo =  enquiryBillsService.findByPage(pageNum,pageSize,enquiryRecordVo);
         modelMap.put("billsPage",billsPageInfo);
         enquiryRecordVo.setUserId(null);
-
+        UserValidate userValidate = userService.validateUser(user);
+        modelMap.put("userValidate",userValidate);
         return "user_enquiry_record";
     }
 
@@ -217,7 +220,11 @@ public class EnquiryController extends BaseController{
                                 ModelMap modelMap,Integer billId){
         User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         // 用户只能看到他自己的询价单 TODO:
+        // 把询价单状态修改为已读
+        enquiryBillsService.read(billId);
         EnquiryBillsVo vo =  enquiryBillsService.findVOById(billId);
+        UserValidate userValidate = userService.validateUser(user);
+        modelMap.put("userValidate",userValidate);
         modelMap.put("bill", vo);
         return "user_enquiry_record_detail";
     }

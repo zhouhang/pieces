@@ -297,7 +297,7 @@ public class OrderController extends BaseController{
         EnquiryRecordVo enquiryRecordVo = new EnquiryRecordVo();
         enquiryRecordVo.setUserId(user.getId());
         enquiryRecordVo.setStatus(1);
-        PageInfo<EnquiryBills> billsPageInfo =  enquiryBillsService.findByPage(1,5,enquiryRecordVo);
+        PageInfo<EnquiryBillsVo> billsPageInfo =  enquiryBillsService.findByPage(1,5,enquiryRecordVo);
 
         //订单form
         PageInfo<OrderFormVo>  orderFormVoPageInfo = orderFormService.findOrderByUserId(customerId,1,1);

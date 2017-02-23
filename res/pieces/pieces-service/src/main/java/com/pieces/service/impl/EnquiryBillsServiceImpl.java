@@ -13,9 +13,7 @@ import com.pieces.dao.vo.EnquiryRecordVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.EnquiryBillsService;
 import com.pieces.service.EnquiryCommoditysService;
-import com.pieces.service.constant.bean.Result;
 import com.pieces.service.utils.ExcelParse;
-import com.pieces.tools.utils.BeanUtils;
 import com.pieces.tools.utils.SeqNoUtil;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -114,7 +112,7 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     }
 
     @Override
-    public PageInfo<EnquiryBills> findByPage(int pageNum, int pageSize,EnquiryRecordVo enquiryRecordVo) {
+    public PageInfo<EnquiryBillsVo> findByPage(int pageNum, int pageSize,EnquiryRecordVo enquiryRecordVo) {
         PageHelper.startPage(pageNum, pageSize);
         if (enquiryRecordVo!= null && "2".equalsIgnoreCase(String.valueOf(enquiryRecordVo.getStatus()))){
             enquiryRecordVo.setStatus(null);
@@ -124,9 +122,9 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
             enquiryRecordVo.setExpireDate(new Date());
         }
 
-        List<EnquiryBills> list = enquiryBillsDao.findByCommoditys(enquiryRecordVo);
+        List<EnquiryBillsVo> list = enquiryBillsDao.queryByParam(enquiryRecordVo);
         for (EnquiryBills enquiryBills : list) {
-            List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysDao.findByBillId(enquiryBills.getId(),null, 10);
+            List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysDao.findByBillId(enquiryBills.getId(),null, null);
             enquiryBills.setEnquiryCommoditys(enquiryCommoditysList);
         }
         PageInfo page = new PageInfo(list);
@@ -189,5 +187,14 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     @Override
     public List<Integer> getNotHandleIds() {
         return enquiryBillsDao.getNotHandleIds();
+    }
+
+    @Override
+    @Transactional
+    public void read(Integer id) {
+        EnquiryBills enquiryBills = new EnquiryBills();
+        enquiryBills.setId(id);
+        enquiryBills.setType(0);
+        update(enquiryBills);
     }
 }

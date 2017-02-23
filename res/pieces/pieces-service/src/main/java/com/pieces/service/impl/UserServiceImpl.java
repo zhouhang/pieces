@@ -5,7 +5,10 @@ import java.util.List;
 
 import com.github.pagehelper.PageHelper;
 import com.pieces.dao.enums.CertifyStatusEnum;
+import com.pieces.dao.model.CertifyRecord;
+import com.pieces.service.CertifyRecordService;
 import com.pieces.service.constant.BasicConstants;
+import com.pieces.service.dto.UserValidate;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.utils.SeqNoUtil;
 import org.apache.commons.lang.StringUtils;
@@ -46,6 +49,8 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         return userDao.findUserByCondition(user);
     }
 
+    @Autowired
+    CertifyRecordService certifyRecordService;
     /**
      * 添加用户
      *
@@ -239,4 +244,31 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         return user;
     }
 
+    @Override
+    public UserValidate validateUser(User user) {
+        UserValidate validate = new UserValidate(200, null);
+        // 200 成功 1 未提交资质审核 2 正在进行资质审核 3 资质审核未通过 4 代理商未绑定终端用户
+        if (user.getCertifyStatus()!=1 && user.getType()==1){
+            CertifyRecord certifyRecord = certifyRecordService.getLatest(user.getId());
+            if (certifyRecord ==null){
+                // 未提交审核资料
+                validate = new UserValidate(1,null);
+            } else {
+                if (certifyRecord.getStatus() == 0){
+                    // 未处理
+                    validate = new UserValidate(2,null);
+                } else if (certifyRecord.getStatus() == 2) {
+                    // 未认证通过
+                    validate = new UserValidate(3,certifyRecord.getResult());
+                }
+            }
+        }else if (user.getType() ==2){
+            //判断用户是代理商的话有没有绑定终端用户
+            List<UserVo> list = findUserByProxy(user.getId());
+            if (list==null || list.size() == 0){
+                validate = new UserValidate(4, null);
+            }
+        }
+        return validate;
+    }
 }

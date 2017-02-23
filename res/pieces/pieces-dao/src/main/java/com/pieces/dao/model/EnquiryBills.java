@@ -38,6 +38,9 @@ public class EnquiryBills  implements Serializable {
 	// 报价截止日期
 	private Date expireDate;
 
+	// 0 已读 1未读
+	private Integer type;
+
 	private List<EnquiryCommoditys> enquiryCommoditys;
 
 	public EnquiryBills(){}
@@ -128,5 +131,13 @@ public class EnquiryBills  implements Serializable {
 
 	public void setExpireDate(Date expireDate) {
 		this.expireDate = expireDate;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 }

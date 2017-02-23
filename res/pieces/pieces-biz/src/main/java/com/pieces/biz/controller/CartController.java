@@ -147,7 +147,10 @@ public class CartController {
 
                             List<String> commodityIds=new ArrayList<String>();
                             for(EnquiryCommoditys enquiryCommoditys:enquiryCommodityses){
-                                   commodityIds.add(enquiryCommoditys.getCommodityId().toString());
+                                   // 忽略以前询价单中没有商品ID的询价商品
+                                   if (enquiryCommoditys.getCommodityId()!=null) {
+                                          commodityIds.add(String.valueOf(enquiryCommoditys.getCommodityId()));
+                                   }
                             }
                             //由于登录了cookie和数据库中是一致的只需更新到数据库中，然后刷新cookie就行了
                             cartsCommodityService.combine((String[])commodityIds.toArray(new String[commodityIds.size()]),user);
