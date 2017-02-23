@@ -30,7 +30,7 @@
             <p>稍后将有专业人员与您联系，为您提供相对精准的报价。</p>
         </div>
         <div class="ft">
-            <a href="/">返回首页</a>
+            <a class="btn btn-red" href="/">返回首页</a>
         </div>
     </div>
 </div><!-- fa-message end -->
