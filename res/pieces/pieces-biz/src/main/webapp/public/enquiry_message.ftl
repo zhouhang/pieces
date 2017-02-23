@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <#include "./inc/meta.ftl"/>
+<#include "./inc/meta.ftl"/>
     <title>询价成功-上工好药</title>
 </head>
 
@@ -30,7 +30,6 @@
             <p>稍后将有专业人员与您联系，为您提供相对精准的报价。</p>
         </div>
         <div class="ft">
-            <a class="btn btn-red" href="/anon/enquiry">继续询价</a>
             <a href="/">返回首页</a>
         </div>
     </div>

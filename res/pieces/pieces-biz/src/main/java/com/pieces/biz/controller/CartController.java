@@ -238,6 +238,14 @@ public class CartController {
               return new Result(true).info("提交询价成功");
        }
 
+       /**
+        * 询价成功页面
+        * @return
+        */
+       @RequestMapping(value = "/enquirySuccess")
+       public String enquiryMessage(){
+              return "enquiry_message";
+       }
 
 
 

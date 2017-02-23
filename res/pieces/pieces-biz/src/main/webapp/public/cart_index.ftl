@@ -171,7 +171,7 @@
                                url: '/cart/submit',
                                type:"POST",
                                success: function(res) {
-                                   window.location.href = '/anon/enquirySuccess';
+                                   window.location.href = '/cart/enquirySuccess';
                                    shopcart.saveCart("");
                                }
                            })
@@ -209,7 +209,7 @@
                                     data: $(form).formSerialize(),
                                     success: function(res) {
                                         if(res.status=="y"){
-                                            window.location.href = '/anon/enquirySuccess';
+                                            window.location.href = '/cart/enquirySuccess';
                                             shopcart.saveCart("");
                                         }else{
                                             $msg.html(res.info).show();
