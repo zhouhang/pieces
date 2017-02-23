@@ -48,7 +48,7 @@
                             <div class="hd">
                                 <span>询价单号：${bill.code!}</span>
                                 <span>询价日期：${(bill.createTime?date)!}</span>
-                                <span>报价截止日期：${(bill.expireDate?date)!}</span>
+                                <span>报价截止日期：<#if bill.expireDate?exists>${(bill.expireDate?date)!}</#if></span>
                             </div>
                             <form action="" id="enquiryForm">
                                 <input  id="billId" type="hidden" value="" name="billId">
@@ -177,6 +177,8 @@
 
                         total = icheck ? amount : 0;
                     })
+
+                    $cbxAll.trigger("click");
 
                 },
                 submit: function() {

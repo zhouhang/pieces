@@ -57,7 +57,7 @@
                                         <div class="hd">
                                             <span>询价单号：${bill.code!}</span>
                                             <span>询价日期：${(bill.createTime?date)!}</span>
-                                            <span>报价截止日期：${(bill.expireDate?date)!}</span>
+                                            <span>报价截止日期：<#if bill.expireDate?exists>${(bill.expireDate?date)!}</#if></span>
                                         </div>
                                         <div class="col1">
                                             <span class="name">${bill.commodityOverview!}</span>
