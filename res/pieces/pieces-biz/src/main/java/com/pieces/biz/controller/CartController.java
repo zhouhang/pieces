@@ -6,6 +6,7 @@ import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.CartsCommodityVo;
 import com.pieces.dao.vo.CommodityVo;
+import com.pieces.dao.vo.EnquiryBillsVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.constant.bean.Result;
@@ -16,7 +17,7 @@ import com.pieces.service.redis.RedisManager;
 import com.pieces.tools.utils.CookieUtils;
 import com.pieces.tools.utils.SpringUtil;
 import com.pieces.tools.utils.WebUtil;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -47,7 +48,9 @@ public class CartController {
 
 
 
+       private static final int CART_EXPIRE = 3600*24*30;//默认30天
 
+       private static final String CART_NAME ="cart";
 
        @Autowired
        HttpSession httpSession;
@@ -57,6 +60,8 @@ public class CartController {
 
        @Autowired
        private EnquiryBillsService enquiryBillsService;
+
+
 
        @Autowired
        private CommodityService commodityService;
@@ -130,6 +135,34 @@ public class CartController {
               }
               return new Result(true).info("删除成功");
        }
+
+
+       @RequestMapping(value="/reEnquiry",method=RequestMethod.GET)
+       public String reEnquiry(HttpServletRequest request,HttpServletResponse response,Integer billId) throws Exception {
+              User user = (User) request.getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+              if(user!=null&&billId!=null){
+                     EnquiryBillsVo enquiryBillsVo=enquiryBillsService.findVOById(billId);
+                     if(enquiryBillsVo!=null){
+                            List<EnquiryCommoditys> enquiryCommodityses=enquiryBillsVo.getEnquiryCommoditys();
+
+                            List<String> commodityIds=new ArrayList<String>();
+                            for(EnquiryCommoditys enquiryCommoditys:enquiryCommodityses){
+                                   commodityIds.add(enquiryCommoditys.getCommodityId().toString());
+                            }
+                            //由于登录了cookie和数据库中是一致的只需更新到数据库中，然后刷新cookie就行了
+                            cartsCommodityService.combine((String[])commodityIds.toArray(new String[commodityIds.size()]),user);
+                            List<Integer> ids=cartsCommodityService.getIds(user.getId());
+                            if(ids.size()!=0){
+                                   CookieUtils.setCookie(response, CART_NAME, StringUtils.join(ids,"@") ,CART_EXPIRE);
+                            }
+                     }
+
+              }
+
+              return "redirect:/cart/index";
+       }
+
+
 
 
        /**

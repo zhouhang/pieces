@@ -181,13 +181,9 @@ public class UserController extends BaseController {
 		if(cookieValue!=null&&!cookieValue.equals("")){
 			cartsCommodityService.combine(StringUtils.split(cookieValue,"@"),user);
 		}
-
 		List<Integer> ids=cartsCommodityService.getIds(user.getId());
-
-		int size = ids.size();
-		if(size!=0){
+		if(ids.size()!=0){
 			CookieUtils.setCookie(response, CART_NAME,StringUtils.join(ids,"@") ,CART_EXPIRE);
-
 		}
 
 
@@ -299,16 +295,14 @@ public class UserController extends BaseController {
 
         //合并cookie和购物车里面商品
 		User user=userService.findByAccount(userName);
+
 		String cookieValue = CookieUtils.getCookieValue(request, CART_NAME);
 
 		if(cookieValue!=null&&!cookieValue.equals("")){
 			cartsCommodityService.combine(StringUtils.split(cookieValue,"@"),user);
 		}
 		List<Integer> ids=cartsCommodityService.getIds(user.getId());
-
-		int size = ids.size();
-
-		if(size!=0){
+		if(ids.size()!=0){
 			CookieUtils.setCookie(response, CART_NAME,StringUtils.join(ids,"@") ,CART_EXPIRE);
 		}
 
