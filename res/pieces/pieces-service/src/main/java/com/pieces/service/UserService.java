@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.UserVo;
+import com.pieces.service.dto.UserValidate;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
@@ -84,6 +85,14 @@ public interface UserService extends ICommonService<User>{
 	 *姓名和手机后台自动生成一个新用户
 	 */
 	int generateUser(User user);
+
+	/**
+	 * 检查用户是否能下单
+	 * @param user
+	 * @return
+     */
+	UserValidate validateUser(User user);
+
 
 	/**
 	 * 增加合并前台cookie和后台数据的功能

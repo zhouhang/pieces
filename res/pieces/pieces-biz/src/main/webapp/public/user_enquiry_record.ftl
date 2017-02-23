@@ -20,11 +20,27 @@
                     </div>
 
                     <div class="enquity-list">
-                    <#if user_session_biz??&&user_session_biz.certifyStatus!=1>
+                    <#if userValidate.status == 1>
                         <div class="fa-msg">
                             <i class="fa fa-prompt"></i>
                             <span>您尚未提交企业资质审核，通过审核后方可进行在线下单</span>
                             <a class="btn-ghost" href="/center/certificate/stepOne">提交资格审核</a>
+                        </div>
+                    <#elseif userValidate.status == 2>
+                        <div class="fa-msg">
+                            <i class="fa fa-prompt"></i>
+                            <span>您的企业资质正在审核中，通过审核后方可进行在线下单,如有问题请致电0558-5120088</span>
+                        </div>
+                    <#elseif userValidate.status == 3>
+                        <div class="fa-msg">
+                            <i class="fa fa-prompt"></i>
+                            <span>您的企业资质审核未通过，无法进行下单.</span>
+                            <span>不通过原因:${userValidate.msg!}</span>
+                        </div>
+                    <#elseif userValidate.status == 4>
+                        <div class="fa-msg">
+                            <i class="fa fa-prompt"></i>
+                            <span>您还没有绑定终端客户,暂时无法进行下单. 如果您已提交终端客户资料,请联系客服人员帮您进行绑定.客服电话:0558-5120088</span>
                         </div>
                     </#if>
                         <div class="tab">
@@ -44,8 +60,8 @@
                                             <span>报价截止日期：${(bill.expireDate?date)!}</span>
                                         </div>
                                         <div class="col1">
-                                            <span class="name">海马、天冬、天麻、党参、煅人中白、制马钱子...</span>
-                                            <i class="fa fa-new"></i>
+                                            <span class="name">${bill.commodityOverview!}</span>
+                                            <#if bill.type==1><i class="fa fa-new"></i></#if>
                                             <span class="count">共${bill.enquiryCommoditys?size}个商品</span>
                                         </div>
                                         <div class="col2">
@@ -70,7 +86,7 @@
                                 </#list>
                             <#else>
                                 <div class="empty">
-                                    <p>您还没有询价记录，现在<a href="/center/enquiry/index">立即询价</a>吧！</p>
+                                    <p>没有符合条件的记录，现在<a class="c-blue" href="/center/enquiry/index">立即询价</a>吧！</p>
                                 </div>
                             </#if>
                             </ul>

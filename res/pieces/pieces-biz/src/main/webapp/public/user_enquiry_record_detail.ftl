@@ -21,11 +21,27 @@
 
                     <div class="fa-table">
 
-                    <#if user_session_biz??&&user_session_biz.certifyStatus!=1>
+                    <#if userValidate.status == 1>
                         <div class="fa-msg">
                             <i class="fa fa-prompt"></i>
                             <span>您尚未提交企业资质审核，通过审核后方可进行在线下单</span>
                             <a class="btn-ghost" href="/center/certificate/stepOne">提交资格审核</a>
+                        </div>
+                    <#elseif userValidate.status == 2>
+                        <div class="fa-msg">
+                            <i class="fa fa-prompt"></i>
+                            <span>您的企业资质正在审核中，通过审核后方可进行在线下单,如有问题请致电0558-5120088</span>
+                        </div>
+                    <#elseif userValidate.status == 3>
+                        <div class="fa-msg">
+                            <i class="fa fa-prompt"></i>
+                            <span>您的企业资质审核未通过，无法进行下单.</span>
+                            <span>不通过原因:${userValidate.msg!}</span>
+                        </div>
+                    <#elseif userValidate.status == 4>
+                        <div class="fa-msg">
+                            <i class="fa fa-prompt"></i>
+                            <span>您还没有绑定终端客户,暂时无法进行下单. 如果您已提交终端客户资料,请联系客服人员帮您进行绑定.客服电话:0558-5120088</span>
                         </div>
                     </#if>
                         <div class="fa-chart enquity-detail">
@@ -166,7 +182,7 @@
                 submit: function() {
                     // 重新询价
                     $("#enquiryBtn").click(function () {
-                        // 重新询价加入购物车
+                        window.location.href = "/cart/reEnquiry?billId=${bill.id!}";
                     })
 
                     //下单

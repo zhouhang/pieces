@@ -44,7 +44,7 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
         enquiryBills.setId(billsId);
         enquiryBills.setUpdateTime(new Date());
         enquiryBills.setUpdateUser(memberId);
-
+        enquiryBills.setType(1);
         if (list!= null && list.size()>0){
             enquiryBills.setExpireDate(list.get(0).getExpireDate());
         }
@@ -84,6 +84,7 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
         enquiryBills.setUpdateTime(new Date());
         enquiryBills.setUpdateUser(memberId);
         enquiryBills.setStatus(1);
+        enquiryBills.setType(1);
         if (list!= null && list.size()>0){
             enquiryBills.setExpireDate(list.get(0).getExpireDate());
         }
