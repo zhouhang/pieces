@@ -120,8 +120,8 @@
                     </div>
 
                     <div class="tab">
-                        <span class="curr"><a href="#">全部</a></span>
-                        <span><a href="#">已报价</a></span>
+                        <span><a href="#">全部</a></span>
+                        <span class="curr"><a href="#">已报价</a></span>
                         <span><a href="#">未报价</a></span>
                         <span><a href="#">已过期</a></span>
                     </div>
@@ -228,6 +228,9 @@
         var _blobal = {
             fn: {
                 init: function () {
+                    $('.tab').on('click', 'span', function() {
+                        $(this).addClass('curr').siblings().removeClass('curr');
+                    })
                 }
             }
         }

@@ -450,6 +450,10 @@ var shopcart = {
 			}
 		}
 		return false;
+	},
+	clearCart: function() {
+		this.saveCart('');
+		this.empty();
 	}
 }
 
