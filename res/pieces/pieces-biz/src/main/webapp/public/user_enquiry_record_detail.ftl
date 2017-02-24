@@ -109,19 +109,20 @@
                                     </tbody>
                                 </table>
                                 <div class="ft">
+                                    <span>共 <em>${bill.enquiryCommoditys?size}</em> 个商品，
                                 <#if bill.status==0>
-                                    <span>共 <em>10</em> 个商品，<em>1</em> 个未报价，<em>9</em> 个可下单。</span>
-                                    <button class="btn btn-red" type="button" id="buyBtn" disabled >下单</button>
+                                    <em id="notPriceCount">1</em> 个未报价，<em id="buysCount">9</em> 个可下单。</span>
+                                    <button class="btn" type="button" id="buyBtn" disabled >下单</button>
                                     <button class="btn btn-white" type="button" id="exportBtn">导出报价表</button>
                                     <#--<span class="c2">未报价</span>-->
                                 <#else >
                                     <#if bill.expireDate?exists&&bill.expireDate?is_date&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
-                                        <span>共 <em>10</em> 个商品，<em>1</em> 个未报价，<em>9</em> 个可下单。</span>
+                                        <em id="notPriceCount">1</em> 个未报价，<em id="buysCount">9</em> 个可下单。</span>
                                         <button class="btn btn-red" type="button" id="buyBtn">下单</button>
                                         <button class="btn btn-white" type="button" id="exportBtn">导出报价表</button>
                                         <#--<span class="c1">已报价</span>-->
                                     <#else >
-                                        <span>共 <em>10</em> 个商品，<em>1</em> 个未报价，<em>9</em> 个可下单。</span>
+                                        <em id="notPriceCount">1</em> 个未报价，<em id="buysCount">9</em> 个可下单。</span>
                                         <button class="btn btn-red" type="button" id="enquiryBtn">重新询价</button>
                                         <button class="btn btn-white" type="button" id="exportBtn">导出报价表</button>
                                         <#--<span class="c3">已过期</span>-->
@@ -150,6 +151,13 @@
                 init: function() {
                     this.checkAll();
                     this.submit();
+                    this.count();
+                },
+                count: function(){
+                    var notPrice = $('.enquity-commodity').find(".w6:contains('-')");//未报价
+                    var buys = $('.enquity-commodity').find('td input:not(:disabled)')//可下单
+                    $("#notPriceCount").html(notPrice.size());
+                    $("#buysCount").html(buys.size());
                 },
                 // 全选
                 checkAll: function() {
