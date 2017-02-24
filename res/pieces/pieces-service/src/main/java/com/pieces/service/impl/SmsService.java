@@ -1,6 +1,9 @@
 package com.pieces.service.impl;
 
 import com.pieces.dao.exception.SmsOverException;
+import com.pieces.dao.model.User;
+import com.pieces.dao.vo.EnquiryBillsVo;
+import com.pieces.service.UserService;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.enums.TextTemplateEnum;
 import com.pieces.service.redis.RedisManager;
@@ -13,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +44,9 @@ public class SmsService {
 
     @Autowired
     private RedisManager redisManager;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 发送短信验证码
@@ -142,13 +150,19 @@ public class SmsService {
 
     // 后台报价 quoted
     //【上工之选】@@@ 您好,您的询价单 @@@ (询价商品 @@@ 等)已有报价,请在询价记录中查看.
-    public void sendQuoted(String username, String code, String commodity, String mobile) {
+    public void sendQuoted(EnquiryBillsVo vo) {
         if (enable) {
             try {
                 Map<String, Object> param = new HashMap<>();
                 param.put("apikey", apikey);
-                param.put("mobile", mobile);
-                param.put("text", TextTemplateEnum.SMS_BOSS_QUOTED.getText(username, code, commodity));
+                param.put("mobile", vo.getContactMobile());
+                User user =userService.findById(vo.getId());
+                if (user.getSource() == 2){
+                    param.put("text", TextTemplateEnum.SMS_BOSS_QUOTED_NOTLOGIN.getText(vo.getContactName(), vo.getCode()));
+                } else {
+                    param.put("text", TextTemplateEnum.SMS_BOSS_QUOTED.getText(vo.getContactName(), vo.getCode()));
+                }
+
                 HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
             } catch (Exception e) {
                 throw new RuntimeException("后台报价短信发送失败", e);
@@ -158,13 +172,20 @@ public class SmsService {
 
     //后台修改报价 quotedUpdate
     //【上工之选】@@@ 您好,您的询价单 @@@ 中部分商品的报价有更新,请在询价记录中查看.
-    public void sendQuotedUpdate(String username, String code, String mobile) {
+    public void sendQuotedUpdate(EnquiryBillsVo vo) {
         if (enable) {
             try {
                 Map<String, Object> param = new HashMap<>();
                 param.put("apikey", apikey);
-                param.put("mobile", mobile);
-                param.put("text", TextTemplateEnum.SMS_BOSS_QUOTEDUPDATE.getText(username, code));
+                param.put("mobile", vo.getContactMobile());
+
+                User user =userService.findById(vo.getId());
+                if (user.getSource() == 2){
+                    param.put("text", TextTemplateEnum.SMS_BOSS_QUOTED_NOTLOGIN.getText(vo.getContactName(), vo.getCode()));
+                } else {
+                    param.put("text", TextTemplateEnum.SMS_BOSS_QUOTEDUPDATE.getText(vo.getContactName(), vo.getCode()));
+                }
+
                 HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
             } catch (Exception e) {
                 throw new RuntimeException("后台修改报价短信发送失败", e);

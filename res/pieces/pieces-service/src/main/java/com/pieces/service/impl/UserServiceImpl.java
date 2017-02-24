@@ -242,6 +242,10 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         Session s = subject.getSession();
         s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), user);
 
+        //自动生成的用户第一次登入修改用户来源为前台创建
+        user.setSource(0);
+        update(user);
+
         //合并cookie和购物车里面商品
 
         String cookieValue = null;
