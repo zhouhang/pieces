@@ -3,6 +3,9 @@ package com.pieces.service.shiro;
 import java.io.Serializable;
 import java.util.Collection;
 
+import com.pieces.dao.model.User;
+import com.pieces.service.UserService;
+import com.pieces.tools.utils.SpringUtil;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
@@ -59,6 +62,16 @@ public class RedisSessionDAO extends AbstractSessionDAO {
 		}
 		
 		Session s = (Session)SerializeUtils.deserialize(redisManager.get(this.getByteKey(sessionId)));
+		if (s!=null) {
+			User user = (User) s.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+			if (user != null && user.getType() == 1 && user.getCertifyStatus() == 0) {
+				UserService userService = (UserService) SpringUtil.getBean(UserService.class);
+				user = userService.findById(user.getId());
+				user.setPassword(null);
+				user.setSalt(null);
+				s.setAttribute(RedisEnum.USER_SESSION_BIZ.getValue(), user);
+			}
+		}
 		return s;
 	}
 	
@@ -101,7 +114,7 @@ public class RedisSessionDAO extends AbstractSessionDAO {
 	
 	/**
 	 * 获得byte[]型的key
-	 * @param key
+	 * @param sessionId
 	 * @return
 	 */
 	private byte[] getByteKey(Serializable sessionId){
