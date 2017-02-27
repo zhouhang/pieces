@@ -784,6 +784,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .enquity-list .tab{padding:0;}
 .enquity-list .tab span:nth-child(n+2){border-left:0;}
 .enquity-list .tab .curr a{color:#fff;}
+.enquity-list .tab a{display:block;}
 .enquity-list .list{margin-top:-1px;padding:20px;border:1px solid #ccc;}
 .enquity-list .list li{margin-bottom:20px;border:1px solid #e7e7e7;overflow:hidden;*zoom:1;}
 .enquity-list .list .hd{line-height:28px;padding:0 30px;font-size:12px;color:#999;border-bottom:1px solid #e7e7e7;background:#f5f5f5;}
