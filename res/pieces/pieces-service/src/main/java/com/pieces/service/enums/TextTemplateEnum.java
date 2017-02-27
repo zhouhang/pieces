@@ -15,7 +15,7 @@ public enum TextTemplateEnum {
     SMS_BIZ_CERTIFYFAIL_TEMPLATE("【上工好药】尊敬的用户，您的企业资质审核未通过，不通过原因：{1}，请整理好资料后重新提交。有问题请致电 0558-5120088。"),
     SMS_BOSS_ADDUSER_PASSWORD_TEMPLATE("{1}您的用户名是{2},密码是{3},请妥善保管."),
     SMS_BOSS_UPDATEUSER_PASSWORD_TEMPLATE("{1}{2}您好,您的新密码是{3},请妥善保管."),
-    SMS_BOSS_QUOTED_NOTLOGIN("【上工好药】尊敬的用户: 您的询价单 {2} 已有回复.点击 http://sghaoyao.com/quote/{2} 查看详细。下单请登录平台操作。登录账号您的手机号，登录密码您的手机号后六位。"),
+    SMS_BOSS_QUOTED_NOTLOGIN("【上工好药】尊敬的用户: 您的询价单 {2} 已有回复.点击 http://sghaoyao.com/quote/{2} 查看详细。下单请登录平台操作。登录账号:您的手机号，登录密码:您的手机号后六位。"),
     SMS_BOSS_QUOTED("【上工好药】尊敬的用户: 您的询价单 {2} 已有回复.点击 http://sghaoyao.com/quote/{2} 查看详细。下单请登录平台操作。"),
     SMS_BOSS_QUOTEDUPDATE("【上工好药】尊敬的用户: 您的询价单 {2} 已有回复.点击 http://sghaoyao.com/quote/{2} 查看详细。下单请登录平台操作。"),
     SMS_BOSS_PAYSUCCESS("【上工好药】{1} 您好,您 {2}元 的款项支付成功,详情请在支付记录中查看,平台会尽快为您安排发货."),
