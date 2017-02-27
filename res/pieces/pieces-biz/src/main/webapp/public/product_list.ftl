@@ -92,7 +92,7 @@
 	                            <td>${commodity.originOf}</td>
 	                            <td>${commodity.executiveStandard}</td>
 	                            <td>
-                                    <button data-s="${commodity.id}|${commodity.name}|${commodity.spec}" class="btn btn-white btn-cart">加入询价单</button>
+                                    <button data-s="${commodity.id}|${commodity.name}|${commodity.level}" class="btn btn-white btn-cart">加入询价单</button>
                                     <a href="/commodity/${commodity.id }" class="link">查看详情</a>
                                 </td>
 	                        </tr>
