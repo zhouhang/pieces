@@ -156,6 +156,13 @@
                             // do nothing
                         } else if (data.length === 3) {
                             shopcart.addToCart(data);                            
+                            layer.confirm('加入成功，是否立即查看询价单？', {
+                                icon: 1
+                            }, function(index) {
+                                layer.close(index);
+                                window.location.href = 'enquiry2.html';
+                            });
+                            $buying.addClass('disabled').html('已加入询价单');
                         } else {
                             layer.alert('加入询价单失败',{icon: 2});
                         }
