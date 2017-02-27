@@ -457,6 +457,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .product-summary .buttons .btn-gray:hover{color:#c3272b;}
 .product-summary .buttons .faved{color:#999;background:#ededed;}
 .product-summary .buttons .faved:hover{color:#999;background:#ededed;border-color:#ccc;}
+.product-summary .buttons .disabled{background:#e7a9aa!important;border-color:#e7a9aa;}
 .product-summary .buttons .fa{margin-right:6px;font-size:22px;vertical-align:top;}
 .product-detail{margin-top:20px;border:1px solid #e7e7e7;}
 .product-detail .parameter{margin:0 20px 16px;padding:30px 0;line-height:1;font-size:12px;border-bottom:1px solid #e7e7e7;overflow:hidden;*zoom:1;}
@@ -599,8 +600,10 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .banner-slider .side-notice .quick{padding:20px 0 24px;text-align:center;}
 .banner-slider .side-notice .quick span{display:block;line-height:30px;font-size:12px;color:#999;}
 .banner-slider .side-notice .quick hr{margin:10px 0 20px;border:0;border-top:1px solid #e7e7e7;}
-.banner-slider .side-notice .quick .fa{margin-right:5px;}
-.banner-slider .side-notice .btn{display:block;border-radius:3px;}
+.banner-slider .side-notice .btn{display:block;height:0;padding:40px 0 0;background:url(../images/buttons.png) no-repeat;border:none;overflow:hidden;}
+.banner-slider .side-notice .btn:hover{opacity:.9;filter:alpha(opacity=90);}
+.banner-slider .side-notice .btn-red{background-position:0 0;}
+.banner-slider .side-notice .btn-primary{background-position:0 -40px;}
 
 .activity{margin-top:13px;}      
 .activity ul{margin-right:-13px;} 
@@ -784,6 +787,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .enquity-list .tab{padding:0;}
 .enquity-list .tab span:nth-child(n+2){border-left:0;}
 .enquity-list .tab .curr a{color:#fff;}
+.enquity-list .tab a{display:block;}
 .enquity-list .list{margin-top:-1px;padding:20px;border:1px solid #ccc;}
 .enquity-list .list li{margin-bottom:20px;border:1px solid #e7e7e7;overflow:hidden;*zoom:1;}
 .enquity-list .list .hd{line-height:28px;padding:0 30px;font-size:12px;color:#999;border-bottom:1px solid #e7e7e7;background:#f5f5f5;}

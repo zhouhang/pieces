@@ -362,12 +362,9 @@ var shopcart = {
 				$ul = $li.parent(),
 				id = $(this).data('id');
 
-			layer.confirm('您确定要将该商品从购物清单中删除吗？', {icon: 3, title:'提示'}, function(index){
-				$li.remove();
-				that.$header.find('.cart ul').html($ul.html());
-				that.delCart(id);
-	            layer.close(index);
-	        });  
+			$li.remove();
+			that.$header.find('.cart ul').html($ul.html());
+			that.delCart(id);
 		})
 	},
 	addToCart: function(data) {
@@ -380,12 +377,9 @@ var shopcart = {
 	        	'spec': data[2]
 		    }];
 
-	    if (that.isInCart(id)) {
-	    	layer.alert('已加入询价单',{icon: 1});
+	    if (that.isInCart(id)) {	    	
 	    	return that;
-	    }
-
-        if (cart === '') {	
+	    } else if (cart === '') {	
         	// 第一次添加购物车
         	cart = id;
             that.toHtml(model);
@@ -422,6 +416,12 @@ var shopcart = {
             if (id == data[0]) {
                 $(this).removeClass('btn-gray').prop('disabled', false).html('加入询价单');
                 return false; // break
+            }
+		})
+		$('#buying').each(function() {
+			var data = ($(this).data('s') || '').split('|');
+            if (id == data[0]) {
+                $(this).html('加入询价单').removeClass('disabled');
             }
 		})
 	},
