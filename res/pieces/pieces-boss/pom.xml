@@ -231,14 +231,14 @@
 		<profile>
 			<id>test</id>
 			<properties>
-				<!--<biz.base.url>http://www.sghaoyao.com</biz.base.url>
+				<biz.base.url>http://www.sghaoyao.com</biz.base.url>
 				<boss.base.url>http://boss.sghaoyao.com</boss.base.url>
 				<boss.upload.url>http://static.sghaoyao.com/</boss.upload.url>
-				<boss.upload.path>E:\uploadfiles\sghaoyao\</boss.upload.path>-->
-				<biz.base.url>http://www.sankobuy.com:8080</biz.base.url>
+				<boss.upload.path>E:\uploadfiles\sghaoyao\</boss.upload.path>
+				<!--<biz.base.url>http://www.sankobuy.com:8080</biz.base.url>
 				<boss.base.url>http://boss.sankobuy.com:8080</boss.base.url>
 				<boss.upload.url>http://static.sankobuy.com:8080/</boss.upload.url>
-				<boss.upload.path>E:\uploadfiles\sghaoyao\</boss.upload.path>
+				<boss.upload.path>E:\uploadfiles\sghaoyao\</boss.upload.path>-->
 				<boss.logs.path>E:\uploadfiles\logs\</boss.logs.path>
 			</properties>
 		</profile>
