@@ -221,7 +221,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         //默认type=1
         user.setSource(BasicConstants.USER_ENQUIRY_BIZ);
         user.setType(1);
-        user.setUserName("sg"+serialNumberService.getTensTimestamp()+SeqNoUtil.getRandomNum(2));
+        user.setUserName("pc"+serialNumberService.getTensTimestamp()+SeqNoUtil.getRandomNum(2));
         user.setPassword(user.getContactMobile().substring(5,11));
         return addUser(user);
 
