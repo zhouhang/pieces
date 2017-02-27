@@ -52,9 +52,6 @@
     <dl>
         <dt><i class="fa fa-question-circle"></i>询价</dt>
         <dd>
-            <a href="center/enquiry/index"><i class="fa fa-li"></i>我要询价</a>
-        </dd>
-        <dd>
             <a href="center/enquiry/record"><i class="fa fa-li"></i>询价记录</a>
         </dd>
     </dl>

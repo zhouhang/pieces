@@ -35,7 +35,8 @@
                         <div class="fa-msg">
                             <i class="fa fa-prompt"></i>
                             <span>您的企业资质审核未通过，无法进行下单.</span>
-                            <span>不通过原因:${userValidate.msg!}</span>
+                            <em>不通过原因:${userValidate.msg!}</em>
+                            <a class="btn-ghost" href="/center/certificate/stepOne">重新提交资质审核</a>
                         </div>
                     <#elseif userValidate.status == 4>
                         <div class="fa-msg">
