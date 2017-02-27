@@ -75,7 +75,11 @@
                         </dl>
                         <div class="buttons">
                             <a class="btn btn-red" href="javascript:;" id="buying" data-s="${commodity.id}|${commodity.name}|${commodity.spec}">加入询价单</a>
-                            <a class="btn btn-gray j_pop_login_collect" ajaxurl="/center/collect/add/${commodity.id!}" url="/commodity/${commodity.id!}"><i class="fa fa-heart"></i>收藏</a>
+                            <#if collect?exists && collect>
+                                <a class="btn btn-gray faved" href="javascript:return false;"><i class="fa fa-heart"></i>已收藏</a>
+                            <#else >
+                                <a class="btn btn-gray j_pop_login_collect" ajaxurl="/center/collect/add/${commodity.id!}" url="/commodity/${commodity.id!}"><i class="fa fa-heart"></i>收藏</a>
+                            </#if>
                         </div>
                     </div>
                 </div>
