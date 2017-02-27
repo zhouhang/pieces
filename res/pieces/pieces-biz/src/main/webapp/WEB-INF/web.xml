@@ -78,10 +78,5 @@
 			classpath*:com/pieces/biz/spring/spring.xml
 		</param-value>
 	</context-param>
-	
-
-
-
-
 
 </web-app>
