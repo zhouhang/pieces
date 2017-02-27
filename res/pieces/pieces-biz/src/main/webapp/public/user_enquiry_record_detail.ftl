@@ -181,6 +181,7 @@
                     }).each(function() {
                         // 统计已选个数
                         total += this.checked ? 1 : 0;
+                        autoDisableBtn(total)
                     });
 
                     // 全选
@@ -191,7 +192,16 @@
                         });
 
                         total = icheck ? amount : 0;
+                        autoDisableBtn(total)
                     })
+
+                    function autoDisableBtn(check) {
+                        if (check ==0 && $("#buyBtn")) {
+                            $("#buyBtn").attr({"disabled":"disabled"}).addClass("btn-gray").removeClass("btn-red");
+                        } else {
+                            $("#buyBtn").removeAttr("disabled").removeClass("btn-gray").addClass("btn-red");
+                        }
+                    }
 
                     $cbxAll.trigger("click");
 
