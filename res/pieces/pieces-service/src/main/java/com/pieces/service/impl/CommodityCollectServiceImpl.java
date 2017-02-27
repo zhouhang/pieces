@@ -50,4 +50,12 @@ public class CommodityCollectServiceImpl  extends AbsCommonService<CommodityColl
 		
 	}
 
+	@Override
+	public boolean check(Integer cid, Integer userId) {
+		CommodityCollectVo commodityCollectVo = new CommodityCollectVo();
+		commodityCollectVo.setCommodityId(cid);
+		commodityCollectVo.setUserId(userId);
+		PageInfo<CommodityCollectVo> ccp = findByParams(commodityCollectVo,1, 10);
+		return ccp.getSize() == 0?false:true;
+	}
 }

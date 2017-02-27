@@ -70,7 +70,13 @@
                                         <#list bill.enquiryCommoditys as commodity>
                                         <tr>
                                             <td class="td w1"><input type="checkbox" name="commodity" disabled></td>
-                                            <td class="td w2">${commodity.commodityName!}</td>
+                                            <td class="td w2">
+                                                <#if commodity.id?exists>
+                                                    <a href="/commodity/${commodity.id}" target="_blank">${commodity.commodityName!}</a>
+                                                <#else >
+                                                ${commodity.commodityName!}
+                                                </#if>
+                                            </td>
                                             <td class="td w3">${commodity.specs!}</td>
                                             <td class="td w4">${commodity.level!}</td>
                                             <td class="td w5">${commodity.origin!}</td>
@@ -113,7 +119,7 @@
                                     <span>共 <em>${bill.enquiryCommoditys?size}</em> 个商品，
                                 <#if bill.status==0>
                                     <em id="notPriceCount">1</em> 个未报价，<em id="buysCount">9</em> 个可下单。</span>
-                                    <button class="btn" type="button" id="buyBtn" disabled >下单</button>
+                                    <button class="btn btn-gray" type="button" id="buyBtn" disabled >下单</button>
                                     <button class="btn btn-white" type="button" id="exportBtn">导出报价表</button>
                                     <#--<span class="c2">未报价</span>-->
                                 <#else >
@@ -167,6 +173,7 @@
                             amount = $cbxs.length, // 总个数
                             total  = 0; // 当前选中的个数
 
+
                     // 单选
                     $cbxs.on('click', function() {
                         total += this.checked ? 1 : -1;
@@ -175,6 +182,7 @@
                     }).each(function() {
                         // 统计已选个数
                         total += this.checked ? 1 : 0;
+                        autoDisableBtn(total)
                     });
 
                     // 全选
@@ -185,7 +193,16 @@
                         });
 
                         total = icheck ? amount : 0;
+                        autoDisableBtn(total)
                     })
+
+                    function autoDisableBtn(check) {
+                        if (check ==0 && $("#buyBtn")) {
+                            $("#buyBtn").attr({"disabled":"disabled"}).addClass("btn-gray").removeClass("btn-red");
+                        } else {
+                            $("#buyBtn").removeAttr("disabled").removeClass("btn-gray").addClass("btn-red");
+                        }
+                    }
 
                     $cbxAll.trigger("click");
 

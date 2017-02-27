@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.pieces.biz.controller.commons.LogConstant;
-import com.pieces.dao.model.Commodity;
-import com.pieces.dao.model.User;
+import com.pieces.dao.model.*;
+import com.pieces.service.CommodityCollectService;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.exception.NotFoundException;
@@ -25,8 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.elasticsearch.document.CommodityDoc;
-import com.pieces.dao.model.Category;
-import com.pieces.dao.model.Code;
 import com.pieces.dao.vo.CategoryVo;
 import com.pieces.dao.vo.CommodityVo;
 import com.pieces.service.CategoryService;
@@ -54,6 +52,9 @@ public class CommodityController extends BaseController {
 
 	@Autowired
 	private HttpSession session;
+
+	@Autowired
+	private CommodityCollectService collectService;
 
 	/**
 	 * 获取商品列表分页
@@ -279,7 +280,9 @@ public class CommodityController extends BaseController {
 		model.put("categoryId", category1.getId());
 		model.put("commodity", commodity);
 		model.put("featured", featured);
-
+		if (user!= null) {
+			model.put("collect", collectService.check(id, user.getId()));
+		}
 		//标志产品
 		model.put("CURRENT_PAGE","commodity");
 		return "product";

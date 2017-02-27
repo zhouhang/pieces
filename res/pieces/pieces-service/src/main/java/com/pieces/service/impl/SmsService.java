@@ -156,7 +156,7 @@ public class SmsService {
                 Map<String, Object> param = new HashMap<>();
                 param.put("apikey", apikey);
                 param.put("mobile", vo.getContactMobile());
-                User user =userService.findById(vo.getId());
+                User user =userService.findById(vo.getUserId());
                 if (user.getSource() == 2){
                     param.put("text", TextTemplateEnum.SMS_BOSS_QUOTED_NOTLOGIN.getText(vo.getContactName(), vo.getCode()));
                 } else {
@@ -179,7 +179,7 @@ public class SmsService {
                 param.put("apikey", apikey);
                 param.put("mobile", vo.getContactMobile());
 
-                User user =userService.findById(vo.getId());
+                User user =userService.findById(vo.getUserId());
                 if (user.getSource() == 2){
                     param.put("text", TextTemplateEnum.SMS_BOSS_QUOTED_NOTLOGIN.getText(vo.getContactName(), vo.getCode()));
                 } else {
