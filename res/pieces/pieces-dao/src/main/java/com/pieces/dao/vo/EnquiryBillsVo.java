@@ -2,6 +2,7 @@ package com.pieces.dao.vo;
 
 import com.pieces.dao.enums.CertifyTypeEnum;
 import com.pieces.dao.model.EnquiryBills;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 
@@ -46,6 +47,8 @@ public class EnquiryBillsVo extends EnquiryBills{
 
     //企业类型
     private Integer companyType;
+
+    private String commodityOverview;
 
     public String getUserName() {
         return userName;
@@ -141,5 +144,23 @@ public class EnquiryBillsVo extends EnquiryBills{
 
     public void setCompanyType(Integer companyType) {
         this.companyType = companyType;
+    }
+
+    public String getCommodityOverview() {
+
+        if (super.getEnquiryCommoditys() != null) {
+            commodityOverview = "";
+            int lenght = super.getEnquiryCommoditys().size() >= 6 ? 6: super.getEnquiryCommoditys().size();
+            String[] names = new String[lenght];
+            for (int i = 0; i < lenght; i++) {
+                names[i] = super.getEnquiryCommoditys().get(i).getCommodityName();
+            }
+            commodityOverview = StringUtils.join(names, ",");
+            if (super.getEnquiryCommoditys().size() > 6) {
+                commodityOverview += "...";
+            }
+        }
+
+        return commodityOverview;
     }
 }

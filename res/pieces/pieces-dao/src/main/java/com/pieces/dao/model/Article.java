@@ -46,6 +46,8 @@ public class Article  implements Serializable {
 
 	// 文章发布时间
 	private Date publishedDate;
+
+	private int isTop;
 	
 	public Article(){}
 	
@@ -149,5 +151,13 @@ public class Article  implements Serializable {
 
 	public void setPublishedDate(Date publishedDate) {
 		this.publishedDate = publishedDate;
+	}
+
+	public int getIsTop() {
+		return isTop;
+	}
+
+	public void setIsTop(int isTop) {
+		this.isTop = isTop;
 	}
 }

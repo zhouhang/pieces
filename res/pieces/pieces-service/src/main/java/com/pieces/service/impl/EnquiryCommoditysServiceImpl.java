@@ -44,7 +44,7 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
         enquiryBills.setId(billsId);
         enquiryBills.setUpdateTime(new Date());
         enquiryBills.setUpdateUser(memberId);
-
+        enquiryBills.setType(1);
         if (list!= null && list.size()>0){
             enquiryBills.setExpireDate(list.get(0).getExpireDate());
         }
@@ -56,7 +56,7 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
 
             // 报价更新后发生短信
             EnquiryBillsVo billsVo = enquiryBillsDao.findVOById(billsId);
-            smsService.sendQuotedUpdate(billsVo.getContactName(), billsVo.getCode(), billsVo.getContactMobile());
+            smsService.sendQuotedUpdate(billsVo);
         }
     }
 
@@ -84,6 +84,7 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
         enquiryBills.setUpdateTime(new Date());
         enquiryBills.setUpdateUser(memberId);
         enquiryBills.setStatus(1);
+        enquiryBills.setType(1);
         if (list!= null && list.size()>0){
             enquiryBills.setExpireDate(list.get(0).getExpireDate());
         }
@@ -94,8 +95,7 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
             // 报价后发生短信
             EnquiryBillsVo billsVo = enquiryBillsDao.findVOById(billsId);
             EnquiryCommoditys commoditys = enquiryCommoditysDao.findById(list.get(0).getId());
-            smsService.sendQuoted(billsVo.getContactName(), billsVo.getCode(),commoditys.getCommodityName(),
-                    billsVo.getContactMobile());
+            smsService.sendQuoted(billsVo);
         }
     }
 

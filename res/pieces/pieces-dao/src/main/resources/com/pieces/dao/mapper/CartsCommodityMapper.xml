@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.CartsCommodityDao">
+    <resultMap id="CartsCommodityResultMap" type="com.pieces.dao.model.CartsCommodity">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="commodity_id"  property="commodityId" />
+            <result column="create_time"  property="createTime" />
+        
+    </resultMap>
+
+    <resultMap id="CartsCommodityResultMapVo" type="com.pieces.dao.vo.CartsCommodityVo">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="commodity_id"  property="commodityId" />
+            <result column="create_time"  property="createTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,commodity_id,create_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="CartsCommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from carts_commodity
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="CartsCommodityResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from carts_commodity
+    </select>
+
+    <select id="findByParams" resultMap="CartsCommodityResultMapVo" parameterType="com.pieces.dao.vo.CartsCommodityVo">
+        select
+        <include refid="Base_Column_List" />
+        from carts_commodity
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="userId!= null">
+                and user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from carts_commodity
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.CartsCommodity">
+        insert into
+        carts_commodity (user_id,commodity_id,create_time)
+        values
+        (#{userId},#{commodityId},#{createTime})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.CartsCommodity">
+        update carts_commodity
+        <set>
+                                                        
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+                                            
+            <if test="commodityId != null">
+                commodity_id = #{commodityId},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+    <delete id="deleteByVo" parameterType="com.pieces.dao.vo.CartsCommodityVo">
+        delete from carts_commodity
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="userId!= null">
+                and user_id = #{userId}
+            </if>
+            <if test="commodityId != null">
+                and commodity_id = #{commodityId}
+            </if>
+        </where>
+    </delete>
+
+    <update id='combine'>
+        insert into
+        carts_commodity (user_id,commodity_id,create_time)
+        VALUES
+        <foreach collection="list" index="index" item="item"
+                        separator=",">
+        (#{item.userId},#{item.commodityId},#{item.createTime})
+        </foreach>
+              ON DUPLICATE KEY UPDATE
+              user_id = VALUES(user_id),
+              commodity_id = VALUES(commodity_id)
+    </update>
+
+    <select id="getIds" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
+        select
+        commodity_id
+        from carts_commodity
+        where user_id = #{userId}
+    </select>
+
+</mapper>

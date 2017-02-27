@@ -64,7 +64,12 @@
                 <tr>
                     <td>${article.id}</td>
                     <td>
-                        <div class="tl">${article.title}</div>
+                        <div class="tl">${article.title}
+                            <#if article.isTop==1>
+                                <em>置顶</em>
+                            </#if>
+
+                        </div>
                     </td>
                     <td>${article.articleCategoryName}</td>
                     <td><#if article.publishedDate?exists>${article.publishedDate?date}</#if></td>

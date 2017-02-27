@@ -71,8 +71,6 @@
     </div><!-- member-box end -->
 
     <#include "./inc/footer.ftl"/>
-
-    <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
     <script>
         var _global = {
             v: {

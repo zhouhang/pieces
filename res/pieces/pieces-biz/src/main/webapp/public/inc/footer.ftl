@@ -18,27 +18,21 @@
     </div>
 </div><!-- footer end -->
 
-<#--<script src="/js/jquery.min.js"></script>-->
 <script src="${urls.getForLookupPath('/js/jquery.min.js')}"></script>
+<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 <script src="${urls.getForLookupPath('/js/jquery.autocomplete.min.js')}"></script>
 <script src="${urls.getForLookupPath('/js/common.js')}"></script>
 <script src="//hm.baidu.com/hm.js?61c7936d47deb868315f8a231034f0cb"></script>
 
-
 <script>
-
     (function(){
         var bp = document.createElement('script');
         var curProtocol = window.location.protocol.split(':')[0];
         if (curProtocol === 'https'){
-
             bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        }
-        else{
+        } else{
             bp.src = 'http://push.zhanzhang.baidu.com/push.js';
         }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
+        document.body.appendChild(bp);
     })();
-
 </script>

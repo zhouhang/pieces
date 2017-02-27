@@ -30,9 +30,9 @@
                         <#elseif cerfiy==2>
                             <span>您的企业资质审核未通过</span>
                             <em>不通过原因：${reason!}</em>
-                            <a class="btn btn-red" href="/center/certificate/stepOne">重新提交资质审核</a></span>
+                            <a class="btn-ghost" href="/center/certificate/stepOne">重新提交资质审核</a></span>
                         <#elseif cerfiy==-1>
-                            <span>您尚未提交企业资质审核，通过审核后方可进行在线下单。<a class="btn btn-red" href="/center/certificate/stepOne">提交资质审核</a></span>
+                            <span>您尚未提交企业资质审核，通过审核后方可进行在线下单。<a class="btn-ghost" href="/center/certificate/stepOne">提交资质审核</a></span>
                         </#if>
                         </div>
                         </#if>

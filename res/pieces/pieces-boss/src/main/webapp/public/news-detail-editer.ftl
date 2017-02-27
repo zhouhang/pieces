@@ -89,6 +89,10 @@
                                     <option value="0">禁用</option>
                                 </select>
                             </div>
+                            <label>
+                                <input class="cbx" id="topCheck" type="checkbox" <#if article.isTop==1>checked</#if>>
+                                置顶显示
+                            </label>
                         </div>
             </form>
         </div>
@@ -145,10 +149,14 @@ ${article.content}
                         publishedDate:'required'
                     },
                     valid: function (form) {
+                        var isTop=0;
+                        if($('#topCheck').is(':checked')){
+                            isTop=1;
+                        }
                         if ($(form).isValid()) {
                             $.ajax({
                                 url: 'cms/article/save',
-                                data: $(form).serialize(),
+                                data: $(form).serialize()+"&isTop="+isTop,
                                 type: 'POST',
                                 success: function (data) {
                                     $("#submit").attr("disabled", "disabled");

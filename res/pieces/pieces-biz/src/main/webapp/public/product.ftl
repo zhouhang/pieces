@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>${commodity.title!}-上工好药</title>
+    <title><#if commodity.title??>${commodity.name!} 无硫 <#else>${commodity.title!}</#if>-上工好药</title>
     <meta name="description" content="上工好药sghaoyao.com提供${commodity.title!}的优质货源，为合作伙伴提供安全有保障、高效周到、高性价比的服务，采购饮片就来上工好药。"/>
     <meta name="Keywords" content="${commodity.title!},${commodity.name!}"/>
 </head>
@@ -44,10 +44,10 @@
             <div class="main">
                 <div class="product-summary">
                     <div class="preview">
-                        <img src="${commodity.pictureUrl!}"  width="360" height="360" alt="${commodity.title!}">
+                        <img src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>"  width="360" height="360" alt="${commodity.title!}">
                     </div>
                     <div class="ext-info">
-                        <h1 class="name">${commodity.title!}</h1>
+                        <h1 class="name"> <#if commodity.title??>${commodity.name!} 无硫 <#else>${commodity.title!}</#if></h1>
                         <dl>
                             <dt>商品名称</dt>
                             <dd>${commodity.name!}</dd>
@@ -74,7 +74,7 @@
                             </dd>
                         </dl>
                         <div class="buttons">
-                            <a class="btn btn-red j_pop_login" href="/center/enquiry/index?commodityId=${commodity.id!}">询价</a>
+                            <a class="btn btn-red" href="javascript:;" id="buying" data-s="${commodity.id}|${commodity.name}|${commodity.spec}">加入询价单</a>
                             <a class="btn btn-gray j_pop_login_collect" ajaxurl="/center/collect/add/${commodity.id!}" url="/commodity/${commodity.id!}"><i class="fa fa-heart"></i>收藏</a>
                         </div>
                     </div>
@@ -114,9 +114,6 @@
     <#include "./inc/helper.ftl"/>
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
-
-    <!-- footer end -->
-    <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
     <script>
 
         // 收藏结果回调
@@ -133,7 +130,40 @@
             },
             fn: {
                 init: function() {
+                    this.addToCart();
                     this.addFav();
+                    this.imgerror();
+                },
+                // 加入询价单
+                addToCart: function() {
+                    var $buying = $('#buying'),
+                        data    = ($buying.data('s') || '').split('|'), // data-s = "id|name|norms"
+                        id      = data[0];
+
+                    if (id != '' && shopcart.isInCart(id)) {
+                        $buying.html('已加入询价单');
+                    } else {
+                        $buying.html('加入询价单');
+                    }
+                    $buying.on('click', function() {
+                        if (data.length === 3) {
+                            shopcart.addToCart(data);
+                            $buying.html('已加入询价单');
+                        } else {
+                            layer.alert('加入询价单失败',{icon: 2});
+                        }
+                    })
+                },
+                imgerror: function () {
+                    var img = new Image(),
+                        $img = $('.preview img');
+
+                    img.onerror = function() {
+                        img.onerror = null;
+                        $img[0].src = 'images/blank.gif';
+                        $img.addClass('miss');
+                    }
+                    img.src = $img[0].src;
                 },
                 // 收藏
                 addFav: function() {

@@ -12,6 +12,7 @@
             <result column="update_user"  property="updateUser" />
             <result column="quoted_time"  property="quotedTime" />
             <result column="expire_date"  property="expireDate" />
+            <result column="type"  property="type" />
     </resultMap>
 
     <resultMap id="EnquiryBillsVOResultMap" type="com.pieces.dao.vo.EnquiryBillsVo" extends="EnquiryBillsResultMap">
@@ -28,13 +29,13 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,code,user_id,member_id,status,create_time,update_time,update_user,quoted_time,expire_date
+        id,code,user_id,member_id,status,create_time,update_time,update_user,quoted_time,expire_date,type
     </sql>
 
     <sql id="Base_Column_List_Alisa">
         eb.id as id,eb.code as code,eb.user_id as user_id,eb.member_id as member_id,eb.status as status,
         eb.create_time as create_time,eb.update_time as update_time,eb.update_user as update_user,
-        eb.quoted_time as quoted_time,eb.expire_date as expire_date
+        eb.quoted_time as quoted_time,eb.expire_date as expire_date,eb.type as type
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="EnquiryBillsResultMap">
@@ -171,23 +172,27 @@
             <if test="expireDate != null">
                 expire_date = #{expireDate},
             </if>
+            <if test="type != null">
+                type = #{type},
+            </if>
+
         </set>
         where id = #{id}
     </update>
 
 
-    <select id="findByCommoditys"  parameterType="com.pieces.dao.vo.EnquiryRecordVo" resultMap="EnquiryBillsResultMap">
-         select distinct
+    <select id="queryByParam"  parameterType="com.pieces.dao.vo.EnquiryRecordVo" resultMap="EnquiryBillsVOResultMap">
+         select
             b.id,
             b.code,
             b.user_id,
             b.member_id,
             b.status,
             b.create_time,
-            b.expire_date
+            b.expire_date,
+            b.type
         from
             enquiry_bills b
-        left outer join enquiry_commoditys c on b.id = c.bills_id
         <where>
             <if test="userId!=null">
                 b.user_id=#{userId}
@@ -200,9 +205,6 @@
             </if>
             <if test="expireDate != null and status == null">
                 and b.expire_date <![CDATA[<]]> DATE_FORMAT(#{expireDate},'%Y-%m-%d')
-            </if>
-            <if test="commodityName != null">
-                and c.commodity_name like "%"#{commodityName}"%"
             </if>
             <if test="startDate != null ">
                 and DATE_FORMAT(b.create_time, '%Y-%m-%d') >= DATE_FORMAT(#{startDate},'%Y-%m-%d')

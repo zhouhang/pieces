@@ -1,6 +1,5 @@
 package com.pieces.dao;
 
-import com.github.pagehelper.PageInfo;
 import com.pieces.dao.annotation.AutoMapper;
 import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.vo.EnquiryBillsVo;
@@ -27,7 +26,7 @@ public interface EnquiryBillsDao extends ICommonDao<EnquiryBills>{
     public EnquiryBillsVo findVOById(Integer id);
 
 
-    public List<EnquiryBills> findByCommoditys(EnquiryRecordVo enquiryRecordVo);
+    public List<EnquiryBillsVo> queryByParam(EnquiryRecordVo enquiryRecordVo);
 
     /**
      * 未处理询价单数目

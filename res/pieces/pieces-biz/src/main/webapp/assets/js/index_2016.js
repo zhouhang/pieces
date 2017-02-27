@@ -1,13 +1,16 @@
-// slide
-!(function($){
+window.scrollTo(0, 0); // 返回页面顶部
 
-	var defaults = {
-		speed: 700,
-		delay: 5e3,
-		idx: 0,
-		easing: 'swing',
-		autoPlay: true
-	}
+!(function($, window, document, undefined) {
+	var 
+		$win      = $(window),
+		$doc      = $(document),
+		defaults = {
+			speed: 700,
+			delay: 5e3,
+			idx: 0,
+			easing: 'easeInOutExpo',
+			autoPlay: true
+		};
 
 	// Carousel
 	function Carousel(elem, options) {
@@ -141,42 +144,124 @@
 		});
 	}
 
-})(jQuery);
+	// jquery.nav
+	function OnePageNav(elem, options) {
+		var defaults  = {
+			navItems        : 'a',
+			currentClass    : 'current',
+			easing          : 'easeInOutExpo',
+			scrollSpeed     : 700,
+			scrollThreshold : 0.33
+		}
+		this.isScroll  = false;
+		this.sections = {};
+		this.settings = $.extend({}, defaults, options);
+		this.$elem    = $(elem);
+		this.$nav     = this.$elem.find(this.settings.navItems);
+		this.init();
+	};
+	OnePageNav.prototype = {
+		init: function() {
+			this.getPositions();
+			this.$nav.on('click.onePageNav', $.proxy(this.handleClick, this));
+			$win.on('resize.onePageNav', $.proxy(this.getPositions, this));
+			$win.on('scroll.onePageNav', $.proxy(this.scrollChange, this));
+		},
+		getPositions: function() {		
+			var self = this;
+			var throttle = function() {
+				self.$nav.each(function() {
+					var 
+						anchor = self.getHash($(this)),
+						$target = $('#' + anchor);
+
+					if ($target.length) {
+						self.sections[anchor] = {
+							el: $target,
+							top: Math.round($target.offset().top)
+						}
+					}
+				})
+				self.scrollChange(true);
+			}
+			self.getPos && clearTimeout(self.getPos);
+			self.getPos = setTimeout(throttle, 200);
+		},
+		scrollChange: function(immediate) {
+			var self = this;
+			var throttle = function() {
+				var position = self.getSection(); 
+				if (position !== -1) {
+					var $parent = self.$elem.find('a[href$="#' + position + '"]').parent();
+					self.adjustNav($parent);
+				}
+			}
+			if (!self.isScroll) {
+				self.timer && clearTimeout(self.timer);
+				self.timer = setTimeout(throttle, immediate ? 1 : 200);
+			}
+		},
+		adjustNav: function($parent) {
+			$parent.addClass(this.settings.currentClass).siblings().removeClass(this.settings.currentClass);
+		},
+		getHash: function($link) {
+			return $link.attr('href').split('#')[1];
+		},
+		getSection: function() {
+			var returnValue = -1;
+			var scrollTop = $win.scrollTop();
+			var winHeight = Math.round($win.height() * this.settings.scrollThreshold);
+			for (var section in this.sections) {
+				if (this.sections[section].top < scrollTop + winHeight) {
+					returnValue = section;
+				}
+			}
+			return returnValue;
+		},
+		handleClick: function(e) {
+			var self = this;
+			var $link = $(e.currentTarget);
+			var $parent = $link.parent();
+			var newLoc = '#' + self.getHash($link);
+			self.isScroll = true;
+			self.adjustNav($parent);
+			self.scrollTo(newLoc);
+			e.preventDefault();
+		},
+		scrollTo: function(target) {
+			var self = this;
+			var offset = $(target).offset().top;
+			$('html, body').stop().animate({
+				scrollTop: offset
+			}, this.settings.scrollSpeed, this.settings.easing, function() {
+				self.isScroll = false;
+			});
+		}
+	};
+	$.fn.onePageNav = function(options) {
+		return this.each(function() {
+			new OnePageNav(this, options);
+		});
+	}
+})(jQuery, window, document);
+
 
 $(function(){
-	// 返回页面顶部
-	window.scrollTo(0, 0);
-
-	var EASING = 'easeInOutExpo';
-	$('#jslide').carousel({
-		easing: EASING
-	});
-	$('#jbrands').slide({
-		// autoPlay: false,
-		speed: 300
-	});
+	$('#jslide').carousel();
 
 	// 楼层导航
 	var 
 		$win      = $(window),
 		$elevator = $('#jelevator'),
-		threshold = $('.idx-main').offset().top,
-		elevator  = function() {
-			var stop  = $win.scrollTop();
-			$elevator[stop < threshold ? 'fadeOut' : 'fadeIn'](100);
-		},
-		_elevator = throttle(elevator, 50, 150);
+		model     = [];
 
-	var html = ['<ul>'];
 	$('.idx-floor').each(function() {
 		var text = $(this).find('.idx-hd h2').html().replace('类', '');
 		var className = text.length > 3 ? ' class="mul"' : '';
-		html.push('<li><a href="#', this.id, '"', className, '>', text, '</a></li>');
+		model.push('<li><a href="#', this.id, '"', className, '>', text, '</a></li>');
 	});
-	html.push('</ul>');
+	model.unshift('<ul>');
+	model.push('</ul>');
 
-	elevator();
-	$win.on('scroll.elevator', _elevator);
-	$elevator.html(html.join('')).onePageNav();
-
+	$elevator.html(model.join('')).onePageNav();
 });

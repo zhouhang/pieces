@@ -29,6 +29,15 @@
             <div class="logo">
                 <a href="home.html">饮片B2B首页</a>
             </div>
+
+            <div class="cart">
+                <div class="hd">
+                    <i class="fa fa-cartlist"></i>
+                    <span>我的购物车</span>
+                    <em class="count">0</em>
+                </div>
+                <div class="bd"></div>
+            </div>
             <div class="search">
                 <div class="form">
                     <input class="ipt" name="" id="" placeholder="输入关键字" value="" type="text">
@@ -51,6 +60,33 @@
         </div>
     </div><!-- header end -->
 
+    <!-- 悬浮框 start -->
+    <div class="header search-fixed">
+        <div class="wrap">
+            <div class="logo">
+                <a href="/">上工好药首页</a>
+            </div>
+
+            <div class="cart">
+                <div class="hd">
+                    <i class="fa fa-cartlist"></i>
+                    <span>我的购物车</span>
+                    <em class="count">0</em>
+                </div>
+                <div class="bd"></div>
+            </div>
+
+            <div class="search">
+                <div class="form">
+                    <form id="searchFollow" action="commodity/search" method="get">
+                        <input id="_search_ipt2" class="ipt" name="keyword" placeholder="请输入原药名称或饮片名称" value="" type="text">
+                        <button class="btn" type="submit">搜索</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 悬浮 end -->
 
     <!-- nav start -->
     <div class="nav">
@@ -526,7 +562,7 @@
             <div class="main">
                 <div class="product-summary">
                     <div class="preview">
-                        <img src="uploads/p4.jpg" width="360" height="360" alt="">
+                        <img src="/opt/resources/sghaoyao/commodity/2016/12/52973f7c-550c-4e6e-b37c-1eee65addf30Crop.png" width="360" height="360" alt="">
                     </div>
                     <div class="ext-info">
                         <h1 class="name">亳白芍选片20-24号筛  趁鲜加工  芍药苷3.0%  5年生  无硫</h1>
@@ -562,7 +598,7 @@
                             </dd>
                         </dl>
                         <div class="buttons">
-                            <a class="btn btn-red" href="#">询价</a>
+                            <a class="btn btn-red" href="javascript:;" id="buying" data-s="131|白芷|片2-3mm、3号筛">加入询价单</a>
                             <a class="btn btn-gray faved" href="#"><i class="fa fa-heart"></i>已收藏</a>
                         </div>
                     </div>
@@ -677,18 +713,54 @@
     </div><!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/jquery.autocomplete.min.js"></script>
     <script src="js/common.js"></script>
     <script>
     var _global = {
         v: {},
         fn: {
             init: function() {
+                this.addToCart();
                 this.rank();
+                this.imgerror();
+            },
+            // 加入询价单
+            addToCart: function() {
+                var $buying = $('#buying'),
+                    data    = ($buying.data('s') || '').split('|'), // data-s = "id|name|norms"
+                    id      = data[0];
+
+                if (id != '' && shopcart.isInCart(id)) {
+                    $buying.html('已加入询价单');
+                    // $buying.addClass('btn-gray').html('已加入询价单');
+                } else {
+                    $buying.html('加入询价单');
+                }
+                $buying.on('click', function() {
+                    if (data.length === 3) {
+                        shopcart.addToCart(data);
+                        $buying.html('已加入询价单');
+                    } else {
+                        layer.alert('加入询价单失败',{icon: 2});
+                    }
+                })
             },
             rank: function() {
                 $('#rank').on('click', 'a', function() {
                     $(this).addClass('current').siblings().removeClass('current');
                 })
+            },
+            imgerror: function() {
+                var img = new Image(),
+                    $img = $('.preview img');
+
+                img.onerror = function() {
+                    img.onerror = null;
+                    $img[0].src = 'images/blank.gif';
+                    $img.addClass('miss');
+                }
+                img.src = $img[0].src;
             }
         }
     }

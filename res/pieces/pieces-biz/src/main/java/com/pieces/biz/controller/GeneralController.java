@@ -231,6 +231,21 @@ public class GeneralController extends BaseController {
         return new Result(true);
     }
 
+    /**
+     * 询价时候填的验证码
+     * @return
+     */
+    @RequestMapping(value="/code/enquiry")
+    @ResponseBody
+    public Result getEnquiryCode(String phone){
+        try {
+            smsService.sendEnquiryCaptcha(phone);
+        } catch (Exception e) {
+            return new Result(false);
+        }
+        return new Result(true);
+    }
+
 
     @RequestMapping(value="/home/create")
     public void createHtml(HttpServletRequest request){
