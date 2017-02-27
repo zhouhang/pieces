@@ -53,7 +53,7 @@
             <a href="/cart/index" class="btn btn-red"><i class="fa fa-question-circle"></i>我要询价</a>
             <span>挑选商品，提交询价单</span>
             <hr />
-            <a href="/center/enquiry/index" class="btn btn-primary"><i class="fa fa-cart"></i>我要下单</a>
+            <a href="/center/enquiry/record" class="btn btn-primary"><i class="fa fa-cart"></i>我要下单</a>
             <span>登录，在询价记录中下单</span>
         </div>
         <h3>服务公告</h3>
