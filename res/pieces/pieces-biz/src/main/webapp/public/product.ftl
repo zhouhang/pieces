@@ -74,7 +74,7 @@
                             </dd>
                         </dl>
                         <div class="buttons">
-                            <a class="btn btn-red" href="javascript:;" id="buying" data-s="${commodity.id}|${commodity.name}|${commodity.spec}">加入询价单</a>
+                            <a class="btn btn-red" href="javascript:;" id="buying" data-s="${commodity.id}|${commodity.name}|${commodity.level}">加入询价单</a>
 
                             <div id="collectDiv" style="display: inline-block">
                             <#if collect?exists && collect>

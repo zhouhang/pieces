@@ -71,8 +71,8 @@
                                         <tr>
                                             <td class="td w1"><input type="checkbox" name="commodity" disabled></td>
                                             <td class="td w2">
-                                                <#if commodity.id?exists>
-                                                    <a href="/commodity/${commodity.id}" target="_blank">${commodity.commodityName!}</a>
+                                                <#if commodity.commodityId?exists>
+                                                    <a href="/commodity/${commodity.commodityId}" target="_blank">${commodity.commodityName!}</a>
                                                 <#else >
                                                 ${commodity.commodityName!}
                                                 </#if>
