@@ -81,7 +81,7 @@ public class CartController {
         */
        @RequestMapping("/index")
        public String index(ModelMap modelMap){
-              modelMap.put("cartHide",true);
+//              modelMap.put("cartHide",true);
               return "cart_index";
        }
 

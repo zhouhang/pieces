@@ -17,7 +17,7 @@
         <div class="fa-msg">
             <i class="fa fa-prompt"></i>
             <span>您还没有登录！登录后订货单的商品将保存到您的账号中。</span>
-            <a class="btn-ghost" href="/user/login">立即登录</a>
+            <a class="btn-ghost" href="/user/login?redirectUrl=/cart/index">立即登录</a>
         </div>
            </#if>
 
@@ -94,9 +94,9 @@
 <script>
     !(function($, window){
 
-        shopcart = shopcart || {};
-        shopcart.init = function(){};
-        shopcart.empty = function(){};
+//        shopcart = shopcart || {};
+//        shopcart.init = function(){};
+//        shopcart.empty = function(){};
 
         var _global = {
             fn: {
@@ -125,7 +125,7 @@
                     if (data.length > 0) {
                         $.each(data, function(i, item) {
                             model.push('<tr>');
-                            model.push('<td><a href="/commodity/' , item.id ,'" class="c-blue">', item.name , '</a></td>');
+                            model.push('<td><a href="/commodity/' , item.id ,'" class="c-blue" target="_blank">', item.name , '</a></td>');
                             model.push('<td>', item.spec, '</td>');
                             model.push('<td>', item.level,'</td>');
                             model.push('<td>', item.originOf, '</td>');

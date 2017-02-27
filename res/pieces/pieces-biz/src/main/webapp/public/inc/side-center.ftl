@@ -1,9 +1,9 @@
 <div class="side">
 <#if user_session_biz?? && user_session_biz.type == 1>
     <dl>
-        <dt><i class="fa fa-question-circle"></i>询价</dt>
+        <dt><i class="fa fa-question-circle"></i>下单</dt>
         <dd>
-            <a href="center/enquiry/record"><i class="fa fa-li"></i>询价记录</a>
+            <a href="center/enquiry/record"><i class="fa fa-li"></i>我的询价</a>
         </dd>
     </dl>
     <#if user_session_biz.certifyStatus == 1>
@@ -50,9 +50,9 @@
     </#if>
     <#if user_session_biz?? && user_session_biz.type == 2>
     <dl>
-        <dt><i class="fa fa-question-circle"></i>询价</dt>
+        <dt><i class="fa fa-question-circle"></i>下单</dt>
         <dd>
-            <a href="center/enquiry/record"><i class="fa fa-li"></i>询价记录</a>
+            <a href="center/enquiry/record"><i class="fa fa-li"></i>我的询价</a>
         </dd>
     </dl>
     <dl>

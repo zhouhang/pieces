@@ -13,4 +13,6 @@ public interface CommodityCollectService extends ICommonService<CommodityCollect
 	public List<CommodityCollectVo> findByUser(Integer userId);
 
 	public void deleteCollect(CommodityCollect commodityCollect);
+
+	boolean check(Integer cid, Integer userId);
 }

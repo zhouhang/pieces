@@ -236,7 +236,8 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String toLogin() {
+	public String toLogin(String redirectUrl) {
+		httpSession.setAttribute("redirectUrl",redirectUrl);
 		return "login";
 	}
 
@@ -266,6 +267,11 @@ public class UserController extends BaseController {
 		// 存入用户信息到session
 		if(StringUtils.isBlank(url)){
 			url = WebUtils.getSavedRequest(request) != null ? WebUtils.getSavedRequest(request).getRequestUrl() : "/user/info";
+		}
+
+		if (httpSession.getAttribute("redirectUrl")!= null){
+			url = (String)httpSession.getAttribute("redirectUrl");
+			httpSession.removeAttribute("redirectUrl");
 		}
 
 
