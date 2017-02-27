@@ -340,8 +340,8 @@ var shopcart = {
 
 		$.each(data, function(i, item) {
 			model.push('<li>');
-			model.push('<a href="/commodity/' , item.id ,'" class="name">', item.name , '</a>');
-			model.push('<span class="norms">', item.spec, '</span>');
+			model.push('<a href="/commodity/' , item.id ,'" class="name" target="_blank">', item.name , '</a>');
+			model.push('<span class="norms">', item.level, '</span>');
 			model.push('<a href="javascript:;" data-id="', item.id, '" class="fa fa-times"></a>');
 			model.push('</li>');
 		})
@@ -358,25 +358,22 @@ var shopcart = {
 		})
 
 		// 删除购物车商品
-		that.$header.on('click', '.fa-times', function() {
+		that.$header.on('click', '.fa-times', function () {
 			var $li = $(this).parent(),
 				$ul = $li.parent(),
 				id = $(this).data('id');
 
-			layer.confirm('您确定要将该商品从购物清单中删除吗？', {icon: 3, title:'提示'}, function(index){
-				$.ajax({
-					url: '/cart/delete',
-					type:"POST",
-					data: {commodityId: id},
-					success: function(res) {
-						$li.remove();
-						that.$header.find('.cart ul').html($ul.html());
-						that.delCart(id);
-						layer.close(index);
-					}
-				})
-
-	        });  
+			$.ajax({
+				url: '/cart/delete',
+				type: "POST",
+				data: {commodityId: id},
+				success: function (res) {
+					$li.remove();
+					that.$header.find('.cart ul').html($ul.html());
+					that.delCart(id);
+					layer.close(index);
+				}
+			});
 		})
 	},
 	addToCart: function(data) {
@@ -456,7 +453,7 @@ var shopcart = {
 		num && that.$count.find('i').animate({top: '-30px', 'opacity': 0}, 1e3);
 	},
 	empty: function() {
-		this.$header.find('.cart .bd').html('<div class="arrow"></div><div class="empty">询价单中还没有商品，立即挑选吧！</div>');
+		this.$header.find('.cart .bd').html('<div class="arrow"></div><div class="empty">询价单中还没有商品，<a href="/commodity/index">立即挑选</a>吧！</div>');
 	},
 	isInCart: function(id) {
 		var cart = this.getCart().split('@');

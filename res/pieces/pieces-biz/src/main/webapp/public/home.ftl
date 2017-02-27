@@ -50,7 +50,7 @@
     <div class="hd"></div>
     <div class="side-notice">
         <div class="quick">
-            <a href="/cart/index" class="btn btn-red"><i class="fa fa-question-circle"></i>我要询价</a>
+            <a href="/commodity/index" class="btn btn-red"><i class="fa fa-question-circle"></i>我要询价</a>
             <span>挑选商品，提交询价单</span>
             <hr />
             <a href="/center/enquiry/index" class="btn btn-primary"><i class="fa fa-cart"></i>我要下单</a>
