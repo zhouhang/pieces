@@ -119,7 +119,7 @@
                                     <span>共 <em>${bill.enquiryCommoditys?size}</em> 个商品，
                                 <#if bill.status==0>
                                     <em id="notPriceCount">1</em> 个未报价，<em id="buysCount">9</em> 个可下单。</span>
-                                    <button class="btn" type="button" id="buyBtn" disabled >下单</button>
+                                    <button class="btn btn-gray" type="button" id="buyBtn" disabled >下单</button>
                                     <button class="btn btn-white" type="button" id="exportBtn">导出报价表</button>
                                     <#--<span class="c2">未报价</span>-->
                                 <#else >
