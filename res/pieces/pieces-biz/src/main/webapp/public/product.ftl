@@ -160,7 +160,7 @@
                                 icon: 1
                             }, function(index) {
                                 layer.close(index);
-                                window.location.href = 'enquiry2.html';
+                                window.location.href = '/cart/index';
                             });
                             $buying.addClass('disabled').html('已加入询价单');
                         } else {
