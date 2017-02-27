@@ -70,7 +70,13 @@
                                         <#list bill.enquiryCommoditys as commodity>
                                         <tr>
                                             <td class="td w1"><input type="checkbox" name="commodity" disabled></td>
-                                            <td class="td w2">${commodity.commodityName!}</td>
+                                            <td class="td w2">
+                                                <#if commodity.id?exists>
+                                                    <a href="/commodity/${commodity.id}" target="_blank">${commodity.commodityName!}</a>
+                                                <#else >
+                                                ${commodity.commodityName!}
+                                                </#if>
+                                            </td>
                                             <td class="td w3">${commodity.specs!}</td>
                                             <td class="td w4">${commodity.level!}</td>
                                             <td class="td w5">${commodity.origin!}</td>
