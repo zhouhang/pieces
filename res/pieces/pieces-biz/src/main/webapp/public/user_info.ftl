@@ -23,14 +23,13 @@
                     <#if user.type==1>
 
                         <#if user.certifyStatus==0 >
-                            <div class="fa-msg">
+                        <div class="fa-msg">
                             <i class="fa fa-prompt"></i>
                         <#if cerfiy==0>
                             <span>您的企业资质正在审核中，审核结果将以短信的形式发送给您，如有问题请致电0558-5120088。</span>
                         <#elseif cerfiy==2>
-                            <span>您的企业资质审核未通过</span>
-                            <em>不通过原因：${reason!}</em>
-                            <a class="btn-ghost" href="/center/certificate/stepOne">重新提交资质审核</a></span>
+                            <span>您的企业资质审核未通过<em>不通过原因：${reason!}</em></span>
+                            <a class="btn-ghost" href="/center/certificate/stepOne">重新提交资质审核</a>
                         <#elseif cerfiy==-1>
                             <span>您尚未提交企业资质审核，通过审核后方可进行在线下单。<a class="btn-ghost" href="/center/certificate/stepOne">提交资质审核</a></span>
                         </#if>
