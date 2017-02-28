@@ -301,13 +301,16 @@ var shopcart = {
 
 		$.ajax({
 			url: '/cart/list',
-			type:"POST",
+			type: 'POST',
 			data: {ids: cart.join()},
 			beforeSend: function() {
 				// loading
 				that.$header.find('.cart .bd').html('<div class="arrow"></div><div class="loading"></div>');
 			},
 			success: function(res) {
+				try{
+					_global.fn.initCart(res.data); // page cart_index
+				}catch(error){};
 				that.count = res.data.length;
 				that.toHtml(res.data);
 			}
@@ -318,7 +321,7 @@ var shopcart = {
 			model = [];			
 
 		if (data.length > 0) {
-			model.push('<div class="arrow"></div><div class="tb">');
+			model.push('<div class="arrow"></div><div class="th">最新加入</div><div class="tb">');
 			model.push('<ul>');
 			model.push(that.addList(data));
 			model.push('</ul></div>');
@@ -338,10 +341,30 @@ var shopcart = {
 			cart = this.getCart().split('@'),
 			json = [];
 
+		var ellipsis = function(str, maxLength) {
+	        var count = 0;
+	        var len = str.length;
+	        var cut = [];
+
+			for (var i = 0; i < len; i++) {
+				var a = str.charAt(i);
+				if (count >= maxLength) {
+					cut.push('...');
+					break;
+				} else if (escape(a).length > 4) {
+					count += 2;
+				} else {
+					count += 1;
+				}
+				cut.push(a);
+			}
+			return cut.join('');
+	    }
+
 		$.each(data, function(i, item) {
 			model.push('<li>');
 			model.push('<a href="/commodity/' , item.id ,'" class="name" target="_blank">', item.name , '</a>');
-			model.push('<span class="norms">', item.level, '</span>');
+			model.push('<span class="level">', ellipsis(item.level, 50), '</span>');
 			model.push('<a href="javascript:;" data-id="', item.id, '" class="fa fa-times"></a>');
 			model.push('</li>');
 		})
@@ -363,16 +386,9 @@ var shopcart = {
 				$ul = $li.parent(),
 				id = $(this).data('id');
 
-		$li.remove();
-		that.$header.find('.cart ul').html($ul.html());
-		that.delCart(id);
-			$.ajax({
-				url: '/cart/delete',
-				type:"POST",
-				data: {commodityId: id},
-				success: function(res) {}
-			})
-
+			$li.remove();
+			that.$header.find('.cart ul').html($ul.html());
+			that.delCart(id);
 		})
 	},
 	addToCart: function(data) {
@@ -382,32 +398,26 @@ var shopcart = {
             model = [{
 		    	'id': data[0],
 	        	'name': data[1],
-	        	'spec': data[2]
+	        	'level': data[2]
 		    }];
 
-	    if (that.isInCart(id)) {
+	    if (that.isInCart(id)) {	    	
 	    	return that;
-	    }
-		$.ajax({
-			url: '/cart/add',
-			type:"POST",
-			data: {commodityId: id},
-			success: function(res) {
-				if (cart === '') {
-					// 第一次添加购物车
-					cart = id;
-					that.toHtml(model);
-				} else {
-					// 添加相同商品时，调整前后顺序，保证新添加的商品在最前面
-					cart = id + '@' + cart;
-					that.$header.find('.cart ul').prepend(that.addList(model));
-				}
+	    } else  if (cart === '') {
+			// 第一次添加购物车
+			cart = id;
+			that.toHtml(model);
+		} else {
+			// 添加相同商品时，调整前后顺序，保证新添加的商品在最前面
+			cart = id + '@' + cart;
+			that.$header.find('.cart ul').prepend(that.addList(model));
+		}
 
-				that.saveCart(cart);
-				that.calcCount(1);
-			}
-		})
+		that.saveCart(cart);
+		that.calcCount(1);
 
+		// 保存到服务器
+		this.savaService('/cart/add', {commodityId: id});
 	},
 	getCart: function() {
 		return cookieFn.get('cart') || '';
@@ -441,6 +451,22 @@ var shopcart = {
                 $(this).html('加入询价单').removeClass('disabled');
             }
 		})
+
+		// 保存到服务器
+		this.savaService('/cart/delete', {commodityId: id});
+	},
+	savaService: function(url, data, callback) {
+		var that = this;
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: data,
+			success: function(res) {
+				if (typeof call === 'function') {
+					callback.call(that, res);
+				}
+			}
+		})
 	},
 	calcCount: function(num) {
 		var that = this;
@@ -457,7 +483,7 @@ var shopcart = {
 		num && that.$count.find('i').animate({top: '-30px', 'opacity': 0}, 1e3);
 	},
 	empty: function() {
-		this.$header.find('.cart .bd').html('<div class="arrow"></div><div class="empty">询价单中还没有商品，<a href="/commodity/index">立即挑选</a>吧！</div>');
+		this.$header.find('.cart').removeClass('cart-hover').find('.bd').html('<div class="arrow"></div><div class="empty">询价单中还没有商品，<a class="c-blue" href="/commodity/index">立即挑选</a> 吧！</div>');
 	},
 	isInCart: function(id) {
 		var cart = this.getCart().split('@');
@@ -470,7 +496,6 @@ var shopcart = {
 	},
 	clearCart: function() {
 		this.saveCart('');
-		this.empty();
 	}
 }
 

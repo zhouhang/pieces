@@ -9,7 +9,7 @@ if (isset($_REQUEST['ids']) && $_REQUEST['ids'] != '') {
 		$list[] = array(
 			'id' => $row['id'],
 			'name' => $row['name'],
-			'spec' => $row['level'],
+			'level' => $row['level'],
 			'origin' => $row['origin_of']
 		);
 	}

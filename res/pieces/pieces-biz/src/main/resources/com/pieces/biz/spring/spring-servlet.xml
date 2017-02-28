@@ -153,7 +153,15 @@
 	</mvc:resources>
 	<mvc:resources mapping="/file/**" location="/assets/file/" />
 	<mvc:resources mapping="/fonts/**" location="/assets/fonts/" />
-	<mvc:resources mapping="/images/**" location="/assets/images/" />
+	<mvc:resources mapping="/images/**" location="/assets/images/">
+		<mvc:resource-chain resource-cache="true">
+			<mvc:resolvers>
+				<mvc:version-resolver>
+					<mvc:content-version-strategy patterns="/**"/>
+				</mvc:version-resolver>
+			</mvc:resolvers>
+		</mvc:resource-chain>
+	</mvc:resources>
 
 	<bean id="log" class="com.pieces.tools.log.aop.LogAspect"></bean>
 
