@@ -482,7 +482,7 @@ var shopcart = {
 		num && that.$count.find('i').animate({top: '-30px', 'opacity': 0}, 1e3);
 	},
 	empty: function() {
-		this.$header.find('.cart .bd').html('<div class="arrow"></div><div class="empty">询价单中还没有商品，<a class="c-blue" href="product_list.html">立即挑选</a> 吧！</div>');
+		this.$header.find('.cart').removeClass('cart-hover').find('.bd').html('<div class="arrow"></div><div class="empty">询价单中还没有商品，<a class="c-blue" href="product_list.html">立即挑选</a> 吧！</div>');
 	},
 	isInCart: function(id) {
 		var cart = this.getCart().split('@');

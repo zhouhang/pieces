@@ -62,32 +62,6 @@
                 <li><a href="news/${article.id!}">${article.title!}</a></li>
             </#list>
         </ul>
-
-        <h3>知名厂家</h3>
-        <div class="brands" id="jbrands">
-            <div class="inner">
-                <div class="col" index="0">
-                    <#list AD_MANUFACTURERS as ad>
-                        <#if ad_index<4>
-                        <a target="_blank" href="${ad.link!"#!"}"><img src="${ad.pictureUrl!}" alt="${ad.title!}"></a>
-                        </#if>
-                    </#list>
-                </div>
-                <#if (AD_MANUFACTURERS?size>4)>
-                    <div class="col" index="1">
-                        <#list AD_MANUFACTURERS as ad>
-                            <#if (ad_index>3)&&ad_index<8>
-                                <a href="${ad.link!"#!"}"><img src="${ad.pictureUrl!}" alt="${ad.title!}"></a>
-                            </#if>
-                        </#list>
-                    </div>
-                </#if>
-
-            </div>
-            <div class="ctrl">
-                <i class="prev">&lt;</i><i class="next">&gt;</i>
-            </div>
-        </div>
     </div>
 </div><!-- banner end -->
 
