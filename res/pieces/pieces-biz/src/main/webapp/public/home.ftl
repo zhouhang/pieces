@@ -129,7 +129,7 @@
                             </#if>
                         </ul>
                         <div class="img">
-                            <img src="images/blank.gif" alt="${category.title!}" class="lazyload" data-original="${category.pictureUrl!}" width="200" height="270">
+                            <img src="images/blank.gif" alt="${category.title!}" class="lazyload" data-original="${urls.getForLookupPath(category.pictureUrl)}" width="200" height="270">
                         </div>
                     </div>
 
