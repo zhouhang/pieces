@@ -9,6 +9,10 @@
 <body class="bg-gray">
 
 <#include "./inc/header.ftl"/>
+<script>
+    // 开启页面搜索悬浮
+    var searchFixed = true;
+</script>
 
 <!-- banner start -->
 <div class="banner-slider" id="jslide">
@@ -120,8 +124,5 @@
 
 <#include "./inc/footer.ftl"/>
 <script src="${urls.getForLookupPath('/js/index_2016.js')}"></script>
-<script>
-    var searchFixed = true;
-</script>
 </body>
 </html>

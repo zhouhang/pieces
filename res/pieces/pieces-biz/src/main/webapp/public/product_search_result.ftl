@@ -8,7 +8,11 @@
 </head>
 
 <body>
-    <#include "./inc/header.ftl"/>
+<#include "./inc/header.ftl"/>
+<script>
+    // 开启页面搜索悬浮
+    var searchFixed = true;
+</script>
 <div class="main-body">
 
     <div class="wrap">
@@ -76,7 +80,6 @@
     <#include "./inc/helper.ftl"/>
     <#include "./inc/footer.ftl"/>
     <script>
-        var searchFixed = true;
         var _global = {
             fn: {
                 init: function(){
