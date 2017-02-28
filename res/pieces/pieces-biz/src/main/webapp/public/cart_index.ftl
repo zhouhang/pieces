@@ -56,7 +56,6 @@
             </div>
             <div class="cnt">
                 <input type="text" name="username" id="username" class="ipt" autocomplete="off" placeholder="">
-                <span class="error"></span>
             </div>
         </div>
 
@@ -67,7 +66,6 @@
             <div class="cnt">
                 <input type="text" name="mobile" id="mobile" class="ipt" style="width:189px;" autocomplete="off" placeholder="">
                 <button type="button" class="btn btn-gray" id="send">获取验证码</button>
-                <span class="error"></span>
             </div>
         </div>
         <div class="group">
@@ -76,7 +74,6 @@
             </div>
             <div class="cnt">
                 <input type="text" name="code" id="code" class="ipt" autocomplete="off" placeholder="">
-                <span class="error"></span>
             </div>
         </div>
 
@@ -145,19 +142,31 @@
                 var that = this,
                     $header = $('.header'),
                     $list = $('.list'),
-                    $contact = $('#jcontact');
+                    $contact = $('#jcontact'),
+                    $submit = $('#submit'),
+                    disabled = false;
 
                 // 询价
-                $('#submit').on('click', function() {
-
+                $submit.on('click', function() {
+                    if (disabled) {
+                        return false;
+                    }
                    <#if user_session_biz??>
                         // 已登录
                        $.ajax({
                            url: '/cart/submit',
                            type: 'POST',
+                           beforeSend: function() {
+                                disabled = true;
+                                $submit.prop('disabled', true).html('正在提交...');
+                           },
                            success: function(res) {
                                shopcart.clearCart();
                                window.location.href = '/cart/enquirySuccess';
+                           },
+                           always: function() {
+                                disabled = false;
+                                $submit.prop('disabled', false).html('询价');
                            }
                        })
                     <#else >
@@ -187,22 +196,27 @@
                     },
                     valid: function(form) {
                         var myfromValid = this;
-                        if ( $(form).isValid() ) {
+                        if ( $(form).isValid() && !disabled) {
                             $.ajax({
                                 url: '/cart/submit',
                                 type: 'POST',
                                 data: $(form).formSerialize(),
+                                beforeSend: function() {
+                                    disabled = true;
+                                },
                                 success: function(res) {
                                     if(res.status=="y"){
                                         shopcart.clearCart();
                                         window.location.href = '/cart/enquirySuccess';
                                     }else{
-                                        $msg.html(res.info).show();
+                                        $('#code').next().html('<span class="error"><i class="fa fa-prompt"></i> ' + res.info + '</span>').show();
+                                        disabled = false;
                                     }
-
+                                },
+                                always: function() {
+                                    disabled = false;
                                 }
                             })
-
                         }
                     }
                 });
