@@ -16,9 +16,6 @@
         </div>
         <form action="" id="myform" method="post">
             <input type="hidden" name="orderId" value="${order.id!}">
-            <input type="hidden" name="orderId" value="${orderForm.id!}">
-            <input type="hidden" name="userId" value="${orderForm.userId!}">
-            <input type="hidden" name="agentId" value="${orderForm.agentId}">
             <input type="hidden" name="token" value="${token!}">
         <div class="cont">
             <div class="info">
@@ -33,7 +30,6 @@
                 <label class="checked"><input type="radio" name="type" value="alipay" checked><img height="38" src="images/alipay.png" alt=""><i></i></label>
                 <!--<label><input type="radio" name="type" value="wxpay"><img height="38" src="images/wxpay.png" alt=""><i></i></label>-->
                 <label><input type="radio" name="type" value="bank">银行转账<i></i></label>
-                <label><input type="radio" name="type" value="bill">申请账期<i></i></label>
             </div>
 
             <div class="bank">

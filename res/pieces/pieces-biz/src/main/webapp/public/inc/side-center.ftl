@@ -24,9 +24,6 @@
         <dd>
             <a href="/center/pay/record"><i class="fa fa-li"></i>支付记录</a>
         </dd>
-        <dd>
-            <a href="/center/bill/index"><i class="fa fa-li"></i>帐期账单</a>
-        </dd>
     </dl>
     </#if>
     <dl>
@@ -71,6 +68,9 @@
         <dt><i class="fa fa-bill"></i>对账单</dt>
         <dd>
             <a href="/center/pay/record"><i class="fa fa-li"></i>支付记录</a>
+        </dd>
+        <dd>
+            <a href="/center/bill/index"><i class="fa fa-li"></i>帐期账单</a>
         </dd>
     </dl>
     <dl>
