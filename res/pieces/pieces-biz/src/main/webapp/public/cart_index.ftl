@@ -99,7 +99,7 @@
                 this.bindEvent();
             },
             initCart: function(data) {
-                this.toHtml(data);
+                this.toHtml(data); // common.js里面调用
             },
             toHtml: function(data) {
                 var that = this,
