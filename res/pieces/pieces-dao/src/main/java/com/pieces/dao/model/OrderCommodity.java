@@ -29,7 +29,7 @@ public class OrderCommodity  implements Serializable {
 	@NotNull(groups = {Boss.class})
 	private Double price;
 
-	// 指导价
+	// 销售价
 	private Double guidePrice;
 
 	private Double subtotal;

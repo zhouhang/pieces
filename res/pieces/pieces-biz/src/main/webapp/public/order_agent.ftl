@@ -65,10 +65,10 @@
                                 <th width="90">片型</th>
                                 <th>规格等级</th>
                                 <th width="100">产地</th>
-                                <th width="110">指导价<em>（元/公斤）</em></th>
-                                <th width="110">合同价<em>（元/公斤）</em></th>
+                                <th width="110">销售价<em>（元/公斤）</em></th>
+                                <th width="110">开票价<em>（元/公斤）</em></th>
                                 <th width="110">数量<em>（公斤）</em></th>
-                                <th width="150">合同价小计<em>（元）</em></th>
+                                <th width="150">开票价小计<em>（元）</em></th>
                                 <td width="100">操作</td>
                             </tr>
                             </thead>

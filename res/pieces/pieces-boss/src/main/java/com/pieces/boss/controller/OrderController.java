@@ -248,7 +248,7 @@ public class OrderController extends BaseController{
         orderFormVo.setAmountsPayable(payable.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue());
 
         if (orderFormVo.getAgentId() != null) {
-            //计算保证金 指导价X 数量加运费
+            //计算保证金 销售价X 数量加运费
             BigDecimal sumD = new BigDecimal(0);
             for(OrderCommodity commodity : commodities ){
                 BigDecimal total= new BigDecimal(commodity.getAmount()).multiply(new BigDecimal(commodity.getGuidePrice()));

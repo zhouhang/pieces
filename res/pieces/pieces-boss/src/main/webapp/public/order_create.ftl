@@ -100,9 +100,9 @@
                                 <th>规格等级</th>
                                 <th width="100">产地</th>
                                 <th width="90">数量（公斤）</th>
-                                <th width="120">指导价（元/公斤）</th>
-                                <th width="100">合同价（元/公斤）</th>
-                                <th width="120">合同价小计（元）</th>
+                                <th width="120">销售价（元/公斤）</th>
+                                <th width="100">开票价（元/公斤）</th>
+                                <th width="120">开票价小计（元）</th>
                                 <th width="100">操作</th>
                             </tr>
                         </thead>
