@@ -18,6 +18,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -59,6 +60,12 @@ public class EnquiryController extends BaseController{
     @BizLog(type = LogConstant.enquiry, desc = "询价详情页面")
     public String detail(@PathVariable("id") Integer id, ModelMap modelMap) {
         EnquiryBillsVo vo = enquiryBillsService.findVOById(id);
+        if (vo.getExpireDate() == null){
+            //报价时间为空时设置默认报价时间
+            LocalDate date = LocalDate.now();
+            date = date.plusDays(3);
+            vo.setExpireDate(date.toDate());
+        }
         modelMap.put("enquiryBills", vo);
         return "enquiry-detail";
     }
