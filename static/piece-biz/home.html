@@ -25,69 +25,44 @@
 
     <!-- header start -->
     <div class="header">
-        <div class="wrap">
-            <div class="logo">
-                <a href="home.html">饮片B2B首页</a>
-            </div>
-
-            <div class="cart">
-                <div class="hd">
-                    <i class="fa fa-cartlist"></i>
-                    <span>我的购物车</span>
-                    <em class="count">0</em>
+        <div class="inner">
+            <div class="wrap">
+                <div class="logo">
+                    <a href="home.html">饮片B2B首页</a>
                 </div>
-                <div class="bd"></div>
-            </div>
 
-            <div class="search">
-                <div class="form">
-                <form action="" id="_search_form">
-                    <input class="ipt" name="" id="_search_ipt" placeholder="输入关键字" value="" type="text">
-                    <button class="btn" type="button">搜索</button></form>
+                <div class="cart">
+                    <div class="hd">
+                        <i class="fa fa-cartlist"></i>
+                        <span>我的购物车</span>
+                        <em class="count">0</em>
+                    </div>
+                    <div class="bd"></div>
                 </div>
-                <div class="hotwords">
-                    <a class="hot" href="#!">金樱子肉</a>
-                    <a href="#!">荆芥</a>
-                    <a href="#!">九香虫</a>
-                    <a href="#!">韭菜子</a>
-                    <a href="#!">桔梗</a>
-                    <a href="#!">降香</a>
-                    <a href="#!">炒蒺藜</a>
-                    <a href="#!">急性子</a>
-                    <a href="#!">焦栀子</a>
-                    <a href="#!">煅珍珠母</a>
-                    <a href="#!">鸡冠花</a>
-                </div>
-            </div>
 
-        </div>
-    </div><!-- header end -->
-
-    <!-- 悬浮框 start -->
-    <div class="header search-fixed">
-        <div class="wrap">
-            <div class="logo">
-                <a href="/">上工好药首页</a>
-            </div>
-            <div class="cart">
-                <div class="hd">
-                    <i class="fa fa-cartlist"></i>
-                    <span>我的购物车</span>
-                    <em class="count">0</em>
-                </div>
-                <div class="bd"></div>
-            </div>
-            <div class="search">
-                <div class="form">
-                    <form id="searchFollow" action="commodity/search" method="get">
-                        <input id="_search_ipt2" class="ipt" name="keyword" placeholder="请输入原药名称或饮片名称" value="" type="text">
-                        <button class="btn" type="submit">搜索</button>
-                    </form>
+                <div class="search">
+                    <div class="form">
+                    <form action="" id="_search_form">
+                        <input class="ipt" name="" id="_search_ipt" placeholder="输入关键字" value="" type="text">
+                        <button class="btn" type="button">搜索</button></form>
+                    </div>
+                    <div class="hotwords">
+                        <a class="hot" href="#!">金樱子肉</a>
+                        <a href="#!">荆芥</a>
+                        <a href="#!">九香虫</a>
+                        <a href="#!">韭菜子</a>
+                        <a href="#!">桔梗</a>
+                        <a href="#!">降香</a>
+                        <a href="#!">炒蒺藜</a>
+                        <a href="#!">急性子</a>
+                        <a href="#!">焦栀子</a>
+                        <a href="#!">煅珍珠母</a>
+                        <a href="#!">鸡冠花</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- 悬浮 end -->
+    </div><!-- header end -->
 
     <!-- nav start -->
     <div class="nav">
@@ -994,7 +969,10 @@
     <div class="gotop" id="jgotop">
         <a href="javascript:;"><b class="fa fa-chevron-up"></b><em>返回顶部</em></a>
     </div>
-
+        
+    <script>
+        var searchFixed = true;
+    </script>
     <script src="js/jquery.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/index_2016.js"></script>
