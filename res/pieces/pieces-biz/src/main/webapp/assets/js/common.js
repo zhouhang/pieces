@@ -70,8 +70,7 @@ $.easing.easeInOutExpo = function (x, t, b, c, d) {
 function searchBar() {
 	var $win = $(window),
 		$searchForm = $('#_search_form'),
-		$searchForm2 = $('#_search_form2'),
-		$fixed = $('.search-fixed');
+		$header = $('.header');
 
 	$('#_search_ipt').autocomplete({
         serviceUrl: '/commodity/search/auto',
@@ -90,41 +89,21 @@ function searchBar() {
             $searchForm.submit();
         }
     });
-	if ($searchForm2.length === 1) {
-		$('#_search_ipt2').autocomplete({
-			serviceUrl: '/commodity/search/auto',
-			paramName: 'keyword',
-			groupBy: 'category',
-			transformResult: function (response) {
-				response = JSON.parse(response);
-				return {
-					suggestions: $.map(response, function (dataItem) {
-						return {
-							value: (dataItem.category ? dataItem.category + '：' : '') + dataItem.value,
-							data: {'category': dataItem.category}
-						}
-					})
-				};
-			},
-			onSelect: function (suggestion) {
-				$searchForm2.submit();
-			}
-		});
-	}
 
 	var searchBarFixed = function() {
 		if ($win.scrollTop() > 129) {
-			$fixed.addClass('search-animated');
+			$header.addClass('search-animated');
 		} else {
-			$fixed.removeClass('search-animated');
+			$header.removeClass('search-animated');
 		}
 	}
-
-	$win.on('scroll', function() {
+	if (typeof searchFixed !== 'undefined' && searchFixed === true) {
+		$header.addClass('header-fixed');
+		$win.on('scroll', function() {
+			searchBarFixed();
+		})
 		searchBarFixed();
-	})
-
-	searchBarFixed();
+	}
 }
 
 // 用户中心导航高亮
@@ -321,7 +300,7 @@ var shopcart = {
 			model = [];			
 
 		if (data.length > 0) {
-			model.push('<div class="arrow"></div><div class="tb">');
+			model.push('<div class="arrow"></div><div class="th">最新加入</div><div class="tb">');
 			model.push('<ul>');
 			model.push(that.addList(data));
 			model.push('</ul></div>');
@@ -382,13 +361,8 @@ var shopcart = {
 
 		// 删除购物车商品
 		that.$header.on('click', '.fa-times', function() {
-			var $li = $(this).parent(),
-				$ul = $li.parent(),
-				id = $(this).data('id');
-
-			$li.remove();
-			that.$header.find('.cart ul').html($ul.html());
-			that.delCart(id);
+			$(this).parent().remove();
+			that.delCart($(this).data('id'));
 		})
 	},
 	addToCart: function(data) {
@@ -483,7 +457,7 @@ var shopcart = {
 		num && that.$count.find('i').animate({top: '-30px', 'opacity': 0}, 1e3);
 	},
 	empty: function() {
-		this.$header.find('.cart .bd').html('<div class="arrow"></div><div class="empty">询价单中还没有商品，<a class="c-blue" href="/commodity/index">立即挑选</a> 吧！</div>');
+		this.$header.find('.cart').removeClass('cart-hover').find('.bd').html('<div class="arrow"></div><div class="empty">询价单中还没有商品，<a class="c-blue" href="/commodity/index">立即挑选</a> 吧！</div>');
 	},
 	isInCart: function(id) {
 		var cart = this.getCart().split('@');
