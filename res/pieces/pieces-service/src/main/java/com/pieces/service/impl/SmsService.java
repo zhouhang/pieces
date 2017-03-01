@@ -243,13 +243,13 @@ public class SmsService {
 
     //账期成功accountSuccess
     //【上工之选】@@@ 您好,您 @@@元 的账期申请成功,详情请在账期账单中查看,平台会尽快为您安排发货.
-    public void sendAccountSuccess(String username, Double money, String mobile) {
+    public void sendAccountSuccess(String orderCode, Integer billTime, String mobile) {
         if (enable) {
             try {
                 Map<String, Object> param = new HashMap<>();
                 param.put("apikey", apikey);
                 param.put("mobile", mobile);
-                param.put("text", TextTemplateEnum.SMS_BOSS_ACCOUNTSUCCESS.getText(username, String.valueOf(money)));
+                param.put("text", TextTemplateEnum.SMS_BOSS_ACCOUNTSUCCESS.getText(orderCode, String.valueOf(billTime)));
                 HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
             } catch (Exception e) {
                 throw new RuntimeException("账期申请成功短信发送失败", e);
@@ -259,13 +259,13 @@ public class SmsService {
 
     //账期失败accountFail
     //【上工之选】@@@ 您好,您 @@@元 的账期申请失败,详情请在账期账单中查看.
-    public void sendAccountFail(String username, Double money, String mobile){
+    public void sendAccountFail(String orderCode,String mobile){
         if (enable) {
             try {
                 Map<String, Object> param = new HashMap<>();
                 param.put("apikey", apikey);
                 param.put("mobile", mobile);
-                param.put("text", TextTemplateEnum.SMS_BOSS_ACCOUNTFAIL.getText(username, String.valueOf(money)));
+                param.put("text", TextTemplateEnum.SMS_BOSS_ACCOUNTFAIL.getText(orderCode));
                 HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
             } catch (Exception e) {
                 throw new RuntimeException("账期申请失败短信发送失败", e);
@@ -319,7 +319,20 @@ public class SmsService {
         }
     }
 
-
-
+    // 账期到期提醒
+    //【上工好药】尊敬的用户：您的账单 *** 将在 ***年**月**日 到期，请提前准备好货款，登录平台，前往“会员中心”-“对账单”-“账期账单”完成支付。
+    public void sendTipsAccoountBill(String mobile,String code, String date){
+        if (enable) {
+            try {
+                Map<String, Object> param = new HashMap<>();
+                param.put("apikey", apikey);
+                param.put("mobile", mobile);
+                param.put("text", TextTemplateEnum.SMS_BOSS_ACCOUNT_TIP.getText(code,date));
+                HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+            } catch (Exception e) {
+                throw new RuntimeException("发送账号到手机发送失败", e);
+            }
+        }
+    }
 
 }

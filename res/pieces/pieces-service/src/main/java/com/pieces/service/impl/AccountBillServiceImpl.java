@@ -126,7 +126,7 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 
 		//账期审核成功发送短信通知
 		OrderFormVo orderFormVo = orderFormService.findVoById(temp.getOrderId());
-		smsService.sendAccountSuccess(orderFormVo.getUser().getContactName(),temp.getAmountsPayable(),
+		smsService.sendAccountSuccess(orderFormVo.getCode(),temp.getBillTime(),
 				orderFormVo.getUser().getContactMobile());
 
 	}
@@ -150,7 +150,7 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 
 		// 账期审核失败 发送短信通知
 		OrderFormVo orderFormVo = orderFormService.findVoById(temp.getOrderId());
-		smsService.sendAccountFail(orderFormVo.getUser().getContactName(),temp.getAmountsPayable(),
+		smsService.sendAccountFail(orderFormVo.getCode(),
 				orderFormVo.getUser().getContactMobile());
 	}
 
@@ -225,7 +225,8 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 		return accountBillDao;
 	}
 
-
-
-
+	@Override
+	public List<AccountBillVo> findUnpaidBill() {
+		return accountBillDao.findUnpaidBill();
+	}
 }
