@@ -236,7 +236,12 @@ public class CommodityController extends BaseController {
 	@RequestMapping(value = "search")
 	@BizLog(type = LogConstant.commodity, desc = "商品搜索信息")
 	public String proResult( Integer pageNum, Integer pageSize,
-			ModelMap model, String keyword) {
+			ModelMap model, String keyword,HttpServletResponse response) {
+
+		if(StringUtils.isBlank(keyword)){
+			return "redirect:commodity/index";
+		}
+
 		pageNum = pageNum == null ? 1 : pageNum;
 		pageSize = pageSize == null ? 10 : pageSize;
 		Page<CommodityDoc> commodityDocPage = commoditySearchService.findByNameOrCategoryName(pageNum, pageSize, keyword);

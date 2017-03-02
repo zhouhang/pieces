@@ -345,7 +345,13 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     @Override
     @Transactional
     public Integer batchUpdate(List<Commodity> list) {
+
+        Integer result =  commodityDao.batchUpdate(list);
+
+        for(Commodity commodity: list){
+            commoditySearchService.save(commodity);
+        }
         //TODO 更新完成后要更新 ES 里面的商品排序信息
-        return commodityDao.batchUpdate(list);
+        return result;
     }
 }
