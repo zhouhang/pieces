@@ -27,7 +27,7 @@ public class TipsJob {
     @Autowired
     SmsService smsService;
 
-    @Scheduled(cron = "0/30 * * * * ?")
+//    @Scheduled(cron = "0/30 * * * * ?")
     public void execute(){
         // 查询所有未支付的订单 并且到期时间距离今天1天 或者7天 给这些账单的用户发送短信
         List<AccountBillVo> list = accountBillService.findUnpaidBill();

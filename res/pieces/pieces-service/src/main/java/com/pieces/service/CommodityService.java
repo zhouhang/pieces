@@ -45,6 +45,7 @@ public interface CommodityService extends ICommonService<Commodity>{
     public CropResult uploadUeditorImage(MultipartFile img);
 
     public List<CommodityVo> findCommodityByBreedId(Integer id);
+    List<CommodityVo> queryCommodityByBreedId(Integer id);
     List<CommodityVo> findFactoryByBreedId(String ids);
     List<CommodityVo> findStandardByBreedId(String ids);
 
@@ -78,4 +79,5 @@ public interface CommodityService extends ICommonService<Commodity>{
     public List<Commodity> findByName(String name);
 	public List<CommodityVo> findDistinctName(CommodityVo commodityVO);
 
+    Integer batchUpdate(List<Commodity> list);
 }

@@ -68,6 +68,9 @@ public class Commodity  implements Serializable {
 	private Integer status;
 	
 	private Date createTime;
+
+	// 商品排序 越大越靠前
+	private Integer sort;
 	
 	public Commodity(){}
 	
@@ -188,5 +191,12 @@ public class Commodity  implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
 }

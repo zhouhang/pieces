@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.pieces.boss.commons.LogConstant;
+import com.pieces.dao.model.Commodity;
 import com.pieces.service.enums.CategoryEnum;
 import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
@@ -351,6 +352,30 @@ public class CategoryController {
 	}
 
 
+	/**
+	 * //根据品种名查
+	 * @param breeId
+	 * @return
+     */
+	@RequestMapping(value = "/breed/commodity", method = RequestMethod.GET)
+	public String commodityByBreed(Integer breeId, ModelMap model){
+		// 根据品种ID 查询品种下的所有商品
+		model.put("list",commodityService.queryCommodityByBreedId(breeId));
+		BreedVo breed = categoryService.getBreedById(breeId);
+		model.put("breed",breed);
+		return "breed_sort";
+	}
 
+	/**
+	 * 保存商品的排序信息
+	 * @param commodities
+	 * @return
+     */
+	@RequestMapping(value = "/breed/commodity", method = RequestMethod.POST)
+	@ResponseBody
+	public Result commodityByBreedSave(@RequestBody List<Commodity> commodities){
+		commodityService.batchUpdate(commodities);
+		return new Result(true).info("保存排序成功");
+	}
 
 }

@@ -41,4 +41,7 @@ public interface CommodityDao extends ICommonDao<Commodity>{
 	public List<Commodity> findByName(String name);
 
 	public List<CommodityVo> findDistinctName(CommodityVo commodityVO);
+
+	// 批量更新商品信息
+	Integer batchUpdate(List<Commodity> list);
 }

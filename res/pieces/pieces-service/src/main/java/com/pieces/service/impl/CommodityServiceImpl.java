@@ -199,6 +199,14 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     }
 
     @Override
+    public List<CommodityVo> queryCommodityByBreedId(Integer id) {
+        CommodityVo vo = new CommodityVo();
+        vo.setCategoryId(id);
+        vo.setSort(0);
+        return commodityDao.findByParam(vo);
+    }
+
+    @Override
     public List<CommodityVo> findFactoryByBreedId(String ids) {
         CommodityVo vo = new CommodityVo();
         vo.setBreedIds(ids);
@@ -334,5 +342,10 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         return FileUtil.convertAbsolutePathToUrl(commodityDao.findByIds(ids),param);
     }
 
-
+    @Override
+    @Transactional
+    public Integer batchUpdate(List<Commodity> list) {
+        //TODO 更新完成后要更新 ES 里面的商品排序信息
+        return commodityDao.batchUpdate(list);
+    }
 }

@@ -100,8 +100,10 @@ public class CommodityController extends BaseController {
 	private PageInfo<CommodityVo> indexBreed(Integer pageSize, Integer pageNum, CommodityVo commodityVO, ModelMap model) {
 		Category category = null;
 		List<CommodityVo> lxCommodity = null;
+		// 根据品种ID 查询品种详情
 		if(commodityVO.getBreedId() != null){
 			category = categoryService.findById(commodityVO.getBreedId());
+			// 查询品种下所有的商品名 只要名字相同都算一样的
 			lxCommodity = commodityService.findDistinctName(commodityVO);
 		}
 		if(commodityVO.getEqName() != null){
@@ -120,6 +122,9 @@ public class CommodityController extends BaseController {
 		Category parent = categoryService.findById(category.getParentId());
 		Integer cid = commodityVO.getCategoryId();
 		commodityVO.setCategoryId(category.getId());
+
+		commodityVO.setSort(0);
+		commodityVO.setStatus(1);
 		PageInfo<CommodityVo> pageInfo = commodityService.query(commodityVO, pageNum, pageSize);
 		commodityVO.setCategoryId(cid);
 		                                                                                   
