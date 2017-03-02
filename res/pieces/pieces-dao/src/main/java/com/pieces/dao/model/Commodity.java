@@ -1,5 +1,6 @@
 package com.pieces.dao.model;
 
+import com.google.common.base.Strings;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -99,6 +100,9 @@ public class Commodity  implements Serializable {
 	}
 	
 	public String getTitle() {
+		if (Strings.isNullOrEmpty(title)){
+			title = name +" 无硫";
+		}
 		return title;
 	}
 

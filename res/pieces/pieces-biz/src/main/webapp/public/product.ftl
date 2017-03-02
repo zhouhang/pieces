@@ -47,7 +47,7 @@
                         <img src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>"  width="360" height="360" alt="${commodity.title!}">
                     </div>
                     <div class="ext-info">
-                        <h1 class="name"> <#if commodity.title??>${commodity.name!} 无硫 <#else>${commodity.title!}</#if></h1>
+                        <h1 class="name">${commodity.title!}</h1>
                         <dl>
                             <dt>商品名称</dt>
                             <dd>${commodity.name!}</dd>
