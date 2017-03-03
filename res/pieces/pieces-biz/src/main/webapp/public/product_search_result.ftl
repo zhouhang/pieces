@@ -8,32 +8,11 @@
 </head>
 
 <body>
-    <#include "./inc/header.ftl"/>
-    <!-- 悬浮框 start -->
-    <div class="header search-fixed">
-        <div class="wrap">
-            <div class="logo">
-                <a href="/">上工好药首页</a>
-            </div>
-            <div class="cart">
-                <div class="hd">
-                    <i class="fa fa-cartlist"></i>
-                    <span>我的询价单</span>
-                    <em class="count">0</em>
-                </div>
-                <div class="bd"></div>
-            </div>
-            <div class="search">
-                <div class="form">
-                    <form id="_search_form2" action="commodity/search" method="get">
-                        <input id="_search_ipt2" class="ipt" name="keyword" placeholder="请输入原药名称或饮片名称" value="${keyword!}" type="text">
-                        <button class="btn" type="submit">搜索</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- 悬浮 end -->
+<#include "./inc/header.ftl"/>
+<script>
+    // 开启页面搜索悬浮
+    var searchFixed = true;
+</script>
 <div class="main-body">
 
     <div class="wrap">
@@ -100,7 +79,6 @@
 </div>
     <#include "./inc/helper.ftl"/>
     <#include "./inc/footer.ftl"/>
-
     <script>
         var _global = {
             fn: {

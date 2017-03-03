@@ -70,8 +70,7 @@ $.easing.easeInOutExpo = function (x, t, b, c, d) {
 function searchBar() {
 	var $win = $(window),
 		$searchForm = $('#_search_form'),
-		$searchForm2 = $('#_search_form2'),
-		$fixed = $('.search-fixed');
+		$header = $('.header');
 
 	$('#_search_ipt').autocomplete({
         serviceUrl: '/commodity/search/auto',
@@ -90,41 +89,21 @@ function searchBar() {
             $searchForm.submit();
         }
     });
-	if ($searchForm2.length === 1) {
-		$('#_search_ipt2').autocomplete({
-			serviceUrl: '/commodity/search/auto',
-			paramName: 'keyword',
-			groupBy: 'category',
-			transformResult: function (response) {
-				response = JSON.parse(response);
-				return {
-					suggestions: $.map(response, function (dataItem) {
-						return {
-							value: (dataItem.category ? dataItem.category + '：' : '') + dataItem.value,
-							data: {'category': dataItem.category}
-						}
-					})
-				};
-			},
-			onSelect: function (suggestion) {
-				$searchForm2.submit();
-			}
-		});
-	}
 
 	var searchBarFixed = function() {
 		if ($win.scrollTop() > 129) {
-			$fixed.addClass('search-animated');
+			$header.addClass('search-animated');
 		} else {
-			$fixed.removeClass('search-animated');
+			$header.removeClass('search-animated');
 		}
 	}
-
-	$win.on('scroll', function() {
+	if (typeof searchFixed !== 'undefined' && searchFixed === true) {
+		$header.addClass('header-fixed');
+		$win.on('scroll', function() {
+			searchBarFixed();
+		})
 		searchBarFixed();
-	})
-
-	searchBarFixed();
+	}
 }
 
 // 用户中心导航高亮
@@ -381,13 +360,8 @@ var shopcart = {
 
 		// 删除购物车商品
 		that.$header.on('click', '.fa-times', function() {
-			var $li = $(this).parent(),
-				$ul = $li.parent(),
-				id = $(this).data('id');
-
-			$li.remove();
-			that.$header.find('.cart ul').html($ul.html());
-			that.delCart(id);
+			$(this).parent().remove();
+			that.delCart($(this).data('id'));
 		})
 	},
 	addToCart: function(data) {

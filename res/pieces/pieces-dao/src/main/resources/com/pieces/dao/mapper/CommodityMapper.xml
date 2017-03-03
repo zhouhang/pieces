@@ -214,6 +214,7 @@
         category.name as categoryName
         from commodity
         left join category on category_id = category.id
+        WHERE commodity.status = 1
     </select>
 
     <select id="findVoById" parameterType="java.lang.Integer" resultMap="CommodityVOResultMap" >

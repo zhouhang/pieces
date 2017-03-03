@@ -6,35 +6,13 @@
     <meta name="description" content="上工好药sghaoyao.com - 专业的中药饮片采购平台，整合中药饮片各品种优势货源，为合作伙伴提供安全有保障、高效周到、高性价比的服务，采购饮片就来上工好药。" />
     <meta name="Keywords" content="中药,饮片,中药饮片,饮片采购,饮片批发,精致饮片,毒性饮片,药食同源,炮制,古法炮制,上工好药" />
 </head>
-<body  class="bg-gray">
+<body class="bg-gray">
 
 <#include "./inc/header.ftl"/>
-
-<!-- 悬浮框 start -->
-<div class="header search-fixed">
-    <div class="wrap">
-        <div class="logo">
-            <a href="/">上工好药首页</a>
-        </div>
-        <div class="cart">
-            <div class="hd">
-                <i class="fa fa-cartlist"></i>
-                <span>我的购物车</span>
-                <em class="count">0</em>
-            </div>
-            <div class="bd"></div>
-        </div>
-        <div class="search">
-            <div class="form">
-                <form id="_search_form2" action="commodity/search" method="get">
-                    <input id="_search_ipt2" class="ipt" name="keyword" placeholder="请输入原药名称或饮片名称" value="${keyword!}" type="text">
-                    <button class="btn" type="submit">搜索</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- 悬浮 end -->
+<script>
+    // 开启页面搜索悬浮
+    var searchFixed = true;
+</script>
 
 <!-- banner start -->
 <div class="banner-slider" id="jslide">
