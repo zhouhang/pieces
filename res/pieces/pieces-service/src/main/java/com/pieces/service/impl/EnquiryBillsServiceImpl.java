@@ -77,7 +77,6 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
         enquiryBills.setCode(code);
         enquiryBillsDao.update(enquiryBills);
 
-
         //创建报价单商品
         createCommoditys(enquiryCommoditysList,user.getId(),enquiryBills.getId());
 

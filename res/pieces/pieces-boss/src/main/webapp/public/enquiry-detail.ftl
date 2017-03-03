@@ -10,6 +10,11 @@
 <!-- fa-floor start -->
 <div class="fa-floor">
     <div class="wrap">
+    <#if (create??)>
+        <div class="message">
+            <i class="fa fa-check-circle"></i> <span>询价单创建成功!</span>
+        </div>
+    </#if>
         <div class="side">
             <dl>
                 <dt>询价信息</dt>
