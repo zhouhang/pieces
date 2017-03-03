@@ -94,12 +94,9 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
             commodityDao.create(commodity);
             LogAuditing.audit(null,commodity,"商品","新增商品");
         }
-        //如果更改商品状态为不显示则删除索引
-        if(commodity.getStatus()==0){
-            commoditySearchService.deleteByCommodityId(commodity.getId());
-        }else{
-            commoditySearchService.save(commodity);
-        }
+
+         commoditySearchService.save(commodity);
+
         return commodity.getId();
     }
 
