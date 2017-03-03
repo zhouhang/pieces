@@ -17,6 +17,7 @@
                     <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">取消</button>
                     <button type="button" class="btn btn-blue" id="importExcel">导入询价品种</button>
                     <button type="submit" class="btn btn-red" id="submit">报价</button>
+                    <a class="c-blue" href="/file/报价商品.xlsx">下载导入模板</a>
                 </div>
             </div>
 

@@ -171,6 +171,7 @@
 		</mvc:resource-chain>
 	</mvc:resources>
 	<mvc:resources mapping="/images/**" location="/assets/images/" />
+	<mvc:resources mapping="/file/**" location="/assets/file/" />
 	<mvc:resources mapping="/fonts/**" location="/assets/fonts/" />
 	<mvc:resources mapping="/robots.txt" location="/assets/robots.txt" />
 
