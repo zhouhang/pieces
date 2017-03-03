@@ -139,4 +139,6 @@ public class CommodityDoc {
     public void setSort(Integer sort) {
         this.sort = sort;
     }
+
+
 }
