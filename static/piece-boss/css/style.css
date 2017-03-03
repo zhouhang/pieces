@@ -443,6 +443,8 @@ vertical-align:middle;
 .create-order .main .chart td a{margin:0 4px;}
 .create-order .main .chart tfoot td{padding:10px 20px;background:#f0eff5;border-color:#e7e7e7;}
 .create-order .main .chart-info{margin-bottom:20px;}
+.create-order .main .ipt-tr{margin-top:10px;text-align:right;}
+.create-order .main .ipt-tr .ipt{width:140px;}
 .create-order .main .fa-form{padding:10px 20px;color:#999;font-size:12px;border:1px solid #e7e7e7;}
 .create-order .main .fa-form .group{padding-left:70px;}
 .create-order .main .fa-form .cnt{min-height:50px;height:auto;}

@@ -371,7 +371,7 @@
                 </div>
 
                 <div class="submit">
-                    <button class="btn btn-red" type="button">提交订单</button>
+                    <button class="btn btn-red" type="submit">提交订单</button>
                 </div>
 
             </div>
@@ -420,13 +420,26 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/laydate/laydate.js"></script>
     <script src="js/layer/layer.js"></script>
+    <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
     <script>
     var _global = {
         v: {},
         fn: {
             init: function() {
+                this.formValidate();
                 this.myformEvent();
                 this.addGoodsToOrder();
+            },
+            formValidate: function() {
+                $('#myform').validator({
+                    fields : {
+                       // jfreightPrice : '运费: required;',
+                        consignee : '收货人: required',
+                        tel : '手机号: required; mobile',
+                        area : '所在地区: required',
+                        detail : '详细地址: required'
+                    }
+                });
             },
             myformEvent: function() {
                 var $body        = $('body');

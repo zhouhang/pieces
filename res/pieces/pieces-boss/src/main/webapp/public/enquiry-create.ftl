@@ -64,7 +64,10 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div>报价有效期至: <input type="text" id="expireDate" name="expireDate" class="ipt ipt-date" value=""></div>
+                        <div class="ipt-tr">
+                            <span>报价有效期至：</span>
+                            <input type="text" class="ipt" id="expireDate" name="expireDate" value="" autocomplete="off">
+                        </div>
                     </form>
                 </div>
             </div>

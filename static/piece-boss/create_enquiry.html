@@ -104,15 +104,19 @@
                             </tfoot>
                             <tbody>
                                 <tr>
-                                    <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" name="name" autocomplete="off"></div><span class="error"></span></td>
-                                    <td><div class="ipt-wrap"><input type="text" class="ipt" name="spec" autocomplete="off"></div><span class="error"></span></td>
-                                    <td><div class="ipt-wrap"><input type="text" class="ipt" name="level" autocomplete="off"></div><span class="error"></span></td>
-                                    <td><div class="ipt-wrap"><input type="text" class="ipt" name="originof" autocomplete="off"></div><span class="error"></span></td>
+                                    <td><div class="ipt-wrap pr"><input type="text" class="ipt ipt-name" name="name" autocomplete="off"></div><span class="error"></span></td>
+                                    <td><div class="ipt-wrap pr"><input type="text" class="ipt" name="spec" autocomplete="off"></div><span class="error"></span></td>
+                                    <td><div class="ipt-wrap pr"><input type="text" class="ipt" name="level" autocomplete="off"></div><span class="error"></span></td>
+                                    <td><div class="ipt-wrap pr"><input type="text" class="ipt" name="originof" autocomplete="off"></div><span class="error"></span></td>
                                     <td><input type="text" class="ipt price" name="price" value="" autocomplete="off"><span class="error"></span></td>
                                     <td><a href="javascript:;" class="remove c-red">删除</a></td>
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="ipt-tr">
+                            <span>报价有效期至：</span>
+                            <input type="text" class="ipt" autocomplete="off">
+                        </div>
                     </form>
                 </div>
             </div>
@@ -165,7 +169,7 @@
                     this.batch();
                     // this.addGoodsToOrder();
                     // this.pirceInput();
-                    // this.formValidate();
+                    this.formValidate();
                 },
                 myformEvent: function() {
                     var $body        = $('body');
@@ -318,7 +322,7 @@
                 formValidate: function () {
                     $('#myform').validator({
                         fields: {
-                            expireDate: 'required'
+                            name: 'required'
                         }
                     })
 
