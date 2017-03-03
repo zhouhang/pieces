@@ -15,3 +15,15 @@ UPDATE `pieces`.`home_weight` SET `value`='405,1086,1509,1102,1415' WHERE `id`='
 UPDATE `pieces`.`home_weight` SET `value`='143,646,1242,1436,1787' WHERE `id`='209';
 UPDATE `pieces`.`home_weight` SET `value`='1877,1109,890,1167,932' WHERE `id`='210';
 UPDATE `pieces`.`home_weight` SET `value`='429,458,1324,1233,1022' WHERE `id`='211';
+
+-- 首页商品品种替换
+UPDATE `pieces`.`home_weight` SET `value`='83,373,369,686,598,269,580,364,357,352,571,1646' WHERE `id`='91';
+UPDATE `pieces`.`home_weight` SET `value`='486,551,290,223,216,513,510,557,501,493,477,472' WHERE `id`='101';
+UPDATE `pieces`.`home_weight` SET `value`='1047,506,107,812,503,810,846,788,818,488,103,777' WHERE `id`='111';
+UPDATE `pieces`.`home_weight` SET `value`='1265,1318,1311,1310,1309,1369,1259,1529,1354,1339,1302,1271' WHERE `id`='122';
+UPDATE `pieces`.`home_weight` SET `value`='1666,1123,1158,1141,1549,1116,1156,1114,1152,1093,1091,1150' WHERE `id`='131';
+UPDATE `pieces`.`home_weight` SET `value`='1214,1208,1061,1207,1448,1206,1224,1210,1200,1195,1198,1199' WHERE `id`='141';
+
+UPDATE `pieces`.`home_weight` SET `value`='1666,1123,1158,1141,1097,1116,1156,1114,1152,1093,1091,1150' WHERE `id`='131';
+UPDATE `pieces`.`home_weight` SET `value`='1214,1208,1223,1207,1448,1206,1224,1210,1200,1195,1198,1199' WHERE `id`='141';
+
