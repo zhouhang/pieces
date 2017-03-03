@@ -293,6 +293,7 @@ vertical-align:middle;
 .user-info{margin-bottom:40px;border:1px solid #e7e7e7;background:#f0eff5;}
 .user-info:last-child{margin-bottom:0;}
 .user-info h3{padding:13px 30px;font-weight:700;text-align:left;border-bottom:1px solid #e7e7e7;background:#fff;}
+.user-info h3 span{font-size:12px;font-weight:400;color:#666;}
 .user-info .info{padding:35px 30px;}
 .user-info .info table{width:auto;}
 .user-info .info tbody:nth-child(n+1){margin-top:20px;}
