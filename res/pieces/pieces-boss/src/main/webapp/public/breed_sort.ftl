@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="user-info">
-                        <h3>商品排序</h3>
+                        <h3><span class="fr">数字越大越靠前显示</span>商品排序</h3>
                         <div class="chart">
                             <table>
                                 <thead>

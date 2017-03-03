@@ -186,6 +186,13 @@ public class EnquiryController extends BaseController{
         if (commoditys!= null) {
             modelMap.put("commoditys", commoditys);
         }
+
+
+        //报价时间为空时设置默认报价时间
+        LocalDate date = LocalDate.now();
+        date = date.plusDays(3);
+        modelMap.put("expireDate", date);
+
         modelMap.put("user", user);
         return "enquiry-create";
     }

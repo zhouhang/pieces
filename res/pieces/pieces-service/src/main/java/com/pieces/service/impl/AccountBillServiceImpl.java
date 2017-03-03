@@ -19,6 +19,7 @@ import com.pieces.service.OrderFormService;
 import com.pieces.service.PayRecordService;
 import com.pieces.tools.utils.DateUtils;
 import com.pieces.tools.utils.SeqNoUtil;
+import org.elasticsearch.common.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -126,8 +127,14 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 
 		//账期审核成功发送短信通知
 		OrderFormVo orderFormVo = orderFormService.findVoById(temp.getOrderId());
+		String mobile;
+		if (Strings.isNullOrEmpty(orderFormVo.getAgentTel())) {
+			mobile = orderFormVo.getUser().getContactMobile();
+		} else {
+			mobile = orderFormVo.getAgentTel();
+		}
 		smsService.sendAccountSuccess(orderFormVo.getCode(),temp.getBillTime(),
-				orderFormVo.getUser().getContactMobile());
+				mobile);
 
 	}
 
@@ -150,8 +157,14 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 
 		// 账期审核失败 发送短信通知
 		OrderFormVo orderFormVo = orderFormService.findVoById(temp.getOrderId());
+		String mobile;
+		if (Strings.isNullOrEmpty(orderFormVo.getAgentTel())) {
+			mobile = orderFormVo.getUser().getContactMobile();
+		} else {
+			mobile = orderFormVo.getAgentTel();
+		}
 		smsService.sendAccountFail(orderFormVo.getCode(),
-				orderFormVo.getUser().getContactMobile());
+				mobile);
 	}
 
 	@Override

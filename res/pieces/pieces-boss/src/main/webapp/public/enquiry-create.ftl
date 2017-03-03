@@ -17,7 +17,6 @@
                     <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">取消</button>
                     <button type="button" class="btn btn-blue" id="importExcel">导入询价品种</button>
                     <button type="submit" class="btn btn-red" id="submit">报价</button>
-                    <a class="c-blue" href="/file/报价商品.xlsx">下载导入模板</a>
                 </div>
             </div>
 
@@ -67,7 +66,7 @@
                         </table>
                         <div class="ipt-tr">
                             <span>报价有效期至：</span>
-                            <input type="text" class="ipt" id="expireDate" name="expireDate" value="" autocomplete="off">
+                            <input type="text" class="ipt" id="expireDate" name="expireDate" value="${expireDate!}" autocomplete="off">
                         </div>
                     </form>
                 </div>
