@@ -147,7 +147,7 @@
                                 <input class="ipt" value="" autocomplete="off" name="cardID_1" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
                                 <em class="error1 top"></em>
                                 <label for="">有效期至：</label>
-                                <input class="ipt date" value="" autocomplete="off" name="indate_1" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                <input class="ipt date" value="" autocomplete="off" name="indate_1" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}" onclick="laydate()">
                                 <em class="error1 bottom"></em>
                             </div>
                         </div>
@@ -165,7 +165,7 @@
                                 <input class="ipt" value="" autocomplete="off" name="cardID_2" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
                                 <em class="error1 top"></em>
                                 <label for="">有效期至：</label>
-                                <input class="ipt date" value="" autocomplete="off" name="indate_2" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                <input class="ipt date" value="" autocomplete="off" name="indate_2" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}" onclick="laydate()">
                                 <em class="error1 bottom"></em>
                             </div>
                         </div>
@@ -182,7 +182,7 @@
                                 <input class="ipt" value="" autocomplete="off" name="cardID_3" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
                                 <em class="error1 top"></em>
                                 <label for="">有效期至：</label>
-                                <input class="ipt date" value="" autocomplete="off" name="indate_3" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                <input class="ipt date" value="" autocomplete="off" name="indate_3" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}" onclick="laydate()">
                                 <em class="error1 bottom"></em>
                             </div>
                         </div>
@@ -214,6 +214,7 @@
 
     <script src="js/jquery.min.js"></script>
     <script src="js/lightbox.js"></script>
+    <script src="js/laydate/laydate.js"></script>
     <script>
     var _global = {
             v: {
@@ -262,7 +263,6 @@
                         msg = '<i class="fa fa-prompt"></i> 企业名称长度4-50，只能由中英文、数字及\"_\"、\"-\"、()、（）组成';
                     }
                     $input.next().html(msg)[msg == '' ? 'hide' : 'show']();
-                    msg && $input.focus();
                     return msg === '';
                 },
                 checklegalPerson: function() {
@@ -275,7 +275,6 @@
                         msg = '<i class="fa fa-prompt"></i> 企业责任人长度4-50位';
                     }
                     $input.next().html(msg)[msg == '' ? 'hide' : 'show']();
-                    msg && $input.focus();
                     return msg === '';
                 },
                 checkcompanyRegion: function() {
@@ -288,7 +287,6 @@
                         msg = '<i class="fa fa-prompt"></i> 企业责任人长度4-150位';
                     }
                     $input.next().html(msg)[msg == '' ? 'hide' : 'show']();
-                    msg && $input.focus();
                     return msg === '';
                 },
                 formValidate: function() {
