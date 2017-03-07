@@ -83,11 +83,13 @@
                 <div class="user-info" qid="${qualification.id}">
                     <h3>${qualification.typeText}</h3>
                     <div class="check">
-                        <div class="pic thumb">
+
                             <#list qualification.pictures as qualificationPicsVo>
+                            <div class="pic thumb">
                                     <img src="${qualificationPicsVo.pictureUrl}" alt="">
+                            </div>
                             </#list>
-                        </div>
+
                         <div class="form" >
                             <label for="">证件号：</label>
                             <input class="ipt" value="${qualification.number}" autocomplete="off" name="cardID_1" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
@@ -265,11 +267,6 @@
                             type: "POST",
                             contentType: "application/json; charset=utf-8",
                             success: function(data){
-                                $.notify({
-                                    type: 'success',
-                                    title: data.info,
-                                    delay: 3e3
-                                });
                                 if(data.status=="y"){
                                     $("#pass").hide();
                                     $("#notpass").hide();
@@ -299,11 +296,6 @@
                             type: "POST",
                             contentType: "application/json; charset=utf-8",
                             success: function(data){
-                                $.notify({
-                                    type: 'success',
-                                    title: data.info,
-                                    delay: 3e3
-                                });
                                 if(data.status=="y"){
                                     $("#pass").hide();
                                     $("#notpass").hide();

@@ -181,9 +181,31 @@
         fn: {
             init: function() {
                 this.formValidate();
+                this.iniForm();
                 this.chooseType();
                 this.zoomImg();
                 this.goodsImg();
+            },
+            iniForm: function() {
+                <#if userCertification?exists>
+                    $("input:radio[value='${userCertification.type}']").click();
+                    <#if userQualification>
+                    <#list userQualification as qualification>
+                        var imgctrl= $(".floor:visible[type='${qualification.type}']");
+                        var htmltext="";
+                        <#list qualification.pictures as picture>
+                            var htmltext='<div class="up-img">' +
+                                    '<img src="${picture.pictureUrl}">' +
+                                    '<i class="del"></i>' +
+                                    '<input type="hidden" value="${picture.pictureUrl}"></div>'+htmltext;
+
+
+                        </#list>
+                        imgctrl.find(".up-img").before(htmltext);
+                    </#list>
+                    </#if>
+                </#if>
+
             },
             chooseType: function() {
                 var $floor = $('.floor');
