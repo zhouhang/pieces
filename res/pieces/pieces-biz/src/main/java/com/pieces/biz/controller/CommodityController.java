@@ -239,7 +239,7 @@ public class CommodityController extends BaseController {
 			ModelMap model, String keyword,HttpServletResponse response) {
 
 		if(StringUtils.isBlank(keyword)){
-//			return "redirect:/commodity/index";
+			return "redirect:/commodity/index";
 		}
 
 		pageNum = pageNum == null ? 1 : pageNum;

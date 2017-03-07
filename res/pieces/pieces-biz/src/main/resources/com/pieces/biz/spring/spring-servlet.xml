@@ -153,6 +153,8 @@
 	</mvc:resources>
 	<mvc:resources mapping="/file/**" location="/assets/file/" />
 	<mvc:resources mapping="/fonts/**" location="/assets/fonts/" />
+	<mvc:resources mapping="/fonts/**" location="/assets/fonts/" />
+
 	<mvc:resources mapping="/images/**" location="/assets/images/">
 		<mvc:resource-chain resource-cache="true">
 			<mvc:resolvers>
@@ -162,6 +164,7 @@
 			</mvc:resolvers>
 		</mvc:resource-chain>
 	</mvc:resources>
+	<mvc:resources mapping="/*" location="/assets/"/>
 
 	<bean id="log" class="com.pieces.tools.log.aop.LogAspect"></bean>
 
