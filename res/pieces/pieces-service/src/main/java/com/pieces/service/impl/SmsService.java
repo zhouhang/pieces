@@ -1,6 +1,9 @@
 package com.pieces.service.impl;
 
 import com.pieces.dao.exception.SmsOverException;
+import com.pieces.dao.model.User;
+import com.pieces.dao.vo.EnquiryBillsVo;
+import com.pieces.service.UserService;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.enums.TextTemplateEnum;
 import com.pieces.service.redis.RedisManager;
@@ -13,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +44,9 @@ public class SmsService {
 
     @Autowired
     private RedisManager redisManager;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 发送短信验证码
@@ -104,6 +112,24 @@ public class SmsService {
     }
 
 
+    public String sendEnquiryCaptcha(String mobile) throws Exception {
+        checkCaptcha(mobile);
+        //生成并发送验证码
+        String code = SeqNoUtil.getRandomNum(4);
+        Map<String, Object> param = new HashMap<>();
+        param.put("apikey", apikey);
+        param.put("mobile", mobile);
+        param.put("text", TextTemplateEnum.SMS_BIZ_FINDPASSWORD_CAPTCHA.getText("【上工好药】", code));
+        HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+        //记录发送成功的时间
+        redisManager.set(RedisEnum.KEY_MOBILE_CAPTCHA_INTERVAL.getValue()+mobile,new Date().getTime()+"");
+        //验证码存储在redis缓存里
+        redisManager.set(RedisEnum.KEY_MOBILE_EQUIRY_CAPTCHA.getValue()+mobile,code,SMS_EXPIRE_TIME);
+        return code;
+    }
+
+
+
     public void sendAddUserAccount(String passWord,String mobile,String username)throws Exception{
         //生成六位数密码
         Map<String, Object> param = new HashMap<>();
@@ -124,13 +150,19 @@ public class SmsService {
 
     // 后台报价 quoted
     //【上工之选】@@@ 您好,您的询价单 @@@ (询价商品 @@@ 等)已有报价,请在询价记录中查看.
-    public void sendQuoted(String username, String code, String commodity, String mobile) {
+    public void sendQuoted(EnquiryBillsVo vo) {
         if (enable) {
             try {
                 Map<String, Object> param = new HashMap<>();
                 param.put("apikey", apikey);
-                param.put("mobile", mobile);
-                param.put("text", TextTemplateEnum.SMS_BOSS_QUOTED.getText(username, code, commodity));
+                param.put("mobile", vo.getContactMobile());
+                User user =userService.findById(vo.getUserId());
+                if (user.getSource() == 2){
+                    param.put("text", TextTemplateEnum.SMS_BOSS_QUOTED_NOTLOGIN.getText(vo.getContactName(), vo.getCode()));
+                } else {
+                    param.put("text", TextTemplateEnum.SMS_BOSS_QUOTED.getText(vo.getContactName(), vo.getCode()));
+                }
+
                 HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
             } catch (Exception e) {
                 throw new RuntimeException("后台报价短信发送失败", e);
@@ -140,13 +172,20 @@ public class SmsService {
 
     //后台修改报价 quotedUpdate
     //【上工之选】@@@ 您好,您的询价单 @@@ 中部分商品的报价有更新,请在询价记录中查看.
-    public void sendQuotedUpdate(String username, String code, String mobile) {
+    public void sendQuotedUpdate(EnquiryBillsVo vo) {
         if (enable) {
             try {
                 Map<String, Object> param = new HashMap<>();
                 param.put("apikey", apikey);
-                param.put("mobile", mobile);
-                param.put("text", TextTemplateEnum.SMS_BOSS_QUOTEDUPDATE.getText(username, code));
+                param.put("mobile", vo.getContactMobile());
+
+                User user =userService.findById(vo.getUserId());
+                if (user.getSource() == 2){
+                    param.put("text", TextTemplateEnum.SMS_BOSS_QUOTED_NOTLOGIN.getText(vo.getContactName(), vo.getCode()));
+                } else {
+                    param.put("text", TextTemplateEnum.SMS_BOSS_QUOTEDUPDATE.getText(vo.getContactName(), vo.getCode()));
+                }
+
                 HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
             } catch (Exception e) {
                 throw new RuntimeException("后台修改报价短信发送失败", e);
@@ -204,13 +243,13 @@ public class SmsService {
 
     //账期成功accountSuccess
     //【上工之选】@@@ 您好,您 @@@元 的账期申请成功,详情请在账期账单中查看,平台会尽快为您安排发货.
-    public void sendAccountSuccess(String username, Double money, String mobile) {
+    public void sendAccountSuccess(String orderCode, Integer billTime, String mobile) {
         if (enable) {
             try {
                 Map<String, Object> param = new HashMap<>();
                 param.put("apikey", apikey);
                 param.put("mobile", mobile);
-                param.put("text", TextTemplateEnum.SMS_BOSS_ACCOUNTSUCCESS.getText(username, String.valueOf(money)));
+                param.put("text", TextTemplateEnum.SMS_BOSS_ACCOUNTSUCCESS.getText(orderCode, String.valueOf(billTime)));
                 HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
             } catch (Exception e) {
                 throw new RuntimeException("账期申请成功短信发送失败", e);
@@ -220,13 +259,13 @@ public class SmsService {
 
     //账期失败accountFail
     //【上工之选】@@@ 您好,您 @@@元 的账期申请失败,详情请在账期账单中查看.
-    public void sendAccountFail(String username, Double money, String mobile){
+    public void sendAccountFail(String orderCode,String mobile){
         if (enable) {
             try {
                 Map<String, Object> param = new HashMap<>();
                 param.put("apikey", apikey);
                 param.put("mobile", mobile);
-                param.put("text", TextTemplateEnum.SMS_BOSS_ACCOUNTFAIL.getText(username, String.valueOf(money)));
+                param.put("text", TextTemplateEnum.SMS_BOSS_ACCOUNTFAIL.getText(orderCode));
                 HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
             } catch (Exception e) {
                 throw new RuntimeException("账期申请失败短信发送失败", e);
@@ -280,7 +319,20 @@ public class SmsService {
         }
     }
 
-
-
+    // 账期到期提醒
+    //【上工好药】尊敬的用户：您的账单 *** 将在 ***年**月**日 到期，请提前准备好货款，登录平台，前往“会员中心”-“对账单”-“账期账单”完成支付。
+    public void sendTipsAccoountBill(String mobile,String code, String date){
+        if (enable) {
+            try {
+                Map<String, Object> param = new HashMap<>();
+                param.put("apikey", apikey);
+                param.put("mobile", mobile);
+                param.put("text", TextTemplateEnum.SMS_BOSS_ACCOUNT_TIP.getText(code,date));
+                HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+            } catch (Exception e) {
+                throw new RuntimeException("发送账号到手机发送失败", e);
+            }
+        }
+    }
 
 }

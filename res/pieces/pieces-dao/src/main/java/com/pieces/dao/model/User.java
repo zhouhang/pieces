@@ -55,7 +55,7 @@ public class User  implements Serializable {
 	//是否绑定erp（0：未绑定，1：绑定）
 	private Boolean bindErp;
 	
-	//创建渠道（0：前台  1：后台）
+	//创建渠道（0：前台  1：后台 2 询价自动创建）
 	private Integer source;
 	
 	//地址全称

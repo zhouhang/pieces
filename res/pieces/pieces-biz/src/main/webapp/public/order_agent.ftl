@@ -65,10 +65,10 @@
                                 <th width="90">片型</th>
                                 <th>规格等级</th>
                                 <th width="100">产地</th>
-                                <th width="110">指导价<em>（元/公斤）</em></th>
-                                <th width="110">合同价<em>（元/公斤）</em></th>
+                                <th width="110">销售价<em>（元/公斤）</em></th>
+                                <th width="110">开票价<em>（元/公斤）</em></th>
                                 <th width="110">数量<em>（公斤）</em></th>
-                                <th width="150">合同价小计<em>（元）</em></th>
+                                <th width="150">开票价小计<em>（元）</em></th>
                                 <td width="100">操作</td>
                             </tr>
                             </thead>
@@ -284,7 +284,6 @@
 
     <#include "./inc/footer.ftl"/>
 
-    <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
     <script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
     <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
     <script src="${urls.getForLookupPath('/js/jquery.form.js')}"></script>
@@ -303,6 +302,13 @@
                     this.orderSubmit();
                     <#if !(agentUser?exists && agentUser?size>0)>
                     this.warning();
+                    <#else >
+                        <#if !(shippingAddressList?exists && shippingAddressList?size gt 0) >
+                            layer.confirm('您还没有收货地址,是否立即新建一个？', {icon: 3, title:'提示'}, function(index){
+                                layer.close(index);
+                                $('.jaddConsignee').eq(0).trigger("click");
+                            });
+                        </#if>
                     </#if>
                 },
                 // 新增发票

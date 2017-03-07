@@ -225,11 +225,8 @@
 		<profile>
 			<id>test</id>
 			<properties>
-				<!--<biz.base.url>http://www.sghaoyao.com</biz.base.url>
+				<biz.base.url>http://www.sghaoyao.com</biz.base.url>
 				<biz.upload.url>http://static.sghaoyao.com/</biz.upload.url>
-				<biz.upload.path>E:\uploadfiles\sghaoyao\</biz.upload.path>-->
-				<biz.base.url>http://www.sankobuy.com:8080</biz.base.url>
-				<biz.upload.url>http://static.sankobuy.com:8080/</biz.upload.url>
 				<biz.upload.path>E:\uploadfiles\sghaoyao\</biz.upload.path>
 			</properties>
 		</profile>
@@ -248,6 +245,10 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/webapp</directory>
+				<filtering>false</filtering>
 			</resource>
 		</resources>
 		<plugins>

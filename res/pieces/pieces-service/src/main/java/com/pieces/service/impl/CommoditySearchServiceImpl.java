@@ -7,11 +7,13 @@ import com.pieces.dao.model.Commodity;
 import com.pieces.dao.vo.CommodityVo;
 import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
+import com.pieces.service.enums.StatusEnum;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.sort.FieldSortBuilder;
+import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +48,11 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
     public CommodityDoc save(Commodity commodity) {
         CommodityVo commodityVO = commodityService.findVoById(commodity.getId());
         CommodityDoc commodityDoc =  vo2doc(commodityVO);
-        commoditySearchRepository.save(commodityDoc);
+        if(StatusEnum.disable.getValue().equals(commodityVO.getStatus())){
+            deleteByCommodityId(commodityVO.getId());
+        }else{
+            commoditySearchRepository.save(commodityDoc);
+        }
         return commodityDoc;
     }
 
@@ -112,8 +118,11 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
             }else{
                 matchQueryBuilder = matchQuery("name", field);
             }
+            FieldSortBuilder sorter = SortBuilders.fieldSort("sort")
+                    .order(SortOrder.DESC);
             searchQuery = new NativeSearchQueryBuilder()
                     .withQuery(matchQueryBuilder)
+                    .withSort(sorter)
                     .withPageable(new PageRequest(pageNum-1,pageSize))
                     .build();
         }
@@ -196,6 +205,7 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
         commodityDoc.setPictureUrl(commodityVO.getPictureUrl());
         commodityDoc.setSpec(commodityVO.getSpec());
         commodityDoc.setCategoryName(commodityVO.getCategoryName());
+        commodityDoc.setSort(commodityVO.getSort());
         return commodityDoc;
     }
 

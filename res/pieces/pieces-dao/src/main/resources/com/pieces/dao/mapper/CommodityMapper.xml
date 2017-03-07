@@ -17,6 +17,7 @@
         <result column="picture_url"  property="pictureUrl" />
         <result column="status"  property="status" />
         <result column="create_time"  property="createTime" />
+        <result column="sort" property="sort"/>
     </resultMap>
 
     <resultMap id="CommodityVOResultMap" type="com.pieces.dao.vo.CommodityVo">
@@ -36,14 +37,15 @@
         <result column="categoryName" property="categoryName" />
         <result column="eqName" property="eqName" />
         <result column="create_time"  property="createTime" />
+        <result column="sort" property="sort"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,category_id,name,title,level,spec,origin_of,executive_standard,exterior,attribute,details,picture_url,status,create_time
+        id,category_id,name,title,level,spec,origin_of,executive_standard,exterior,attribute,details,picture_url,status,create_time,sort
     </sql>
 
     <sql id="Base_Column_List_B">
-        coom.id as id,category_id,name,title,level,spec,origin_of,executive_standard,exterior,attribute,details,picture_url,status,create_time
+        coom.id as id,category_id,name,title,level,spec,origin_of,executive_standard,exterior,attribute,details,picture_url,status,create_time, coom.sort as sort
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="CommodityResultMap">
@@ -75,7 +77,7 @@
         left join category on category_id = category.id
         <where>
             <if test="id != null">
-                id = #{id}
+                coom.id = #{id}
             </if>
 
             <if test="name != null">
@@ -133,7 +135,9 @@
 
 
         </where>
-        order by coom.id DESC
+        order by
+        <if test="sort != null">coom.sort DESC,</if>
+        coom.id DESC
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
@@ -208,12 +212,27 @@
         where id = #{id}
     </update>
 
+    <!-- 批量更新报价信息 -->
+    <update id="batchUpdate" parameterType="java.util.List">
+        <if test="list != null">
+            <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                update commodity
+                <set>
+                    <if test="item.sort != null">
+                        sort = #{item.sort},
+                    </if>
+                </set>
+                where id = #{item.id}
+            </foreach>
+        </if>
+    </update>
 
     <select id="findVoByPage" resultMap="CommodityVOResultMap" >
         select  *,
         category.name as categoryName
         from commodity
         left join category on category_id = category.id
+        WHERE commodity.status = 1
     </select>
 
     <select id="findVoById" parameterType="java.lang.Integer" resultMap="CommodityVOResultMap" >
@@ -289,6 +308,7 @@
         <if test="breedId != null and breedId != ''">
             and a.category_id = #{breedId}
         </if>
+        ORDER BY  a.sort DESC
     </select>
 
 </mapper>

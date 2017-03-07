@@ -11,6 +11,7 @@ public enum RedisEnum {
 	SITE_TAG_PINYIN_CATEGORY("site_tag_pinyin_category"),
 	KEY_MOBILE_CAPTCHA("mobile_captcha"), // 注册验证码
 	KEY_MOBILE_FINDPASSWORD_CAPTCHA("mobile_password_captcha"),
+	KEY_MOBILE_EQUIRY_CAPTCHA("mobile_enquiry_captcha"),//询价发送验证码
 	KEY_MOBILE_CAPTCHA_INTERVAL("mobile_captcha_interval"),
 	KEY_MOBILE_TIMER("mobile_timer"),
 	NOT_HANDLE_ID_MAP("not_handle_map_");

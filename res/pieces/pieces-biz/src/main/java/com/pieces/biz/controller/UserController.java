@@ -18,15 +18,15 @@ import com.pieces.dao.model.ShippingAddress;
 import com.pieces.dao.vo.CertifyRecordVo;
 import com.pieces.dao.vo.ShippingAddressVo;
 import com.pieces.dao.vo.UserCertificationVo;
-import com.pieces.service.CertifyRecordService;
-import com.pieces.service.ShippingAddressService;
-import com.pieces.service.UserCertificationService;
+import com.pieces.service.*;
 import com.pieces.service.constant.BasicConstants;
 import com.pieces.service.shiro.ShiroRedisCacheManager;
 import com.pieces.service.utils.SerializeUtils;
 import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
-import org.apache.commons.lang.StringUtils;
+import com.pieces.tools.utils.CookieUtils;
+import com.pieces.tools.utils.GsonUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
@@ -43,13 +43,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.pieces.biz.shiro.BizRealm;
 import com.pieces.biz.shiro.BizToken;
 import com.pieces.dao.model.User;
-import com.pieces.service.UserService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.redis.RedisManager;
 import com.pieces.tools.utils.CommonUtils;
 import com.pieces.tools.utils.WebUtil;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 /**
  * 用户控制器 包括用户注册，用户登录和用户中心
@@ -85,6 +85,7 @@ public class UserController extends BaseController {
 
 	@Autowired
 	ShiroRedisCacheManager shiroRedisCacheManager;
+
 
 	/**
 	 * 进入注册页面
@@ -165,9 +166,7 @@ public class UserController extends BaseController {
 
 		Subject subject = SecurityUtils.getSubject();
 		BizToken token = new BizToken(user.getUserName(), passWord, false, CommonUtils.getRemoteHost(request), "");
-		userService.login(subject,token);
-
-
+		userService.loginNew(subject,token,request,response);
 
 		Result result = new Result(true);
 		WebUtil.print(response, result);
@@ -237,7 +236,8 @@ public class UserController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String toLogin() {
+	public String toLogin(String redirectUrl) {
+		httpSession.setAttribute("redirectUrl",redirectUrl);
 		return "login";
 	}
 
@@ -252,12 +252,12 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(String userName, String password, String url, HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws Exception {
 		// 登陆验证
 		Subject subject = SecurityUtils.getSubject();
 		BizToken token = new BizToken(userName, password, false, CommonUtils.getRemoteHost(request), "");
 		try{
-			userService.login(subject,token);
+			userService.loginNew(subject,token,request,response);
 		}catch(Exception e){
 			logger.info("userService.login Exception {} ",e.getMessage());
 			Result result = new Result(false).info("账户名密码错误");
@@ -268,6 +268,12 @@ public class UserController extends BaseController {
 		if(StringUtils.isBlank(url)){
 			url = WebUtils.getSavedRequest(request) != null ? WebUtils.getSavedRequest(request).getRequestUrl() : "/user/info";
 		}
+
+		if (httpSession.getAttribute("redirectUrl")!= null){
+			url = (String)httpSession.getAttribute("redirectUrl");
+			httpSession.removeAttribute("redirectUrl");
+		}
+
 
 		Result result = new Result(true).info(url);
 		WebUtil.print(response, result);

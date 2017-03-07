@@ -28,7 +28,7 @@ public interface EnquiryBillsService extends ICommonService<EnquiryBills>{
 
     public Integer create(List<EnquiryCommoditys> enquiryCommoditysList, User user);
 
-    public PageInfo<EnquiryBills> findByPage(int pageNum, int pageSize, EnquiryRecordVo enquiryRecordVo);
+    public PageInfo<EnquiryBillsVo> findByPage(int pageNum, int pageSize, EnquiryRecordVo enquiryRecordVo);
 
 
     /**
@@ -72,4 +72,10 @@ public interface EnquiryBillsService extends ICommonService<EnquiryBills>{
     public Integer getNotHandleCount();
 
     public List<Integer> getNotHandleIds();
+
+    /**
+     * 设置询价单为已读
+     * @param id
+     */
+    void read(Integer id);
 }

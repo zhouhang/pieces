@@ -46,6 +46,9 @@ public class CommodityDoc {
     @Field(type = FieldType.String,index=FieldIndex.not_analyzed)
     private String pictureUrl;
 
+    @Field(type = FieldType.Integer,index=FieldIndex.not_analyzed)
+    private Integer sort;
+
 
     public Integer getId() {
         return id;
@@ -127,4 +130,15 @@ public class CommodityDoc {
     public void setTitle(String title) {
         this.title = title;
     }
+
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+
 }

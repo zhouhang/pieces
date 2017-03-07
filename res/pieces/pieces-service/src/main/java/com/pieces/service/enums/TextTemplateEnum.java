@@ -15,14 +15,15 @@ public enum TextTemplateEnum {
     SMS_BIZ_CERTIFYFAIL_TEMPLATE("【上工好药】尊敬的用户，您的企业资质审核未通过，不通过原因：{1}，请整理好资料后重新提交。有问题请致电 0558-5120088。"),
     SMS_BOSS_ADDUSER_PASSWORD_TEMPLATE("{1}您的用户名是{2},密码是{3},请妥善保管."),
     SMS_BOSS_UPDATEUSER_PASSWORD_TEMPLATE("{1}{2}您好,您的新密码是{3},请妥善保管."),
-    SMS_BOSS_QUOTED("【上工好药】尊敬的用户: 您的询价单 {2} 已有回复.点击 http://sghaoyao.com/quote/{2} 查看详细"),
-    SMS_BOSS_QUOTEDUPDATE("【上工好药】尊敬的用户: 您的询价单 {2} 已有回复.点击 http://sghaoyao.com/quote/{2} 查看详细"),
+    SMS_BOSS_QUOTED_NOTLOGIN("【上工好药】尊敬的用户: 您的询价单 {2} 已有回复.点击 http://sghaoyao.com/quote/{2} 查看详细。下单请登录平台操作。登录账号:您的手机号，登录密码:您的手机号后六位。"),
+    SMS_BOSS_QUOTED("【上工好药】尊敬的用户: 您的询价单 {2} 已有回复.点击 http://sghaoyao.com/quote/{2} 查看详细。下单请登录平台操作。"),
+    SMS_BOSS_QUOTEDUPDATE("【上工好药】尊敬的用户: 您的询价单 {2} 已有回复.点击 http://sghaoyao.com/quote/{2} 查看详细。下单请登录平台操作。"),
     SMS_BOSS_PAYSUCCESS("【上工好药】{1} 您好,您 {2}元 的款项支付成功,详情请在支付记录中查看,平台会尽快为您安排发货."),
     SMS_BOSS_PAYACCOUNTSUCCESS("【上工好药】{1} 您好,您 {2}元 的款项支付成功,详情请在支付记录中查看."),
     SMS_BOSS_PAYFAIL("【上工好药】{1} 您好,您 {2}元 的款项支付失败,详情在支付记录中查看."),
-    SMS_BOSS_ACCOUNTSUCCESS("【上工好药】{1} 您好,您 {2}元 的账期申请成功,详情请在账期账单中查看,平台会尽快为您安排发货."),
-    SMS_BOSS_ACCOUNTFAIL("【上工好药】{1} 您好,您 {2}元 的账期申请失败,详情请在账期账单中查看.");
-
+    SMS_BOSS_ACCOUNTSUCCESS("【上工好药】尊敬的用户，您的订单 {1} 已通过账期支付，我们将尽快为您发货，账期时间 {2}个月，届时请前往“用户中心”-“对账单”-“账期账单”中完成支付。"),
+    SMS_BOSS_ACCOUNTFAIL("【上工好药】尊敬的用户，您的订单 {1} 的账期支付申请未通过，请使用其他方式付款。如有疑问请咨询客服0558-5120088。"),
+    SMS_BOSS_ACCOUNT_TIP("【上工好药】尊敬的用户：您的账单 {1} 将在 {2} 到期，请提前准备好货款，登录平台，前往“会员中心”-“对账单”-“账期账单”完成支付。");
 
     private String value;
 

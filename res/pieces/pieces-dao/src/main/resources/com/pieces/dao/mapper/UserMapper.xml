@@ -327,8 +327,11 @@
 
 	<!-- 条件查询User 新版查询vo-->
 	<select id="findVoByCondition" parameterType="com.pieces.dao.vo.UserVo" resultMap="Vo">
-		select b.* ,m.name as serviceName from user b
+		select b.* ,m.name as serviceName, agent.contact_name as agentName,agent.id as agentId
+		from user b
 		LEFT JOIN member m ON b.service_id = m.id
+		LEFT JOIN  user_bind bind ON b.id = bind.terminal_id
+		LEFT JOIN  user agent ON bind.agent_id = agent.id
 		<where>
 			<if test="userName != null and userName != ''">
 				b.user_name like "%"#{userName}"%"

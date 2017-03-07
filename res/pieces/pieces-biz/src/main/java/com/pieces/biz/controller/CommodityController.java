@@ -8,10 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.pieces.biz.controller.commons.LogConstant;
-import com.pieces.dao.model.Commodity;
-import com.pieces.dao.model.User;
+import com.pieces.dao.model.*;
+import com.pieces.service.CommodityCollectService;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.annotation.SecurityToken;
+import com.pieces.tools.exception.NotFoundException;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import org.apache.commons.lang.StringUtils;
@@ -24,8 +25,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.elasticsearch.document.CommodityDoc;
-import com.pieces.dao.model.Category;
-import com.pieces.dao.model.Code;
 import com.pieces.dao.vo.CategoryVo;
 import com.pieces.dao.vo.CommodityVo;
 import com.pieces.service.CategoryService;
@@ -33,6 +32,7 @@ import com.pieces.service.CommoditySearchService;
 import com.pieces.service.CommodityService;
 import com.pieces.service.utils.ValidUtils;
 import com.pieces.tools.utils.WebUtil;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 /**
  * Author: ff 7/19/16. 商品信息
@@ -52,6 +52,9 @@ public class CommodityController extends BaseController {
 
 	@Autowired
 	private HttpSession session;
+
+	@Autowired
+	private CommodityCollectService collectService;
 
 	/**
 	 * 获取商品列表分页
@@ -97,8 +100,10 @@ public class CommodityController extends BaseController {
 	private PageInfo<CommodityVo> indexBreed(Integer pageSize, Integer pageNum, CommodityVo commodityVO, ModelMap model) {
 		Category category = null;
 		List<CommodityVo> lxCommodity = null;
+		// 根据品种ID 查询品种详情
 		if(commodityVO.getBreedId() != null){
 			category = categoryService.findById(commodityVO.getBreedId());
+			// 查询品种下所有的商品名 只要名字相同都算一样的
 			lxCommodity = commodityService.findDistinctName(commodityVO);
 		}
 		if(commodityVO.getEqName() != null){
@@ -117,6 +122,9 @@ public class CommodityController extends BaseController {
 		Category parent = categoryService.findById(category.getParentId());
 		Integer cid = commodityVO.getCategoryId();
 		commodityVO.setCategoryId(category.getId());
+
+		commodityVO.setSort(0);
+		commodityVO.setStatus(1);
 		PageInfo<CommodityVo> pageInfo = commodityService.query(commodityVO, pageNum, pageSize);
 		commodityVO.setCategoryId(cid);
 		                                                                                   
@@ -228,7 +236,12 @@ public class CommodityController extends BaseController {
 	@RequestMapping(value = "search")
 	@BizLog(type = LogConstant.commodity, desc = "商品搜索信息")
 	public String proResult( Integer pageNum, Integer pageSize,
-			ModelMap model, String keyword) {
+			ModelMap model, String keyword,HttpServletResponse response) {
+
+		if(StringUtils.isBlank(keyword)){
+//			return "redirect:/commodity/index";
+		}
+
 		pageNum = pageNum == null ? 1 : pageNum;
 		pageSize = pageSize == null ? 10 : pageSize;
 		Page<CommodityDoc> commodityDocPage = commoditySearchService.findByNameOrCategoryName(pageNum, pageSize, keyword);
@@ -259,11 +272,11 @@ public class CommodityController extends BaseController {
 
 	@RequestMapping(value = "/{id}")
 	@BizLog(type = LogConstant.commodity, desc = "商品详情页面")
+	@SecurityToken(generateToken = true)
 	public String detail(@PathVariable("id") Integer id, ModelMap model) {
 		CommodityVo commodity = commodityService.findVoById(id);
 		if (commodity == null) {
-			// TODO: 商品不存在
-			return "redirect:error/404";
+			throw new NotFoundException();
 		}
 
 		List<Commodity> commodityList =	commodityService.findByName(commodity.getName());
@@ -277,7 +290,9 @@ public class CommodityController extends BaseController {
 		model.put("categoryId", category1.getId());
 		model.put("commodity", commodity);
 		model.put("featured", featured);
-
+		if (user!= null) {
+			model.put("collect", collectService.check(id, user.getId()));
+		}
 		//标志产品
 		model.put("CURRENT_PAGE","commodity");
 		return "product";

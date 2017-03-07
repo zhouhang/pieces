@@ -121,6 +121,7 @@
 .payment .cont .bill{display:none;margin:30px 0 0;padding-top:30px;border-top:1px solid #e7e7e7;color:#999;}
 .payment .cont .bill select{width:220px;height:40px;line-height:40px;margin-right:10px;}
 .payment .cont .bill label{display:inline-block;width:86px;}
+.payment .cont .bill p{margin-top:20px;}
 .payment .cont .error{color:#c3272b;}
 .pay-modal{line-height:24px;padding:0 40px;}
 .pay-modal .hd{padding:35px 0 4px 34px;font-size:16px;}

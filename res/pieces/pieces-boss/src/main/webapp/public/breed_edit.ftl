@@ -18,6 +18,7 @@
                     <dt>品种信息</dt>
                     <dd>
                         <a class="curr" href="/breed/list">基本信息</a>
+                        <a href="/breed/commodity?breeId=${breed.id }">商品排序</a>
                     </dd>
                 </dl>
             </div>

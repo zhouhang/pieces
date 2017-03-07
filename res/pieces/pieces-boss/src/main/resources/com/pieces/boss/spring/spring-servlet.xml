@@ -171,6 +171,7 @@
 		</mvc:resource-chain>
 	</mvc:resources>
 	<mvc:resources mapping="/images/**" location="/assets/images/" />
+	<mvc:resources mapping="/file/**" location="/assets/file/" />
 	<mvc:resources mapping="/fonts/**" location="/assets/fonts/" />
 	<mvc:resources mapping="/robots.txt" location="/assets/robots.txt" />
 
@@ -179,11 +180,9 @@
 	<bean id="logAspect" class="com.pieces.tools.log.aop.LogAspect"></bean>
 	<aop:config>
 		<aop:pointcut id="asp" expression="execution(* com.pieces.boss.controller.*.*(..))"/>
-
 		<aop:aspect id="b" ref="logAspect"><!--调用日志类-->
 			<aop:around method="doAroundMethodCall" pointcut-ref="asp" />
 		</aop:aspect>
-
 	</aop:config>
 
 </beans>

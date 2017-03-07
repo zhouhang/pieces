@@ -94,12 +94,9 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
             commodityDao.create(commodity);
             LogAuditing.audit(null,commodity,"商品","新增商品");
         }
-        //如果更改商品状态为不显示则删除索引
-        if(commodity.getStatus()==0){
-            commoditySearchService.deleteByCommodityId(commodity.getId());
-        }else{
-            commoditySearchService.save(commodity);
-        }
+
+         commoditySearchService.save(commodity);
+
         return commodity.getId();
     }
 
@@ -196,6 +193,14 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
     @Override
     public List<CommodityVo> findCommodityByBreedId(Integer id) {
     	return FileUtil.convertAbsolutePathToUrl(commodityDao.findCommodityByBreedId(id), param);
+    }
+
+    @Override
+    public List<CommodityVo> queryCommodityByBreedId(Integer id) {
+        CommodityVo vo = new CommodityVo();
+        vo.setCategoryId(id);
+        vo.setSort(0);
+        return commodityDao.findByParam(vo);
     }
 
     @Override
@@ -334,5 +339,16 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         return FileUtil.convertAbsolutePathToUrl(commodityDao.findByIds(ids),param);
     }
 
+    @Override
+    @Transactional
+    public Integer batchUpdate(List<Commodity> list) {
 
+        Integer result =  commodityDao.batchUpdate(list);
+
+        for(Commodity commodity: list){
+            commoditySearchService.save(commodity);
+        }
+        //TODO 更新完成后要更新 ES 里面的商品排序信息
+        return result;
+    }
 }

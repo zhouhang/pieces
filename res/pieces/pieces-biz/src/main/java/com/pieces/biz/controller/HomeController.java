@@ -165,11 +165,9 @@ public class HomeController extends BaseController{
 				if(!collection.isEmpty()){
 					map.put(letter,new ArrayList<CategoryVo>(collection));
 				}
-
 			}
 			categoryVo.setCategoryPinyin(map);
 		}
-
 	}
 
 	/**

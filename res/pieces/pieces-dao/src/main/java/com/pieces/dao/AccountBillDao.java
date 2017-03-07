@@ -24,4 +24,6 @@ public interface AccountBillDao extends ICommonDao<AccountBill>{
     public Integer getNotHandleCount();
 
     public List<Integer> getNotHandleIds();
+
+    List<AccountBillVo> findUnpaidBill();
 }

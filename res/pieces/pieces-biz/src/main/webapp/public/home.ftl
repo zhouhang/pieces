@@ -6,10 +6,13 @@
     <meta name="description" content="上工好药sghaoyao.com - 专业的中药饮片采购平台，整合中药饮片各品种优势货源，为合作伙伴提供安全有保障、高效周到、高性价比的服务，采购饮片就来上工好药。" />
     <meta name="Keywords" content="中药,饮片,中药饮片,饮片采购,饮片批发,精致饮片,毒性饮片,药食同源,炮制,古法炮制,上工好药" />
 </head>
-<body  class="bg-gray">
+<body class="bg-gray">
 
 <#include "./inc/header.ftl"/>
-
+<script>
+    // 开启页面搜索悬浮
+    var searchFixed = true;
+</script>
 
 <!-- banner start -->
 <div class="banner-slider" id="jslide">
@@ -24,38 +27,19 @@
     </div>
     <div class="hd"></div>
     <div class="side-notice">
+        <div class="quick">
+            <a href="/commodity/index" class="btn btn-red"><i class="fa fa-question-circle"></i>我要询价</a>
+            <span>挑选商品，提交询价单</span>
+            <hr />
+            <a href="/center/enquiry/record" class="btn btn-primary"><i class="fa fa-cart"></i>我要下单</a>
+            <span>登录，在询价记录中下单</span>
+        </div>
         <h3>服务公告</h3>
         <ul>
             <#list articles as article>
                 <li><a href="news/${article.id!}">${article.title!}</a></li>
             </#list>
         </ul>
-
-        <h3>知名厂家</h3>
-        <div class="brands" id="jbrands">
-            <div class="inner">
-                <div class="col" index="0">
-                    <#list AD_MANUFACTURERS as ad>
-                        <#if ad_index<4>
-                        <a target="_blank" href="${ad.link!"#!"}"><img src="${ad.pictureUrl!}" alt="${ad.title!}"></a>
-                        </#if>
-                    </#list>
-                </div>
-                <#if (AD_MANUFACTURERS?size>4)>
-                    <div class="col" index="1">
-                        <#list AD_MANUFACTURERS as ad>
-                            <#if (ad_index>3)&&ad_index<8>
-                                <a href="${ad.link!"#!"}"><img src="${ad.pictureUrl!}" alt="${ad.title!}"></a>
-                            </#if>
-                        </#list>
-                    </div>
-                </#if>
-
-            </div>
-            <div class="ctrl">
-                <i class="prev">&lt;</i><i class="next">&gt;</i>
-            </div>
-        </div>
     </div>
 </div><!-- banner end -->
 
@@ -97,7 +81,7 @@
                             </#if>
                         </ul>
                         <div class="img">
-                            <img src="images/blank.gif" alt="${category.title!}" class="lazyload" data-original="${category.pictureUrl!}" width="200" height="270">
+                            <img src="images/blank.gif" alt="${category.title!}" class="lazyload" data-original="${urls.getForLookupPath(category.pictureUrl)}" width="200" height="270">
                         </div>
                     </div>
 
@@ -139,8 +123,6 @@
 
 
 <#include "./inc/footer.ftl"/>
-
-<script src="${urls.getForLookupPath('/js/jquery.nav.js')}"></script>
 <script src="${urls.getForLookupPath('/js/index_2016.js')}"></script>
 </body>
 </html>

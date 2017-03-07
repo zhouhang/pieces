@@ -27,7 +27,7 @@
                     <strong class="h2">支付货款</strong>
                     <label class="checked"><input type="radio" name="type" value="alipay" checked><img height="38" src="images/alipay.png" alt=""><i></i></label>
                     <!--<label><input type="radio" name="type" value="wxpay"><img height="38" src="images/wxpay.png" alt=""><i></i></label>-->
-                    <label><input type="radio" name="type" value="bank">线下银行转账<i></i></label>
+                    <label><input type="radio" name="type" value="bank">银行转账<i></i></label>
                 </div>
                 <div class="bank">
                 <#list payAccountList as payAccount>
@@ -74,9 +74,8 @@
     </div>
     </script>
 <#include "./inc/footer.ftl"/>
-<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 <script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
-<script src="/js/validator/jquery.validator.js?local=zh-CN"></script>
+<script src="js/validator/jquery.validator.js?local=zh-CN"></script>
 <script src="${urls.getForLookupPath('/js/croppic.min.js')}"></script>
 <script src="${urls.getForLookupPath('/js/jquery.form.js')}"></script>
 <script>

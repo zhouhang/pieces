@@ -1,5 +1,6 @@
 package com.pieces.dao.model;
 
+import com.google.common.base.Strings;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -68,6 +69,9 @@ public class Commodity  implements Serializable {
 	private Integer status;
 	
 	private Date createTime;
+
+	// 商品排序 越大越靠前
+	private Integer sort;
 	
 	public Commodity(){}
 	
@@ -96,6 +100,9 @@ public class Commodity  implements Serializable {
 	}
 	
 	public String getTitle() {
+		if (Strings.isNullOrEmpty(title)){
+			title = name +" 无硫";
+		}
 		return title;
 	}
 
@@ -188,5 +195,12 @@ public class Commodity  implements Serializable {
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-	
+
+	public Integer getSort() {
+		return sort;
+	}
+
+	public void setSort(Integer sort) {
+		this.sort = sort;
+	}
 }

@@ -8,8 +8,11 @@
 </head>
 
 <body>
-    <#include "./inc/header.ftl"/>
-
+<#include "./inc/header.ftl"/>
+<script>
+    // 开启页面搜索悬浮
+    var searchFixed = true;
+</script>
 <div class="main-body">
 
     <div class="wrap">
@@ -47,7 +50,10 @@
                             <td>${commodityDoc.spec!}</td>
                             <td>${commodityDoc.originOf!}</td>
                             <td>${commodityDoc.executiveStandard!}</td>
-                            <td><a href="/center/enquiry/index?commodityId=${commodityDoc.id!}" class="btn btn-white btn-quote j_pop_login">立即询价</a></td>
+                            <td>
+                                <button data-s="${commodityDoc.id}|${commodityDoc.name}|${commodityDoc.level}" class="btn btn-white btn-cart">加入询价单</button>
+                                <a href="/commodity/${commodityDoc.id }" class="link">查看详情</a>
+                            </td>
                         </tr>
                     </#list>
                 <#else>
@@ -73,6 +79,48 @@
 </div>
     <#include "./inc/helper.ftl"/>
     <#include "./inc/footer.ftl"/>
-    <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
+    <script>
+        var _global = {
+            fn: {
+                init: function(){
+                    this.addToCart();
+                    // this.skip();
+                },
+                addToCart: function() {
+                    // 加入询价单
+                    $('.fa-pro-list').on('click', '.btn-white', function() {
+                        var data = ($(this).data('s') || '').split('|'); // data-s = "id|name|norms"
+                        if (data.length === 3) {
+                            shopcart.addToCart(data);
+                            $(this).addClass('btn-gray').prop('disabled', true).html('已加入询价单');
+                        } else {
+                            layer.alert('加入询价单失败',{icon: 2});
+                        }
+                        return false;
+
+                    }).find('.btn-white').each(function() {
+                        var data = ($(this).data('s') || '').split('|'),
+                                id = data[0];
+
+                        if (id != '' && shopcart.isInCart(id)) {
+                            $(this).addClass('btn-gray').prop('disabled', true).html('已加入询价单');
+                        } else {
+                            $(this).prop('disabled', false).html('加入询价单');
+                        }
+                    })
+                },
+                skip: function() {
+                    // 页面跳转
+                    $('.fa-pro-list').on('click', 'tr', function() {
+                        window.location.href = $(this).find('td:eq(0)').find('a')[0].href;
+                    })
+                }
+
+            }
+        }
+        $(function() {
+            _global.fn.init();
+        })
+    </script>
 </body>
 </html>

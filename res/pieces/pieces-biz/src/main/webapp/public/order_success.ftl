@@ -16,9 +16,6 @@
         </div>
         <form action="" id="myform" method="post">
             <input type="hidden" name="orderId" value="${order.id!}">
-            <input type="hidden" name="orderId" value="${orderForm.id!}">
-            <input type="hidden" name="userId" value="${orderForm.userId!}">
-            <input type="hidden" name="agentId" value="${orderForm.agentId}">
             <input type="hidden" name="token" value="${token!}">
         <div class="cont">
             <div class="info">
@@ -33,7 +30,6 @@
                 <label class="checked"><input type="radio" name="type" value="alipay" checked><img height="38" src="images/alipay.png" alt=""><i></i></label>
                 <!--<label><input type="radio" name="type" value="wxpay"><img height="38" src="images/wxpay.png" alt=""><i></i></label>-->
                 <label><input type="radio" name="type" value="bank">银行转账<i></i></label>
-                <label><input type="radio" name="type" value="bill">账期支付<i></i></label>
             </div>
 
             <div class="bank">
@@ -54,8 +50,8 @@
                     <option value="1">1个月</option>
                     <option value="3">3个月</option>
                 </select>
-                <label>账期支付需要通过平台审核</label>
                 <span class="error"></span>
+                <p>账期支付需要通过平台审核</p>
             </div>
 
             <div class="button">
@@ -85,7 +81,6 @@
     </div>
     </script>
 <#include "./inc/footer.ftl"/>
-<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 <script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
 <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
 <script src="${urls.getForLookupPath('/js/croppic.min.js')}"></script>

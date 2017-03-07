@@ -10,9 +10,9 @@
  <bean id="bossRealm" class="com.pieces.boss.shiro.BossRealm">
      <property name="cachingEnabled" value="true"/>
      <property name="authenticationCachingEnabled" value="false"/>
-     <property name="authenticationCacheName" value="authenticationCache"/>
+     <property name="authenticationCacheName" value="${pieces.shiro.defaultRealm.authenticationCacheName}"/>
      <property name="authorizationCachingEnabled" value="true"/>
-     <property name="authorizationCacheName" value="authorizationCache"/>
+     <property name="authorizationCacheName" value="${pieces.shiro.defaultRealm.authorizationCacheName}"/>
      <property name="credentialsMatcher" ref="credentialsMatcher"/>
  </bean>
 

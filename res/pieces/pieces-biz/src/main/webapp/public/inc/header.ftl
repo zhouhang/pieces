@@ -2,19 +2,30 @@
 
 <!-- header start -->
 <div class="header">
-    <div class="wrap">
-        <div class="logo">
-            <a href="/">上工好药首页</a>
-        </div>
-        <div class="search">
-            <div class="form">
-                <form id="_search_form" action="commodity/search" method="get">
-                    <input id="_search_ipt" class="ipt" name="keyword"  placeholder="请输入原药名称或饮片名称" value="${keyword!}" type="text">
-                    <button  class="btn" type="submit">搜索</button>
-                </form>
+    <div class="inner">
+        <div class="wrap">
+            <div class="logo">
+                <a href="/">上工好药首页</a>
             </div>
-            <div class="hotwords">
-                <@search_keyword />
+         <#if !cartHide??>
+            <div class="cart">
+                <div class="hd">
+                    <span>我的询价单</span>
+                    <em class="count">0</em>
+                </div>
+                <div class="bd"></div>
+            </div>
+             </#if>
+            <div class="search">
+                <div class="form">
+                    <form id="_search_form" action="commodity/search" method="get">
+                        <input id="_search_ipt" class="ipt" name="keyword"  placeholder="请输入原药名称或饮片名称" value="${keyword!}" type="text">
+                        <button  class="btn" type="submit">搜索</button>
+                    </form>
+                </div>
+                <div class="hotwords">
+                    <@search_keyword />
+                </div>
             </div>
         </div>
     </div>

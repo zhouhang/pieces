@@ -63,4 +63,10 @@ public interface AccountBillService extends ICommonService<AccountBill>{
 
     public List<Integer> getNotHandleIds();
 
+    /**
+     * 查询用户未付款的账单且距离到期时间为 1天和7天的.
+     * @return
+     */
+    List<AccountBillVo> findUnpaidBill();
+
 }

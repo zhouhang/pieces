@@ -186,6 +186,7 @@ vertical-align:middle;
 .chart a:hover{color:#155ee5;}
 .chart .link{color:#666;}
 .chart .link:hover{color:#333;}
+.chart .tl em{margin-left:5px;padding:1px 3px;background:#f00;color:#ff9;border-radius:3px;}
 .chart .tl{text-align:left;padding-left:27px;}
 .chart .tr{text-align:right;padding-right:10px;}
 .chart .caption{}
@@ -244,7 +245,7 @@ vertical-align:middle;
 
 #imgCropWrap{display:none;}    
 #imgCrop{display:block !important;}    
-#imgCrop img{cursor:pointer;}    
+#imgCrop img{cursor:pointer;}
 
 /* 新增商品 */
 .goods-img{position:relative;width:98px;height:98px;line-height:98px;margin-right:20px;border:1px dashed #ccc;background:#fff url(../images/plus.png) no-repeat 50%;cursor:pointer;text-align:center;display:inline-block;}
@@ -292,6 +293,7 @@ vertical-align:middle;
 .user-info{margin-bottom:40px;border:1px solid #e7e7e7;background:#f0eff5;}
 .user-info:last-child{margin-bottom:0;}
 .user-info h3{padding:13px 30px;font-weight:700;text-align:left;border-bottom:1px solid #e7e7e7;background:#fff;}
+.user-info h3 span{font-size:12px;font-weight:400;color:#666;}
 .user-info .info{padding:35px 30px;}
 .user-info .info table{width:auto;}
 .user-info .info tbody:nth-child(n+1){margin-top:20px;}
@@ -432,6 +434,7 @@ vertical-align:middle;
 .create-order .side .item .bd .w3{width:65px;}
 .create-order .side .item .bd .w4{width:53px;}
 .create-order .main{margin-left:320px;}
+.create-enquiry .main{margin-left:0;}
 .create-order .main .chart th{padding:10px 0;font-size:12px;}
 .create-order .main .chart td{padding:0;background:#fff;}
 .create-order .main .chart td .ipt-wrap{position:relative;margin:0;padding:0;border:none;}
@@ -441,6 +444,8 @@ vertical-align:middle;
 .create-order .main .chart td a{margin:0 4px;}
 .create-order .main .chart tfoot td{padding:10px 20px;background:#f0eff5;border-color:#e7e7e7;}
 .create-order .main .chart-info{margin-bottom:20px;}
+.create-order .main .ipt-tr{margin-top:10px;text-align:right;}
+.create-order .main .ipt-tr .ipt{width:140px;}
 .create-order .main .fa-form{padding:10px 20px;color:#999;font-size:12px;border:1px solid #e7e7e7;}
 .create-order .main .fa-form .group{padding-left:70px;}
 .create-order .main .fa-form .cnt{min-height:50px;height:auto;}
@@ -449,7 +454,7 @@ vertical-align:middle;
 .create-order .main .fa-form .ipt{padding:4px 9px;}
 .create-order .main .fa-form .ipt-mul{width:400px;height:60px;}
 .create-order .main .fa-form .ipt-note{width:748px;height:90px;}
-.create-order .main .choose{margin:-20px 0 30px;padding:10px 0;color:#999;font-size:12px;border-bottom:1px solid #e7e7e7;}
+.create-order .main .choose{margin:-10px 0 30px;padding:10px 0;color:#999;font-size:12px;border-bottom:1px solid #e7e7e7;}
 .create-order .main .choose select{width:400px;height:30px;line-height:30px;font-size:12px;color:#999;}
 .create-order .main .summary .ipt{width:100px;padding:1px 9px;}
 .create-order .main .submit{padding:0 20px 0 0;text-align:right;}

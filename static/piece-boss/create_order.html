@@ -371,7 +371,7 @@
                 </div>
 
                 <div class="submit">
-                    <button class="btn btn-red" type="button">提交订单</button>
+                    <button class="btn btn-red" type="submit">提交订单</button>
                 </div>
 
             </div>
@@ -420,13 +420,26 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/laydate/laydate.js"></script>
     <script src="js/layer/layer.js"></script>
+    <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
     <script>
     var _global = {
         v: {},
         fn: {
             init: function() {
+                this.formValidate();
                 this.myformEvent();
                 this.addGoodsToOrder();
+            },
+            formValidate: function() {
+                $('#myform').validator({
+                    fields : {
+                       // jfreightPrice : '运费: required;',
+                        consignee : '收货人: required',
+                        tel : '手机号: required; mobile',
+                        area : '所在地区: required',
+                        detail : '详细地址: required'
+                    }
+                });
             },
             myformEvent: function() {
                 var $body        = $('body');
@@ -480,9 +493,13 @@
                 // 商品名联想
                 $myform.on({
                     'click': function(event) {
-                        $(this).after($suggestions);
+                        // $(this).after($suggestions);
                         // self.getKeywords(this.value); // 获取焦点时查询一次
                         event.stopPropagation();
+                    },
+                    'focus': function() {
+                        $(this).after($suggestions);
+                        $suggestions.find('.group').length > 1 && $suggestions.show();
                     },
                     'input': function() {
                         self.getKeywords(this.value);                           
@@ -624,12 +641,12 @@
             toHtml: function(json) {
                 var modal = [];
                 $.each(json, function(i, item) {
-                    var val = item.goodsName + '-' + item.standard + '-' + item.level + '-' + item.origin;
+                    var val = item.name + '-' + item.spec + '-' + item.level + '-' + item.originOf;
                     modal.push('<div class="group" data-val="', val, '">');
-                    modal.push(     '<span class="w1">', item.goodsName, '</span>');
-                    modal.push(     '<span class="w2">', item.standard, '</span>');
+                    modal.push(     '<span class="w1">', item.name, '</span>');
+                    modal.push(     '<span class="w2">', item.spec, '</span>');
                     modal.push(     '<span class="w3">', item.level, '</span>');
-                    modal.push(     '<span class="w4">', item.origin, '</span>');
+                    modal.push(     '<span class="w4">', item.originOf, '</span>');
                     modal.push('</div>');
                 })
                 $('#suggestions .bd').empty().html(modal.join('')).parent().show();

@@ -91,6 +91,12 @@
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-quartz</artifactId>
+			<!--<exclusions>-->
+				<!--<exclusion>-->
+					<!--<groupId>org.quartz-scheduler</groupId>-->
+					<!--<artifactId>quartz</artifactId>-->
+				<!--</exclusion>-->
+			<!--</exclusions>-->
 		</dependency>
 		<dependency>
 			<groupId>commons-collections</groupId>

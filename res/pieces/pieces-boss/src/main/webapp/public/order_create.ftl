@@ -100,9 +100,9 @@
                                 <th>规格等级</th>
                                 <th width="100">产地</th>
                                 <th width="90">数量（公斤）</th>
-                                <th width="120">指导价（元/公斤）</th>
-                                <th width="100">合同价（元/公斤）</th>
-                                <th width="120">合同价小计（元）</th>
+                                <th width="120">销售价（元/公斤）</th>
+                                <th width="100">开票价（元/公斤）</th>
+                                <th width="120">开票价小计（元）</th>
                                 <th width="100">操作</th>
                             </tr>
                         </thead>
@@ -390,6 +390,15 @@
                     'focus': function() {
                         $(this).after($suggestions);
                         $suggestions.find('.group').length > 1 && $suggestions.show();
+                        // 关键字自动填充
+                        $suggestions.on('click', '.bd .group', function() {
+                            var data = $(this).data('val').split('-');
+                            $suggestions.prev().val(data[0])
+                                    .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
+                                    .closest('td').next().find('.ipt').val(data[2]).trigger('focus').end()
+                                    .closest('td').next().find('.ipt').val(data[3]).trigger('focus');
+                            $suggestions.hide();
+                        })
                     },
                     'input': function() {
                         self.getKeywords(this.value);                           
@@ -403,16 +412,7 @@
                 $suggestions.on('click', function(event) {
                     event.stopPropagation();
                 })
-
-                // 关键字自动填充
-                $suggestions.on('click', '.bd .group', function() {
-                    var data = $(this).data('val').split('-');
-                    $suggestions.prev().val(data[0])
-                    .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
-                    .closest('td').next().find('.ipt').val(data[2]).trigger('focus').end()
-                    .closest('td').next().find('.ipt').val(data[3]).trigger('focus');
-                    $suggestions.hide();
-                })
+                
 
                 // 新增一行
                 $myform.on('click', '.add', function() {

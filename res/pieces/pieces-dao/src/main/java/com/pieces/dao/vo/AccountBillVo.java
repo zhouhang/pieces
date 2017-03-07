@@ -23,6 +23,9 @@ public class AccountBillVo extends AccountBill{
 
     private String memberName;
 
+    // 联系人电话
+    private String contactMobile;
+
 
 
     private List<PayRecordVo> payRecordVoList;
@@ -102,5 +105,13 @@ public class AccountBillVo extends AccountBill{
 
     public void setMemberName(String memberName) {
         this.memberName = memberName;
+    }
+
+    public String getContactMobile() {
+        return contactMobile;
+    }
+
+    public void setContactMobile(String contactMobile) {
+        this.contactMobile = contactMobile;
     }
 }

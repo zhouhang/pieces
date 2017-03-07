@@ -30,7 +30,7 @@
                     <label class="checked"><input type="radio" name="type" value="alipay" checked><img height="38" src="images/alipay.png" alt=""><i></i></label>
                     <#--<label><input type="radio" name="type" value="wxpay"><img height="38" src="images/wxpay.png" alt=""><i></i></label>-->
                     <label><input type="radio" name="type" value="bank">银行转账<i></i></label>
-                    <#--<label><input type="radio" name="type" value="bill">账期支付<i></i></label>-->
+                    <label><input type="radio" name="type" value="bill">账期支付<i></i></label>
                 </div>
 
                 <div class="bank">
@@ -48,12 +48,10 @@
                     <select name="billtime" id="billtime">
                         <option value="">请选择</option>
                         <option value="1">1个月</option>
-                        <option value="2">2个月</option>
                         <option value="3">3个月</option>
-                        <option value="6">6个月</option>
-                        <option value="12">1年</option>
                     </select>
                     <span class="error"></span>
+                    <p>账期支付需要通过平台审核</p>
                 </div>
                 <div class="button">
                     <button type="button" class="btn btn-red" id="stageSubmit">去付款</button>
@@ -82,7 +80,6 @@
     </div>
     </script>
 <#include "./inc/footer.ftl"/>
-<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 <script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
 <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
 <script src="${urls.getForLookupPath('/js/croppic.min.js')}"></script>

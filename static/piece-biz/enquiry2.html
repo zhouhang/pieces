@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>上工之选</title>
+    <meta name="renderer" content="webkit" />
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+    <!-- site-nav end -->
+    <div class="site-nav">
+        <div class="wrap">
+            <p class="fl">欢迎光临 上工之选饮片采购平台！</p>
+            <ul class="fr">
+                <li><a href="login.html">登录</a> | <a href="register.html">注册</a></li>
+                <li><a href="helper.html">帮助中心</a></li>
+                <li><a href="sitemap.html">网站导航</a></li>
+            </ul>
+        </div>
+    </div><!-- site-nav end -->
+
+
+    <!-- header start -->
+    <div class="header">
+        <div class="wrap">
+            <div class="logo">
+                <a href="home.html">饮片B2B首页</a>
+            </div>
+            <div class="cart">
+                <div class="hd">
+                    <i class="fa fa-cartlist"></i>
+                    <span>我的购物车</span>
+                    <em class="count">0</em>
+                </div>
+                <div class="bd"></div>
+            </div>
+            <div class="search">
+                <div class="form">
+                <form action="" id="_search_form">
+                    <input class="ipt" name="" id="_search_ipt" placeholder="输入关键字" value="" type="text">
+                    <button class="btn" type="button">搜索</button></form>
+                </div>
+                <div class="hotwords">
+                    <a class="hot" href="#!">金樱子肉</a>
+                    <a href="#!">荆芥</a>
+                    <a href="#!">九香虫</a>
+                    <a href="#!">韭菜子</a>
+                    <a href="#!">桔梗</a>
+                    <a href="#!">降香</a>
+                    <a href="#!">炒蒺藜</a>
+                    <a href="#!">急性子</a>
+                    <a href="#!">焦栀子</a>
+                    <a href="#!">煅珍珠母</a>
+                    <a href="#!">鸡冠花</a>
+                </div>
+            </div>
+        </div>
+    </div><!-- header end -->
+
+
+    <!-- nav start -->
+    <div class="nav">
+        <div class="wrap">
+            <div class="cat">
+                <div class="hd">商品分类</div>
+                <div class="bd" id="jcat"></div>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li class="current"><a href="/"><em>首页</em></a></li>
+                    <li><a href="product_list.html">产品</a></li>
+                    <li><a href="prescription_list.html">厂家</a></li>
+                    <li><a href="prescription_list.html">经方</a></li>
+                    <li><a href="prescription_list.html">功效</a></li>
+                </ul>
+            </div>
+            <div class="plus">
+                <a href="#" class="btn btn-gray"><i class="fa fa-question-circle"></i>快速询价</a>
+            </div>
+        </div>
+    </div><!-- nav end -->
+    
+    
+    <div class="main-body">
+        <div class="wrap">
+
+            <div class="fa-msg">
+                <i class="fa fa-prompt"></i>
+                <span>您还没有登录！登录后订货单的商品将保存到您的账号中。</span>
+                <a class="btn-ghost" href="/center/certificate/stepOne">立即登录</a>
+            </div>
+            
+
+            <div class="enquiry" id="app">
+                <div class="hd">询价单</div>
+                
+                <div class="list">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th width="200">商品名称</th>
+                                <th width="160">片型</th>
+                                <th width="500">规格等级</th>
+                                <th width="200">原药产地</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+
+                    <div class="tf">
+                        共 <em class="count" id="c_count">0</em> 件商品 <button type="button" class="btn btn-red" id="submit">询价</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>              
+
+    <div class="helper">
+        <div class="wrap">
+            <div class="inner">
+                <dl>
+                    <dt>新手指南</dt>
+                    <dd><a href="#">用户注册</a></dd>
+                    <dd><a href="#">注册协议</a></dd>
+                    <dd><a href="#">视频介绍</a></dd>
+                </dl>
+                <dl>
+                    <dt>产品询价</dt>    
+                    <dd><a href="#">寻找商品</a></dd>
+                    <dd><a href="#">在线询价</a></dd>
+                    <dd><a href="#">一键下单</a></dd>
+                </dl>
+                <dl>
+                    <dt>交期管理</dt>   
+                    <dd><a href="#">验货签收</a></dd>
+                    <dd><a href="#">交货周期</a></dd>
+                    <dd><a href="#">用户确认</a></dd>
+                </dl>
+                <dl>
+                    <dt>增值服务</dt>   
+                    <dd><a href="#">关于发票</a></dd>
+                    <dd><a href="#">统计分析</a></dd>
+                    <dd><a href="#">在线对账</a></dd>
+                </dl>
+                <dl>
+                    <dt>服务说明</dt>   
+                    <dd><a href="#">隐私声明</a></dd>
+                    <dd><a href="#">产权保护</a></dd>
+                    <dd><a href="#">法律声明</a></dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <!-- footer start -->
+    <div class="footer">
+        <div class="wrap">
+            <div class="links">
+                <a href="#">关于上工之选</a>
+                <i>|</i>
+                <a href="#">联系我们</a>
+                <i>|</i>
+                <a href="#">法律申明</a>
+                <i>|</i>
+                <a href="#">建议与投诉</a>
+                <i>|</i>
+                <a href="#">友情链接</a>
+                <i>|</i>
+                <a href="#">站长统计</a>
+            </div>
+            <div class="copyright">
+                <p> 电信与信息服务业务经营许可证号：皖B20140001  备案号：皖ICP备13006003号  互联网药品交易服务资格证：皖B20130001  互联网药品信息服务资格证：（皖）-经营性-2016-0001</p>
+                <p>网站商务合作邮箱：bd@copy;yaoyy.com  客户服务企业邮箱：service@copy;yaoyy.com  Copyright &copy; 2015 – 2020 上工之选 All Rights Reserved</p>
+            </div>
+        </div>
+    </div><!-- footer end -->
+
+    <!-- start 联系方式 -->
+    <div class="fa-form fa-form-layer" id="jcontact">
+        <form action="">
+            <div class="group">
+                <div class="txt">
+                    <span>您的姓名：</span>
+                </div>
+                <div class="cnt">
+                    <input type="text" name="username" id="username" class="ipt" autocomplete="off" placeholder="">
+                    <span class="error"></span>
+                </div>
+            </div>
+
+            <div class="group">
+                <div class="txt">
+                    <span>手机号码：</span>
+                </div>
+                <div class="cnt">
+                    <input type="text" name="mobile" id="mobile" class="ipt" style="width:189px;" autocomplete="off" placeholder="">
+                    <button type="button" class="btn btn-gray" id="send">获取验证码</button>
+                    <span class="error"></span>
+                </div>
+            </div>
+            <div class="group">
+                <div class="txt">
+                    <span>验证码：</span>
+                </div>
+                <div class="cnt">
+                    <input type="text" name="code" id="code" class="ipt" autocomplete="off" placeholder="">
+                    <span class="error"></span>
+                </div>
+            </div>
+
+            <div class="button">
+                <button type="submit" class="btn btn-red submit">保存</button>
+                <button type="reset" class="btn btn-gray cancel">取消</button>
+            </div>
+        </form>
+    </div><!-- end 新增收货地址 -->
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
+    <script>
+
+
+        var _global = {
+            fn: {
+                init: function() {
+                    // this.initCart(); // 交由common.js调用
+                    this.bindEvent();
+                },
+                initCart: function(data) {
+                    this.toHtml(data);
+                },
+                toHtml: function(data) {
+                    var that = this,
+                        model = [];
+
+                    if (data.length > 0) {
+                        $.each(data, function(i, item) {
+                            model.push('<tr id="tr', item.id, '">');
+                            model.push('<td><a href="' , item.url ,'" class="c-blue">', item.name , '</a></td>');
+                            model.push('<td>', item.spec, '</td>');
+                            model.push('<td>', item.level, '</td>');
+                            model.push('<td>', item.origin, '</td>');
+                            model.push('<td><a href="javascript:;" data-id="', item.id, '" class="del">删除</a></td>');
+                            model.push('</tr>');
+                        })
+                        $('.list').find('.count').html(data.length);
+                        $('.list').find('tbody').html(model.join(''));
+                    } else {
+                        that.empty();   // 购物车为空
+                    }
+                },
+                empty: function() {
+                    var title = this.isLogin ? '订货单内暂时没有商品，去挑选需要的商品吧' : '订货单内暂时没有商品，登录后将显示您之前加入的商品',
+                        model = [];
+
+                    model.push('<div class="fa-pro-empty">');
+                    model.push('<div class="fa fa-frown"></div>');
+                    model.push('<div class="text">');
+                    model.push('<h1 class="title">', title, '</h1>');
+                    model.push('<dl><dd>');
+                    !this.isLogin && model.push('<a href="login.html" class="btn btn-red">登录</a>');
+                    model.push('<a href="product_list.html">挑选商品&gt;</a>');
+                    model.push('</dd></dl></div></div>');
+                    $('.main-body').html(model.join(''));
+                },
+                bindEvent: function() {
+                    var that = this,
+                        $header = $('.header'),
+                        $list = $('.list'),
+                        $contact = $('#jcontact');
+
+                    // 询价
+                    $('#submit').on('click', function() {
+                        if (that.isLogin) {
+                            // 已登录
+                            // window.location.href = '';
+                        } else {
+                            // 未登录
+                            layer.open({
+                                area: ['540px'],
+                                type: 1,
+                                moveType: 1,
+                                content: $contact,
+                                title: '联系方式'
+                            });
+                        }
+                    })
+
+                    // 关闭弹层
+                    $contact.on('click', '.cancel', function() {
+                        layer.closeAll();
+                    })
+
+                    $contact.validator({
+                        fields : {
+                            username : '姓名: required; ',
+                            mobile : '手机号码: required; mobile',
+                            code : '验证码: required'
+                        },
+                        valid: function(form) {
+                            var myfromValid = this;
+                            if ( $(form).isValid() ) {
+                                window.location.href = 'message_enquiry-2.html';
+                            } 
+                        }
+                    });
+
+                    // 删除商品
+                    $list.on('click', '.del', function() {
+                        var $tr = $(this).closest('tr'),
+                            id = $(this).data('id');
+
+                        layer.confirm('您确定要将该商品从购物清单中删除吗？', {icon: 3, title:'提示'}, function(index){
+                            layer.close(index);
+                            shopcart.delCart(id);
+                            if (shopcart.count < 1) {
+                                that.empty();
+                            } else {
+                                $tr.remove();
+                            }
+                            $("#c_count").html(shopcart.count);
+                            $header.find('.fa-times').each(function() {
+                                if (id === $(this).data('id')) {
+                                    $(this).closest('li').remove();
+                                }
+                            })
+                        });
+                    })
+
+                    // 删除购物车商品
+                    $header.on('click', '.fa-times', function() {
+                        var id = $(this).data('id');
+                        $('#tr' + id).remove();
+                        if (shopcart.count < 1) {
+                            that.empty();
+                        }
+                    })
+
+                    this.SMSCode();
+                },
+                // 短信验证码
+                SMSCode: function() {
+                    var $send = $('#send'),
+                        $msg = $send.next(),
+                        self = this;
+                        wait = 0,
+                        txt = ' 秒后重试';
+
+                    var showMsg = function(msg) {
+                        if (msg) {
+                            $msg.html(msg).show();
+                        } else {
+                            $msg.hide();
+                        }
+                    }
+
+                    var lock = function() {
+                        $send.text(wait + txt).prop('disabled', true);
+                        wait--;
+                        if (wait === 0) {
+                            $send.text("获取验证码").prop('disabled', false);
+                        } else {
+                            setTimeout(function() {
+                                lock(wait);
+                            }, 1e3);
+                        }
+                    }
+
+                    var sendMSM = function() {
+                        $.ajax({
+                            url : 'json/getMobileCode.php',
+                            dataType: 'json',
+                            beforeSend: function() {
+                                $send.text('发送中...').prop('disabled', true);
+                            },
+                            success: function(data) {
+                                if (data.status === 'y') {
+                                    lock();
+                                    showMsg();
+                                } else {
+                                    wait = 0;
+                                    $send.text('获取验证码').prop('disabled', false);
+                                    showMsg('发送失败');
+                                }
+                            },
+                            error: function() {
+                                wait = 0;
+                                $send.text('获取验证码').prop('disabled', false);
+                            }
+                        })
+                    }
+                    $send.prop('disabled', false).on('click', function() {
+                        $('#mobile').isValid(function(){
+                            if(wait === 0) {
+                                wait = 60; // 60秒倒计时
+                                sendMSM();
+                            }
+                        });
+                    })
+                }
+            }
+        }
+
+        $(function() {
+            _global.fn.init();
+        })
+    </script>
+</body>
+</html>

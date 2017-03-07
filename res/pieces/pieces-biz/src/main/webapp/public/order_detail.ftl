@@ -85,9 +85,9 @@
                             <th width="100">产地</th>
                             <th width="90">数量<span>（公斤）</span></th>
                         <#if user_session_biz?? && user_session_biz.type == 2>
-                            <th width="80">指导价<span>（元/公斤）</span></th>
-                            <th width="80">合同价<span>（元/公斤）</span></th>
-                            <th width="80">合同价小计<span>（元）</span></th>
+                            <th width="80">销售价<span>（元/公斤）</span></th>
+                            <th width="80">开票价<span>（元/公斤）</span></th>
+                            <th width="80">开票价小计<span>（元）</span></th>
                         <#else >
                             <th width="100">单价<span>（元/公斤）</span></th>
                             <th width="130">小计<span>（元）</span></th>
@@ -202,8 +202,6 @@
     </div><!-- end 新增发票 -->
     
 <#include "./inc/footer.ftl"/>
-
-<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
 <script src="${urls.getForLookupPath('/js/jquery.form.js')}"></script>
 <script src="${urls.getForLookupPath('/js/jquery_util.js')}"></script>

@@ -418,7 +418,6 @@
 
 
 <#include "./inc/footer.ftl"/>
-<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 <script src="${urls.getForLookupPath('/js/croppic.min.js')}"></script>
 <script src="${urls.getForLookupPath('/js/lightbox.js')}"></script>
 <script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>

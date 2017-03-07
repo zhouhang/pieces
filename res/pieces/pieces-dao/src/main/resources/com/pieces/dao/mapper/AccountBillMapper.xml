@@ -22,6 +22,7 @@
     <resultMap id="AccountBillResultMapVo" type="com.pieces.dao.vo.AccountBillVo" extends="AccountBillResultMap">
             <result column="order_code"  property="orderCode" />
             <result column="memberName"  property="memberName" />
+            <result column="contactMobile"  property="contactMobile" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -173,5 +174,12 @@
         select id
         from account_bill WHERE status=0 order by id
     </select>
+
+    <select id="findUnpaidBill"  resultMap="AccountBillResultMapVo">
+        select ab.*, u.contact_mobile as contactMobile  from account_bill ab
+        LEFT JOIN user u on ab.user_id = u.id
+        WHERE ab.status=1 AND (DATEDIFF(ab.repay_time,now()) =7 OR DATEDIFF(ab.repay_time,now())=1)
+    </select>
+
 
 </mapper>
