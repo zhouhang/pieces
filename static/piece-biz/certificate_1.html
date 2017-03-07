@@ -128,7 +128,7 @@
                     <div class="floor">
                         <h3>医疗机构许可证</h3>
                         <div class="check">
-                            <div class="pic thumb">
+                            <div class="pic thumb required">
                                 <span class="up-img"></span>
                             </div>
                             <div class="form">
@@ -173,7 +173,7 @@
                     <div class="floor">
                         <h3>GMP证书</h3>
                         <div class="check">
-                            <div class="pic thumb">
+                            <div class="pic thumb required">
                                 <span class="up-img"></span>
                             </div>
                             <div class="form">
@@ -203,7 +203,7 @@
                     <div class="floor">
                         <h3>药品生产许可证</h3>
                         <div class="check">
-                            <div class="pic thumb">
+                            <div class="pic thumb required">
                                 <span class="up-img"></span>
                             </div>
                             <div class="form">
@@ -218,7 +218,7 @@
                     <div class="floor">
                         <h3>法人授权委托书</h3>
                         <div class="check">
-                            <div class="pic thumb">
+                            <div class="pic thumb required">
                                 <span class="up-img"></span>
                             </div>
                             <div class="form">
@@ -234,7 +234,7 @@
                     <div class="floor">
                         <h3>印鉴章备案</h3>
                         <div class="check">
-                            <div class="pic thumb">
+                            <div class="pic thumb required">
                                 <span class="up-img"></span>
                             </div>
                             <div class="form">
@@ -249,7 +249,7 @@
                     </div>
                     
                     <div class="button">
-                        <button type="button" class="btn btn-red">提交</button>
+                        <button type="button" class="btn btn-red" id="submit">提交</button>
                     </div>
                 
                 </div>
@@ -352,7 +352,7 @@
             },
             fn: {
                 init: function() {
-                    // this.formValidate();
+                    this.formValidate();
                     this.chooseType();
                     this.zoomImg();
                     this.goodsImg();
@@ -370,7 +370,7 @@
                     // 7.印鉴章备案
 
                     $('.certificate').find('.type').on('click', '.cbx', function() {
-                        $floor.hide().find('h3 em').remove();
+                        $floor.hide().find('h3 em').remove().end().find('.error').remove();
                         
                         if (this.value == 1) {
                             // 药店
@@ -428,6 +428,7 @@
 
                     // 上传图片
                     $('.pic').on('click', '.up-img', function() {
+                        $(this).parent().find('.error').remove();
                         if (self.wait) {
                             return;
                         }
@@ -474,6 +475,25 @@
                     var cropModal = new Croppic('upload', options);
                 },
                 formValidate: function() {
+                    var self = this;
+                    $('#submit').on('click', function() {
+                        var pass = self.checkImg();
+                        if (!pass) {
+                            console.log('没通过')
+                        } else {
+                            console.log('通过')
+                        }
+                    })
+                },
+                checkImg: function() {
+                    var pass = true;
+                    $('.floor:visible').find('.required').each(function() {
+                        if ($(this).find('input').length === 0) {
+                            pass = false;
+                            $(this).append('<span class="error">请上传证件照片</span>');
+                        }
+                    })
+                    return pass;
                 }
             }
         }
