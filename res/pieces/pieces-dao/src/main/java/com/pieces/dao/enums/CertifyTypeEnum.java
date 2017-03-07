@@ -5,14 +5,13 @@ package com.pieces.dao.enums;
  */
 public enum CertifyTypeEnum {
 
-    //1单体药店,2连锁药店,3公立医院,4民营医院,5个体诊所,6社区医疗机构
+    //old:1单体药店,2连锁药店,3公立医院,4民营医院,5个体诊所,6社区医疗机构
+    //new:1.药店，2.医疗机构，3.制药企业,4医药公司
 
-    SINGLE_DRUGSTORE(1, "单体药店"),
-    CHAIN_DRUGSTORE(2, "连锁药店"),
-    PUBLIC_HOSPITAL(3, "公立医院"),
-    PRIVATE_HOSPITAL(4, "民营医院"),
-    PRIVATE_CLINIC(5, "个体诊所"),
-    COMMUNITY_MEDICINE(6, "社区医疗机构");
+    DRUGSTORE(1, "药店"),
+    MEDICAL_ORG(2, "医疗机构"),
+    PHARMACY(3, "制药企业"),
+    MEDICINE_COMPANY(4, "民营医院");
 
     private Integer value;
 

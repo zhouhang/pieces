@@ -9,6 +9,8 @@
 
 <#include "./inc/header.ftl"/>
 
+
+
 <!-- fa-floor start -->
 <div class="fa-floor">
     <div class="wrap">
@@ -25,10 +27,8 @@
                 <h3><i class="fa fa-people"></i>${certifyRecord.userName}的企业资质审核</h3>
                 <div class="extra">
                     <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                    <#if certifyRecord.status==0>
-                    <button type="button" class="btn btn-gray" id="notpass">不通过</button>
-                    <button type="button" class="btn btn-red" id="pass">通过</button>
-                    </#if>
+                    <button type="button" class="btn btn-gray" id="submit2">不通过</button>
+                    <button type="button" class="btn btn-red" id="submit1">通过</button>
                 </div>
             </div>
 
@@ -40,7 +40,8 @@
                             <i>*</i>企业名称：
                         </div>
                         <div class="cnt">
-                            <span class="val">${userCertification.company}</span>
+                            <input class="ipt" value="${userCertification.company!}" autocomplete="off" name="company" id="companyName" placeholder="营业执照上的企业名称全称" type="text">
+                            <span class="error1"></span>
                         </div>
                     </div>
 
@@ -49,19 +50,19 @@
                             <i>*</i>企业负责人：
                         </div>
                         <div class="cnt">
-                            <span class="val">${userCertification.corporation}</span>
+                            <input class="ipt" value="${userCertification.corporation!}" autocomplete="off" name="corporation" id="legalPerson" placeholder="营业执照上法人姓名" type="text">
+                            <span class="error1"></span>
                         </div>
                     </div>
-
                     <div class="group">
                         <div class="txt">
                             <i>*</i>企业所在地：
                         </div>
                         <div class="cnt">
-                            <span class="val">${userCertification.address}</span>
+                            <input class="ipt" value="${userCertification.address!}" autocomplete="off" name="address" id="companyRegion" placeholder="营业执照上的企业所在地地址" type="text">
+                            <span class="error1"></span>
                         </div>
                     </div>
-
                     <div class="group">
                         <div class="txt">
                             <i>*</i>企业类型：
@@ -69,136 +70,188 @@
                         <div class="cnt">
                             <span class="val">${userCertification.typeText}</span>
                         </div>
+                        <span class="error1" id="categoryError"></span>
                     </div>
-
                 </div>
             </div>
-            <div class="user-info">
-                <h3>企业资质</h3>
-                <#list userQualification as qualification>
-                <div class="fa-form">
-                    <div class="group">
-                        <div class="txt">
-                            证件名称：
-                        </div>
-                        <div class="cnt">
-                            <span class="val">${qualification.typeText}</span>
-                        </div>
-                    </div>
-                    <div class="group">
-                        <div class="txt">
-                            证件号：
-                        </div>
-                        <div class="cnt">
-                            <span class="val">${qualification.number}</span>
-                        </div>
-                    </div>
-                    <div class="group">
-                        <div class="txt">
-                            有效期：
-                        </div>
-                        <#if qualification.status=1>
-                        <div class="cnt">
-                            <span class="val">长期</span>
-                        </div>
-                        <#else>
-                            <div class="cnt">
-                                <span class="val">${qualification.term}</span>
-                            </div>
-                        </#if>
 
 
-                    </div>
-                    <div class="group">
-                        <div class="txt">
-                            证件照片：
-                        </div>
-                        <div class="cnt cnt-mul">
+            <div class="certificate">
+              <#list userQualification as qualification>
+                <div class="user-info">
+                    <h3>${qualification.typeText}</h3>
+                    <div class="check">
+                        <div class="pic thumb">
                             <#list qualification.pictures as qualificationPicsVo>
-                            <div class="goods-img thumb">
-                                <img src="${qualificationPicsVo.pictureUrl}" data-src="${qualificationPicsVo.pictureUrl}">
-                            </div>
-                            <input type="hidden" value="" id="imgUrl">
+                                    <img src="${qualificationPicsVo.pictureUrl}" alt="">
                             </#list>
                         </div>
+                        <div class="form">
+                            <label for="">证件号：</label>
+                            <input class="ipt" value="${qualification.number}" autocomplete="off" name="cardID_1" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
+                            <em class="error1 top"></em>
+                            <label for="">有效期至：</label>
+                            <input class="ipt date" value="${qualification.term!}" autocomplete="off" name="indate_1" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}" onclick="laydate()">
+                            <em class="error1 bottom"></em>
+                        </div>
                     </div>
                 </div>
-                </#list>
+              </#list>
+                </div>
             </div>
 
-
-            <div class="chart-info">
+            <div class="user-info">
                 <h3>跟进结果</h3>
-                <form action="" class="note-form">
+
+                <div class="fa-note">
                     <p class="tips"><i>*</i>判断为不通过时要填写原因。</p>
-                    <div class="cnt2">
-                        <textarea class="ipt" name="" value="" id="result" cols="30" rows="10" placeholder="请填写跟进结果。">${certifyRecord.result}</textarea>
-                    </div>
-                </form>
+                    <textarea class="ipt" value="" id="note">${certifyRecord.result!}</textarea>
+                    <span class="error1"></span>
+                </div>
             </div>
         </div>
     </div><!-- fa-floor end -->
 </div>
 
-
-<!-- footer start -->
 <#include "./inc/footer.ftl"/>
+
+<script src="${urls.getForLookupPath('/js/jquery.min.js')}"></script>
 <script src="${urls.getForLookupPath('/js/lightbox.js')}"></script>
+<script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
 <script>
-    $(function() {
-           var recordId=${certifyRecord.id};
-           var userId=${certifyRecord.userId};
-           $("#pass").click(function(){
-               var status=1;
-               $.ajax({
-                   url: "/certify/handle",
-                   data: {"id":recordId,"userId":userId,"status":status},
-                   type: "POST",
-                   success: function(data){
-                       $.notify({
-                           type: 'success',
-                           title: data.info,
-                           delay: 3e3
-                       });
-                       if(data.status=="y"){
-                           $("#pass").hide();
-                           $("#notpass").hide();
-                       }
+    var _global = {
+        v: {
+            id: "page"
+        },
+        fn: {
+            init: function () {
+                this.bindEvent();
+                this.submitForm();
+            },
+            bindEvent: function() {
+                var self = this;
+                $myform = $('.form');
 
-                   }
-               });
-           });
-        $("#notpass").click(function(){
-            var status=2;
-            var result=$("#result").val();
-            if(result==""){
-                $.notify({
-                    type: 'error',
-                    title: "请填写原因",
-                    delay: 3e3
-                });
-                return;
-            }
-            $.ajax({
-                url: "/certify/handle",
-                data: {"id":recordId,"userId":userId,"result":result,"status":status},
-                type: "POST",
-                success: function(data){
-                    $.notify({
-                        type: 'success',
-                        title: data.info,
-                        delay: 3e3
-                    });
-                    if(data.status=="y"){
-                        $("#pass").hide();
-                        $("#notpass").hide();
+                // blur
+                $myform.on('blur', '.ipt', function() {
+                    var len = this.value.length,
+                            tips = eval('(' + $(this).data('msg') + ')'),
+                            msg = '';
+
+                    if (len == 0) {
+                        msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
+                    } else if (len < 2 || len > 50) {
+                        msg = '<i class="fa fa-prompt"></i> ' + tips.error;
                     }
+                    $(this).next().html(msg)[msg == '' ? 'hide' : 'show']();
+                })
+
+                $('#companyName').on('blur', function() {
+                    self.checkCompName();
+                })
+                $('#legalPerson').on('blur', function() {
+                    self.checklegalPerson();
+                })
+                $('#companyRegion').on('blur', function() {
+                    self.checkcompanyRegion();
+                })
+            },
+            checkCompName: function() {
+                var $input = $('#companyName'),
+                        length = $input.val().length,
+                        msg = '';
+                if (length == 0) {
+                    msg = '<i class="fa fa-prompt"></i> 请输入企业名称';
+                } else if (!/^([a-zA-Z0-9_\(\)-]|[\u4e00-\u9fa5]|[（）]){4,50}$/.test($input.val())) {
+                    msg = '<i class="fa fa-prompt"></i> 企业名称长度4-50，只能由中英文、数字及\"_\"、\"-\"、()、（）组成';
                 }
-            });
-        });
+                $input.next().html(msg)[msg == '' ? 'hide' : 'show']();
+                return msg === '';
+            },
+            checklegalPerson: function() {
+                var $input = $('#legalPerson'),
+                        length = $input.val().length,
+                        msg = '';
+                if (length == 0) {
+                    msg = '<i class="fa fa-prompt"></i> 请输入企业负责姓名';
+                } else if (length < 4 || length > 50) {
+                    msg = '<i class="fa fa-prompt"></i> 企业责任人长度4-50位';
+                }
+                $input.next().html(msg)[msg == '' ? 'hide' : 'show']();
+                return msg === '';
+            },
+            checkcompanyRegion: function() {
+                var $input = $('#companyRegion'),
+                        length = $input.val().length,
+                        msg = '';
+                if (length == 0) {
+                    msg = '<i class="fa fa-prompt"></i> 请输入企业所在地地址';
+                } else if (length < 4 || length > 50) {
+                    msg = '<i class="fa fa-prompt"></i> 企业责任人长度4-150位';
+                }
+                $input.next().html(msg)[msg == '' ? 'hide' : 'show']();
+                return msg === '';
+            },
+            formValidate: function() {
+                var pass = true;
 
+                if (!this.checkcompanyRegion()) {
+                    pass = false;
+                }
+                if (!this.checklegalPerson()) {
+                    pass = false;
+                }
+                if (!this.checkCompName()) {
+                    pass = false;
+                }
 
-    })
+                $('.form').find('.ipt').each(function() {
+                    var len = this.value.length,
+                            tips = eval('(' + $(this).data('msg') + ')'),
+                            msg = '';
+
+                    if ($(this).prop('disabled')) {
+                        // do nothing
+                    } else if (len == 0) {
+                        msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
+                    } else if (len < 2 || len > 50) {
+                        msg = '<i class="fa fa-prompt"></i> ' + tips.error;
+                    }
+                    $(this).next().html(msg)[msg == '' ? 'hide' : 'show']();
+                    if (pass && msg != '') {
+                        pass = false;
+                        $(this).focus();
+                    }
+                })
+
+                return pass;
+            },
+            submitForm: function() {
+                var self = this;
+                $('#submit1').on('click', function() {
+                    if (self.formValidate()) {
+                        alert('success')
+                    } else {
+                    }
+                    return false;
+                })
+                // 不通过
+                $('#submit2').on('click', function() {
+                    var note = $('#note').val();
+                    if (note != '') {
+                        alert('success')
+                    } else {
+                        $('#note').focus();
+                    }
+                    return false;
+                })
+            }
+        }
+    }
+    //加载页面js
+    $(function() {
+        _global.fn.init();
+    });
 </script>
 </body>
 </html>

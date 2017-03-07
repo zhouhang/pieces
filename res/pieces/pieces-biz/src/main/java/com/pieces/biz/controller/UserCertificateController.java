@@ -61,7 +61,7 @@ public class UserCertificateController {
 
     @RequestMapping(value = "/stepOne", method = RequestMethod.GET)
     public String stepOne(){
-        return "certificate_1";
+        return "redirect:error/404";
     }
 
     @RequestMapping(value = "/stepTwo", method = RequestMethod.GET)
@@ -77,7 +77,7 @@ public class UserCertificateController {
 
     @RequestMapping(value = "/stepThree", method = RequestMethod.GET)
     public String stepThree(){
-        return "certificate_3";
+        return "redirect:error/404";
     }
 
     @RequestMapping(value = "/stepOne", method = RequestMethod.POST)

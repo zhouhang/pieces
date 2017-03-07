@@ -135,14 +135,14 @@ public class ApiController {
                     companyInfoVo.setEntrust_licence_expire(expireDate);
                 }
                 else if(userQualificationVo.getType()==QualificationTypeEnum.LIENSE_6.getValue()){
-                    if(userCertificationVo.getType()!= CertifyTypeEnum.SINGLE_DRUGSTORE.getValue()&&userCertificationVo.getType()!= CertifyTypeEnum.CHAIN_DRUGSTORE.getValue()){
+                    if(userCertificationVo.getType()!= CertifyTypeEnum.DRUGSTORE.getValue()){
                         companyInfoVo.setMedical_licence(userQualificationVo.getNumber());
                         companyInfoVo.setMedical_licence_expire(expireDate);
                     }
 
                 }
                 else if(userQualificationVo.getType()==QualificationTypeEnum.LIENSE_3.getValue()){
-                    if(userCertificationVo.getType()== CertifyTypeEnum.SINGLE_DRUGSTORE.getValue()||userCertificationVo.getType()== CertifyTypeEnum.CHAIN_DRUGSTORE.getValue()){
+                    if(userCertificationVo.getType()== CertifyTypeEnum.DRUGSTORE.getValue()){
                         companyInfoVo.setMedical_licence(userQualificationVo.getNumber());
                         companyInfoVo.setMedical_licence_expire(expireDate);
                     }

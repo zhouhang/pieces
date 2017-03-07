@@ -1,5 +1,6 @@
 package com.pieces.biz.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -13,19 +14,20 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import com.pieces.biz.controller.commons.LogConstant;
+import com.pieces.dao.enums.CertifyRecordStatusEnum;
 import com.pieces.dao.enums.CertifyStatusEnum;
+import com.pieces.dao.model.CertifyRecord;
 import com.pieces.dao.model.ShippingAddress;
-import com.pieces.dao.vo.CertifyRecordVo;
-import com.pieces.dao.vo.ShippingAddressVo;
-import com.pieces.dao.vo.UserCertificationVo;
+import com.pieces.dao.vo.*;
 import com.pieces.service.*;
 import com.pieces.service.constant.BasicConstants;
+import com.pieces.service.enums.NotifyTemplateEnum;
+import com.pieces.service.listener.NotifyEvent;
 import com.pieces.service.shiro.ShiroRedisCacheManager;
 import com.pieces.service.utils.SerializeUtils;
 import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
-import com.pieces.tools.utils.CookieUtils;
-import com.pieces.tools.utils.GsonUtil;
+import com.pieces.tools.utils.*;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -36,9 +38,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import com.pieces.biz.shiro.BizRealm;
 import com.pieces.biz.shiro.BizToken;
@@ -46,9 +46,6 @@ import com.pieces.dao.model.User;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.redis.RedisManager;
-import com.pieces.tools.utils.CommonUtils;
-import com.pieces.tools.utils.WebUtil;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
@@ -461,7 +458,13 @@ public class UserController extends BaseController {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		user=userService.findById(user.getId());//获取最新用户信息
 		model.put("user", user);
+
+
 		if(user.getCertifyStatus()==(CertifyStatusEnum.NOT_CERTIFY.getValue())){
+			//TODO 获取旧的认证记录
+			return "new_certificate";
+		}
+		else{
 			CertifyRecordVo certifyRecordVo=certifyRecordService.getLatest(user.getId());
 			if(certifyRecordVo!=null){
 				model.put("cerfiy", certifyRecordVo.getStatus());
@@ -470,14 +473,12 @@ public class UserController extends BaseController {
 			else{
 				model.put("cerfiy", -1);
 			}
-
+			UserCertificationVo userCertification=new UserCertificationVo();
+			userCertification.setUserId(user.getId());
+			model.put("userCertification",userCertificationService.findAll(userCertification));
+			return "user_info";
 		}
-		UserCertificationVo userCertification=new UserCertificationVo();
-		userCertification.setUserId(user.getId());
-		model.put("userCertification",userCertificationService.findAll(userCertification));
 
-
-		return "user_info";
 	}
 	
 	/**
@@ -597,5 +598,36 @@ public class UserController extends BaseController {
 		User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		shippingAddressService.settingDefaultAddress(id, user.getId());
 		return new Result(true).info("默认地址设置成功!");
+	}
+
+	/**
+	 *
+	 * @param certifyDataVo
+	 * @return
+	 */
+	@RequestMapping(value = "/submit", method = RequestMethod.POST)
+	@ResponseBody
+	public Result submit(@RequestBody CertifyDataVo certifyDataVo){
+		UserCertificationVo certificationVo=new UserCertificationVo();
+		certificationVo.setType(certifyDataVo.getType());
+		User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+		CertifyRecord certifyRecord=new CertifyRecord();
+		certifyRecord.setUserId(user.getId());
+		certifyRecord.setUserName(user.getUserName());
+		certifyRecord.setCreateTime(new Date());
+		certifyRecord.setStatus(CertifyRecordStatusEnum.NOT_HANDLE.getValue());
+		certifyRecordService.saveRecord(certifyRecord,certificationVo,certifyDataVo.getUserQualificationVos());
+		// 通知管理员有新的资质审核请求提交
+		SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SpringUtil.getApplicationContext().
+				publishEvent(new NotifyEvent(NotifyTemplateEnum.certify.getTitle(String.valueOf(certificationVo.getId())),
+						NotifyTemplateEnum.certify.getContent("待认证用户",time.format(new Date())),NotifyTemplateEnum.certify.getType(),certificationVo.getRecordId()));
+
+		return new Result(true).info("提交成功");
+
+	}
+	@RequestMapping(value = "/submitSuccess", method = RequestMethod.GET)
+	public String stepThree(){
+		return "certificate_3";
 	}
 }
