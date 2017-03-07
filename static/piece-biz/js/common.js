@@ -213,24 +213,27 @@ function category() {
 }
 
 function gotop() {
-	var $win      = $(window);
-	var $elevator = $('#jelevator');
-	var $gotop    = $('<div class="gotop"><a href="javascript:;"><b class="fa fa-chevron-up"></b><em>返回顶部</em></a></div>').appendTo($('body'));
-	var threshold = $win.height();
-	var timer	  = 0;
-	var elevator = $elevator.length === 1;
+	var 
+		qq        = '1340296870';
+		timer     = 0,
+		$elevator = $('#jelevator'),
+		$win      = $(window),
+		threshold = $win.height(),
+		elevator  = $elevator.length === 1,
+		$toolbar  = $('<div class="toolbar"><div class="item wechat"><img src="images/qrcode.png"></div><div class="item qq"><a href="tencent://message/?uin='+qq+'&amp;Site=在线QQ&amp;Menu=yes"></a></div><div class="item gotop"><a href="javascript:;">返回顶部</a></div></div>').appendTo($('body'));
+
 	var scroll = function() {
 		clearTimeout(timer);
 		timer = setTimeout(function() {
 			var fade = $win.scrollTop() < threshold ? 'fadeOut' : 'fadeIn';
-			$gotop[fade]();
+			$toolbar[fade]();
 			elevator && $elevator[fade]();
 		}, 50);
 	}
 
 	$win.on('scroll', scroll);
 
-	$gotop.on('click', function() {
+	$toolbar.on('click', '.gotop', function() {
 		$('html, body').animate({
 			scrollTop: 0
 		}, 700, 'easeInOutExpo');

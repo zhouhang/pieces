@@ -657,13 +657,18 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .elevator li a:hover,
 .elevator li.current a{background:#c3272b;border-bottom-color:#c3272b;color:#fff;text-decoration:none;}
 
-/* gotop */
-.gotop{position:fixed;bottom:50px;left:50%;width:40px;height:40px;margin:-160px 0 0 610px;text-align:center;overflow:hidden;display:none;}
-.gotop a{display:block;color:#fff;background:#fff;}
-.gotop a:hover{background:#c3272b;color:#fff;text-decoration:none;}
-.gotop a:hover b{display:none;}
-.gotop b{display:block;line-height:38px;font-size:20px;color:#999;border:1px solid #e7e7e7;}
-.gotop em{display:block;line-height:14px;padding:5px 6px;font-size:12px;border:1px solid #c3272b;}
+/* toolbar */
+.toolbar{position:fixed;bottom:50%;left:50%;margin:-160px 0 0 610px;text-align:center;display:none;}
+.toolbar .item{width:40px;height:40px;background:#fff url(../images/toolbar.png) no-repeat;}
+.toolbar .wechat{background-position:0 50%;position:relative;}
+.toolbar .wechat:hover{background-position:-40px 50%;}
+.toolbar .wechat:hover img{display:block;}
+.toolbar .wechat img{display:none;position:absolute;top:-13px;right:28px;}
+.toolbar .qq{background-position:-80px 50%;margin:10px 0;overflow:hidden;}
+.toolbar .qq:hover{background-position:-120px 50%;}
+.toolbar .gotop{background-position:-160px 50%;overflow:hidden;}
+.toolbar .gotop a:hover{padding-top:6px;background:#c3272b;color:#fff;text-decoration:none;}
+.toolbar a{display:block;height:40px;line-height:14px;padding:40px 6px 5px;font-size:12px;}
 
 /* allsort */
 .allsort{margin:20px 0 50px;border:1px solid #e7e7e7;}
