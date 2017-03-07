@@ -887,8 +887,11 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .certificate .floor{margin-top:30px;font-size:12px;border:1px solid #e7e7e7;}
 .certificate .floor h3{line-height:30px;padding-left:30px;background:#f5f5f5;border-bottom:1px solid #e7e7e7;}
 .certificate .floor .check{padding:25px 30px;overflow:hidden;*zoom:1;}
-.certificate .floor .check .pic{float:left;width:500px;height:102px;overflow:hidden;}
+.certificate .floor .check .pic{position:relative;float:left;width:500px;height:102px;}
 .certificate .floor .check .pic .up-img{vertical-align:top;}
+.certificate .floor .check .pic .error{position:absolute;top:102%;left:0;z-index:9999;display:block;line-height:18px;padding:2px 5px;background:#d74141;color:#fff;}
+.certificate .floor .check .pic .error:after{content:"";position:absolute;top:-10px;left:10px;border:5px dashed transparent;border-bottom:5px solid #d74141;}
+.certificate .floor .check .pic .error .error{color:#fff;}
 .certificate .floor .check .form{float:right;width:300px;line-height:22px;}
 .certificate .floor .check .form span{display:inline-block;width:260px;vertical-align:middle;}
 .certificate .floor .check .form em{display:inline-block;width:100%;color:#c3272b;vertical-align:top;}
