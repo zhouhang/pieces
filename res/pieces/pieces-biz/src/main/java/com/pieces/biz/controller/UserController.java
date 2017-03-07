@@ -83,6 +83,9 @@ public class UserController extends BaseController {
 	@Autowired
 	ShiroRedisCacheManager shiroRedisCacheManager;
 
+	@Autowired
+	UserQualificationService userQualificationService;
+
 
 	/**
 	 * 进入注册页面
@@ -458,13 +461,7 @@ public class UserController extends BaseController {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		user=userService.findById(user.getId());//获取最新用户信息
 		model.put("user", user);
-
-
 		if(user.getCertifyStatus()==(CertifyStatusEnum.NOT_CERTIFY.getValue())){
-			//TODO 获取旧的认证记录
-			return "new_certificate";
-		}
-		else{
 			CertifyRecordVo certifyRecordVo=certifyRecordService.getLatest(user.getId());
 			if(certifyRecordVo!=null){
 				model.put("cerfiy", certifyRecordVo.getStatus());
@@ -473,13 +470,38 @@ public class UserController extends BaseController {
 			else{
 				model.put("cerfiy", -1);
 			}
-			UserCertificationVo userCertification=new UserCertificationVo();
-			userCertification.setUserId(user.getId());
-			model.put("userCertification",userCertificationService.findAll(userCertification));
-			return "user_info";
+
 		}
+		UserCertificationVo userCertification=new UserCertificationVo();
+		userCertification.setUserId(user.getId());
+		model.put("userCertification",userCertificationService.findAll(userCertification));
+
+
+		return "user_info";
 
 	}
+	@RequestMapping(value = "/certify")
+	public String userCertify(ModelMap model, HttpServletRequest request) {
+		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+		CertifyRecordVo certifyRecordVo=certifyRecordService.getLatest(user.getId());
+		if(certifyRecordVo!=null){
+			UserCertificationVo userCertification=new UserCertificationVo();
+			userCertification.setRecordId(certifyRecordVo.getId());
+			UserQualificationVo userQualification=new UserQualificationVo();
+			userQualification.setRecordId(certifyRecordVo.getId());
+
+
+
+
+
+			model.put("userCertification",userCertificationService.findAll(userCertification));
+			model.put("userQualification",userQualificationService.findAll(userQualification));
+		}
+
+		return "new_certificate";
+	}
+
+
 	
 	/**
 	 * 进入修改密码页面

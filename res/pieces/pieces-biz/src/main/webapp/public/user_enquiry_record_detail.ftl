@@ -25,7 +25,7 @@
                         <div class="fa-msg">
                             <i class="fa fa-prompt"></i>
                             <span>您尚未提交企业资质审核，通过审核后方可进行在线下单</span>
-                            <a class="btn-ghost" href="/user/info">提交资格审核</a>
+                            <a class="btn-ghost" href="/user/certify">提交资格审核</a>
                         </div>
                     <#elseif userValidate.status == 2>
                         <div class="fa-msg">
@@ -37,7 +37,7 @@
                             <i class="fa fa-prompt"></i>
                             <span>您的企业资质审核未通过，无法进行下单.</span>
                             <em>不通过原因:${userValidate.msg!}</em>
-                            <a class="btn-ghost" href="/user/info">重新提交资质审核</a>
+                            <a class="btn-ghost" href="/user/certify">重新提交资质审核</a>
                         </div>
                     <#elseif userValidate.status == 4>
                         <div class="fa-msg">

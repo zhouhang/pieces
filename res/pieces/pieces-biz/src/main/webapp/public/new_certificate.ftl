@@ -33,7 +33,7 @@
                 <div class="floor">
                     <h3>医疗机构许可证</h3>
                     <div class="check">
-                        <div class="pic thumb">
+                        <div class="pic thumb required">
                             <span class="up-img"></span>
                         </div>
                         <div class="form">
@@ -48,7 +48,7 @@
                 <div class="floor" type="1">
                     <h3>营业执照副本</h3>
                     <div class="check">
-                        <div class="pic thumb">
+                        <div class="pic thumb required">
                             <span class="up-img"></span>
                         </div>
                         <div class="form">
@@ -63,7 +63,7 @@
                 <div class="floor" type="2">
                     <h3>GSP证书</h3>
                     <div class="check">
-                        <div class="pic thumb">
+                        <div class="pic thumb required">
                             <span class="up-img"></span>
                         </div>
                         <div class="form">
@@ -78,7 +78,7 @@
                 <div class="floor" type="2">
                     <h3>GMP证书</h3>
                     <div class="check">
-                        <div class="pic thumb">
+                        <div class="pic thumb required">
                             <span class="up-img"></span>
                         </div>
                         <div class="form">
@@ -93,7 +93,7 @@
                 <div class="floor" type="3">
                     <h3>药品经营许可证</h3>
                     <div class="check">
-                        <div class="pic thumb">
+                        <div class="pic thumb required">
                             <span class="up-img"></span>
                         </div>
                         <div class="form">
@@ -108,7 +108,7 @@
                 <div class="floor" type="3">
                     <h3>药品生产许可证</h3>
                     <div class="check">
-                        <div class="pic thumb">
+                        <div class="pic thumb required">
                             <span class="up-img"></span>
                         </div>
                         <div class="form">
@@ -123,7 +123,7 @@
                 <div class="floor" type="7">
                     <h3>法人授权委托书</h3>
                     <div class="check">
-                        <div class="pic thumb">
+                        <div class="pic thumb required">
                             <span class="up-img"></span>
                         </div>
                         <div class="form">
@@ -139,7 +139,7 @@
                 <div class="floor" type="8">
                     <h3>印鉴章备案</h3>
                     <div class="check">
-                        <div class="pic thumb">
+                        <div class="pic thumb required">
                             <span class="up-img"></span>
                         </div>
                         <div class="form">
@@ -154,7 +154,7 @@
                 </div>
 
                 <div class="button">
-                    <button type="button" class="btn btn-red" id="submit1">提交</button>
+                    <button type="button" class="btn btn-red" id="submit">提交</button>
                 </div>
                 </form>
 
@@ -199,17 +199,20 @@
 
                 $('.certificate').find('.type').on('click', '.cbx', function() {
                     $floor.hide().find('h3 em').remove();
-
                     if (this.value == 1) {
                         // 药店
                         $floor.eq(1).show();
+                        $floor.eq(1).show().find(".pic").attr("class","pic thumb required");
                         $floor.eq(6).show();
 
                     } else if (this.value == 2) {
                         // 医疗机构
                         $floor.eq(0).show();
+                        $floor.eq(1).show().find(".pic").attr("class","pic thumb");
                         $floor.eq(1).show().find('h3').append('<em>（盈利性医疗机构必填）</em>');
+                        $floor.eq(2).show().find(".pic").attr("class","pic thumb");
                         $floor.eq(2).show().find('h3').append('<em>（盈利性医疗机构必填）</em>');
+                        $floor.eq(4).show().find(".pic").attr("class","pic thumb");
                         $floor.eq(4).show().find('h3').append('<em>（盈利性医疗机构必填）</em>');
                         $floor.eq(6).show();
                         $floor.eq(7).show();
@@ -217,6 +220,7 @@
                     } else if (this.value == 3) {
                         // 制药企业
                         $floor.eq(1).show();
+                        $floor.eq(1).show().find(".pic").attr("class","pic thumb required");
                         $floor.eq(3).show();
                         $floor.eq(5).show();
                         $floor.eq(6).show();
@@ -225,8 +229,11 @@
                     } else {
                         // 医药公司
                         $floor.eq(1).show();
+                        $floor.eq(1).show().find(".pic").attr("class","pic thumb required");
                         $floor.eq(2).show();
+                        $floor.eq(2).show().find(".pic").attr("class","pic thumb required");
                         $floor.eq(4).show();
+                        $floor.eq(4).show().find(".pic").attr("class","pic thumb required");
                         $floor.eq(6).show();
                         $floor.eq(7).show();
                     }
@@ -303,55 +310,66 @@
             },
             formValidate: function() {
                 var self = this;
-                var boxs = $('#myform').find('.floor:visible');
-                $('#submit1').on('click', function() {
-                    //如果检验通过
-                    var certifyDataVo={};
-                    certifyDataVo.type=$(" #myform input[name='type']:checked").val();
-                    var userQualificationVos=[];
-                    boxs.each(function() {
-                        if($(this).attr("style")=="display: none;"){
-                            return;
-                        }
-                        var userQualification={};
-                        var pics=[];
-                        userQualification.type=$(this).attr('type');
-                        $(this).find(".up-img").each(function (index) {
-                            var url=$(this).find("input[type='hidden']").val();
-                            var pic={};
-                            if(url!=undefined){
-                                pic.pictureUrl=url;
-                                pic.indexNum=index;
-                                pics.push(pic);
-                            }
-
-                        });
-                        if(pics.length!=0){
-                            userQualification.pictures=pics;
-                            userQualificationVos.push(userQualification);
-                        }
-                    });
-                    certifyDataVo.userQualificationVos=userQualificationVos;
-                    $.ajax({
-                        url: _global.v.submitUrl,
-                        data: JSON.stringify(certifyDataVo),
-                        type: "POST",
-                        contentType: "application/json; charset=utf-8",
-                        success: function (data) {
-                            var status = data.status;
-                            var info = data.info;
-                            if (status == 'y') {
-                                window.location.href = '/user/submitSuccess';
+                $('#submit').on('click', function() {
+                    var pass = self.checkImg();
+                    var boxs = $('#myform').find('.floor:visible');
+                    if (pass) {
+                        //如果检验通过
+                        var certifyDataVo={};
+                        certifyDataVo.type=$(" #myform input[name='type']:checked").val();
+                        var userQualificationVos=[];
+                        boxs.each(function() {
+                            if($(this).attr("style")=="display: none;"){
                                 return;
                             }
-                        }
-                    });
+                            var userQualification={};
+                            var pics=[];
+                            userQualification.type=$(this).attr('type');
+                            $(this).find(".up-img").each(function (index) {
+                                var url=$(this).find("input[type='hidden']").val();
+                                var pic={};
+                                if(url!=undefined){
+                                    pic.pictureUrl=url;
+                                    pic.indexNum=index;
+                                    pics.push(pic);
+                                }
 
-
-                });
+                            });
+                            if(pics.length!=0){
+                                userQualification.pictures=pics;
+                                userQualificationVos.push(userQualification);
+                            }
+                        });
+                        certifyDataVo.userQualificationVos=userQualificationVos;
+                        $.ajax({
+                            url: _global.v.submitUrl,
+                            data: JSON.stringify(certifyDataVo),
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            success: function (data) {
+                                var status = data.status;
+                                var info = data.info;
+                                if (status == 'y') {
+                                    window.location.href = '/user/submitSuccess';
+                                    return;
+                                }
+                            }
+                        });
+                    }
+                })
+            },
+            checkImg: function() {
+                var pass = true;
+                $('.floor:visible').find('.required').each(function() {
+                    if ($(this).find('input').length === 0) {
+                        pass = false;
+                        $(this).append('<span class="error">请上传证件照片</span>');
+                    }
+                })
+                return pass;
             }
+          }
         }
-    }
     $(function() {
         _global.fn.init();
     })
