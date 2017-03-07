@@ -12,6 +12,17 @@ public class CertifyParamVo {
 
     private UserCertificationVo userCertificationVo;
 
+
+    private CertifyRecordVo certifyRecordVo;
+
+    public CertifyRecordVo getCertifyRecordVo() {
+        return certifyRecordVo;
+    }
+
+    public void setCertifyRecordVo(CertifyRecordVo certifyRecordVo) {
+        this.certifyRecordVo = certifyRecordVo;
+    }
+
     public List<UserQualificationVo> getUserQualificationVos() {
         return userQualificationVos;
     }

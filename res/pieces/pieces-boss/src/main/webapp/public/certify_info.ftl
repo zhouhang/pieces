@@ -27,14 +27,16 @@
                 <h3><i class="fa fa-people"></i>${certifyRecord.userName}的企业资质审核</h3>
                 <div class="extra">
                     <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                    <button type="button" class="btn btn-gray" id="submit2">不通过</button>
-                    <button type="button" class="btn btn-red" id="submit1">通过</button>
+                    <#if certifyRecord.status==0>
+                    <button type="button" class="btn btn-gray" id="notpass">不通过</button>
+                    <button type="button" class="btn btn-red" id="pass">通过</button>
+                    </#if>
                 </div>
             </div>
 
             <div class="user-info">
                 <h3>企业基础信息</h3>
-                <div class="fa-form">
+                <div class="fa-form" id="certification">
                     <div class="group">
                         <div class="txt">
                             <i>*</i>企业名称：
@@ -78,7 +80,7 @@
 
             <div class="certificate">
               <#list userQualification as qualification>
-                <div class="user-info">
+                <div class="user-info" qid="${qualification.id}">
                     <h3>${qualification.typeText}</h3>
                     <div class="check">
                         <div class="pic thumb">
@@ -86,7 +88,7 @@
                                     <img src="${qualificationPicsVo.pictureUrl}" alt="">
                             </#list>
                         </div>
-                        <div class="form">
+                        <div class="form" >
                             <label for="">证件号：</label>
                             <input class="ipt" value="${qualification.number}" autocomplete="off" name="cardID_1" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
                             <em class="error1 top"></em>
@@ -144,6 +146,7 @@
                         msg = '<i class="fa fa-prompt"></i> ' + tips.error;
                     }
                     $(this).next().html(msg)[msg == '' ? 'hide' : 'show']();
+
                 })
 
                 $('#companyName').on('blur', function() {
@@ -174,8 +177,8 @@
                         msg = '';
                 if (length == 0) {
                     msg = '<i class="fa fa-prompt"></i> 请输入企业负责姓名';
-                } else if (length < 4 || length > 50) {
-                    msg = '<i class="fa fa-prompt"></i> 企业责任人长度4-50位';
+                } else if (length < 2 || length > 50) {
+                    msg = '<i class="fa fa-prompt"></i> 企业责任人长度2-50位';
                 }
                 $input.next().html(msg)[msg == '' ? 'hide' : 'show']();
                 return msg === '';
@@ -187,7 +190,7 @@
                 if (length == 0) {
                     msg = '<i class="fa fa-prompt"></i> 请输入企业所在地地址';
                 } else if (length < 4 || length > 50) {
-                    msg = '<i class="fa fa-prompt"></i> 企业责任人长度4-150位';
+                    msg = '<i class="fa fa-prompt"></i> 企业所在地长度4-150位';
                 }
                 $input.next().html(msg)[msg == '' ? 'hide' : 'show']();
                 return msg === '';
@@ -228,18 +231,85 @@
             },
             submitForm: function() {
                 var self = this;
-                $('#submit1').on('click', function() {
+                var recordId=${certifyRecord.id};
+                var userId=${certifyRecord.userId};
+                $('#pass').on('click', function() {
                     if (self.formValidate()) {
-                        alert('success')
+                        var status=1;
+                        var certifyParamVo={};
+                        var certifyRecordVo={};
+                        var userQualificationVos=[];
+                        certifyRecordVo.id=recordId;
+                        certifyRecordVo.userId=userId;
+                        certifyRecordVo.result="";
+                        certifyRecordVo.status=status;
+                        certifyParamVo.certifyRecordVo=certifyRecordVo;
+                        var userCertificationVo={};
+                        userCertificationVo.id=${userCertification.id};
+                        userCertificationVo.company=$("#certification").find("input[name='company']").val();
+                        userCertificationVo.corporation=$("#certification").find("input[name='corporation']").val();
+                        userCertificationVo.address=$("#certification").find("input[name='address']").val();
+                        certifyParamVo.userCertificationVo=userCertificationVo;
+                        $(".certificate .user-info").each(function () {
+                            var userQualification={};
+                            userQualification.id=$(this).attr('qid');
+                            userQualification.number=$(this).find("input[name='cardID_1']").val();
+                            userQualification.term=$(this).find("input[name='indate_1']").val();
+                            userQualification.status=0;
+                            userQualificationVos.push(userQualification);
+                        })
+                        certifyParamVo.userQualificationVos=userQualificationVos;
+                        $.ajax({
+                            url: "/certify/handle",
+                            data: JSON.stringify(certifyParamVo),
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            success: function(data){
+                                $.notify({
+                                    type: 'success',
+                                    title: data.info,
+                                    delay: 3e3
+                                });
+                                if(data.status=="y"){
+                                    $("#pass").hide();
+                                    $("#notpass").hide();
+                                }
+
+                            }
+                        });
                     } else {
                     }
                     return false;
                 })
                 // 不通过
-                $('#submit2').on('click', function() {
+                $('#notpass').on('click', function() {
                     var note = $('#note').val();
                     if (note != '') {
-                        alert('success')
+                        var status=2;
+                        var certifyParamVo={};
+                        var certifyRecordVo={};
+                        certifyRecordVo.id=recordId;
+                        certifyRecordVo.userId=userId;
+                        certifyRecordVo.result=note;
+                        certifyRecordVo.status=status;
+                        certifyParamVo.certifyRecordVo=certifyRecordVo;
+                        $.ajax({
+                            url: "/certify/handle",
+                            data: JSON.stringify(certifyParamVo),
+                            type: "POST",
+                            contentType: "application/json; charset=utf-8",
+                            success: function(data){
+                                $.notify({
+                                    type: 'success',
+                                    title: data.info,
+                                    delay: 3e3
+                                });
+                                if(data.status=="y"){
+                                    $("#pass").hide();
+                                    $("#notpass").hide();
+                                }
+                            }
+                        })
                     } else {
                         $('#note').focus();
                     }
