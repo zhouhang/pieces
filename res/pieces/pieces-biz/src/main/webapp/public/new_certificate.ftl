@@ -131,7 +131,7 @@
                             <span>
                                     <em>说明</em>
                                     请上传采购人员的法人授权委托书图片，如果采购人员与收货人员不是同一个人，还需要上传收货人员授权委托书图片。
-                                    <a href="javascript:;" class="c-blue thumb">示例图片<img src="uploads/card.jpg" /></a>
+                                    <a href="javascript:;" class="c-blue thumb">示例图片<img src="images/1.jpg" /></a>
                                 </span>
                         </div>
                     </div>
@@ -147,7 +147,7 @@
                             <span>
                                     <em>说明</em>
                                     请上传贵单位的印鉴章备案图片。
-                                    <a href="javascript:;" class="c-blue thumb">示例图片<img src="uploads/card.jpg" /></a>
+                                    <a href="javascript:;" class="c-blue thumb">示例图片<img src="images/2.jpg" /></a>
                                 </span>
                         </div>
                     </div>
