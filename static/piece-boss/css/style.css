@@ -520,3 +520,17 @@ vertical-align:middle;
 .jq-page .p-num .current{color:#c3272b;}
 .jq-page .p-num .current.prev,
 .jq-page .p-num .current.next{color:#c3272b;}
+
+.certificate .check{padding:25px 30px;overflow:hidden;*zoom:1;}
+.certificate .check .pic{float:left;width:120px;height:120px;border:1px solid #ccc;overflow:hidden;}
+.certificate .check .form{float:right;width:314px;line-height:50px;border-left:1px solid #ccc;position:relative;}
+.certificate .check .form label{display:inline-block;width:110px;text-align:right;vertical-align:top;}
+.certificate .check .form .ipt{width:170px;height:28px;padding:0 4px;border:1px solid #ccc;}
+.certificate .check .form span{display:inline-block;width:170px;}
+.certificate .check .form em{position:absolute;left:113px;line-height:1;}
+.certificate .check .form em.top{top:41px;}
+.certificate .check .form em.bottom{bottom:-7px;}
+.fa-note{padding:25px 30px;}
+.fa-note .tips{margin-bottom:10px;}
+.fa-note .tips i{margin-right:6px;color:#c3272b;}
+.fa-note .ipt{width:99%;height:120px;padding:5px;border:1px solid #ccc;}

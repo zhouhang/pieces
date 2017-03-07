@@ -875,3 +875,19 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .autocomplete-selected{background:#f0f0f0;}
 .autocomplete-group{border-bottom:1px solid #000;}
 .autocomplete-group strong{display:none;}
+
+.certificate{margin:30px;}
+.certificate .type i{margin-right:6px;color:#c3272b;}
+.certificate .type label{margin-right:20px;}
+.certificate .floor{margin-top:30px;font-size:12px;border:1px solid #e7e7e7;}
+.certificate .floor h3{line-height:30px;padding-left:30px;background:#f5f5f5;border-bottom:1px solid #e7e7e7;}
+.certificate .floor .check{padding:25px 30px;overflow:hidden;*zoom:1;}
+.certificate .floor .check .pic{float:left;width:500px;height:102px;overflow:hidden;}
+.certificate .floor .check .pic .up-img{vertical-align:top;}
+.certificate .floor .check .form{float:right;width:300px;line-height:22px;}
+.certificate .floor .check .form span{display:inline-block;width:260px;vertical-align:middle;}
+.certificate .floor .check .form em{display:inline-block;width:100%;color:#c3272b;vertical-align:top;}
+.certificate .floor .check .form i{display:inline-block;height:100px;width:1px;margin-right:26px;background:#ccc;vertical-align:middle;}
+.certificate .floor .check .form img{display:none;}
+.certificate .button{margin-top:30px;text-align:right;}
+.certificate .button .btn{width:120px;height:40px;}

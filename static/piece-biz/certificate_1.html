@@ -116,6 +116,147 @@
                     <div class="extra"></div>
                 </div>
 
+                <div class="certificate">
+                    <div class="type">
+                        <label><i>*</i>企业类型：</label>
+                        <label><input type="radio" name="category" value="1" class="cbx" checked>药店</label>
+                        <label><input type="radio" name="category" value="2" class="cbx">医疗机构</label>
+                        <label><input type="radio" name="category" value="3" class="cbx">制药企业</label>
+                        <label><input type="radio" name="category" value="4" class="cbx">医药公司</label>
+                    </div>
+
+                    <div class="floor">
+                        <h3>医疗机构许可证</h3>
+                        <div class="check">
+                            <div class="pic thumb">
+                                <span class="up-img"></span>
+                            </div>
+                            <div class="form">
+                                <i></i>
+                                <span>
+                                    <em>说明</em>
+                                    请上传医疗机构许可证图片。
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="floor">
+                        <h3>营业执照副本</h3>
+                        <div class="check">
+                            <div class="pic thumb">
+                                <span class="up-img"></span>
+                            </div>
+                            <div class="form">
+                                <i></i>
+                                <span>
+                                    <em>说明</em>
+                                    请上传企业营业执照副本图片，如果是老版的营业执照，还需要上传组织机构代码证以及税务登记证图片。
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="floor">
+                        <h3>GSP证书</h3>
+                        <div class="check">
+                            <div class="pic thumb">
+                                <span class="up-img"></span>
+                            </div>
+                            <div class="form">
+                                <i></i>
+                                <span>
+                                    <em>说明</em>
+                                    请上传GSP证书图片。
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="floor">
+                        <h3>GMP证书</h3>
+                        <div class="check">
+                            <div class="pic thumb">
+                                <span class="up-img"></span>
+                            </div>
+                            <div class="form">
+                                <i></i>
+                                <span>
+                                    <em>说明</em>
+                                    请上传GMP证书图片。
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="floor">
+                        <h3>药品经营许可证</h3>
+                        <div class="check">
+                            <div class="pic thumb">
+                                <span class="up-img"></span>
+                            </div>
+                            <div class="form">
+                                <i></i>
+                                <span>
+                                    <em>说明</em>
+                                    请上传药品经营许可证图片，如果做过资质变更，还需要上传资质变更记录表图片，变更记录表最多能传3张。
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="floor">
+                        <h3>药品生产许可证</h3>
+                        <div class="check">
+                            <div class="pic thumb">
+                                <span class="up-img"></span>
+                            </div>
+                            <div class="form">
+                                <i></i>
+                                <span>
+                                    <em>说明</em>
+                                    请上传药品生产许可证图片，如果做过资质变更，还需要上传资质变更记录表图片，变更记录表最多能传3张。
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="floor">
+                        <h3>法人授权委托书</h3>
+                        <div class="check">
+                            <div class="pic thumb">
+                                <span class="up-img"></span>
+                            </div>
+                            <div class="form">
+                                <i></i>
+                                <span>
+                                    <em>说明</em>
+                                    请上传采购人员的法人授权委托书图片，如果采购人员与收获人员不是同一个人，还需要上传收货人员授权委托书图片。
+                                    <a href="javascript:;" class="c-blue thumb">示例图片<img src="uploads/card.jpg" /></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="floor">
+                        <h3>印鉴章备案</h3>
+                        <div class="check">
+                            <div class="pic thumb">
+                                <span class="up-img"></span>
+                            </div>
+                            <div class="form">
+                                <i></i>
+                                <span>
+                                    <em>说明</em>
+                                    请上传贵单位的印鉴章备案图片。
+                                    <a href="javascript:;" class="c-blue thumb">示例图片<img src="uploads/card.jpg" /></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="button">
+                        <button type="button" class="btn btn-red">提交</button>
+                    </div>
+                
+                </div>
+            </div>
+
+<!-- 
+
                 <div class="fa-step">
                     <ol>
                         <li class="curr"><em>1</em>填写基础信息</li>
@@ -171,8 +312,7 @@
                             </div>
                         </div>
                     </form>
-                </div>
-            </div>
+                </div> -->
         </div>
     </div><!-- member-box end -->
 
@@ -202,46 +342,138 @@
 
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
+    <script src="js/lightbox.js"></script>
+    <script src="js/croppic.min.js"></script>
+    <script src="js/layer/layer.js"></script>
+    <script src="js/common.js"></script>
     <script>
         var _global = {
             v: {
             },
             fn: {
                 init: function() {
-                    this.formValidate();
+                    // this.formValidate();
+                    this.chooseType();
+                    this.zoomImg();
+                    this.goodsImg();
+                },
+                chooseType: function() {
+                    var $floor = $('.floor');
+
+                    // 0.医疗机构许可证
+                    // 1.营业执照副本
+                    // 2.GSP证书
+                    // 3.GMP证书
+                    // 4.药品经营许可证
+                    // 5.药品生产许可证
+                    // 6.法人授权委托书
+                    // 7.印鉴章备案
+
+                    $('.certificate').find('.type').on('click', '.cbx', function() {
+                        $floor.hide().find('h3 em').remove();
+                        
+                        if (this.value == 1) {
+                            // 药店
+                            $floor.eq(1).show();
+                            $floor.eq(6).show();
+
+                        } else if (this.value == 2) {
+                            // 医疗机构
+                            $floor.eq(0).show();
+                            $floor.eq(1).show().find('h3').append('<em>（盈利性医疗机构必填）</em>');
+                            $floor.eq(2).show().find('h3').append('<em>（盈利性医疗机构必填）</em>');
+                            $floor.eq(4).show().find('h3').append('<em>（盈利性医疗机构必填）</em>');
+                            $floor.eq(6).show();
+                            $floor.eq(7).show();
+
+                        } else if (this.value == 3) {
+                            // 制药企业
+                            $floor.eq(1).show();
+                            $floor.eq(3).show();
+                            $floor.eq(5).show();
+                            $floor.eq(6).show();
+                            $floor.eq(7).show();
+
+                        } else {
+                            // 医药公司
+                            $floor.eq(1).show();
+                            $floor.eq(2).show();
+                            $floor.eq(4).show();
+                            $floor.eq(6).show();
+                            $floor.eq(7).show();
+                        }
+                    })
+                    $('.certificate').find('.type .cbx:checked').trigger('click');
+                },
+                zoomImg: function() {
+                    $('.form').on('click', '.c-blue', function() {
+                        $(this).find('img').trigger('click');
+                    })
+                },
+                // 商品图片
+                goodsImg: function() {
+                    var self = this;
+                    $('body').append('<div id="upload" style="position:fixed;bottom:0;left:0;width:0;height:0;visibility:hidden;"></div>');
+
+                    // 删除图片
+                    $('.pic').on('click', '.del', function() {
+                        var $self = $(this);
+                        layer.confirm('确认删除图片？', function(index){
+                            $self.closest('.pic').find('span.up-img').show();
+                            $self.parent().remove();
+                            layer.close(index);
+                        });
+                        return false;
+                    })
+
+                    // 上传图片
+                    $('.pic').on('click', '.up-img', function() {
+                        if (self.wait) {
+                            return;
+                        }
+
+                        if ($(this).siblings().length > 3) {
+                            $.notify({
+                                type: 'error',
+                                title: '最多只能上传4张图片',
+                                delay: 3e3
+                            });
+                            return;
+                        }
+
+                        self.$el = $(this);
+                        $('#upload').find('.cropControlUpload').trigger('click');
+                    })
+
+                    this.upImg();
+                },
+                upImg: function() {
+                    var self = this;
+                    var options = {
+                        uploadUrl:'img_save_to_file.php',
+                        onBeforeImgUpload: function() {
+                            self.wait = true;
+                            self.$el.html('<span class="loader">图片上传中...</span>');
+                        },
+                        onAfterImgUpload: function(response) {
+                            self.$el.empty('').before('<div class="up-img"><img src="' + response.url + '"/><i class="del"></i><input type="hidden" value="' + response.url + '" /></div>');
+                            self.$el.siblings().length > 3 && self.$el.hide(); // 上传超过4张后隐藏
+                            self.wait = false;
+                        },
+                        onError:function(msg){
+                            $.notify({
+                                type: 'error', 
+                                title: '上传图片失败',   // 不允许的文件类型
+                                text: msg,     //'支持 jpg、jepg、png、gif等格式图片文件', 
+                                delay: 3e3
+                            });
+                            self.$el.empty('');
+                            self.wait = false;
+                        }
+                    }
+                    var cropModal = new Croppic('upload', options);
                 },
                 formValidate: function() {
-                    $('#myform').validator({
-                        fields: {
-                            companyName: {
-                                rule: 'required, company',
-                                msg: {
-                                    required: '请输入企业名称'
-                                }
-                            },
-                            legalPerson: {
-                                rule: 'required,  length(4~50)',
-                                msg: {
-                                    required: '请输入企业负责姓名',
-                                    length: '企业责任人长度4-50位'
-                                }
-                            },
-                            companyRegion: {
-                                rule: 'required,  length(4~150)',
-                                msg: {
-                                    required: '请输入企业所在地地址',
-                                    length: '企业责任人长度4-150位'
-                                }
-                            },
-                            category: {
-                                rule: 'checked',
-                                msg: {
-                                    checked: '请选择企业类型'
-                                }
-                            }
-                        }
-                    });
                 }
             }
         }
@@ -251,3 +483,14 @@
     </script>
 </body>
 </html>
+
+
+<script>
+$.ajax({
+    url: 'sidemenu.html',
+    success: function(menu) {
+        $('.side').off().html(menu);
+        userMenu();
+    }
+})
+</script>

@@ -85,8 +85,8 @@
                     <h3><i class="fa fa-people"></i>hehuan的企业资质审核</h3>
                     <div class="extra">
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                        <button type="reset" class="btn btn-gray">不通过</button>
-                        <button type="submit" class="btn btn-red">通过</button>
+                        <button type="button" class="btn btn-gray" id="submit2">不通过</button>
+                        <button type="button" class="btn btn-red" id="submit1">通过</button>
                     </div>
                 </div>
 
@@ -98,7 +98,8 @@
                                 <i>*</i>企业名称：
                             </div>
                             <div class="cnt">
-                                <span class="val">武汉同济医院</span>
+                                <input class="ipt" value="" autocomplete="off" name="companyName" id="companyName" placeholder="营业执照上的企业名称全称" type="text">
+                                <span class="error1"></span>
                             </div>
                         </div>
 
@@ -107,19 +108,19 @@
                                 <i>*</i>企业负责人：
                             </div>
                             <div class="cnt">
-                                <span class="val">何先生</span>
+                                <input class="ipt" value="" autocomplete="off" name="legalPerson" id="legalPerson" placeholder="营业执照上法人姓名" type="text">
+                                <span class="error1"></span>
                             </div>
                         </div>
-
                         <div class="group">
                             <div class="txt">
                                 <i>*</i>企业所在地：
                             </div>
                             <div class="cnt">
-                                <span class="val">湖北省武汉市XX区XX路XXX号</span>
+                                <input class="ipt" value="" autocomplete="off" name="companyRegion" id="companyRegion" placeholder="营业执照上的企业所在地地址" type="text">
+                                <span class="error1"></span>
                             </div>
                         </div>
-
                         <div class="group">
                             <div class="txt">
                                 <i>*</i>企业类型：
@@ -127,60 +128,75 @@
                             <div class="cnt">
                                 <span class="val">公立医院</span>
                             </div>
+                            <span class="error1" id="categoryError"></span>
                         </div>
-
                     </div>
                 </div>
+
+
+                <div class="certificate">
+                        
+                    <div class="user-info">
+                        <h3>营业执照</h3>
+                        <div class="check">
+                            <div class="pic thumb">
+                                <img src="temp/card.jpg" alt="">
+                            </div>
+                            <div class="form">
+                                <label for="">证件号：</label>
+                                <input class="ipt" value="" autocomplete="off" name="cardID_1" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
+                                <em class="error1 top"></em>
+                                <label for="">有效期至：</label>
+                                <input class="ipt date" value="" autocomplete="off" name="indate_1" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                <em class="error1 bottom"></em>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="user-info">
+                        <h3>GPS证书</h3>
+
+                        <div class="check">
+                            <div class="pic thumb">
+                                <img src="temp/card.jpg" alt="">
+                            </div>
+                            <div class="form">
+                                <label for="">证件号：</label>
+                                <input class="ipt" value="" autocomplete="off" name="cardID_2" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
+                                <em class="error1 top"></em>
+                                <label for="">有效期至：</label>
+                                <input class="ipt date" value="" autocomplete="off" name="indate_2" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                <em class="error1 bottom"></em>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-info">
+                        <h3>药品经营许可证</h3>
+
+                        <div class="check">
+                            <div class="pic thumb">
+                                <img src="temp/card.jpg" alt="">
+                            </div>
+                            <div class="form">
+                                <label for="">证件号：</label>
+                                <input class="ipt" value="" autocomplete="off" name="cardID_3" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
+                                <em class="error1 top"></em>
+                                <label for="">有效期至：</label>
+                                <input class="ipt date" value="" autocomplete="off" name="indate_3" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}">
+                                <em class="error1 bottom"></em>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    
                 <div class="user-info">
-                    <h3>企业资质</h3>
-                    <div class="fa-form">
-                        <div class="group">
-                            <div class="txt">
-                                证件名称：
-                            </div>
-                            <div class="cnt">
-                                <span class="val">医疗机构执业许可证</span>   
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">
-                                证件号：
-                            </div>
-                            <div class="cnt">
-                                <span class="val">XXXXXXXXXX</span>  
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">
-                                有效期
-                            </div>
-                            <div class="cnt">
-                                <span class="val">长期</span>     
-                            </div>
-                        </div>
-                        <div class="group">
-                            <div class="txt">
-                                证件照片：
-                            </div>
-                            <div class="cnt cnt-mul">
-                                <div class="goods-img thumb">
-                                    <img src="uploads/p0.jpg" data-src="uploads/p0.jpg">
-                                </div>
-                                <input type="hidden" value="" id="imgUrl">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="chart-info">
                     <h3>跟进结果</h3>
-                    <form action="" class="note-form">
+                        
+                    <div class="fa-note">
                         <p class="tips"><i>*</i>判断为不通过时要填写原因。</p>
-                        <div class="cnt2">
-                            <textarea class="ipt" name="" id="" cols="30" rows="10" placeholder="请填写跟进结果。"></textarea>
-                        </div>
-                    </form>
+                        <textarea class="ipt" value="" id="note"></textarea>
+                        <span class="error1"></span>
+                    </div>
                 </div>
             </div>
         </div><!-- fa-floor end -->
@@ -197,48 +213,144 @@
     </div><!-- footer end -->
 
     <script src="js/jquery.min.js"></script>
-    <script src="js/validform.min.js"></script>
     <script src="js/lightbox.js"></script>
     <script>
-        $(function() {
+    var _global = {
+            v: {
+                id: "page"
+            },
+            fn: {
+                init: function () {
+                    this.bindEvent();
+                    this.submitForm();
+                },
+                bindEvent: function() {
+                    var self = this;
+                        $myform = $('.form');
 
-            var rule = [{
-                {
-                    ele: '#companyName',
-                    datatype: 's',
-                    nullmsg: '用户名必须以英文字母开头，长度6到20位',
-                    errormsg: '用户名长度只能在6-20位字符之间'
+                    // blur
+                    $myform.on('blur', '.ipt', function() {
+                        var len = this.value.length,
+                            tips = eval('(' + $(this).data('msg') + ')'),
+                            msg = '';
+
+                        if (len == 0) {
+                            msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
+                        } else if (len < 2 || len > 50) {
+                            msg = '<i class="fa fa-prompt"></i> ' + tips.error;
+                        } 
+                        $(this).next().html(msg)[msg == '' ? 'hide' : 'show']();
+                    })
+
+                    $('#companyName').on('blur', function() {
+                        self.checkCompName();
+                    })
+                    $('#legalPerson').on('blur', function() {
+                        self.checklegalPerson();
+                    })
+                    $('#companyRegion').on('blur', function() {
+                        self.checkcompanyRegion();
+                    })
                 },
-                {
-                    ele: '#area',
-                    datatype: 's',
-                    nullmsg: '请选择企业注册地'
+                checkCompName: function() {
+                    var $input = $('#companyName'),
+                        length = $input.val().length,
+                        msg = '';
+                    if (length == 0) {
+                        msg = '<i class="fa fa-prompt"></i> 请输入企业名称';
+                    } else if (!/^([a-zA-Z0-9_\(\)-]|[\u4e00-\u9fa5]|[（）]){4,50}$/.test($input.val())) {
+                        msg = '<i class="fa fa-prompt"></i> 企业名称长度4-50，只能由中英文、数字及\"_\"、\"-\"、()、（）组成';
+                    }
+                    $input.next().html(msg)[msg == '' ? 'hide' : 'show']();
+                    msg && $input.focus();
+                    return msg === '';
                 },
-                {
-                    ele: '#linkMan',
-                    datatype: 's',
-                    nullmsg: '请输入联系人姓名'
+                checklegalPerson: function() {
+                    var $input = $('#legalPerson'),
+                        length = $input.val().length,
+                        msg = '';
+                    if (length == 0) {
+                        msg = '<i class="fa fa-prompt"></i> 请输入企业负责姓名';
+                    } else if (length < 4 || length > 50) {
+                        msg = '<i class="fa fa-prompt"></i> 企业责任人长度4-50位';
+                    }
+                    $input.next().html(msg)[msg == '' ? 'hide' : 'show']();
+                    msg && $input.focus();
+                    return msg === '';
                 },
-                {
-                    ele: '#mobile',
-                    datatype: 'm',
-                    nullmsg: '请输入手机号码',
-                    errormsg: '请输入正确的手机号码'
+                checkcompanyRegion: function() {
+                    var $input = $('#companyRegion'),
+                        length = $input.val().length,
+                        msg = '';
+                    if (length == 0) {
+                        msg = '<i class="fa fa-prompt"></i> 请输入企业所在地地址';
+                    } else if (length < 4 || length > 50) {
+                        msg = '<i class="fa fa-prompt"></i> 企业责任人长度4-150位';
+                    }
+                    $input.next().html(msg)[msg == '' ? 'hide' : 'show']();
+                    msg && $input.focus();
+                    return msg === '';
                 },
-                {
-                    ele: '#pwd',
-                    datatype: 'pwd',
-                    nullmsg: '请输入密码',
-                    errormsg: '密码由数字、字母或下划线组成，长度为6-20位'
+                formValidate: function() {
+                    var pass = true;
+
+                    if (!this.checkcompanyRegion()) {
+                        pass = false;
+                    }
+                    if (!this.checklegalPerson()) {
+                        pass = false;
+                    }
+                    if (!this.checkCompName()) {
+                        pass = false;
+                    }
+
+                    $('.form').find('.ipt').each(function() {
+                        var len = this.value.length,
+                            tips = eval('(' + $(this).data('msg') + ')'),
+                            msg = '';
+
+                        if ($(this).prop('disabled')) {
+                            // do nothing
+                        } else if (len == 0) {
+                            msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
+                        } else if (len < 2 || len > 50) {
+                            msg = '<i class="fa fa-prompt"></i> ' + tips.error;
+                        }
+                        $(this).next().html(msg)[msg == '' ? 'hide' : 'show']();
+                        if (pass && msg != '') {
+                            pass = false;
+                            $(this).focus();
+                        }
+                    })
+
+                    return pass;
                 },
-                {
-                    ele: '#pwdOld',
-                    datatype: '*',
-                    nullmsg: '请输入当前操作人的boss帐号密码'
+                submitForm: function() {
+                    var self = this;
+                    $('#submit1').on('click', function() {
+                        if (self.formValidate()) {
+                            alert('success')
+                        } else {
+                        }
+                        return false;
+                    })
+                    // 不通过
+                    $('#submit2').on('click', function() {
+                        var note = $('#note').val();
+                        if (note != '') {
+                            alert('success')
+                        } else {
+                            $('#note').focus();
+                        }
+                        return false;
+                    })
                 }
-            ])
-
-        })
+            }
+        }
+        //加载页面js
+        $(function() {
+            _global.fn.init();
+        });
     </script>
 </body>
 </html>

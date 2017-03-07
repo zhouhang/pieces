@@ -196,7 +196,7 @@ function pageInit() {
 	// 用户中心导航高亮
 	currNav();
 	// 新消息提示
-	navMsg(true);
+	// navMsg(true);
 }
 
 $(function() {

@@ -3,7 +3,7 @@
 *	!!! THIS IS JUST AN EXAMPLE !!!, PLEASE USE ImageMagick or some other quality image processing libraries
 */
 
-sleep(1);
+// sleep(1);
 
 $allowedExts = array("gif", "jpeg", "jpg", "png"); //上传文件类型列表
 $max_file_size = 1024*1024; //上传文件大小限制, 单位BYTE
