@@ -163,6 +163,7 @@
 		</mvc:resource-chain>
 	</mvc:resources>
 	<mvc:resources mapping="/doc/**" location="/assets/doc/" />
+	<mvc:resources mapping="/**" location="/assets/" />
 
 	<bean id="log" class="com.pieces.tools.log.aop.LogAspect"></bean>
 
