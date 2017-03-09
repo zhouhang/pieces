@@ -214,7 +214,7 @@ function category() {
 
 function gotop() {
 	var 
-		qq        = '1340296870';
+		qq        = '1296394620',
 		timer     = 0,
 		$elevator = $('#jelevator'),
 		$win      = $(window),
