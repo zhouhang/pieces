@@ -329,11 +329,13 @@
                 var cropModal = new Croppic('upload', options);
             },
             formValidate: function() {
-                var self = this;
+                var self = this,
+                    abled = true;
+
                 $('#submit').on('click', function() {
                     var pass = self.checkImg();
                     var boxs = $('#myform').find('.floor:visible');
-                    if (pass) {
+                    if (pass && abled) {
                         //如果检验通过
                         var certifyDataVo={};
                         certifyDataVo.type=$(" #myform input[name='type']:checked").val();
@@ -361,6 +363,7 @@
                             }
                         });
                         certifyDataVo.userQualificationVos=userQualificationVos;
+                        abled = false;
                         $.ajax({
                             url: _global.v.submitUrl,
                             data: JSON.stringify(certifyDataVo),
@@ -373,6 +376,9 @@
                                     window.location.href = '/user/submitSuccess';
                                     return;
                                 }
+                            },
+                            complete: function() {
+                                abled = true;
                             }
                         });
                     }

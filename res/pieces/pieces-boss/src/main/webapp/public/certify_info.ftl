@@ -84,11 +84,11 @@
                     <h3>${qualification.typeText}</h3>
                     <div class="check">
 
+                        <div class="pic thumb">
                             <#list qualification.pictures as qualificationPicsVo>
-                            <div class="pic thumb">
-                                    <img src="${qualificationPicsVo.pictureUrl}" alt="">
-                            </div>
+                            <img src="${qualificationPicsVo.pictureUrl}" />
                             </#list>
+                        </div>
 
                         <div class="form" >
                         <#if !([8]?seq_contains(qualification.type?default(0)))>
@@ -140,18 +140,8 @@
                 $myform = $('.form');
 
                 // blur
-                $myform.on('blur', '.ipt', function() {
-                    var len = this.value.length,
-                            tips = eval('(' + $(this).data('msg') + ')'),
-                            msg = '';
-
-                    if (len == 0) {
-                        msg = '<i class="fa fa-prompt"></i> ' + tips.empty;
-                    } else if (len < 2 || len > 50) {
-                        msg = '<i class="fa fa-prompt"></i> ' + tips.error;
-                    }
-                    $(this).next().html(msg)[msg == '' ? 'hide' : 'show']();
-
+                $myform.on('focus', '.ipt', function() {
+                    $(this).next().hide();
                 })
 
                 $('#companyName').on('blur', function() {
