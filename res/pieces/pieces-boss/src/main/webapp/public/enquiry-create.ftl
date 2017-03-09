@@ -49,7 +49,7 @@
                                     <td><div class="ipt-wrap" name="spec"></div></td>
                                     <td><div class="ipt-wrap" name="level"></div></td>
                                     <td><div class="ipt-wrap" name="originof"></div></td>
-                                    <td><input type="text" class="ipt price" name="myPrice" value="" autocomplete="off"><span class="error"></span></td>
+                                    <td><input type="text" class="ipt price" name="myPrice" value="${commodity.myPrice!}" autocomplete="off"><span class="error"></span></td>
                                     <td><a href="javascript:;" class="remove c-red">删除</a></td>
                                 </tr>
                                 </#list>

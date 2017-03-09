@@ -481,6 +481,7 @@ public class UserController extends BaseController {
 
 	}
 	@RequestMapping(value = "/certify")
+	@SecurityToken(generateToken = true)
 	public String userCertify(ModelMap model, HttpServletRequest request) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		CertifyRecordVo certifyRecordVo=certifyRecordService.getLatest(user.getId());
@@ -629,6 +630,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping(value = "/submit", method = RequestMethod.POST)
 	@ResponseBody
+	@SecurityToken(validateToken = true)
 	public Result submit(@RequestBody CertifyDataVo certifyDataVo){
 		UserCertificationVo certificationVo=new UserCertificationVo();
 		certificationVo.setType(certifyDataVo.getType());

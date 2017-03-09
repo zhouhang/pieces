@@ -61,13 +61,7 @@ public class ExcelParse {
                                 commoditys.setCommodityName(getCellValue(c));
                                 break;
                             case 1:
-                                commoditys.setSpecs(getCellValue(c));
-                                break;
-                            case 2:
-                                commoditys.setLevel(getCellValue(c));
-                                break;
-                            case 3:
-                                commoditys.setOrigin(getCellValue(c));
+                                commoditys.setMyPrice(Double.valueOf(getCellValue(c)));
                                 break;
                            default:
                                break;
