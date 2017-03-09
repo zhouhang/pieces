@@ -72,10 +72,14 @@
                         </#list>
                         </div>
                         <div class="form">
+                            <#if qualification.number?exists>
                             <label>证件号：</label>
                             <span>${qualification.number}</span>
+                            </#if>
+                            <#if qualification.term?exists>
                             <label>有效期至：</label>
                             <span>${qualification.term!}</span>
+                            </#if>
                         </div>
                     </div>
                 </div>

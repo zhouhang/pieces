@@ -91,12 +91,12 @@
                         </div>
 
                         <div class="form" >
-                        <#if !([8]?seq_contains(qualification.type?default(0)))>
+                        <#if !([7,8]?seq_contains(qualification.type?default(0)))>
                             <label for="">证件号：</label>
                             <input class="ipt" value="${qualification.number}" autocomplete="off" name="cardID_1" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
                             <em class="error1 top"></em>
                         </#if>
-                        <#if !([7,8]?seq_contains(qualification.type?default(0)))>
+                        <#if !([8]?seq_contains(qualification.type?default(0)))>
                             <label for="">营业期限至：</label>
                             <input class="ipt date" value="${qualification.term!}" autocomplete="off" name="indate_1" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}" onclick="laydate()">
                             <em class="error1 bottom"></em>
