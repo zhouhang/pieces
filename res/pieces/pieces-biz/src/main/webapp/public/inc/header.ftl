@@ -52,13 +52,4 @@
                 <li <#if CURRENT_PAGE??&&CURRENT_PAGE=='recruit'>class="current"</#if>><a href="/recruit/index">合作伙伴计划</a></li>
             </ul>
         </div>
-        <div class="plus">
-   <#if user_session_biz??>
-   <a href="/center/enquiry/index" class="btn btn-gray">
-    <#else>
-    <a href="/anon/enquiry" class="btn btn-gray">
-    </#if>
-           <i class="fa fa-question-circle"></i>快速询价</a>
-        </div>
-    </div>
 </div><!-- nav end -->

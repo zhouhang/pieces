@@ -43,7 +43,6 @@
 	                                    <td>${commodity.exterior}</td>
 	                                    <td>${commodity.originOf}</td>
 	                                    <td>
-	                                        <#if commodity.status == 1><a href="/center/enquiry/index?commodityId=${commodity.id!}" class="c-blue">询价</a></#if>
 	                                        <a href="/center/collect/delete/${commodity.id!}" class="c-red jdel">删除</a>
 	                                    </td>
 	                                </tr>

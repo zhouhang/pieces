@@ -64,7 +64,6 @@
                             <dl>
                                 <dt>建议您：</dt>
                                 <dd>1. 检查输入文字是否有误后重新搜索 </dd>
-                                <dd>2. 使用 <a href="/center/enquiry/index">快速询价</a> 功能，提交您的采购单</dd>
                             </dl>
                         </div>
                     </div>
