@@ -52,4 +52,5 @@
                 <li <#if CURRENT_PAGE??&&CURRENT_PAGE=='recruit'>class="current"</#if>><a href="/recruit/index">合作伙伴计划</a></li>
             </ul>
         </div>
+    </div>
 </div><!-- nav end -->
