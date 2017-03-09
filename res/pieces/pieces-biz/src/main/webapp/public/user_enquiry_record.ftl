@@ -86,7 +86,7 @@
                                 </#list>
                             <#else>
                                 <div class="empty">
-                                    <p>没有符合条件的记录，现在<a class="c-blue" href="/center/enquiry/index">立即询价</a>吧！</p>
+                                    <p>没有符合条件的记录，现在<a class="c-blue" href="/commodity/index">立即询价</a>吧！</p>
                                 </div>
                             </#if>
                             </ul>
