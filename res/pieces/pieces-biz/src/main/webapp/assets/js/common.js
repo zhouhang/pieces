@@ -220,13 +220,20 @@ function gotop() {
 		$win      = $(window),
 		threshold = $win.height(),
 		elevator  = $elevator.length === 1,
-		$toolbar  = $('<div class="toolbar"><div class="item wechat"><img src="images/qrcode.png"></div><div class="item qq"><a href="tencent://message/?uin='+qq+'&amp;Site=在线QQ&amp;Menu=yes"></a></div><div class="item gotop"><a href="javascript:;">返回顶部</a></div></div>').appendTo($('body'));
+		$toolbar  = $('<div class="toolbar"><div class="item wechat"><img src="images/qrcode.png"></div><div class="item qq"><a href="tencent://message/?uin='+qq+'&amp;Site=在线QQ&amp;Menu=yes"></a></div><div class="item gotop"><a href="javascript:;">返回顶部</a></div></div>').appendTo($('body')),
+		$gotop 	  = $toolbar.find('.gotop');
 
 	var scroll = function() {
 		clearTimeout(timer);
 		timer = setTimeout(function() {
-			var fade = $win.scrollTop() < threshold ? 'fadeOut' : 'fadeIn';
-			$toolbar[fade]();
+			var fade = 'fadeIn',
+				className = 'addClass';
+
+			if ($win.scrollTop() < threshold) {
+				fade = 'fadeOut';
+				className = 'removeClass';
+			}
+			$gotop[className]('fade');
 			elevator && $elevator[fade]();
 		}, 50);
 	}
