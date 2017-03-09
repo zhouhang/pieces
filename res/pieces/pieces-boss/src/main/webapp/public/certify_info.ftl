@@ -91,18 +91,22 @@
                             </#list>
 
                         <div class="form" >
+                        <#if !([8]?seq_contains(qualification.type?default(0)))>
                             <label for="">证件号：</label>
                             <input class="ipt" value="${qualification.number}" autocomplete="off" name="cardID_1" placeholder="" type="text" data-msg="{empty: '请输入证件号', error: '证件号字符长度2到50个字符！'}">
                             <em class="error1 top"></em>
-                            <label for="">有效期至：</label>
+                        </#if>
+                        <#if !([7,8]?seq_contains(qualification.type?default(0)))>
+                            <label for="">营业期限至：</label>
                             <input class="ipt date" value="${qualification.term!}" autocomplete="off" name="indate_1" placeholder="" type="text" data-msg="{empty: '请输入证件有效期', error: '证件号有效期长度2到50个字符！'}" onclick="laydate()">
                             <em class="error1 bottom"></em>
+                        </#if>
                         </div>
+
                     </div>
                 </div>
               </#list>
                 </div>
-            </div>
 
             <div class="user-info">
                 <h3>跟进结果</h3>
@@ -114,13 +118,12 @@
                 </div>
             </div>
         </div>
+    </div>
     </div><!-- fa-floor end -->
-</div>
 
 <#include "./inc/footer.ftl"/>
-
-<script src="${urls.getForLookupPath('/js/jquery.min.js')}"></script>
 <script src="${urls.getForLookupPath('/js/lightbox.js')}"></script>
+<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 <script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
 <script>
     var _global = {
@@ -270,6 +273,17 @@
                                 if(data.status=="y"){
                                     $("#pass").hide();
                                     $("#notpass").hide();
+                                    $.notify({
+                                        type: 'success',
+                                        title: '审核通过',
+                                        text: data.info,
+                                        delay: 3e3,
+                                        call: function () {
+                                            setTimeout(function() {
+                                                location.reload();
+                                            }, 3e3);
+                                        }
+                                    });
                                 }
 
                             }
@@ -299,6 +313,17 @@
                                 if(data.status=="y"){
                                     $("#pass").hide();
                                     $("#notpass").hide();
+                                    $.notify({
+                                        type: 'success',
+                                        title: '审核未通过',
+                                        text: data.info,
+                                        delay: 3e3,
+                                        call: function () {
+                                            setTimeout(function() {
+                                                location.reload();
+                                            }, 3e3);
+                                        }
+                                    });
                                 }
                             }
                         })

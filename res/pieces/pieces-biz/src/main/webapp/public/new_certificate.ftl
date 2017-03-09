@@ -30,8 +30,8 @@
                     <label><input type="radio" name="type" value="4" class="cbx">医药公司</label>
                 </div>
 
-                <div class="floor">
-                    <h3>医疗机构许可证</h3>
+                <div class="floor" type="6">
+                    <h3>医疗机构经营许可证</h3>
                     <div class="check">
                         <div class="pic thumb required">
                             <span class="up-img"></span>
@@ -40,7 +40,7 @@
                             <i></i>
                             <span>
                                     <em>说明</em>
-                                    请上传医疗机构许可证图片。
+                                    请上传医疗机构经营许可证图片，如果做过资质变更，还需要上传资质变更记录表图片，变更记录表最多能传3张。
                                 </span>
                         </div>
                     </div>
@@ -130,8 +130,9 @@
                             <i></i>
                             <span>
                                     <em>说明</em>
-                                    请上传采购人员的法人授权委托书图片，如果采购人员与收货人员不是同一个人，还需要上传收货人员授权委托书图片。
-                                    <a href="javascript:;" class="c-blue thumb">示例图片<img src="images/1.jpg" /></a>
+                                    请上传采购人员的法人授权委托书图片，如果采购人员与收货人员不是同一个人，还需要上传收货人员授权委托书图片。</br>
+                                    <a href="javascript:;" class="c-blue thumb">查看示例<img src="${urls.getForLookupPath('/images/1.jpg')}" /></a>
+                                    <a href="/doc/1.docx" target="_blank" class="c-blue">下载模板</a>
                                 </span>
                         </div>
                     </div>
@@ -146,8 +147,9 @@
                             <i></i>
                             <span>
                                     <em>说明</em>
-                                    请上传贵单位的印鉴章备案图片。
-                                    <a href="javascript:;" class="c-blue thumb">示例图片<img src="images/2.jpg" /></a>
+                                    请上传贵单位的印鉴章备案图片。</br>
+                                    <a href="javascript:;" class="c-blue thumb">查看示例<img src="${urls.getForLookupPath('/images/2.jpg')}" /></a>
+                                    <a href="/doc/2.docx" target="_blank" class="c-blue">下载模板</a>
                                 </span>
                         </div>
                     </div>
@@ -166,13 +168,8 @@
 
 
 <#include "./inc/footer.ftl"/>
-
-
-<script src="${urls.getForLookupPath('/js/jquery.min.js')}"></script>
 <script src="${urls.getForLookupPath('/js/lightbox.js')}"></script>
 <script src="${urls.getForLookupPath('/js/croppic.min.js')}"></script>
-<script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
-<script src="${urls.getForLookupPath('/js/common.js')}"></script>
 <script>
     var _global = {
         v: {
@@ -221,6 +218,7 @@
 
                 $('.certificate').find('.type').on('click', '.cbx', function() {
                     $floor.hide().find('h3 em').remove();
+                    $floor.hide().find('span.error').remove();
                     if (this.value == 1) {
                         // 药店
                         $floor.eq(1).show();

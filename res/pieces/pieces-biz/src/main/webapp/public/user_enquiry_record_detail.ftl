@@ -192,11 +192,10 @@
                     $cbxs.on('click', function() {
                         total += this.checked ? 1 : -1;
                         $cbxAll.prop('checked', total === amount);
-
+                        autoDisableBtn(total)
                     }).each(function() {
                         // 统计已选个数
                         total += this.checked ? 1 : 0;
-                        autoDisableBtn(total)
                     });
 
                     // 全选
