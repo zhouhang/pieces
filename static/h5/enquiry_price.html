@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>修改销售价-上工好药</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+
+<section class="ui-content">
+    <div class="pdetail">
+        <div class="thead">
+            <div class="tr">
+                <div class="td">商品名</div>
+                <div class="td">片型</div>
+                <div class="td">销售价</div>
+                <div class="td">开票价</div>
+            </div>
+        </div>
+        <div class="tbody">
+            <div class="tr">
+                <div class="td">白芍</div>
+                <div class="td">薄片</div>
+                <div class="td">￥90.00</div>
+                <div class="td"><input type="tel" placeholder="￥90.00" value="" class="ipt" tabindex="1" /><span class="error"></span></div>
+            </div>
+            <div class="tr">
+                <div class="td">白芍</div>
+                <div class="td">薄片</div>
+                <div class="td">￥90.00</div>
+                <div class="td"><input type="tel" placeholder="￥90.00" value="" class="ipt" tabindex="1" /><span class="error"></span></div>
+            </div>
+            <div class="tr">
+                <div class="td">白芍</div>
+                <div class="td">薄片</div>
+                <div class="td">￥90.00</div>
+                <div class="td"><input type="tel" placeholder="￥90.00" value="" class="ipt" tabindex="1" /><span class="error"></span></div>
+            </div>
+        </div>
+    </div>
+    <div class="ui-button">
+        <button type="button" class="ubtn ubtn-red" id="submit">保存</button>
+    </div>
+</section><!-- /ui-content -->
+
+<script src="assets/js/jquery191.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+!(function($) {
+    var _global = {
+        init: function() {
+            this.bindEvent();
+        },
+        bindEvent: function() {
+            var $ipt = $('.pdetail').find('.ipt');
+
+            var check = function() {
+                var pass = true;
+                $ipt.each(function() {
+                    if (this.value == '') {
+                        $(this).next().html('请输入价格').show();
+                        pass = false;
+                        return false; // break
+                    }
+                })
+                return pass;
+            }
+
+            // 价格输入框
+            $ipt.on('focus blur', function() {
+                $(this).next().hide();
+            }).on('keyup', function() {
+                var val = this.value;
+                if (!/^\d+\.?\d*$/.test(val)) {
+                    val = Math.abs(parseFloat(val));
+                    this.value = isNaN(val) ? '' : val;
+                }
+            })
+
+            // 提交
+            $('#submit').on('click', function() {
+                if (check()) {
+                    popover('提交成功');
+                    // window.location.href = 'enquiry_price_message.html';
+                }
+            })
+        }
+    }
+
+    _global.init();
+})(window.Zepto || window.jQuery);
+</script>
+</body>
+</html>
