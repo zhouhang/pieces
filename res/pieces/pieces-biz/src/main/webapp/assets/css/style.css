@@ -22,6 +22,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 /* iconfont.cn */
 @font-face{font-family:"fa";src:url('../fonts/iconfont.eot?t=1466759445');src:url('../fonts/iconfont.eot?t=1466759445#iefix') format('embedded-opentype'),url('../fonts/iconfont.woff?t=1466759445') format('woff'),url('../fonts/iconfont.ttf?t=1466759445') format('truetype'),url('../fonts/iconfont.svg?t=1466759445#fa') format('svg')}
 .fa{font-family:"fa"!important;font-size:16px;font-style:normal;vertical-align:middle;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:0.2px;-moz-osx-font-smoothing:grayscale}
+
 .fa-download:before{content:"\e61b";}
 .fa-cart:before{content:"\e61e";}
 .fa-attach:before{content:"\e62d";}
@@ -30,15 +31,16 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .fa-setting:before{content:"\e604";}
 .fa-check:before{content:"\e609";}
 .fa-lock:before{content:"\e600";}
-.fa-chevron-right:before{content:"\e60a";}
+.fa-chevron-right:before{content:"\e631";}
 .fa-search:before{content:"\e612";}
 .fa-times-circle-o:before{content:"\e617";}
 .fa-tel:before{content:"\e60b";}
+.fa-success:before{content:"\e61d";}
 .fa-invoice:before{content:"\e605";}
-.fa-chevron-down:before{content:"\e60c";}
-.fa-chevron-up:before{content:"\e60d";}
+.fa-chevron-down:before{content:"\e632";}
+.fa-chevron-up:before{content:"\e633";}
 .fa-people:before{content:"\e601";}
-.fa-chevron-left:before{content:"\e610";}
+.fa-chevron-left:before{content:"\e634";}
 .fa-plus:before{content:"\e611";}
 .fa-question-circle:before{content:"\e602";}
 .fa-li:before{content:"\e61c";}
@@ -52,8 +54,11 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .fa-export:before{content:"\e613";}
 .fa-bill:before{content:"\e607";}
 .fa-clock:before{content:"\e608";}
+.fa-fukuan:before{content:"\e6a6";}
 .fa-times-circle:before{content:"\e615";}
-.fa-cartlist:before{content:"\e61d";}
+.fa-xiadan01:before{content:"\e647";}
+.fa-chuku:before{content:"\e650";}
+.fa-truck:before{content:"\e639";}
 .fa-new:before{content:"\e61f";}
 
 .fa-chevron-up,
@@ -314,10 +319,33 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .order-list .nr{border-right:none;}
 .order-list .nl{border-left:none;}
 .order-list .pagin{padding:0;}
-.order-detail table{border:1px solid #ccc;} 
-.order-detail td{vertical-align:top;border:none;}  
-.order-detail td em{color:#333;font-size:12px !important;}  
-.order-detail td em{color:#333;font-size:12px !important;}  
+.order-detail{padding-top:30px;font-size:12px;overflow:hidden;}
+.order-detail .guide{padding:5px 0 45px;overflow:hidden;*zoom:1;}
+.order-detail .guide li{position:relative;float:left;width:20%;text-align:center;color:#999;}
+.order-detail .guide li:before{content:'';position:absolute;top:24px;left:-43px;width:86px;height:10px;background:url(../images/guide.png) no-repeat;}
+.order-detail .guide li.fore:before{display:none;}
+.order-detail .guide i{display:block;height:70px;font-size:40px;}
+.order-detail .guide em{display:block;font-size:14px;}
+.order-detail .guide span{display:block;width:80px;margin:0 auto;}
+.order-detail .guide a.btn{margin-top:6px;padding:3px 15px;}
+.order-detail .guide .curr{color:#333;}
+.order-detail .guide .curr:before{background-position:0 -10px;}
+.order-detail .guide .curr i{color:#58c805;}
+.order-detail .info{margin-right:-1px;overflow:hidden;*zoom:1;}
+.order-detail .info dl{float:left;width:242px;height:120px;padding:25px 35px;line-height:22px;border:1px solid #e7e7e7;border-left:0;}
+.order-detail .info dt{margin-bottom:10px;font-size:14px;font-weight:700;}
+.order-detail .info dd{position:relative;padding-left:60px;}
+.order-detail .info em{position:absolute;left:0;top:0;width:60px;text-align:right;}
+.order-detail .table{font-size:14px;}
+.order-detail th{height:40px;background:#f5f5f5;text-align:left;}
+.order-detail td{padding:20px 0;border-top:1px solid #e7e7e7;}
+.order-detail em{font-size:12px;}
+.order-detail .pic{width:78px;height:78px;border:1px solid #e7e7e7;vertical-align:middle;overflow:hidden;}
+.order-detail .name{padding-right:80px;}
+.order-detail .summary{padding:30px;line-height:30px;background:#f0eff5;font-size:14px;text-align:right;}
+.order-detail .summary span{display:inline-block;width:90px;color:#c3272b;}
+.order-detail .summary .bold{font-size:16px;font-weight:bold;}
+
 .order-detail-list{margin-top:-40px;}    
 .order-detail-list td{padding:10px 0;background:#fff;}    
 
