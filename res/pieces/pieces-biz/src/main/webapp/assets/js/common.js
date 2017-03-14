@@ -268,7 +268,7 @@ var cookieFn = {
 			if (temp[0] == key) return unescape(temp[1]);
 		}
 	},
-	delete: function(key) {
+	del: function(key) {
 		var date = new Date();
 		date.setTime(date.getTime() - 1e4);
 		document.cookie = key + '=v; expires =' + date.toGMTString();

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>询价单-上工好药</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+
+<section class="ui-content">
+    <div class="ui-tab">
+        <ul class="cf">
+            <li class="curr"><a href="?id=1">已报价</a></li>
+            <li><a href="?id=2">未报价</a></li>
+            <li><a href="?id=0">已过期</a></li>
+        </ul>
+    </div>
+    <div class="ui-cnt">
+        <div class="ui-empty">
+            <p>没有已报价的询价单！</p>
+            <div class="btm">
+                <a href="enquiry.html" class="ubtn ubtn-red"><i class="ico ico-camera"></i> 拍照询价</a>
+            </div>
+        </div>
+
+        <ul class="plist">
+            <li>
+                <a href="enquiry_detail.html">
+                    <div class="hd new">E20170205150200172</div>
+                    <div class="bd">海马、天冬、天麻、党参、煅人中白、制马钱子... 共 <em>10</em> 个商品 </div>
+                    <time data-time="2017-03-10 09:12:11">上午10：28</time>
+                </a>
+            </li>
+            <li>
+                <a href="enquiry_detail.html">
+                    <div class="hd">E20170205150200172</div>
+                    <div class="bd">海马、天冬、天麻、党参、煅人中白、制马钱子... 共 <em>10</em> 个商品 </div>
+                    <time data-time="2017-03-9 09:12:11">上午10：28</time>
+                </a>
+            </li>
+            <li>
+                <a href="enquiry_detail.html">
+                    <div class="hd">E20170205150200172</div>
+                    <div class="bd">海马、天冬、天麻、党参、煅人中白、制马钱子... 共 <em>10</em> 个商品 </div>
+                    <time data-time="2017-03-8 09:12:11">上午10：28</time>
+                </a>
+            </li>
+            <li>
+                <a href="enquiry_detail.html">
+                    <div class="hd">E20170205150200172</div>
+                    <div class="bd">海马、天冬、天麻、党参、煅人中白、制马钱子... 共 <em>10</em> 个商品 </div>
+                    <time data-time="2017-03-7 09:12:11">上午10：28</time>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+</section><!-- /ui-content -->
+
+<script src="assets/js/jquery191.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+!(function($) {
+    var _global = {
+        init: function() {
+            this.timeago();
+        },
+        timeago: function() {
+            $('.plist').find('time').each(function() {
+                var date = $(this).data('time');
+                date && $(this).html(_YYY.timeago.elapsedTime(date));
+            })
+        }
+    }
+
+    _global.init();
+})(window.Zepto || window.jQuery);
+</script>
+</body>
+</html>
