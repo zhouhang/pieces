@@ -132,6 +132,7 @@
             <if test="agentId != null">
                 and o.agent_id = #{agentId}
             </if>
-
+        ORDER BY l.id DESC
     </select>
+
 </mapper>

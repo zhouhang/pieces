@@ -116,7 +116,7 @@
                and a.type_id = #{typeId}
            </if>
        </where>
-        order by a.sort desc
+        order by a.create_time desc
     </select>
 
     <select id="findByType" parameterType="java.lang.Integer"  resultMap="AdResultMapVo">
