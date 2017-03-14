@@ -33,7 +33,7 @@
                                 <a href="/commodity/${commodity.id}"><img class="lazyload" src="images/blank.gif" data-original="${commodity.pictureUrl!}" width="80" height="80" alt="${commodity.title!}"></a>
                             </div>
                             <div class="desc">
-                                <h3><a href="/commodity/${commodity.id}">${commodity.name}</a></h3>
+                                <h3><a href="/commodity/${commodity.id}" title="${commodity.name}">${commodity.name}</a></h3>
                                 <P>${commodity.spec}</P>
                             </div>
                         </dd>
