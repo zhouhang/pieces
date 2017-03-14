@@ -279,6 +279,7 @@ public class OrderController extends BaseController {
     public String detail(@PathVariable("id")Integer id, ModelMap modelMap) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		OrderFormVo vo =  orderFormService.findVoById(id);
+		// 查询用户该订单的付款记录 TODO:
 		//该订单非用户自己订单
 		if(!user.getId().equals(vo.getUserId())){
 			return "redirect:error/404";

@@ -15,34 +15,18 @@
     <#include "./inc/side-center.ftl"/>
         <div class="main">
             <div class="title">
-                <h3>订单详情</h3>
+                <h3>订单号：${orderForm.code!}</h3>
                 <div class="extra"></div>
             </div>
 
-            <div style="display: none;">${orderForm.statusText}</div>
-
-            <div class="order-list order-detail">
-                <table class="tc">
-                    <tbody>
-                    <tr>
-                        <th colspan="3" class="tl">
-                            <span>订单单号：${orderForm.code}</span>
-                            <span>下单时间：<#if orderForm.createrTime??>${orderForm.createrTime?datetime}</#if></span>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td class="tl nr">
-                            <span>收&nbsp;&nbsp;货&nbsp;&nbsp;人：<em>${orderForm.address.consignee}</em></span>
-                            <span>联系方式：<em>${orderForm.address.tel}</em></span>
-                            <span>收货地址：<em>${orderForm.address.area}${orderForm.address.detail}</em></span>
-                        </td>
-                        <td class="tl nl nr">
-                            <span>订单总额：<em class="price">¥${orderForm.amountsPayable}</em></span>
-                        <#if user_session_biz?? && user_session_biz.type == 2>
-                            <span>需支付保证金：<em class="price">¥${orderForm.deposit}</em></span>
-                        </#if>
-                        </td>
-                        <td class="nl">
+            <div class="order-detail">
+                <div class="guide">
+                    <ul>
+                        <li class="fore curr">
+                            <i class="fa fa-xiadan01"></i><em>下单</em>
+                            <span><#if orderForm.createrTime??>${orderForm.createrTime?datetime}</#if></span>
+                        </li>
+                        <li class="curr"><i class="fa fa-fukuan"></i>
                         <#if user_session_biz?? && user_session_biz.type == 2>
                             <#if (orderForm.status == 1)>
                                 <a href="/center/pay/go/${orderForm.id}" class="btn btn-red">支付保证金</a>
@@ -52,155 +36,245 @@
                                 <a href="/center/pay/go/${orderForm.id}" class="btn btn-red">付款</a>
                             </#if>
                         </#if>
-                        <#if (orderForm.status == 4)>
-                            <a href="${orderForm.id}" name="5" class="btn btn-red status">确认收货</a>
-                        </#if>
                         <#if (orderForm.status &lt;= 2 || orderForm.status == 8)>
                             <span><a href="${orderForm.id}" name="6" class="c-blue jremove status">取消订单</a></span>
                         </#if>
                         <#if (orderForm.status == 6)>
                             <span><a href="${orderForm.id}" name="7" class="c-blue jremove status">删除订单</a></span>
                         </#if>
-                        <#if (orderForm.status == 1)>
-                            <span>剩余付款时间</span>
-                            <span>${orderForm.orderValidityPeriod}</span>
+                            <em>付款成功</em>
+                        </li>
+                        <li>
+                            <i class="fa fa-chuku"></i>
+                            <#if (orderForm.status == 3)>
+                                <em>等待发货</em>
+                            </#if>
+                            <#if (orderForm.status == 4)>
+                                <em>商品出库</em>
+                                <span>${orderForm.deliveryDate?datetime}</span>
+                            </#if>
+                        </li>
+                        <li>
+                            <i class="fa fa-truck"></i>
+                        <#if (orderForm.status == 4)>
+                            <a href="${orderForm.id}" name="5" class="btn btn-red status">确认收货</a>
                         </#if>
-                        <#if ((orderForm.status == 4 || orderForm.status == 5) && !orderForm.invoiceId?exists)>
-                            <span><a href="${orderForm.id}" name="-1" class="c-blue jinvoice">补开发票</a></span>
+                        </li>
+                        <li>
+                            <i class="fa fa-success"></i>
+                        <#if (orderForm.status == 5)>
+                            <em>完成</em>
                         </#if>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                        </li>
+                    </ul>
+                </div>
 
-            <div class="fa-table order-detail-list">
-                <div class="fa-chart">
+                <div class="info">
+                    <dl>
+                        <dt>收货人信息</dt>
+                        <dd>
+                            <em>收货人：</em>
+                            <span>${orderForm.address.consignee}</span>
+                        </dd>
+                        <dd>
+                            <em>联系方式：</em>
+                            <span>${orderForm.address.tel}</span>
+                        </dd>
+                        <dd>
+                            <em>收货地址：</em>
+                            <span>${orderForm.address.area}${orderForm.address.detail}</span>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>付款信息</dt>
+                    <#if orderForm.invoice?exists>
+                        <dd>
+                            <em>付款方式：</em>
+                            <span>支付宝</span>
+                        </dd>
+                        <dd>
+                            <em>付款时间：</em>
+                            <span>2017-03-13 10:06:20</span>
+                        </dd>
+                        <dd>
+                            <em>订单金额：</em>
+                            <span>¥60.00</span>
+                        </dd>
+                        <dd>
+                            <em>需付金额：</em>
+                            <span>¥60.00</span>
+                        </dd>
+                    <#else >
+                        <span>未付款</span>
+                        <#if (orderForm.status == 1)>
+                        <span>剩余付款时间</span>
+                        <span>${orderForm.orderValidityPeriod}</span>
+                        </#if>
+                    </#if>
+                    </dl>
+                    <dl>
+                        <dt>发票信息</dt>
+                        <#if orderForm.invoice?exists>
+                        <dd>
+                            <em>发票类型：</em>
+                            <span>普通发票</span>
+                        </dd>
+                        <dd>
+                            <em>发票抬头：</em>
+                            <span>个人</span>
+                        </dd>
+                        <dd>
+                            <em>发票内容：</em>
+                            <span>明细</span>
+                        </dd>
+                        <#else >
+                            <dd>
+                                <#if ((orderForm.status == 4 || orderForm.status == 5) && !orderForm.invoiceId?exists)>
+                                    <span><a href="${orderForm.id}" name="-1" class="c-blue jinvoice">补开发票</a></span>
+                                </#if>
+                            </dd>
+                        </#if>
+                    </dl>
+                </div>
+
+                <div class="table">
                     <table>
                         <thead>
                         <tr>
-                            <th width="130">商品名称</th>
-                            <th width="70">片型</th>
-                            <th width="70">规格等级</th>
-                            <th width="100">产地</th>
-                            <th width="90">数量<span>（公斤）</span></th>
+                            <th width="30"></th>
+                            <th width="100"></th>
+                            <th>商品信息</th>
                         <#if user_session_biz?? && user_session_biz.type == 2>
-                            <th width="80">销售价<span>（元/公斤）</span></th>
-                            <th width="80">开票价<span>（元/公斤）</span></th>
-                            <th width="80">开票价小计<span>（元）</span></th>
+                            <th width="130">指导价<em>（元/公斤）</em></th>
+                            <th width="130">开票价<em>（元/公斤）</em></th>
                         <#else >
-                            <th width="100">单价<span>（元/公斤）</span></th>
-                            <th width="130">小计<span>（元）</span></th>
+                            <th width="130">单价<em>（元/公斤）</em></th>
                         </#if>
-                            <th>状态</th>
+                            <th width="100">数量<em>（公斤）</em></th>
                         </tr>
                         </thead>
-                        <tfoot></tfoot>
                         <tbody>
                         <#list orderForm.commodities as commodity>
                         <tr>
-                            <td>${commodity.name}</td>
-                            <td>${commodity.spec}</td>
-                            <td>${commodity.level}</td>
-                            <td>${commodity.originOf}</td>
-                            <td>${commodity.amount}</td>
+                            <td></td>
+                            <td>
+                                <div class="pic">
+                                    <a href="#"><img src="uploads/p1.jpg" alt=""></a>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="name">
+                                    <a href="/commodity/${commodity.id}">${commodity.name}${commodity.spec}${commodity.level}</a>
+                                </div>
+                            </td>
                             <#if user_session_biz?? && user_session_biz.type == 2>
                                 <td><#if commodity.guidePrice??>¥${commodity.guidePrice}</#if></td>
                             </#if>
                             <td><#if commodity.price??>¥${commodity.price}</#if></td>
-                            <td><#if commodity.subtotal??>¥${commodity.subtotal}</#if></td>
-                            <#if commodity_index == 0>
-                                <td rowspan="${orderForm.commodities?size}"><span class="c-red">${orderForm.statusText}</span></td>
-                            </#if>
+                            <td>${commodity.amount}</td>
                         </tr>
                         </#list>
                         </tbody>
                     </table>
                 </div>
+                <div class="summary">
+                <#if user_session_biz?? && user_session_biz.type == 2>
+                    <div class="row">
+                        <label>订单总额：</label><span>¥60.00</span>
+                    </div>
+                    <div class="row bold">
+                        <label>需付保证金：</label><span>¥3000.00</span>
+                    </div>
+                <#else >
+                    <div class="row bold">
+                        <label>订单总额：</label><span>¥${orderForm.amountsPayable!}</span>
+                    </div>
+                </#if>
+                </div>
             </div>
         </div>
-    </div><!-- member-box end -->
+    </div>
+</div><!-- member-box end -->
 
-    <!-- start 新增发票 -->
-    <div class="fa-form fa-form-layer" id="jinvoiceBox">
-        <form action="" id="invoiceForm">
-            <div class="group">
-                <div class="txt">
-                    <span>发票类型：</span>
-                </div>
-                <div class="cnt">
-                    <label><input type="radio" name="type" value="1" class="cbx" data-text="普通发票">普通发票</label>
-                    <label><input type="radio" name="type" value="2" class="cbx" id="tax" data-text="增值税专用发票">增值税专用发票</label>
-                </div>
+<!-- start 新增发票 -->
+<div class="fa-form fa-form-layer" id="jinvoiceBox">
+    <form action="" id="invoiceForm">
+        <div class="group">
+            <div class="txt">
+                <span>发票类型：</span>
             </div>
+            <div class="cnt">
+                <label><input type="radio" name="type" value="1" class="cbx" data-text="普通发票">普通发票</label>
+                <label><input type="radio" name="type" value="2" class="cbx" id="tax" data-text="增值税专用发票">增值税专用发票</label>
+            </div>
+        </div>
 
-            <div class="group">
-                <div class="txt">
-                    <i>*</i>
-                    <span>发票抬头：</span>
-                </div>
-                <div class="cnt">
-                    <input type="text" name="name" class="ipt" autocomplete="off" placeholder="请填写发票抬头">
-                </div>
+        <div class="group">
+            <div class="txt">
+                <i>*</i>
+                <span>发票抬头：</span>
             </div>
+            <div class="cnt">
+                <input type="text" name="name" class="ipt" autocomplete="off" placeholder="请填写发票抬头">
+            </div>
+        </div>
 
-            <div class="group">
-                <div class="txt">
-                    <i class="hide">*</i>
-                    <span>纳税人识别号：</span>
-                </div>
-                <div class="cnt">
-                    <input type="text" name="identifier" class="ipt" autocomplete="off" placeholder="15，17，18或20位纳税人识别号">
-                </div>
+        <div class="group">
+            <div class="txt">
+                <i class="hide">*</i>
+                <span>纳税人识别号：</span>
             </div>
+            <div class="cnt">
+                <input type="text" name="identifier" class="ipt" autocomplete="off" placeholder="15，17，18或20位纳税人识别号">
+            </div>
+        </div>
 
-            <div class="group">
-                <div class="txt">
-                    <i class="hide">*</i>
-                    <span>注册地址：</span>
-                </div>
-                <div class="cnt">
-                    <input type="text" name="registeredAddress" class="ipt" autocomplete="off" placeholder="请填写注册地址">
-                </div>
+        <div class="group">
+            <div class="txt">
+                <i class="hide">*</i>
+                <span>注册地址：</span>
             </div>
+            <div class="cnt">
+                <input type="text" name="registeredAddress" class="ipt" autocomplete="off" placeholder="请填写注册地址">
+            </div>
+        </div>
 
-            <div class="group">
-                <div class="txt">
-                    <i class="hide">*</i>
-                    <span>注册电话：</span>
-                </div>
-                <div class="cnt">
-                    <input type="text" name="registeredTel" class="ipt" autocomplete="off" placeholder="请填写注册电话">
-                </div>
+        <div class="group">
+            <div class="txt">
+                <i class="hide">*</i>
+                <span>注册电话：</span>
             </div>
+            <div class="cnt">
+                <input type="text" name="registeredTel" class="ipt" autocomplete="off" placeholder="请填写注册电话">
+            </div>
+        </div>
 
-            <div class="group">
-                <div class="txt">
-                    <i class="hide">*</i>
-                    <span>开户银行：</span>
-                </div>
-                <div class="cnt">
-                    <input type="text" name="bankName" class="ipt" autocomplete="off" placeholder="请填写开户银行">
-                </div>
+        <div class="group">
+            <div class="txt">
+                <i class="hide">*</i>
+                <span>开户银行：</span>
             </div>
+            <div class="cnt">
+                <input type="text" name="bankName" class="ipt" autocomplete="off" placeholder="请填写开户银行">
+            </div>
+        </div>
 
-            <div class="group">
-                <div class="txt">
-                    <i class="hide">*</i>
-                    <span>银行帐号：</span>
-                </div>
-                <div class="cnt">
-                    <input type="text" name="bankAccount" class="ipt" autocomplete="off" placeholder="请填写银行帐号">
-                </div>
+        <div class="group">
+            <div class="txt">
+                <i class="hide">*</i>
+                <span>银行帐号：</span>
             </div>
+            <div class="cnt">
+                <input type="text" name="bankAccount" class="ipt" autocomplete="off" placeholder="请填写银行帐号">
+            </div>
+        </div>
 
-            <div class="button">
-                <button type="submit" class="btn btn-red submit">保存</button>
-                <button type="reset" class="btn btn-gray cancel">取消</button>
-            </div>
-        </form>
-    </div><!-- end 新增发票 -->
-    
+        <div class="button">
+            <button type="submit" class="btn btn-red submit">保存</button>
+            <button type="reset" class="btn btn-gray cancel">取消</button>
+        </div>
+    </form>
+</div><!-- end 新增发票 -->
 <#include "./inc/footer.ftl"/>
 <script src="js/validator/jquery.validator.js?local=zh-CN"></script>
 <script src="${urls.getForLookupPath('/js/jquery.form.js')}"></script>

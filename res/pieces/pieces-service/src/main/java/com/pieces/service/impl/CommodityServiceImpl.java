@@ -86,7 +86,10 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
 //        commodity.setPictureUrl(commodity.getPictureUrl().replace(defaultUploadFile.getUrl(), ""));
         // 把文件从临时目录保存
         commodity.setPictureUrl(FileUtil.saveFileFromTemp(commodity.getPictureUrl(), PathEnum.COMMODITY.getValue()));
-        if(commodity.getId()!= null) {
+
+        //保存商品图片时要压缩 商品图片压缩为3个格式的图片在现有图片名后面加 G2,G3 TODO:
+
+      if(commodity.getId()!= null) {
             LogAuditing.audit(commodityDao.findById(commodity.getId()),commodity,"商品","修改商品");
             commodityDao.update(commodity);
         } else {

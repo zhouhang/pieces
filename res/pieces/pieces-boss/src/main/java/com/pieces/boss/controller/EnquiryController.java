@@ -136,6 +136,7 @@ public class EnquiryController extends BaseController{
      */
     @RequestMapping(value = "/excel/{id}")
     public String importEnquiryExcel(@RequestParam(required = true) MultipartFile file, @PathVariable("id") Integer id, ModelMap modelMap){
+        // TODO: 判断文件后缀名 只能上传excel 类型的文件
         EnquiryBillsVo vo = enquiryBillsService.importEnquiryExcel(file, id);
         modelMap.put("enquiryBills", vo);
         return "enquiry-detail";
