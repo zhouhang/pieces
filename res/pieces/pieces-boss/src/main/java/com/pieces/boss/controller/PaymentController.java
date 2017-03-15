@@ -97,7 +97,7 @@ public class PaymentController {
      */
     @RequestMapping(value = "/fail", method = RequestMethod.POST)
     @ResponseBody
-    @BizLog(type = LogConstant.pay, desc = "支付成功")
+    @BizLog(type = LogConstant.pay, desc = "支付失败")
     public Result fail(Integer payId, String msg) {
         Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         payRecordService.fail(payId,msg,mem);

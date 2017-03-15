@@ -117,15 +117,15 @@
                         <#if orderForm.invoice?exists>
                         <dd>
                             <em>发票类型：</em>
-                            <span>普通发票</span>
+                            <span>${orderForm.invoice.typeText!}</span>
                         </dd>
                         <dd>
                             <em>发票抬头：</em>
-                            <span>个人</span>
+                            <span>${orderForm.invoice.name!}</span>
                         </dd>
                         <dd>
                             <em>发票内容：</em>
-                            <span>明细</span>
+                            <span>${orderForm.invoice.content!}</span>
                         </dd>
                         <#else >
                             <dd>
@@ -180,10 +180,10 @@
                 <div class="summary">
                 <#if user_session_biz?? && user_session_biz.type == 2>
                     <div class="row">
-                        <label>订单总额：</label><span>¥60.00</span>
+                        <label>订单总额：</label><span>¥${orderForm.amountsPayable!}</span>
                     </div>
                     <div class="row bold">
-                        <label>需付保证金：</label><span>¥3000.00</span>
+                        <label>需付保证金：</label><span>¥${orderForm.deposit!}</span>
                     </div>
                 <#else >
                     <div class="row bold">

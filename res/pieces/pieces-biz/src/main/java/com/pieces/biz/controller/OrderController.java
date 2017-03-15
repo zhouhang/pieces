@@ -279,7 +279,14 @@ public class OrderController extends BaseController {
     public String detail(@PathVariable("id")Integer id, ModelMap modelMap) {
 		User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		OrderFormVo vo =  orderFormService.findVoById(id);
-		// 查询用户该订单的付款记录 TODO:
+		// 查询用户该订单的付款记录
+		// 先查账单 再查付款记录确定用户支付类型
+		// 1. 判定用户类型
+		// 代理商 账单userId查询 没有 支付记录代理商Id = userId 的支付记录
+
+		// 普通用户 账单userId查询 根据userId = userId 和agentId == null 的记录
+		// 都要加上 orderId 来判断
+
 		//该订单非用户自己订单
 		if(!user.getId().equals(vo.getUserId())){
 			return "redirect:error/404";
