@@ -103,6 +103,22 @@
                                     <input type="text" class="ipt" value="根茎类" autocomplete="off" name="name" id="name" placeholder="">                            
                                 </div>
                             </div>
+                            <div class="group">
+                                <div class="txt">
+                                    关键字：
+                                </div>
+                                <div class="cnt cnt-mul">
+                                    <textarea name="keywords" class="ipt ipt-mul"></textarea>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="txt">
+                                    描述：
+                                </div>
+                                <div class="cnt cnt-mul">
+                                    <textarea name="description" class="ipt ipt-mul"></textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -131,8 +147,26 @@
                 },
                 formValidate: function() {
                     $("#myform").validator({
+                        rules: {
+                            keywords: function(element) {
+                                var val = element.value.split(','),
+                                    length = val.length;
+
+                                if (val.length > 5) {
+                                    return '关键字个数不超过5个';
+                                }
+                                while (length --) {
+                                    if (val[length].length > 8) {
+                                        return '关键字不能超过8个字';
+                                    }   
+                                }  
+                                return true;
+                            }
+                        },
                         fields: {
-                            username: "required"
+                            name: "required",
+                            keywords: "keywords",
+                            description: "length(0~160, true)"
                         }
                     });
                 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>修改品种-boss-饮片B2B</title>
+    <title>seo管理-boss-饮片B2B</title>
     <meta name="renderer" content="webkit" />
     <link rel="stylesheet" href="css/style.css" />
 </head>
@@ -74,64 +74,64 @@
         <div class="wrap">
             <div class="side">
                 <dl>
-                    <dt>品种信息</dt>
+                    <dt>SEO管理</dt>
                     <dd>
-                        <a class="curr" href="breed.html">基本信息</a>
-                        <a href="breed_sort.html">商品排序</a>
+                        <a href="seo_base.html">基本设置</a>
+                        <a href="seo_commodity_list.html">商品列表页模板</a>
+                        <a href="seo_commodity_info.html">商品详情页模板</a>
+                        <a class="curr" href="seo_commodity_search.html">搜索结果页模板</a>
+                        <a href="seo_article_list.html">文章列表页模板</a>
+                        <a href="seo_article_info.html">文章详情页模板</a>
                     </dd>
                 </dl>
             </div>
-            <div class="main">
+            <div class="main seo">
                 <form action="" id="myform">
                     <div class="title">
-                        <h3><i class="fa fa-chevron-right"></i>修改品种“人参”</h3>
+                        <h3><i class="fa fa-chevron-right"></i>搜索结果页模板</h3>
                         <div class="extra">
                             <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                            <button type="reset" class="btn btn-gray">重置</button>
-                            <button type="button" class="btn btn-gray">删除</button>
                             <button type="submit" class="btn btn-red">保存</button>
                         </div>
                     </div>
 
                     <div class="user-info">
-                        <h3>基本信息</h3>
+                        <h3>搜索结果页模板</h3>
                         <div class="fa-form">
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>所属分类：
+                                    <i>*</i>页面标题：
                                 </div>
                                 <div class="cnt">
-                                    <select name="type" class="wide" id="type" data-msg="请选择所属分类">
-                                        <option value="">--请选择--</option>
-                                        <option value="1">根茎类</option>
-                                        <option value="2">果实籽仁类</option>
-                                    </select>
+                                    <textarea name="title" class="ipt ipt-mul"></textarea>
+                                    <div class="tag">
+                                        <a href="javascript:;">{搜索关键字}</a>
+                                        <a href="javascript:;">{通用标题}</a>
+                                    </div>
                                 </div>
                             </div>
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>原药品种：
+                                    <i>*</i>关键字：
                                 </div>
                                 <div class="cnt">
-                                    <input type="text" class="ipt" value="" autocomplete="off" name="name" placeholder="" data-msg="请填写原药品种"> 
+                                    <textarea name="keywords" class="ipt ipt-mul"></textarea>
+                                    <div class="tag">
+                                        <a href="javascript:;">{搜索关键字}</a>
+                                        <a href="javascript:;">{通用关键字}</a>
+                                    </div>
                                 </div>
                             </div>
                             <div class="group">
                                 <div class="txt">
-                                    品种别名：
+                                    <i>*</i>描述：
                                 </div>
-                                <div class="cnt cnt-mul">
-                                    <textarea name="" class="ipt ipt-mul">神草，吉林参，棒槌，土精，黄参，血参，地精，金井玉阑，孩儿参</textarea>
-                                    <span class="tips">多个别名请用逗号隔开</span>
-                                </div>
-                            </div>
-                            <div class="group">
-                                <div class="txt">
-                                    描述：
-                                </div>
-                                <div class="cnt cnt-mul">
+                                <div class="cnt">
                                     <textarea name="description" class="ipt ipt-mul"></textarea>
-                                    <span class="tips">描述控制在80个汉字以内，160个字符之间</span>
+                                    <div class="tag">
+                                        <a href="javascript:;">{搜索关键字}</a>
+                                        <a href="javascript:;">{搜索结果数量}</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -158,14 +158,38 @@
             v: {},
             fn: {
                 init: function() {
+                    this.bindEvent();
                     this.formValidate();
+                },
+                bindEvent: function() {
+                    var data = {};
+                    $('.fa-form').find('.group').each(function() {
+                        var $ipt = $(this).find('.ipt'),
+                            name = $ipt.attr('name'),
+                            length = $(this).find('.tag a').length;
+
+                        data[name] = [];
+                        while (length-- > 0) {
+                            data[name].push('');
+                        }
+                    })
+
+                    $('.tag').on('click', 'a', function() {
+                            $text = $(this).parent().siblings('.ipt'),
+                            name = $text.attr('name'),
+                            val = $text.val(),
+                            idx = $(this).index();
+
+                        data[name][idx] = data[name][idx] == '' ? $(this).html() : '';
+                        $text.val(data[name].join(' '));
+                    })
                 },
                 formValidate: function() {
                     $("#myform").validator({
                         fields: {
-                            type: 'required',
-                            name: 'required',
-                            description: 'length(0~160, true)'
+                            title: 'required',
+                            keywords: 'required',
+                            description: 'required'
                         }
                     });
                 }
