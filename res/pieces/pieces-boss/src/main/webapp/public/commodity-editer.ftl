@@ -81,6 +81,14 @@
                         </div>
                         <div class="group">
                             <div class="txt">
+                                <i>*</i>指导价：
+                            </div>
+                            <div class="cnt">
+                                <input type="text" class="ipt" value="${commodity.guidePrice}" name="guidePrice" autocomplete="off" placeholder="">
+                            </div>
+                        </div>
+                        <div class="group">
+                            <div class="txt">
                                 <i>*</i>原药产地：
                             </div>
                             <div class="cnt">
@@ -302,7 +310,8 @@ ${commodity.details}
                             rule: "required",
                             target: "#detailsError"
                         },
-                        status: "required"
+                        status: "required",
+                        guidePrice: "required"
                     }
                 });
             },

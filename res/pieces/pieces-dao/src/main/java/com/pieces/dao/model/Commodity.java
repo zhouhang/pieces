@@ -3,6 +3,7 @@ package com.pieces.dao.model;
 import com.google.common.base.Strings;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -72,6 +73,10 @@ public class Commodity  implements Serializable {
 
 	// 商品排序 越大越靠前
 	private Integer sort;
+
+	// 商品指导价
+	@NotNull
+	private Double guidePrice;
 	
 	public Commodity(){}
 	
@@ -98,7 +103,7 @@ public class Commodity  implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getTitle() {
 		if (Strings.isNullOrEmpty(title)){
 			title = name +" 无硫";
@@ -202,5 +207,13 @@ public class Commodity  implements Serializable {
 
 	public void setSort(Integer sort) {
 		this.sort = sort;
+	}
+
+	public Double getGuidePrice() {
+		return guidePrice;
+	}
+
+	public void setGuidePrice(Double guidePrice) {
+		this.guidePrice = guidePrice;
 	}
 }
