@@ -311,6 +311,7 @@
                     return tableObj;
                 },
                 batch: function() {
+                    var flag = false;
                     $("#importExcel").click(function(){
                         layer.open({
                             moveType: 1,
@@ -319,8 +320,10 @@
                             content: '<form action="/enquiry/commodityName?userId=${user.id}" id="excelForm" method="post" enctype="multipart/form-data"><p>上传报价文件</p><label class="btn btn-file enquiry_btn"><span>上传文件</span><input type="file" name="file"></label><label class="filename"></label></form>',
                             btn: ['确定', '取消'],
                             yes: function(index) {
-                                $("#excelForm").submit();
-                                layer.close(index);
+                                if (flag) {
+                                    $("#excelForm").submit();
+                                    layer.close(index);
+                                }
                             },
                             end: function() {
                                 $('.enquiry_btn').off();
@@ -328,7 +331,18 @@
                         })
 
                         $('.enquiry_btn').on('change', 'input', function() {
-                            $('.filename').html($(this).val());
+                            var filename = this.value;
+                            if (/(\.|\/)(csv|xls|xlsx)$/i.test(filename)) {
+                                flag = true;
+                                $('.filename').html(filename);
+                            } else {
+                                flag = false;
+                                $.notify({
+                                    type: 'error', 
+                                    title: '文件格式错误',
+                                    text: '请上传excel表格, 后缀名为.csv, .xls, .xlsx的都可以'
+                                })
+                            }
                         })
                     })
                 }
