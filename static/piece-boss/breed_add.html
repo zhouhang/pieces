@@ -123,6 +123,15 @@
                                     <span class="tips">多个别名请用逗号隔开</span>
                                 </div>
                             </div>
+                            <div class="group">
+                                <div class="txt">
+                                    描述：
+                                </div>
+                                <div class="cnt cnt-mul">
+                                    <textarea name="description" class="ipt ipt-mul"></textarea>
+                                    <span class="tips">描述控制在80个汉字以内，160个字符之间</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -153,7 +162,8 @@
                     $("#myform").validator({
                         fields: {
                             type: 'required',
-                            name: 'required'
+                            name: 'required',
+                            description: 'length(0~160, true)'
                         }
                     });
                 }

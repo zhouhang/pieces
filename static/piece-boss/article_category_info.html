@@ -109,6 +109,24 @@
                                     <input type="text" class="ipt" value="" autocomplete="off" name="name" id="name" placeholder="">
                                 </div>
                             </div>
+                            <div class="group">
+                                <div class="txt">
+                                    关键字：
+                                </div>
+                                <div class="cnt cnt-mul">
+                                    <textarea name="keywords" class="ipt ipt-mul"></textarea>
+                                    <span class="tips">关键字个数不超过5个，每个关键字不超过8个汉字</span>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="txt">
+                                    描述：
+                                </div>
+                                <div class="cnt cnt-mul">
+                                    <textarea name="description" class="ipt ipt-mul"></textarea>
+                                    <span class="tips">描述控制在80个汉字以内，160个字符之间</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -138,8 +156,26 @@
                 },
                 formValidate: function() {
                     $("#myform").validator({
+                        rules: {
+                            keywords: function(element) {
+                                var val = element.value.split(','),
+                                    length = val.length;
+
+                                if (val.length > 5) {
+                                    return '关键字个数不超过5个';
+                                }
+                                while (length --) {
+                                    if (val[length].length > 8) {
+                                        return '关键字不能超过8个字';
+                                    }   
+                                }  
+                                return true;
+                            }
+                        },
                         fields: {
-                            name: "required"
+                            name: "required",
+                            keywords: "keywords",
+                            description: "length(0~160, true)"
                         }
                     });
                 }
