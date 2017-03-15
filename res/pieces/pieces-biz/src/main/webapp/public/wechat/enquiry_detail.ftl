@@ -10,65 +10,31 @@
 <body>
 <section class="ui-content">
     <div class="ui-notice">
-        <b>*</b>本次报价仅于 2017-01-17 23:59:00 前有效。<br>
+        <b>*</b>本次报价仅于 ${bill.expireDate?date} 前有效。<br>
         <b>*</b>所有价格都是公斤价。
     </div>
 
     <div class="pdetail">
         <ul>
+        <#list bill.enquiryCommoditys as commodity>
             <li>
-                <div class="hd">黄芪</div>
-                <div class="bd">圆片、厚2-3mm、直径0.6cm-1.8cm以上、无空心片、异形片、黑片 ...</div>
+                <div class="hd">${commodity.commodityName!}</div>
+                <div class="bd">${commodity.specs!}${commodity.level!}</div>
                 <div class="price">
-                    <span>销售价:<em>￥90.00</em></span>
-                    <span>开票价:￥95.00</span>
+                    <span>销售价:<em>￥${commodity.myPrice!}</em></span>
+                    <span>开票价:￥${commodity.price!}</span>
                 </div>
                 <div class="pic rs-pic">
-                    <img src="uploads/p1.jpg" />
+                    <img src="${commodity.pictureUrl!}"/>
                 </div>
-                <div class="cbx mid"><input type="checkbox" class="ico ico-rad" /></div>
+                <div class="cbx mid"><input type="checkbox" value="${commodity.id!}" class="ico ico-rad"/></div>
             </li>
-            <li>
-                <div class="hd">黄芪</div>
-                <div class="bd">圆片、厚2-3mm、直径0.6cm-1.8cm以上、无空心片、异形片、黑片 ...</div>
-                <div class="price">
-                    <span>销售价:<em>￥111190.00</em></span>
-                    <span>开票价:￥111195.00</span>
-                </div>
-                <div class="pic rs-pic">
-                    <img src="uploads/p1.jpg" />
-                </div>
-                <div class="cbx mid"><input type="checkbox" class="ico ico-rad" /></div>
-            </li>
-            <li>
-                <div class="hd">黄芪</div>
-                <div class="bd">圆片、厚2-3mm、直径0.6cm-1.8cm以上、无空心片、异形片、黑片 ...</div>
-                <div class="price">
-                    <span>销售价:<em>￥90.00</em></span>
-                    <span>开票价:￥95.00</span>
-                </div>
-                <div class="pic rs-pic">
-                    <img src="uploads/p1.jpg" />
-                </div>
-                <div class="cbx mid"><input type="checkbox" class="ico ico-rad" /></div>
-            </li>
-            <li>
-                <div class="hd">黄芪</div>
-                <div class="bd">圆片、厚2-3mm、直径0.6cm-1.8cm以上、无空心片、异形片、黑片 ...</div>
-                <div class="price">
-                    <span>销售价:<em>￥90.00</em></span>
-                    <span>开票价:￥95.00</span>
-                </div>
-                <div class="pic rs-pic">
-                    <img src="uploads/p1.jpg" />
-                </div>
-                <div class="cbx mid"><input type="checkbox" class="ico ico-rad" /></div>
-            </li>
+        </#list>
         </ul>
     </div>
 
     <div class="ui-button">
-        <a href="enquiry_price.html" class="ubtn ubtn-red" id="submit"><i class="ico ico-edit"></i> 修改开票价</a>
+        <button type="button" class="ubtn ubtn-red" id="submit"><i class="ico ico-edit"></i> 修改开票价</button>
         <button type="button" class="ubtn ubtn-white" id="share"><i class="ico ico-share2"></i> 分享报价</button>
     </div>
 
@@ -79,6 +45,34 @@
         var _global = {
             init: function() {
                 _YYY.share.init('#share'); // 分享
+            },
+            share:function() {
+                var commodityStr = [];
+                var $cbxs = $('.enquity-pdetail').find('td input:not(:disabled)')
+
+                $cbxs.each(function() {
+                    this.checked && commodityStr.push(this.value);
+                })
+
+                if (commodityStr.length === 0) {
+                    popover('请先选择商品');
+                    return false;
+                }
+                window.location.href = "/quote?ids=" +commodityStr.join(',');
+            },
+            update: function () {
+                var commodityStr = [], commodityIds;
+                var $cbxs = $('.enquity-pdetail').find('td input:not(:disabled)')
+
+                $cbxs.each(function() {
+                    this.checked && commodityStr.push(this.value);
+                })
+
+                if (commodityStr.length === 0) {
+                    popover('请先选择商品');
+                    return false;
+                }
+                window.location.href = "/h5/enquiry/updatePrice?ids=" +commodityStr.join(',');
             }
         }
 

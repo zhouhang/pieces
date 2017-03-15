@@ -245,5 +245,18 @@
         from pay_record WHERE status=0 ORDER BY id
     </select>
 
+    <select id="findByOrderForUser"    resultMap="PayRecordResultMapVo">
+        select
+        <include refid="Base_Column_List" />
+        from pay_record pr
+        WHERE pr.status = 1 and  pr.user_id = #{userId} and pr.order_id = #{orderId} and pr.agent_id is NULL and pr.account_bill_id is NULL
+    </select>
+
+    <select id="findByOrderForAgent"    resultMap="PayRecordResultMapVo">
+        select
+        <include refid="Base_Column_List" />
+        from pay_record pr
+        WHERE pr.status = 1 and  pr.agent_id = #{agentId} and pr.order_id = #{orderId} and pr.account_bill_id is NULL
+    </select>
 
 </mapper>

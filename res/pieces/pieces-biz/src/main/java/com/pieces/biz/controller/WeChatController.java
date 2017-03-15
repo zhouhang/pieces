@@ -1,15 +1,35 @@
 package com.pieces.biz.controller;
 
-import com.pieces.dao.model.Commodity;
-import com.pieces.dao.model.EnquiryCommoditys;
-import com.pieces.service.CommodityService;
+import com.github.pagehelper.PageInfo;
+import com.google.common.base.Strings;
+import com.pieces.biz.shiro.BizToken;
+import com.pieces.dao.model.*;
+import com.pieces.dao.vo.*;
+import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.service.dto.UserValidate;
+import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.redis.RedisManager;
 import com.pieces.service.vo.CropResult;
 import com.pieces.tools.bean.BASE64DecodedMultipartFile;
+import com.pieces.tools.exception.NotFoundException;
+import com.pieces.tools.utils.CommonUtils;
+import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import sun.misc.BASE64Decoder;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Author: koabs
@@ -20,24 +40,74 @@ import sun.misc.BASE64Decoder;
 @RequestMapping("/h5/")
 public class WeChatController {
 
+    Logger logger = LoggerFactory.getLogger(WeChatController.class);
+
     @Autowired
     CommodityService commodityService;
 
-    // 用户进入任何一个页面时根据openID 判断用户在数据库中是否存在 然后自动登入
+    @Autowired
+    AnonEnquiryService anonEnquiryService;
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    RedisManager redisManager;
+
+    @Autowired
+    HttpSession httpSession;
+
+    @Autowired
+    WxMpService wxService;
+
+    @Autowired
+    EnquiryBillsService enquiryBillsService;
+
+    @Autowired
+    EnquiryCommoditysService enquiryCommoditysService;
+
+
     /**
      * 用户询价
      * @return
      */
     @RequestMapping(value = "enquiry", method = RequestMethod.GET)
-    public String enquiry() {
+    public String enquiry(ModelMap model) {
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        model.put("user", user);
         return "enquiry";
     }
 
+    /**
+     * 保存询价信息
+     * @return
+     */
     @RequestMapping(value = "enquiry", method = RequestMethod.POST)
     @ResponseBody
-    public Result enquirySave() {
+    public Result enquirySave(AnonEnquiryVo anonEnquiryVo, String code) {
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        // 把询价信息保存到新客询价里面
+        // 用户填写的姓名和手机号 要保存到自动生成的账号里面.
+        if (anonEnquiryVo.getContacts()!= null && anonEnquiryVo.getPhone() != null && code != null) {
+            // code 和Redis 存的code做对比
+            //帮用户注册生成询价单
+            String sessionCode  = redisManager.get(RedisEnum.KEY_MOBILE_EQUIRY_CAPTCHA.getValue()+anonEnquiryVo.getPhone());
+            if (Strings.isNullOrEmpty(sessionCode) || !code.equals(sessionCode)) {
+                // 验证码错误.
+            } else {
+                WxMpUser wxUser = (WxMpUser)httpSession.getAttribute("wxMpUser");
+                userService.createWxUser(wxUser,anonEnquiryVo.getContacts(),anonEnquiryVo.getPhone());
+            }
 
-        return null;
+        }
+        //用户已经登入
+        if (user!= null) {
+            anonEnquiryVo.setContacts(user.getContactName());
+            anonEnquiryVo.setPhone(user.getContactMobile());
+        }
+        anonEnquiryService.save(anonEnquiryVo);
+
+        return new Result(true).info("询价成功");
     }
 
     /**
@@ -51,32 +121,56 @@ public class WeChatController {
 
     // 询价单列表
     @RequestMapping("enquiry/list")
-    public String enquiryList() {
+    public String enquiryList(ModelMap model, Integer status) {
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        if (user != null) {
+            EnquiryRecordVo vo = new EnquiryRecordVo();
+            vo.setUserId(user.getId());
+            model.put("status",status);
+            //查询用户的询价单
+            PageInfo<EnquiryBillsVo> pageInfo =  enquiryBillsService.findByPage(1,100,vo);
+            model.put("pageInfo",pageInfo);
+        }
         return "enquiry_list" ;
     }
 
     // 询价单详情
     @RequestMapping("enquiry/detail")
-    public String enquiryDetail(Integer id) {
+    public String enquiryDetail(Integer billId, ModelMap model) {
+        // 报价时销售价等于开票价
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        if (user!= null) {
+            enquiryBillsService.read(billId);
+            EnquiryBillsVo vo = enquiryBillsService.findVOById(billId);
+            model.put("bill", vo);
+        }
         return "enquiry_detail" ;
     }
-    // 商品详情
 
     //修改询价开票价
     @RequestMapping(value = "enquiry/updatePrice", method = RequestMethod.GET)
-    public String enquiryUpdatePrice(String ids) {
-        return "enquiry_detail" ;
+    public String enquiryUpdatePrice(String ids, Integer billId, ModelMap model) {
+        // 安全性检测用户只能访问自己的询价商品
+        List<EnquiryCommoditysVo> list = enquiryCommoditysService.findVoByIds(ids);
+        model.put("list",list);
+        model.put("ids",ids);
+        model.put("billId",billId);
+        return "enquiry_price_update" ;
     }
 
     /**
      * 保存商品价格修改后信息
-     * @param commoditys
-     * @param enquiryId
+     * @param list
      * @return
      */
     @RequestMapping(value = "enquiry/updatePrice", method = RequestMethod.POST)
-    public String enquiryUpdatePriceSave(@RequestBody EnquiryCommoditys commoditys, Integer enquiryId) {
-        return "enquiry_price_update" ;
+    @ResponseBody
+    public Result enquiryUpdatePriceSave(@RequestBody List<EnquiryCommoditys> list) {
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        if (user!= null) {
+            enquiryCommoditysService.priceUpdate(list,user.getId());
+        }
+        return new Result(true);
     }
 
     /**
@@ -86,8 +180,9 @@ public class WeChatController {
      * @return
      */
     @RequestMapping(value = "enquiry/updatePriceSuccess", method = RequestMethod.GET)
-    public String enquiryUpdatePriceSuccess(String ids) {
-
+    public String enquiryUpdatePriceSuccess(String ids,Integer billId, ModelMap model) {
+        model.put("ids",ids);
+        model.put("billId",billId);
         return "enquiry_price_update_message" ;
     }
 
@@ -97,8 +192,13 @@ public class WeChatController {
      * @return
      */
     @RequestMapping(value = "commodity/{id}", method = RequestMethod.GET)
-    public String enquiryUpdatePriceSuccess(@PathVariable("id") Integer id) {
+    public String enquiryUpdatePriceSuccess(@PathVariable("id") Integer id, ModelMap model) {
 
+        CommodityVo commodity = commodityService.findVoById(id);
+        if (commodity == null) {
+            throw new NotFoundException();
+        }
+        model.put("commodity", commodity);
         return "commodity_detail" ;
     }
 
@@ -115,5 +215,36 @@ public class WeChatController {
         byte[] result = base64Decoder.decodeBuffer(img);//解码
         BASE64DecodedMultipartFile multipartFile = new BASE64DecodedMultipartFile(result, fileName);
         return commodityService.uploadImage(multipartFile);
+    }
+
+
+    // 自动登入
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public String loginPage(String call, String code) {
+        if (!Strings.isNullOrEmpty(code)) {
+            try {
+                WxMpOAuth2AccessToken wxMpOAuth2AccessToken = wxService.oauth2getAccessToken(code);
+                WxMpUser wxMpUser = wxService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
+                User user = userService.findByOpenId(wxMpUser.getOpenId());
+                if (user != null) {
+                    // 登入
+                    Subject subject = SecurityUtils.getSubject();
+                    BizToken token = new BizToken(user.getUserName(), user.getPassword(), false,null, "");
+                    userService.login(subject, token);
+
+                } else {
+                    //保存微信信息到Session 里面
+                    httpSession.setAttribute("wxMpUser",wxMpUser);
+                }
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+            }
+        }
+
+        if (!Strings.isNullOrEmpty(call)) {
+            return "redirect:" + call;
+        } else {
+            return "redirect:/h5/enquiry/list";
+        }
     }
 }

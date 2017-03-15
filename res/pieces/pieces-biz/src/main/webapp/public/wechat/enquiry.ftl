@@ -22,7 +22,7 @@
             </span>
         </div>
     </div>
-
+    <#if !(user?exists)>
     <div class="ui-floor">
         <div class="ui-hd">
             <i class="ico ico-mobile"></i>
@@ -48,16 +48,19 @@
     <div class="ui-notice">
         <b>*</b>联系方式仅在第一次询价时需要填写。
     </div>
+    </#if>
     <div class="ui-button">
         <button type="button" class="ubtn ubtn-red" id="submit">提交</button>
     </div>
-
 </section><!-- /ui-content -->
 <#include "./inc/footer.ftl"/>
 <script src="/js/lrz.bundle.js"></script>
 <script>
     !(function($) {
         var _global = {
+            v:{
+                img:{}
+            },
             init: function() {
                 this.help();
                 this.upfile();
@@ -82,8 +85,36 @@
 
                 $('#submit').on('click', function() {
                     if (that.check()) {
-                        popover('提交成功');
-                        window.location.href = 'enquiry_message.html';
+                        var enquiry = {};
+                        if ($('#name')) {
+                            enquiry['code'] = $("#SMSCode").val();
+                            enquiry['contacts'] = $("#name").val();
+                            enquiry['phone'] = $("#mobile").val();
+                        }
+                        enquiry.files = new Array();
+                        $.each(_global.v.img, function(k,v){
+                            enquiry.files.push({"attachmentUrl": v})
+                        })
+
+                        if( enquiry.files.length == 0) {
+                            popover('请选择图片');
+                            return false;
+                        }
+
+                        $.ajax({
+                            url: '/h5/enquiry',
+                            data: enquiry,
+                            type: 'POST',
+                            dataType: 'json',
+                            success: function (result) {
+                                if (result.status=="y") {
+                                    window.location.href = '/h5/enquiry/success';
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                popover('网络连接超时，请您稍后重试！');
+                            }
+                        })
                     }
                 })
 
@@ -93,9 +124,13 @@
                 that.SMSCodeEvent();
             },
             check: function() {
-                return this.checkName()
-                        && this.checkMobile()
-                        && this.checkSMSCode()
+                if ($('#name')) {
+                    return this.checkName()
+                            && this.checkMobile()
+                            && this.checkSMSCode()
+                } else {
+                    return true;
+                }
             },
             checkName: function() {
                 var $el = $('#name'),
@@ -158,9 +193,9 @@
                 var sendMSM = function() {
                     popover('验证码发送中，请稍后...!');
                     $.ajax({
-                        url: 'php/getsmscode.php',
+                        url: '/gen/code/enquiry',
                         dataType: 'json',
-                        data: 'phone=13026584785',
+                        data: {phone:$("#mobile").val()},
                         success: function(data) {
                             if (data.status === 'y') {
                                 $send.text(second + txt).prop('disabled', true);
@@ -188,8 +223,7 @@
                         $picNumber = $('#picNumber'),
                         idx = 0,
                         number = 0, // 已上传图片数量
-                        maxSize = 9, // 最大上传图片数量
-                        img = {};
+                        maxSize = 9; // 最大上传图片数量
 
                 $('body').append('<div id="upload" style="position:fixed;bottom:0;left:0;width:0;height:0;visibility:hidden;"></div>');
 
@@ -208,7 +242,7 @@
                         var base64 = rst.base64;
                         base64 = base64.substr(base64.indexOf(',') + 1);
                         $.ajax({
-                            url: 'php/upImg.php',
+                            url: '/h5/upload',
                             data: {
                                 img: base64,
                                 fileName: rst.origin.name
@@ -218,10 +252,10 @@
                             success: function (result) {
                                 if (number >= maxSize) {
                                     $upfile.empty('').hide();
-                                } else if (result.status == '1') {
+                                } else if (result.status == 'success') {
                                     reset();
                                     var model = [];
-                                    img['img_' + (idx++)] = result.url;
+                                    _global.v.img['img_' + (idx++)] = result.url;
                                     model.push('<span class="ui-file">');
                                     model.push('<img src="' , result.url , '" data-src="' , result.url , '" />');
                                     model.push('<i class="del" id="img_' , idx , '"></i>');
@@ -247,7 +281,7 @@
 
                 // 删除图片
                 $('.ui-upload').on('click', '.del', function() {
-                    delete img['img_' + this.id];
+                    delete _global.v.img['img_' + this.id];
                     $picNumber.html((-- number) + '/' + maxSize);
                     $(this).parent().remove();
                     reset();

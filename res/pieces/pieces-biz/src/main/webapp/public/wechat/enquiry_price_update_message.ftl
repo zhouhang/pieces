@@ -16,7 +16,7 @@
     </div>
     <div class="ui-button">
         <button type="button" class="ubtn ubtn-red" id="share"><i class="ico ico-share"></i> 立即分享</button>
-        <a href="enquiry_detail.html" class="ubtn ubtn-white">返回询价单</a>
+        <a href="/h5/enquiry/detail?billId=${billId!}" class="ubtn ubtn-white">返回询价单</a>
     </div>
 </section><!-- /ui-content -->
 <#include "./inc/footer.ftl"/>

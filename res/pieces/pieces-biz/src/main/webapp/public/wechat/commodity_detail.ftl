@@ -11,10 +11,10 @@
 <section class="ui-content">
     <div class="goods-info">
         <div class="pic rs-pic">
-            <img src="uploads/p2.jpg" />
+            <img src="${commodity.pictureUrl!}" />
         </div>
 
-        <h1>樟树子 无硫</h1>
+        <h1>${title}</h1>
     </div>
 
     <div class="goods-info">
@@ -85,12 +85,7 @@
 
                 <div class="item">
                     <div class="img">
-                        <img src="assets/images/blank.gif" data-src="uploads/p3_01.jpg" />
-                        <img src="assets/images/blank.gif" data-src="uploads/p3_02.jpg" />
-                        <img src="assets/images/blank.gif" data-src="uploads/p3_03.jpg" />
-                        <img src="assets/images/blank.gif" data-src="http://static.yaobest.com/ueditor/2016/11/204534f3-2364-4a88-967d-ecf8882101cb.jpg" />
-                        <img src="assets/images/blank.gif" data-src="http://static.yaobest.com/ueditor/2016/11/942af4f3-a99b-43f9-8526-a54cd40959e2.jpg" />
-                        <img src="assets/images/blank.gif" data-src="http://static.yaobest.com/ueditor/2016/11/9ea385e4-2e65-411d-b5d1-e54d2ea2d536.jpg" />
+                        ${details}
                     </div>
                 </div>
             </div>

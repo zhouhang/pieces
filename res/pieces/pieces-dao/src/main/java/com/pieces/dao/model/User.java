@@ -55,7 +55,7 @@ public class User  implements Serializable {
 	//是否绑定erp（0：未绑定，1：绑定）
 	private Boolean bindErp;
 	
-	//创建渠道（0：前台  1：后台 2 询价自动创建）
+	//创建渠道（0：前台  1：后台 2 询价自动创建 3 微信）
 	private Integer source;
 	
 	//地址全称
@@ -80,6 +80,8 @@ public class User  implements Serializable {
 	
 	//修改时间
 	private Date updateTime;
+
+	private String openId;
 	
 	public User(){}
 
@@ -234,5 +236,12 @@ public class User  implements Serializable {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	
+
+	public String getOpenId() {
+		return openId;
+	}
+
+	public void setOpenId(String openId) {
+		this.openId = openId;
+	}
 }

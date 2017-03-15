@@ -242,4 +242,10 @@ public class AccountBillServiceImpl  extends AbsCommonService<AccountBill> imple
 	public List<AccountBillVo> findUnpaidBill() {
 		return accountBillDao.findUnpaidBill();
 	}
+
+	@Override
+	public AccountBill findValidBillByOrderID(Integer orderId, Integer userId) {
+
+		return accountBillDao.findValidBillByOrderID(userId,orderId);
+	}
 }

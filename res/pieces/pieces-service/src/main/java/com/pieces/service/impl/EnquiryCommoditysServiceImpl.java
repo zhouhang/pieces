@@ -6,8 +6,11 @@ import com.pieces.dao.ICommonDao;
 import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.vo.EnquiryBillsVo;
+import com.pieces.dao.vo.EnquiryCommoditysVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.EnquiryCommoditysService;
+import com.pieces.tools.utils.BeanUtils;
+import com.pieces.tools.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +24,9 @@ import java.util.List;
  */
 @Service
 public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommoditys> implements EnquiryCommoditysService {
+
+    public final static String param = "pictureUrl";
+
     @Autowired
     private EnquiryCommoditysDao enquiryCommoditysDao;
 
@@ -62,7 +68,7 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
 
     @Override
     public List<EnquiryCommoditys> findByBillId(Integer billId,Integer userId, Integer pageSize) {
-        return enquiryCommoditysDao.findByBillId(billId, userId,pageSize);
+        return FileUtil.convertAbsolutePathToUrl(enquiryCommoditysDao.findByBillId(billId, userId,pageSize),param);
     }
 
     @Override
@@ -113,6 +119,31 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
 
 	@Override
 	public List<EnquiryCommoditys> findByIds(String ids) {
-		return enquiryCommoditysDao.findByIds(ids);
+        List<EnquiryCommoditysVo> list =  enquiryCommoditysDao.findByIds(ids);
+        List<EnquiryCommoditys> param = null;
+        try {
+            param = BeanUtils.copyList(list,EnquiryCommoditys.class);
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+		return param;
 	}
+
+    @Override
+    @Transactional
+    public void priceUpdate(List<EnquiryCommoditys> list, Integer userId) {
+        for (EnquiryCommoditys commoditys: list) {
+            commoditys.setUserId(userId);
+        }
+        enquiryCommoditysDao.priceUpdate(list);
+    }
+
+    @Override
+    public List<EnquiryCommoditysVo> findVoByIds(String ids) {
+        List<EnquiryCommoditysVo> list = enquiryCommoditysDao.findByIds(ids);
+        list = FileUtil.convertAbsolutePathToUrl(list,param);
+        return list;
+    }
 }

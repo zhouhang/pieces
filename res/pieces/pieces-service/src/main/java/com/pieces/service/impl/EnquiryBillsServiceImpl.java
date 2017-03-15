@@ -9,11 +9,13 @@ import com.pieces.dao.model.EnquiryBills;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.EnquiryBillsVo;
+import com.pieces.dao.vo.EnquiryCommoditysVo;
 import com.pieces.dao.vo.EnquiryRecordVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.EnquiryBillsService;
 import com.pieces.service.EnquiryCommoditysService;
 import com.pieces.service.utils.ExcelParse;
+import com.pieces.tools.utils.BeanUtils;
 import com.pieces.tools.utils.SeqNoUtil;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -96,7 +98,7 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
     @Override
     public EnquiryBillsVo findVOById(Integer id) {
         EnquiryBillsVo vo = enquiryBillsDao.findVOById(id);
-        vo.setEnquiryCommoditys(enquiryCommoditysDao.findByBillId(id,null, null));
+        vo.setEnquiryCommoditys(enquiryCommoditysService.findByBillId(id,null, null));
         return vo;
     }
 
@@ -106,7 +108,7 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
         vo.setCode(code);
         List<EnquiryBillsVo> list = enquiryBillsDao.findByParam(vo);
         vo = list.get(0);
-        vo.setEnquiryCommoditys(enquiryCommoditysDao.findByBillId(vo.getId(),null, null));
+        vo.setEnquiryCommoditys(enquiryCommoditysService.findByBillId(vo.getId(),null, null));
         return vo;
     }
 
@@ -123,7 +125,7 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
 
         List<EnquiryBillsVo> list = enquiryBillsDao.queryByParam(enquiryRecordVo);
         for (EnquiryBills enquiryBills : list) {
-            List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysDao.findByBillId(enquiryBills.getId(),null, null);
+            List<EnquiryCommoditys> enquiryCommoditysList = enquiryCommoditysService.findByBillId(enquiryBills.getId(),null, null);
             enquiryBills.setEnquiryCommoditys(enquiryCommoditysList);
         }
         PageInfo page = new PageInfo(list);
@@ -173,7 +175,7 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
 
     @Override
     public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, String ids) {
-        List<EnquiryCommoditys>list = enquiryCommoditysService.findByIds(ids);
+        List<EnquiryCommoditys> list = enquiryCommoditysService.findByIds(ids);
         Workbook workbook = ExcelParse.exportEnquiryInfo(list);
         ExcelParse.returnExcel(response,request, workbook,"报价表");
     }

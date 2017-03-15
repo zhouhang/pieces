@@ -15,7 +15,7 @@
         <div class="bd">报价信息将在30分钟内发送给您，请注意查收！</div>
     </div>
     <div class="ui-button">
-        <button type="button" class="ubtn ubtn-red" id="share"><i class="ico ico-share"></i> 分享到朋友圈</button>
+        <a href="/h5/enquiry/list?status=1" class="ubtn ubtn-red" id="share"><i class="ico ico-share"></i> 查看询价单</a>
     </div>
 </section><!-- /ui-content -->
 <#include "./inc/footer.ftl"/>
@@ -23,7 +23,7 @@
     !(function($) {
         var _global = {
             init: function() {
-                _YYY.share.init('#share'); // 分享
+//                _YYY.share.init('#share'); // 分享
             }
         }
         _global.init();

@@ -182,4 +182,15 @@ public class HomeController extends BaseController{
 		return "user_quote";
 	}
 
+	/**
+	 * 用户分享的报价单
+	 * @param model
+     * @return
+     */
+	@RequestMapping(value = "/quote", method = RequestMethod.GET)
+	public String quoteWx(@PathVariable("ids") String ids, ModelMap model){
+		// 询价商品详情 TODO:
+		return "user_quote";
+	}
+
 }

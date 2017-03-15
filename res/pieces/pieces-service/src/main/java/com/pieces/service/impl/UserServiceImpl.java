@@ -13,6 +13,7 @@ import com.pieces.service.dto.UserValidate;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.utils.CookieUtils;
 import com.pieces.tools.utils.SeqNoUtil;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
@@ -322,5 +323,39 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
             }
         }
         return validate;
+    }
+
+    @Override
+    public User findByOpenId(String openId) {
+        User param = new User();
+        param.setOpenId(openId);
+        List<User> result = userDao.findUserByCondition(param);
+        return  result!= null && result.size()>0?result.get(0):null;
+    }
+
+    @Override
+    @Transactional
+    public void createWxUser(WxMpUser wxMpUser, String userName, String phone) {
+        // 根据phone 查询下如果手机号已经存在则直接把手机号和openId 绑定
+        User param = new User();
+        param.setContactMobile(phone);
+        List<User> result = userDao.findUserByCondition(param);
+        if (result!= null && result.size()>0) {
+            User user = result.get(0);
+            User param2 = new User();
+            param2.setId(user.getId());
+            param2.setOpenId(wxMpUser.getOpenId());
+            update(param2);
+        } else {
+            User user = new User();
+            user.setSource(3); // 表明来至微信
+            user.setType(1); // 默认是终端用户
+            user.setContactName(userName);
+            user.setUserName("wx"+serialNumberService.getTensTimestamp()+SeqNoUtil.getRandomNum(2));
+            user.setPassword(user.getContactMobile().substring(5,11)); // 默认密码
+            user.setContactMobile(phone);
+            user.setOpenId(wxMpUser.getOpenId());
+            addUser(user);
+        }
     }
 }

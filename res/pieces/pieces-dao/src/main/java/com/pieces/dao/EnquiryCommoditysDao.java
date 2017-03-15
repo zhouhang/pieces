@@ -2,6 +2,7 @@ package com.pieces.dao;
 
 import com.pieces.dao.annotation.AutoMapper;
 import com.pieces.dao.model.EnquiryCommoditys;
+import com.pieces.dao.vo.EnquiryCommoditysVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -30,6 +31,13 @@ public interface EnquiryCommoditysDao extends ICommonDao<EnquiryCommoditys>{
 
     public void deleteByBillId(Integer billId);
 
-	public List<EnquiryCommoditys> findByIds(String ids);
+	public List<EnquiryCommoditysVo> findByIds(String ids);
+
+    /**
+     * 用户更改合同价
+     * @param list
+     * @return
+     */
+    Integer priceUpdate(List<EnquiryCommoditys> list);
 	
 }
