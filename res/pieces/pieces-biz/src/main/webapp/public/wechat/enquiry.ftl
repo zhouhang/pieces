@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <#include "./inc/meta.ftl"/>
+    <#include "wechat/inc/meta.ftl"/>
     <meta name="description" content="">
     <meta name="author" content="">
     <title>拍照询价-上工好药</title>
@@ -53,8 +53,8 @@
         <button type="button" class="ubtn ubtn-red" id="submit">提交</button>
     </div>
 </section><!-- /ui-content -->
-<#include "./inc/footer.ftl"/>
-<script src="/js/lrz.bundle.js"></script>
+<#include "wechat/inc/footer_h5.ftl"/>
+<script src="/h5-static/js/lrz.bundle.js"></script>
 <script>
     !(function($) {
         var _global = {
@@ -71,22 +71,16 @@
                 $('.help').on('click', function() {
                     layer.open({
                         className: 'layer-help',
-                        content: '<div class="hd">使用帮助</div><div class="bd">用手机拍下您需要的品种清单，上传照片。30分钟内您就能收到报价信息。</div><div class="pic"><img width="250" height="330" src="assets/images/help.jpg" /></div>'
+                        content: '<div class="hd">使用帮助</div><div class="bd">用手机拍下您需要的品种清单，上传照片。30分钟内您就能收到报价信息。</div><div class="pic"><img width="250" height="330" src="h5-static/images/help.jpg" /></div>'
                     });
                 })
             },
             bindEvent: function() {
                 var that = this;
-                var check = function() {
-                    var pass = true;
-                    that.checkName() && that.checkMobile() && that.checkSMSCode();
-                    return pass;
-                }
-
                 $('#submit').on('click', function() {
                     if (that.check()) {
                         var enquiry = {};
-                        if ($('#name')) {
+                        if ($('body').find("#name").length >0) {
                             enquiry['code'] = $("#SMSCode").val();
                             enquiry['contacts'] = $("#name").val();
                             enquiry['phone'] = $("#mobile").val();
@@ -100,10 +94,14 @@
                             popover('请选择图片');
                             return false;
                         }
-
+                        $.ajaxSetup({
+                            headers: {
+                                'Content-Type': 'application/json;charset=utf-8'
+                            }
+                        });
                         $.ajax({
                             url: '/h5/enquiry',
-                            data: enquiry,
+                            data: JSON.stringify(enquiry),
                             type: 'POST',
                             dataType: 'json',
                             success: function (result) {
@@ -124,7 +122,7 @@
                 that.SMSCodeEvent();
             },
             check: function() {
-                if ($('#name')) {
+                if ($('body').find("#name").length >0) {
                     return this.checkName()
                             && this.checkMobile()
                             && this.checkSMSCode()

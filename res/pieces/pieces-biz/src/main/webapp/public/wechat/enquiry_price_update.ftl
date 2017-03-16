@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <#include "./inc/meta.ftl"/>
+    <#include "wechat/inc/meta.ftl"/>
     <meta name="description" content="">
     <meta name="author" content="">
     <title>修改销售价-上工好药</title>
@@ -24,7 +24,7 @@
                 <div class="td">${commodity.commodityName!}<input type="text" style="display: none;" value="${commodity.id!}"></div>
                 <div class="td">${commodity.specs}</div>
                 <div class="td">${commodity.myPrice!}</div>
-                <div class="td"><input type="tel" placeholder="￥90.00" value="${commodity.price}" class="ipt" tabindex="1" /><span class="error"></span></div>
+                <div class="td"><input type="tel" placeholder="￥90.00" value="${commodity.price?default(commodity.myPrice!)}" class="ipt" tabindex="1" /><span class="error"></span></div>
             </div>
             </#list>
         </div>
@@ -33,7 +33,7 @@
         <button type="button" class="ubtn ubtn-red" id="submit">保存</button>
     </div>
 </section><!-- /ui-content -->
-<#include "./inc/footer.ftl"/>
+<#include "wechat/inc/footer_h5.ftl"/>
 <script>
     !(function($) {
         var _global = {
@@ -70,7 +70,7 @@
                 $('#submit').on('click', function() {
                     if (check()) {
                         var list = new Array();
-                        var $trs = $('.pdetail').find('.tr');
+                        var $trs = $('.tbody').find('.tr');
                         $.each($trs, function (k, v) {
                             list.push({id:$($(v).find("input")[0]).val(),price:$($(v).find("input")[1]).val()});
                         })

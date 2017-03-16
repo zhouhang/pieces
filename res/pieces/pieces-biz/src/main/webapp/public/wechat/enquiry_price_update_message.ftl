@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <#include "./inc/meta.ftl"/>
+    <#include "wechat/inc/meta.ftl"/>
     <meta name="description" content="">
     <meta name="author" content="">
     <title>修改销售价-上工好药</title>
@@ -19,7 +19,7 @@
         <a href="/h5/enquiry/detail?billId=${billId!}" class="ubtn ubtn-white">返回询价单</a>
     </div>
 </section><!-- /ui-content -->
-<#include "./inc/footer.ftl"/>
+<#include "wechat/inc/footer_h5.ftl"/>
 <script>
     !(function($) {
         var _global = {

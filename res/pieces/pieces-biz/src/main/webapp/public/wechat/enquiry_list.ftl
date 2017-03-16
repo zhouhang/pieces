@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <#include "./inc/meta.ftl"/>
+    <#include "wechat/inc/meta.ftl"/>
     <meta name="description" content="">
     <meta name="author" content="">
     <title>询价单-上工好药</title>
@@ -22,17 +22,23 @@
             <ul class="plist">
                 <#list pageInfo.list as bill>
                 <li>
-                    <a href="/enquiry/detail?billId=${bill.id!}">
+                    <a href="/h5/enquiry/detail?billId=${bill.id!}">
                         <div class="hd <#if bill.type==1>new</#if>">${bill.code!}</div>
                         <div class="bd">${bill.commodityOverview!} 共 <em>${bill.enquiryCommoditys?size}</em> 个商品 </div>
-                        <time data-time="${(bill.createTime?date)!}">上午10：28</time>
+                        <time data-time="${(bill.createTime?date)!}"></time>
                     </a>
                 </li>
             </#list>
             </ul>
         <#else >
             <div class="ui-empty">
+                <#if status=1>
                 <p>没有已报价的询价单！</p>
+                <#elseif  status=0>
+                <p>没有未报价的询价单！</p>
+                <#elseif  status=2>
+                <p>没有已过期的询价单！</p>
+                </#if>
                 <div class="btm">
                     <a href="/h5/enquiry" class="ubtn ubtn-red"><i class="ico ico-camera"></i> 拍照询价</a>
                 </div>
@@ -40,7 +46,7 @@
         </#if>
     </div>
 </section><!-- /ui-content -->
-<#include "./inc/footer.ftl"/>
+<#include "wechat/inc/footer_h5.ftl"/>
 <script>
     !(function($) {
         var _global = {

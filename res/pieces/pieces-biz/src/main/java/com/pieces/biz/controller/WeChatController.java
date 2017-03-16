@@ -84,7 +84,7 @@ public class WeChatController {
      */
     @RequestMapping(value = "enquiry", method = RequestMethod.POST)
     @ResponseBody
-    public Result enquirySave(AnonEnquiryVo anonEnquiryVo, String code) {
+    public Result enquirySave(@RequestBody AnonEnquiryVo anonEnquiryVo, String code) {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         // 把询价信息保存到新客询价里面
         // 用户填写的姓名和手机号 要保存到自动生成的账号里面.
@@ -126,12 +126,14 @@ public class WeChatController {
         if (user != null) {
             EnquiryRecordVo vo = new EnquiryRecordVo();
             vo.setUserId(user.getId());
-            model.put("status",status== null?1:status);
+            status = status== null?1:status;
+            vo.setStatus(status);
+            model.put("status",status);
             //查询用户的询价单
             PageInfo<EnquiryBillsVo> pageInfo =  enquiryBillsService.findByPage(1,100,vo);
             model.put("pageInfo",pageInfo);
         }
-        return "wechat/enquiry_list" ;
+        return "/wechat/enquiry_list" ;
     }
 
     // 询价单详情

@@ -44,7 +44,7 @@
                                         附件：
                                     <#if vo.files?exists && vo.files?size gt 0 >
                                         <#list vo.files as file>
-                                            <a href="/anon/download?url=${file.attachmentUrl!}&fileName=${file.content!}">${file.content!}</a>
+                                            <a href="/anon/download?url=${file.attachmentUrl!}&fileName=${file.content?default("询价文件"+ file_index)}">${file.content?default("询价文件"+ file_index)}</a>
                                         </#list>
                                     <#else>
                                         无
