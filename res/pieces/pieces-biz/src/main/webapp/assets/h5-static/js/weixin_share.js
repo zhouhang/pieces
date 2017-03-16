@@ -15,6 +15,10 @@ wx.config({
 });
 
 wx.ready(function() {
+    initWxShareV1();
+})
+
+function initWxShareV1() {
     // 2.1 监听“分享给朋友”，按钮点击、自定义分享内容及分享结果接口
     wx.onMenuShareAppMessage({
         title: weixinShare.title,
@@ -28,7 +32,7 @@ wx.ready(function() {
     });
 
     // 2.2 监听“分享到朋友圈”按钮点击、自定义分享内容及分享结果接口
-    wx.onMenuShareTimeline({        
+    wx.onMenuShareTimeline({
         title: weixinShare.title,
         link: weixinShare.link,
         imgUrl: weixinShare.imgUrl,
@@ -77,4 +81,4 @@ wx.ready(function() {
         cancel: function(res) {},
         fail: function(res) {}
     });
-})
+}

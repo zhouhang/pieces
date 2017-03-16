@@ -5,14 +5,19 @@
        xsi:schemaLocation="
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
- <!-- 定义boss子系统的realm配置 -->  
- <bean id="bizRealm" class="com.pieces.biz.shiro.BizRealm">
-     <property name="cachingEnabled" value="true"/>
-     <property name="authorizationCachingEnabled" value="true"/>
-     <property name="authorizationCacheName" value="${pieces.shiro.defaultRealm.authorizationCacheName}"/>
-     <property name="credentialsMatcher" ref="credentialsMatcher"/>
- </bean>
-    
- <bean id="bizAuthorizationFilter" class="com.pieces.biz.shiro.BizAuthorizationFilter" />
-  
+    <!-- 定义boss子系统的realm配置 -->
+    <bean id="bizRealm" class="com.pieces.biz.shiro.BizRealm">
+        <property name="cachingEnabled" value="true"/>
+        <property name="authorizationCachingEnabled" value="true"/>
+        <property name="authorizationCacheName" value="${pieces.shiro.defaultRealm.authorizationCacheName}"/>
+        <property name="credentialsMatcher" ref="credentialsMatcherBiz"/>
+    </bean>
+
+    <bean id="credentialsMatcherBiz" class="com.pieces.biz.shiro.BizCredentialsMatcher">
+        <constructor-arg ref="cacheManager"/>
+        <property name="retryCounterCacheName" value="${pieces.shiro.credentialsMatcher.retryCounterCacheName}"/>
+    </bean>
+
+    <bean id="bizAuthorizationFilter" class="com.pieces.biz.shiro.BizAuthorizationFilter"/>
+
 </beans>

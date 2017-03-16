@@ -81,7 +81,6 @@
                     if (that.check()) {
                         var enquiry = {};
                         if ($('body').find("#name").length >0) {
-                            enquiry['code'] = $("#SMSCode").val();
                             enquiry['contacts'] = $("#name").val();
                             enquiry['phone'] = $("#mobile").val();
                         }
@@ -100,13 +99,15 @@
                             }
                         });
                         $.ajax({
-                            url: '/h5/enquiry',
+                            url: '/h5/enquiry?code='+$("#SMSCode").val(),
                             data: JSON.stringify(enquiry),
                             type: 'POST',
                             dataType: 'json',
                             success: function (result) {
                                 if (result.status=="y") {
                                     window.location.href = '/h5/enquiry/success';
+                                } else {
+                                    popover(result.info);
                                 }
                             },
                             error: function (XMLHttpRequest, textStatus, errorThrown) {

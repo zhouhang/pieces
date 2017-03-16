@@ -21,6 +21,20 @@
 </section><!-- /ui-content -->
 <#include "wechat/inc/footer_h5.ftl"/>
 <script>
+    var weixinShare = {
+        appId: '${signature.appid!}',
+        title: '中药饮片报价《上工好药》',
+        desc: '上工好药——中药饮片采购首选 - 正品底价、品质保障、配送及时、轻松采购！',
+        link: '${baseUrl}/quote?ids=${ids}',
+        imgUrl: "${baseUrl}/images/favicon.ico",
+        timestamp: ${signature.timestamp?string("#")},
+        nonceStr: '${signature.noncestr!}',
+        signature: '${signature.signature!}'
+    }
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="${urls.getForLookupPath('/h5-static/js/weixin_share.js')}"></script>
+<script>
     !(function($) {
         var _global = {
             init: function() {

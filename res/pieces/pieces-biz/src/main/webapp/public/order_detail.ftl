@@ -192,7 +192,7 @@
                             <td></td>
                             <td>
                                 <div class="pic">
-                                    <a href="/commodity/${commodity.id}"><img src="${commodity.pictureUrl}" alt=""></a>
+                                    <a href="/commodity/${commodity.id}"><img style="width: 80px; height: 80px;" src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>" alt=""></a>
                                 </div>
                             </td>
                             <td>
