@@ -195,7 +195,7 @@ body.noscroll{overflow:hidden;}
 
 /* pdetail */
 .pdetail{margin-bottom:30px;background:#fff;}
-.pdetail li{position:relative;padding:16px 25% 16px 56px;font-size:1.2rem;border-bottom:1px solid #e7e7e7;}
+.pdetail li{position:relative;min-height:112px;padding:16px 25% 16px 56px;font-size:1.2rem;border-bottom:1px solid #e7e7e7;}
 .pdetail li:first-child{border-top:1px solid #e7e7e7;}
 .pdetail .hd{font-size:1.6rem;}
 .pdetail .bd{padding:5px 0 9px;color:#aaa;}
