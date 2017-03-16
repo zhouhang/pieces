@@ -207,7 +207,7 @@ var _YYY = {
             if (_YYY.is_weixn) {
                 model.push('    <h2 class="hd">点击这里</h2>');
                 model.push('    <p>然后点击 <em>【发送给朋友】</em> 或 <em>【分享到朋友圈】</em></p>');
-                model.push('    <div class="guide"><img src="assets/images/guide.png" width="85" height="115"></div>');
+                model.push('    <div class="guide"></div>');
             } else {
                 model.push('    <p>找到浏览器的<em>分享按钮</em><br>然后点击 <em>【发送给朋友】</em> 或 <em>【分享到朋友圈】</em></p>');
             }
