@@ -56,6 +56,9 @@
                                 <em>商品出库</em>
                                 <#if orderForm.deliveryDate?exists><span>${orderForm.deliveryDate?datetime}</span></#if>
                             </#if>
+                        <#if ![3,4,5,8]?seq_contains(orderForm.status)>
+                            <em>商品出库</em>
+                        </#if>
                         </li>
                         <li class="<#if [4,5,8]?seq_contains(orderForm.status)>curr</#if>">
                             <i class="fa fa-truck"></i>
@@ -66,6 +69,9 @@
                             <em>确认收货</em>
                             <#if orderForm.finishDate?exists><span>${orderForm.finishDate?datetime}</span></#if>
                         </#if>
+                        <#if ![4,5,8]?seq_contains(orderForm.status)>
+                            <em>确认收货</em>
+                        </#if>
 
                         </li>
                         <li class="<#if [5,8]?seq_contains(orderForm.status)>curr</#if>">
@@ -73,6 +79,9 @@
                         <#if (orderForm.status == 5)>
                             <em>完成</em>
                             <#if orderForm.finishDate?exists><span>${orderForm.finishDate?datetime}</span></#if>
+                        </#if>
+                        <#if ![5,8]?seq_contains(orderForm.status)>
+                            <em>确认收货</em>
                         </#if>
                         </li>
                     </ul>
