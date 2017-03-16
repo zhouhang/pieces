@@ -84,7 +84,7 @@
                                 <i>*</i>指导价：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" value="${commodity.guidePrice}" name="guidePrice" autocomplete="off" placeholder="">
+                                <input type="text" id="price" class="ipt" value="${commodity.guidePrice}" name="guidePrice" autocomplete="off" placeholder="">
                             </div>
                         </div>
                         <div class="group">
@@ -295,6 +295,14 @@ ${commodity.details}
             </#if>
             },
             formValidate: function () {
+                $('#price').on('blur', function() {
+                    var val = this.value;
+                    if (!/^\d+\.?\d*$/.test(val)) {
+                        val = Math.abs(parseFloat(val));
+                    }
+                    val = Math.abs(parseFloat(val));
+                    this.value = isNaN(val) ? '' : parseFloat(val.toFixed(2));
+                });
                 $("#form").validator({
                     fields: {
                         categoryId: "required",
