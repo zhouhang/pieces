@@ -192,6 +192,10 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
                 status == OrderEnum.SHIPPED.getValue()) {
             form.setDeliveryDate(new Date());
         }
+
+        if (status == OrderEnum.COMPLETE.getValue()) {
+            form.setFinishDate(new Date());
+        }
         orderFormDao.update(form);
         LogAuditing.audit(orderFormDao.findById(orderId),form,"订单","修改订单状态");
         return new Result(true).info("");

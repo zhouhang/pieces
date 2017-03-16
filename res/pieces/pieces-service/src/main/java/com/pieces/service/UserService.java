@@ -101,7 +101,7 @@ public interface UserService extends ICommonService<User>{
 	void loginNew(Subject subject, UsernamePasswordToken token,HttpServletRequest request, HttpServletResponse response);
 
 	// 用户微信登入获取授权创建默认账户
-	void createWxUser(WxMpUser wxMpUser, String userName, String phone);
+	User createWxUser(WxMpUser wxMpUser, String userName, String phone);
 
 	/**
 	 * 根据openId 查询用户

@@ -52,7 +52,7 @@
                             <#if (orderForm.status == 3)>
                                 <em>等待发货</em>
                             </#if>
-                            <#if (orderForm.status == 4)>
+                            <#if [4,5,8]?seq_contains(orderForm.status)>
                                 <em>商品出库</em>
                                 <span>${orderForm.deliveryDate?datetime}</span>
                             </#if>
@@ -62,11 +62,17 @@
                         <#if (orderForm.status == 4)>
                             <a href="${orderForm.id}" name="5" class="btn btn-red status">确认收货</a>
                         </#if>
+                        <#if [5]?seq_contains(orderForm.status)>
+                            <em>确认收货</em>
+                            <#if orderForm.finishDate?exists><span>${orderForm.finishDate?datetime}</span></#if>
+                        </#if>
+
                         </li>
-                        <li <#if [5]?seq_contains(orderForm.status)>curr</#if>>
+                        <li class="<#if [5,8]?seq_contains(orderForm.status)>curr</#if>">
                             <i class="fa fa-success"></i>
                         <#if (orderForm.status == 5)>
                             <em>完成</em>
+                            <#if orderForm.finishDate?exists><span>${orderForm.finishDate?datetime}</span></#if>
                         </#if>
                         </li>
                     </ul>
@@ -111,7 +117,7 @@
                         <#else >
                             <dd>
                                 <em>需付金额：</em>
-                                <span>¥${payRecord.actualPayment!}</span>
+                                <span>¥${payRecord.actualPayment?default(payRecord.deposit!)}</span>
                             </dd>
                         </#if>
 
@@ -192,7 +198,7 @@
                             <td></td>
                             <td>
                                 <div class="pic">
-                                    <a href="/commodity/${commodity.id}"><img src="${commodity.pictureUrl}" alt=""></a>
+                                    <a href="/commodity/${commodity.id}"><img style="width: 80px; height: 80px;" src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>" alt=""></a>
                                 </div>
                             </td>
                             <td>

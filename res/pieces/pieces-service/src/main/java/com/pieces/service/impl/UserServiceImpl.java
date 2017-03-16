@@ -335,15 +335,16 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 
     @Override
     @Transactional
-    public void createWxUser(WxMpUser wxMpUser, String userName, String phone) {
+    public User createWxUser(WxMpUser wxMpUser, String userName, String phone) {
+        User result = null;
         // 根据phone 查询下如果手机号已经存在则直接把手机号和openId 绑定
         User param = new User();
         param.setContactMobile(phone);
-        List<User> result = userDao.findUserByCondition(param);
-        if (result!= null && result.size()>0) {
-            User user = result.get(0);
+        List<User> list = userDao.findUserByCondition(param);
+        if (list != null && list.size() > 0) {
+            result = list.get(0);
             User param2 = new User();
-            param2.setId(user.getId());
+            param2.setId(result.getId());
             param2.setOpenId(wxMpUser.getOpenId());
             update(param2);
         } else {
@@ -351,11 +352,15 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
             user.setSource(3); // 表明来至微信
             user.setType(1); // 默认是终端用户
             user.setContactName(userName);
-            user.setUserName("wx"+serialNumberService.getTensTimestamp()+SeqNoUtil.getRandomNum(2));
-            user.setPassword(user.getContactMobile().substring(5,11)); // 默认密码
+            user.setUserName("wx" + serialNumberService.getTensTimestamp() + SeqNoUtil.getRandomNum(2));
+            user.setPassword(user.getContactMobile().substring(5, 11)); // 默认密码
             user.setContactMobile(phone);
             user.setOpenId(wxMpUser.getOpenId());
             addUser(user);
+            result = user;
         }
+
+        return result;
     }
 }
+

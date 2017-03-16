@@ -41,12 +41,25 @@
 
 </section><!-- /ui-content -->
 <#include "wechat/inc/footer_h5.ftl"/>
+<script>
+    var weixinShare = {
+        appId: '${signature.appid!}',
+        title: '中药饮片报价《上工好药》',
+        desc: '上工好药——中药饮片采购首选 - 正品底价、品质保障、配送及时、轻松采购！',
+        link: '',
+        imgUrl: "${baseUrl}/images/favicon.ico",
+        timestamp: ${signature.timestamp?string("#")},
+        nonceStr: '${signature.noncestr!}',
+        signature: '${signature.signature!}'
+    }
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="${urls.getForLookupPath('/h5-static/js/weixin_share.js')}"></script>
 <script>
     !(function($) {
         var _global = {
             init: function() {
-                _YYY.share.init('#share'); // 分享
+                _YYY.share.init(''); // 分享
                 this.share();
                 this.update();
             },
@@ -67,19 +80,31 @@
                 })
             },
             share: function () {
-                $("#share").click(function() {
-                    var commodityStr = [], commodityIds;
-                    var $cbxs = $('.pdetail').find('.cbx input:not(:disabled)')
-
+                var commodityStr = [];
+                var $cbxs = $('.pdetail').find('.cbx input:not(:disabled)')
+                // 单选
+                $cbxs.on('click', function() {
+                    commodityStr = [];
                     $cbxs.each(function () {
                         this.checked && commodityStr.push(this.value);
                     })
+                    weixinShare.link = "${baseUrl}/quote?ids=" + commodityStr.join(',');
+                    initWxShareV1();
+                })
 
+               var $model = $('#jwxShare');
+                $("#share").click(function() {
+                    commodityStr = [];
+                    $cbxs.each(function () {
+                        this.checked && commodityStr.push(this.value);
+                    })
                     if (commodityStr.length === 0) {
                         popover('请先选择商品');
                         return false;
                     }
-                    window.location.href = "/quote?ids=" +commodityStr.join(',');
+                    $model.show();
+                    // window.location.href = "/quote?ids=" +commodityStr.join(',');
+                    weixinShare.link = "${baseUrl}/quote?ids=" + commodityStr.join(',');
                 })
             }
         }

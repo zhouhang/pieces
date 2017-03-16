@@ -55,11 +55,13 @@ public class BizAuthorizationFilter extends AuthorizationFilter {
 						String wechatLoginUrl = baseUrl + "/h5/login?call=" + uri;
 						String OAUTH_URL = wxService.oauth2buildAuthorizationUrl(wechatLoginUrl, WxConsts.OAUTH2_SCOPE_USER_INFO, "weixin_state");
 						WebUtils.issueRedirect(request, response, OAUTH_URL);
+						return false;
 					}
 				} else {
 					return  true;
 				}
 			}
+			WebUtils.issueRedirect(request, response, getLoginUrl());
 			return false;
 		}
 		return true;

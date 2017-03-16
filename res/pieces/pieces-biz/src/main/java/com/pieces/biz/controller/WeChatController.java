@@ -14,6 +14,9 @@ import com.pieces.service.vo.CropResult;
 import com.pieces.tools.bean.BASE64DecodedMultipartFile;
 import com.pieces.tools.exception.NotFoundException;
 import com.pieces.tools.utils.CommonUtils;
+import com.pieces.tools.utils.WebUtil;
+import me.chanjar.weixin.common.bean.WxJsapiSignature;
+import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
@@ -28,6 +31,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import sun.misc.BASE64Decoder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -94,9 +98,15 @@ public class WeChatController {
             String sessionCode  = redisManager.get(RedisEnum.KEY_MOBILE_EQUIRY_CAPTCHA.getValue()+anonEnquiryVo.getPhone());
             if (Strings.isNullOrEmpty(sessionCode) || !code.equals(sessionCode)) {
                 // 验证码错误.
+                return new Result(false).info("验证码错误");
             } else {
                 WxMpUser wxUser = (WxMpUser)httpSession.getAttribute("wxMpUser");
-                userService.createWxUser(wxUser,anonEnquiryVo.getContacts(),anonEnquiryVo.getPhone());
+                user = userService.createWxUser(wxUser,anonEnquiryVo.getContacts(),anonEnquiryVo.getPhone());
+
+                Subject subject = SecurityUtils.getSubject();
+                BizToken token = new BizToken(user.getUserName(), user.getPassword(), false,null, "");
+                token.setWechat(true);
+                userService.login(subject, token);
             }
 
         }
@@ -123,12 +133,12 @@ public class WeChatController {
     @RequestMapping("enquiry/list")
     public String enquiryList(ModelMap model, Integer status) {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        status = status== null?1:status;
+        model.put("status",status);
         if (user != null) {
             EnquiryRecordVo vo = new EnquiryRecordVo();
             vo.setUserId(user.getId());
-            status = status== null?1:status;
             vo.setStatus(status);
-            model.put("status",status);
             //查询用户的询价单
             PageInfo<EnquiryBillsVo> pageInfo =  enquiryBillsService.findByPage(1,100,vo);
             model.put("pageInfo",pageInfo);
@@ -138,7 +148,7 @@ public class WeChatController {
 
     // 询价单详情
     @RequestMapping("enquiry/detail")
-    public String enquiryDetail(Integer billId, ModelMap model) {
+    public String enquiryDetail(Integer billId, ModelMap model, HttpServletRequest request) {
         // 报价时销售价等于开票价
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         if (user!= null) {
@@ -146,6 +156,14 @@ public class WeChatController {
             EnquiryBillsVo vo = enquiryBillsService.findVOById(billId);
             model.put("bill", vo);
         }
+
+        try {
+            WxJsapiSignature signature = wxService.createJsapiSignature(WebUtil.getFullUrl(request));
+            model.put("signature",signature);
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
+
         return "wechat/enquiry_detail" ;
     }
 
@@ -182,9 +200,15 @@ public class WeChatController {
      * @return
      */
     @RequestMapping(value = "enquiry/updatePriceSuccess", method = RequestMethod.GET)
-    public String enquiryUpdatePriceSuccess(String ids,Integer billId, ModelMap model) {
+    public String enquiryUpdatePriceSuccess(String ids,Integer billId, ModelMap model,HttpServletRequest request) {
         model.put("ids",ids);
         model.put("billId",billId);
+        try {
+            WxJsapiSignature signature = wxService.createJsapiSignature(WebUtil.getFullUrl(request));
+            model.put("signature",signature);
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
         return "wechat/enquiry_price_update_message" ;
     }
 
@@ -232,6 +256,7 @@ public class WeChatController {
                     // 登入
                     Subject subject = SecurityUtils.getSubject();
                     BizToken token = new BizToken(user.getUserName(), user.getPassword(), false,null, "");
+                    token.setWechat(true);
                     userService.login(subject, token);
 
                 } else {

@@ -58,7 +58,10 @@ public class OrderForm  implements Serializable {
 
 	// 订单过期时间
 	private Date expireDate;
-	
+
+	// 订单完成时间
+	private Date finishDate;
+
 	public OrderForm(){}
 	
 	public Integer getId() {
@@ -201,5 +204,13 @@ public class OrderForm  implements Serializable {
 
 	public void setExpireDate(Date expireDate) {
 		this.expireDate = expireDate;
+	}
+
+	public Date getFinishDate() {
+		return finishDate;
+	}
+
+	public void setFinishDate(Date finishDate) {
+		this.finishDate = finishDate;
 	}
 }
