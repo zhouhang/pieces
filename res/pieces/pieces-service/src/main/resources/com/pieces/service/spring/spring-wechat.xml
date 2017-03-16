@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="configStorage" class="me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage">
+        <property name="appId" value="${wechat.mp.appId}" />
+        <property name="secret" value="${wechat.mp.secret}" />
+        <property name="token" value="${wechat.mp.token}" />
+    </bean>
+
+    <bean id="wxMpService" class="me.chanjar.weixin.mp.api.impl.WxMpServiceImpl">
+        <property name="wxMpConfigStorage" ref="configStorage" />
+    </bean>
+
+</beans>

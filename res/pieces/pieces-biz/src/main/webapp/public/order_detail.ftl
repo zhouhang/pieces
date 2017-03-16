@@ -27,7 +27,7 @@
                             <i class="fa fa-xiadan01"></i><em>下单</em>
                             <span><#if orderForm.createrTime??>${orderForm.createrTime?datetime}</#if></span>
                         </li>
-                        <li class="<#if [2,3,4,5,8]?seq_contains(orderForm.status)>curr</#if>"><i class="fa fa-fukuan"></i>
+                        <li class="<#if [1,2,3,4,5,8]?seq_contains(orderForm.status)>curr</#if>"><i class="fa fa-fukuan"></i>
                         <#if user_session_biz?? && user_session_biz.type == 2>
                             <#if (orderForm.status == 1)>
                                 <a href="/center/pay/go/${orderForm.id}" class="btn btn-red">支付保证金</a>
@@ -43,7 +43,9 @@
                         <#if (orderForm.status == 6)>
                             <span><a href="${orderForm.id}" name="7" class="c-blue jremove status">删除订单</a></span>
                         </#if>
+                        <#if [3,4,5,8]?seq_contains(orderForm.status)>
                             <em>付款成功</em>
+                        </#if>
                         </li>
                         <li class="<#if [3,4,5,8]?seq_contains(orderForm.status)>curr</#if>">
                             <i class="fa fa-chuku"></i>
@@ -190,7 +192,7 @@
                             <td></td>
                             <td>
                                 <div class="pic">
-                                    <a href="#"><img src="uploads/p1.jpg" alt=""></a>
+                                    <a href="/commodity/${commodity.id}"><img src="${commodity.pictureUrl}" alt=""></a>
                                 </div>
                             </td>
                             <td>

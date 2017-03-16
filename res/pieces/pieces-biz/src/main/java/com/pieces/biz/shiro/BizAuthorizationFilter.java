@@ -65,4 +65,9 @@ public class BizAuthorizationFilter extends AuthorizationFilter {
 		return true;
 	}
 
+	@Override
+	protected boolean onAccessDenied(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
+		return false;
+	}
+
 }

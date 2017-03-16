@@ -75,7 +75,7 @@ public class WeChatController {
     public String enquiry(ModelMap model) {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         model.put("user", user);
-        return "enquiry";
+        return "wechat/enquiry";
     }
 
     /**
@@ -116,7 +116,7 @@ public class WeChatController {
      */
     @RequestMapping("enquiry/success")
     public String enquirySuccess() {
-        return "enquiry_message";
+        return "wechat/enquiry_message";
     }
 
     // 询价单列表
@@ -126,12 +126,12 @@ public class WeChatController {
         if (user != null) {
             EnquiryRecordVo vo = new EnquiryRecordVo();
             vo.setUserId(user.getId());
-            model.put("status",status);
+            model.put("status",status== null?1:status);
             //查询用户的询价单
             PageInfo<EnquiryBillsVo> pageInfo =  enquiryBillsService.findByPage(1,100,vo);
             model.put("pageInfo",pageInfo);
         }
-        return "enquiry_list" ;
+        return "wechat/enquiry_list" ;
     }
 
     // 询价单详情
@@ -144,7 +144,7 @@ public class WeChatController {
             EnquiryBillsVo vo = enquiryBillsService.findVOById(billId);
             model.put("bill", vo);
         }
-        return "enquiry_detail" ;
+        return "wechat/enquiry_detail" ;
     }
 
     //修改询价开票价
@@ -155,7 +155,7 @@ public class WeChatController {
         model.put("list",list);
         model.put("ids",ids);
         model.put("billId",billId);
-        return "enquiry_price_update" ;
+        return "wechat/enquiry_price_update" ;
     }
 
     /**
@@ -183,7 +183,7 @@ public class WeChatController {
     public String enquiryUpdatePriceSuccess(String ids,Integer billId, ModelMap model) {
         model.put("ids",ids);
         model.put("billId",billId);
-        return "enquiry_price_update_message" ;
+        return "wechat/enquiry_price_update_message" ;
     }
 
     /**
@@ -199,7 +199,7 @@ public class WeChatController {
             throw new NotFoundException();
         }
         model.put("commodity", commodity);
-        return "commodity_detail" ;
+        return "wechat/commodity_detail" ;
     }
 
     /**

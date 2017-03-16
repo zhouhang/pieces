@@ -41,12 +41,12 @@
 	
 	<!-- 此处引入 dao项目下所有的spring配置文件管理器 -->
 	<import resource="classpath*:com/pieces/dao/spring/spring-contextmanager.xml"  />
+	<import resource="classpath*:com/pieces/service/spring/spring-wechat.xml"  />
 	<import resource="classpath*:com/pieces/service/spring/spring-shiro.xml"  />
 	<import resource="classpath*:com/pieces/service/spring/spring-redis.xml"  />
 	<import resource="classpath*:com/pieces/biz/spring/spring-shiro-biz.xml"  />
 	<import resource="classpath*:com/pieces/service/spring/spring-elasticsearch.xml"  />
 	<import resource="classpath*:com/pieces/service/spring/spring-mail.xml"  />
-
 	<!-- 导入log 配置 -->
 	<import resource="classpath*:com/pieces/tools/log/config/spring-log.xml"/>
 </beans>
