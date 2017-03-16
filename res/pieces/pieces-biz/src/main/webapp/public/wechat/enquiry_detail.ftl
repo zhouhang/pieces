@@ -48,7 +48,7 @@
         desc: '上工好药——中药饮片采购首选 - 正品底价、品质保障、配送及时、轻松采购！',
         link: '',
         imgUrl: "${baseUrl}/images/favicon.ico",
-        timestamp: ${signature.timestamp?string("#")},
+        timestamp: ${signature.timestamp!},
         nonceStr: '${signature.noncestr!}',
         signature: '${signature.signature!}'
     }
