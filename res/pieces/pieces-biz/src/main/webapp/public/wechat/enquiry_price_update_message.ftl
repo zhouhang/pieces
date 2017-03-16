@@ -23,8 +23,8 @@
 <script>
     var weixinShare = {
         appId: '${signature.appid!}',
-        title: '中药饮片报价《上工好药》',
-        desc: '上工好药——中药饮片采购首选 - 正品底价、品质保障、配送及时、轻松采购！',
+        title: '中药饮片报价',
+        desc: '',
         link: '${baseUrl}/quote?ids=${ids}',
         imgUrl: "${baseUrl}/images/favicon.ico",
         timestamp: ${signature.timestamp?string("#")},

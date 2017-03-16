@@ -61,7 +61,7 @@
         </#list>
         </div>
         <#list list as commodity>
-        <#if commodity_index ==1>
+        <#if commodity_index ==0>
         <div class="tips">
             <div>
                 * 旋转手机屏幕可以查看更多信息；<br>

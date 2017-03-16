@@ -157,6 +157,8 @@ public class WeChatController {
             model.put("bill", vo);
         }
 
+        model.put("user", user);
+
         try {
             WxJsapiSignature signature = wxService.createJsapiSignature(WebUtil.getFullUrl(request));
             model.put("signature",signature);

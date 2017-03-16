@@ -24,7 +24,7 @@
                 <div class="td">${commodity.commodityName!}<input type="text" style="display: none;" value="${commodity.id!}"></div>
                 <div class="td">${commodity.specs}</div>
                 <div class="td">${commodity.myPrice!}</div>
-                <div class="td"><input type="tel" placeholder="￥90.00" value="${commodity.price?default(commodity.myPrice!)}" class="ipt" tabindex="1" /><span class="error"></span></div>
+                <div class="td"><input type="tel" value="${commodity.price?default(commodity.myPrice!)}" class="ipt" tabindex="1" /><span class="error"></span></div>
             </div>
             </#list>
         </div>

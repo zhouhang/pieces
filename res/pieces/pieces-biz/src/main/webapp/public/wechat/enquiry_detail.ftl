@@ -22,7 +22,9 @@
                 <div class="bd">${commodity.specs!}${commodity.level!}</div>
                 <div class="price">
                     <span>销售价:<em>￥${commodity.myPrice?default(0)}</em></span>
+                    <#if user?exists && user.type == 2>
                     <span>开票价:￥${commodity.price?default(commodity.myPrice?default(0))}</span>
+                    </#if>
                 </div>
                 <div class="pic rs-pic">
                     <img src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>"/>
@@ -34,7 +36,9 @@
     </div>
 <#if bill.expireDate?exists>
     <div class="ui-button">
+    <#if user?exists && user.type == 2>
         <button type="button" class="ubtn ubtn-red" id="submit"><i class="ico ico-edit"></i> 修改开票价</button>
+    </#if>
         <button type="button" class="ubtn ubtn-white" id="share"><i class="ico ico-share2"></i> 分享报价</button>
     </div>
 </#if>
@@ -44,10 +48,10 @@
 <script>
     var weixinShare = {
         appId: '${signature.appid!}',
-        title: '中药饮片报价《上工好药》',
-        desc: '上工好药——中药饮片采购首选 - 正品底价、品质保障、配送及时、轻松采购！',
+        title: '中药饮片报价',
+        desc: '',
         link: '',
-        imgUrl: "${baseUrl}/images/favicon.ico",
+        imgUrl: "",
         timestamp: ${signature.timestamp!},
         nonceStr: '${signature.noncestr!}',
         signature: '${signature.signature!}'
