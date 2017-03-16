@@ -243,7 +243,7 @@ body.noscroll{overflow:hidden;}
 .dialog-mask .hd{margin-bottom:14px;font-size:1.8rem;}
 .dialog-mask p{line-height:3rem;font-size:1.2rem;}
 .dialog-mask em{color:#fda21d;}
-.dialog-mask .guide{position:absolute;top:0;right:20px;}
+.dialog-mask .guide{position:absolute;top:0;right:20px;width:85px;height:115px;background:url(../images/guide.png) no-repeat;background-size:100% auto;}
 .dialog-mask .bd{padding:0 16.6%;}
 .dialog-mask .bd .btn{display:block;width:100%;height:4rem;line-height:4rem;margin-top:3rem;padding:0;border-radius:2rem;color:#fda21d;background:none;border:1px solid #fda21d;}
 .dialog-mask .bd .btn:active{background:#fda21d;color:#fff;}
