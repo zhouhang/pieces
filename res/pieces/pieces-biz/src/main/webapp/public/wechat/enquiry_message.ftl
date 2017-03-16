@@ -15,7 +15,7 @@
         <div class="bd">报价信息将在30分钟内发送给您，请注意查收！</div>
     </div>
     <div class="ui-button">
-        <a href="/h5/enquiry/list?status=1" class="ubtn ubtn-red" id="share"><i class="ico ico-share"></i> 查看询价单</a>
+        <a href="/h5/enquiry/list?status=1" class="ubtn ubtn-red" id="share">查看询价单</a>
     </div>
 </section><!-- /ui-content -->
 <#include "wechat/inc/footer_h5.ftl"/>

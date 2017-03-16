@@ -54,7 +54,7 @@
                             </#if>
                             <#if [4,5,8]?seq_contains(orderForm.status)>
                                 <em>商品出库</em>
-                                <span>${orderForm.deliveryDate?datetime}</span>
+                                <#if orderForm.deliveryDate?exists><span>${orderForm.deliveryDate?datetime}</span></#if>
                             </#if>
                         </li>
                         <li class="<#if [4,5,8]?seq_contains(orderForm.status)>curr</#if>">
@@ -198,12 +198,12 @@
                             <td></td>
                             <td>
                                 <div class="pic">
-                                    <a href="/commodity/${commodity.id}"><img style="width: 80px; height: 80px;" src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>" alt=""></a>
+                                    <a href="/commodity/${commodity.id}" target="_blank"><img style="width: 80px; height: 80px;" src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>" alt=""></a>
                                 </div>
                             </td>
                             <td>
                                 <div class="name">
-                                    <a href="/commodity/${commodity.id}">${commodity.name}${commodity.spec}${commodity.level}</a>
+                                    <a href="/commodity/${commodity.id}" target="_blank">${commodity.name}${commodity.spec}${commodity.level}</a>
                                 </div>
                             </td>
                             <#if user_session_biz?? && user_session_biz.type == 2>

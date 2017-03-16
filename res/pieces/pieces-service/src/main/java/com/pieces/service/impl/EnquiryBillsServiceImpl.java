@@ -155,11 +155,13 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
         }
 
         EnquiryBillsVo vo = findVOById(id);
-        for (EnquiryCommoditys commoditys : vo.getEnquiryCommoditys()) {
-            EnquiryCommoditys parse = map.get(commoditys.getId());
-            if (parse != null){
-                commoditys.setExpireDate(parse.getExpireDate());
-                commoditys.setMyPrice(parse.getMyPrice());
+        if (map != null) {
+            for (EnquiryCommoditys commoditys : vo.getEnquiryCommoditys()) {
+                EnquiryCommoditys parse = map.get(commoditys.getId());
+                if (parse != null) {
+                    commoditys.setExpireDate(parse.getExpireDate());
+                    commoditys.setMyPrice(parse.getMyPrice());
+                }
             }
         }
 
