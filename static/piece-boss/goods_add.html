@@ -140,6 +140,15 @@
 
                             <div class="group">
                                 <div class="txt">
+                                    <i>*</i>指导价：
+                                </div>
+                                <div class="cnt">
+                                    <input type="text" class="ipt" id="price" value="" autocomplete="off" placeholder="">                            
+                                </div>
+                            </div>
+
+                            <div class="group">
+                                <div class="txt">
                                     <i>*</i>原药产地：
                                 </div>
                                 <div class="cnt">
@@ -355,6 +364,15 @@
                             description: "length(0~160, true)"
                         }
                     });
+
+                    $('#price').on('blur', function() {
+                        var val = this.value;
+                        if (!/^\d+\.?\d*$/.test(val)) {
+                            val = Math.abs(parseFloat(val));
+                        }
+                        val = Math.abs(parseFloat(val));
+                        this.value = isNaN(val) ? '' : parseFloat(val.toFixed(2));
+                    })
                 },
                 // 提交事件
                 submitEvent: function() {
