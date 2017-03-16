@@ -305,10 +305,10 @@ public class OrderController extends BaseController {
 			PayRecordVo payRecord = null;
 			if (user.getType() == 2) {
 				// 代理商
-				payRecord = payRecordService.findByOrderForUser(user.getId(),id);
+				payRecord = payRecordService.findByOrderForAgent(user.getId(),id);
 			} else if (user.getType() ==1) {
 				// 终端
-				payRecord = payRecordService.findByOrderForAgent(user.getId(),id);
+				payRecord = payRecordService.findByOrderForUser(user.getId(),id);
 			}
 			modelMap.put("payRecord",payRecord);
 		}
