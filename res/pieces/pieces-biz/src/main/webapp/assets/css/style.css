@@ -430,6 +430,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .main-body .side .pic{float:left;width:80px;height:80px;}
 .main-body .side .desc{margin-left:95px;font-size:12px;color:#999;}
 .main-body .side h3 a{display:block;height:18px;margin-bottom:6px;padding-top:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.main-body .side h3 a:hover{text-decoration:none;}
 .main-body .main{margin-left:220px;}
 .bg-gray .main-body{margin:20px 0 0;}
 
