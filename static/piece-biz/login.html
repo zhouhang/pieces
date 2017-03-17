@@ -96,5 +96,47 @@
 
     <script src="js/jquery.min.js"></script>
     <script src="js/login.js"></script>
+    <script>
+        _global = {
+            fn: {
+                init: function() {
+                    this.submit();
+                },
+                submit: function() {
+                    var isSubmit = false;
+                    $('#submit').on('click', function() {
+                        if (!isSubmit && loginPage.fn.checkForm()) {
+                            $.ajax({
+                                url : 'json/login.php',
+                                // type : 'POST',
+                                dataType : 'json',
+                                data : {
+                                    userName : $('#username').val(),
+                                    password : $('#pwd').val()
+                                },
+                                success: function(result) {
+                                    if (result.status != 'y') {
+                                        loginPage.fn.showMsg(result.info);
+                                    } else {
+                                        console.log(result)
+                                    }
+                                },
+                                beforeSend: function(){
+                                    isSubmit = true;
+                                },
+                                complete: function() {
+                                    isSubmit = false;
+                                }
+                            });
+                        }
+                        return false;
+                    })
+                }
+            }
+        }
+        $(function(){
+            _global.fn.init();
+        })
+    </script>
 </body>
 </html>

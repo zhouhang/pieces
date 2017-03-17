@@ -123,49 +123,6 @@ function userMenu() {
     }) 
 }
 
-// 检查登录
-function isLogin(call) {
-	$.ajax({
-        url: "/pop",
-        type: "POST",
-        dataType : "json",
-        success: function(data){
-        	if (typeof call === 'function') {
-       			call(data.status === 'y');
-        	}
-        }
-    });
-}
-
-// 询价
-function quoteEvent() {
-	$('body').on('click', '.j_pop_login', function() {
-        var url = $(this).attr('href');
-
-		// 检查登录状态
-    	$.ajax({
-            url: "/pop",
-            type: "POST",
-            dataType : "json",
-            // data : {url : url},
-            success: function(data){
-            	var status = data.status;
-            	if(status === 'y') {
-            		location.href = url;
-            	}else{
-            		layer.open({
-                        type: 2,
-                        title: '账户登录',
-                        area: ['360px', '360px'],
-                        content: ['/popLogin?url=' + url, 'no']
-                    });
-            	}
-            }
-        });
-    	return false;
-    })
-}
-
 // 商品分类
 function category() {
 	$cat = $('#jcat');
@@ -209,7 +166,6 @@ function category() {
 			hideCat();
 		}
 	})
-
 }
 
 function gotop() {
@@ -281,8 +237,10 @@ var shopcart = {
 		this.$header = $('.header');
 		this.$count = this.$header.find('.cart .count');
 		this.count = 0;
-		this.initCart();
-		this.bindEvent();
+		if (this.$count.length > 0) {
+			this.initCart();
+			this.bindEvent();
+		}
 	},
 	initCart: function() {
 		var that = this,
@@ -298,9 +256,9 @@ var shopcart = {
 			success: function(res) {
 				try{
 					_global.fn.initCart(res.data); // page cart_index
+					that.count = res.data.length;
+					that.toHtml(res.data);
 				}catch(error){};
-				that.count = res.data.length;
-				that.toHtml(res.data);
 			}
 		})
 	},
