@@ -23,9 +23,9 @@
                 <#list pageInfo.list as bill>
                 <li>
                     <a href="/h5/enquiry/detail?billId=${bill.id!}">
-                        <div class="hd <#if bill.type==1>new</#if>">${bill.code!}</div>
+                        <div class="hd <#if bill.type==1 && status!=2 >new</#if>">${bill.code!}</div>
                         <div class="bd">${bill.commodityOverview!} 共 <em>${bill.enquiryCommoditys?size}</em> 个商品 </div>
-                        <time data-time="${(bill.createTime?date)!}"></time>
+                        <time data-time="${(bill.createTime?datetime)!}"></time>
                     </a>
                 </li>
             </#list>

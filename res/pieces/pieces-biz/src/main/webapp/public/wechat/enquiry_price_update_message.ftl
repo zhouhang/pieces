@@ -26,7 +26,7 @@
         title: '中药饮片报价',
         desc: '${desc!}',
         link: '${baseUrl}/quote?ids=${ids}',
-        imgUrl: "${baseUrl}/images/favicon.ico",
+        imgUrl: "",
         timestamp: ${signature.timestamp?string("#")},
         nonceStr: '${signature.noncestr!}',
         signature: '${signature.signature!}'
