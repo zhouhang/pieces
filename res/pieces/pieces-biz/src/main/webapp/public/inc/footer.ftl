@@ -20,7 +20,6 @@
 
 <script src="${urls.getForLookupPath('/js/jquery.min.js')}"></script>
 <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
-<script src="${urls.getForLookupPath('/js/jquery.autocomplete.min.js')}"></script>
 <script src="${urls.getForLookupPath('/js/common.js')}"></script>
 <script src="//hm.baidu.com/hm.js?61c7936d47deb868315f8a231034f0cb"></script>
 
