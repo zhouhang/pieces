@@ -18,23 +18,27 @@
         <ul>
         <#list bill.enquiryCommoditys as commodity>
             <li>
-                <div class="hd">${commodity.commodityName!}</div>
+                <div class="hd"><a href="/h5/commodity/${commodity.id}">${commodity.commodityName!}</a></div>
                 <div class="bd">${commodity.specs!}${commodity.level!}</div>
                 <div class="price">
-                    <span>销售价:<em>￥${commodity.myPrice?default(0)}</em></span>
+                    <span>销售价:<em>${(commodity.myPrice?default(0))?string .currency}</em></span>
                     <#if user?exists && user.type == 2>
-                    <span>开票价:￥${commodity.price?default(commodity.myPrice?default(0))}</span>
+                    <span>开票价:${(commodity.price?default(commodity.myPrice?default(0)))?string .currency}</span>
                     </#if>
                 </div>
                 <div class="pic rs-pic">
-                    <img src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>"/>
+                    <a href="/h5/commodity/${commodity.id}"><img src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>"/></a>
                 </div>
-                <div class="cbx mid"><input type="checkbox" value="${commodity.id!}" class="ico ico-rad"/></div>
+                <#if bill.status==0 || !commodity.myPrice?exists || (commodity.myPrice == 0) || !((commodity.expireDate?date gte .now?date) || (commodity.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
+                <div class="cbx mid"><input type="checkbox" value="${commodity.id!}" class="ico ico-rad" disabled/></div>
+                <#else >
+                <div class="cbx mid"><input type="checkbox" data-price="${(commodity.price?default(commodity.myPrice?default(0)))?string .currency}" data-name="${commodity.commodityName!}" value="${commodity.id!}" class="ico ico-rad"/></div>
+                </#if>
             </li>
         </#list>
         </ul>
     </div>
-<#if bill.expireDate?exists>
+<#if bill.expireDate?exists&&((bill.expireDate?date gte .now?date) || (bill.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
     <div class="ui-button">
     <#if user?exists && user.type == 2>
         <button type="button" class="ubtn ubtn-red" id="submit"><i class="ico ico-edit"></i> 修改开票价</button>
@@ -86,13 +90,29 @@
             share: function () {
                 var commodityStr = [];
                 var $cbxs = $('.pdetail').find('.cbx input:not(:disabled)')
+                var desc = "";
+                // 默认全选
+                $cbxs.each(function() {
+                    this.checked = true;
+                    commodityStr.push(this.value);
+                    desc += $(this).data("name")+ " "+$(this).data("price");
+                    weixinShare.link = "${baseUrl}/quote?ids=" + commodityStr.join(',');
+                    weixinShare.desc = desc;
+                    initWxShareV1();
+                });
+
                 // 单选
                 $cbxs.on('click', function() {
+                    desc = "";
                     commodityStr = [];
                     $cbxs.each(function () {
-                        this.checked && commodityStr.push(this.value);
+                        if (this.checked) {
+                            commodityStr.push(this.value);
+                            desc += $(this).data("name")+ " "+$(this).data("price");
+                        }
                     })
                     weixinShare.link = "${baseUrl}/quote?ids=" + commodityStr.join(',');
+                    weixinShare.desc = desc;
                     initWxShareV1();
                 })
 

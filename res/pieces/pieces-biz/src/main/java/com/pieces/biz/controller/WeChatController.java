@@ -205,6 +205,12 @@ public class WeChatController {
     public String enquiryUpdatePriceSuccess(String ids,Integer billId, ModelMap model,HttpServletRequest request) {
         model.put("ids",ids);
         model.put("billId",billId);
+        List<EnquiryCommoditysVo> list = enquiryCommoditysService.findVoByIds(ids);
+        String desc = "";
+        for (EnquiryCommoditysVo vo : list) {
+            desc += vo.getCommodityName() + " " + ((vo.getPrice()==null||vo.getPrice()==0)?vo.getMyPrice():vo.getPrice());
+        }
+        model.put("desc",desc);
         try {
             WxJsapiSignature signature = wxService.createJsapiSignature(WebUtil.getFullUrl(request));
             model.put("signature",signature);

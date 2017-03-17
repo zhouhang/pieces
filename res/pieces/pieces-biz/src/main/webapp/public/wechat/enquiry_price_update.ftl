@@ -6,7 +6,6 @@
     <meta name="author" content="">
     <title>修改销售价-上工好药</title>
 </head>
-
 <body>
 <section class="ui-content">
     <div class="pdetail">
@@ -23,8 +22,8 @@
             <div class="tr">
                 <div class="td">${commodity.commodityName!}<input type="text" style="display: none;" value="${commodity.id!}"></div>
                 <div class="td">${commodity.specs}</div>
-                <div class="td">${commodity.myPrice!}</div>
-                <div class="td"><input type="tel" value="${commodity.price?default(commodity.myPrice!)}" class="ipt" tabindex="1" /><span class="error"></span></div>
+                <div class="td">${(commodity.myPrice?string .currency)!}</div>
+                <div class="td"><input type="tel" value="${(commodity.price?default(commodity.myPrice!))?string("0.00")}" class="ipt" tabindex="1" /><span class="error"></span></div>
             </div>
             </#list>
         </div>

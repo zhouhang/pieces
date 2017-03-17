@@ -56,7 +56,7 @@
                 <div class="td w2">${commodity.specs!}</div>
                 <div class="td w3">${commodity.level!}</div>
                 <div class="td w4">${commodity.origin!}</div>
-                <div class="td w5"><span>&yen; ${commodity.price?default(commodity.myPrice!)}</span></div>
+                <div class="td w5"><span>${(commodity.price?default(commodity.myPrice!))?string .currency}</span></div>
             </div>
         </#list>
         </div>

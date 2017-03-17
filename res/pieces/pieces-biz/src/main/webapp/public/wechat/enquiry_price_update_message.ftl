@@ -24,7 +24,7 @@
     var weixinShare = {
         appId: '${signature.appid!}',
         title: '中药饮片报价',
-        desc: '',
+        desc: '${desc!}',
         link: '${baseUrl}/quote?ids=${ids}',
         imgUrl: "${baseUrl}/images/favicon.ico",
         timestamp: ${signature.timestamp?string("#")},

@@ -97,6 +97,10 @@ public class EnquiryCommoditysServiceImpl extends AbsCommonService<EnquiryCommod
         enquiryBillsDao.update(enquiryBills);
 
         if(list != null && list.size()>0) {
+            // 报价时给合同价设置默认值
+            for (EnquiryCommoditys commoditys :list) {
+                commoditys.setPrice(commoditys.getMyPrice());
+            }
             enquiryCommoditysDao.quotedUpdate(list);
             // 报价后发生短信
             EnquiryBillsVo billsVo = enquiryBillsDao.findVOById(billsId);
