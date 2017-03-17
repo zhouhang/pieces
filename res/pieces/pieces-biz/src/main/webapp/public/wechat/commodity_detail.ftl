@@ -33,7 +33,7 @@
                             <strong>${commodity.name!}</strong>
                         </li>
                         <li>
-                            <em>片       型：</em>
+                            <em>片&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：</em>
                             <strong>${commodity.spec!}</strong>
                         </li>
                         <li>
