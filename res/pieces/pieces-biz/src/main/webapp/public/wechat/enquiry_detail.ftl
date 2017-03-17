@@ -18,7 +18,7 @@
         <ul>
         <#list bill.enquiryCommoditys as commodity>
             <li>
-                <div class="hd"><a href="/h5/commodity/${commodity.commodityId}">${commodity.commodityName!}</a></div>
+                <div class="hd"><a href="/h5/commodity/${commodity.commodityId!}">${commodity.commodityName!}</a></div>
                 <div class="bd">${commodity.specs!}${commodity.level!}</div>
                 <div class="price">
                     <span>销售价:<em>${(commodity.myPrice?default(0))?string .currency}</em></span>
@@ -27,7 +27,7 @@
                     </#if>
                 </div>
                 <div class="pic rs-pic">
-                    <a href="/h5/commodity/${commodity.commodityId}"><img src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>"/></a>
+                    <a href="/h5/commodity/${commodity.commodityId!}"><img src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>"/></a>
                 </div>
                 <#if bill.status==0 || !commodity.myPrice?exists || (commodity.myPrice == 0) || !((commodity.expireDate?date gte .now?date) || (commodity.expireDate?string("yyyyMMdd") == .now?string("yyyyMMdd")))>
                 <div class="cbx mid"><input type="checkbox" value="${commodity.id!}" class="ico ico-rad" disabled/></div>
