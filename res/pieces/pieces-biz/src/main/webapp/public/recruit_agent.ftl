@@ -244,8 +244,9 @@
         <div class="hotline">服务热线：0558-5120088</div>
     </div>
 </div>
-<script src="${urls.getForLookupPath('/js/jquery.min.js')}"></script>
 <#include "./inc/footer.ftl"/>
+
+<div class="toolbar"></div>
 <script>
     _global = {
         v: {

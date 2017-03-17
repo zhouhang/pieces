@@ -100,8 +100,8 @@ body .layui-m-layer .layui-m-layer-msg{width:auto;max-width:90%;margin:0 auto;bo
 .ico-share2{background-image:url(../images/ico-share2.png);width:18px;height:18px;}
 .ico-right{background-image:url(../images/ico-right.png);width:90px;height:90px;}
 .ico-camera{background-image:url(../images/ico-camera.png);width:24px;height:24px;}
-.ico-rad{background-image:url(../images/ico-rad.png?id=2);width:24px;height:24px;}
-.ico-rad:checked{background-position:-24px 0;}
+.ico-rad{background-image:url(../images/ico-rad.png);width:24px;height:24px;border:0;}
+.ico-rad:checked{background-position:-24px 0;background-color:#fff;}
 
 /* ui-button */
 .ui-button{margin:15px 13px;text-align:center;}
@@ -218,7 +218,8 @@ body.noscroll{overflow:hidden;}
 .goods-info{margin-top:15px;background:#fff;border-bottom:1px solid #e7e7e7;}
 .goods-info:first-child{margin-top:0;}
 .goods-info h1{padding:26px 13px;font-size:1.6rem;}
-.goods-info .pic:before{padding-top:53.333%;}
+.goods-info .pic{text-align:center;}
+.goods-info .pic img{max-width:100%;}
 .goods-info .tab{height:45px;line-height:45px;text-align:center;}
 .goods-info .tab li{float:left;width:50%;border:1px solid #e7e7e7;border-left:0;color:#aaa;}
 .goods-info .tab .curr{border-top:2px solid #c3272b;border-bottom:0;color:#c3272b;}

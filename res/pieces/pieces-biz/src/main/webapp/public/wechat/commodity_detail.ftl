@@ -10,7 +10,7 @@
 <body class="bg-gray">
 <section class="ui-content">
     <div class="goods-info">
-        <div class="pic rs-pic">
+        <div class="pic">
             <img src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>" />
         </div>
 

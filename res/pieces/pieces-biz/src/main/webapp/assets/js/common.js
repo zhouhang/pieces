@@ -170,13 +170,11 @@ function category() {
 
 function gotop() {
 	var 
-		qq        = '1296394620',
 		timer     = 0,
-		$elevator = $('#jelevator'),
+		$elevator = $('.elevator'),
 		$win      = $(window),
 		threshold = $win.height(),
-		elevator  = $elevator.length === 1,
-		$toolbar  = $('<div class="toolbar"><div class="item wechat"><img src="images/qrcode.png"></div><div class="item qq"><a href="tencent://message/?uin='+qq+'&amp;Site=在线QQ&amp;Menu=yes"></a></div><div class="item gotop"><a href="javascript:;">返回顶部</a></div></div>').appendTo($('body')),
+		$toolbar = $('.toolbar').html('<a class="item wechat" href="javascript:;"><img src="images/qrcode.png"></a><a class="item qq" href="tencent://message/?uin=1296394620&amp;Site=在线QQ&amp;Menu=yes"></a><a class="item gotop" href="javascript:;"></a>'),
 		$gotop 	  = $toolbar.find('.gotop');
 
 	var scroll = function() {
@@ -190,7 +188,7 @@ function gotop() {
 				className = 'removeClass';
 			}
 			$gotop[className]('fade');
-			elevator && $elevator[fade]();
+			$elevator[fade]();
 		}, 50);
 	}
 

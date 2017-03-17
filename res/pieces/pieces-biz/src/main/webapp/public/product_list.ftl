@@ -95,6 +95,8 @@
 
     <#include "./inc/helper.ftl"/>
     <#include "./inc/footer.ftl"/>
+
+    <div class="toolbar"></div>
     <script>
     var _global = {
         fn: {

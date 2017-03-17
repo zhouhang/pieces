@@ -118,11 +118,10 @@
 </div>
 
 <#include "./inc/helper.ftl"/>
-
-<div class="elevator" id="jelevator"></div>
-
-
 <#include "./inc/footer.ftl"/>
+
+<div class="elevator"></div>
+<div class="toolbar"></div>
 <script src="${urls.getForLookupPath('/js/index_2016.js')}"></script>
 </body>
 </html>
