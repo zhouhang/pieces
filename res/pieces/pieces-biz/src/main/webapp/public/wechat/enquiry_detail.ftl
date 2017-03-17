@@ -18,7 +18,7 @@
         <ul>
         <#list bill.enquiryCommoditys as commodity>
             <li>
-                <div class="hd"><a href="/h5/commodity/${commodity.commodityId!}">${commodity.commodityName!}</a></div>
+                <div class="hd"><a href="/h5/commodity/${commodity.commodityId}">${commodity.commodityName!}</a></div>
                 <div class="bd">${commodity.specs!}${commodity.level!}</div>
                 <div class="price">
                     <span>销售价:<em>${(commodity.myPrice?default(0))?string .currency}</em></span>

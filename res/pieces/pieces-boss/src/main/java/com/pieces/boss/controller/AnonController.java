@@ -139,6 +139,9 @@ public class AnonController extends BaseController{
     @RequestMapping(value = "/download")
     public void download(HttpServletResponse response, HttpServletRequest request, String url, String fileName) throws IOException {
         String path = FileUtil.getAbsolutePath(url);
+
+        String ext = FileUtil.getFileExt(path);
+        fileName = fileName + ext;
         File file = new File(path);
         if (!file.exists()) throw new RuntimeException("文件不存在");
 

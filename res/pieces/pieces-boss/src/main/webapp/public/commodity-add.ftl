@@ -311,7 +311,7 @@
                         val = Math.abs(parseFloat(val));
                     }
                     val = Math.abs(parseFloat(val));
-                    this.value = isNaN(val) ? '' : parseFloat(val.toFixed(2));
+                    this.value = isNaN(val) ? '' : val.toFixed(2);
                 });
 
                 $("#form").validator({
