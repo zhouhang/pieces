@@ -176,7 +176,7 @@ function gotop() {
 		$win      = $(window),
 		threshold = $win.height(),
 		elevator  = $elevator.length === 1,
-		$toolbar  = $('<div class="toolbar"><div class="item wechat"><img src="images/qrcode.png"></div><div class="item qq"><a href="tencent://message/?uin='+qq+'&amp;Site=在线QQ&amp;Menu=yes"></a></div><div class="item gotop"><a href="javascript:;">返回顶部</a></div></div>').appendTo($('body')),
+		$toolbar  = $('<div class="toolbar"><a class="item wechat" href="javascript:;"><img src="images/qrcode.png"></a><a class="item qq" href="tencent://message/?uin='+qq+'&amp;Site=在线QQ&amp;Menu=yes"></a><a class="item gotop" href="javascript:;"></a></div>').appendTo($('body')),
 		$gotop 	  = $toolbar.find('.gotop');
 
 	var scroll = function() {
@@ -254,10 +254,12 @@ var shopcart = {
 				that.$header.find('.cart .bd').html('<div class="arrow"></div><div class="loading"></div>');
 			},
 			success: function(res) {
-				try{
-					_global.fn.initCart(res.data); // page cart_index
+				if (res && res.data) {
 					that.count = res.data.length;
 					that.toHtml(res.data);
+				}
+				try{
+					_global.fn.initCart(res.data); // page cart_index
 				}catch(error){};
 			}
 		})

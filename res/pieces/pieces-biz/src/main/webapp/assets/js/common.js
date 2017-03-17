@@ -255,10 +255,12 @@ var shopcart = {
 				that.$header.find('.cart .bd').html('<div class="arrow"></div><div class="loading"></div>');
 			},
 			success: function(res) {
-				try{
-					_global.fn.initCart(res.data); // page cart_index
+				if (res && res.data) {
 					that.count = res.data.length;
 					that.toHtml(res.data);
+				}
+				try{
+					_global.fn.initCart(res.data); // page cart_index
 				}catch(error){};
 			}
 		})
