@@ -132,17 +132,17 @@ var _YYY = {
                 + this.fillZero(t.getMinutes()); 
         },
         fullTime: function(e) {
-            var t = new Date(e);
+            var t = new Date(e.replace(/-/g, '/'));
             return this.format(t);
         },
         shortDate: function(e) {
-            var t = new Date(e);
+            var t = new Date(e.replace(/-/g, '/'));
             return t.getFullYear() + "-"
                 + this.fillZero(t.getMonth() + 1) + "-"
                 + this.fillZero(t.getDate());
         },
         elapsedTime: function(e) {
-            var t = new Date(e),
+            var t = new Date(e.replace(/-/g, '/')),
                 s = new Date,
                 a = (s - t) / 1e3;
             return 10 > a ? "刚刚" : 60 > a ? Math.round(a) + "秒前" : 3600 > a ? Math.round(a / 60) + "分钟前" : 86400 > a ? Math.round(a / 3600) + "小时前" : this.format(t)
