@@ -92,7 +92,7 @@
 
                 var lazyimg = function(idx) {
                     $item.eq(idx).find('img').each(function() {
-                        this.src = this.getAttribute('data-src');
+                        this.src = this.getAttribute('_src');
                     })
                 }
 
