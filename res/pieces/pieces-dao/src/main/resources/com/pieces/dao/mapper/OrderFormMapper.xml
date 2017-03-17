@@ -65,6 +65,8 @@
             <result column="c_subtotal"  property="subtotal" />
             <result column="c_enquiry_commodity_id"  property="enquiryCommodityId" />
             <result column="c_guide_price"  property="guidePrice" />
+            <result column="c_commodity_id"  property="commodityId" />
+            <result column="c_picture_url"  property="pictureUrl" />
         </collection>
     </resultMap>
 
@@ -235,7 +237,7 @@
         i.registered_tel as i_registered_tel,i.bank_name as i_bank_name,i.bank_account as i_bank_account,
         c.id as c_id,c.name as c_name,c.spec as c_spec,c.level as c_level,c.originOf as c_originOf,
         c.amount as c_amount,c.price as c_price,c.subtotal as c_subtotal,
-        c.enquiry_commodity_id as c_enquiry_commodity_id,c.order_id as c_order_id,c.guide_price as c_guide_price,
+        c.enquiry_commodity_id as c_enquiry_commodity_id,c.order_id as c_order_id,c.guide_price as c_guide_price, ec.commodity_id as c_commodity_id,rc.picture_url as c_picture_url,
         u.contact_name as u_contact_name, u.company_full_name as u_company_full_name,u.contact_mobile as u_contact_mobile,
         agent.contact_name as agentName, agent.contact_mobile as agentTel
         from order_form o
@@ -244,6 +246,8 @@
         left join order_invoice i on o.invoice_id = i.id
         left join user u on u.id = o.user_id
         left join user agent on agent.id = o.agent_id
+        left join enquiry_commoditys ec on c.enquiry_commodity_id = ec.id
+        left join commodity rc on ec.commodity_id = rc.id
         where o.id = #{id}
     </select>
 

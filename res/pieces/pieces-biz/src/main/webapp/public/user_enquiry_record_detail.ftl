@@ -104,7 +104,7 @@
                                                 <td class="td w3">${commodity.specs!}</td>
                                                 <td class="td w4">${commodity.level!}</td>
                                                 <td class="td w5">${commodity.origin!}</td>
-                                                <td class="td w6">${commodity.myPrice!}</td>
+                                                <td class="td w6">${(commodity.myPrice?default(0))?string .currency}</td>
                                             </tr>
                                             <#else>
                                             <tr>
@@ -121,7 +121,7 @@
                                                 <td class="td w4">${commodity.level!}</td>
                                                 <td class="td w5">${commodity.origin!}</td>
                                                 <td class="td w6"><#if commodity.myPrice??&&commodity.myPrice == 0>
-                                                    -<#else>${commodity.myPrice!}</#if></td>
+                                                    -<#else>${(commodity.myPrice?default(0))?string .currency}</#if></td>
                                             </tr>
                                             </#if>
                                         </#list>

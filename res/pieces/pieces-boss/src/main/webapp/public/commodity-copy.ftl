@@ -85,7 +85,7 @@
                                 <i>*</i>指导价：
                             </div>
                             <div class="cnt">
-                                <input type="text" class="ipt" id="price" value="${commodity.guidePrice}" name="guidePrice" autocomplete="off" placeholder="">
+                                <input type="text" class="ipt" id="price" value="${(commodity.guidePrice?default(0))?string("0.00")}" name="guidePrice" autocomplete="off" placeholder="">
                             </div>
                         </div>
                         <div class="group">

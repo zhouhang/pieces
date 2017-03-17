@@ -23,11 +23,14 @@
                 <div class="guide">
                     <ul>
 
-                        <li class="fore <#if [1,2,3,4,5,8]?seq_contains(orderForm.status)>curr</#if>">
+                        <li class="fore <#if [1,2,3,4,5,8,6]?seq_contains(orderForm.status)>curr</#if>">
                             <i class="fa fa-xiadan01"></i><em>下单</em>
                             <span><#if orderForm.createrTime??>${orderForm.createrTime?datetime}</#if></span>
                         </li>
-                        <li class="<#if [1,2,3,4,5,8]?seq_contains(orderForm.status)>curr</#if>"><i class="fa fa-fukuan"></i>
+                        <li class="<#if [1,2,3,4,5,8,6]?seq_contains(orderForm.status)>curr</#if>"><i class="fa fa-fukuan"></i>
+                        <#if (orderForm.status == 2)>
+                            <em>付款待确认</em>
+                        </#if>
                         <#if user_session_biz?? && user_session_biz.type == 2>
                             <#if (orderForm.status == 1)>
                                 <a href="/center/pay/go/${orderForm.id}" class="btn btn-red">支付保证金</a>
@@ -41,7 +44,8 @@
                             <span><a href="${orderForm.id}" name="6" class="c-blue jremove status">取消订单</a></span>
                         </#if>
                         <#if (orderForm.status == 6)>
-                            <span><a href="${orderForm.id}" name="7" class="c-blue jremove status">删除订单</a></span>
+                            <em>已取消</em>
+                            <span><a href="${orderForm.id}" name="7" class="btn btn-red jremove status">删除订单</a></span>
                         </#if>
                         <#if [3,4,5,8]?seq_contains(orderForm.status)>
                             <em>付款成功</em>
@@ -157,6 +161,9 @@
                     <#if (orderForm.status == 2)>
                         <span>付款待确认</span>
                     </#if>
+                    <#if (orderForm.status == 6 && !accountBill?exists && !payRecord?exists)>
+                        <span>未付款</span>
+                    </#if>
 
 
                     </dl>
@@ -176,11 +183,13 @@
                             <span>${orderForm.invoice.content!}</span>
                         </dd>
                         <#else >
-                            <dd>
-                                <#if ((orderForm.status == 4 || orderForm.status == 5) && !orderForm.invoiceId?exists)>
+
+                                <#--<#if ((orderForm.status == 4 || orderForm.status == 5) && !orderForm.invoiceId?exists)>-->
+                                    <span>暂无发票</span><br>
+                            <#if [1,2,3,4,5]?seq_contains(orderForm.status)>
                                     <span><a href="${orderForm.id}" name="-1" class="c-blue jinvoice">补开发票</a></span>
-                                </#if>
-                            </dd>
+                            </#if>
+                            <#--</#if>-->
                         </#if>
                     </dl>
                 </div>
@@ -207,18 +216,18 @@
                             <td></td>
                             <td>
                                 <div class="pic">
-                                    <a href="/commodity/${commodity.id}" target="_blank"><img style="width: 80px; height: 80px;" src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>" alt=""></a>
+                                    <a href="/commodity/${commodity.commodityId}" target="_blank"><img style="width: 80px; height: 80px;" src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>" alt=""></a>
                                 </div>
                             </td>
                             <td>
                                 <div class="name">
-                                    <a href="/commodity/${commodity.id}" target="_blank">${commodity.name}${commodity.spec}${commodity.level}</a>
+                                    <a href="/commodity/${commodity.commodityId}" target="_blank">${commodity.name}${commodity.spec}${commodity.level}</a>
                                 </div>
                             </td>
                             <#if user_session_biz?? && user_session_biz.type == 2>
-                                <td><#if commodity.guidePrice??>¥${commodity.guidePrice}</#if></td>
+                                <td><#if commodity.guidePrice??>${(commodity.guidePrice?default(0))?string .currency}</#if></td>
                             </#if>
-                            <td><#if commodity.price??>¥${commodity.price}</#if></td>
+                            <td><#if commodity.price??>${(commodity.price?default(0))?string .currency}</#if></td>
                             <td>${commodity.amount}</td>
                         </tr>
                         </#list>
@@ -228,14 +237,14 @@
                 <div class="summary">
                 <#if user_session_biz?? && user_session_biz.type == 2>
                     <div class="row">
-                        <label>订单总额：</label><span>¥${orderForm.amountsPayable!}</span>
+                        <label>订单总额：</label><span>${(orderForm.amountsPayable?default(0))?string .currency}</span>
                     </div>
                     <div class="row bold">
-                        <label>需付保证金：</label><span>¥${orderForm.deposit!}</span>
+                        <label>需付保证金：</label><span>${(orderForm.deposit?default(0))?string .currency}</span>
                     </div>
                 <#else >
                     <div class="row bold">
-                        <label>订单总额：</label><span>¥${orderForm.amountsPayable!}</span>
+                        <label>订单总额：</label><span>${(orderForm.amountsPayable?default(0))?string .currency}</span>
                     </div>
                 </#if>
                 </div>

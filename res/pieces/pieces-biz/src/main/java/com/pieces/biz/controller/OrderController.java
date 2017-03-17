@@ -267,6 +267,7 @@ public class OrderController extends BaseController {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         PageInfo<OrderFormVo> pageInfo = orderFormService.findOrderByUserId(user.getId(),pageNum, pageSize);
         modelMap.put("pageInfo", pageInfo);
+		modelMap.put("pageUrl","/center/order/list");
 		if (user.getType()==2){
 			return "redirect:/center/order/agent";
 		}
@@ -374,6 +375,7 @@ public class OrderController extends BaseController {
 		User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
 		PageInfo<OrderFormVo> pageInfo = orderFormService.findOrderByAgentId(user.getId(),pageNum, pageSize);
 		modelMap.put("pageInfo", pageInfo);
+		modelMap.put("pageUrl","/center/order/agent");
 		return "order_list";
 	}
 
@@ -393,6 +395,29 @@ public class OrderController extends BaseController {
 		if(!user.getId().equals(vo.getAgentId())){
 			return "redirect:error/404";
 		}
+
+		// 查询用户该订单的付款记录
+		// 先查账单 再查付款记录确定用户支付类型
+		// 1. 判定用户类型
+		// 只查询有效的付款信息
+		AccountBill accountBill = accountBillService.findValidBillByOrderID(id,user.getId());
+		if (accountBill!=null) {
+			modelMap.put("accountBill",accountBill);
+		} else {
+			// 获取非账单支付的支付信息
+			//1 代理商 agentId orderId accountBillId=null
+			//2. 普通用户 orderId userId = userId 和agentId == null
+			PayRecordVo payRecord = null;
+			if (user.getType() == 2) {
+				// 代理商
+				payRecord = payRecordService.findByOrderForAgent(user.getId(),id);
+			} else if (user.getType() ==1) {
+				// 终端
+				payRecord = payRecordService.findByOrderForUser(user.getId(),id);
+			}
+			modelMap.put("payRecord",payRecord);
+		}
+
 		return "order_detail";
 	}
 
