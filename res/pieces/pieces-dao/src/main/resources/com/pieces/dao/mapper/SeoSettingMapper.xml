@@ -4,8 +4,9 @@
     <resultMap id="SeoSettingResultMap" type="com.pieces.dao.model.SeoSetting">
             <id column="id"  property="id" />
             <result column="type"  property="type" />
-            <result column="place"  property="place" />
-            <result column="content"  property="content" />
+            <result column="title"  property="title" />
+            <result column="key_word"  property="keyWord" />
+            <result column="intro"  property="intro" />
             <result column="create_time"  property="createTime" />
             <result column="update_time"  property="updateTime" />
         
@@ -14,15 +15,16 @@
     <resultMap id="SeoSettingResultMapVo" type="com.pieces.dao.vo.SeoSettingVo">
             <id column="id"  property="id" />
             <result column="type"  property="type" />
-            <result column="place"  property="place" />
-            <result column="content"  property="content" />
+            <result column="title"  property="title" />
+            <result column="key_word"  property="keyWord" />
+            <result column="intro"  property="intro" />
             <result column="create_time"  property="createTime" />
             <result column="update_time"  property="updateTime" />
         
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,type,place,content,create_time,update_time
+        id,type,title,key_word,intro,create_time,update_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="SeoSettingResultMap">
@@ -56,9 +58,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.SeoSetting">
         insert into
-        seo_setting (type,place,content,create_time,update_time)
+        seo_setting (type,title,key_word,intro,create_time,update_time)
         values
-        (#{type},#{place},#{content},#{createTime},#{updateTime})
+        (#{type},#{title},#{keyWord},#{intro},#{createTime},#{updateTime})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.SeoSetting">
@@ -69,12 +71,16 @@
                 type = #{type},
             </if>
                                             
-            <if test="place != null">
-                place = #{place},
+            <if test="title != null">
+                title = #{title},
             </if>
                                             
-            <if test="content != null">
-                content = #{content},
+            <if test="keyWord != null">
+                key_word = #{keyWord},
+            </if>
+                                            
+            <if test="intro != null">
+                intro = #{intro},
             </if>
                                             
             <if test="createTime != null">
@@ -94,5 +100,4 @@
         from seo_setting
         where type = #{type}
     </select>
-
 </mapper>

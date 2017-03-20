@@ -13,11 +13,14 @@ public class SeoSetting  implements Serializable {
 	//类型：1基本设置,2商品列表3，商品详情4，搜索结果5，文章列表，文章详情
 	private Integer type;
 	
-	//1,标题2，关键字，3，描述
-	private Integer place;
+	//标题
+	private String title;
 	
-	//内容
-	private String content;
+	//关键字
+	private String keyWord;
+	
+	//描述
+	private String intro;
 	
 	private Date createTime;
 	
@@ -41,20 +44,28 @@ public class SeoSetting  implements Serializable {
 		this.type = type;
 	}
 	
-	public Integer getPlace() {
-		return place;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setPlace(Integer place) {
-		this.place = place;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	
-	public String getContent() {
-		return content;
+	public String getKeyWord() {
+		return keyWord;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
+	}
+	
+	public String getIntro() {
+		return intro;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
 	}
 	
 	public Date getCreateTime() {

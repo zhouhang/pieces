@@ -29,11 +29,13 @@
             </div>
             <div class="main seo">
                 <form action="" id="myform">
+                    <input type="hidden" class="ipt" name="id"  value="<#if seoSettingVo??>${seoSettingVo.id!}</#if>">
+                    <input type="hidden" class="ipt" name="type"  value="5">
                     <div class="title">
                         <h3><i class="fa fa-chevron-right"></i>文章列表页模板</h3>
                         <div class="extra">
                             <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
-                            <button type="submit" class="btn btn-red">保存</button>
+                            <button type="submit" id="save" class="btn btn-red">保存</button>
                         </div>
                     </div>
 
@@ -45,7 +47,7 @@
                                     <i>*</i>页面标题：
                                 </div>
                                 <div class="cnt">
-                                    <textarea name="title" class="ipt ipt-mul"></textarea>
+                                    <textarea name="title" class="ipt ipt-mul">${seoSettingVo.title!}</textarea>
                                     <div class="tag">
                                         <a href="javascript:;">{分类名称}</a>
                                         <a href="javascript:;">{通用标题}</a>
@@ -57,7 +59,7 @@
                                     <i>*</i>关键字：
                                 </div>
                                 <div class="cnt">
-                                    <textarea name="keywords" class="ipt ipt-mul"></textarea>
+                                    <textarea name="keyWord" class="ipt ipt-mul">${seoSettingVo.keyWord!}</textarea>
                                     <div class="tag">
                                         <a href="javascript:;">{分类关键字}</a>
                                         <a href="javascript:;">{通用关键字}</a>
@@ -69,7 +71,7 @@
                                     <i>*</i>描述：
                                 </div>
                                 <div class="cnt">
-                                    <textarea name="description" class="ipt ipt-mul"></textarea>
+                                    <textarea name="intro" class="ipt ipt-mul">${seoSettingVo.intro!}</textarea>
                                     <div class="tag">
                                         <a href="javascript:;">{分类描述}</a>
                                         <a href="javascript:;">{通用描述}</a>
@@ -125,6 +127,20 @@
                             title: 'required',
                             keywords: 'required',
                             description: 'required'
+                        }
+                    });
+                    $('#save').on('click', function() {
+                        if ($('#myform').isValid()) {
+                            $.ajax({
+                                url: '/seo/setting/save',
+                                data: $('#myform').serialize(),
+                                type: "POST",
+                                success: function (data) {
+                                    if(data.status=="y"){
+                                        window.location.reload();
+                                    }
+                                }
+                            });
                         }
                     });
                 }

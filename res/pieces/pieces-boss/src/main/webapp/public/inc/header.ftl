@@ -129,9 +129,11 @@
                     </div>
                 </li>
             </@shiro.hasPermission>
+            <@shiro.hasPermission name="seo:index">
             <li>
                 <a href="/seo/setting/1">seo管理</a>
             </li>
+            </@shiro.hasPermission>
         </ul>
     </div>
 </div>

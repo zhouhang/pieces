@@ -44,8 +44,8 @@ public class SeoSettingServiceImpl  extends AbsCommonService<SeoSetting> impleme
 			seoSettingDao.create(seoSettingVo);
 		}
 		else{
-			seoSettingDao.update(seoSettingVo);
 			seoSettingVo.setUpdateTime(now);
+			seoSettingDao.update(seoSettingVo);
 		}
 	}
 

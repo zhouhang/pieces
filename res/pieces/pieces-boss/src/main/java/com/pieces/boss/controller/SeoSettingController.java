@@ -1,9 +1,12 @@
 package com.pieces.boss.controller;
 
+import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.model.SeoSetting;
 import com.pieces.dao.vo.SeoSettingVo;
 import com.pieces.service.SeoSettingService;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.tools.log.annotation.BizLog;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,7 +24,9 @@ public class SeoSettingController {
     @Autowired
     private SeoSettingService seoSettingService;
 
+    @RequiresPermissions(value = "seo:index")
     @RequestMapping("/{id}")
+    @BizLog(type = LogConstant.seo, desc = "seo设置")
     public String info(@PathVariable("id") Integer id,
                        ModelMap model){
 
@@ -54,8 +59,10 @@ public class SeoSettingController {
 
 
     }
+    @RequiresPermissions(value = "seo:index")
     @RequestMapping("/save")
     @ResponseBody
+    @BizLog(type = LogConstant.seo, desc = "保存seo配置")
     public Result save(SeoSettingVo seoSettingVo){
         seoSettingService.save(seoSettingVo);
         return new Result(true).info("保存成功").data(seoSettingVo);
