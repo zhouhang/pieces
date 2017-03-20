@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.pieces.dao.model.Commodity;
+import com.pieces.tools.utils.FileUtil;
 import com.pieces.tools.utils.GsonUtil;
 import org.apache.commons.lang.StringUtils;
 
@@ -32,6 +33,11 @@ public class CommodityVo extends Commodity {
 
 	private String eqName;
 
+	// 商品不同规格缩略图90*90
+	private String pictureUrl90;
+
+	// 商品不同规格缩略图180*180
+	private String pictureUrl180;
 
 	private Map<String,String> attributeView;
 
@@ -116,5 +122,27 @@ public class CommodityVo extends Commodity {
 
 	public void setEqName(String eqName) {
 		this.eqName = eqName;
+	}
+
+	public String getPictureUrl90() {
+		if (getPictureUrl()!= null) {
+			pictureUrl90 = FileUtil.getFilePathNoExt(getPictureUrl()) + "@90" + FileUtil.getFileExt(getPictureUrl());
+		}
+		return pictureUrl90;
+	}
+
+	public void setPictureUrl90(String pictureUrl90) {
+		this.pictureUrl90 = pictureUrl90;
+	}
+
+	public String getPictureUrl180() {
+		if (getPictureUrl()!= null) {
+			pictureUrl90 = FileUtil.getFilePathNoExt(getPictureUrl()) + "@180" + FileUtil.getFileExt(getPictureUrl());
+		}
+		return pictureUrl180;
+	}
+
+	public void setPictureUrl180(String pictureUrl180) {
+		this.pictureUrl180 = pictureUrl180;
 	}
 }

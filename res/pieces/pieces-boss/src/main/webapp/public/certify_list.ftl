@@ -39,7 +39,7 @@
                 <tr>
                     <td></td>
                     <td><div class="ipt-wrap"><input type="text" class="ipt" name="userName" value="${certifyRecordVo.userName}"></div></td>
-                    <td><input type="text" class="ipt date" value="<#if certifyRecordVo.startTime?exists>${certifyRecordVo.startTime?string("YYYY/MM/dd")}</#if>" name="startTime" id="start"> - <input type="text" class="ipt date" value="<#if certifyRecordVo.endTime?exists>${certifyRecordVo.endTime?string("YYYY/MM/dd")}</#if>" name="endTime"  id="end"></td>
+                    <td><input type="text" class="ipt date" value="<#if certifyRecordVo.startTime?exists>${certifyRecordVo.startTime?string("yyyy-MM-dd")}</#if>" name="startTime" id="start"> - <input type="text" class="ipt date" value="<#if certifyRecordVo.endTime?exists>${certifyRecordVo.endTime?string("yyyy-MM-dd")}</#if>" name="endTime"  id="end"></td>
                     <td>
                         <select name="status" id="status">
                             <option value=""></option>
@@ -49,7 +49,7 @@
                         </select>
                     </td>
                     <td><div class="ipt-wrap"><input type="text" class="ipt" name="followName" value="${certifyRecordVo.followName}"></div></td>
-                    <td><input type="text" class="ipt date" value="<#if certifyRecordVo.startFollowTime?exists>${certifyRecordVo.startFollowTime?string("YYYY/MM/dd")}</#if>"  name="startFollowTime"  id="start2"> - <input type="text" class="ipt date" value="<#if certifyRecordVo.endFollowTime?exists>${certifyRecordVo.endFollowTime?string("YYYY/MM/dd")}</#if>" name="endFollowTime" id="end2"></td>
+                    <td><input type="text" class="ipt date" value="<#if certifyRecordVo.startFollowTime?exists>${certifyRecordVo.startFollowTime?string("yyyy-MM-dd")}</#if>"  name="startFollowTime"  id="start2"> - <input type="text" class="ipt date" value="<#if certifyRecordVo.endFollowTime?exists>${certifyRecordVo.endFollowTime?string("yyyy-MM-dd")}</#if>" name="endFollowTime" id="end2"></td>
                     <td></td>
                 </tr>
                 </thead>
@@ -116,14 +116,14 @@
                     var start = {
                         elem: '#start',
                         choose: function(datas){
-                            end.min = datas;
-                            end.start = datas;
+                             end.min = datas;
+                             end.start = datas;
                         }
                     };
                     var end = {
                         elem: '#end',
                         choose: function(datas){
-                            start.max = datas;
+                           start.max = datas;
                         }
                     };
                     laydate(start);

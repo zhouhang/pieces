@@ -77,7 +77,6 @@ public class PayRecord  implements Serializable {
 	public PayRecord(){}
 
 	public Integer getPayType() {
-		if (payType == null) payType =0; // 设置默认值 为线下打款
 		return payType;
 	}
 

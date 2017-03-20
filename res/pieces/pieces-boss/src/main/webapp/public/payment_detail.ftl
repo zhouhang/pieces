@@ -50,7 +50,7 @@
                             <td><em>用药单位：</em>${pay.companyFullName}</td>
                         </tr>
                         <tr>
-                            <td><em>应 付 金 额 ：</em>&yen; ${pay.amountsPayable}</td>
+                            <td><em>应 付 金 额 ：</em>&yen; ${pay.amountsPayable?string("0.00")}</td>
                             <td><em>支付渠道：</em>
                             <#if pay.paymentId?exists>
                             ${pay.payTypeName}
@@ -71,7 +71,7 @@
                         <table>
                             <tbody>
                             <tr>
-                                <td><em>支付金额：</em>${pay.actualPayment!}</td>
+                                <td><em>支付金额：</em><#if pay.actualPayment?exists>${pay.actualPayment?string("0.00")}<#else >${pay.deposit?string("0.00")}</#if></td>
                                 <td><em>支付时间：</em>${(pay.paymentTime?date)!}</td>
                             </tr>
                             </tbody>

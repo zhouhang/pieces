@@ -10,3 +10,6 @@ ADD COLUMN `open_id` VARCHAR(45) NULL COMMENT '微信openId' AFTER `update_time`
 ALTER TABLE `pieces`.`order_form`
 ADD COLUMN `finish_date` DATETIME NULL COMMENT '订单完成时间' AFTER `expire_date`;
 
+-- 2017-03-20
+alter table carts_commodity add constraint cart_index UNIQUE(user_id,commodity_id);
+

@@ -1,8 +1,12 @@
 package com.pieces.tools.utils;
 
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.FastDateFormat;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,7 +35,11 @@ public class Reflection {
                 field.setAccessible(true);
 
                 if(!field.getType().isArray() && field.get(object)!=null&&(!field.getName().equals("serialVersionUID"))){
-                    sb.append("&").append(field.getName()).append("=").append(field.get(object).toString());
+                    if (field.getType().isAssignableFrom(Date.class)) {
+                        sb.append("&").append(field.getName()).append("=").append(DateFormatUtils.format((Date)field.get(object),"yyyy-MM-dd"));
+                    } else {
+                        sb.append("&").append(field.getName()).append("=").append(field.get(object).toString());
+                    }
                 }
             }
         }

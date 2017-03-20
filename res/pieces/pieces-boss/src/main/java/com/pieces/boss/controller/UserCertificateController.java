@@ -34,7 +34,7 @@ import java.util.Date;
  */
 @Controller
 @RequestMapping(value = "/certify")
-public class UserCertificateController {
+public class UserCertificateController extends BaseController{
 
     @Autowired
     CertifyRecordService certifyRecordService;
@@ -66,7 +66,7 @@ public class UserCertificateController {
         PageInfo<CertifyRecordVo> certifyRecordVoPageInfo = certifyRecordService.findByParams(certifyRecordVo,pageNum,pageSize);
         model.put("pageInfo",certifyRecordVoPageInfo);
         model.put("certifyParams", Reflection.serialize(certifyRecordVo));
-
+        model.put("certifyRecordVo",certifyRecordVo);
         return "certify_list";
     }
     @RequiresPermissions(value = "certify:info" )
