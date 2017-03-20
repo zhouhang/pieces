@@ -91,6 +91,7 @@
 
 
 <#include "./inc/footer.ftl"/>
+<script src="${urls.getForLookupPath('/js/lightbox.js')}"></script>
 
 <script>
     var _global = {
