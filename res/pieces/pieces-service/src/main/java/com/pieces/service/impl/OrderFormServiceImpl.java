@@ -11,6 +11,7 @@ import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 
 import com.pieces.tools.log.api.LogAuditing;
+import com.pieces.tools.utils.FileUtil;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,7 +97,12 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
 
     @Override
     public OrderFormVo findVoById(Integer id) {
-        return orderFormDao.findVoById(id);
+        // 商品图片转换.
+        OrderFormVo vo = orderFormDao.findVoById(id);
+        if (vo!= null) {
+            vo.setCommodities(FileUtil.convertAbsolutePathToUrl(vo.getCommodities(),"pictureUrl"));
+        }
+        return vo;
     }
 
     @Override
@@ -191,6 +197,10 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
         if (status == OrderEnum.SHIPPED_FAIL.getValue() ||
                 status == OrderEnum.SHIPPED.getValue()) {
             form.setDeliveryDate(new Date());
+        }
+
+        if (status == OrderEnum.COMPLETE.getValue()) {
+            form.setFinishDate(new Date());
         }
         orderFormDao.update(form);
         LogAuditing.audit(orderFormDao.findById(orderId),form,"订单","修改订单状态");

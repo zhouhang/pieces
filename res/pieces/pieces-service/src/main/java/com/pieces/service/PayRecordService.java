@@ -52,5 +52,8 @@ public interface PayRecordService extends ICommonService<PayRecord>{
 
     public List<Integer> getNotHandleIds();
 
+    PayRecordVo findByOrderForUser(Integer userId,Integer orderId);
+
+    PayRecordVo findByOrderForAgent(Integer agentId,Integer orderId);
 
 }

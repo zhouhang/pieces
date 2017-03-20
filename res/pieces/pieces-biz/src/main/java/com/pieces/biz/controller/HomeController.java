@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.github.pagehelper.PageInfo;
+import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.vo.*;
 import com.pieces.service.*;
 import com.pieces.service.enums.CodeEnum;
@@ -45,6 +46,8 @@ public class HomeController extends BaseController{
 	@Autowired
 	private EnquiryBillsService enquiryBillsService;
 
+	@Autowired
+	private EnquiryCommoditysService enquiryCommoditysService;
 
 	/**
 	 * 首页
@@ -180,6 +183,18 @@ public class HomeController extends BaseController{
 		EnquiryBillsVo vo = enquiryBillsService.findVoByCode(code);
 		model.put("vo",vo);
 		return "user_quote";
+	}
+
+	/**
+	 * 用户分享的报价单
+	 * @param model
+     * @return
+     */
+	@RequestMapping(value = "/quote", method = RequestMethod.GET)
+	public String quoteWx(String ids, ModelMap model){
+		List<EnquiryCommoditysVo> list = enquiryCommoditysService.findVoByIds(ids);
+		model.put("list",list);
+		return "wechat/quote";
 	}
 
 }

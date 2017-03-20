@@ -1,6 +1,6 @@
-<script src="${urls.getForLookupPath('/js/jquery191.js')}"></script>
-<script src="${urls.getForLookupPath('/js/layer.js')}"></script>
-<script src="${urls.getForLookupPath('/js/app.js')}"></script>
+<script src="${urls.getForLookupPath('/h5-static/js/jquery191.js')}"></script>
+<script src="${urls.getForLookupPath('/h5-static/js/layer.js')}"></script>
+<script src="${urls.getForLookupPath('/h5-static/js/app.js')}"></script>
 <script src="//hm.baidu.com/hm.js?61c7936d47deb868315f8a231034f0cb"></script>
 <script>
     (function(){
@@ -14,3 +14,5 @@
         document.body.appendChild(bp);
     })();
 </script>
+
+<#--<script src="${urls.getForLookupPath('/h5-static/js/weixin_share.js')}"></script>-->

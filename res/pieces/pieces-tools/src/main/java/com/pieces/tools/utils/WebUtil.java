@@ -1,5 +1,6 @@
 package com.pieces.tools.utils;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
@@ -62,4 +63,15 @@ public class WebUtil {
         }
     }
 
+    public static String getFullUrl(HttpServletRequest httpRequest){
+        String fullUrl = null;
+        String url = httpRequest.getRequestURL().toString();
+        String queryStr = httpRequest.getQueryString();
+        if(queryStr!=null){
+            fullUrl =  url+"?"+queryStr;
+        }else{
+            fullUrl= url;
+        }
+        return fullUrl;
+    }
 }

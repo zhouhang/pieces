@@ -46,6 +46,20 @@ public class EnquiryCommoditys  implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
 	private Date createTime;
 
+	// 商品图片
+	private String pictureUrl;
+
+	// 开票价
+	private Double price;
+
+	public String getPictureUrl() {
+		return pictureUrl;
+	}
+
+	public void setPictureUrl(String pictureUrl) {
+		this.pictureUrl = pictureUrl;
+	}
+
 
 	public Integer getId() {
 		return id;
@@ -141,5 +155,13 @@ public class EnquiryCommoditys  implements Serializable {
 
 	public void setMyPrice(Double myPrice) {
 		this.myPrice = myPrice;
+	}
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 }

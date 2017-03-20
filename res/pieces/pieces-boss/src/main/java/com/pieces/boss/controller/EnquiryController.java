@@ -12,6 +12,7 @@ import com.pieces.service.EnquiryCommoditysService;
 import com.pieces.service.UserService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.impl.SmsService;
 import com.pieces.service.utils.ExcelParse;
 import com.pieces.tools.annotation.SameUrlData;
 import com.pieces.tools.annotation.TokenHold;
@@ -61,6 +62,9 @@ public class EnquiryController extends BaseController{
 
     @Autowired
     HttpSession session;
+
+    @Autowired
+    SmsService smsService;
 
     @RequiresPermissions(value = "enquiry:index")
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -237,6 +241,10 @@ public class EnquiryController extends BaseController{
         enquiryBillsService.update(enquiryBills);
 
         session.removeAttribute("enquiryCommodityName");
+
+        //报价成功后通知客户 TODO:
+        EnquiryBillsVo billsVo = enquiryBillsService.findVOById(billId);
+        smsService.sendQuoted(billsVo);
 
         // 保存报价成功后跳到编辑页面并提示报价成功
         return new Result(true).data("/enquiry/"+billId+"?create=create");

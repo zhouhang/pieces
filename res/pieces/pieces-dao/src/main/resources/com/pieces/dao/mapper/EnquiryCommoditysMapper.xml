@@ -14,11 +14,23 @@
             <result column="my_price"  property="myPrice" />
             <result column="expire_date"  property="expireDate" />
             <result column="create_time"  property="createTime" />
-        
+            <result column="pictureUrl"  property="pictureUrl" />
+            <result column="price"  property="price" />
     </resultMap>
 
+    <resultMap id="EnquiryCommoditysVoResultMap" extends="EnquiryCommoditysResultMap" type="com.pieces.dao.vo.EnquiryCommoditysVo">
+
+    </resultMap>
+
+
+
     <sql id="Base_Column_List">
-        id,user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,my_price,expire_date,create_time
+        id,user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,my_price,expire_date,create_time,price
+    </sql>
+
+    <sql id="Base_Column_List_Alisa">
+        ec.id as id,ec.user_id as user_id,ec.bills_id as bills_id,ec.commodity_id as commodity_id,ec.commodity_name as commodity_name,ec.specs as specs,
+        ec.level as level,ec.origin as origin,ec.amount as amount,ec.my_price as my_price,ec.expire_date as expire_date,ec.create_time as create_time,ec.price as price
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="EnquiryCommoditysResultMap">
@@ -28,11 +40,12 @@
         where id = #{id}
     </select>
     
-    <select id="findByIds" parameterType="java.lang.String" resultMap="EnquiryCommoditysResultMap">
+    <select id="findByIds" parameterType="java.lang.String" resultMap="EnquiryCommoditysVoResultMap">
         select
-        <include refid="Base_Column_List" />
-        from enquiry_commoditys
-        where id in (${value})
+        <include refid="Base_Column_List_Alisa" />,co.picture_url as pictureUrl
+        from enquiry_commoditys ec
+        left join commodity co on co.id = ec.commodity_id
+        where ec.id in (${value})
     </select>
 
     <select id="findAll"  resultMap="EnquiryCommoditysResultMap">
@@ -43,17 +56,18 @@
 
     <select id="findByBillId"  parameterType="java.lang.Integer" resultMap="EnquiryCommoditysResultMap">
         select
-        <include refid="Base_Column_List" />
-        from enquiry_commoditys
+        <include refid="Base_Column_List_Alisa" />,co.picture_url as pictureUrl
+        from enquiry_commoditys ec
+        left join commodity co on co.id = ec.commodity_id
         <where>
             <if test="billId!=null">
-                bills_id = #{billId}
+                ec.bills_id = #{billId}
             </if>
             <if test="userId!=null">
-                and user_id = #{userId}
+                and ec.user_id = #{userId}
             </if>
         </where>
-        ORDER BY my_price DESC
+        ORDER BY ec.my_price DESC
         <if test="pageSize!=null">
             limit #{pageSize}
         </if>
@@ -81,17 +95,17 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.EnquiryCommoditys">
         insert into
-        enquiry_commoditys (user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,my_price,expire_date,create_time)
+        enquiry_commoditys (user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,my_price,expire_date,create_time,price)
         values
-        (#{userId},#{billsId},#{commodityId},#{commodityName},#{specs},#{level},#{origin},#{amount},#{myPrice},#{expireDate},#{createTime})
+        (#{userId},#{billsId},#{commodityId},#{commodityName},#{specs},#{level},#{origin},#{amount},#{myPrice},#{expireDate},#{createTime},#{price})
     </insert>
 
     <insert id="batchCreate" useGeneratedKeys="true"  parameterType="com.pieces.dao.model.EnquiryCommoditys">
         insert into
-        enquiry_commoditys (user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,my_price,expire_date,create_time)
+        enquiry_commoditys (user_id,bills_id,commodity_id,commodity_name,specs,level,origin,amount,my_price,expire_date,create_time,price)
         values
         <foreach collection="list" item="item" index="index" separator="," >
-            (#{item.userId},#{item.billsId},#{item.commodityId},#{item.commodityName},#{item.specs},#{item.level},#{item.origin},#{item.amount},#{item.myPrice},#{item.expireDate},#{item.createTime})
+            (#{item.userId},#{item.billsId},#{item.commodityId},#{item.commodityName},#{item.specs},#{item.level},#{item.origin},#{item.amount},#{item.myPrice},#{item.expireDate},#{item.createTime},#{item.price})
         </foreach>
     </insert>
 
@@ -112,6 +126,20 @@
                     </if>
                 </set>
                 where id = #{item.id}
+            </foreach>
+        </if>
+    </update>
+    <!-- 用户更改合同价 -->
+    <update id="priceUpdate" parameterType="java.util.List">
+        <if test="list != null">
+            <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                update enquiry_commoditys
+                <set>
+                    <if test="item.price != null">
+                        price = #{item.price},
+                    </if>
+                </set>
+                where id = #{item.id} and user_id = #{item.userId}
             </foreach>
         </if>
     </update>
@@ -163,7 +191,9 @@
             <if test="createTime != null">
                 create_time = #{createTime},
             </if>
-                            
+            <if test="price != null">
+                price = #{price},
+            </if>
         </set>
         where id = #{id}
     </update>

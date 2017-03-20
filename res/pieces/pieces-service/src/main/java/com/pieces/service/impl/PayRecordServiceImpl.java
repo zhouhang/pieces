@@ -347,4 +347,14 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 			}
 		}
 	}
+
+	@Override
+	public PayRecordVo findByOrderForUser(Integer userId, Integer orderId) {
+		return payRecordDao.findByOrderForUser(userId, orderId);
+	}
+
+	@Override
+	public PayRecordVo findByOrderForAgent(Integer agentId, Integer orderId) {
+		return payRecordDao.findByOrderForAgent(agentId, orderId);
+	}
 }

@@ -22,6 +22,7 @@
 		<result column="certify_time"  property="certifyTime" />
 		<result column="create_time"  property="createTime" />
 		<result column="update_time"  property="updateTime" />
+		<result column="open_id"  property="openId" />
 	</resultMap>
 	
 	<resultMap id="Vo" type="com.pieces.dao.vo.UserVo" extends="BaseResultMap">
@@ -31,7 +32,8 @@
 	</resultMap>
 
 	<sql id="Base_Column_List">
-		id,user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,type,service_id,certify_status,certify_time,create_time,update_time
+		id,user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,
+		type,service_id,certify_status,certify_time,create_time,update_time,open_id
 	</sql>
 
 
@@ -55,9 +57,9 @@
 
 	<insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.User">
 		insert into
-		user (user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,type,service_id,certify_status,certify_time,create_time,update_time)
+		user (user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,type,service_id,certify_status,certify_time,create_time,update_time,open_id)
 		values
-		(#{userName},#{password},#{salt},#{companyFullName},#{areaId},#{contactName},#{contactMobile},#{onlineStatus},#{bindErp},#{source},#{areaFull},#{isDel},#{type},#{serviceId},#{certifyStatus},#{certifyTime},#{createTime},#{updateTime})
+		(#{userName},#{password},#{salt},#{companyFullName},#{areaId},#{contactName},#{contactMobile},#{onlineStatus},#{bindErp},#{source},#{areaFull},#{isDel},#{type},#{serviceId},#{certifyStatus},#{certifyTime},#{createTime},#{updateTime},#{openId})
 	</insert>
 
 	<update id="update" parameterType="com.pieces.dao.model.User">
@@ -136,6 +138,10 @@
 				update_time = #{updateTime},
 			</if>
 
+			<if test="openId != null">
+				open_id = #{openId},
+			</if>
+
 		</set>
 		where id = #{id}
 	</update>
@@ -180,6 +186,10 @@
 	  <if test="certifyTime != null" >
 		  and b.certify_time = #{certifyTime}
 	  </if>
+	  <if test="openId != null" >
+		  and b.open_id = #{openId}
+	  </if>
+
   </select>
   
   	<!-- 新增会员 -->
@@ -187,7 +197,7 @@
 		<![CDATA[
 			insert into user
 			(user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,isDel,create_time,update_time
-			,online_status,bind_erp,source,area_full,type,service_id,certify_status,certify_time)
+			,online_status,bind_erp,source,area_full,type,service_id,certify_status,certify_time,open_id)
 			values (#{userName,jdbcType=VARCHAR},
 			#{password,jdbcType=VARCHAR},
 			#{salt,jdbcType=VARCHAR},
@@ -205,7 +215,8 @@
 			#{type,jdbcType=INTEGER},
 			#{certifyStatus,jdbcType=INTEGER},
 			#{certifyTime},
-			#{serviceId}
+			#{serviceId},
+			#{openId}
 			)
 		]]>
 	</insert>
@@ -251,6 +262,9 @@
 			</if>
 			<if test="serviceId!= null" >
 				service_id = #{serviceId}
+			</if>
+			<if test="openId!= null" >
+				open_id = #{openId}
 			</if>
 	    </set>
         WHERE id = #{id,jdbcType=NUMERIC}

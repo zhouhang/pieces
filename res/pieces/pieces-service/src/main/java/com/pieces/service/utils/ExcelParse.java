@@ -2,6 +2,7 @@ package com.pieces.service.utils;
 
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.vo.EnquiryBillsVo;
+import com.pieces.dao.vo.EnquiryCommoditysVo;
 import org.apache.poi.hssf.usermodel.DVConstraint;
 import org.apache.poi.hssf.usermodel.HSSFDataFormat;
 import org.apache.poi.hssf.usermodel.HSSFDataValidation;

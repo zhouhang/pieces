@@ -118,11 +118,11 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
             }else{
                 matchQueryBuilder = matchQuery("name", field);
             }
-            FieldSortBuilder sorter = SortBuilders.fieldSort("sort")
-                    .order(SortOrder.DESC);
+//            FieldSortBuilder sorter = SortBuilders.fieldSort("sort")
+//                    .order(SortOrder.DESC);
             searchQuery = new NativeSearchQueryBuilder()
                     .withQuery(matchQueryBuilder)
-                    .withSort(sorter)
+//                    .withSort(sorter)
                     .withPageable(new PageRequest(pageNum-1,pageSize))
                     .build();
         }

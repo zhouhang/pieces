@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <#include "./inc/meta.ftl"/>
+    <#include "wechat/inc/meta.ftl"/>
     <meta name="description" content="">
     <meta name="author" content="">
     <title>商品详情-上工好药</title>
@@ -10,11 +10,11 @@
 <body class="bg-gray">
 <section class="ui-content">
     <div class="goods-info">
-        <div class="pic rs-pic">
-            <img src="uploads/p2.jpg" />
+        <div class="pic">
+            <img src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>" />
         </div>
 
-        <h1>樟树子 无硫</h1>
+        <h1>${title}</h1>
     </div>
 
     <div class="goods-info">
@@ -30,75 +30,49 @@
                     <ul>
                         <li>
                             <em>商品名称：</em>
-                            <strong>樟树子</strong>
+                            <strong>${commodity.name!}</strong>
                         </li>
                         <li>
-                            <em>片       型：</em>
-                            <strong>个</strong>
+                            <em>片&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：</em>
+                            <strong>${commodity.spec!}</strong>
                         </li>
                         <li>
                             <em>规格等级：</em>
-                            <strong>2号筛</strong>
+                            <strong>${commodity.level!}</strong>
                         </li>
                         <li>
                             <em>原药产地：</em>
-                            <strong>安徽亳州</strong>
+                            <strong>${commodity.originOf!}</strong>
                         </li>
                         <li>
                             <em>外观描述：</em>
-                            <strong>干燥果实，圆球形，棕黑色至紫黑色，表面皱缩不平，或有光泽，直径约5～8毫米，有的基部尚包有宿存的花被。果皮肉质而薄，内含种子1枚，黑色。气香、味辛辣。</strong>
+                            <strong>${commodity.exterior!}</strong>
                         </li>
                         <li>
                             <em>执行标准：</em>
-                            <strong>《广东中药炮制规范》2011版</strong>
+                            <strong>${commodity.executiveStandard!}</strong>
                         </li>
-                        <li>
-                            <em>袋装规格：</em>
-                            <strong>1公斤/袋</strong>
-                        </li>
-                        <li>
-                            <em>年       限：</em>
-                            <strong>1年</strong>
-                        </li>
-                        <li>
-                            <em>原药产地：</em>
-                            <strong>安徽亳州</strong>
-                        </li>
-                        <li>
-                            <em>外观描述：</em>
-                            <strong>干燥果实，圆球形，棕黑色至紫黑色，表面皱缩不平，或有光泽，直径约5～8毫米，有的基部尚包有宿存的花被。果皮肉质而薄，内含种子1枚，黑色。气香、味辛辣。</strong>
-                        </li>
-                        <li>
-                            <em>执行标准：</em>
-                            <strong>《广东中药炮制规范》2011版</strong>
-                        </li>
-                        <li>
-                            <em>袋装规格：</em>
-                            <strong>1公斤/袋</strong>
-                        </li>
-                        <li>
-                            <em>年       限：</em>
-                            <strong>1年</strong>
-                        </li>
+                    <#if commodity.attributeView??>
+                        <#list commodity.attributeView?keys as key>
+                            <#if key!="生产厂家">
+                                <li title="${commodity.attributeView[key]}"><em>${key}：</em>${commodity.attributeView[key]}</li>
+                            </#if>
+                        </#list>
+                    </#if>
                     </ul>
                 </div>
 
                 <div class="item">
                     <div class="img">
-                        <img src="assets/images/blank.gif" data-src="uploads/p3_01.jpg" />
-                        <img src="assets/images/blank.gif" data-src="uploads/p3_02.jpg" />
-                        <img src="assets/images/blank.gif" data-src="uploads/p3_03.jpg" />
-                        <img src="assets/images/blank.gif" data-src="http://static.yaobest.com/ueditor/2016/11/204534f3-2364-4a88-967d-ecf8882101cb.jpg" />
-                        <img src="assets/images/blank.gif" data-src="http://static.yaobest.com/ueditor/2016/11/942af4f3-a99b-43f9-8526-a54cd40959e2.jpg" />
-                        <img src="assets/images/blank.gif" data-src="http://static.yaobest.com/ueditor/2016/11/9ea385e4-2e65-411d-b5d1-e54d2ea2d536.jpg" />
+                        ${commodity.details}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section><!-- /ui-content -->
-<#include "./inc/footer.ftl"/>
-<script src="/js/dragloader.min.js"></script>
+<#include "wechat/inc/footer_h5.ftl"/>
+<script src="/h5-static/js/dragloader.min.js"></script>
 <script>
     !(function($) {
         var _global = {
@@ -118,7 +92,7 @@
 
                 var lazyimg = function(idx) {
                     $item.eq(idx).find('img').each(function() {
-                        this.src = this.getAttribute('data-src');
+                        this.src = this.getAttribute('_src');
                     })
                 }
 

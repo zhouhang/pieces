@@ -33,10 +33,17 @@ public class OrderCommodity  implements Serializable {
 	private Double guidePrice;
 
 	private Double subtotal;
-	
+
+	// 询价商品ID
 	private Integer enquiryCommodityId;
 	
 	private Integer orderId;
+
+	// 商品Id
+	private Integer commodityId;
+
+	// 商品图片
+	private String pictureUrl;
 	
 	public OrderCommodity(){}
 	
@@ -126,5 +133,21 @@ public class OrderCommodity  implements Serializable {
 
 	public void setGuidePrice(Double guidePrice) {
 		this.guidePrice = guidePrice;
+	}
+
+	public Integer getCommodityId() {
+		return commodityId;
+	}
+
+	public void setCommodityId(Integer commodityId) {
+		this.commodityId = commodityId;
+	}
+
+	public String getPictureUrl() {
+		return pictureUrl;
+	}
+
+	public void setPictureUrl(String pictureUrl) {
+		this.pictureUrl = pictureUrl;
 	}
 }

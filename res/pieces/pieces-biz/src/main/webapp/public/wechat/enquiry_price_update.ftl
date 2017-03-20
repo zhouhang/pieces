@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <#include "./inc/meta.ftl"/>
+    <#include "wechat/inc/meta.ftl"/>
     <meta name="description" content="">
     <meta name="author" content="">
     <title>修改销售价-上工好药</title>
 </head>
-
 <body>
 <section class="ui-content">
     <div class="pdetail">
@@ -19,31 +18,21 @@
             </div>
         </div>
         <div class="tbody">
+            <#list list as commodity>
             <div class="tr">
-                <div class="td">白芍</div>
-                <div class="td">薄片</div>
-                <div class="td">￥90.00</div>
-                <div class="td"><input type="tel" placeholder="￥90.00" value="" class="ipt" tabindex="1" /><span class="error"></span></div>
+                <div class="td">${commodity.commodityName!}<input type="text" style="display: none;" value="${commodity.id!}"></div>
+                <div class="td">${commodity.specs}</div>
+                <div class="td">${(commodity.myPrice?string .currency)!}</div>
+                <div class="td"><input type="tel" value="${(commodity.price?default(commodity.myPrice!))?string("0.00")}" class="ipt" tabindex="1" /><span class="error"></span></div>
             </div>
-            <div class="tr">
-                <div class="td">白芍</div>
-                <div class="td">薄片</div>
-                <div class="td">￥90.00</div>
-                <div class="td"><input type="tel" placeholder="￥90.00" value="" class="ipt" tabindex="1" /><span class="error"></span></div>
-            </div>
-            <div class="tr">
-                <div class="td">白芍</div>
-                <div class="td">薄片</div>
-                <div class="td">￥90.00</div>
-                <div class="td"><input type="tel" placeholder="￥90.00" value="" class="ipt" tabindex="1" /><span class="error"></span></div>
-            </div>
+            </#list>
         </div>
     </div>
     <div class="ui-button">
         <button type="button" class="ubtn ubtn-red" id="submit">保存</button>
     </div>
 </section><!-- /ui-content -->
-<#include "./inc/footer.ftl"/>
+<#include "wechat/inc/footer_h5.ftl"/>
 <script>
     !(function($) {
         var _global = {
@@ -79,8 +68,31 @@
                 // 提交
                 $('#submit').on('click', function() {
                     if (check()) {
-                        popover('提交成功');
-                        // window.location.href = 'enquiry_price_message.html';
+                        var list = new Array();
+                        var $trs = $('.tbody').find('.tr');
+                        $.each($trs, function (k, v) {
+                            list.push({id:$($(v).find("input")[0]).val(),price:$($(v).find("input")[1]).val()});
+                        })
+                        $.ajaxSetup({
+                            headers: {
+                                'Content-Type': 'application/json;charset=utf-8'
+                            }
+                        });
+
+                        $.ajax({
+                            url: '/h5/enquiry/updatePrice',
+                            data: JSON.stringify(list),
+                            type: 'POST',
+                            dataType: 'json',
+                            success: function (result) {
+                                if (result.status=="y") {
+                                    window.location.href = '/h5/enquiry/updatePriceSuccess?ids=${ids!}&billId=${billId!}';
+                                }
+                            },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                popover('网络连接超时，请您稍后重试！');
+                            }
+                        })
                     }
                 })
             }

@@ -69,6 +69,12 @@
             <if test="status != null">
                 ab.status = #{status}
             </if>
+            <if test="userId != null">
+                ab.user_id = #{userId}
+            </if>
+            <if test="orderId != null">
+                ab.order_id = #{orderId}
+            </if>
         </where>
         ORDER BY ab.id DESC
     </select>
@@ -181,5 +187,8 @@
         WHERE ab.status=1 AND (DATEDIFF(ab.repay_time,now()) =7 OR DATEDIFF(ab.repay_time,now())=1)
     </select>
 
-
+    <select id="findValidBillByOrderID"  resultMap="AccountBillResultMap">
+        select * FROM  account_bill
+        WHERE user_id=#{userId} and order_id = #{orderId} and (status=1 or status=2)
+    </select>
 </mapper>

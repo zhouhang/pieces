@@ -3,6 +3,7 @@ package com.pieces.dao;
 import com.pieces.dao.annotation.AutoMapper;
 import com.pieces.dao.model.AccountBill;
 import com.pieces.dao.vo.AccountBillVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 @AutoMapper
@@ -26,4 +27,6 @@ public interface AccountBillDao extends ICommonDao<AccountBill>{
     public List<Integer> getNotHandleIds();
 
     List<AccountBillVo> findUnpaidBill();
+
+    AccountBill findValidBillByOrderID(@Param("userId")Integer userId, @Param("orderId")Integer orderId);
 }

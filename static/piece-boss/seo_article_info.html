@@ -181,8 +181,7 @@
                             val = $text.val(),
                             idx = $(this).index();
 
-                        data[name][idx] = data[name][idx] == '' ? $(this).html() : '';
-                        console.log(data)
+                        data[name][idx] += ' ' + $(this).html();
                         $text.val(data[name].join(' '));
                     })
                 },

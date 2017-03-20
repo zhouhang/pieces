@@ -1,6 +1,7 @@
 package com.pieces.service;
 
 import com.pieces.dao.model.EnquiryCommoditys;
+import com.pieces.dao.vo.EnquiryCommoditysVo;
 
 import java.util.List;
 
@@ -9,10 +10,13 @@ import java.util.List;
  */
 public interface EnquiryCommoditysService extends ICommonService<EnquiryCommoditys>{
 
-    public List<EnquiryCommoditys> findByBillId(Integer billId,Integer userId, Integer pageSize);
+    List<EnquiryCommoditys> findByBillId(Integer billId,Integer userId, Integer pageSize);
 
-    public List<EnquiryCommoditys> findByIds(String ids);
-    public void create(List<EnquiryCommoditys> enquiryCommoditysList);
+    List<EnquiryCommoditys> findByIds(String ids);
+
+    List<EnquiryCommoditysVo> findVoByIds(String ids);
+
+    void create(List<EnquiryCommoditys> enquiryCommoditysList);
 
     /**
      * 报价
@@ -20,7 +24,7 @@ public interface EnquiryCommoditysService extends ICommonService<EnquiryCommodit
      * @param list
      * @return
      */
-    public void quoted(List<EnquiryCommoditys> list, Integer memberId, Integer billsId);
+    void quoted(List<EnquiryCommoditys> list, Integer memberId, Integer billsId);
 
 
 
@@ -30,6 +34,12 @@ public interface EnquiryCommoditysService extends ICommonService<EnquiryCommodit
      * @param list
      * @return
      */
-    public void quotedUpdate(List<EnquiryCommoditys> list, Integer menmberId, Integer billsId);
+    void quotedUpdate(List<EnquiryCommoditys> list, Integer menmberId, Integer billsId);
+
+    /**
+     * 用户修改开票价
+     * @param list
+     */
+    void priceUpdate(List<EnquiryCommoditys> list, Integer userId);
 
 }

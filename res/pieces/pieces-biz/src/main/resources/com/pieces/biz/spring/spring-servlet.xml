@@ -133,6 +133,15 @@
 	</bean>
 	
 	<!-- css,js路径 -->
+	<mvc:resources mapping="/h5-static/**" location="/assets/h5-static/" >
+		<mvc:resource-chain resource-cache="false">
+			<mvc:resolvers>
+				<mvc:version-resolver>
+					<mvc:content-version-strategy patterns="/**"/>
+				</mvc:version-resolver>
+			</mvc:resolvers>
+		</mvc:resource-chain>
+	</mvc:resources>
 	<mvc:resources mapping="/css/**" location="/assets/css/" >
 		<mvc:resource-chain resource-cache="false">
 			<mvc:resolvers>

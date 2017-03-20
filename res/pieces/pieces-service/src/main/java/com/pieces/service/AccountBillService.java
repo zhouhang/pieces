@@ -7,13 +7,13 @@ import com.pieces.dao.vo.AccountBillVo;
 
 import java.util.List;
 
-public interface AccountBillService extends ICommonService<AccountBill>{
+ public interface AccountBillService extends ICommonService<AccountBill>{
 
-    public PageInfo<AccountBillVo> findByParams(AccountBillVo accountBillVo, Integer pageNum, Integer pageSize);
+     PageInfo<AccountBillVo> findByParams(AccountBillVo accountBillVo, Integer pageNum, Integer pageSize);
 
-    public AccountBill createBill(AccountBill accountBill);
+     AccountBill createBill(AccountBill accountBill);
 
-    public PageInfo<AccountBillVo> findVoAll(Integer pageNum, Integer pageSize);
+     PageInfo<AccountBillVo> findVoAll(Integer pageNum, Integer pageSize);
 
     /**
      * 查询用户所有帐单
@@ -22,51 +22,58 @@ public interface AccountBillService extends ICommonService<AccountBill>{
      * @param pageSize
      * @return
      */
-    public PageInfo<AccountBillVo> findVoAll(Integer userId,Integer pageNum, Integer pageSize);
+     PageInfo<AccountBillVo> findVoAll(Integer userId,Integer pageNum, Integer pageSize);
 
     /**
-     * 查询所有用户帐单
      * @param billId
      * @return
      */
-    public AccountBillVo findVoById(Integer billId);
+     AccountBillVo findVoById(Integer billId);
 
     /**
      * 账单审核成功
      * @param billId
      */
-    public void auditSuccess(Integer billId, Integer memberId);
+     void auditSuccess(Integer billId, Integer memberId);
 
     /**
      * 账单审核失败
      * @param billId
      */
-    public void auditFail(Integer billId, String msg, Integer memberId);
+     void auditFail(Integer billId, String msg, Integer memberId);
 
 
     /**
      * 当用户付款单审核通过时改变账单数据
      * @param billId
      */
-    public void refreshStatus(Integer billId);
+     void refreshStatus(Integer billId);
 
     /**
      * 为用户生成3个月账期的账单
      *
      */
 
-    public void generateBill(PayRecord payRecord,Integer memberId);
+     void generateBill(PayRecord payRecord,Integer memberId);
 
 
-    public Integer getNotHandleCount();
+     Integer getNotHandleCount();
 
 
-    public List<Integer> getNotHandleIds();
+     List<Integer> getNotHandleIds();
 
     /**
      * 查询用户未付款的账单且距离到期时间为 1天和7天的.
      * @return
      */
     List<AccountBillVo> findUnpaidBill();
+
+     /**
+      * 根据用户ID 和订单ID 获取有效的账期
+      * @param orderId
+      * @param userId
+      * @return
+      */
+    AccountBill findValidBillByOrderID(Integer orderId, Integer userId);
 
 }

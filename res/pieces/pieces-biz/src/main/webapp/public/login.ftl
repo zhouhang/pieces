@@ -37,8 +37,7 @@
 							<i class="fa fa-people"></i>
 						</div>
 						<div class="cnt">
-							<input type="text" class="ipt" value="" autocomplete="off"
-								name="userName" id="username" placeholder="用户名/手机号">
+							<input type="text" class="ipt" value="" autocomplete="off" name="userName" id="username" placeholder="用户名/手机号">
 						</div>
 					</div>
 
@@ -47,15 +46,12 @@
 							<i class="fa fa-lock"></i>
 						</div>
 						<div class="cnt">
-							<input type="password"
-								class="ipt" value="" autocomplete="off" name="password" id="pwd"
-								placeholder="密码">
+							<input type="password" class="ipt" value="" autocomplete="off" name="password" id="pwd" placeholder="密码">
 						</div>
 					</div>
 
 					<div class="links cf">
-						<a class="fl" href="/user/register">免费注册</a> <a class="fr"
-							href="/user/findpwd/stepone">忘记密码？</a>
+						<a class="fl" href="/user/register">免费注册</a> <a class="fr" href="/user/findpwd/stepone">忘记密码？</a>
 					</div>
 
 					<div class="button">

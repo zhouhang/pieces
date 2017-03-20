@@ -10,6 +10,7 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.User;
 import com.pieces.dao.vo.UserVo;
 import com.pieces.service.dto.UserValidate;
+import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
@@ -97,5 +98,16 @@ public interface UserService extends ICommonService<User>{
 	/**
 	 * 增加合并前台cookie和后台数据的功能
 	 */
-	public void loginNew(Subject subject, UsernamePasswordToken token,HttpServletRequest request, HttpServletResponse response);
+	void loginNew(Subject subject, UsernamePasswordToken token,HttpServletRequest request, HttpServletResponse response);
+
+	// 用户微信登入获取授权创建默认账户
+	User createWxUser(WxMpUser wxMpUser, String userName, String phone);
+
+	/**
+	 * 根据openId 查询用户
+	 * @param openId
+	 * @return
+     */
+	User findByOpenId(String openId);
+
 }

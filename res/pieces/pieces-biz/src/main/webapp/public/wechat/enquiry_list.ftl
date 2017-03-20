@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <#include "./inc/meta.ftl"/>
+    <#include "wechat/inc/meta.ftl"/>
     <meta name="description" content="">
     <meta name="author" content="">
     <title>询价单-上工好药</title>
@@ -11,52 +11,42 @@
 <section class="ui-content">
     <div class="ui-tab">
         <ul class="cf">
-            <li class="curr"><a href="?id=1">已报价</a></li>
-            <li><a href="?id=2">未报价</a></li>
-            <li><a href="?id=0">已过期</a></li>
+            <li <#if status=1>class="curr"</#if>><a href="/h5/enquiry/list?status=1">已报价</a></li>
+            <li <#if status=0>class="curr"</#if>><a href="/h5/enquiry/list?status=0">未报价</a></li>
+            <li <#if status=2>class="curr"</#if>><a href="/h5/enquiry/list?status=2">已过期</a></li>
         </ul>
     </div>
     <div class="ui-cnt">
-        <div class="ui-empty">
-            <p>没有已报价的询价单！</p>
-            <div class="btm">
-                <a href="enquiry.html" class="ubtn ubtn-red"><i class="ico ico-camera"></i> 拍照询价</a>
-            </div>
-        </div>
 
-        <ul class="plist">
-            <li>
-                <a href="enquiry_detail.html">
-                    <div class="hd new">E20170205150200172</div>
-                    <div class="bd">海马、天冬、天麻、党参、煅人中白、制马钱子... 共 <em>10</em> 个商品 </div>
-                    <time data-time="2017-03-10 09:12:11">上午10：28</time>
-                </a>
-            </li>
-            <li>
-                <a href="enquiry_detail.html">
-                    <div class="hd">E20170205150200172</div>
-                    <div class="bd">海马、天冬、天麻、党参、煅人中白、制马钱子... 共 <em>10</em> 个商品 </div>
-                    <time data-time="2017-03-9 09:12:11">上午10：28</time>
-                </a>
-            </li>
-            <li>
-                <a href="enquiry_detail.html">
-                    <div class="hd">E20170205150200172</div>
-                    <div class="bd">海马、天冬、天麻、党参、煅人中白、制马钱子... 共 <em>10</em> 个商品 </div>
-                    <time data-time="2017-03-8 09:12:11">上午10：28</time>
-                </a>
-            </li>
-            <li>
-                <a href="enquiry_detail.html">
-                    <div class="hd">E20170205150200172</div>
-                    <div class="bd">海马、天冬、天麻、党参、煅人中白、制马钱子... 共 <em>10</em> 个商品 </div>
-                    <time data-time="2017-03-7 09:12:11">上午10：28</time>
-                </a>
-            </li>
-        </ul>
+        <#if pageInfo?exists && pageInfo.list?has_content>
+            <ul class="plist">
+                <#list pageInfo.list as bill>
+                <li>
+                    <a href="/h5/enquiry/detail?billId=${bill.id!}">
+                        <div class="hd <#if bill.type==1 && status!=2 >new</#if>">${bill.code!}</div>
+                        <div class="bd">${bill.commodityOverview!} 共 <em>${bill.enquiryCommoditys?size}</em> 个商品 </div>
+                        <time data-time="${(bill.createTime?datetime)!}"></time>
+                    </a>
+                </li>
+            </#list>
+            </ul>
+        <#else >
+            <div class="ui-empty">
+                <#if status=1>
+                <p>没有已报价的询价单！</p>
+                <#elseif  status=0>
+                <p>没有未报价的询价单！</p>
+                <#elseif  status=2>
+                <p>没有已过期的询价单！</p>
+                </#if>
+                <div class="btm">
+                    <a href="/h5/enquiry" class="ubtn ubtn-red"><i class="ico ico-camera"></i> 拍照询价</a>
+                </div>
+            </div>
+        </#if>
     </div>
 </section><!-- /ui-content -->
-<#include "./inc/footer.ftl"/>
+<#include "wechat/inc/footer_h5.ftl"/>
 <script>
     !(function($) {
         var _global = {

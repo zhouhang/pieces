@@ -123,49 +123,6 @@ function userMenu() {
     }) 
 }
 
-// 检查登录
-function isLogin(call) {
-	$.ajax({
-        url: "/pop",
-        type: "POST",
-        dataType : "json",
-        success: function(data){
-        	if (typeof call === 'function') {
-       			call(data.status === 'y');
-        	}
-        }
-    });
-}
-
-// 询价
-function quoteEvent() {
-	$('body').on('click', '.j_pop_login', function() {
-        var url = $(this).attr('href');
-
-		// 检查登录状态
-    	$.ajax({
-            url: "/pop",
-            type: "POST",
-            dataType : "json",
-            // data : {url : url},
-            success: function(data){
-            	var status = data.status;
-            	if(status === 'y') {
-            		location.href = url;
-            	}else{
-            		layer.open({
-                        type: 2,
-                        title: '账户登录',
-                        area: ['360px', '360px'],
-                        content: ['/popLogin?url=' + url, 'no']
-                    });
-            	}
-            }
-        });
-    	return false;
-    })
-}
-
 // 商品分类
 function category() {
 	$cat = $('#jcat');
@@ -209,18 +166,15 @@ function category() {
 			hideCat();
 		}
 	})
-
 }
 
 function gotop() {
 	var 
-		qq        = '1296394620',
 		timer     = 0,
-		$elevator = $('#jelevator'),
+		$elevator = $('.elevator'),
 		$win      = $(window),
 		threshold = $win.height(),
-		elevator  = $elevator.length === 1,
-		$toolbar  = $('<div class="toolbar"><div class="item wechat"><img src="images/qrcode.png"></div><div class="item qq"><a href="tencent://message/?uin='+qq+'&amp;Site=在线QQ&amp;Menu=yes"></a></div><div class="item gotop"><a href="javascript:;">返回顶部</a></div></div>').appendTo($('body')),
+		$toolbar = $('.toolbar').html('<a class="item wechat" href="javascript:;"><img src="images/qrcode.png"></a><a class="item qq" href="tencent://message/?uin=1296394620&amp;Site=在线QQ&amp;Menu=yes"></a><a class="item gotop" href="javascript:;"></a>'),
 		$gotop 	  = $toolbar.find('.gotop');
 
 	var scroll = function() {
@@ -234,7 +188,7 @@ function gotop() {
 				className = 'removeClass';
 			}
 			$gotop[className]('fade');
-			elevator && $elevator[fade]();
+			$elevator[fade]();
 		}, 50);
 	}
 
@@ -281,8 +235,10 @@ var shopcart = {
 		this.$header = $('.header');
 		this.$count = this.$header.find('.cart .count');
 		this.count = 0;
-		this.initCart();
-		this.bindEvent();
+		if (this.$count.length > 0) {
+			this.initCart();
+			this.bindEvent();
+		}
 	},
 	initCart: function() {
 		var that = this,
@@ -297,11 +253,13 @@ var shopcart = {
 				that.$header.find('.cart .bd').html('<div class="arrow"></div><div class="loading"></div>');
 			},
 			success: function(res) {
+				if (res && res.data) {
+					that.count = res.data.length;
+					that.toHtml(res.data);
+				}
 				try{
 					_global.fn.initCart(res.data); // page cart_index
 				}catch(error){};
-				that.count = res.data.length;
-				that.toHtml(res.data);
 			}
 		})
 	},

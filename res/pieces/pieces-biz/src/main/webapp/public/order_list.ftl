@@ -38,9 +38,9 @@
                                 <span>共${orderForm.commodities?size}个商品</span>
                             </td>
                             <td class="nl" width="145">
-                                <span class="price">¥${orderForm.amountsPayable}</span>
+                                <span class="price">${(orderForm.amountsPayable?default(0))?string .currency}</span>
                                 <#if user_session_biz?? && user_session_biz.type == 2>
-                                <span>保证金:￥${orderForm.deposit}元</span>
+                                <span>保证金:${(orderForm.deposit?default(0))?string .currency}元</span>
                                 </#if>
                             </td>
                             <td width="140">
@@ -90,7 +90,7 @@
                 </div>
             </#if>
             <#if pageInfo?? && pageInfo.size &gt; 0>
-                <@p.pager inPageNo=pageInfo.pageNum-1 pageSize=pageInfo.pageSize recordCount=pageInfo.total toURL="/center/order/list"/>
+                <@p.pager inPageNo=pageInfo.pageNum-1 pageSize=pageInfo.pageSize recordCount=pageInfo.total toURL=pageUrl />
             </#if>
             </div>
         </div>

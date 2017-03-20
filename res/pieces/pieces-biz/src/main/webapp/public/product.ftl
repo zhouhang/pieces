@@ -76,13 +76,11 @@
                         <div class="buttons">
                             <a class="btn btn-red" href="javascript:;" id="buying" data-s="${commodity.id}|${commodity.name}|${commodity.level}">加入询价单</a>
 
-                            <div id="collectDiv" style="display: inline-block">
                             <#if collect?exists && collect>
-                                <a class="btn btn-gray faved" href="javascript:return false;"><i class="fa fa-heart"></i>已收藏</a>
+                                <a href="javascript:;" id="jfave" class="btn btn-gray faved"><i class="fa fa-heart"></i>已收藏</a>
                             <#else >
-                                <a class="btn btn-gray j_pop_login_collect" ajaxurl="/center/collect/add/${commodity.id!}" url="/commodity/${commodity.id!}"><i class="fa fa-heart"></i>收藏</a>
+                                <a href="javascript:;" id="jfave" class="btn btn-gray"><i class="fa fa-heart"></i>收藏</a>
                             </#if>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -128,11 +126,10 @@
             layer.closeAll('iframe');
             if(status === 'y') {
                 layer.msg('收藏成功！', {icon: 1});
-                $("#collectDiv").html('<a class="btn btn-gray faved" href="javascript:return false;"><i class="fa fa-heart"></i>已收藏</a>');
-
-            }else{
+            } else {
                 layer.msg('已收藏该商品！', {icon: 2});
             }
+            $('#jfave').off().addClass('faved').html('<i class="fa fa-heart"></i>已收藏</a>');
         }
         var _global = {
             v: {
@@ -186,26 +183,30 @@
                 },
                 // 收藏
                 addFav: function() {
-                    $('.j_pop_login_collect').on('click', function() {
-                        var url = $(this).attr('url');
-                        var ajaxurl = $(this).attr('ajaxurl');
-                        // 检查登录状态
+                    var ajaxurl = '/center/collect/add/${commodity.id!}',
+                        url = '/commodity/${commodity.id!}',
+                        disabled = false;
+
+                    $('#jfave').on('click', function() {
+                        if (disabled) {
+                            return false;
+                        }
+                        enabled = true;
                         $.ajax({
-                            url: "/pop",
-                            type: "POST",
-                            dataType : "json",
-                            success: function(data){
-                                var status = data.status;
-                                if(status === 'y') {
+                            url: '/pop',
+                            type: 'POST',
+                            dataType : 'json',
+                            success: function(res){
+                                if(res.status === 'y') {
                                     $.ajax({
                                         url: ajaxurl,
-                                        type: "POST",
-                                        dataType : "json",
+                                        type: 'POST',
+                                        dataType : 'json',
                                         success: function(data){
                                             loginCall(data.status);
                                         }
                                     });
-                                }else{
+                                } else {
                                     layer.open({
                                         type: 2,
                                         title: '账户登录',
@@ -213,6 +214,9 @@
                                         content: ['/popLogin?url=' + url + '&ajaxurl=' + ajaxurl , 'no']
                                     });
                                 }
+                            },
+                            complete: function() {
+                                enabled = false;
                             }
                         });
                         return false;

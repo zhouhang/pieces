@@ -209,8 +209,8 @@
 		<profile>
 			<id>dev-ppc</id>
 			<properties>
-				<biz.base.url>http://127.0.0.1:8081</biz.base.url>
-				<biz.upload.url>http://127.0.0.1:8081/files/</biz.upload.url>
+				<biz.base.url>http://192.168.10.168:8081</biz.base.url>
+				<biz.upload.url>http://192.168.10.168:8081/files/</biz.upload.url>
 				<biz.upload.path>/Software/JAVAEE/apache-tomcat-8.0.23/webapps/files/</biz.upload.path>
 			</properties>
 		</profile>
