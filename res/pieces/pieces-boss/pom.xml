@@ -211,8 +211,8 @@
 				<biz.base.url>http://127.0.0.1:8088</biz.base.url>
 				<boss.base.url>http://127.0.0.1:8089</boss.base.url>
 				<boss.upload.url>http://127.0.0.1:8089/files/</boss.upload.url>
-				<boss.upload.path>E:/Program Files/Apache Software Foundation/Tomcat 8.5/webapps/files/</boss.upload.path>
-				<boss.logs.path>E:/Program Files/Apache Software Foundation/Tomcat 8.5/logs/</boss.logs.path>
+				<boss.upload.path>D:/apache-tomcat-8.5.11/webapps/files/</boss.upload.path>
+				<boss.logs.path>D:/apache-tomcat-8.5.11/logs/</boss.logs.path>
 			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>

@@ -33,6 +33,12 @@ public class ArticleCategory  implements Serializable {
 	
 	//分类图标
 	private String icon;
+
+	//关键字
+	private String keyWord;
+
+	//描述
+	private String intro;
 	
 	public ArticleCategory(){}
 	
@@ -99,5 +105,21 @@ public class ArticleCategory  implements Serializable {
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}
-	
+
+
+	public String getKeyWord() {
+		return keyWord;
+	}
+
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
+	}
+
+	public String getIntro() {
+		return intro;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
 }

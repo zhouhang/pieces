@@ -48,6 +48,12 @@ public class Article  implements Serializable {
 	private Date publishedDate;
 
 	private int isTop;
+
+	//关键字
+	private String keyWord;
+
+	//描述
+	private String intro;
 	
 	public Article(){}
 	
@@ -159,5 +165,21 @@ public class Article  implements Serializable {
 
 	public void setIsTop(int isTop) {
 		this.isTop = isTop;
+	}
+
+	public String getKeyWord() {
+		return keyWord;
+	}
+
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
+	}
+
+	public String getIntro() {
+		return intro;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
 	}
 }

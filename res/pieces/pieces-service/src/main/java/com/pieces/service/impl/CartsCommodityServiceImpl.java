@@ -43,6 +43,7 @@ public class CartsCommodityServiceImpl  extends AbsCommonService<CartsCommodity>
 	@Override
 	@Transactional
 	public void save(CartsCommodity cartsCommodity) {
+		// TODO: 用户Id 和商品ID 建联合唯一索引.避免重复插入
 		cartsCommodity.setCreateTime(new Date());
 		cartsCommodityDao.create(cartsCommodity);
 	}
@@ -56,13 +57,18 @@ public class CartsCommodityServiceImpl  extends AbsCommonService<CartsCommodity>
 	@Override
 	@Transactional
 	public void combine(String [] ids,User user) {
+		// 查询当前用户的购物车列表
+		List<Integer> sids = getIds(user.getId());
 		List<CartsCommodityVo> cartsCommodityVos=new ArrayList<CartsCommodityVo>();
 		for(String id:ids){
-			CartsCommodityVo cartsCommodityVo=new CartsCommodityVo();
-			cartsCommodityVo.setUserId(user.getId());
-			cartsCommodityVo.setCommodityId(Integer.parseInt(id));
-			cartsCommodityVo.setCreateTime(new Date());
-			cartsCommodityVos.add(cartsCommodityVo);
+			// 用户购物车不存在的商品 才添加到购物车.
+			if (!sids.contains(Integer.parseInt(id))) {
+				CartsCommodityVo cartsCommodityVo = new CartsCommodityVo();
+				cartsCommodityVo.setUserId(user.getId());
+				cartsCommodityVo.setCommodityId(Integer.parseInt(id));
+				cartsCommodityVo.setCreateTime(new Date());
+				cartsCommodityVos.add(cartsCommodityVo);
+			}
 		}
 		if(cartsCommodityVos.size()!=0){
 			cartsCommodityDao.combine(cartsCommodityVos);

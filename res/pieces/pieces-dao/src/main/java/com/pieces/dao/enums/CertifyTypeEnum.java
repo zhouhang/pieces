@@ -11,7 +11,7 @@ public enum CertifyTypeEnum {
     DRUGSTORE(1, "药店"),
     MEDICAL_ORG(2, "医疗机构"),
     PHARMACY(3, "制药企业"),
-    MEDICINE_COMPANY(4, "民营医院");
+    MEDICINE_COMPANY(4, "医药公司");
 
     private Integer value;
 

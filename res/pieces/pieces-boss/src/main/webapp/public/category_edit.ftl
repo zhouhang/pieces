@@ -46,6 +46,24 @@
                                     <input type="text" class="ipt" value="${category.name }" name="name" id="name">                            
                                 </div>
                             </div>
+                            <div class="group">
+                                <div class="txt">
+                                    关键字：
+                                </div>
+                                <div class="cnt cnt-mul">
+                                    <textarea name="keyWord" id="keyWord" class="ipt ipt-mul">${category.keyWord!}</textarea>
+                                    <span class="tips">关键字个数不超过5个，每个关键字不超过8个汉字</span>
+                                </div>
+                            </div>
+                            <div class="group">
+                                <div class="txt">
+                                    描述：
+                                </div>
+                                <div class="cnt cnt-mul">
+                                    <textarea name="intro" id="intro" class="ipt ipt-mul">${category.intro!}</textarea>
+                                    <span class="tips">描述控制在80个汉字之内，160个字符之间</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>

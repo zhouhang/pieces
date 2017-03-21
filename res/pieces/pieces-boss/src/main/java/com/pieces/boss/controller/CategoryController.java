@@ -170,16 +170,15 @@ public class CategoryController {
 	@SecurityToken(generateToken = true,validateToken=true)
 	public void saveCategory(HttpServletRequest request,
 							  HttpServletResponse response,
-							  Integer id,
-							  String name,
+							  Category category,
 							  ModelMap model){
 		Result result = new Result(true);
-		if(StringUtils.isNotBlank(name) ) {
-			if (id == null) {
-				categoryService.addClassify(name);
+		if(StringUtils.isNotBlank(category.getName()) ) {
+			if (category.getId() == null) {
+				categoryService.addClassify(category);
 				result.info("新增分类成功。");
 			} else {
-				categoryService.updateClassify(name, id);
+				categoryService.updateClassify(category);
 				result.info("修改分类成功。");
 			}
 		}

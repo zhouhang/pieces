@@ -41,7 +41,7 @@ public class PayRecordVo extends PayRecord{
     private String payTypeName;
 
     public String getPayTypeName() {
-        return PayTypeEnum.findByValue(getPayType());
+        return PayTypeEnum.findByValue(getPayType() == null?0:getPayType());
     }
 
     public void setPayTypeName(String payTypeName) {

@@ -9,11 +9,13 @@
             <result column="aliases"  property="aliases" />
             <result column="status"  property="status" />
             <result column="level"  property="level" />
+            <result column="key_word"  property="keyWord" />
+            <result column="intro"  property="intro" />
             <result column="create_time"  property="createTime" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,pinyin,parent_id,aliases,status,level,create_time
+        id,name,pinyin,parent_id,aliases,status,level,key_word,intro,create_time
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="CategoryResultMap">
@@ -36,9 +38,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Category">
         insert into
-        category (name,parent_id,aliases,pinyin,status,level,create_time)
+        category (name,parent_id,pinyin,aliases,status,level,key_word,intro,create_time)
         values
-        (#{name},#{parentId},#{aliases},#{pinyin},#{status},#{level},#{createTime})
+        (#{name},#{parentId},#{pinyin},#{aliases},#{status},#{level},#{keyWord},#{intro},#{createTime})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.Category">
@@ -67,6 +69,13 @@
                                             
             <if test="level != null">
                 level = #{level},
+            </if>
+            <if test="keyWord != null">
+                key_word = #{keyWord},
+            </if>
+
+            <if test="intro != null">
+                intro = #{intro},
             </if>
                                             
             <if test="createTime != null">

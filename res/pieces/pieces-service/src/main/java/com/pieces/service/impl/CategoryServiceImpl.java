@@ -49,25 +49,20 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 
 	@Override
 	@Transactional
-	public int updateClassify(String classifyName, int id) {
-		Category t = new Category();
-		t.setId(id);
-		t.setName(classifyName);
-		t.setAliases(classifyName);
-		return this.update(t);
+	public int updateClassify(Category category) {
+		category.setAliases(category.getName());
+		return this.update(category);
 	}
 
 	@Override
 	@Transactional
-	public int addClassify(String classifyName) {
-		Category t = new Category();
-		t.setName(classifyName);
-		t.setParentId(0);
-		t.setAliases(classifyName);
-		t.setCreateTime(new Date());
-		t.setLevel(CategoryEnum.LEVEL_CATEGORY.getValue());
-		t.setStatus(CategoryEnum.STATUS_VALID.getValue());
-		return this.create(t);
+	public int addClassify(Category category) {
+		category.setParentId(0);
+		category.setAliases(category.getName());
+		category.setCreateTime(new Date());
+		category.setLevel(CategoryEnum.LEVEL_CATEGORY.getValue());
+		category.setStatus(CategoryEnum.STATUS_VALID.getValue());
+		return this.create(category);
 	}
 
 
@@ -94,6 +89,8 @@ public class CategoryServiceImpl extends AbsCommonService<Category> implements C
 		ca.setName(bvo.getName());
 		ca.setParentId(bvo.getClassifyId());
 		ca.setAliases(bvo.getAliases());
+		ca.setKeyWord(bvo.getKeyWord());
+		ca.setIntro(bvo.getIntro());
 		ca.setStatus(CategoryEnum.STATUS_VALID.getValue());
 		ca.setLevel(CategoryEnum.LEVEL_BREED.getValue());
 		ca.setCreateTime(new Date());

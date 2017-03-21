@@ -165,6 +165,16 @@ vertical-align:middle;
 .fa-floor .main .title .extra a.btn-gray{padding:0;width:58px;}
 .fa-floor .chart{margin-top:20px;}
 
+.fa-tab{height:39px;line-height:38px;border-bottom:1px solid #ccc;border-left:1px solid #ccc;}
+.fa-tab span{float:left;padding:0 20px;color:#666;text-align:center;background:#e7e7e7;border:1px solid #ccc;border-left:0;cursor:pointer;}
+.fa-tab .curr{position:relative;background:#c3272b;border-color:#c3272b;color:#fff;cursor:default;}
+.fa-tab .curr:after{content:'';position:absolute;bottom:-11px;right:15px;border:5px dashed transparent;border-top:5px solid #c3272b;}
+.fa-tab:after{content:"";display:inline-block;clear:both;}
+.fa-tabcont{overflow:hidden;}
+/*.fa-tabcont .item{display:none;}*/
+.fa-tabcont .more{line-height:30px;font-size:12px;text-align:right;}
+
+
 /* table */
 .chart .tc{text-align:center;}
 .chart tr:hover{background:#f5f5f5;}
@@ -252,6 +262,20 @@ vertical-align:middle;
 .seo .cnt .msg-box{display:inline-block;margin-left:10px;}
 .seo .cnt .tag{line-height:24px;}
 .seo .cnt .tag a{margin-right:9px;color:#1869ff;}
+
+/* guide */
+.guide{padding:20px 0;}
+.guide li{float:left;width:260px;}
+.guide li .ico{display:block;width:160px;height:100px;padding:0 20px 0 70px;text-align:center;color:#fff;}
+.guide li .people{background:#6ccac9 url(../images/ico-people.png) no-repeat 20px 50%;}
+.guide li .sale{background:#ff6d60 url(../images/ico-sale.png) no-repeat 20px 50%;}
+.guide li .cart{background:#f8d347 url(../images/ico-cart.png) no-repeat 20px 50%;}
+.guide li em{display:block;padding-top:10px;font-size:30px;}
+.guide li .btn{width:90px;margin:-22px 16px 0 0;padding:6px 10px 6px 30px;color:#fff;background:#c3272b url(../images/ico-plus.png) no-repeat 10px 50%;border:none;}
+.guide li.op{width:400px;padding-left:20px;line-height:60px;}
+.guide li a{border-radius:3px;transition:all .3s;}
+.guide li a:hover{text-decoration:none;opacity:.8;filte:alpha(opacity=80);}
+
 
 /* 新增商品 */
 .goods-img{position:relative;width:98px;height:98px;line-height:98px;margin-right:20px;border:1px dashed #ccc;background:#fff url(../images/plus.png) no-repeat 50%;cursor:pointer;text-align:center;display:inline-block;}
