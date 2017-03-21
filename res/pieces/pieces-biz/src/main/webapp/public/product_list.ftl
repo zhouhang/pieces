@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>  <#if (category??&&category.name??)>${category.name!}-${parent.name!}-<#else><#if (parent??&&parent.name??)>${parent.name!}-</#if></#if>商品列表-上工好药</title>
-    <meta name="description" content="上工好药sghaoyao.com是国内最专业中药饮片采购平台，本频道提供<#if (category??&&category.name??)>${category.name!}-<#else><#if (parent??&&parent.name??)>${parent.name!}</#if></#if>的规格等地、片型、产地、执行标准、图片等相关信息。" />
-    <meta name="Keywords" content="<#if (category??&&category.name??)>${category.name!},${parent.name!}<#else><#if (parent??&&parent.name??)>${parent.name!},</#if></#if>,样品,询价,图片" />
+        <title>${title!}</title>
+        <meta name="description" content="${description!}"/>
+        <meta name="Keywords" content="${Keywords!}"/>
 </head>
 
 <body>

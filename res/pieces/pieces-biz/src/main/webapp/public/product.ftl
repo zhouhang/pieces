@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title><#if commodity.title??>${commodity.name!} 无硫 <#else>${commodity.title!}</#if>-上工好药</title>
-    <meta name="description" content="上工好药sghaoyao.com提供${commodity.title!}的优质货源，为合作伙伴提供安全有保障、高效周到、高性价比的服务，采购饮片就来上工好药。"/>
-    <meta name="Keywords" content="${commodity.title!},${commodity.name!}"/>
+    <title>${title!}</title>
+    <meta name="description" content="${description!}"/>
+        <meta name="Keywords" content="${Keywords!}"/>
 </head>
 
 <body>

@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>${keyword!}- 商品搜索-上工好药</title>
-    <meta name="description" content="在上工好药找到了<#if commodityDocPage??>${commodityDocPage.totalElements!}</#if>个与${keyword!}相关的商品，其中包含了<#if (commodityDocPage??&&commodityDocPage.totalElements>0)><#list commodityDocPage.content as commodityDoc ><#if commodityDoc_index<2 > ${commodityDoc.categoryName!}</#if></#list></#if> 等品种的饮片。"/>
-    <meta name="Keywords" content="${keyword!},上工好药,${keyword!}"/>
+        <title>${title!}</title>
+        <meta name="description" content="${description!}"/>
+        <meta name="Keywords" content="${Keywords!}"/>
 </head>
 
 <body>

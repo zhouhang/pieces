@@ -8,8 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.pieces.biz.controller.commons.LogConstant;
+import com.pieces.dao.enums.SeoTypeEnum;
 import com.pieces.dao.model.*;
-import com.pieces.service.CommodityCollectService;
+import com.pieces.service.*;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.exception.NotFoundException;
@@ -27,9 +28,6 @@ import com.github.pagehelper.PageInfo;
 import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.vo.CategoryVo;
 import com.pieces.dao.vo.CommodityVo;
-import com.pieces.service.CategoryService;
-import com.pieces.service.CommoditySearchService;
-import com.pieces.service.CommodityService;
 import com.pieces.service.utils.ValidUtils;
 import com.pieces.tools.utils.WebUtil;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -56,6 +54,9 @@ public class CommodityController extends BaseController {
 	@Autowired
 	private CommodityCollectService collectService;
 
+	@Autowired
+	private SeoSettingService seoSettingService;
+
 	/**
 	 * 获取商品列表分页
 	 *
@@ -74,6 +75,51 @@ public class CommodityController extends BaseController {
 		PageInfo<CommodityVo> pageInfo = null;
 		if(commodityVO.getBreedId() != null || commodityVO.getEqName() != null){
 			pageInfo = indexBreed(pageSize, pageNum, commodityVO, model);
+
+			//seo信息
+			Category category=new Category();
+			if(commodityVO.getBreedId() != null){
+				category = categoryService.findById(commodityVO.getBreedId());
+			}
+			if(commodityVO.getEqName() != null){
+				commodityVO.setEqName(commodityVO.getEqName());
+				category = commodityService.findBreedByName(commodityVO);
+			}
+
+			SeoSetting base=seoSettingService.findByType(SeoTypeEnum.BASE.getValue());
+			SeoSetting commditySetting=seoSettingService.findByType(SeoTypeEnum.COMMODITY_LIST.getValue());
+			String title=commditySetting.getTitle();
+			if(title!=null){
+				title=title.replace("{品种名称}",category.getName());
+				title=title.replace("{分类名称}",category.getName());
+				title=title.replace("{通用标题}",base.getTitle()==null?"":base.getTitle());
+			}
+			String description=commditySetting.getIntro();
+			if(description!=null){
+				description=description.replace("{品种名称}",category.getName());
+				description=description.replace("{品种别名}",category.getAliases());
+				description=description.replace("{品种描述}",category.getIntro()==null?"":category.getIntro());
+				description=description.replace("{分类名称}",category.getName());
+				description=description.replace("{通用描述}",base.getIntro()==null?"":base.getIntro());
+			}
+
+
+
+			String keyWords=commditySetting.getKeyWord();
+			if(keyWords!=null){
+				keyWords=keyWords.replace("{品种名称}",category.getName());
+				keyWords=keyWords.replace("{品种别名}",category.getAliases());
+				keyWords=keyWords.replace("{分类名称}",category.getName());
+				keyWords=keyWords.replace("{通用关键字}",base.getKeyWord()==null?"":base.getKeyWord());
+			}
+
+
+
+			model.put("title",title);
+			model.put("description",description);
+			model.put("keyWords",keyWords);
+
+
 		}else{
 			pageInfo = indexCategory(pageSize, pageNum, commodityVO, model);
 		}
@@ -87,6 +133,7 @@ public class CommodityController extends BaseController {
 
 		//标志产品
 		model.put("CURRENT_PAGE","commodity");
+
 		return "product_list";
 	}
 	
@@ -251,6 +298,32 @@ public class CommodityController extends BaseController {
 		//标志产品
 		model.put("CURRENT_PAGE","commodity");
 
+
+		//seo信息
+		SeoSetting base=seoSettingService.findByType(SeoTypeEnum.BASE.getValue());
+		SeoSetting commditySetting=seoSettingService.findByType(SeoTypeEnum.SEARCH_RESULT.getValue());
+		String title=commditySetting.getTitle();
+		if(title!=null){
+			title=title.replace("{搜索关键字}",keyword);
+			title=title.replace("{通用标题}",base.getTitle()==null?"":base.getTitle());
+		}
+		String description=commditySetting.getIntro();
+		if(description!=null){
+			description=description.replace("{搜索关键字}",keyword);
+			description=description.replace("{搜索结果数量}",Integer.toString(commodityDocPage.getSize()));
+		}
+
+
+
+		String keyWords=commditySetting.getKeyWord();
+		if(keyWords!=null){
+			keyWords=keyWords.replace("{搜索关键字}",keyword);
+			keyWords=keyWords.replace("{通用关键字}",base.getKeyWord()==null?"":base.getKeyWord());
+		}
+		model.put("title",title);
+		model.put("description",description);
+		model.put("keyWords",keyWords);
+
 		return "product_search_result";
 	}
 
@@ -295,6 +368,44 @@ public class CommodityController extends BaseController {
 		}
 		//标志产品
 		model.put("CURRENT_PAGE","commodity");
+		//seo信息
+		SeoSetting base=seoSettingService.findByType(SeoTypeEnum.BASE.getValue());
+		SeoSetting commditySetting=seoSettingService.findByType(SeoTypeEnum.COMMODITY_DETAIL.getValue());
+		String title=commditySetting.getTitle();
+		if(title!=null){
+			title=title.replace("{商品标题}",commodity.getTitle());
+			title=title.replace("{品种名称}",commodity.getName());
+			title=title.replace("{分类名称}",category.getName());
+			title=title.replace("{通用标题}",base.getTitle()==null?"":base.getTitle());
+		}
+		String description=commditySetting.getIntro();
+		if(description!=null){
+			description=description.replace("{商品描述}",commodity.getIntro()==null?"":commodity.getIntro());
+			description=description.replace("{商品标题}",commodity.getTitle());
+			description=description.replace("{品种名称}",commodity.getName());
+			description=description.replace("{品种别名}",category.getAliases());
+			description=description.replace("{分类名称}",category.getName());
+			description=description.replace("{通用描述}",base.getIntro()==null?"":base.getIntro());
+		}
+
+
+
+		String keyWords=commditySetting.getKeyWord();
+		if(keyWords!=null){
+			keyWords=keyWords.replace("{商品关键字}",commodity.getKeyWord()==null?"":commodity.getKeyWord());
+			keyWords=keyWords.replace("{品种名称}",commodity.getName());
+			keyWords=keyWords.replace("{品种别名}",category.getAliases());
+			keyWords=keyWords.replace("{通用关键字}",base.getKeyWord()==null?"":base.getKeyWord());
+		}
+
+
+
+		model.put("title",title);
+		model.put("description",description);
+		model.put("keyWords",keyWords);
+
+
+
 		return "product";
 	}
 
