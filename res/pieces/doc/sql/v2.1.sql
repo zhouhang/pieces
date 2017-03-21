@@ -13,3 +13,34 @@ ADD COLUMN `finish_date` DATETIME NULL COMMENT '订单完成时间' AFTER `expir
 -- 2017-03-20
 alter table carts_commodity add constraint cart_index UNIQUE(user_id,commodity_id);
 
+DELETE
+FROM carts_commodity WHERE id in (
+  select id from (
+    select id  from carts_commodity where
+    (user_id,commodity_id) IN (
+        SELECT
+            user_id,
+            commodity_id
+        FROM
+            carts_commodity
+        GROUP BY
+            user_id,
+            commodity_id
+        HAVING
+            count(*) > 1
+    ) AND id NOT IN (
+    SELECT
+        min(id)
+    FROM
+        carts_commodity
+    GROUP BY
+        user_id,
+        commodity_id
+    HAVING
+        count(*) > 1
+    )
+  )b
+) and id >30;
+
+
+
