@@ -36,8 +36,8 @@ public class ImageUtil {
                 ImageIO.read(ImageUtil.class.getClassLoader().getResourceAsStream("img/watermark.png")), 1.0f)
                 .outputQuality(1.0f).toFile(descPath);
         // 生成不同规格的缩略图
-        Thumbnails.of(descPath).forceSize(90,90).outputQuality(1.0f).toFile(FileUtil.getFilePathNoExt(imgPath) + "@90" + FileUtil.getFileExt(imgPath));
-        Thumbnails.of(descPath).forceSize(180,180).outputQuality(1.0f).toFile(FileUtil.getFilePathNoExt(imgPath) + "@180" + FileUtil.getFileExt(imgPath));
+//        Thumbnails.of(descPath).forceSize(90,90).outputQuality(1.0f).toFile(FileUtil.getFilePathNoExt(imgPath) + "@90" + FileUtil.getFileExt(imgPath));
+//        Thumbnails.of(descPath).forceSize(180,180).outputQuality(1.0f).toFile(FileUtil.getFilePathNoExt(imgPath) + "@180" + FileUtil.getFileExt(imgPath));
 //        Thumbnails.of(descPath).forceSize(360,360).outputQuality(1.0f).toFile(FileUtil.getFilePathNoExt(imgPath) + "@360" + FileUtil.getFileExt(imgPath));
 
         return descPath;
