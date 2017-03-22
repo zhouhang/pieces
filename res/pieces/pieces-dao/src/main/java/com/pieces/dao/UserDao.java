@@ -12,10 +12,6 @@ import org.apache.ibatis.annotations.Param;
 @AutoMapper
 public interface UserDao extends ICommonDao<User>{
 	List<User> findUserByCondition(User user);
-	
-	List<User> findUserByVagueCondition(User user);
-
-	int addUser(User user);
 
 	int updateUserByCondition(User user);
 
@@ -32,6 +28,4 @@ public interface UserDao extends ICommonDao<User>{
 	List<UserVo> findUpdateUser(@Param("updateTime")Date updateTime);
 
 	User findByAccount(String accountName);
-
-
 }

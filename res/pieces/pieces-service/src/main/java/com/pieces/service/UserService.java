@@ -20,9 +20,6 @@ import org.apache.shiro.subject.Subject;
  *
  */
 public interface UserService extends ICommonService<User>{
-	List<User> findUserByCondition(User user);
-	
-	PageInfo<User> findUserByVagueCondition(User user,Integer pageNum, Integer pageSize);
 
 	int addUser(User user);
 
@@ -39,8 +36,6 @@ public interface UserService extends ICommonService<User>{
 	boolean checkUserName(String userName);
 
 	User findByUserName(String userName);
-	
-	boolean checkMobileCode(String targetMobileCode);
 
 	PageInfo<User> findByCondition(UserVo userVo, Integer pageNum, Integer pageSize);
 
@@ -109,5 +104,11 @@ public interface UserService extends ICommonService<User>{
 	 * @return
      */
 	User findByOpenId(String openId);
+
+	/**
+	 * 统计当前注册的新用户
+	 * @return
+     */
+	Integer countNewUser();
 
 }
