@@ -16,9 +16,9 @@ public interface CategoryService extends ICommonService<Category> {
 	//获取分类
 	public List<Category> findClassify(CategoryVo t);
 	//修改分类
-	public int updateClassify(String classifyName,int id);
+	public int updateClassify(Category category);
 	//新增分类
-	public int addClassify(String classifyName);
+	public int addClassify(Category category);
 	//通过品种名称查询品种
 	public List<CategoryVo> findBreedByName(String breedName);
 	//新增品种
@@ -56,4 +56,7 @@ public interface CategoryService extends ICommonService<Category> {
 
 	public Category findByNameAndLevel(String name,Integer level);
 	public List<CategoryVo> findBreedByNameLx(CategoryVo categoryVo);
+
+
+
 }

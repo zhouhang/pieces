@@ -91,6 +91,24 @@
                                 置顶显示
                             </label>
                         </div>
+                        <div class="group">
+                            <div class="txt">
+                                关键字：
+                            </div>
+                            <div class="cnt cnt-mul">
+                                <textarea name="keyWord" id="keyWord" class="ipt ipt-mul"></textarea>
+                                <span class="tips">关键字个数不超过5个，每个关键字不超过8个汉字</span>
+                            </div>
+                        </div>
+                        <div class="group">
+                            <div class="txt">
+                                描述：
+                            </div>
+                            <div class="cnt cnt-mul">
+                                <textarea name="intro" id="intro" class="ipt ipt-mul"></textarea>
+                                <span class="tips">描述控制在80个汉字之内，160个字符之间</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </form>
@@ -101,7 +119,7 @@
 <!-- footer start -->
 <#include "./inc/footer.ftl"/>
 <script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
-<script src="/js/validator/jquery.validator.min.js?local=zh-CN')}"></script>
+<script src="/js/validator/jquery.validator.min.js?local=zh-CN')"></script>
 
 <!-- 编辑器相关 -->
 <link href="${urls.getForLookupPath('/js/umeditor1_2_2-utf8/themes/default/css/umeditor.css')}" rel="stylesheet">

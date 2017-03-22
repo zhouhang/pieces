@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>帮助中心-上工好药sghaoyao.com </title>
+        <title>${title!}</title>
+        <meta name="description" content="${description!}"/>
+        <meta name="Keywords" content="${Keywords!}"/>
 
 </head>
 

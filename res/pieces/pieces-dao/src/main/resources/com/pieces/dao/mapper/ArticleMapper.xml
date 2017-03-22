@@ -15,6 +15,8 @@
             <result column="sort"  property="sort" />
             <result column="model"  property="model" />
             <result column="is_top"  property="isTop" />
+            <result column="key_word"  property="keyWord" />
+            <result column="intro"  property="intro" />
     </resultMap>
     
     <resultMap id="ArticleVoResultMap" type="com.pieces.dao.vo.ArticleVo" extends="ArticleResultMap">
@@ -22,7 +24,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,title,published_date,category_id,status,content,create_user,create_time,update_user,update_time,sort,model,is_top
+        id,title,published_date,category_id,status,content,create_user,create_time,update_user,update_time,sort,model,is_top,key_word,intro
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="ArticleResultMap">
@@ -45,9 +47,9 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.Article">
         insert into
-        article (title,category_id,status,content,create_user,create_time,update_user,update_time,sort,model,is_top,published_date)
+        article (title,category_id,status,content,create_user,create_time,update_user,update_time,sort,model,published_date,is_top,key_word,intro)
         values
-        (#{title},#{categoryId},#{status},#{content},#{createUser},#{createTime},#{updateUser},#{updateTime},#{sort},#{model},#{isTop},#{publishedDate})
+        (#{title},#{categoryId},#{status},#{content},#{createUser},#{createTime},#{updateUser},#{updateTime},#{sort},#{model},#{publishedDate},#{isTop},#{keyWord},#{intro})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.Article">
@@ -100,6 +102,14 @@
 
             <if test="publishedDate != null">
                 published_date = #{publishedDate},
+            </if>
+
+            <if test="keyWord != null">
+                key_word = #{keyWord},
+            </if>
+
+            <if test="intro != null">
+                intro = #{intro},
             </if>
 
                             

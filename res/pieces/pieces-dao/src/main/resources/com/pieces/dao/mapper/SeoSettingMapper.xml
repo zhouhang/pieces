@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.SeoSettingDao">
+    <resultMap id="SeoSettingResultMap" type="com.pieces.dao.model.SeoSetting">
+            <id column="id"  property="id" />
+            <result column="type"  property="type" />
+            <result column="title"  property="title" />
+            <result column="key_word"  property="keyWord" />
+            <result column="intro"  property="intro" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <resultMap id="SeoSettingResultMapVo" type="com.pieces.dao.vo.SeoSettingVo">
+            <id column="id"  property="id" />
+            <result column="type"  property="type" />
+            <result column="title"  property="title" />
+            <result column="key_word"  property="keyWord" />
+            <result column="intro"  property="intro" />
+            <result column="create_time"  property="createTime" />
+            <result column="update_time"  property="updateTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,type,title,key_word,intro,create_time,update_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="SeoSettingResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from seo_setting
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="SeoSettingResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from seo_setting
+    </select>
+
+    <select id="findByParams" resultMap="SeoSettingResultMapVo" parameterType="com.pieces.dao.vo.SeoSettingVo">
+        select
+        <include refid="Base_Column_List" />
+        from seo_setting
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from seo_setting
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.SeoSetting">
+        insert into
+        seo_setting (type,title,key_word,intro,create_time,update_time)
+        values
+        (#{type},#{title},#{keyWord},#{intro},#{createTime},#{updateTime})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.SeoSetting">
+        update seo_setting
+        <set>
+                                                        
+            <if test="type != null">
+                type = #{type},
+            </if>
+                                            
+            <if test="title != null">
+                title = #{title},
+            </if>
+                                            
+            <if test="keyWord != null">
+                key_word = #{keyWord},
+            </if>
+                                            
+            <if test="intro != null">
+                intro = #{intro},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+    <select id="findByType" parameterType="java.lang.Integer" resultMap="SeoSettingResultMapVo">
+        select
+        <include refid="Base_Column_List" />
+        from seo_setting
+        where type = #{type}
+    </select>
+</mapper>

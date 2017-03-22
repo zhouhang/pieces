@@ -42,5 +42,35 @@ FROM carts_commodity WHERE id in (
   )b
 ) and id >30;
 
+#seo 配置
+CREATE TABLE `seo_setting` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `type` int(6) NOT NULL COMMENT '类型：1基本设置,2商品列表3，商品详情4，搜索结果5，文章列表，文章详情',
+  `title` varchar(255) NOT NULL COMMENT '标题',
+  `key_word` varchar(255) NOT NULL COMMENT '关键字',
+  `intro` varchar(255) NOT NULL COMMENT '描述',
+  `create_time` datetime DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+INSERT INTO `resources` VALUES ('70', 'SEO管理', 'menu', '/seo/setting/1', '0', 'seo:index', '2017-03-20 21:42:13');
+
+ALTER TABLE `category`
+  ADD COLUMN `key_word`  varchar(255) NULL COMMENT '关键字' AFTER `level`,
+  ADD COLUMN `intro`  varchar(255) NULL COMMENT '描述' AFTER `key_word`;
+
+ALTER TABLE `commodity`
+  ADD COLUMN `key_word`  varchar(255) NULL COMMENT '关键字' AFTER `guide_price`,
+  ADD COLUMN `intro`  varchar(255) NULL COMMENT '描述' AFTER `key_word`;
+
+ALTER TABLE `article_category`
+  ADD COLUMN `key_word`  varchar(255) NULL COMMENT '关键字' AFTER `icon`,
+  ADD COLUMN `intro`  varchar(255) NULL COMMENT '描述' AFTER `key_word`;
+
+ALTER TABLE `article`
+  ADD COLUMN `key_word`  varchar(255) NULL COMMENT '关键字' AFTER `is_top`,
+  ADD COLUMN `intro`  varchar(255) NULL COMMENT '描述' AFTER `key_word`;
+
 
 

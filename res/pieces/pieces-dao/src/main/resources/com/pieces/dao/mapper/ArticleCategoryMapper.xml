@@ -10,6 +10,8 @@
             <result column="create_user"  property="createUser" />
             <result column="create_time"  property="createTime" />
             <result column="icon"  property="icon" />
+            <result column="key_word"  property="keyWord" />
+            <result column="intro"  property="intro" />
         
     </resultMap>
 
@@ -22,7 +24,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,status,sort,model,create_user,create_time,icon
+        id,name,status,sort,model,create_user,create_time,icon,key_word,intro
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="ArticleCategoryResultMap">
@@ -45,43 +47,51 @@
 
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.ArticleCategory">
         insert into
-        article_category (name,status,sort,model,create_user,create_time,icon)
+        article_category (name,status,sort,model,create_user,create_time,icon,key_word,intro)
         values
-        (#{name},#{status},#{sort},#{model},#{createUser},#{createTime},#{icon})
+        (#{name},#{status},#{sort},#{model},#{createUser},#{createTime},#{icon},#{keyWord},#{intro})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.ArticleCategory">
         update article_category
         <set>
-                                                        
+
             <if test="name != null">
                 name = #{name},
             </if>
-                                            
+
             <if test="status != null">
                 status = #{status},
             </if>
-                                            
+
             <if test="sort != null">
                 sort = #{sort},
             </if>
-                                            
+
             <if test="model != null">
                 model = #{model},
             </if>
-                                            
+
             <if test="createUser != null">
                 create_user = #{createUser},
             </if>
-                                            
+
             <if test="createTime != null">
                 create_time = #{createTime},
             </if>
-                                            
+
             <if test="icon != null">
                 icon = #{icon},
             </if>
-                            
+
+            <if test="keyWord != null">
+                key_word = #{keyWord},
+            </if>
+
+            <if test="intro != null">
+                intro = #{intro},
+            </if>
+
         </set>
         where id = #{id}
     </update>

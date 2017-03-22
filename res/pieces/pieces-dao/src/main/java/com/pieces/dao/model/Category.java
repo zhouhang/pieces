@@ -26,6 +26,12 @@ public class Category  implements Serializable {
 	private Integer level;
 
 	private Date createTime;
+
+	//关键字
+	private String keyWord;
+
+	//描述
+	private String intro;
 	
 	public Category(){}
 	
@@ -109,4 +115,20 @@ public class Category  implements Serializable {
         }
         return sb.toString();
     }
+
+	public String getKeyWord() {
+		return keyWord;
+	}
+
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
+	}
+
+	public String getIntro() {
+		return intro;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
 }

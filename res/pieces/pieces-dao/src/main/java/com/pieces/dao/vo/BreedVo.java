@@ -19,6 +19,12 @@ public class BreedVo {
 	@Pattern(regexp = "^[,，\\u4E00-\\u9FA5]+$")
 	private String aliases;
 
+	//关键字
+	private String keyWord;
+
+	//描述
+	private String intro;
+
 	public Integer getId() {
 		return id;
 	}
@@ -58,7 +64,20 @@ public class BreedVo {
 	public void setAliases(String aliases) {
 		this.aliases = aliases;
 	}
-	
-	
-	
+
+	public String getKeyWord() {
+		return keyWord;
+	}
+
+	public void setKeyWord(String keyWord) {
+		this.keyWord = keyWord;
+	}
+
+	public String getIntro() {
+		return intro;
+	}
+
+	public void setIntro(String intro) {
+		this.intro = intro;
+	}
 }

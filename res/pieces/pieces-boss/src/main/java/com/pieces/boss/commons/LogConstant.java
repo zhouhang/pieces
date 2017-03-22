@@ -20,4 +20,6 @@ public interface LogConstant {
     public final String certify="资质审核";
     public final String anon="新客询价";
     public final String recruit="合作伙伴申请";
+    public final String seo="SEO管理";
+
 }
