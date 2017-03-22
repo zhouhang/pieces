@@ -371,7 +371,8 @@ public class CommodityController extends BaseController {
 		//seo信息
 		SeoSetting base=seoSettingService.findByType(SeoTypeEnum.BASE.getValue());
 		SeoSetting commditySetting=seoSettingService.findByType(SeoTypeEnum.COMMODITY_DETAIL.getValue());
-		String title=commditySetting.getTitle();
+
+		String title=(commditySetting==null?null:commditySetting.getTitle());
 		if(title!=null){
 			title=title.replace("{商品标题}",commodity.getTitle());
 			title=title.replace("{品种名称}",commodity.getName());
