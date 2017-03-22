@@ -27,7 +27,7 @@
                 </dl>
             </div>
             <div class="main seo">
-                <form action="" id="myform">
+                <form type="POST" id="myform">
                     <input type="hidden" class="ipt" name="id"  value="<#if seoSettingVo??>${seoSettingVo.id!}</#if>">
                     <input type="hidden" class="ipt" name="type"  value="4">
                     <div class="title">
