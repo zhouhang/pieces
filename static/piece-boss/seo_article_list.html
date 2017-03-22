@@ -163,8 +163,7 @@
                 },
                 bindEvent: function() {
                     $('.tag').on('click', 'a', function() {
-                        $text = $(this).parent().siblings('.ipt');
-
+                        var $text = $(this).parent().siblings('.ipt');
                         $text.val($text.val() + ' ' + $(this).html() + ' ');
                     })
                 },
