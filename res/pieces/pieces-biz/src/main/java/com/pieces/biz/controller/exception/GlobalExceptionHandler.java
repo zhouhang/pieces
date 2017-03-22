@@ -3,6 +3,9 @@ package com.pieces.biz.controller.exception;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.pieces.dao.enums.SeoTypeEnum;
+import com.pieces.dao.model.SeoSetting;
+import com.pieces.service.SeoSettingService;
 import com.pieces.tools.exception.NotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +28,28 @@ public class GlobalExceptionHandler  extends BaseGlobalExceptionHandler{
     @Autowired
     private ResourceUrlProvider resourceUrlProvider;
 
+    @Autowired
+    private SeoSettingService seoSettingService;
+
 
     @ModelAttribute("urls")
     ResourceUrlProvider urls() {
         return this.resourceUrlProvider;
     }
+
+    @ModelAttribute("baseSetting")
+    SeoSetting seoSetting(){
+        return seoSettingService.findByType(SeoTypeEnum.BASE.getValue());
+    }
+
+
+
+
+
+
+
+
+
 
     //404的异常就会被这个方法捕获
     @ExceptionHandler({NoHandlerFoundException.class, NotFoundException.class})

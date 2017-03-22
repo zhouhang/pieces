@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>站点地图-上工好药sghaoyao.com </title>
+        <title>站点地图-${baseSetting.title!}</title>
+        <meta name="description" content="${baseSetting.intro!}" />
+        <meta name="Keywords" content="${baseSetting.keyWord!}" />
 </head>
 
 <body>

@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>账单详情-上工好药</title>
+    <title>账单详情-${baseSetting.title!}</title>
+    <meta name="description" content="${baseSetting.intro!}" />
+    <meta name="Keywords" content="${baseSetting.keyWord!}" />
     <#include "./inc/meta.ftl"/>
 </head>
 
