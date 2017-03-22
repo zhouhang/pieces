@@ -5,8 +5,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.pieces.boss.commons.LogConstant;
 import com.pieces.boss.shiro.BossToken;
+import com.pieces.dao.model.AccountBill;
 import com.pieces.dao.model.Member;
-import com.pieces.service.MemberService;
+import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.utils.CommonUtils;
@@ -19,10 +20,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.text.ParseException;
 
 /**
  * BOSS系统首页和登录
@@ -37,9 +41,48 @@ public class HomeController extends BaseController{
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private EnquiryBillsService enquiryBillsService;
+
+    @Autowired
+    private OrderFormService orderFormService;
+
+    @Autowired
+    private AccountBillService accountBillService;
+
+    @Autowired
+    private PayRecordService payRecordService;
+
+    @Autowired
+    private RecruitAgentService recruitAgentService;
+
+    @Autowired
+    CertifyRecordService certifyRecordService;
+
     @RequestMapping(value = "/")
-    public String index(HttpServletRequest request,
-                        HttpServletResponse response) {
+    public String index(ModelMap model) throws ParseException {
+        //1.今日注册用户
+        model.put("newUser",userService.countNewUser());
+        //2.今日新增询价
+        model.put("newEnquiry",enquiryBillsService.countNewEnquiryBill());
+        //3.今日新增订单
+        model.put("newOrder",orderFormService.countOrderNew());
+        //4.最新询价 enquiryBillsService
+        model.put("enquiryList",enquiryBillsService.findByParam(null,1,10));
+        //5.最新订单 orderFormService
+        model.put("orderList",orderFormService.findByParams(null,1,10));
+        //6.最新支付 paymentService
+        model.put("paymentList",payRecordService.findByParams(null,1,10));
+        //7.最新账期申请 accountBillService
+        model.put("billList",accountBillService.findByParams(null,1,10));
+        //8.最新认证申请 certifyRecordService
+        model.put("certifyList",certifyRecordService.findByParams(null,1,10));
+        //9.最新合作伙伴申请 recruitAgentService
+        model.put("recruitList",recruitAgentService.findByParams(null,1,10));
+
         return "home";
     }
 
@@ -94,6 +137,5 @@ public class HomeController extends BaseController{
         }
 		return result.data(url);
     }
-
 
 }

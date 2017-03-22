@@ -20,13 +20,13 @@ public interface OrderFormService extends ICommonService<OrderForm>{
      * @param pageSize
      * @return
      */
-    public PageInfo<OrderFormVo> findByParams(OrderFormVo orderFormVo, Integer pageNum, Integer pageSize);
+     PageInfo<OrderFormVo> findByParams(OrderFormVo orderFormVo, Integer pageNum, Integer pageSize);
 
     /**
      * 保存订单
      * @param orderFormVo
      */
-    public void save(OrderFormVo orderFormVo, User user);
+     void save(OrderFormVo orderFormVo, User user);
 
 
     /**
@@ -34,7 +34,7 @@ public interface OrderFormService extends ICommonService<OrderForm>{
      * @param id
      * @return
      */
-    public OrderFormVo findVoById(Integer id);
+     OrderFormVo findVoById(Integer id);
 
 
     /**
@@ -44,7 +44,7 @@ public interface OrderFormService extends ICommonService<OrderForm>{
      * @param pageSize
      * @return
      */
-    public PageInfo<OrderFormVo> findOrderByUserId(Integer userId, Integer pageNum, Integer pageSize);
+    PageInfo<OrderFormVo> findOrderByUserId(Integer userId, Integer pageNum, Integer pageSize);
 
     /**
      *根据代理商id 获取用户订单列表
@@ -53,22 +53,22 @@ public interface OrderFormService extends ICommonService<OrderForm>{
      * @param pageSize
      * @return
      */
-    public PageInfo<OrderFormVo> findOrderByAgentId(Integer userId, Integer pageNum, Integer pageSize);
+    PageInfo<OrderFormVo> findOrderByAgentId(Integer userId, Integer pageNum, Integer pageSize);
 
-    public OrderFormVo create(OrderFormVo orderFormVo);
+    OrderFormVo create(OrderFormVo orderFormVo);
 
 
-    public OrderFormVo create(OrderFormVo orderFormVo, Integer origOrderId);
+    OrderFormVo create(OrderFormVo orderFormVo, Integer origOrderId);
     /**
      * 修改订单状态
      * @param orderId
      * @param status
      * @return
      */
-    public Result changeOrderStatus(Integer orderId, Integer status);
+    Result changeOrderStatus(Integer orderId, Integer status);
 
 
-    public OrderForm findByOrderCode(String orderCode);
+    OrderForm findByOrderCode(String orderCode);
 
 
     /**
@@ -76,6 +76,12 @@ public interface OrderFormService extends ICommonService<OrderForm>{
      * @param orderId
      * @param invoice
      */
-    public void saveInvoice(Integer orderId, OrderInvoice invoice);
+    void saveInvoice(Integer orderId, OrderInvoice invoice);
+
+    /**
+     * 统计当天新增的订单
+     * @return
+     */
+    Integer countOrderNew();
 
 }

@@ -13,11 +13,14 @@ import com.pieces.service.constant.bean.Result;
 import com.pieces.tools.log.api.LogAuditing;
 import com.pieces.tools.utils.FileUtil;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -221,5 +224,17 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
         orderForm.setId(orderId);
         orderForm.setInvoiceId(invoice.getId());
         orderFormDao.update(orderForm);
+    }
+
+    @Override
+    public Integer countOrderNew() {
+        OrderFormVo vo = new OrderFormVo();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        try {
+            vo.setStartTime(sdf.parse(DateFormatUtils.format(new Date(),"yyyy/MM/dd")));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return orderFormDao.findByParams(vo).size();
     }
 }

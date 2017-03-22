@@ -15,6 +15,7 @@ import com.pieces.tools.utils.CookieUtils;
 import com.pieces.tools.utils.SeqNoUtil;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
@@ -57,12 +58,6 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 
     @Autowired
     CartsCommodityService cartsCommodityService;
-
-
-    @Override
-    public List<User> findUserByCondition(User user) {
-        return userDao.findUserByCondition(user);
-    }
 
     @Autowired
     CertifyRecordService certifyRecordService;
@@ -134,11 +129,6 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
     }
 
     @Override
-    public boolean checkMobileCode(String targetMobileCode) {
-        return false;
-    }
-
-    @Override
     public PageInfo<User> findByCondition(UserVo userVo, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<User> list = userDao.findByCondition(userVo);
@@ -160,13 +150,6 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         return userDao.updateUserByCondition(user);
     }
 
-    @Override
-    public PageInfo<User> findUserByVagueCondition(User user, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
-        List<User> list = userDao.findUserByVagueCondition(user);
-        PageInfo page = new PageInfo(list);
-        return page;
-    }
 
     @Override
     public PageInfo<UserVo> findProxyUser(UserVo userVo, Integer pageNum, Integer pageSize) {
@@ -361,6 +344,13 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         }
 
         return result;
+    }
+
+    @Override
+    public Integer countNewUser() {
+        UserVo vo = new UserVo();
+        vo.setStartDate(DateFormatUtils.format(new Date(),"yyyy-MM-dd"));
+        return userDao.findVoByCondition(vo).size();
     }
 }
 

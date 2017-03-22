@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -22,13 +23,11 @@ import java.util.List;
  */
 public interface EnquiryBillsService extends ICommonService<EnquiryBills>{
 
+    void update(List<EnquiryCommoditys> enquiryCommoditysList, User user,int billId);
 
+    Integer create(List<EnquiryCommoditys> enquiryCommoditysList, User user);
 
-    public void update(List<EnquiryCommoditys> enquiryCommoditysList, User user,int billId);
-
-    public Integer create(List<EnquiryCommoditys> enquiryCommoditysList, User user);
-
-    public PageInfo<EnquiryBillsVo> findByPage(int pageNum, int pageSize, EnquiryRecordVo enquiryRecordVo);
+    PageInfo<EnquiryBillsVo> findByPage(int pageNum, int pageSize, EnquiryRecordVo enquiryRecordVo);
 
 
     /**
@@ -38,28 +37,28 @@ public interface EnquiryBillsService extends ICommonService<EnquiryBills>{
      * @param pageSize
      * @return
      */
-    public PageInfo<EnquiryBillsVo> findByParam (EnquiryBillsVo enquiryBillsVO, Integer pageNum, Integer pageSize);
+    PageInfo<EnquiryBillsVo> findByParam (EnquiryBillsVo enquiryBillsVO, Integer pageNum, Integer pageSize);
 
-    public EnquiryBillsVo findVOById(Integer id);
+    EnquiryBillsVo findVOById(Integer id);
 
     /**
      * 根据询价单号查找
      * @param code
      * @return
      */
-    public EnquiryBillsVo findVoByCode(String code);
+    EnquiryBillsVo findVoByCode(String code);
 
     /**
      * 导入报价文件
      * @param file
      * @return
      */
-    public  EnquiryBillsVo importEnquiryExcel(MultipartFile file, Integer id);
+    EnquiryBillsVo importEnquiryExcel(MultipartFile file, Integer id);
 
     /**
      * 下载报价excel
      */
-    public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, Integer id);
+    void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, Integer id);
 
     /**
      * 根据报价商品ids下载商品报价信息
@@ -67,15 +66,20 @@ public interface EnquiryBillsService extends ICommonService<EnquiryBills>{
      * @param request
      * @param ids
      */
-    public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, String ids);
+    void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, String ids);
 
-    public Integer getNotHandleCount();
+    Integer getNotHandleCount();
 
-    public List<Integer> getNotHandleIds();
+    List<Integer> getNotHandleIds();
 
     /**
      * 设置询价单为已读
      * @param id
      */
     void read(Integer id);
+
+    /**
+     * 统计当天新增的询价单
+     */
+    Integer countNewEnquiryBill() throws ParseException;
 }

@@ -17,6 +17,8 @@ import com.pieces.service.EnquiryCommoditysService;
 import com.pieces.service.utils.ExcelParse;
 import com.pieces.tools.utils.BeanUtils;
 import com.pieces.tools.utils.SeqNoUtil;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -199,5 +203,13 @@ public class EnquiryBillsServiceImpl extends AbsCommonService<EnquiryBills> impl
         enquiryBills.setId(id);
         enquiryBills.setType(0);
         update(enquiryBills);
+    }
+
+    @Override
+    public Integer countNewEnquiryBill() throws ParseException {
+        EnquiryBillsVo vo = new EnquiryBillsVo();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+        vo.setStartTime(sdf.parse(DateFormatUtils.format(new Date(),"yyyy/MM/dd")));
+        return enquiryBillsDao.findByParam(vo).size();
     }
 }

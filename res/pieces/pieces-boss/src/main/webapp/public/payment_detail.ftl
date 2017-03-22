@@ -71,7 +71,7 @@
                         <table>
                             <tbody>
                             <tr>
-                                <td><em>支付金额：</em><#if pay.actualPayment?exists>${pay.actualPayment?string("0.00")}<#else >${pay.deposit?string("0.00")}</#if></td>
+                                <td><em>支付金额：</em>&yen;&nbsp;<#if pay.actualPayment?exists>${pay.actualPayment?string("0.00")}<#else >${pay.deposit?string("0.00")}</#if></td>
                                 <td><em>支付时间：</em>${(pay.paymentTime?date)!}</td>
                             </tr>
                             </tbody>
