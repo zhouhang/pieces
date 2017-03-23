@@ -566,7 +566,7 @@
                     hasPage = pageSize < item.length;
 
                 for (var i = page_index * pageSize; i < maxPage; i++) {
-                    var val = item[i].id+ '-&' + item[i].name + '-&' + item[i].spec + '-&' + item[i].level + '-&' + item[i].originOf+"-&" +item[i].orderPrice;
+                    var val = item[i].id+ '-&' + item[i].name + '-&' + item[i].spec + '-&' + item[i].level + '-&' + item[i].originOf+"-&" +item[i].guidePrice;
                     modal.push('<div class="group" data-val="', val, '">');
                     modal.push(     '<span class="w1">', item[i].name, '</span>');
                     modal.push(     '<span class="w2">', item[i].spec, '</span>');
