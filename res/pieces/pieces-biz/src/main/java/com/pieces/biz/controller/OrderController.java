@@ -218,7 +218,11 @@ public class OrderController extends BaseController {
 		orderFormVo.setExpireDate(enquiryBillsService.findById(billsId).getExpireDate());
 
 		orderFormVo.setSum(total);
-		orderFormVo.setDeposit(deposit);
+		if (2== user.getType()) {
+			// 代理商才设置保证金
+			orderFormVo.setDeposit(deposit);
+		}
+
 		//total = total + orderFormVo.getShippingCosts();
 		orderFormVo.setAmountsPayable(total);
 		orderFormVo.setCommodities(orderCommoditysList);

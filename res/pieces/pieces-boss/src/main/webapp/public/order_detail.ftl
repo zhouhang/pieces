@@ -123,10 +123,12 @@
                                             <span>实际应付：</span>
                                             <em class="price">&yen; ${vo.amountsPayable}</em>
                                         </div>
+                                    <#if vo.agentId?exists>
                                         <div class="item">
                                             <span>需支付保证金：</span>
                                             <em class="price"><#if vo??>&yen; ${vo.deposit!}</#if></em>
                                         </div>
+                                    </#if>
                                     </div>
                                 </td>
                             </tr>
