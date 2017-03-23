@@ -46,8 +46,8 @@
                                 <i>*</i>客户类型：
                             </div>
                             <div class="cnt cbxs" id="categorys">
-                                <label><input type="radio" class="cbx" name="type" value="1" checked>终端客户</label>
-                                <label><input type="radio" class="cbx" name="type" value="2" >代理商</label>
+                                <label><input type="radio" class="cbx" name="type" value="1" <#if userType =1>checked</#if>>终端客户</label>
+                                <label><input type="radio" class="cbx" name="type" value="2" <#if userType =2>checked</#if>>代理商</label>
                             </div>
                         </div>
 

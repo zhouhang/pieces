@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import com.google.common.base.Strings;
 import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.enums.CertifyStatusEnum;
 import com.pieces.dao.model.Member;
@@ -151,8 +152,8 @@ public class UserController extends  BaseController{
 	@RequestMapping(value = "/add" ,method= RequestMethod.GET)
 	@BizLog(type = LogConstant.user, desc = "添加会员页面")
 	@SecurityToken(generateToken = true)
-	public String userAdd(){
-
+	public String userAdd(Integer userType,ModelMap model){
+		model.put("userType",userType==null?1:userType);
 		return "customers-add";
 	}
 

@@ -25,6 +25,11 @@ public class AccountBillVo extends AccountBill{
 
     // 联系人电话
     private String contactMobile;
+    // 联系人名称
+    private String contactName;
+
+    // 跟单员电话
+    private String servicePhone;
 
 
 
@@ -113,5 +118,21 @@ public class AccountBillVo extends AccountBill{
 
     public void setContactMobile(String contactMobile) {
         this.contactMobile = contactMobile;
+    }
+
+    public String getServicePhone() {
+        return servicePhone;
+    }
+
+    public void setServicePhone(String servicePhone) {
+        this.servicePhone = servicePhone;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
     }
 }

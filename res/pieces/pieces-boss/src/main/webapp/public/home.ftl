@@ -23,7 +23,7 @@
                 </li>
                 <li class="op">
                     <a href="/user/add" class="btn">新增终端客户</a>
-                    <a href="/user/add" class="btn">新增代理商</a>
+                    <a href="/user/add?userType=2" class="btn">新增代理商</a>
                     <a href="/enquiry/customer" class="btn">新建报价</a>
                     <a href="/order/customer" class="btn">新建订单</a>
                 </li>

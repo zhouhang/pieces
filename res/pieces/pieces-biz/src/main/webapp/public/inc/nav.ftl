@@ -1,7 +1,7 @@
 <!-- site-nav end -->
 <div class="site-nav">
     <div class="wrap">
-        <p class="fl">欢迎光临上工好药采购平台！</p>
+        <p class="fl">欢迎光临上工好药中药饮片采购平台！</p>
         <ul class="fr">
             <#if user_session_biz??>
                 <li><a href="user/info">${user_session_biz.userName!'' }</a>  <a href="user/logout">退出</a></li>

@@ -23,6 +23,8 @@
             <result column="order_code"  property="orderCode" />
             <result column="memberName"  property="memberName" />
             <result column="contactMobile"  property="contactMobile" />
+            <result column="servicePhone"  property="servicePhone" />
+            <result column="contactName"  property="contactName" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -182,8 +184,10 @@
     </select>
 
     <select id="findUnpaidBill"  resultMap="AccountBillResultMapVo">
-        select ab.*, u.contact_mobile as contactMobile  from account_bill ab
+        select ab.*,u.user_name as orderUser,u.company_full_name as orderCompany,u.contact_name as contactName, u.contact_mobile as contactMobile  ,m.mobile as servicePhone
+        from account_bill ab
         LEFT JOIN user u on ab.user_id = u.id
+        LEFT JOIN member m on u.service_id = m.id
         WHERE ab.status=1 AND (DATEDIFF(ab.repay_time,now()) =7 OR DATEDIFF(ab.repay_time,now())=1)
     </select>
 

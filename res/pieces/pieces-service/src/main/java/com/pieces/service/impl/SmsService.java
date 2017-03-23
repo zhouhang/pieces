@@ -335,4 +335,20 @@ public class SmsService {
         }
     }
 
+    // 账期到期提醒
+    //【上工好药】客户 Atanky （武汉速采） 的账单 账单号 将在 2017年03月23日 到期，请及时跟踪处理。联系人：何欢，电话：18971437973。
+    public void sendTipsAccoountAdminBill(String adminMobile, String name, String code, String date, String contactMobile,String contactName){
+        if (enable) {
+            try {
+                Map<String, Object> param = new HashMap<>();
+                param.put("apikey", apikey);
+                param.put("mobile", adminMobile);
+                param.put("text", TextTemplateEnum.SMS_BOSS_ACCOUNT_ADMIN_TIP.getText(name,code,date,contactName,contactMobile));
+                HttpClientUtil.post(HttpConfig.custom().url(smsUrl).map(param));
+            } catch (Exception e) {
+                throw new RuntimeException("发送账号到手机发送失败", e);
+            }
+        }
+    }
+
 }
