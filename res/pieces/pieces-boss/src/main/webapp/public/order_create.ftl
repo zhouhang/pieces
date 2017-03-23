@@ -40,6 +40,7 @@
                                 </dt>
                                 <#list bill.enquiryCommoditys as commodity>
                                     <dd>
+                                        <span class="w0" style="display: none;">${commodity.commodityId!}</span>
                                         <span class="w1">${commodity.commodityName!}</span>
                                         <span class="w2">${commodity.specs!}</span>
                                         <span class="w3">${commodity.level!}</span>
@@ -63,6 +64,7 @@
 
                 <div class="bd">
                     <div class="th">
+
                         <span class="w1">商品</span>
                         <span class="w2">片型</span>
                         <span class="w3">规格等级</span>
@@ -71,6 +73,7 @@
                     <dl>
                         <#list orderFormVo.commodityVos as commodity>
                             <dd>
+                                <span class="w0" style="display: none;">${commodity.commodityId!}</span>
                                 <span class="w1">${commodity.name!}</span>
                                 <span class="w2">${commodity.spec!}</span>
                                 <span class="w3">${commodity.level!}</span>
@@ -90,7 +93,7 @@
             <form action="" id="myform">
 
             <div class="chart-info">
-                <h3>订购商品  <button type="button"class="btn btn-gray" id="importExcel">导入报价</button></h3>
+                <h3>订购商品</h3>
                 <div class="chart">
                     <table class="tc">
                         <thead>
@@ -116,7 +119,10 @@
                             <#if commodityVos??&&commodityVos?has_content>
                                 <#list commodityVos as commodity>
                                     <tr>
-                                        <td><div class="pr ipt-wrap"><input type="text" value="${commodity.name!}" class="ipt ipt-name" name="name" autocomplete="off"><span class="error1"></span></div></td>
+                                        <td><div class="pr ipt-wrap">
+                                            <input type="text" style="display:none" class="ipt ipt-name" name="commodityId" value="${commodity.commodityId!}" autocomplete="off">
+                                            <input type="text" value="${commodity.name!}" class="ipt ipt-name" name="name" autocomplete="off"><span class="error1"></span>
+                                        </div></td>
                                         <td><div class="pr ipt-wrap"><input type="text" value="${commodity.spec!}" class="ipt" name="spec" autocomplete="off"><span class="error1"></span></div></td>
                                         <td><div class="pr ipt-wrap"><input type="text" value="${commodity.level!}" class="ipt" name="level" autocomplete="off"><span class="error1"></span></div></td>
                                         <td><div class="pr ipt-wrap"><input type="text" value="${commodity.originOf!}" class="ipt" name="originOf" autocomplete="off"><span class="error1"></span></div></td>
@@ -134,7 +140,10 @@
                                 </#list>
                                 <#else>
                                     <tr>
-                                        <td><div class="pr ipt-wrap"><input type="text"  class="ipt ipt-name" name="name" autocomplete="off"><span class="error1"></span></div></td>
+                                        <td><div class="pr ipt-wrap">
+                                            <input type="text" style="display:none" class="ipt ipt-name" name="commodityId" autocomplete="off">
+                                            <input type="text"  class="ipt ipt-name" name="name" autocomplete="off"><span class="error1"></span>
+                                        </div></td>
                                         <td><div class="pr ipt-wrap"><input type="text"  class="ipt" name="spec" autocomplete="off"><span class="error1"></span></div></td>
                                         <td><div class="pr ipt-wrap"><input type="text"  class="ipt" name="level" autocomplete="off"><span class="error1"></span></div></td>
                                         <td><div class="pr ipt-wrap"><input type="text"  class="ipt" name="originOf" autocomplete="off"><span class="error1"></span></div></td>
@@ -263,7 +272,10 @@
 
 <script type="temp" id="jmodal">
         <tr>
-            <td><div class="pr ipt-wrap"><input type="text" class="ipt ipt-name" name="name" autocomplete="off"><span class="error1"></span></div></td>
+            <td><div class="pr ipt-wrap">
+                <input type="text" style="display:none" class="ipt ipt-name" name="commodityId" autocomplete="off">
+                <input type="text" class="ipt ipt-name" name="name" autocomplete="off"><span class="error1"></span>
+            </div></td>
             <td><div class="pr ipt-wrap"><input type="text" class="ipt" name="spec" autocomplete="off"><span class="error1"></span></div></td>
             <td><div class="pr ipt-wrap"><input type="text" class="ipt" name="level" autocomplete="off"><span class="error1"></span></div></td>
             <td><div class="pr ipt-wrap"><input type="text" class="ipt" name="originOf" autocomplete="off"><span class="error1"></span></div></td>
@@ -393,10 +405,11 @@
                         // 关键字自动填充
                         $suggestions.on('click', '.bd .group', function() {
                             var data = $(this).data('val').split('-&');
-                            $suggestions.prev().val(data[0])
-                                    .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
+                            $suggestions.prev().val(data[1]).prev().val(data[0])
                                     .closest('td').next().find('.ipt').val(data[2]).trigger('focus').end()
-                                    .closest('td').next().find('.ipt').val(data[3]).trigger('focus');
+                                    .closest('td').next().find('.ipt').val(data[3]).trigger('focus').end()
+                                    .closest('td').next().find('.ipt').val(data[4]).trigger('focus').end()
+                                    .closest('td').next().closest('td').next().find('.ipt').val(data[5]!="null"?data[5]:"0.00");
                             $suggestions.hide();
                         })
                     },
@@ -459,10 +472,11 @@
                         var $tr = $(modal),
                                 $dd = $(this).closest('dd');
 
-                        $tr.find('.ipt:eq(0)').val($dd.find('.w1').html()).trigger('focus');
-                        $tr.find('.ipt:eq(1)').val($dd.find('.w2').html()).trigger('focus');
-                        $tr.find('.ipt:eq(2)').val($dd.find('.w3').html()).trigger('focus');
-                        $tr.find('.ipt:eq(3)').val($dd.find('.w4').html()).trigger('focus');
+                        $tr.find('.ipt:eq(0)').val($dd.find('.w0').html()).trigger('focus');
+                        $tr.find('.ipt:eq(1)').val($dd.find('.w1').html()).trigger('focus');
+                        $tr.find('.ipt:eq(2)').val($dd.find('.w2').html()).trigger('focus');
+                        $tr.find('.ipt:eq(3)').val($dd.find('.w3').html()).trigger('focus');
+                        $tr.find('.ipt:eq(4)').val($dd.find('.w4').html()).trigger('focus');
                         $tbody.append($tr);
                     });
                 })
@@ -552,7 +566,7 @@
                     hasPage = pageSize < item.length;
 
                 for (var i = page_index * pageSize; i < maxPage; i++) {
-                    var val = item[i].name + '-&' + item[i].spec + '-&' + item[i].level + '-&' + item[i].originOf;
+                    var val = item[i].id+ '-&' + item[i].name + '-&' + item[i].spec + '-&' + item[i].level + '-&' + item[i].originOf+"-&" +item[i].orderPrice;
                     modal.push('<div class="group" data-val="', val, '">');
                     modal.push(     '<span class="w1">', item[i].name, '</span>');
                     modal.push(     '<span class="w2">', item[i].spec, '</span>');
@@ -700,12 +714,14 @@
                             $amount   = $(this).find('.ipt[name="amount"]'),
                             amount    = $.trim($amount.val()),
                             $price    = $(this).find('.ipt[name="price"]'),
-                            price     = $.trim($price.val());
+                            price     = $.trim($price.val()),
+                            $commodityId   = $(this).find('.ipt[name="commodityId"]'),
+                            commodityId      = $.trim($commodityId.val());
 
-                    if (name) {
+                    if (name && commodityId) {
                         $name.nextAll('.error1').html('').hide();
                     } else {
-                        $name.nextAll('.error1').html('不可空白').show();
+                        $name.nextAll('.error1').html('请选择有效的商品').show();
                         result.pass = false;
                     }
 
@@ -768,7 +784,7 @@
                 })
                 return result;
             },
-            batch: function() {
+            batch: function() { // 批量导入报价功能已删除.
                 $("#importExcel").click(function(){
                     layer.open({
                         moveType: 1,
