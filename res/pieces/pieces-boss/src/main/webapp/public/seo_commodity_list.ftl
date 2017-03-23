@@ -81,7 +81,7 @@
                                         <a href="javascript:;">{品种别名}</a>
                                         <a href="javascript:;">{品种描述}</a>
                                         <a href="javascript:;">{分类名称}</a>
-                                        <a href="javascript:;">{通用关键字}</a>
+                                        <a href="javascript:;">{通用描述}</a>
                                     </div>
                                 </div>
                             </div>
