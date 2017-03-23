@@ -112,9 +112,11 @@ public class FileUtil {
         if (srcFile.exists()) {
             try {
                 FileUtils.copyFile(srcFile, destFile);
-                // 生成不同规格的缩略图
-                Thumbnails.of(dest).forceSize(90,90).outputQuality(1.0f).toFile(FileUtil.getFilePathNoExt(dest) + "@90" + FileUtil.getFileExt(dest));
-                Thumbnails.of(dest).forceSize(180,180).outputQuality(1.0f).toFile(FileUtil.getFilePathNoExt(dest) + "@180" + FileUtil.getFileExt(dest));
+                if (dest.contains("commodity/")) {
+                    // 生成不同规格的缩略图
+                    Thumbnails.of(dest).forceSize(90, 90).outputQuality(1.0f).toFile(FileUtil.getFilePathNoExt(dest) + "@90" + FileUtil.getFileExt(dest));
+                    Thumbnails.of(dest).forceSize(180, 180).outputQuality(1.0f).toFile(FileUtil.getFilePathNoExt(dest) + "@180" + FileUtil.getFileExt(dest));
+                }
             } catch (IOException e) {
                 throw new RuntimeException("从临时文件去拷贝文件出错", e);
             }
