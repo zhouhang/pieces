@@ -4,7 +4,7 @@
     <#include "./inc/meta.ftl"/>
         <title>${title!}</title>
         <meta name="description" content="${description!}"/>
-        <meta name="Keywords" content="${keywords!}"/>
+        <meta name="Keywords" content="${keyWords!}"/>
 
 </head>
 
