@@ -255,7 +255,7 @@
 <div class="suggestions" id="suggestions" style="width: 860px;">
     <div class="hd">
         <div class="group">
-            <span class="w1">商品名称</span><span class="w2">片型</span><span class="w3">规格等级</span><span class="w4">产地</span><span class="w5">当前价格</span><span class="w6">上次成交价格</span>
+            <span class="w1">商品名称</span><span class="w2">片型</span><span class="w3">规格等级</span><span class="w4">产地</span><span class="w4">当前价格</span><span class="w4">上次成交价格</span>
         </div>
     </div>
     <div class="bd"></div>
@@ -392,7 +392,7 @@
                         $suggestions.find('.group').length > 1 && $suggestions.show();
                         // 关键字自动填充
                         $suggestions.on('click', '.bd .group', function() {
-                            var data = $(this).data('val').split('-');
+                            var data = $(this).data('val').split('-&');
                             $suggestions.prev().val(data[0])
                                     .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
                                     .closest('td').next().find('.ipt').val(data[2]).trigger('focus').end()
@@ -552,14 +552,14 @@
                     hasPage = pageSize < item.length;
 
                 for (var i = page_index * pageSize; i < maxPage; i++) {
-                    var val = item[i].name + '-' + item[i].spec + '-' + item[i].level + '-' + item[i].originOf;
+                    var val = item[i].name + '-&' + item[i].spec + '-&' + item[i].level + '-&' + item[i].originOf;
                     modal.push('<div class="group" data-val="', val, '">');
                     modal.push(     '<span class="w1">', item[i].name, '</span>');
                     modal.push(     '<span class="w2">', item[i].spec, '</span>');
                     modal.push(     '<span class="w3">', item[i].level, '</span>');
                     modal.push(     '<span class="w4">', item[i].originOf, '</span>');
-                    modal.push(     '<span class="w5">', item[i].guidePrice?item[i].guidePrice:"-", '</span>');
-                    modal.push(     '<span class="w6">', item[i].orderPrice?item[i].orderPrice:"-", '</span>');
+                    modal.push(     '<span class="w4">', item[i].guidePrice?item[i].guidePrice:"-", '</span>');
+                    modal.push(     '<span class="w4">', item[i].orderPrice?item[i].orderPrice:"-", '</span>');
                     modal.push('</div>');
                 }
                 hasPage && modal.push('<div class="jq-page"></div>');
