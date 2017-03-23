@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>成功找回密码-上工好药</title>
+        <title>成功找回密码-${baseSetting.title!}</title>
+        <meta name="description" content="${baseSetting.intro!}" />
+        <meta name="Keywords" content="${baseSetting.keyWord!}" />
 </head>
 
 <body>

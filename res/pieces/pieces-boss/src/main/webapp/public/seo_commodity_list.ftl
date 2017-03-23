@@ -29,7 +29,7 @@
                 </dl>
             </div>
             <div class="main seo">
-                <form action="" id="myform">
+                <form type="POST" id="myform">
                     <input type="hidden" class="ipt" name="id"  value="<#if seoSettingVo??>${seoSettingVo.id!}</#if>">
                     <input type="hidden" class="ipt" name="type"  value="2">
                     <div class="title">
@@ -81,7 +81,7 @@
                                         <a href="javascript:;">{品种别名}</a>
                                         <a href="javascript:;">{品种描述}</a>
                                         <a href="javascript:;">{分类名称}</a>
-                                        <a href="javascript:;">{通用关键字}</a>
+                                        <a href="javascript:;">{通用描述}</a>
                                     </div>
                                 </div>
                             </div>
@@ -105,26 +105,9 @@
                     this.formValidate();
                 },
                 bindEvent: function() {
-                    var data = {};
-                    $('.fa-form').find('.group').each(function() {
-                        var $ipt = $(this).find('.ipt'),
-                            name = $ipt.attr('name'),
-                            length = $(this).find('.tag a').length;
-
-                        data[name] = [];
-                        while (length-- > 0) {
-                            data[name].push('');
-                        }
-                    })
-
                     $('.tag').on('click', 'a', function() {
-                            $text = $(this).parent().siblings('.ipt'),
-                            name = $text.attr('name'),
-                            val = $text.val(),
-                            idx = $(this).index();
-
-                        data[name][idx] = data[name][idx] == '' ? $(this).html() : '';
-                        $text.val(data[name].join(' '));
+                        var $text = $(this).parent().siblings('.ipt');
+                        $text.val($text.val() + ' ' + $(this).html() + ' ');
                     })
                 },
                 formValidate: function() {

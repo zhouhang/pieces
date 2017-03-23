@@ -73,6 +73,11 @@ public class CommodityController extends BaseController {
 		pageSize = pageSize == null ? 10 : pageSize;
 
 		PageInfo<CommodityVo> pageInfo = null;
+		SeoSetting base=seoSettingService.findByType(SeoTypeEnum.BASE.getValue());
+		String title="";
+		String description="";
+		String keyWords="";
+
 		if(commodityVO.getBreedId() != null || commodityVO.getEqName() != null){
 			pageInfo = indexBreed(pageSize, pageNum, commodityVO, model);
 
@@ -86,15 +91,15 @@ public class CommodityController extends BaseController {
 				category = commodityService.findBreedByName(commodityVO);
 			}
 
-			SeoSetting base=seoSettingService.findByType(SeoTypeEnum.BASE.getValue());
+
 			SeoSetting commditySetting=seoSettingService.findByType(SeoTypeEnum.COMMODITY_LIST.getValue());
-			String title=commditySetting.getTitle();
+			title=commditySetting.getTitle();
 			if(title!=null){
 				title=title.replace("{品种名称}",category.getName());
 				title=title.replace("{分类名称}",category.getName());
 				title=title.replace("{通用标题}",base.getTitle()==null?"":base.getTitle());
 			}
-			String description=commditySetting.getIntro();
+			description=commditySetting.getIntro();
 			if(description!=null){
 				description=description.replace("{品种名称}",category.getName());
 				description=description.replace("{品种别名}",category.getAliases());
@@ -105,7 +110,7 @@ public class CommodityController extends BaseController {
 
 
 
-			String keyWords=commditySetting.getKeyWord();
+			keyWords=commditySetting.getKeyWord();
 			if(keyWords!=null){
 				keyWords=keyWords.replace("{品种名称}",category.getName());
 				keyWords=keyWords.replace("{品种别名}",category.getAliases());
@@ -115,13 +120,14 @@ public class CommodityController extends BaseController {
 
 
 
-			model.put("title",title);
-			model.put("description",description);
-			model.put("keyWords",keyWords);
+
 
 
 		}else{
 			pageInfo = indexCategory(pageSize, pageNum, commodityVO, model);
+			title="中药饮片商品展示 -"+base.getTitle();
+			description=base.getIntro();
+			keyWords=base.getKeyWord();
 		}
 		
 		model.put("pageNum", pageNum);
@@ -129,6 +135,9 @@ public class CommodityController extends BaseController {
 		model.put("pageInfo", pageInfo);
 		model.put("commodity", commodityVO);
 		model.put("commodityParam", Reflection.serialize(commodityVO));
+		model.put("title",title);
+		model.put("description",description);
+		model.put("keyWords",keyWords);
 
 
 		//标志产品
@@ -298,7 +307,6 @@ public class CommodityController extends BaseController {
 		//标志产品
 		model.put("CURRENT_PAGE","commodity");
 
-
 		//seo信息
 		SeoSetting base=seoSettingService.findByType(SeoTypeEnum.BASE.getValue());
 		SeoSetting commditySetting=seoSettingService.findByType(SeoTypeEnum.SEARCH_RESULT.getValue());
@@ -310,7 +318,7 @@ public class CommodityController extends BaseController {
 		String description=commditySetting.getIntro();
 		if(description!=null){
 			description=description.replace("{搜索关键字}",keyword);
-			description=description.replace("{搜索结果数量}",Integer.toString(commodityDocPage.getSize()));
+			description=description.replace("{搜索结果数量}",Long.toString(commodityDocPage.getTotalElements()));
 		}
 
 

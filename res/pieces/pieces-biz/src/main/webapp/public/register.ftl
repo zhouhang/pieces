@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 	<#include "./inc/meta.ftl"/>
-    <title>注册-上工好药sghaoyao.com</title>
+        <title>注册-${baseSetting.title!}</title>
+        <meta name="description" content="${baseSetting.intro!}" />
+        <meta name="Keywords" content="${baseSetting.keyWord!}" />
 
 </head>
 

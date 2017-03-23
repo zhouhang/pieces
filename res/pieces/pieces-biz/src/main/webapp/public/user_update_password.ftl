@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
 	<#include "./inc/meta.ftl"/>
-    <title>用户资料-上工好药</title>
+        <title>用户资料-${baseSetting.title!}</title>
+        <meta name="description" content="${baseSetting.intro!}" />
+        <meta name="Keywords" content="${baseSetting.keyWord!}" />
 </head>
 
 <body>

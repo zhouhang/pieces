@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>代理商生成订单-上工好药</title>
+        <title>代理商生成订单-${baseSetting.title!}</title>
+        <meta name="description" content="${baseSetting.intro!}" />
+        <meta name="Keywords" content="${baseSetting.keyWord!}" />
     <link rel="stylesheet" href="${urls.getForLookupPath('/css/order.css')}" />
 </head>
 

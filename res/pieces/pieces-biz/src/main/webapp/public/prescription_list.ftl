@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <#include "./inc/meta.ftl"/>
-    <title>经方-上工好药</title>
-    <meta name="description" content="上工好药为您推荐一些经典方剂的组成以及常见配伍，为合作伙伴提供安全有保障、高效周到、高性价比的服务，采购饮片就来上工好药。" />
-    <meta name="Keywords" content="经方,桂枝汤,麻黄汤,葛根汤,小柴胡汤,白虎汤,承气汤,小陷胸汤,抵挡汤,四逆汤,理中汤,上工好药" />
+    <title>经方-${baseSetting.title!}</title>
+    <meta name="description" content="${baseSetting.intro!}" />
+    <meta name="Keywords" content="${baseSetting.keyWord!}" />
 </head>
 
 <body class="bg-gray">
