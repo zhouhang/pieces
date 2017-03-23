@@ -1,5 +1,6 @@
 package com.pieces.dao.elasticsearch.document;
 
+import com.pieces.tools.utils.FileUtil;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -48,6 +49,9 @@ public class CommodityDoc {
 
     @Field(type = FieldType.Integer,index=FieldIndex.not_analyzed)
     private Integer sort;
+
+    // 商品不同规格缩略图180*180
+    private String pictureUrl180;
 
 
     public Integer getId() {
@@ -140,5 +144,14 @@ public class CommodityDoc {
         this.sort = sort;
     }
 
+    public String getPictureUrl180() {
+        if (getPictureUrl()!= null) {
+            pictureUrl180 = FileUtil.getFilePathNoExt(getPictureUrl()) + "@180" + FileUtil.getFileExt(getPictureUrl());
+        }
+        return pictureUrl180;
+    }
 
+    public void setPictureUrl180(String pictureUrl180) {
+        this.pictureUrl180 = pictureUrl180;
+    }
 }

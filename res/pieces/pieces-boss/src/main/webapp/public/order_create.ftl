@@ -252,10 +252,10 @@
 
 
 <!-- 输入框联想 start -->
-<div class="suggestions" id="suggestions">
+<div class="suggestions" id="suggestions" style="width: 860px;">
     <div class="hd">
         <div class="group">
-            <span class="w1">商品名称</span><span class="w2">片型</span><span class="w3">规格等级</span><span class="w4">产地</span>
+            <span class="w1">商品名称</span><span class="w2">片型</span><span class="w3">规格等级</span><span class="w4">产地</span><span class="w5">当前价格</span><span class="w6">上次成交价格</span>
         </div>
     </div>
     <div class="bd"></div>
@@ -528,16 +528,16 @@
             ajaxSearch: function(keywords) {
                 var self = this;
                 $.ajax({
-                    url: 'order/auto',
+                    url: 'order/commodity/auto',
                     dataType: 'json',
-                    data:{commodityName:keywords},
+                    data:{commodityName:keywords,userId:${user.id!}},
                     success: function(result) {
                         // 显示查询结果
                         if (result.status === 'y') {
-                            if (result.data.length === 0) {
+                            if (result.data.list.length === 0) {
                                 self.$suggestions.show().find('.bd').empty().html('暂无此商品:)');
                             } else {
-                                self.toHtml(result.data, 0, 7);
+                                self.toHtml(result.data.list, 0, 7);
                             }
                         } else {
                             self.$suggestions.hide();
@@ -558,6 +558,8 @@
                     modal.push(     '<span class="w2">', item[i].spec, '</span>');
                     modal.push(     '<span class="w3">', item[i].level, '</span>');
                     modal.push(     '<span class="w4">', item[i].originOf, '</span>');
+                    modal.push(     '<span class="w5">', item[i].guidePrice?item[i].guidePrice:"-", '</span>');
+                    modal.push(     '<span class="w6">', item[i].orderPrice?item[i].orderPrice:"-", '</span>');
                     modal.push('</div>');
                 }
                 hasPage && modal.push('<div class="jq-page"></div>');

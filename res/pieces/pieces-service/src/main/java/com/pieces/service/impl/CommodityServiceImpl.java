@@ -351,7 +351,16 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         for(Commodity commodity: list){
             commoditySearchService.save(commodity);
         }
-        //TODO 更新完成后要更新 ES 里面的商品排序信息
         return result;
+    }
+
+    @Override
+    public PageInfo<CommodityVo> searchForOrder(Integer userId, String name, Integer pageNum, Integer pageSize) {
+        pageNum = pageNum==null?1:pageNum;
+        pageSize = pageSize==null?10:pageSize;
+        PageHelper.startPage(pageNum, pageSize);
+        List<CommodityVo> list = commodityDao.searchForOrder(userId, name);
+        PageInfo page = new PageInfo(list);
+        return page;
     }
 }

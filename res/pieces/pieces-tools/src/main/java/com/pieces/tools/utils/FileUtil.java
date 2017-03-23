@@ -3,6 +3,7 @@ package com.pieces.tools.utils;
 
 import com.pieces.tools.exception.FileUploadException;
 import com.pieces.tools.upload.IUploadConfig;
+import net.coobird.thumbnailator.Thumbnails;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,12 +112,17 @@ public class FileUtil {
         if (srcFile.exists()) {
             try {
                 FileUtils.copyFile(srcFile, destFile);
+                // 生成不同规格的缩略图
+                Thumbnails.of(dest).forceSize(90,90).outputQuality(1.0f).toFile(FileUtil.getFilePathNoExt(dest) + "@90" + FileUtil.getFileExt(dest));
+                Thumbnails.of(dest).forceSize(180,180).outputQuality(1.0f).toFile(FileUtil.getFilePathNoExt(dest) + "@180" + FileUtil.getFileExt(dest));
             } catch (IOException e) {
                 throw new RuntimeException("从临时文件去拷贝文件出错", e);
             }
         } else {
             dest = null;
         }
+
+
         return dest;
     }
 

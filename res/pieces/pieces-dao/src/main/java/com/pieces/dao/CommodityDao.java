@@ -9,39 +9,42 @@ import com.pieces.dao.annotation.AutoMapper;
 import com.pieces.dao.model.Category;
 import com.pieces.dao.model.Commodity;
 import com.pieces.dao.vo.CommodityVo;
+import org.apache.ibatis.annotations.Param;
 
 @AutoMapper
 public interface CommodityDao extends ICommonDao<Commodity>{
 
-    public List<CommodityVo> findVoByPage();
+	List<CommodityVo> findVoByPage();
 
-    public List<CommodityVo> findByParam (CommodityVo commodity);
+	List<CommodityVo> findByParam (CommodityVo commodity);
 
-    public CommodityVo findVoById(Integer id);
+	CommodityVo findVoById(Integer id);
 
-    public List<CommodityVo> findVoByIds(Collection<Integer> ids);
+	List<CommodityVo> findVoByIds(Collection<Integer> ids);
 
 	/**
 	 * 根据id 的字符串查询id列表
 	 * @param ids
 	 * @return
      */
-	public List<CommodityVo> findByIds(String ids);
+	List<CommodityVo> findByIds(String ids);
 
-	public List<CommodityVo> findCommodityByBreedId(Integer id);
+	List<CommodityVo> findCommodityByBreedId(Integer id);
 
 	List<CommodityVo> findStandardByBreedId(CommodityVo vo);
 	
 	List<CommodityVo> findFactoryByBreedId(CommodityVo vo);
 
-	public List<CommodityVo> findCommodityByName(CommodityVo commodityVO);
+	List<CommodityVo> findCommodityByName(CommodityVo commodityVO);
 	
-	public List<CommodityVo> findCommodityByNameLx(CommodityVo commodityVO);
+	List<CommodityVo> findCommodityByNameLx(CommodityVo commodityVO);
 
-	public List<Commodity> findByName(String name);
+	List<Commodity> findByName(String name);
 
-	public List<CommodityVo> findDistinctName(CommodityVo commodityVO);
+	List<CommodityVo> findDistinctName(CommodityVo commodityVO);
 
 	// 批量更新商品信息
 	Integer batchUpdate(List<Commodity> list);
+
+	List<CommodityVo> searchForOrder(@Param("userId")Integer userId, @Param("name") String name);
 }

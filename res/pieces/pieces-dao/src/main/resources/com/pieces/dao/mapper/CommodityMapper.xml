@@ -26,6 +26,7 @@
     <resultMap id="CommodityVOResultMap" type="com.pieces.dao.vo.CommodityVo" extends="CommodityResultMap">
         <result column="categoryName" property="categoryName" />
         <result column="eqName" property="eqName" />
+        <result column="orderPrice" property="orderPrice" />
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -306,6 +307,25 @@
             and a.category_id = #{breedId}
         </if>
         ORDER BY  a.sort DESC
+    </select>
+
+    <!--为新建订单时查询商品包含用户最近的成交价格-->
+    <select id="searchForOrder" resultMap="CommodityVOResultMap">
+       select a.id as id, a.name as name,a.spec as spec,a.level as level,a.origin_of as origin_of, a.guide_price as guide_price, oc.price as orderPrice
+        from commodity a
+        left join (select * from (
+        SELECT oc.id as id,ec.commodity_id as cid,oc.name as name,oc.price as price,of.creater_time as create_time
+        FROM order_commodity oc
+        left join enquiry_commoditys ec on oc.enquiry_commodity_id = ec.id
+        left join order_form of on oc.order_id = of.id
+        where ec.commodity_id is not null and of.user_id = #{userId}
+        order by of.creater_time desc) t
+        group by  cid) oc on a.id = oc.cid
+        where a.status = 1
+        <if test="name != null">
+            and a.name like "%"#{name}"%"
+        </if>
+        ORDER BY a.name, a.sort DESC
     </select>
 
 </mapper>
