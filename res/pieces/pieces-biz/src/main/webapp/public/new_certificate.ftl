@@ -225,6 +225,8 @@
                         // 药店
                         $floor.eq(1).show();
                         $floor.eq(1).show().find(".pic").attr("class","pic thumb required");
+                        $floor.eq(4).show();
+                        $floor.eq(2).show();
                         $floor.eq(6).show();
 
                     } else if (this.value == 2) {
@@ -232,12 +234,7 @@
                         $floor.eq(0).show();
                         $floor.eq(1).show().find(".pic").attr("class","pic thumb");
                         $floor.eq(1).show().find('h3').append('<em>（盈利性医疗机构必填）</em>');
-                        $floor.eq(2).show().find(".pic").attr("class","pic thumb");
-                        $floor.eq(2).show().find('h3').append('<em>（盈利性医疗机构必填）</em>');
-                        $floor.eq(4).show().find(".pic").attr("class","pic thumb");
-                        $floor.eq(4).show().find('h3').append('<em>（盈利性医疗机构必填）</em>');
                         $floor.eq(6).show();
-                        $floor.eq(7).show();
 
                     } else if (this.value == 3) {
                         // 制药企业
@@ -246,7 +243,6 @@
                         $floor.eq(3).show();
                         $floor.eq(5).show();
                         $floor.eq(6).show();
-                        $floor.eq(7).show();
 
                     } else {
                         // 医药公司
@@ -257,7 +253,6 @@
                         $floor.eq(4).show();
                         $floor.eq(4).show().find(".pic").attr("class","pic thumb required");
                         $floor.eq(6).show();
-                        $floor.eq(7).show();
                     }
                 })
                 $('.certificate').find('.type .cbx:checked').trigger('click');

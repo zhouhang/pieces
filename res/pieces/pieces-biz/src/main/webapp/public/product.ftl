@@ -30,7 +30,7 @@
                     <#list featured as commodity>
                         <dd>
                             <div class="pic">
-                                <a href="/commodity/${commodity.id}"><img class="lazyload" src="images/blank.gif" data-original="${commodity.pictureUrl!}" width="80" height="80" alt="${commodity.title!}"></a>
+                                <a href="/commodity/${commodity.id}"><img class="lazyload" src="images/blank.gif" data-original="${commodity.pictureUrl90!}" width="80" height="80" alt="${commodity.title!}"></a>
                             </div>
                             <div class="desc">
                                 <h3><a href="/commodity/${commodity.id}" title="${commodity.name}">${commodity.name}</a></h3>

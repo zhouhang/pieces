@@ -23,28 +23,28 @@ public interface CommodityService extends ICommonService<Commodity>{
      * 保存或者更新商品信息
      * @param commodity
      */
-    public Integer saveOrUpdate(Commodity commodity) throws IOException;
+    Integer saveOrUpdate(Commodity commodity) throws IOException;
     /**
      * 根据传入的参数查询商品信息
      * @param commodity
      * @return
      */
-    public PageInfo<CommodityVo> query(CommodityVo commodity, int pageNum, int pageSize);
+    PageInfo<CommodityVo> query(CommodityVo commodity, int pageNum, int pageSize);
 
-    public PageInfo<CommodityVo> findVoByPage(int pageNum, int pageSize);
+    PageInfo<CommodityVo> findVoByPage(int pageNum, int pageSize);
 
-    public CommodityVo findVoById(Integer id);
+    CommodityVo findVoById(Integer id);
 
-    public List<CommodityVo> findVoByIds(Set<Integer> ids);
+    List<CommodityVo> findVoByIds(Set<Integer> ids);
     /**
      * 上传文件
      * @return
      */
-    public CropResult uploadImage(MultipartFile img);
+    CropResult uploadImage(MultipartFile img);
 
-    public CropResult uploadUeditorImage(MultipartFile img);
+    CropResult uploadUeditorImage(MultipartFile img);
 
-    public List<CommodityVo> findCommodityByBreedId(Integer id);
+    List<CommodityVo> findCommodityByBreedId(Integer id);
     List<CommodityVo> queryCommodityByBreedId(Integer id);
     List<CommodityVo> findFactoryByBreedId(String ids);
     List<CommodityVo> findStandardByBreedId(String ids);
@@ -72,12 +72,14 @@ public interface CommodityService extends ICommonService<Commodity>{
 
 
     void create(List<Commodity> commodityList);
-    public Category findBreedByName(CommodityVo commodityVO);
+    Category findBreedByName(CommodityVo commodityVO);
 
-    public List<CommodityVo> findCommodityByName(CommodityVo commodityVO);
+    List<CommodityVo> findCommodityByName(CommodityVo commodityVO);
 
-    public List<Commodity> findByName(String name);
-	public List<CommodityVo> findDistinctName(CommodityVo commodityVO);
+    List<Commodity> findByName(String name);
+    List<CommodityVo> findDistinctName(CommodityVo commodityVO);
 
     Integer batchUpdate(List<Commodity> list);
+
+    PageInfo<CommodityVo> searchForOrder(Integer userId, String name,Integer pageNum, Integer pageSize);
 }

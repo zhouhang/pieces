@@ -95,7 +95,7 @@
                             <#if category.breedList??>
                                 <#list category.commodityList as commodity>
                                     <dd>
-                                        <a href="/commodity/${commodity.id!}"><img src="images/blank.gif" alt="${commodity.title!}" class="lazyload" data-original="${commodity.pictureUrl!}" width="180" height="180"></a>
+                                        <a href="/commodity/${commodity.id!}"><img src="images/blank.gif" alt="${commodity.title!}" class="lazyload" data-original="${commodity.pictureUrl180!}" width="180" height="180"></a>
                                         <a href="/commodity/${commodity.id!}">${commodity.name!}</a>
                                         <span>片型：${commodity.spec!}</span>
                                     </dd>

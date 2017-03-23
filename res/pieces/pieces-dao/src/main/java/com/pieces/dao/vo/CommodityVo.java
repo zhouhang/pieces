@@ -39,6 +39,9 @@ public class CommodityVo extends Commodity {
 	// 商品不同规格缩略图180*180
 	private String pictureUrl180;
 
+	// 用户查询时当前商品的最近成交价格
+	private String orderPrice;
+
 	private Map<String,String> attributeView;
 
 	public Integer getBreedId() {
@@ -137,12 +140,20 @@ public class CommodityVo extends Commodity {
 
 	public String getPictureUrl180() {
 		if (getPictureUrl()!= null) {
-			pictureUrl90 = FileUtil.getFilePathNoExt(getPictureUrl()) + "@180" + FileUtil.getFileExt(getPictureUrl());
+			pictureUrl180 = FileUtil.getFilePathNoExt(getPictureUrl()) + "@180" + FileUtil.getFileExt(getPictureUrl());
 		}
 		return pictureUrl180;
 	}
 
 	public void setPictureUrl180(String pictureUrl180) {
 		this.pictureUrl180 = pictureUrl180;
+	}
+
+	public String getOrderPrice() {
+		return orderPrice;
+	}
+
+	public void setOrderPrice(String orderPrice) {
+		this.orderPrice = orderPrice==null?"-":orderPrice;
 	}
 }

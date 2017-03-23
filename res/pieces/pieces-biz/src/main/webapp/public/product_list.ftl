@@ -59,7 +59,7 @@
                     <#if (pageInfo??&&pageInfo.list?size>0)>
 	                    <#list pageInfo.list as commodity>
 	                        <tr>
-	                            <td><a href="/commodity/${commodity.id }"><img class="lazyload" src="images/blank.gif" data-original="${commodity.pictureUrl!}" width="130" height="130" alt="${commodity.title!}"></a></td>
+	                            <td><a href="/commodity/${commodity.id }"><img class="lazyload" src="images/blank.gif" data-original="${commodity.pictureUrl180!}" width="130" height="130" alt="${commodity.title!}"></a></td>
 	                            <td class="tl">                                
 	                                <div class="desc">
 	                                    <h3><a href="/commodity/${commodity.id}">${commodity.name }</a></h3>

@@ -34,6 +34,7 @@ public class TipsJob {
         for (AccountBillVo vo: list) {
             SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
             smsService.sendTipsAccoountBill(vo.getContactMobile(),vo.getCode(),format.format(vo.getRepayTime()));
+            //TODO: 给跟单员发送提醒
         }
        //
     }

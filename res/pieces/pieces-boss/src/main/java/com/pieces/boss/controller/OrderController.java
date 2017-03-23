@@ -71,6 +71,8 @@ public class OrderController extends BaseController{
     private CommoditySearchService commoditySearchService;
     @Autowired
     private AreaService areaService;
+    @Autowired
+    private CommodityService commodityService;
 
 
     /**
@@ -222,7 +224,22 @@ public class OrderController extends BaseController{
                           HttpServletResponse response,
                           String commodityName){
         List<CommodityDoc> commodityDocList = commoditySearchService.findByCommodityName(commodityName);
+        //附加当前品种的最近成交价格
+        //1. 查询当前用户所有成交品种的最近成交价格Map
+        //2. 循环给查询结果赋值
+
         WebUtil.print(response,new Result(true).data(commodityDocList));
+    }
+
+    /**
+     * 自动联想 会带出商品的最近成交价格
+     * @param commodityName
+     */
+    @RequestMapping(value = "/commodity/auto")
+    @ResponseBody
+    public Result inputCommodityAuto(String commodityName,Integer userId){
+       PageInfo<CommodityVo> pageInfo = commodityService.searchForOrder(userId,commodityName,1,10);
+       return new Result(true).data(pageInfo);
     }
 
     /**
