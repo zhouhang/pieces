@@ -317,6 +317,20 @@
                 <label><input type="radio" name="way" value="" id="way3" class="cbx">货运部发货</label>
             </div>
         </div>
+        <div class="group">
+            <div class="txt"><i>*</i>快递公司：</div>
+            <div class="cnt">
+                <select name="expressCode" style="width:420px;">
+                    <option value="">请选择</option>
+                    <option value="SF">顺丰快递</option>
+                    <option value="YTO">圆通快递</option>
+                    <option value="ZTO">中通快递</option>
+                    <option value="STO">申通快递</option>
+                    <option value="YD">韵达快递</option>
+                    <option value="HTKY">百世汇通</option>
+                </select>
+            </div>
+        </div>
 
         <div class="way" id="_way1">
             <div class="group">
@@ -382,6 +396,7 @@
             $myform.validator({
                 fields: {
                     way: '派送方式: checked(1)',
+                    expressCode: '快递公司: required',
                     expressNumber: '快递单号: required(#way1:checked)',
                     
                     expressDate: '提货时间: required(#way2:checked)',
