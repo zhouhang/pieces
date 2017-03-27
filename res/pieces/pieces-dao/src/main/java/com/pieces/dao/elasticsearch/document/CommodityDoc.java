@@ -1,5 +1,6 @@
 package com.pieces.dao.elasticsearch.document;
 
+import com.google.common.base.Strings;
 import com.pieces.tools.utils.FileUtil;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -145,7 +146,7 @@ public class CommodityDoc {
     }
 
     public String getPictureUrl180() {
-        if (getPictureUrl()!= null) {
+        if (!Strings.isNullOrEmpty(getPictureUrl())) {
             pictureUrl180 = FileUtil.getFilePathNoExt(getPictureUrl()) + "@180" + FileUtil.getFileExt(getPictureUrl());
         }
         return pictureUrl180;

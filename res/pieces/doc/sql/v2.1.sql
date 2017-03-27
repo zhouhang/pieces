@@ -75,6 +75,7 @@ ALTER TABLE `article`
 ALTER TABLE `pieces`.`order_commodity`
 ADD COLUMN `commodity_id` INT NULL AFTER `order_id`;
 
+-- 询价单上的商品ID 添加到订单上面
 update order_commodity, enquiry_commoditys
 set order_commodity.commodity_id=enquiry_commoditys.commodity_id
 where order_commodity.enquiry_commodity_id=enquiry_commoditys.id and order_commodity.id

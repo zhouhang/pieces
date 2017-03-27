@@ -7,6 +7,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.common.base.Strings;
 import com.pieces.dao.model.Commodity;
 import com.pieces.tools.utils.FileUtil;
 import com.pieces.tools.utils.GsonUtil;
@@ -128,7 +129,7 @@ public class CommodityVo extends Commodity {
 	}
 
 	public String getPictureUrl90() {
-		if (getPictureUrl()!= null) {
+		if (!Strings.isNullOrEmpty(getPictureUrl())) {
 			pictureUrl90 = FileUtil.getFilePathNoExt(getPictureUrl()) + "@90" + FileUtil.getFileExt(getPictureUrl());
 		}
 		return pictureUrl90;
@@ -139,7 +140,7 @@ public class CommodityVo extends Commodity {
 	}
 
 	public String getPictureUrl180() {
-		if (getPictureUrl()!= null) {
+		if (!Strings.isNullOrEmpty(getPictureUrl())) {
 			pictureUrl180 = FileUtil.getFilePathNoExt(getPictureUrl()) + "@180" + FileUtil.getFileExt(getPictureUrl());
 		}
 		return pictureUrl180;

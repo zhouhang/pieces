@@ -207,7 +207,7 @@ public class OrderController extends BaseController {
 			oc.setSubtotal(oc.getAmount()*oc.getPrice());
 			oc.setEnquiryCommodityId(ec.getId());
 			oc.setOrderId(null);
-			oc.setGuidePrice(ec.getMyPrice());
+//			oc.setGuidePrice(ec.getMyPrice());
 			orderCommoditysList.add(oc);
 			total = total + oc.getSubtotal();
 			deposit += oc.getGuidePrice()*oc.getAmount();
