@@ -241,7 +241,7 @@ vertical-align:middle;
 .fa-form .cnt .msg-box .error{color:#c3272b;}
 .fa-form .cnt-extra{height:46px;}
 .fa-form .cbxs{line-height:40px;}
-.fa-form .cbxs label{margin-right:10px;}
+.fa-form .cbxs label{margin-right:20px;}
 .fa-form .group-cbx{margin-top:-10px;}
 .fa-form .group-cbx label{display:inline-block;margin:10px 24px 0 0;white-space:nowrap;}
 .fa-form .group-cbx .txt{top:10px;line-height:normal;}
@@ -255,6 +255,7 @@ vertical-align:middle;
 #imgCropWrap{display:none;}    
 #imgCrop{display:block !important;}    
 #imgCrop img{cursor:pointer;}
+.fa-form-layer{padding-bottom:0;}
 
 /* seo */
 .seo .cnt{height:auto;margin-bottom:30px;}
@@ -358,6 +359,16 @@ vertical-align:middle;
 .groups .group dl{min-height:160px;border:1px solid #e7e7e7;}
 .groups .group dt{line-height:34px;padding:7px 30px;font-weight:700;background:#f0eff5;border-bottom:1px solid #e7e7e7;}
 .groups .group dd{line-height:22px;padding:22px 30px;font-size:12px;color:#666;}
+.groups .group-row{clear:both;float:none;width:auto;}
+
+.express_box{margin-top:10px;padding-bottom:10px;text-align:left;border:1px solid #e7e7e7;}
+.express_box li{padding:9px 15px;}
+.express_box li:nth-child(2){color:#c3272b;}
+.express_box .company{margin-bottom:10px;padding:10px 15px;border-bottom:1px solid #e7e7e7;}
+.express_box .company em{margin-right:20px;font-size:15px;color:#333;}
+.express_box .date{float:left;width:200px;}
+.express_box .trace{margin-left:200px;}
+
 
 /*添加&编辑商品*/
 .user-info .chart-form{padding:50px;background:none;}

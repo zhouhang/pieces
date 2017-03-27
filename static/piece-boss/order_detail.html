@@ -87,7 +87,7 @@
                         <button type="button" class="btn btn-gray" onclick="javascript:history.go(-1);">返回</button>
                         <button type="button" class="btn btn-gray">修改</button>
                         <button type="button" class="btn btn-gray">发货</button>
-                        <button type="button" class="btn btn-gray">配送失败</button>
+                        <button type="button" id="jexpress" class="btn btn-gray">配送</button>
                         <button type="submit" class="btn btn-red">重新下单</button>
                     </div>
                 </div>
@@ -123,7 +123,78 @@
                                 <p>联系电话：17740679874</p>
                             </dd>
                         </dl>
-                    </div>                  
+                    </div>      
+                    <div class="group group-row">
+                        <dl>
+                            <dt>物流信息</dt>
+                            <dd>     
+                                <p>配送方式：货运部发货</p>
+                                <p>预计到货时间：2017-03-24</p>
+                                <p>司机姓名：张师傅</p>
+                                <p>联系电话：18972354632</p>
+                            </dd>
+                        </dl>
+                    </div>
+
+                    <div class="group group-row">
+                        <dl>
+                            <dt>物流信息</dt>
+                            <dd>     
+                                <p>配送方式：快递</p>
+                                <p>快递单号：211377404886 <a href="#" class="c-blue">[查询]</a></p>
+
+                                <ul class="express_box">
+                                    <li class="company">
+                                        <em>百世快递</em> 电话：95311
+                                    </li>
+                                    <li>
+                                        <div class="date">2017.03.23 19:36 星期四</div>
+                                        <div class="trace">蚌埠市|到件|到蚌埠【蚌埠转运中心】</div>
+                                    </li>
+                                    <li>
+                                        <div class="date">2017.03.23 14:49</div>
+                                        <div class="trace"> 亳州市|收件|亳州【亳州】，【周媛/05585355226】已揽收</div>
+                                    </li>
+                                    <li>
+                                        <div class="date">2017.03.23 12:36</div>
+                                        <div class="trace">亳州市|发件|亳州【亳州】，正发【蚌埠转运中心】</div>
+                                    </li>
+                                    <li>
+                                        <div class="date">2017年3月23日 下午6:48:40</div>
+                                        <div class="trace">[深圳新福永] [深圳市] [深圳新福永]的派件已签收 感谢使用中通快递,期待再次为您服务!</div>
+                                    </li>
+                                    <li>
+                                        <div class="date">2017年3月23日 下午3:02:15</div>
+                                        <div class="trace">[深圳新福永] [深圳市] [深圳新福永]的大洋田史镜明正在第1次派件 电话:13352956277 请保持电话畅通、耐心等待</div>
+                                    </li>
+                                    <li>
+                                        <div class="date">2017年3月23日 下午2:09:56</div>
+                                        <div class="trace">[深圳新福永] [深圳市] 快件到达 [深圳新福永]</div>
+                                    </li>
+                                    <li>
+                                        <div class="date">2017年3月23日 上午8:04:53</div>
+                                        <div class="trace">[深圳中心] [深圳市] 快件离开 [深圳中心]已发往[深圳新福永]</div>
+                                    </li>
+                                    <li>
+                                        <div class="date">2017年3月22日 上午1:10:52</div>
+                                        <div class="trace">[武汉中转部] [武汉市] 快件离开 [武汉中转部]已发往[深圳中心]</div>
+                                    </li>
+                                    <li>
+                                        <div class="date">2017年3月21日 下午11:24:04</div>
+                                        <div class="trace">[武汉中转部] [武汉市] 快件到达 [武汉中转部]</div>
+                                    </li>
+                                    <li>
+                                        <div class="date">2017年3月21日 下午8:45:13</div>
+                                        <div class="trace">[武昌鲁巷] [武汉市] 快件离开 [武昌鲁巷]已发往[深圳中心]</div>
+                                    </li>
+                                    <li>
+                                        <div class="date">2017年3月21日 下午8:21:45</div>
+                                        <div class="trace">[武昌鲁巷] [武汉市] [武昌鲁巷]的邮科院13072706048已收件 电话:13072706048</div>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </div>
                 </div>
                 
                 <div class="chart-info">
@@ -235,43 +306,139 @@
         </div>
     </div><!-- footer end -->
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/laydate/laydate.js"></script>
-    <script>
-        var enquiryPage = {
-            v: {},
-            fn: {
-                init: function() {
-                    this.pirceInput();
-                    this.dateInit();
+<!-- 发货 -->
+<form id="myform" class="hide">
+    <div class="fa-form fa-form-layer">
+        <div class="group">
+            <div class="txt"><i>*</i>配送方式：</div>
+            <div class="cnt cbxs">
+                <label><input type="radio" name="way" value="" id="way1" class="cbx" checked>快递</label>
+                <label><input type="radio" name="way" value="" id="way2" class="cbx">自提</label>
+                <label><input type="radio" name="way" value="" id="way3" class="cbx">货运部发货</label>
+            </div>
+        </div>
+
+        <div class="way" id="_way1">
+            <div class="group">
+                <div class="txt"><i>*</i>快递单号：</div>
+                <div class="cnt">
+                    <input type="text" name="expressNumber" class="ipt" placeholder="" autocomplete="off">
+                </div>
+            </div>
+        </div>
+
+        <div class="way hide" id="_way2">
+            <div class="group">
+                <div class="txt"><i>*</i>提货时间：</div>
+                <div class="cnt">
+                    <input type="text" name="expressDate" id="expressDate" class="ipt" placeholder="" autocomplete="off">
+                </div>
+            </div>
+            <div class="group">
+                <div class="txt"><i>*</i>提货地点：</div>
+                <div class="cnt">
+                    <input type="text" name="expressAddress" class="ipt" placeholder="" autocomplete="off">
+                </div>
+            </div>
+        </div>
+
+        <div class="way hide" id="_way3">
+            <div class="group">
+                <div class="txt"><i>*</i>预计到货时间：</div>
+                <div class="cnt">
+                    <input type="text" name="expressExpected" id="expressExpected" class="ipt" placeholder="" autocomplete="off">
+                </div>
+            </div>
+            <div class="group">
+                <div class="txt"><i>*</i>司机姓名：</div>
+                <div class="cnt">
+                    <input type="text" name="expressName" class="ipt" placeholder="" autocomplete="off">
+                </div>
+            </div>
+            <div class="group">
+                <div class="txt"><i>*</i>联系电话：</div>
+                <div class="cnt">
+                    <input type="text" name="expressTel" class="ipt" placeholder="" autocomplete="off">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/laydate/laydate.js"></script>
+<script src="js/layer/layer.js"></script>
+<script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
+<script>
+!(function($, window) {
+    var _global = {
+        init: function() {
+            this.deliver();
+        },
+        // 发货
+        deliver: function() {
+            var $myform = $('#myform');
+
+            $myform.validator({
+                fields: {
+                    way: '派送方式: checked(1)',
+                    expressNumber: '快递单号: required(#way1:checked)',
+                    
+                    expressDate: '提货时间: required(#way2:checked)',
+                    expressAddress: '提货地点: required(#way2:checked)',
+
+                    expressExpected: '预计到货时间: required(#way3:checked)',
+                    expressName: '司机姓名: required(#way3:checked)',
+                    expressTel: '联系电话: required(#way3:checked); mobile'
+
+
                 },
-                // 裸价
-                pirceInput: function() {
-                    $('#myform').on('keyup', '.ipt-price', function(e) {
-                        var val = this.value;
-                        if (!/^\d+\.?\d*$/.test(val)) {
-                            val = Math.abs(parseFloat(val));
-                            this.value = isNaN(val) ? '' : val;
-                        }
-                    });
-                },
-                //日期选择
-                dateInit: function () {
-                    // 重新定位
-                    $('.ipt-date').on('click', function() {
-                        var 
-                            posX = $(this).offset().left,
-                            w = this.offsetWidth,
-                            obj = document.getElementById('laydate_box');
-                        obj.style.left = posX + w - obj.offsetWidth + 'px';
-                    })
-                },
-            }
+                valid: function (form) {}
+            });
+
+            // 配送方式
+            $myform.on('click', '.cbx', function() {
+                $('#_' + this.id).show().siblings('.way').hide();
+            })
+
+            // 提货时间
+            laydate({
+                elem: '#expressDate',
+                min: laydate.now(),
+                choose: function(datas){
+                     $('#expressDate').trigger('validate');
+                }
+            });
+
+            // 预计到货时间
+            laydate({
+                elem: '#expressExpected',
+                min: laydate.now(),
+                choose: function(datas){
+                     $('#expressExpected').trigger('validate');
+                }
+            });
+
+            $('#jexpress').on('click', function() {
+                $myform[0].reset();
+                layer.open({
+                    area: ['600px'],
+                    type: 1,
+                    moveType: 1,
+                    content: $myform,
+                    btn: ['确定', '取消'],
+                    btn1: function() {
+                        $myform.submit();
+                    },
+                    title: '物流信息'
+                });
+                $myform.parent().height('auto')
+            })
         }
-        $(function() {
-            enquiryPage.fn.init();
-        })
-    </script>
+    }
+    _global.init();
+})(jQuery, window);
+</script>
 </body>
 </html>
 

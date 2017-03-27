@@ -20,7 +20,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 :-ms-input-placeholder{color:#999;} 
 
 /* iconfont.cn */
-@font-face{font-family:"fa";src:url('../fonts/iconfont.eot?t=146675933333445');src:url('../fonts/iconfont.eot?t=146622222759445#iefix') format('embedded-opentype'),url('../fonts/iconfont.woff?t=1466733359445') format('woff'),url('../fonts/iconfont.ttf?t=1464446759445') format('truetype'),url('../fonts/iconfont.svg?t=1466744459445#fa') format('svg')}
+@font-face{font-family:"fa";src:url('../fonts/iconfont.eot?t=1466759445');src:url('../fonts/iconfont.eot?t=1466759445#iefix') format('embedded-opentype'),url('../fonts/iconfont.woff?t=1466759445') format('woff'),url('../fonts/iconfont.ttf?t=1466759445') format('truetype'),url('../fonts/iconfont.svg?t=1466759445#fa') format('svg')}
 .fa{font-family:"fa"!important;font-size:16px;font-style:normal;vertical-align:middle;-webkit-font-smoothing:antialiased;-webkit-text-stroke-width:0.2px;-moz-osx-font-smoothing:grayscale}
 
 .fa-download:before{content:"\e61b";}
@@ -334,6 +334,16 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .order-detail .info dt{margin-bottom:10px;font-size:14px;font-weight:700;}
 .order-detail .info dd{position:relative;padding-left:60px;}
 .order-detail .info em{position:absolute;left:0;top:0;width:60px;text-align:right;}
+.order-detail .info .row{position:relative;clear:both;float:none;width:auto;border:0;border-bottom:1px solid #e7e7e7;}
+.order-detail .info .row dd{padding-left:90px;}
+.order-detail .info .row em{width:90px;}
+.order-detail .info .row .express_box{position:absolute;top:0;left:312px;height:100%;padding:0;border-left:1px solid #e7e7e7;overflow:hidden;overflow-y:auto;}
+.order-detail .info .row .express_box li{padding:9px 15px;}
+.order-detail .info .row .express_box li:nth-child(1){color:#c3272b;}
+.order-detail .info .row .express_box .company{margin-bottom:10px;padding:10px 15px;border-bottom:1px solid #e7e7e7;}
+.order-detail .info .row .express_box .company em{margin-right:20px;font-size:15px;color:#333;}
+.order-detail .info .row .express_box .date{float:left;width:200px;}
+.order-detail .info .row .express_box .trace{margin-left:200px;}
 .order-detail .table{font-size:14px;}
 .order-detail th{height:40px;background:#f5f5f5;text-align:left;}
 .order-detail td{padding:20px 0;border-top:1px solid #e7e7e7;}

@@ -138,7 +138,7 @@
     <div class="suggestions" id="suggestions">
         <div class="hd">
             <div class="group">
-                <span class="w1">商品名称</span><span class="w2">片型</span><span class="w3">规格等级</span><span class="w4">产地</span>
+                <span class="w1">商品名称</span><span class="w2">片型</span><span class="w3">规格等级</span><span class="w4">产地</span><span class="w5">当前价格</span><span class="w6">上次成交价格</span>
             </div>
         </div>
         <div class="bd"></div>
@@ -289,6 +289,8 @@
                         modal.push(     '<span class="w2">', item[i].spec, '</span>');
                         modal.push(     '<span class="w3">', item[i].level, '</span>');
                         modal.push(     '<span class="w4">', item[i].originOf, '</span>');
+                        modal.push(     '<span class="w4">&yen;22</span>');
+                        modal.push(     '<span class="w4">&yen;22</span>');
                         modal.push('</div>');
                     }
                     hasPage && modal.push('<div class="jq-page"></div>');
