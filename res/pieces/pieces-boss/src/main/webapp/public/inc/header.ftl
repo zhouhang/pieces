@@ -36,9 +36,6 @@
                     <@shiro.hasPermission name="bill:index">
                     <a href="/account/bill/index" id="accountIndex">账单管理<b></b></a>
                     </@shiro.hasPermission>
-                    <@shiro.hasPermission name="logistical:index">
-                    <a href="/logistics/index">物流管理</a>
-                    </@shiro.hasPermission>
                     </div>
                 </li>
             </@shiro.hasPermission>
