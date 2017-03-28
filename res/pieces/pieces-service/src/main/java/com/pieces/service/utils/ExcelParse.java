@@ -1,14 +1,17 @@
 package com.pieces.service.utils;
 
 import com.pieces.dao.model.EnquiryCommoditys;
+import com.pieces.dao.model.OrderCommodity;
 import com.pieces.dao.vo.EnquiryBillsVo;
 import com.pieces.dao.vo.EnquiryCommoditysVo;
-import org.apache.poi.hssf.usermodel.DVConstraint;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
-import org.apache.poi.hssf.usermodel.HSSFDataValidation;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import com.pieces.dao.vo.OrderFormVo;
+import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.hssf.util.Region;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -349,5 +352,263 @@ public class ExcelParse {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 导出订单详情
+     * @param orderInfo
+     * @return
+     */
+   public static Workbook exportOrderInfo(OrderFormVo orderInfo) {
+       Workbook wb = new HSSFWorkbook();
+       Sheet s = wb.createSheet();
+       Row r;
+       Cell c;
+       Font font = wb.createFont();
+       font.setFontName("宋体");
+       font.setFontHeightInPoints((short) 12);//设置字体
+
+       CellStyle h2 = wb.createCellStyle();
+//       h2.setFillPattern(CellStyle.FINE_DOTS);
+//       h2.setFillBackgroundColor(HSSFColor.SKY_BLUE.index);
+       h2.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+       h2.setFillForegroundColor(HSSFColor.PALE_BLUE.index);
+       h2.setFillBackgroundColor(HSSFColor.LIGHT_BLUE.index);
+
+       h2.setFont(font);
+       h2.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框
+       h2.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框
+       h2.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框
+       h2.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
+//       h2.setBottomBorderColor();
+
+       CellStyle h1 = wb.createCellStyle();
+       h1.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+       h1.setFillForegroundColor(HSSFColor.PALE_BLUE.index);
+       h1.setFillBackgroundColor(HSSFColor.LIGHT_BLUE.index);
+       h1.setFont(font);
+       h1.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框
+       h1.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框
+       h1.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框
+       h1.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
+       h1.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+
+       CellStyle p = wb.createCellStyle();
+       p.setFillPattern((short) 0);
+       p.setFont(font);
+       p.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框
+       p.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框
+       p.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框
+       p.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框
+       p.setDataFormat((short)0x31);
+
+       s.setColumnWidth(0, 15 * 256);
+       s.setColumnWidth(1, 15 * 256);
+       s.setColumnWidth(2, 15 * 256);
+       s.setColumnWidth(3, 15 * 256);
+       s.setColumnWidth(4, 15 * 256);
+       s.setColumnWidth(5, 15 * 256);
+       s.setColumnWidth(6, 15 * 256);
+       s.setColumnWidth(7, 15 * 256);
+
+       s.setDisplayGridlines(true);
+       s.setDefaultRowHeightInPoints(20);
+
+       wb.setSheetName(0, "订单详情");
+       r = s.createRow((short) 1);
+       setRowCellStyle(r, 1,7,p);
+       c = r.getCell((short) 1);
+       c.setCellValue("订单号");
+       c.setCellStyle(h2);
+       c = r.getCell(2);
+       c.setCellValue(orderInfo.getCode());
+       s.addMergedRegion(new CellRangeAddress(1, (short) 1, 2, (short) 7));//指定合并区域
+
+       r = s.createRow(2);
+       setRowCellStyle(r, 1,7,p);
+       c = r.getCell((short) 1);
+       c.setCellValue("下单日期");
+       c.setCellStyle(h2);
+       s.addMergedRegion(new CellRangeAddress(2, (short) 2, 2, (short) 7));//指定合并区域
+       c = r.getCell(2);
+       c.setCellValue(DateFormatUtils.format(orderInfo.getCreaterTime(),"yyyy-MM-dd"));
+
+
+       r = s.createRow(3);
+       setRowCellStyle(r, 1,7,p);
+       s.addMergedRegion(new CellRangeAddress(3, (short) 3, 1, (short) 7));//指定合并区域
+       c = r.getCell(1);
+       c.setCellStyle(h1);
+       c.setCellValue("客户信息");
+
+       r = s.createRow(4);
+       setRowCellStyle(r, 1,7,p);
+       s.addMergedRegion(new CellRangeAddress(4, (short) 4, 2, (short) 3));//指定合并区域
+       c = r.getCell(1);
+       c.setCellValue("用药单位");
+       c = r.getCell(2);
+       c.setCellValue(orderInfo.getUser().getCompanyFullName());
+       c = r.getCell(4);
+       c.setCellValue("联系人");
+       c = r.getCell(5);
+       c.setCellValue(orderInfo.getUser().getContactName());
+       c = r.getCell(6);
+       c.setCellStyle(p);
+       c.setCellValue("联系电话");
+       c = r.getCell(7);
+       c.setCellStyle(p);
+       c.setCellValue(orderInfo.getUser().getContactMobile());
+
+       r = s.createRow(5);
+       setRowCellStyle(r, 1,7,p);
+       s.addMergedRegion(new CellRangeAddress(5, (short) 5, 1, (short) 7));//指定合并区域
+       c = r.getCell(1);
+       c.setCellStyle(p);
+
+       r = s.createRow(6);
+       setRowCellStyle(r, 1,7,p);
+       s.addMergedRegion(new CellRangeAddress(6, (short) 6, 1, (short) 7));//指定合并区域
+       c = r.getCell(1);
+       c.setCellStyle(h1);
+       c.setCellValue("配送信息");
+
+       r = s.createRow(7);
+       setRowCellStyle(r, 1,7,p);
+       s.addMergedRegion(new CellRangeAddress(7, (short) 7, 2, (short) 3));//指定合并区域
+       c = r.getCell(1);
+       c.setCellValue("收货地址");
+       c = r.getCell(2);
+       c.setCellValue(orderInfo.getAddress().getArea()+orderInfo.getAddress().getDetail());
+       c = r.getCell(4);
+       c.setCellValue("收货人");
+       c = r.getCell(5);
+       c.setCellValue(orderInfo.getAddress().getConsignee());
+       c = r.getCell(6);
+       c.setCellValue("联系电话");
+       c = r.getCell(7);
+       c.setCellValue(orderInfo.getAddress().getTel());
+
+       r = s.createRow(8);
+       setRowCellStyle(r, 1,7,p);
+       s.addMergedRegion(new CellRangeAddress(8, (short) 8, 1, (short) 7));//指定合并区域
+       c = r.getCell(1);
+       c.setCellStyle(p);
+
+       r = s.createRow(9);
+       setRowCellStyle(r, 1,7,p);
+       s.addMergedRegion(new CellRangeAddress(9, (short) 9, 1, (short) 7));//指定合并区域
+       c = r.getCell(1);
+       c.setCellStyle(h1);
+       c.setCellValue("商品清单");
+
+       r = s.createRow(10);
+       setRowCellStyle(r, 1,7,p);
+       c = r.getCell(1);
+       c.setCellValue("商品名称");
+       c = r.getCell(2);
+       c.setCellValue("片型");
+       c = r.getCell(3);
+       c.setCellValue("规格等级");
+       c = r.getCell(4);
+       c.setCellValue("产地");
+       c = r.getCell(5);
+       c.setCellValue("数量(公斤)");
+       c = r.getCell(6);
+       c.setCellValue("销售价(元/公斤)");
+       if (orderInfo.getAgentId()!= null) {
+           c = r.getCell(7);
+           c.setCellValue("开票价(元/公斤)"); // 根据身份设置
+       }
+       int nextRow=11;
+       // for 循环 来输出商品值
+       for (OrderCommodity commodity:orderInfo.getCommodities()) {
+           r = s.createRow(nextRow++);
+           setRowCellStyle(r, 1,7,p);
+           c = r.getCell(1);
+           c.setCellValue(commodity.getName());
+           c = r.getCell(2);
+           c.setCellValue(commodity.getSpec());
+           c = r.getCell(3);
+           c.setCellValue(commodity.getLevel());
+           c = r.getCell(4);
+           c.setCellValue(commodity.getOriginOf());
+           c = r.getCell(5);
+           c.setCellValue(commodity.getAmount());
+           c = r.getCell(6);
+           c.setCellValue(commodity.getGuidePrice());
+           if (orderInfo.getAgentId()!= null) {
+               c = r.getCell(7);
+               c.setCellValue(commodity.getPrice()); // 根据身份设置
+           }
+       }
+
+       r = s.createRow(nextRow++);
+       setRowCellStyle(r, 1,7,p);
+
+       r = s.createRow(nextRow);
+       setRowCellStyle(r, 1,7,p);
+       s.addMergedRegion(new CellRangeAddress(nextRow, (short) nextRow, 1, (short) 7));//指定合并区域
+       c = r.getCell(1);
+       c.setCellStyle(h1);
+       c.setCellValue("发票信息");
+
+       r = s.createRow(++nextRow);
+       setRowCellStyle(r, 1,7,p);
+       s.addMergedRegion(new CellRangeAddress(nextRow, (short) nextRow, 1, (short) 7));//指定合并区域
+       c = r.getCell(1);
+       c.setCellStyle(p);
+       if (orderInfo.getInvoice()!= null) {
+           String invoice = "";
+           invoice+=orderInfo.getInvoice().getTypeText()+
+                   orderInfo.getInvoice().getName();
+           c.setCellValue(invoice);
+       }
+
+       r = s.createRow(++nextRow);
+       setRowCellStyle(r, 1,7,p);
+       s.addMergedRegion(new CellRangeAddress(nextRow, (short) nextRow, 1, (short) 7));//指定合并区域
+       c = r.getCell(1);
+       c.setCellStyle(h1);
+       c.setCellValue("备注");
+
+       r = s.createRow(++nextRow);
+       setRowCellStyle(r, 1,7,p);
+       s.addMergedRegion(new CellRangeAddress(nextRow, (short) nextRow, 1, (short) 7));//指定合并区域
+       c = r.getCell(1);
+       c.setCellStyle(p);
+       c.setCellValue(orderInfo.getRemark());
+
+//       File file = new File("/Users/kevin1/Downloads/订单详情.xls");
+//       try {
+//           file.createNewFile();
+//       } catch (IOException e) {
+//           e.printStackTrace();
+//       }
+//       try {
+//           FileOutputStream os = new FileOutputStream(file);
+//           wb.write(os);
+//       } catch (FileNotFoundException e) {
+//           e.printStackTrace();
+//       } catch (IOException e) {
+//           e.printStackTrace();
+//       }
+       return wb;
+   }
+
+    /**
+     * 给一列设置默认格式
+     * @param r
+     * @param start
+     * @param end
+     */
+    private static void setRowCellStyle(Row r, int start, int end, CellStyle style){
+        for (int i = start;i<= end;i++) {
+            Cell c = r.createCell((short) i);
+            c.setCellStyle(style);
+        }
+    }
+
+    public static void main(String[] args) {
+        ExcelParse.exportOrderInfo(null);
     }
 }

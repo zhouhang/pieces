@@ -29,7 +29,8 @@
                         </#if>
                     </@shiro.hasPermission>
                     <#if vo.status == 3 || vo.status == 8>
-                        <a id="delivery" type="button" class="btn btn-gray" href="javascript:;">配送</a>
+                        <a id="jexpress" type="button" class="btn btn-gray" href="javascript:;">配送</a>
+                        <a id="exportOrder" type="button" class="btn btn-gray" href="/order/download/${vo.id}">导出订单</a>
                     </#if>
                     <#if vo.status == 4>
                         <a id="deliveryFail" type="button" class="btn btn-gray" href="javascript:;">配送失败</a>
@@ -93,8 +94,41 @@
                             </dl>
                         </div>
                     </#if>
-                </div>
+                <#if logistical?exists>
+                    <div class="group group-row">
+                    <#--配送方式 1快递 2自提 3货运部发货-->
+                        <dl>
+                            <dt>物流信息</dt>
+                            <dd>
+                                <#if logistical.type = 1>
+                                    <p>配送方式：快递</p>
+                                    <p>快递公司：${logistical.companyCodeName!}</p>
+                                    <p>快递单号：${logistical.code!} <a href="http://www.kuaidi100.com/" target="_blank" class="c-blue">[查询]</a></p>
 
+                                <#--<ul class="express_box">-->
+                                <#--<li class="company">-->
+                                <#--<em>百世快递</em> 电话：95311-->
+                                <#--</li>-->
+                                <#--<li>-->
+                                <#--<div class="date">2017.03.23 19:36 星期四</div>-->
+                                <#--<div class="trace">蚌埠市|到件|到蚌埠【蚌埠转运中心】</div>-->
+                                <#--</li>-->
+                                <#--</ul>-->
+                                <#elseif logistical.type = 2>
+                                    <p>配送方式：自提</p>
+                                    <p>提货时间：${logistical.receivingDate?date} </p>
+                                    <p>提货地点：${logistical.pickUp}</p>
+                                <#elseif logistical.type = 3>
+                                    <p>配送方式：货运部发货</p>
+                                    <p>预计到货时间：${logistical.receivingDate?date}</p>
+                                    <p>司机姓名：${logistical.driverName!}</p>
+                                    <p>联系电话：${logistical.driverTel!}</p>
+                                </#if>
+                            </dd>
+                        </dl>
+                    </div>
+                </#if>
+                </div>
                 <div class="chart-info">
                     <h3>订购商品</h3>
                     <div class="chart">
@@ -187,11 +221,88 @@
 
     <!-- footer start -->
     <#include "./inc/footer.ftl"/>
-<!-- footer end -->
+    <!-- footer end -->
+    <!-- 发货 -->
+    <form id="myform" class="hide">
+        <div class="fa-form fa-form-layer">
+            <div class="group">
+                <div class="txt"><i>*</i>配送方式：</div>
+                <div class="cnt cbxs">
+                    <label><input type="radio" name="type" value="1" id="way1" class="cbx" checked>快递</label>
+                    <label><input type="radio" name="type" value="2" id="way2" class="cbx">自提</label>
+                    <label><input type="radio" name="type" value="3" id="way3" class="cbx">货运部发货</label>
+                </div>
+            </div>
+
+            <div class="way" id="_way1">
+                <div class="group">
+                    <div class="txt"><i>*</i>快递公司：</div>
+                    <div class="cnt">
+                        <select name="companyCode" style="width:420px;">
+                            <option value="">请选择</option>
+                            <option value="SF">顺丰快递</option>
+                            <option value="YTO">圆通快递</option>
+                            <option value="ZTO">中通快递</option>
+                            <option value="STO">申通快递</option>
+                            <option value="YD">韵达快递</option>
+                            <option value="HTKY">百世汇通</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="group">
+                    <div class="txt"><i>*</i>快递单号：</div>
+                    <div class="cnt">
+                        <input type="text" name="code" class="ipt" placeholder="" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+
+            <div class="way hide" id="_way2">
+                <div class="group">
+                    <div class="txt"><i>*</i>提货时间：</div>
+                    <div class="cnt">
+                        <input type="text" name="expressDate" id="expressDate" class="ipt" placeholder="" autocomplete="off">
+                    </div>
+                </div>
+                <div class="group">
+                    <div class="txt"><i>*</i>提货地点：</div>
+                    <div class="cnt">
+                        <input type="text" name="pickUp" class="ipt" placeholder="" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+
+            <div class="way hide" id="_way3">
+                <div class="group">
+                    <div class="txt"><i>*</i>预计到货时间：</div>
+                    <div class="cnt">
+                        <input type="text" name="expressExpected" id="expressExpected" class="ipt" placeholder="" autocomplete="off">
+                    </div>
+                </div>
+                <div class="group">
+                    <div class="txt"><i>*</i>司机姓名：</div>
+                    <div class="cnt">
+                        <input type="text" name="driverName" class="ipt" placeholder="" autocomplete="off">
+                    </div>
+                </div>
+                <div class="group">
+                    <div class="txt"><i>*</i>联系电话：</div>
+                    <div class="cnt">
+                        <input type="text" name="driverTel" class="ipt" placeholder="" autocomplete="off">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
     <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
+    <script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
+    <script src="/js/validator/jquery.validator.min.js?local=zh-CN"></script>
 <script>
-    var enquiryPage = {
-        v: {},
+    var _globle = {
+        v: {
+            orderId:${vo.id}
+        },
         fn: {
             init: function () {
                 $("#summit_comment").on("click", function () {
@@ -219,25 +330,6 @@
                     });
                     return false
                 });
-
-                $("#delivery").click(function () {
-                    layer.confirm('您确认吗？订单已经发货', {icon: 3, title: '提示'}, function (index) {
-                        layer.close(index);
-                        $.post("/order/status",{status:4,orderId:${vo.id}}, function (data) {
-                            if (data.status == "y") {
-                                $.notify({
-                                    type: 'success',
-                                    title: '订单状态修为已发货.',
-                                    delay: 3e3,
-                                    call: function () {
-                                        window.location.reload();
-                                    }
-                                });
-                            }
-                        })
-                    });
-                    return false
-                });
                 // 配送失败按钮
                 $("#deliveryFail").click(function () {
                     layer.confirm('您确认吗？货物配送失败', {icon: 3, title: '提示'}, function (index) {
@@ -257,11 +349,117 @@
                     });
                     return false
                 });
+                this.deliver();
+            },
+            // 发货
+            deliver: function() {
+                var $myform = $('#myform');
+
+                $myform.validator({
+                    fields: {
+                        type: '派送方式: checked(1)',
+                        companyCode: '快递公司: required(#way1:checked)',
+                        code: '快递单号: required(#way1:checked)',
+
+                        expressDate: '提货时间: required(#way2:checked)',
+                        pickUp: '提货地点: required(#way2:checked)',
+
+                        expressExpected: '预计到货时间: required(#way3:checked)',
+                        driverName: '司机姓名: required(#way3:checked)',
+                        driverTel: '联系电话: required(#way3:checked); mobile'
+                    },
+                    valid: function (form) {
+                        var  lock = false;
+                        var logistical = $(form).serializeObject();
+                        logistical.orderId = _globle.v.orderId;
+                        // receivingDate
+                        if (logistical.type==1) {
+                            // noting
+                        } else if (logistical.type==2) {
+                            logistical.receivingDate = logistical.expressDate;
+                        } else if(logistical.type==3) {
+                            logistical.receivingDate = logistical.expressExpected;
+                        }
+                        if (lock) return false;
+                        lock = true;
+                        $.post("/logistics/create", logistical, function (data) {
+                            if (data.status == "y") {
+                                $.notify({
+                                    type: 'success',
+                                    title: '发货信息以保存,订单状态修为已发货.',
+                                    delay: 3e3,
+                                    call: function () {
+                                        window.location.reload();
+                                    }
+                                });
+                            }
+                        })
+                        return false;
+                    }
+                });
+
+                // 配送方式
+                $myform.on('click', '.cbx', function() {
+                    $('#_' + this.id).show().siblings('.way').hide();
+                })
+
+                // 提货时间
+                laydate({
+                    elem: '#expressDate',
+                    min: laydate.now(),
+                    choose: function(datas){
+                        $('#expressDate').trigger('validate');
+                    }
+                });
+
+                // 预计到货时间
+                laydate({
+                    elem: '#expressExpected',
+                    min: laydate.now(),
+                    choose: function(datas){
+                        $('#expressExpected').trigger('validate');
+                    }
+                });
+
+                $('#jexpress').on('click', function() {
+                    $myform[0].reset();
+                    layer.open({
+                        area: ['600px'],
+                        type: 1,
+                        moveType: 1,
+                        content: $myform,
+                        btn: ['确定', '取消'],
+                        btn1: function() {
+                            $myform.submit();
+                        },
+                        title: '物流信息'
+                    });
+                    $myform.parent().height('auto')
+                })
+
+                <#--$("#delivery").click(function () {-->
+                    <#--layer.confirm('您确认吗？订单已经发货', {icon: 3, title: '提示'}, function (index) {-->
+                        <#--layer.close(index);-->
+                        <#--$.post("/order/status",{status:4,orderId:${vo.id}}, function (data) {-->
+                            <#--if (data.status == "y") {-->
+                                <#--$.notify({-->
+                                    <#--type: 'success',-->
+                                    <#--title: '订单状态修为已发货.',-->
+                                    <#--delay: 3e3,-->
+                                    <#--call: function () {-->
+                                        <#--window.location.reload();-->
+                                    <#--}-->
+                                <#--});-->
+                            <#--}-->
+                        <#--})-->
+                    <#--});-->
+                    <#--return false-->
+                <#--});-->
             }
         }
     }
     $(function() {
-        enquiryPage.fn.init();
+        _globle.fn.init();
     })
 </script>
 </body>

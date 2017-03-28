@@ -7,6 +7,9 @@ import com.pieces.dao.model.User;
 import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.constant.bean.Result;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * Author: koabs
  * 8/15/16.
@@ -83,5 +86,13 @@ public interface OrderFormService extends ICommonService<OrderForm>{
      * @return
      */
     Integer countOrderNew();
+
+    /**
+     * 导出订单信息
+     * @param response
+     * @param request
+     * @param id
+     */
+    void exportOrderExcel(HttpServletResponse response, HttpServletRequest request, Integer id);
 
 }

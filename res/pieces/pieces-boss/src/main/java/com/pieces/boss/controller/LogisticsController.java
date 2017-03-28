@@ -5,6 +5,11 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import com.pieces.boss.commons.LogConstant;
+import com.pieces.dao.enums.OrderEnum;
+import com.pieces.dao.model.Member;
+import com.pieces.service.*;
+import com.pieces.service.constant.bean.Result;
+import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.log.annotation.BizLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +26,8 @@ import com.pieces.dao.model.ShippingAddressHistory;
 import com.pieces.dao.vo.LogisticalCommodityVo;
 import com.pieces.dao.vo.LogisticalVo;
 import com.pieces.dao.vo.OrderCommodityVo;
-import com.pieces.service.LogisticalCommodityService;
-import com.pieces.service.LogisticalService;
-import com.pieces.service.OrderCommodityService;
-import com.pieces.service.ShippingAddressHistoryService;
 import com.pieces.tools.utils.Reflection;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Author: ff 7/19/16. 商品信息
@@ -47,7 +49,7 @@ public class LogisticsController extends BaseController {
     private ShippingAddressHistoryService shippingAddressHistoryService;
 
     @Autowired
-    private OrderCommodityService orderCommodityService;
+    private OrderFormService orderFormService;
     /**
      * 我的物流页面
      * @return
@@ -90,22 +92,15 @@ public class LogisticsController extends BaseController {
      * 物流保存
      * @return
      */
-    @RequestMapping(value = "/logistics/create", method = RequestMethod.GET)
+    @RequestMapping(value = "/logistics/create", method = RequestMethod.POST)
     @BizLog(type = LogConstant.logistics, desc = "保存物流")
-    public void create(Logistical logistic,String logisticalCommodityIds,ModelMap modelMap) {
-    	List<OrderCommodityVo> orderCommodityVo = orderCommodityService.findByOrderId(logistic.getOrderId());
-    	String[] logisticalCommodityId = logisticalCommodityIds.split(",");
-    	logistic.setTotal(orderCommodityVo.size());
-    	logistic.setShipNumber(logisticalCommodityId.length);
-    	logisticalService.create(logistic);
-    	for(OrderCommodityVo ocv : orderCommodityVo){
-    		if(logisticalCommodityIds.contains(ocv.getId().toString())){
-    			LogisticalCommodity logisticalCommodity = new LogisticalCommodity();
-        		logisticalCommodity.setLogisticalId(logistic.getId());
-        		logisticalCommodity.setOrderCommodityId(ocv.getId());
-        		logisticalCommodity.setAmount(ocv.getAmount());
-        		logisticalCommodityService.create(logisticalCommodity);
-    		}
-    	}
+    @ResponseBody
+    public Result create(Logistical logistic) {
+        Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
+        logistic.setMemId(mem.getId());
+        logisticalService.save(logistic);
+        // 保存物流信息同时改变订单状态为已发货
+        orderFormService.changeOrderStatus(logistic.getOrderId(), OrderEnum.SHIPPED.getValue());
+        return  new Result(true);
     }
 }

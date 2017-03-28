@@ -3,30 +3,22 @@ package com.pieces.boss.controller;
 import com.github.pagehelper.PageInfo;
 import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.elasticsearch.document.CommodityDoc;
-import com.pieces.dao.group.Biz;
 import com.pieces.dao.model.*;
 import com.pieces.dao.vo.*;
-import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.utils.ExcelParse;
-import com.pieces.tools.annotation.SameUrlData;
 import com.pieces.tools.annotation.SecurityToken;
-import com.pieces.tools.annotation.TokenHold;
-import com.pieces.tools.annotation.TokenVerify;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.WebUtil;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StreamUtils;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,10 +28,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Author: koabs
@@ -73,6 +63,8 @@ public class OrderController extends BaseController{
     private AreaService areaService;
     @Autowired
     private CommodityService commodityService;
+    @Autowired
+    private LogisticalService logisticalService;
 
 
     /**
@@ -103,6 +95,8 @@ public class OrderController extends BaseController{
         List<OrderRemarkVo> remarks = orderRemarkService.findByOrderId(id);
         modelMap.put("vo", vo);
         modelMap.put("remarks", remarks);
+        modelMap.put("logistical",logisticalService.findByOrderId(id));
+
         return  "order_detail";
     }
 
@@ -349,6 +343,12 @@ public class OrderController extends BaseController{
         return new Result(true).data(enquiryCommodityses);
     }
 
-
+    /**
+     *
+     */
+    @RequestMapping(value = "/download/{id}")
+    public void exportEnquiryExcel(HttpServletResponse response, HttpServletRequest request, @PathVariable("id") Integer id){
+        orderFormService.exportOrderExcel(response, request, id);
+    }
 
 }

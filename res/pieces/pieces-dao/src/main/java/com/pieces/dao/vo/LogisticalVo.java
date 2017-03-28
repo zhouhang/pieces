@@ -1,6 +1,8 @@
 package com.pieces.dao.vo;
 
+import com.pieces.dao.enums.CarrierCodeEnum;
 import com.pieces.dao.model.Logistical;
+import org.elasticsearch.common.Strings;
 
 public class LogisticalVo extends Logistical{
 	//用户id
@@ -17,6 +19,10 @@ public class LogisticalVo extends Logistical{
 	private Integer addr;
 	//发货日期
 	private String shipDateStr;
+
+	// 新版属性
+	private String companyCodeName;
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -54,5 +60,12 @@ public class LogisticalVo extends Logistical{
 
 	public void setAgentId(Integer agentId) {
 		this.agentId = agentId;
+	}
+
+	public String getCompanyCodeName() {
+		if (!Strings.isNullOrEmpty(getCompanyCode())) {
+			companyCodeName = CarrierCodeEnum.findByValue(getCompanyCode());
+		}
+		return companyCodeName;
 	}
 }

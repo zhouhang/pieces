@@ -10,14 +10,18 @@ import com.pieces.dao.vo.OrderFormVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 
+import com.pieces.service.utils.ExcelParse;
 import com.pieces.tools.log.api.LogAuditing;
 import com.pieces.tools.utils.FileUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -236,5 +240,12 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
             e.printStackTrace();
         }
         return orderFormDao.findByParams(vo).size();
+    }
+
+    @Override
+    public void exportOrderExcel(HttpServletResponse response, HttpServletRequest request, Integer id) {
+        OrderFormVo vo = findVoById(id);
+        Workbook workbook = ExcelParse.exportOrderInfo(vo);
+        ExcelParse.returnExcel(response,request, workbook,"订单详情"+ id);
     }
 }

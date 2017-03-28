@@ -76,6 +76,9 @@ public class OrderController extends BaseController {
 	@Autowired
 	private PayRecordService payRecordService;
 
+	@Autowired
+	private LogisticalService logisticalService;
+
 	@RequestMapping(value = "/order/md5")
 	public String redictOrder(String commodityIds){
 		String md5 = EncryptUtil.getSHA1(commodityIds,"UTF-8");
@@ -318,6 +321,8 @@ public class OrderController extends BaseController {
 			modelMap.put("payRecord",payRecord);
 		}
         modelMap.put("orderForm", vo);
+		modelMap.put("logistical",logisticalService.findByOrderId(id));
+
         return "order_detail";
     }
 

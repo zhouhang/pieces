@@ -14,12 +14,6 @@
         </dd>
     </dl>
     <dl>
-        <dt><i class="fa fa-logistics"></i>物流</dt>
-        <dd>
-            <a href="/center/logistics/list"><i class="fa fa-li"></i>我的物流</a>
-        </dd>
-    </dl>
-    <dl>
         <dt><i class="fa fa-bill"></i>对账单</dt>
         <dd>
             <a href="/center/pay/record"><i class="fa fa-li"></i>支付记录</a>
@@ -56,12 +50,6 @@
         <dt><i class="fa fa-menu"></i>订单</dt>
         <dd>
             <a href="/center/order/agent"><i class="fa fa-li"></i>我的订单</a>
-        </dd>
-    </dl>
-    <dl>
-        <dt><i class="fa fa-logistics"></i>物流</dt>
-        <dd>
-            <a href="/center/logistics/agent/list"><i class="fa fa-li"></i>我的物流</a>
         </dd>
     </dl>
     <dl>

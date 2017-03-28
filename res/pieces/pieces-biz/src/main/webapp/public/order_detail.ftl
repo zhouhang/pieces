@@ -194,6 +194,56 @@
                             <#--</#if>-->
                         </#if>
                     </dl>
+                <#if logistical?exists>
+                    <#--配送方式 1快递 2自提 3货运部发货-->
+                    <dl class="row">
+                        <dt>物流信息</dt>
+                                <#if logistical.type = 1>
+                                    <dd>
+                                        <em>配送方式：</em>
+                                        <span>快递</span>
+                                    </dd>
+                                    <dd>
+                                        <em>快递单号：</em>
+                                        <span>${logistical.code!}<a href="http://www.kuaidi100.com/" target="_blank" class="c-blue">[查询]</a></span>
+                                    </dd>
+                                    <dd>
+                                        <em>快递公司：</em>
+                                        <span>${logistical.companyCodeName!} </span>
+                                    </dd>
+                                <#elseif logistical.type = 2>
+                                    <dd>
+                                        <em>配送方式：</em>
+                                        <span>自提</span>
+                                    </dd>
+                                    <dd>
+                                        <em>提货时间：</em>
+                                        <span>${logistical.receivingDate?date}</span>
+                                    </dd>
+                                    <dd>
+                                        <em>提货地点：</em>
+                                        <span>${logistical.pickUp}</span>
+                                    </dd>
+                                <#elseif logistical.type = 3>
+                                    <dd>
+                                        <em>配送方式：</em>
+                                        <span>货运部发货</span>
+                                    </dd>
+                                    <dd>
+                                        <em>预计到货时间：</em>
+                                        <span>${logistical.receivingDate?date}</span>
+                                    </dd>
+                                    <dd>
+                                        <em>司机姓名：</em>
+                                        <span>${logistical.driverName!}</span>
+                                    </dd>
+                                    <dd>
+                                        <em>联系电话：</em>
+                                        <span>${logistical.driverTel!}</span>
+                                    </dd>
+                                </#if>
+                        </dl>
+                </#if>
                 </div>
 
                 <div class="table">

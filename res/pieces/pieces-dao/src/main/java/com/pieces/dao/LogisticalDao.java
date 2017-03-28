@@ -8,8 +8,11 @@ import java.util.List;
 @AutoMapper
 public interface LogisticalDao extends ICommonDao<Logistical>{
 
-    public List<LogisticalVo> findByParams(LogisticalVo logisticalVo);
+    List<LogisticalVo> findByParams(LogisticalVo logisticalVo);
     
-    public List<LogisticalVo> findByUser(LogisticalVo logisticalVo);
+    List<LogisticalVo> findByUser(LogisticalVo logisticalVo);
+
+    // 根据订单ID 查询物流信息
+    LogisticalVo findByOrderId(Logistical logistical);
 
 }
