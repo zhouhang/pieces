@@ -25,4 +25,10 @@ public interface LogisticalService extends ICommonService<Logistical>{
      * @return
      */
     LogisticalVo findByOrderId(Integer orderId);
+
+    // 订阅第三方物流
+
+    // 接收第三方物流平台的回调信息
+
+    // 查询快递信息和轨迹(本地或者快递编号和公司直接查询)
 }
