@@ -39,7 +39,7 @@ import java.util.List;
  * 微信端订单功能
  */
 @Controller
-@RequestMapping("/h5/")
+@RequestMapping("/h5c/")
 public class H5OrderController {
 
     Logger logger = LoggerFactory.getLogger(H5OrderController.class);
