@@ -70,6 +70,9 @@ public class OrderFormVo extends OrderForm {
     // 代理商电话
     private String agentTel;
 
+    //商品个数
+    private Integer commodityNum;
+
 
     /**
      * 创建订单时候传递的参数
@@ -305,5 +308,16 @@ public class OrderFormVo extends OrderForm {
 
         this.user = userL;
         return param;
+    }
+
+    public Integer getCommodityNum() {
+        if (commodities != null) {
+            commodityNum=commodities.size();
+        }
+        return commodityNum;
+    }
+
+    public void setCommodityNum(Integer commodityNum) {
+        this.commodityNum = commodityNum;
     }
 }

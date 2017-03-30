@@ -248,4 +248,20 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
         Workbook workbook = ExcelParse.exportOrderInfo(vo);
         ExcelParse.returnExcel(response,request, workbook,"订单详情"+ id);
     }
+
+    @Override
+    public PageInfo<OrderFormVo> findOrderByUserId(Integer userId, Integer status, Integer pageNum, Integer pageSize) {
+        OrderFormVo vo = new OrderFormVo();
+        vo.setUserId(userId);
+        vo.setStatus(status);
+        return findOrderByVo(vo,pageNum,pageSize);
+    }
+
+    @Override
+    public PageInfo<OrderFormVo> findOrderByAgentId(Integer agentId, Integer status, Integer pageNum, Integer pageSize) {
+        OrderFormVo vo = new OrderFormVo();
+        vo.setAgentId(agentId);
+        vo.setStatus(status);
+        return findOrderByVo(vo,pageNum,pageSize);
+    }
 }
