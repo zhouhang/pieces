@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>订单-上工好药</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="bg-gray">
+
+<section class="ui-content">
+    <div class="ui-tab">
+        <ul class="cf">
+            <li class="curr"><a href="?id=1">待付款</a></li>
+            <li><a href="?id=2">待发货</a></li>
+            <li><a href="?id=0">待收货</a></li>
+        </ul>
+    </div>
+    <div class="ui-cnt">
+        <!-- 
+        <div class="ui-empty">
+            <p>没有代付款的订单！</p>
+            <div class="btm">
+                <a href="enquiry.html" class="ubtn ubtn-red"><i class="ico ico-camera"></i> 拍照询价</a>
+            </div>
+        </div> 
+        -->
+
+        <ul class="olist">
+            <li>
+                <a href="pay.html" class="ubtn ubtn-red pay">去支付</a>
+                <a href="order_detail.html">
+                    <div class="hd">
+                        <p><span>状态：</span><em>待支付</em></p>
+                        <p><span>总价：</span>¥180.00</p>
+                        <p><span>保证金：</span>¥100.00</p>
+                    </div>
+                    <div class="bd">
+                        <span>海马、天冬、天麻、党参、煅人中白、制马钱子、海马、天冬、天麻、党参、煅人中白、制马钱子</span>
+                        <em>共10个商品</em>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a href="pay.html" class="ubtn ubtn-red pay">去支付</a>
+                <a href="order_detail.html">
+                    <div class="hd">
+                        <p><span>状态：</span><em>待支付</em></p>
+                        <p><span>总价：</span>¥180.00</p>
+                        <p><span>保证金：</span>¥100.00</p>
+                    </div>
+                    <div class="bd">
+                        <span>海马、天冬、天麻、党参、煅人中白、制马钱子、海马、天冬、天麻、党参、煅人中白、制马钱子</span>
+                        <em>共10个商品</em>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+</section><!-- /ui-content -->
+
+<script src="assets/js/jquery191.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+!(function($) {
+    var _global = {
+        init: function() {
+        }
+    }
+
+    _global.init();
+})(window.Zepto || window.jQuery);
+</script>
+</body>
+</html>

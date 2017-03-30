@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>收货地址-上工好药</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="bg-gray">
+
+<section class="ui-content">
+    <form action="" id="myform">
+        <div class="ui-form">
+                <div class="item">
+                    <input type="text" class="ui-ipt" name="name" id="name" placeholder="收货人" value="何欢" autocomplete="off">
+                    <span class="error"></span>
+                </div>
+                <div class="item">
+                    <input type="tel" class="ui-ipt" name="mobile" id="mobile" placeholder="手机号" value="18915120058" autocomplete="off">
+                    <span class="error"></span>
+                </div>
+                <div class="item">
+                    <input type="text" class="ui-ipt" name="region" id="region" placeholder="省-市-区/县" value="湖北省武汉市洪山区" readonly="" autocomplete="off">
+                    <span class="error"></span>
+                    <i class="ico ico-arrow mid"></i>
+                </div>
+                <div class="item">
+                    <input type="text" class="ui-ipt" name="address" id="address" placeholder="详细地址" value="珞喻路727号光谷银座15楼" autocomplete="off">
+                    <span class="error"></span>
+                </div>
+        </div>
+
+        <div class="ui-button mt30">
+            <button type="button" id="submit" class="ubtn ubtn-red">确认</button>
+            <!-- <button type="button" id="delete" class="ubtn ubtn-white">删除地址</button> -->
+        </div>
+    </form>
+</section><!-- /ui-content -->
+
+
+<div class="pick-region">
+    <div class="ui-header">
+        <div class="title">地址选择</div>
+        <div class="back mid" id="back"></div>
+        <div class="tab">
+            <span>请选择</span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <div class="tabcont">
+        <div class="cont">
+            <ul>
+                <li data-id="1">北京</li>
+            </ul>
+            <ul>
+                <li data-id="2816">密云区</li>
+                <li data-id="7222">朝阳区</li>
+                <li data-id="2901">昌平区</li>
+                <li data-id="2953">平谷区</li>
+                <li data-id="2800">海淀区</li>
+                <li data-id="2801">西城区</li>
+                <li data-id="2802">东城区</li>
+                <li data-id="2803">崇文区</li>
+                <li data-id="2804">宣武区</li>
+                <li data-id="2805">丰台区</li>
+                <li data-id="2806">石景山区</li>
+                <li data-id="2807">门头沟</li>
+                <li data-id="2808">房山区</li>
+                <li data-id="2809">通州区</li>
+                <li data-id="3065">延庆县</li>
+                <li data-id="2810">大兴区</li>
+                <li data-id="2812">顺义区</li>
+                <li data-id="2814">怀柔区</li>
+            </ul>
+            <ul>
+                <li data-id="6667">城区</li>
+                <li data-id="2862">城区以外</li>
+            </ul>
+            <ul>
+                <li>镇</li>
+            </ul>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="assets/js/jquery191.js"></script>
+<script src="assets/js/layer.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+!(function($) {
+    var _global = {
+        init: function() {
+            this.region();
+            this.bindEvent();
+        },
+        bindEvent: function() {
+            var that = this,
+                enable = true;
+
+            // 确认
+            $('#submit').on('click', function() {
+                var pass = that.validator();
+                if (pass) {
+                    console.log('验证成功')
+                } else {
+                    console.log('验证失败')
+                }
+                return false;
+            })
+
+            // 删除地址
+            $('#delete').on('click', function() {
+                layer.open({
+                    content: '确定要删除吗？',
+                    btn: ['确定', '取消'],
+                    yes: function(index) {
+                        enable && $.ajax({
+                            url: '',
+                            // type: 'POST',
+                            success: function(res) {
+                                console.log(0)
+                                // layer.close(index);
+                            },
+                            complete: function() {
+                                enable = true;
+                            }
+                        })
+                        enable = false;
+                    }
+                });
+            })
+        },
+        validator: function() {
+            return this.checkName() && this.checkMobile() && this.checkRegion() && this.checkAddress();
+        },
+        checkName: function() {
+            var $el = $('#name'),
+                val = $el.val();
+            if (!val) {
+                $el.next().html('请输入收货人！').show();
+
+            } else {
+                $el.next().hide();
+                return true;
+            }
+            return false;
+        },
+        checkMobile: function() {
+            var $el = $('#mobile'),
+                val = $el.val();
+
+            if (!val) {
+                $el.next().html('请输入手机号码！').show();
+
+            } else if (!_YYY.verify.isMobile(val)) {
+                $el.next().html('请输入有效的手机号！').show();
+
+            } else {
+                $el.next().hide();
+                return true;
+            }
+            return false;
+        },
+        checkRegion: function() { 
+            var $el = $('#region'),
+                val = $el.val();
+            if (!val) {
+                $el.next().html('请选择地区！').show();
+
+            } else {
+                $el.next().hide();
+                return true;
+            }
+            return false;
+        },
+        checkAddress: function() {
+            var $el = $('#address'),
+                val = $el.val();
+
+            if (!val) {
+                $el.next().html('请输入详细地址！').show();
+
+            } else {
+                $el.next().hide();
+                return true;
+            }
+            return false;
+        },
+        region: function() {
+            var that = this,
+                $tab = $('.tab'),
+                $tabcont = $('.tabcont'),
+                $item = $tabcont.find('ul'),
+                $cont = $('.cont'),
+                choose = [];
+
+            var tab = function(idx) {
+                var distance = idx * $tabcont.width();
+                $item.css('position','absolute').eq(idx).css('position','relative');
+                $cont.css({
+                    '-webkit-transition':'all .3s ease',
+                    'transition':'all .3s ease',
+                    '-webkit-transform':'translate3d(-' + distance + 'px,0,0)',
+                    'transform':'translate3d(-' + distance + 'px,0,0)'
+                });
+            }
+
+            // 选择地区
+            $('#region').on('click', function() {
+                $('.pick-region').show();
+                $('#myform').hide();
+            })
+
+            // 返回
+            $('#back').on('click', function() {
+                $('.pick-region').hide();
+                $('#myform').show();
+            })
+
+            // tab
+            $tab.on('click', 'span', function() {
+                var idx = $(this).index();
+
+                $(this).html('请选择');
+                $tab.find('span').each(function(i) {
+                    i > idx && $(this).empty();
+                })
+                tab(idx);
+            })
+
+            // 城市级联
+            $tabcont.on('click', 'li', function() {
+                var idx = $(this).parent().index(),
+                    name = this.innerHTML,
+                    cid = $(this).data('id');
+                $.ajax({
+                    url: '',
+                    data: {cid: cid},
+                    success: function(result) {
+                        result = {
+                            data: [
+                                {id: '1', text: '武汉'},
+                                {id: '2', text: '杭州'}
+                            ]
+                        }
+                        $tab.find('span').eq(idx).html(name).next().html('请选择');
+                        that.toHtml(result.data, $item.eq(++idx));
+                        tab(idx);
+                    }
+                })
+            })
+        },
+        toHtml: function(data, $wrap) {
+            var model = [];
+            $.each(data, function(i, item) {
+                model.push('<li data-id="' , item.id ,'">', item.text, '</li>');
+            })
+            $wrap.html(model.join(''));
+        }
+    }
+
+    _global.init();
+})(window.Zepto || window.jQuery);
+</script>
+</body>
+</html>

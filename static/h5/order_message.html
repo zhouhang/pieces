@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>下单成功-上工好药</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body>
+
+<section class="ui-content">
+    <div class="ui-message">
+        <div class="ico ico-right"></div>
+        <h3 class="hd">下单成功</h3>
+        <div class="bd">订单号：201608101125001 需支付保证金：<em class="c-red">￥1900.00</em></div>
+        <div class="bd">请在 2017-08-10 前完成付款</div>
+    </div>
+    <div class="ui-button">
+        <a href="pay.html" class="ubtn ubtn-red" id="pay">立即支付</a>
+        <button type="button" class="ubtn ubtn-white" id="share"><i class="ico ico-share2"></i> 分享到朋友圈</button>
+    </div>
+</section><!-- /ui-content -->
+
+<script src="assets/js/jquery191.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+!(function($) {
+    var _global = {
+        init: function() {
+            _YYY.share.init('#share'); // 分享
+        }
+    }
+    _global.init();
+})(window.Zepto || window.jQuery);
+</script>
+</body>
+</html>

@@ -74,7 +74,7 @@ function gallery(weChatImagePreview) {
         if (weChatImagePreview) {
             return;
         }
-       !weChatImagePreview && $gallery.on('touchstart', '.close', function() {
+       !weChatImagePreview && $gallery.on('click', '.close', function() {
             $gallery.hide().find('.main').remove();
             lockscroll(false);
        });
@@ -214,6 +214,21 @@ var _YYY = {
             model.push('</div>');
             $('body').append(model.join(''));
         }
+    },
+
+    getParams: function() {
+        var ret = {},
+            params = window.location.search.replace(/^\?/,'').split('&'),
+            len = params.length, i = 0, s;
+
+        for (;i<len;i++) {
+            if (!params[i]) { 
+                continue; 
+            }
+            s = params[i].split('=');
+            ret[s[0]] = s[1];
+        }
+        return ret;
     }
 }
 

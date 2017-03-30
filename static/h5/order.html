@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>下单-上工好药</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/app.css?id=2k2">
+</head>
+<body class="bg-gray">
+
+<section class="ui-content">
+    <div class="order">
+        <div class="item">
+            <input type="hidden" name="customerID" id="customerID" value="">
+            <span class="error"></span>
+            <strong class="t1">选择终端客户</strong>
+            <a href="customer.html?value=" class="ico ico-arrow mid"></a>
+        </div>
+        <div class="item">
+            <strong class="t1">王彬  18801285391</strong>
+            <span class="t2">湖北省武汉市洪山区城区珞瑜路光谷银座15楼</span>
+            <input type="hidden" name="regionID" id="regionID" value="">
+            <span class="error"></span>
+            <a href="consignee.html?value=1" class="ico ico-arrow mid"></a>
+        </div>
+        <div class="goods">
+            <ul>
+                <li>
+                    <div class="hd">黄芪</div>
+                    <div class="bd">圆片、厚2-3mm、直径0.6cm-1.8cm以上、无空心片、异形片、黑片 ...</div>
+                    <div class="price">
+                        <span>销售价:<em>￥90.00</em></span>
+                        <span>开票价:￥95.00</span>
+                    </div>
+                    <div class="pic rs-pic">
+                        <img src="uploads/p1.jpg" />
+                    </div>
+                </li>
+            </ul>
+            <div class="num">
+                <div class="fr">
+                    <input type="tel" name="number" id="number" class="ipt" value="1" />公斤
+                    <span class="error"></span>
+                </div>
+                <div>数量：</div>
+            </div>
+        </div>
+        <div class="item note">
+            订单备注
+            <textarea name="" cols="30" rows="10" class="ipt mul" name="note"></textarea>
+            <span class="error"></span>
+        </div>
+        <div class="item">
+            <strong class="t1">选择发票</strong>
+            <input type="hidden" name="invoiceID" id="invoiceID" value="">
+            <span class="error"></span>
+            <a href="invoice.html?value=1" class="ico ico-arrow mid"></a>
+        </div>
+
+        <div class="summary">
+            <div class="money">
+                <em class="fr">¥190.00</em>开票金额
+            </div>
+            <div class="li">
+                需支付保证金：<em>¥90.00</em>
+            </div>
+        </div>
+    </div>
+    <div class="ui-button mt20">
+        <button type="button" id="submit" class="ubtn ubtn-red">确认订购</button>
+    </div>
+
+</section><!-- /ui-content -->
+
+<script src="assets/js/jquery191.js"></script>
+<script src="assets/js/layer.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+!(function($) {
+    var _global = {
+        init: function() {
+            // this.getLocalstorage();
+            // this.noCustomer();
+            // this.noConsignee();
+            this.bindEvent();
+        },
+        getLocalstorage: function() {
+            $('#customerID').val(_YYY.localstorage.get('customerID'));
+            $('#customer').val(_YYY.localstorage.get('customer'));
+            $('#invoiceID').val(_YYY.localstorage.get('invoiceID'));
+            $('#invoice').val(_YYY.localstorage.get('invoice'));
+        },
+        noCustomer: function() {
+            layer.open({
+                className: 'layer-custom',
+                content: '<div class="bd"><p>您还没有绑定终端客户，暂时无法进行下单。如果您已提交终端客户资料，请联系客服人员帮您进行绑定。</p><p><a href="tel:客服电话：0558-5120088" class="c-blue">客服电话：0558-5120088。</a></p></div>',
+                btn: ['确定']
+            })
+        },
+        noConsignee: function() {
+            layer.open({
+                className: 'layer-custom',
+                content: '<div class="bd">您还没有收货地址，是否立即新建一个？</div>',
+                btn: ['确定', '取消'],
+                yes: function() {
+                    window.location.href = 'consignee_add.html';
+                }
+            })
+        },
+        bindEvent: function() {
+            var that = this,
+                enable = true;
+
+            // 确认订购
+            $('#submit').on('click', function() {
+                enable && that.check() && $.ajax({
+                    url: '',
+                    // type: 'POST',
+                    success: function(res) {
+                        console.log(0)
+                        window.location.href = 'order_message.html';
+                        // layer.close(index);
+                    },
+                    complete: function() {
+                        enable = true;
+                    }
+                })
+                enable = false;
+            })
+        },
+        check: function() {
+            return this.checkCustomer() 
+            && this.checkConsignee() 
+            && this.checkNumber()
+            && this.checkInvoice()
+        },
+        checkCustomer: function() {
+            var $el = $('#customerID'),
+                val = $el.val();
+            if (!val) {
+                $el.next().html('请选择终端客户！').show();
+
+            } else {
+                $el.next().hide();
+                return true;
+            }
+            window.scrollTo(0, 0);
+            return false;
+        },
+        checkConsignee: function() {
+            var $el = $('#regionID'),
+                val = $el.val();
+            if (!val) {
+                $el.next().html('请选择收货地址！').show();
+
+            } else {
+                $el.next().hide();
+                return true;
+            }
+            window.scrollTo(0, 60);
+            return false;
+        },
+        checkNumber: function() {
+            var $el = $('#number'),
+                val = $el.val();
+            if (!val) {
+                $el.next().html('请输入数量！').show();
+
+            } else if (!/^\d*$/.test(val)) {
+                $el.next().html('数量只能输入正整数！').show();
+
+            } else {
+                $el.next().hide();
+                return true;
+            }
+            return false;
+        },
+        checkInvoice: function() {
+            var $el = $('#invoiceID'),
+                val = $el.val();
+            if (!val) {
+                $el.next().html('请选择发票！').show();
+
+            } else {
+                $el.next().hide();
+                return true;
+            }
+            return false;
+        }
+    }
+
+    _global.init();
+})(window.Zepto || window.jQuery);
+</script>
+</body>
+</html>

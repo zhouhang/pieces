@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>发票选择-上工好药</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="bg-gray">
+
+<section class="ui-content">
+    <div class="floors">
+        <div class="hd">发票</div>
+        <div class="bd">
+            <input name="invoice" value="1" type="radio" class="ico ico-rad mid cbx" checked="" />
+            <em>增值税专用发票</em>
+        </div>
+        <div class="bd">
+            <input name="invoice" value="2" type="radio" class="ico ico-rad mid cbx" />
+            <em>增值税普通发票</em>
+        </div>
+        <div class="bd">
+            <input name="invoice" value="3" type="radio" class="ico ico-rad mid cbx" />
+            <em>不需要发票</em>
+        </div>
+    </div>
+</section><!-- /ui-content -->
+
+
+
+<script src="assets/js/jquery191.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+!(function($) {
+    var _global = {
+        init: function() {
+            this.bindEvent();
+        },
+        bindEvent: function() {
+            var params = _YYY.getParams();
+            $('.cbx').each(function() {
+                if (this.value == params.value) {
+                    this.checked = true;
+                }
+            })
+
+            $('.cbx').on('click', function() {
+                _YYY.localstorage.set('invoice', $(this).next().html()); // 保存发票
+                _YYY.localstorage.set('invoiceID', this.value); // 保存发票ID
+                window.location.href = 'order.html?id=1&invoice=' + this.id;
+            })
+        }
+    }
+
+    _global.init();
+})(window.Zepto || window.jQuery);
+</script>
+</body>
+</html>
