@@ -63,13 +63,23 @@
 
                             <div class="group">
                                 <div class="txt">
-                                    <i>*</i>联系人手机号码：
+                                    联系人手机号码：
                                 </div>
                                 <div class="cnt">
                                     <input type="text" class="ipt" value="${(user.contactMobile)!}" autocomplete="off" name="contactMobile" id="contactMobile" placeholder="">
                                 </div>
                             </div>
-
+                        <#if user.type==1>
+                            <div class="group">
+                                <div class="txt">
+                                    <i>*</i>客户类型：
+                                </div>
+                                <div class="cnt cbxs">
+                                    <label><input type="radio" class="cbx" name="type" value="1" <#if userType =1>checked</#if>>终端客户</label>
+                                    <label><input type="radio" class="cbx" name="type" value="2" <#if userType =2>checked</#if>>代理商</label>
+                                </div>
+                            </div>
+                        </#if>
                         </div>
                     </div>
 

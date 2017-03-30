@@ -110,7 +110,12 @@
 							<td>${user.serviceName!}</td>
 							<td>
 								<@shiro.hasPermission name="customer:edit">
-									<a href="user/info/${user.id}">修改</a>
+                                    <a href="user/info/${user.id}">修改</a>
+									<#if !user.isDel>
+                                        <a href="user/disable?id=${user.id}">禁用</a>
+									<#else>
+                                        <a href="user/enable?id=${user.id}">启用</a>
+									</#if>
 								</@shiro.hasPermission>
 							</td>
 						</tr>

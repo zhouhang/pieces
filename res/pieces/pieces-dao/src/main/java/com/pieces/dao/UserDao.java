@@ -17,8 +17,6 @@ public interface UserDao extends ICommonDao<User>{
 
 	User findByUserName(String userName);
 
-	List<User> findByCondition(UserVo userVo);
-
 	List<UserVo> findVoByCondition(UserVo userVo);
 
 	List<UserVo> findProxyUser(UserVo userVo);

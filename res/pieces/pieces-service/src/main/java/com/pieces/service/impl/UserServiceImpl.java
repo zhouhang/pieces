@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.github.pagehelper.PageHelper;
+import com.google.common.base.Strings;
 import com.pieces.dao.enums.CertifyStatusEnum;
 import com.pieces.dao.model.CertifyRecord;
 import com.pieces.service.CartsCommodityService;
@@ -101,6 +102,11 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         if (StringUtils.isNotBlank(user.getPassword())) {
             createPwdAndSaltMd5(user);
         }
+
+        if(user.getType()==2){//代理商(默认认证通过)
+            user.setCertifyStatus(CertifyStatusEnum.CERTIFY_SUCESS.getValue());
+        }
+
         user.setUpdateTime(new Date());
         return this.update(user);
     }
@@ -108,10 +114,25 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 
     @Override
     public boolean ifExistMobile(String contactMobile) {
+        if (Strings.isNullOrEmpty(contactMobile)) return false;
         User user = new User();
         user.setContactMobile(contactMobile);
         List<User> users = userDao.findUserByCondition(user);
         return (users != null && users.size() != 0);
+    }
+
+    @Override
+    public boolean ifAutoMobile(String contactMobile) {
+        Boolean flag = true;
+        User user = new User();
+        user.setContactMobile(contactMobile);
+        List<User> users = userDao.findUserByCondition(user);
+        if (users == null || users.size() == 0) {
+            flag = true;
+        } else if (users.get(0).getIsDel()){
+            flag = false;
+        }
+        return flag;
     }
 
     @Override
@@ -131,7 +152,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
     @Override
     public PageInfo<User> findByCondition(UserVo userVo, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
-        List<User> list = userDao.findByCondition(userVo);
+        List<User> list = userDao.findUserByCondition(userVo);
         PageInfo page = new PageInfo(list);
         return page;
     }
@@ -312,6 +333,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
     public User findByOpenId(String openId) {
         User param = new User();
         param.setOpenId(openId);
+        param.setIsDel(false);
         List<User> result = userDao.findUserByCondition(param);
         return  result!= null && result.size()>0?result.get(0):null;
     }
@@ -351,6 +373,24 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         UserVo vo = new UserVo();
         vo.setStartDate(DateFormatUtils.format(new Date(),"yyyy-MM-dd"));
         return userDao.findVoByCondition(vo).size();
+    }
+
+    @Override
+    @Transactional
+    public void disable(Integer userId) {
+        User user = new User();
+        user.setId(userId);
+        user.setIsDel(true);
+        updateUser(user);
+    }
+
+    @Override
+    @Transactional
+    public void enable(Integer userId) {
+        User user = new User();
+        user.setId(userId);
+        user.setIsDel(false);
+        updateUser(user);
     }
 }
 

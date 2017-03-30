@@ -198,6 +198,10 @@ public class CartController {
                             return new Result(false).info("验证码错误");
                      }
 
+                     if (!userService.ifAutoMobile(mobile)) {
+                            return new Result(false).info("手机号已被使用");
+                     }
+
                      if(!userService.ifExistMobile(mobile)){
                             user=new User();
                             user.setContactName(username);

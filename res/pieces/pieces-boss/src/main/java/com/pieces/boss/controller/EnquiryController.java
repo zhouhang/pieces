@@ -171,6 +171,8 @@ public class EnquiryController extends BaseController{
                                      UserVo userVo){
         pageNum=pageNum==null?1:pageNum;
         pageSize=pageSize==null?10:pageSize;
+        // 删除的客户不显示
+        userVo.setIsDel(false);
         PageInfo<UserVo> customerPage =  userService.findVoByCondition(userVo,pageNum,pageSize);
         model.put("customerParams", Reflection.serialize(userVo));
         model.put("customerPage",customerPage);

@@ -99,14 +99,17 @@ public class WeChatController {
             if (Strings.isNullOrEmpty(sessionCode) || !code.equals(sessionCode)) {
                 // 验证码错误.
                 return new Result(false).info("验证码错误");
+                // 判断手机号存在时用户是否被禁用
+            } else if (!userService.ifAutoMobile(anonEnquiryVo.getContacts())) {
+                return new Result(false).info("手机号已被使用");
             } else {
-                WxMpUser wxUser = (WxMpUser)httpSession.getAttribute("wxMpUser");
-                user = userService.createWxUser(wxUser,anonEnquiryVo.getContacts(),anonEnquiryVo.getPhone());
+                    WxMpUser wxUser = (WxMpUser)httpSession.getAttribute("wxMpUser");
+                    user = userService.createWxUser(wxUser,anonEnquiryVo.getContacts(),anonEnquiryVo.getPhone());
 
-                Subject subject = SecurityUtils.getSubject();
-                BizToken token = new BizToken(user.getUserName(), user.getPassword(), false,null, "");
-                token.setWechat(true);
-                userService.login(subject, token);
+                    Subject subject = SecurityUtils.getSubject();
+                    BizToken token = new BizToken(user.getUserName(), user.getPassword(), false,null, "");
+                    token.setWechat(true);
+                    userService.login(subject, token);
             }
 
         }

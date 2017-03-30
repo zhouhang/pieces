@@ -32,6 +32,13 @@ public interface UserService extends ICommonService<User>{
 	int updateUserByCondition(User user);
 	
 	boolean ifExistMobile(String contactMobile);
+
+	/**
+	 * 检查手机能否被用于自动绑定
+	 * @param contactMobile
+	 * @return
+     */
+	boolean ifAutoMobile(String contactMobile);
 	
 	boolean checkUserName(String userName);
 
@@ -110,5 +117,17 @@ public interface UserService extends ICommonService<User>{
 	 * @return
      */
 	Integer countNewUser();
+
+	/**
+	 * 禁用用户
+	 * @param userId
+     */
+	void disable(Integer userId);
+
+	/**
+	 * 启用用户
+	 * @param userId
+     */
+	void enable(Integer userId);
 
 }

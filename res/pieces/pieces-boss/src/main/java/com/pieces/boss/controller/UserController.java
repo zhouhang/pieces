@@ -52,12 +52,7 @@ public class UserController extends  BaseController{
 	@Autowired
 	private SmsService smsService;
 	@Autowired
-	private AreaService areaService;
-
-	@Autowired
 	private UserBindService userBindService;
-
-
 	@Autowired
 	UserCertificationService userCertificationService;
 
@@ -101,7 +96,7 @@ public class UserController extends  BaseController{
 		model.put("userPage",userPage);
 		model.put("userParams", Reflection.serialize(userVo));
 		model.put("advices",advices);
-		return "customers";
+ 		return "customers";
 	}
 
 	/**
@@ -192,6 +187,13 @@ public class UserController extends  BaseController{
 		}*/
 		//没有用户ID为新用户
 		if(user.getId()==null){
+			// 用户类型为代理商时手机号为必填
+			if (Strings.isNullOrEmpty(user.getContactMobile()) && user.getType()==2) {
+				advices="用户类型为代理商时手机号必填";
+				WebUtil.print(response,new Result(false).info(advices));
+				return;
+			}
+
 			if(userService.ifExistMobile(user.getContactMobile())){
 				advices="手机号存在";
 				WebUtil.print(response,new Result(false).info(advices));
@@ -216,6 +218,12 @@ public class UserController extends  BaseController{
 			}
 		}else{
 			User oldUser=userService.findById(user.getId());
+			// 用户类型为代理商时手机号为必填
+			if (Strings.isNullOrEmpty(user.getContactMobile()) && user.getType()==2) {
+				advices="用户类型为代理商时手机号必填";
+				WebUtil.print(response,new Result(false).info(advices));
+				return;
+			}
 			if(!(oldUser.getContactMobile().equals(user.getContactMobile()))&&userService.ifExistMobile(user.getContactMobile())){
 				advices="修改手机号存在";
 				WebUtil.print(response,new Result(false).info(advices));
@@ -327,6 +335,7 @@ public class UserController extends  BaseController{
         UserVo userVo=new UserVo();
 		userVo.setContactName(name);
 		userVo.setType(2);
+		userVo.setIsDel(false); // 搜索未禁用的代理商
 		PageInfo<User> userPage = userService.findByCondition(userVo,1,10);
 		return new Result(true).data(userPage);
 	}
@@ -355,9 +364,31 @@ public class UserController extends  BaseController{
 		return new Result(true).data("保存成功");
 	}
 
+	/**
+	 * 禁用用户
+	 * @param id
+	 * @return
+     */
+	@RequiresPermissions(value = "customer:edit")
+	@RequestMapping(value = "/disable" ,method= RequestMethod.POST)
+	@ResponseBody
+	@BizLog(type = LogConstant.user, desc = "禁用用户")
+	public Result disable(Integer id) {
+		return null;
+	}
 
 
-
-
+	/**
+	 * 启用用户
+	 * @param id
+	 * @return
+	 */
+	@RequiresPermissions(value = "customer:edit")
+	@RequestMapping(value = "/enable" ,method= RequestMethod.POST)
+	@ResponseBody
+	@BizLog(type = LogConstant.user, desc = "禁用用户")
+	public Result enable(Integer id) {
+		return null;
+	}
 
 }
