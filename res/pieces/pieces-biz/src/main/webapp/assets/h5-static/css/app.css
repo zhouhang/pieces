@@ -305,6 +305,7 @@ body.noscroll{overflow:hidden;}
 .floors .bd{position:relative;padding:16px 13px 16px 44px;background:#fff;border-top:1px solid #e7e7e7;}
 .floors .cbx{left:0;}
 .floors .edit{right:0;}
+.floors label{display:block;}
 .floors strong{display:block;font-size:1.6rem;font-weight:400;}
 .floors span{display:block;padding:6px 28px 0 0;font-size:1.2rem;color:#999;}
 .floors em{color:#999;}
