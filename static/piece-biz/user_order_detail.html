@@ -205,7 +205,7 @@
                             </dd>
                             <dd>
                                 <em>快递单号：</em>
-                                <span>211377404886 <a href="#" class="c-blue">[查询]</a></span>
+                                <span>211377404886 <a href="javascript:;" class="c-blue" id="jkd">[查询]</a></span>
                             </dd>
                             <dd>
                                 <em>快递公司：</em>
@@ -398,6 +398,7 @@
     			init: function() {
                     this.remove();
                     this.navLight();
+                    this.kd();
     			},
                 // 取消订单
                 remove: function() {
@@ -411,6 +412,28 @@
                 // 导航高亮
                 navLight: function() {
                     $('.side dl:eq(1)').addClass('expand').find('a').addClass('curr');
+                },
+                kd: function() {
+                    var toHtml = function(data) {
+                        var model = [];
+                        $.each(data, function(i, item) {
+                            model.push('<li><div class="date">', item.AcceptTime, '</div><div class="trace">', item.AcceptStation, '</div></li>');
+                        })
+                        model.push('</sul>')
+                        model.unshift('<ul>')
+                        $('.express_box').html(model.join(''));
+                    }
+                    $('#jkd').on('click', function() {
+                        $.ajax({
+                            url: 'json/KdApiSearchDemo.php',
+                            cache: false,
+                            dataType: 'json',
+                            success: function(res) {
+                                console.log(res)
+                                toHtml(res.Traces);
+                            }
+                        })
+                    })
                 }
     		}
     	}
