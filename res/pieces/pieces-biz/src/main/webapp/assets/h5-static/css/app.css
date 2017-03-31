@@ -277,18 +277,19 @@ body.noscroll{overflow:hidden;}
 
 /* goods */
 .goods{margin-bottom:10px;padding:0 13px;background:#fff;}
-.goods li{position:relative;min-height:112px;padding:20px 0 20px 23%;font-size:1.2rem;border-bottom:1px solid #e7e7e7;}
-.goods .hd{padding-left:20px;font-size:1.6rem;}
-.goods .bd{height:46px;padding:5px 0 9px 20px;color:#aaa;overflow:hidden;}
-.goods .price{padding-left:20px;white-space:nowrap;}
+.goods li{position:relative;min-height:112px;padding:20px 0 20px 100px;font-size:1.2rem;border-top:1px solid #e7e7e7;}
+.goods li:first-child{border-top:0;}
+.goods .hd{font-size:1.6rem;}
+.goods .bd{height:32px;margin:5px 0 9px;color:#aaa;overflow:hidden;}
+.goods .price{white-space:nowrap;}
 .goods .price span{margin-right:6px;}
 .goods .price em{color:#c3272b;}
-.goods .pic{position:absolute;top:20px;left:0;width:23%;}
+.goods .pic{position:absolute;top:20px;left:0;width:80px;}
 .goods .ft{padding:15px 13px;text-align:right;}
 .goods .ft em{margin:0 3px 0 6px;color:#c3272b;}
-.goods .num{line-height:70px;padding:0px 13px;}
+.goods .num{line-height:40px;margin:20px 0 0 -100px;}
 .goods .num .fr{position:relative;}
-.goods .ipt{width:200px;margin-right:10px;border:1px solid #e7e7e7;border-radius:5px;}
+.goods .ipt{width:160px;margin-right:10px;border:1px solid #e7e7e7;border-radius:5px;}
 .summary{line-height:56px;padding:0 13px;background:#fff;}
 .summary em{color:#c3272b;}
 .summary .li{text-align:right;border-top:1px solid #e7e7e7;}
