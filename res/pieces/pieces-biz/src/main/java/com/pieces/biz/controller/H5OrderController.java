@@ -69,6 +69,9 @@ public class H5OrderController {
     @Autowired
     PayRecordService payRecordService;
 
+    @Autowired
+    AccountBillService accountBillService;
+
 
     @RequestMapping(value ="order/list",method = RequestMethod.GET)
     public String orderList(Integer status,ModelMap modelMap) {
@@ -173,6 +176,31 @@ public class H5OrderController {
         return new Result(true).info("支付信息提交成功!");
     }
 
+    /**
+     * 提交帐单
+     * @param billtime
+     * @param orderId
+     * @return
+     */
+    @RequestMapping(value = "/bill/create")
+    @ResponseBody
+    public Result bill(Integer billtime,
+                       Integer orderId){
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        AccountBill accountBill = new AccountBill();
+        accountBill.setUserId(user.getId());
+
+        accountBill.setOrderId(orderId);
+        accountBill.setBillTime(billtime);
+        accountBillService.createBill(accountBill);
+        // 账单提交成功后通知管理员审核
+        SimpleDateFormat time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SpringUtil.getApplicationContext().
+                publishEvent(new NotifyEvent(NotifyTemplateEnum.account_bill.getTitle(String.valueOf(accountBill.getId())),
+                        NotifyTemplateEnum.account_bill.getContent(user.getContactName(),time.format(new Date())),NotifyTemplateEnum.account_bill.getType(),accountBill.getId()));
+
+        return new Result(true).info("账单提交成功!");
+    }
 
 
 

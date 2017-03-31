@@ -36,7 +36,7 @@
                 <div class="bd">${commodity.spec}${commodity.level}</div>
                 <div class="price">
                    <#if userType==2>
-                    <span>销售价:<em>￥<#if commodity.guidePrice??>${(commodity.guidePrice?default(0))?string .currency}</#if></em></span>
+                    <span>销售价:<em><#if commodity.guidePrice??>${(commodity.guidePrice?default(0))?string .currency}</#if></em></span>
                    </#if>
                     <span>开票价:<#if commodity.price??>${(commodity.price?default(0))?string .currency}</#if></span>
                 </div>

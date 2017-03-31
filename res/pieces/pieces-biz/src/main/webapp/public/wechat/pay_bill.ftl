@@ -8,9 +8,6 @@
 
 <section class="ui-content">
     <form action="" id="myform" method="post">
-        <input type="hidden" name="orderId" value="${vo.id!}">
-        <input type="hidden" name="userId" value="${vo.userId!}">
-        <input type="hidden" name="agentId" value="${vo.agentId!}">
     <div class="floors-info">
         <p><span>应付金额：</span><em>&yen;${vo.deposit!}</em></p>
         <p><span>订单号：</span>${vo.code!}</p>
@@ -21,13 +18,13 @@
         <div class="hd">账期时间</div>
         <div class="bd">
             <label>
-                <input name="billtime"  type="radio" class="ico ico-rad mid cbx" checked="" />
+                <input name="billtime"  type="radio" value="1" class="ico ico-rad mid cbx" checked="" />
                 <em>1个月</em>
             </label>
         </div>
         <div class="bd">
             <label>
-                <input name="billtime"  type="radio" class="ico ico-rad mid cbx" />
+                <input name="billtime"  type="radio" value="3" class="ico ico-rad mid cbx" />
                 <em>3个月</em>
             </label>
         </div>
@@ -52,12 +49,18 @@
 
             // 提交
             $('#submit').on('click', function() {
+                var billtime=$('input:radio[name="billtime"]:checked').val();
                 enable && $.ajax({
-                    url: '',
-                    // type: 'POST',
+                    url: '/h5c/bill/create',
+                    type: 'POST',
+                    data:{orderId:${vo.id!},billtime:billtime},
                     success: function(res) {
-                        console.log(0)
-                        // layer.close(index);
+                        if(res.status=="y") {
+                            location.href = "/h5c/pay/success"
+                        }
+                        else{
+                            popover(res.info);
+                        }
                     },
                     complete: function() {
                         enable = true;
