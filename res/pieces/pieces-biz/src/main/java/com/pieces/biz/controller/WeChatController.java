@@ -101,7 +101,7 @@ public class WeChatController {
                 return new Result(false).info("验证码错误");
                 // 判断手机号存在时用户是否被禁用
             } else if (!userService.ifAutoMobile(anonEnquiryVo.getContacts())) {
-                return new Result(false).info("手机号已被使用");
+                return new Result(false).info("该手机号已被禁用，如有疑问，请联系客服。");
             } else {
                     WxMpUser wxUser = (WxMpUser)httpSession.getAttribute("wxMpUser");
                     user = userService.createWxUser(wxUser,anonEnquiryVo.getContacts(),anonEnquiryVo.getPhone());

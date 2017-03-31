@@ -12,7 +12,7 @@ ADD COLUMN `mem_id` INT NOT NULL COMMENT '操作员Id' AFTER `company_code`;
 ALTER TABLE `pieces`.`user`
 CHANGE COLUMN `contact_mobile` `contact_mobile` VARCHAR(11) NULL COMMENT '联系人手机' ,
 DROP INDEX `phone` ;
--- 更新客户认证信息
+-- 更新客户认证信息20170330
 update user_certification set company = '东营市医药公司广饶分公司' where company='东营广饶';
 update user_certification set company = '广饶县稻庄镇卫生院' where company='广饶稻庄';
 update user_certification set company = '广饶县广饶街道社区卫生服务中心' where company='广饶服务中心';

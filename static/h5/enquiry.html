@@ -22,7 +22,7 @@
         </div>
         <div class="ui-upload thumb">
             <span class="ui-file" id="upfile">
-                <input type="file" name="file" accept="image/gif,image/jpeg,image/png" class="file" />
+                <input type="file" name="file" accept="image/gif,image/jpeg,image/png" class="file hide" />
             </span>
         </div>
     </div>
@@ -58,18 +58,120 @@
 
 </section><!-- /ui-content -->
 
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script src="assets/js/jquery191.js"></script>
 <script src="assets/js/lrz.bundle.js"></script>
 <script src="assets/js/layer.js"></script>
 <script src="assets/js/app.js"></script>
 <script>
 !(function($) {
+
+    // url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx32d15620e33ede7c&secret=63fbb2d0ecbbb8c0694c79398a829d0a';
+    // 
+    // 
+    // {"access_token":"pdx4_OzdK101vREelDsiaKRZaIjVLhCaWxxIfYwYIZsTArhKSfG54hnTL3K21K1sPdoTT4qftMTT1DlDeK7_zy9c-51k9YSoOIqJXoRI3ty6TkMeA6jkGekUb1g3zT7rNMYaAIAAZL","expires_in":7200}
+    // https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=Kc-JWljHEzyB87S18fpUvm0oLhzYvV8n_mxUbAOyzD1HvwU13uZiRuKJ6_OYcg1C1XTPOKYTZ-x6_SXk1ggMzJkF9RevhXPM1AgyIIwxxGgBUHhAAAHAN&type=jsapi
+    // 
+    // {"errcode":0,"errmsg":"ok","ticket":"kgt8ON7yVITDhtdwci0qecSHOV2WpgOm3UCRjv5mE9ywJ9TyI_ka80NTjfWIXLzWBUjd9OtBRAO_rJ8dSszYFw","expires_in":7200}
+    // 
+    // jsapi_ticket=kgt8ON7yVITDhtdwci0qecSHOV2WpgOm3UCRjv5mE9ywJ9TyI_ka80NTjfWIXLzWBUjd9OtBRAO_rJ8dSszYFw&noncestr=Wm3WZYTPz0wzccnW&timestamp=1490924849&url=http://192.168.1.44/yaocai/pieces/static/h5/enquiry.html
+    wx.config({
+        debug: true,
+        appId: 'wx32d15620e33ede7c',
+        timestamp: '1490924849',
+        nonceStr: 'Wm3WZYTPz0wzccnW',
+        signature: 'd93bba8b49d59582e75a4343e6822f900b32d00b',
+        jsApiList: [
+            'chooseImage',
+            'previewImage',
+            'uploadImage'
+        ]
+    });
+
     var _global = {
         init: function() {
             this.help();
-            this.upfile();
+            this.camera();
             this.bindEvent();
             gallery(true); // 开启图片预览
+        },
+        camera: function() {
+            var that = this,
+                $body = $('body'),
+                $upfile = $('#upfile'),
+                $picNumber = $('#picNumber'),
+                idx = 0,
+                number = 0, // 已上传图片数量
+                maxSize = 9, // 最大上传图片数量
+                img = {};
+
+            var reset = function() {
+                $upfile.show().html('<input type="file" name="file" accept="image/gif,image/jpeg,image/png" class="file" />');
+            }
+            var showLader = function() {
+                $upfile.html('<i class="loader">上传中...</i>');
+            }
+
+            $upfile.on('click', function() {
+                $body.addClass('noscroll');
+                layer.open({
+                    className: 'layer-file',
+                    content: '<div class="bd"><p class="camera">拍摄</p><p calss="photo">从相册选择</p></div>',
+                    end: function() {
+                        $body.removeClass('noscroll');
+                    }
+                })
+                return false;
+            })
+            // 拍照
+            $body.on('click', '.camera', function() {
+                wx.chooseImage({
+                    // count: 1, // 默认9
+                    // sizeType: 'compressed', // 可以指定是原图还是压缩图，默认二者都有
+                    sourceType: ['album'], // 可以指定来源是相册还是相机，默认二者都有
+                    success: function (res) {
+                        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                        wx.uploadImage({
+                            localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
+                            isShowProgressTips: 1, // 默认为1，显示进度提示
+                            success: function (res) {
+                                if (number >= maxSize) {
+                                    $upfile.empty('').hide();
+                                } else if (result.status == '1') {
+                                    reset();
+                                    var model = [];
+                                    img['img_' + (idx++)] = result.url;
+                                    model.push('<span class="ui-file">');
+                                    model.push('<img src="' , localIds , '" data-src="' , localIds , '" />');
+                                    model.push('<i class="del" id="img_' , idx , '"></i>');
+                                    model.push('<span');
+                                    $upfile.before(model.join(''));
+                                    $picNumber.html((++ number) + '/' + maxSize);
+                                    number >= maxSize && $upfile.empty('').hide();
+                                } else {
+                                    popover('上传图片失败，请刷新页面重试！');
+                                }
+
+                                // res.serverId; // 返回图片的服务器端ID，图片有效期3天，需要下载到本地
+                            },
+                            fail: function (error) {
+                                picPath = '';
+                                localIds = '';
+                                alert(Json.stringify(error));
+                            }
+                        });
+                    }
+                });
+            })
+
+            // 删除图片
+            $('.ui-upload').on('click', '.del', function() {
+                delete img['img_' + this.id];
+                $picNumber.html((-- number) + '/' + maxSize);
+                $(this).parent().remove();
+                reset();
+                return false;
+            })
         },
         help: function() {
             $('.help').on('click', function() {
