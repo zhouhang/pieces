@@ -158,6 +158,9 @@ public class EnquiryCommoditys  implements Serializable {
 	}
 
 	public Double getPrice() {
+		if (price == null) {
+			price = myPrice;
+		}
 		return price;
 	}
 

@@ -200,6 +200,7 @@ public class OrderController extends BaseController {
 			oc.setLevel(ec.getLevel());
 			oc.setOriginOf(ec.getOrigin());
 			oc.setAmount(enquiryCommoditys.getAmount());
+			oc.setCommodityId(ec.getCommodityId());
 			if (user.getType()==1) {
 				oc.setGuidePrice(ec.getMyPrice());
 				oc.setPrice(ec.getMyPrice());

@@ -47,7 +47,9 @@ public class AreaServiceImpl extends AbsCommonService<Area> implements AreaServi
         return areaDao;
     }
 
-
-
-
+    @Override
+    public String getFullAdd(Integer areaId) {
+        Area area = findParentsById(areaId);
+        return area.getProvince() + area.getCity() + area.getAreaname();
+    }
 }

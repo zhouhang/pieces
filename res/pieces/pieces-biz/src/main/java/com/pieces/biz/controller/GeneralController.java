@@ -131,7 +131,7 @@ public class GeneralController extends BaseController {
             areaList = areaService.findByParent(parentId);
         }
 
-        String result = GsonUtil.toJsonInclude(areaList, "id", "areaname");
+        String result = GsonUtil.toJsonInclude(areaList, "id", "areaname","position");
         WebUtil.printJson(response, result);
     }
 

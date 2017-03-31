@@ -40,4 +40,5 @@ public interface ShippingAddressService extends ICommonService<ShippingAddress>{
      * @return
      */
     ShippingAddressVo getAddressById(Integer addressId,Integer userId);
+
 }

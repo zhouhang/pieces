@@ -9,133 +9,239 @@
 
 <body class="bg-gray">
 <section class="ui-content">
-    <div class="ui-floor">
-        <div class="ui-hd">
-            <a href="javascript:;" class="help"><i class="ico ico-help"></i> 使用帮助</a>
-            <i class="ico ico-list"></i>
-            <span>您的物品清单</span>
-            <em id="picNumber">0/9</em>
+    <div class="order">
+        <#if user.type==2>
+        <div class="item">
+            <input type="hidden" name="agentId" id="agentId" value="">
+            <span class="error"></span>
+            <strong class="t1" id="agentName">选择终端客户</strong>
+            <a href="/h5c/order/agent?omd5=${omd5!}" class="arrow"></a>
         </div>
-        <div class="ui-upload thumb">
-            <span class="ui-file" id="upfile">
-                <input type="file" name="file" accept="image/gif,image/jpeg,image/png" class="file" />
-            </span>
+        </#if>
+        <div class="item" id="address">
+            <#if shippingAddress?exists>
+            <strong class="t1">${shippingAddress.consignee}  ${shippingAddress.tel}</strong>
+            <span class="t2">${shippingAddress.fullAdd}${shippingAddress.detail}</span>
+            <input type="hidden" name="addrHistoryId" id="addrHistoryId" value="${shippingAddress.id!}">
+            <span class="error"></span>
+            <a href="/h5c/order/address?omd5=${omd5!}" class="arrow"></a>
+            </#if>
+        </div>
+        <div class="goods">
+            <ul>
+                <#list enquiryCommoditys as commodity>
+                <li>
+                    <div class="hd"><a href="/h5/commodity/${commodity.commodityId}">${commodity.commodityName!}</a></div>
+                    <div class="bd">${commodity.specs!}${commodity.level!}</div>
+                    <div class="price">
+                        <span>销售价:<em>${(commodity.myPrice?default(0))?string.currency}</em></span>
+                        <#if user?exists && user.type == 2>
+                            <span>开票价:${(commodity.price?default(commodity.myPrice?default(0)))?string.currency}</span>
+                        </#if>
+                    </div>
+                    <div class="pic rs-pic">
+                        <a href="/h5/commodity/${commodity.commodityId!}"><img src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>"/></a>
+                    </div>
+                    <div class="num">
+                        <div class="fr">
+                            <input type="text" name="number" id="number" class="ipt" value="1" data-id="${commodity.id}" data-min="${(commodity.myPrice?default(0))?c}" data-max="${(commodity.price?default(commodity.myPrice?default(0)))?c}">公斤
+                            <span class="error"></span>
+                        </div>
+                        <div>数量：</div>
+                    </div>
+                </li>
+                </#list>
+            </ul>
+        </div>
+        <div class="item note">
+            订单备注
+            <textarea name="remark"  id="remark" cols="30" rows="10" class="ipt mul"></textarea>
+            <span class="error"></span>
+        </div>
+        <div class="item" id="invoice">
+            <strong class="t1">选择发票</strong>
+            <input type="hidden" name="invoiceId" id="invoiceId" value="">
+            <span class="error"></span>
+            <a href="/h5c/order/invoice?omd5=${omd5}" class="arrow"></a>
+        </div>
+
+        <div class="summary">
+            <div class="money">
+                <em class="fr" id="_max"></em>开票金额
+            </div>
+            <div class="li">
+                需支付保证金：<em id="_min"></em>
+            </div>
         </div>
     </div>
-    <#if !(user?exists)>
-    <div class="ui-floor">
-        <div class="ui-hd">
-            <i class="ico ico-mobile"></i>
-            <span>您的联系方式</span>
-        </div>
-        <div class="ui-form">
-            <div class="item">
-                <input type="text" class="ui-ipt" id="name" placeholder="姓名" />
-                <span class="error"></span>
-            </div>
-            <div class="item">
-                <input type="mobile" class="ui-ipt" id="mobile" placeholder="手机号" />
-                <span class="error"></span>
-                <button type="button" class="send mid" id="send">发送验证码</button>
-            </div>
-            <div class="item">
-                <input type="text" class="ui-ipt" id="SMSCode" placeholder="验证码" />
-                <span class="error"></span>
-            </div>
-        </div>
+    <div class="ui-button mt20">
+        <button type="button" id="submit" class="ubtn ubtn-red">确认订购</button>
     </div>
 
-    <div class="ui-notice">
-        <b>*</b>联系方式仅在第一次询价时需要填写。
-    </div>
-    </#if>
-    <div class="ui-button">
-        <button type="button" class="ubtn ubtn-red" id="submit">提交</button>
-    </div>
 </section><!-- /ui-content -->
 <#include "wechat/inc/footer_h5.ftl"/>
-<script src="/h5-static/js/lrz.bundle.js"></script>
 <script>
     !(function($) {
         var _global = {
-            v:{
-                img:{}
-            },
             init: function() {
-                this.help();
-                this.upfile();
+                <#if (!agentUser?exists || agentUser?size==0)&&user.type == 2>
+                    this.noCustomer();
+                <#elseif !shippingAddress?exists>
+                    this.noConsignee();
+                </#if>
                 this.bindEvent();
-                gallery(true); // 开启图片预览
+                this.calc();
+                this.initLocalstorage();
             },
-            help: function() {
-                $('.help').on('click', function() {
-                    layer.open({
-                        className: 'layer-help',
-                        content: '<div class="hd">使用帮助</div><div class="bd">用手机拍下您需要的品种清单，上传照片。30分钟内您就能收到报价信息。</div><div class="pic"><img width="250" height="330" src="h5-static/images/help.jpg" /></div>'
-                    });
+            initLocalstorage: function() {
+                var invoice = _YYY.localstorage.get('invoice_${omd5!}');
+                var agent = _YYY.localstorage.get('agent_${omd5!}');
+                var address = _YYY.localstorage.get('address_${omd5!}');
+
+                if (agent) {
+                    agent = JSON.parse(agent);
+                    $("#agentId").val(agent.id);
+                    $("#agentName").html(agent.name);
+                }
+
+                if (address) {
+                    address = JSON.parse(address);
+                    $("#address .t1").html(address.tel);
+                    $("#address .t2").html(address.detail);
+                    $("#addrHistoryId").val(address.id);
+                }
+
+                if (invoice) {
+                    invoice = JSON.parse(invoice);
+
+                    $("#invoice .t1").html(invoice.name);
+                    if (invoice.type==0) {
+                        $("#invoiceId").val(null);
+                    } else {
+                        $("#invoiceId").val(invoice.type);
+                    }
+                }
+
+                $(window).bind('beforeunload',function(){
+                    _YYY.localstorage.set('remark_${omd5!}',$("#remark").val());
+                });
+
+                var remark = _YYY.localstorage.get('remark_${omd5!}');
+                if (remark) {
+                    $("#remark").val(remark);
+                }
+
+            },
+            cleanLocalstorage:function() {
+                _YYY.localstorage.remove('order_${omd5!}');
+                _YYY.localstorage.remove('invoice_${omd5!}');
+                _YYY.localstorage.remove('agent_${omd5!}');
+                _YYY.localstorage.remove('address_${omd5!}');
+            },
+            noCustomer: function() {
+                layer.open({
+                    className: 'layer-custom',
+                    content: '<div class="bd"><p>您还没有绑定终端客户，暂时无法进行下单。如果您已提交终端客户资料，请联系客服人员帮您进行绑定。</p><p><a href="tel:客服电话：0558-5120088" class="c-blue">客服电话：0558-5120088。</a></p></div>',
+                    btn: ['确定']
+                })
+            },
+            noConsignee: function() {
+                layer.open({
+                    className: 'layer-custom',
+                    content: '<div class="bd">您还没有收货地址，是否立即新建一个？</div>',
+                    btn: ['确定', '取消'],
+                    yes: function() {
+                        window.location.href = '/h5c/address/edit?omd5=${omd5!}';
+                    }
                 })
             },
             bindEvent: function() {
-                var that = this;
-                $('#submit').on('click', function() {
-                    if (that.check()) {
-                        var enquiry = {};
-                        if ($('body').find("#name").length >0) {
-                            enquiry['contacts'] = $("#name").val();
-                            enquiry['phone'] = $("#mobile").val();
-                        }
-                        enquiry.files = new Array();
-                        $.each(_global.v.img, function(k,v){
-                            enquiry.files.push({"attachmentUrl": v})
-                        })
+                var that = this,
+                        enable = true;
 
-                        if( enquiry.files.length == 0) {
-                            popover('请选择图片');
-                            return false;
+                // 确认订购
+                $('#submit').on('click', function() {
+                    if(enable && that.check()){
+                        var commodityses=[];
+                        var $ipts = $('.goods').find('.ipt');
+                            $ipts.each(function() {
+                                commodityses.push({id:$(this).data("id"),amount:this.value});
+                            })
+                        var param={};
+                        param.commodityses=commodityses;
+                        if ($("#invoiceId").val()){
+                            param.invoice = {type:$("#invoiceId").val()};
                         }
-                        $.ajaxSetup({
-                            headers: {
-                                'Content-Type': 'application/json;charset=utf-8'
-                            }
-                        });
+                        param.addrHistoryId = $("#addrHistoryId").val();
+                        param.remark = $("#remark").val();
+
+                        <#if user.type==2>
+                        param.agentId = $("#agentId").val();
+                        </#if>
+
                         $.ajax({
-                            url: '/h5/enquiry?code='+$("#SMSCode").val(),
-                            data: JSON.stringify(enquiry),
-                            type: 'POST',
-                            dataType: 'json',
-                            success: function (result) {
-                                if (result.status=="y") {
-                                    window.location.href = '/h5/enquiry/success';
-                                } else {
-                                    popover(result.info);
+                            url: '/h5c/order/save',
+                            type : 'POST',
+                            data: JSON.stringify(param),
+                            contentType : 'application/json',
+                            success: function(result) {
+                                if (result.status == "y") {
+                                    that.cleanLocalstorage();
+                                    window.location.href = "/h5c/order/success?orderId="+result.data;
                                 }
                             },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                popover('网络连接超时，请您稍后重试！');
+                            complete: function() {
+                                enable = true;
                             }
                         })
                     }
+                    enable = false;
                 })
-
-                $('.ui-form').on('focus blur', '.ui-ipt', function() {
-                    $(this).next().hide();
-                })
-                that.SMSCodeEvent();
             },
             check: function() {
-                if ($('body').find("#name").length >0) {
-                    return this.checkName()
-                            && this.checkMobile()
-                            && this.checkSMSCode()
-                } else {
-                    return true;
-                }
+                return this.checkCustomer()
+                        && this.checkConsignee()
+                        && this.checkNumber()
+                        && this.checkInvoice()
             },
-            checkName: function() {
-                var $el = $('#name'),
+            checkCustomer: function() {
+                <#if user.type==2>
+                var $el = $('#agentId'),
                         val = $el.val();
                 if (!val) {
-                    $el.next().html('请输入姓名！').show();
+                    $el.next().html('请选择终端客户！').show();
+
+                } else {
+                    $el.next().hide();
+                    return true;
+                }
+                window.scrollTo(0, 0);
+                return false;
+                <#else >
+                return true;
+                </#if>
+            },
+            checkConsignee: function() {
+                var $el = $('#addrHistoryId'),
+                        val = $el.val();
+                if (!val) {
+                    $el.next().html('请选择收货地址！').show();
+
+                } else {
+                    $el.next().hide();
+                    return true;
+                }
+                window.scrollTo(0, 60);
+                return false;
+            },
+            checkNumber: function() {
+                var $el = $('#number'),
+                        val = $el.val();
+                if (!val) {
+                    $el.next().html('请输入数量！').show();
+
+                } else if (!/^\d*$/.test(val)) {
+                    $el.next().html('数量只能输入正整数！').show();
 
                 } else {
                     $el.next().hide();
@@ -143,15 +249,11 @@
                 }
                 return false;
             },
-            checkMobile: function() {
-                var $el = $('#mobile'),
+            checkInvoice: function() {
+                var $el = $('#invoiceId'),
                         val = $el.val();
-
                 if (!val) {
-                    $el.next().html('请输入手机号码！').show();
-
-                } else if (!_YYY.verify.isMobile(val)) {
-                    $el.next().html('请输入有效的手机号！').show();
+                    $el.next().html('请选择发票！').show();
 
                 } else {
                     $el.next().hide();
@@ -159,132 +261,31 @@
                 }
                 return false;
             },
-            checkSMSCode: function() {
-                var $el = $('#SMSCode'),
-                        val = $el.val();
-                if (!val) {
-                    $el.next().html('请输入短信验证码！').show();
+            // 计算价格
+            calc: function() {
+                var $ipts = $('.goods').find('.ipt');
 
-                } else {
-                    $el.next().hide();
-                    return true;
-                }
-                return false;
-            },
-            SMSCodeEvent: function() {
-                var $send = $('#send'),
-                        that = this;
-                second = 0,
-                        wait = 0,
-                        txt = '秒后重试';
+                var totla = function() {
+                    var max = 0,
+                            min = 0,
+                            num = 0;
 
-                var lock = function() {
-                    wait && clearInterval(wait);
-                    wait = setInterval(function() {
-                        second--;
-                        $send.text(second + txt).prop('disabled', true);
-                        if (second === 0) {
-                            clearInterval(wait);
-                            $send.text("获取验证码").prop('disabled', false);
-                        }
-                    }, 1e3);
-                }
-                var sendMSM = function() {
-                    popover('验证码发送中，请稍后...!');
-                    $.ajax({
-                        url: '/gen/code/enquiry',
-                        dataType: 'json',
-                        data: {phone:$("#mobile").val()},
-                        success: function(data) {
-                            if (data.status === 'y') {
-                                $send.text(second + txt).prop('disabled', true);
-                                lock();
-                                popover(data.info);
-                            } else {
-                                popover(data.info);
-                            }
-                        },
-                        error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            popover('网络连接超时，请您稍后重试!');
-                        }
+                    $ipts.each(function() {
+                        num = parseInt(this.value, 10);
+                        min += parseFloat($(this).data('min')) * num;
+                        max += parseFloat($(this).data('max')) * num;
                     })
+                    $('#_min').html('&yen;' + min.toFixed(2));
+                    $('#_max').html('&yen;' + max.toFixed(2));
                 }
-                $send.prop('disabled', false).on('click', function() {
-                    if(second === 0 && that.checkMobile()) {
-                        second = 60; // 60秒倒计时
-                        sendMSM();
+                totla();
+                $('.goods').on('blur', '.ipt', function() {
+                    var val = this.value;
+                    if (val) {
+                        val = (!isNaN(val = parseInt(val, 10)) && val) > 0 ? val : 1;
                     }
-                })
-            },
-            upfile: function() {
-                var that = this,
-                        $upfile = $('#upfile'),
-                        $picNumber = $('#picNumber'),
-                        idx = 0,
-                        number = 0, // 已上传图片数量
-                        maxSize = 9; // 最大上传图片数量
-
-                $('body').append('<div id="upload" style="position:fixed;bottom:0;left:0;width:0;height:0;visibility:hidden;"></div>');
-
-                var reset = function() {
-                    $upfile.show().html('<input type="file" name="file" accept="image/gif,image/jpeg,image/png" class="file" />');
-                }
-                var showLader = function() {
-                    $upfile.html('<i class="loader">上传中...</i>');
-                }
-
-                $upfile.on('change', '.file', function(ev) {
-                    showLader();
-                    lrz(this.files[0], {
-                        width: 800
-                    }).then(function (rst) {
-                        var base64 = rst.base64;
-                        base64 = base64.substr(base64.indexOf(',') + 1);
-                        $.ajax({
-                            url: '/h5/upload',
-                            data: {
-                                img: base64,
-                                fileName: rst.origin.name
-                            },
-                            type: 'POST',
-                            dataType: 'json',
-                            success: function (result) {
-                                if (number >= maxSize) {
-                                    $upfile.empty('').hide();
-                                } else if (result.status == 'success') {
-                                    reset();
-                                    var model = [];
-                                    _global.v.img['img_' + (idx++)] = result.url;
-                                    model.push('<span class="ui-file">');
-                                    model.push('<img src="' , result.url , '" data-src="' , result.url , '" />');
-                                    model.push('<i class="del" id="img_' , idx , '"></i>');
-                                    model.push('<span');
-                                    $upfile.before(model.join(''));
-                                    $picNumber.html((++ number) + '/' + maxSize);
-                                    number >= maxSize && $upfile.empty('').hide();
-                                } else {
-                                    popover('上传图片失败，请刷新页面重试！');
-                                }
-                            },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                popover('网络连接超时，请您稍后重试！');
-                            }
-                        })
-                    }).catch(function (err) {
-                        // 处理失败会执行
-                        reset();
-                    }).always(function () {
-                        // 不管是成功失败，都会执行
-                    });
-                });
-
-                // 删除图片
-                $('.ui-upload').on('click', '.del', function() {
-                    delete _global.v.img['img_' + this.id];
-                    $picNumber.html((-- number) + '/' + maxSize);
-                    $(this).parent().remove();
-                    reset();
-                    return false;
+                    this.value = val;
+                    totla();
                 })
             }
         }

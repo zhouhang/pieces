@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.base.Strings;
 import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.biz.shiro.BizToken;
+import com.pieces.dao.enums.SessionEnum;
 import com.pieces.dao.model.*;
 import com.pieces.dao.vo.*;
 import com.pieces.service.*;
@@ -30,8 +31,10 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import sun.misc.BASE64Decoder;
@@ -40,6 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -218,38 +222,40 @@ public class H5OrderController {
         return new Result(true).info("账单提交成功!");
     }
 
+
     @RequestMapping(value = "/order/md5")
     public String redictOrder(String commodityIds){
         String md5 = EncryptUtil.getSHA1(commodityIds,"UTF-8");
         httpSession.setAttribute(md5,commodityIds);
-        return "redirect:/center/order/create?omd5=" + md5;
+        return "redirect:/h5c/order/create?omd5=" + md5;
     }
 
     @RequestMapping(value = "/order/create")
     @BizLog(type = LogConstant.order, desc = "创建订单页面")
     @SecurityToken(generateToken = true)
-    public String orderCreate(ModelMap modelMap, String omd5,Integer addressId){
+    public String orderCreate(ModelMap modelMap, String omd5){
+        if (Strings.isNullOrEmpty(omd5)) throw new RuntimeException("订单不存在");
+
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-        String commodityIds = null;
-        if (omd5 != null) {
-            commodityIds = (String) httpSession.getAttribute(omd5);
-        }
+        String commodityIds = (String) httpSession.getAttribute(omd5);
+
         // 根据询价商品计算保证金和开票金额
         List<EnquiryCommoditys> enquiryCommoditys = enquiryCommoditysService.findByIds(commodityIds);
         for(EnquiryCommoditys ec : enquiryCommoditys){
             ec.setAmount(1);
         }
         //获取收货地址
-        ShippingAddressVo shippingAddress = shippingAddressService.getAddressById(addressId,user.getId());
+        ShippingAddressVo shippingAddress = shippingAddressService.getAddressById(null,user.getId());
         modelMap.put("enquiryCommoditys", enquiryCommoditys);
         modelMap.put("shippingAddress", shippingAddress);
         modelMap.put("user", user);
+        modelMap.put("omd5", omd5);
         //根据用户类型来判断该跳转到那个下单页面并获取代理商代理的用户信息
         if (user.getType()==2) {
             List<UserVo> agentUser = userService.findUserByProxy(user.getId());
             modelMap.put("agentUser",agentUser);
         }
-        return "order";
+        return "wechat/order";
     }
 
     /**
@@ -257,12 +263,12 @@ public class H5OrderController {
      * @return
      */
     @RequestMapping(value = "/order/agent")
-    public String getAgentUser(ModelMap model, Integer selectId) {
+    public String getAgentUser(ModelMap model, String omd5) {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         List<UserVo> agentUser = userService.findUserByProxy(user.getId());
-        model.put("agentUser",agentUser);
-        model.put("selectId",selectId);
-        return "order_agent_list";
+        model.put("list",agentUser);
+        model.put("omd5",omd5);
+        return "wechat/order_agent_list";
     }
 
     /**
@@ -271,12 +277,23 @@ public class H5OrderController {
      * @return
      */
     @RequestMapping(value = "/order/address")
-    public String getAddress(ModelMap model, Integer selectId) {
+    public String getAddress(ModelMap model, String omd5) {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         List<ShippingAddressVo>  shippingAddress =shippingAddressService.findByUser(user.getId());
-        model.put("agentUser",shippingAddress);
-        model.put("selectId",selectId);
-        return "order_address_list";
+        model.put("list",shippingAddress);
+        model.put("omd5",omd5);
+        return "wechat/order_address_list";
+    }
+
+    /**
+     * 发票
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/order/invoice")
+    public String selectInvoice(ModelMap model, String omd5) {
+        model.put("omd5",omd5);
+        return "wechat/order_invoice";
     }
 
     /**
@@ -287,9 +304,11 @@ public class H5OrderController {
     @RequestMapping(value = "/order/save")
     @BizLog(type = LogConstant.order, desc = "保存订单")
     @SecurityToken(validateToken = true)
+    @ResponseBody
     public Result saveOrder(@RequestBody  OrderFormVo orderFormVo) {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-        return new Result(true);
+        orderFormVo = orderFormService.h5Create(orderFormVo, user);
+        return new Result(true).data(orderFormVo.getId());
     }
 
     /**
@@ -298,9 +317,12 @@ public class H5OrderController {
      * @return
      */
     @RequestMapping(value = "/order/success")
-    public String orderSuccess(Integer orderId) {
+    public String orderSuccess(Integer orderId,ModelMap model) {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-        return "order_success";
+        OrderForm order=orderFormService.findVoById(orderId);
+        model.put("order",order);
+        model.put("user",user);
+        return "wechat/order_success";
     }
 
     /**
@@ -308,9 +330,14 @@ public class H5OrderController {
      * @return
      */
     @RequestMapping(value = "/address/edit", method = RequestMethod.GET)
-    public String saveAddressPage() {
+    public String saveAddressPage(Integer id, ModelMap model,String omd5) {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-        return "order_success";
+        if (id!=null) {
+            ShippingAddressVo shippingAddress = shippingAddressService.findVoById(id);
+            model.put("address", shippingAddress);
+        }
+        model.put("omd5",omd5);
+        return "wechat/address_edit";
     }
 
     /**
@@ -319,9 +346,11 @@ public class H5OrderController {
      * @return
      */
     @RequestMapping(value = "/address/save", method = RequestMethod.POST)
+    @ResponseBody
     public Result saveAddress(@Valid ShippingAddress shippingAddress) {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-        return null;
+        shippingAddressService.saveOrUpdate(shippingAddress,user);
+        return new Result(true).data(shippingAddress.getId());
     }
 
     /**
@@ -330,9 +359,11 @@ public class H5OrderController {
      * @return
      */
     @RequestMapping(value = "/address/delete", method = RequestMethod.POST)
+    @ResponseBody
     public Result deleteAddress(Integer id) {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
-        return null;
+        shippingAddressService.delete(user.getId(),id);
+        return new Result(true);
     }
 
 }
