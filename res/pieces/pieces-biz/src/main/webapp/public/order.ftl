@@ -702,6 +702,10 @@
                             $sum.html(sum);
                             unitPrice[i].sum = sum;
                             total();
+                        }).on('keyup', function(e) {
+                            if (e.keyCode === 13) {
+                                $(this).closest('tr').next().find('.ipt').focus();
+                            }
                         })
                     })
 
