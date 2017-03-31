@@ -2,19 +2,24 @@ package com.pieces.biz.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Strings;
+import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.biz.shiro.BizToken;
-import com.pieces.dao.model.EnquiryCommoditys;
-import com.pieces.dao.model.User;
+import com.pieces.dao.model.*;
 import com.pieces.dao.vo.*;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.service.enums.NotifyTemplateEnum;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.listener.NotifyEvent;
 import com.pieces.service.redis.RedisManager;
+import com.pieces.service.utils.EncryptUtil;
 import com.pieces.service.vo.CropResult;
+import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.bean.BASE64DecodedMultipartFile;
 import com.pieces.tools.exception.NotFoundException;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.SeqNoUtil;
+import com.pieces.tools.utils.SpringUtil;
 import com.pieces.tools.utils.WebUtil;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.exception.WxErrorException;
@@ -33,6 +38,9 @@ import sun.misc.BASE64Decoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,22 +53,40 @@ import java.util.List;
 public class H5OrderController {
 
     Logger logger = LoggerFactory.getLogger(H5OrderController.class);
+
+    private static final  Integer pageSize=5;
     @Autowired
     private HttpSession httpSession;
 
     @Autowired
     private OrderFormService orderFormService;
 
-    private static final  Integer pageSize=5;
+    @Autowired
+    private EnquiryCommoditysService enquiryCommoditysService;
 
     @Autowired
-    PayAccountService payAccountService;
+    private EnquiryBillsService enquiryBillsService;
 
     @Autowired
-    PayRecordService payRecordService;
+    private ShippingAddressService shippingAddressService;
 
     @Autowired
-    AccountBillService accountBillService;
+    private AreaService areaService;
+
+    @Autowired
+    private PayAccountService payAccountService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private AccountBillService accountBillService;
+
+    @Autowired
+    private PayRecordService payRecordService;
+
+    @Autowired
+    private LogisticalService logisticalService;
 
 
     @RequestMapping(value ="order/list",method = RequestMethod.GET)
@@ -192,40 +218,6 @@ public class H5OrderController {
         return new Result(true).info("账单提交成功!");
     }
 
-
-    @Autowired
-    private HttpSession httpSession;
-
-    @Autowired
-    private OrderFormService orderFormService;
-
-    @Autowired
-    private EnquiryCommoditysService enquiryCommoditysService;
-
-    @Autowired
-    private EnquiryBillsService enquiryBillsService;
-
-    @Autowired
-    private ShippingAddressService shippingAddressService;
-
-    @Autowired
-    private AreaService areaService;
-
-    @Autowired
-    private PayAccountService payAccountService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private AccountBillService accountBillService;
-
-    @Autowired
-    private PayRecordService payRecordService;
-
-    @Autowired
-    private LogisticalService logisticalService;
-
     @RequestMapping(value = "/order/md5")
     public String redictOrder(String commodityIds){
         String md5 = EncryptUtil.getSHA1(commodityIds,"UTF-8");
@@ -342,7 +334,5 @@ public class H5OrderController {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         return null;
     }
-
-
 
 }
