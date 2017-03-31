@@ -89,7 +89,7 @@
             $.each(data, function(i, item) {
                 model.push('<li>');
                 if(item.status==1){
-                    model.push('<a href="#', item.id, '" class="ubtn ubtn-red pay">去支付</a>');
+                    model.push('<a href="/h5c/order/pay/', item.id, '" class="ubtn ubtn-red pay">去支付</a>');
                 }
 
                 model.push('<a href="/h5c/order/detail/', item.id, '">');

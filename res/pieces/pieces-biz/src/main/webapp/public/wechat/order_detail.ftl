@@ -11,14 +11,15 @@
         <p><span>状态：</span><em>${vo.statusText}</em></p>
         <p><span>订单号：</span>${vo.code}</p>
         <p><span>下单时间：</span>${vo.createrTime?datetime}</p>
-        <#if vo.status=1>
         <div class="button">
+        <#if vo.status=1>
             <a href="/h5c/order/pay/${vo.id?c}" class="ubtn ubtn-red primary" id="pay">去支付</a>
             <button type="button" id="cancel" class="ubtn ubtn-white">取消订单</button>
-        </div>
+
         <#elseif vo.status=4>
-            <button type="button" id="config" class="ubtn ubtn-white">确认收货</button>
+            <button type="button" id="config" class="ubtn ubtn-red primary">确认收货</button>
         </#if>
+       </div>
     </div>
 
     <div class="floors-info">
