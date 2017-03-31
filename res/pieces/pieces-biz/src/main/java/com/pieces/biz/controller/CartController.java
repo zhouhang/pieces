@@ -199,7 +199,7 @@ public class CartController {
                      }
 
                      if (!userService.ifAutoMobile(mobile)) {
-                            return new Result(false).info("手机号已被使用");
+                            return new Result(false).info("该手机号已被禁用，如有疑问，请联系客服。");
                      }
 
                      if(!userService.ifExistMobile(mobile)){
