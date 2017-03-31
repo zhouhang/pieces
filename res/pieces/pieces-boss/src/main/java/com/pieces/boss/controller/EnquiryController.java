@@ -6,11 +6,9 @@ import com.pieces.dao.model.*;
 import com.pieces.dao.vo.CommodityVo;
 import com.pieces.dao.vo.EnquiryBillsVo;
 import com.pieces.dao.vo.UserVo;
-import com.pieces.service.CommodityService;
-import com.pieces.service.EnquiryBillsService;
-import com.pieces.service.EnquiryCommoditysService;
-import com.pieces.service.UserService;
+import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
+import com.pieces.service.enums.AnonEnquiryEnum;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.impl.SmsService;
 import com.pieces.service.utils.ExcelParse;
@@ -65,6 +63,12 @@ public class EnquiryController extends BaseController{
 
     @Autowired
     SmsService smsService;
+
+    @Autowired
+    private AnonEnquiryService anonEnquiryService;
+
+    @Autowired
+    private AnonFollowRecordService followRecordService;
 
     @RequiresPermissions(value = "enquiry:index")
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -180,18 +184,22 @@ public class EnquiryController extends BaseController{
     }
 
     /**
-     * 创建询价单页面
+     * 创建询价单页面(匿名询价生成报价)
      * @param userId
      * @param modelMap
      * @return
      */
     @RequestMapping(value = "create/{id}")
     @BizLog(type = LogConstant.enquiry, desc = "新建询价单客户选择页面")
-    public String createEnquiry(@PathVariable("id") Integer userId, ModelMap modelMap){
+    public String createEnquiry(@PathVariable("id") Integer userId,Integer anonId, ModelMap modelMap){
         User user = userService.findById(userId);
         List<EnquiryCommoditys> commoditys = (List<EnquiryCommoditys>) session.getAttribute("enquiryCommodityName");
         if (commoditys!= null) {
             modelMap.put("commoditys", commoditys);
+        }
+        if(anonId!=null){
+            //如果是匿名询价生成的报价，session加上匿名Id
+            session.setAttribute("anonId",anonId);
         }
 
 
@@ -247,6 +255,31 @@ public class EnquiryController extends BaseController{
         //报价成功后通知客户 TODO:
         EnquiryBillsVo billsVo = enquiryBillsService.findVOById(billId);
         smsService.sendQuoted(billsVo);
+
+        Integer annoId=(Integer)session.getAttribute("anonId");
+        if(annoId!=null){//匿名询价生成的报价
+            session.removeAttribute("anonId");
+            //匿名询价跟踪记录
+            AnonFollowRecord record=new AnonFollowRecord();
+            record.setFollowerId(member.getId());
+            record.setCreateTime(new Date());
+            record.setAnonEnquiryId(annoId);
+            record.setResult("已报价，询价单号："+billsVo.getCode());
+            followRecordService.create(record);
+            // 如果匿名询价状态未改变，修改为已处理状态
+            AnonEnquiry anonEnquiry=anonEnquiryService.findById(annoId);
+            if(!(anonEnquiry.getStatus().equals(AnonEnquiryEnum.COMPLETE.getValue()))){
+                anonEnquiry.setId(record.getAnonEnquiryId());
+                anonEnquiry.setStatus(AnonEnquiryEnum.COMPLETE.getValue());
+                anonEnquiry.setLastFollowId(member.getId());
+                anonEnquiry.setLastFollowTime(new Date());
+                anonEnquiryService.update(anonEnquiry);
+            }
+
+            //跳转匿名询价详情
+            return new Result(true).data("/anon/detail?id="+annoId);
+        }
+
 
         // 保存报价成功后跳到编辑页面并提示报价成功
         return new Result(true).data("/enquiry/"+billId+"?create=create");

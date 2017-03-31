@@ -24,6 +24,9 @@
                     <h3><i class="fa fa-chevron-right"></i>${vo.contacts} 的询价信息</h3>
                     <div class="extra">
                         <a href="/anon/enquiry" class="btn btn-gray">返回</a>
+                        <#if userId??>
+                        <a class="btn btn-red" href="/enquiry/create/${userId}?anonId=${vo.id}"><i class="fa fa-plus"></i>新建报价</a>
+                        </#if>
                     </div>
                 </div>
                 <div class="chart-info">
