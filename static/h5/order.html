@@ -42,7 +42,7 @@
                             
                     <div class="num">
                         <div class="fr">
-                            <input type="tel" name="number" id="number" class="ipt" value="1" />公斤
+                            <input type="tel" name="number" class="ipt" value="1" id="a1" data-min="90" data-max="95" />公斤
                             <span class="error"></span>
                         </div>
                         <div>数量：</div>
@@ -58,10 +58,10 @@
                     <div class="pic rs-pic">
                         <img src="uploads/p1.jpg" />
                     </div>
-                            
+
                     <div class="num">
                         <div class="fr">
-                            <input type="tel" name="number" id="number" class="ipt" value="1" />公斤
+                            <input type="tel" name="number" class="ipt" value="1" id="a1" data-min="90.00" data-max="95.15" />公斤
                             <span class="error"></span>
                         </div>
                         <div>数量：</div>
@@ -83,10 +83,10 @@
 
         <div class="summary">
             <div class="money">
-                <em class="fr">¥190.00</em>开票金额
+                <em class="fr" id="_max">¥190.00</em>开票金额
             </div>
             <div class="li">
-                需支付保证金：<em>¥90.00</em>
+                需支付保证金：<em id="_min">¥90.00</em>
             </div>
         </div>
     </div>
@@ -107,6 +107,7 @@
             // this.noCustomer();
             // this.noConsignee();
             this.bindEvent();
+            this.calc();
         },
         getLocalstorage: function() {
             $('#customerID').val(_YYY.localstorage.get('customerID'));
@@ -210,6 +211,33 @@
                 return true;
             }
             return false;
+        },
+        // 计算价格
+        calc: function() {
+            var $ipts = $('.goods').find('.ipt');
+
+            var totla = function() {
+                var max = 0,
+                    min = 0,
+                    num = 0;
+
+                $ipts.each(function() {
+                    num = parseInt(this.value, 10);
+                    min += parseFloat($(this).data('min')) * num;
+                    max += parseFloat($(this).data('max')) * num;
+                })
+                $('#_min').html('&yen;' + min.toFixed(2));
+                $('#_max').html('&yen;' + max.toFixed(2));
+            }
+
+            $('.goods').on('blur', '.ipt', function() {
+                var val = this.value;
+                if (val) {
+                    val = (!isNaN(val = parseInt(val, 10)) && val) > 0 ? val : 1;
+                }
+                this.value = val;
+                totla();
+            })
         }
     }
 
