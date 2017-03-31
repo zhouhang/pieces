@@ -83,9 +83,15 @@
                 </dl>
             </div>
             <div class="main">
-
+    
 
                 <form action="" id="myform">
+                    <div style="position:absolute;top:0;left:0;width:0;height:0;overflow:hidden;">
+                        <input type="text">
+                        <input type="password">
+                        <!-- 防登录管家等浏览器插件自动填入账号密码信息 -->
+                    </div>
+
                     <div class="title">
                         <h3><i class="fa fa-people"></i>hehuan</h3>
                         <div class="extra">
@@ -94,7 +100,6 @@
                             <button type="submit" class="btn btn-red">保存</button>
                         </div>
                     </div>
-
                     <div class="user-info">
                         <h3>账户信息</h3>
                         <div class="fa-form">
@@ -217,6 +222,7 @@
                     }).prop('checked', false);
 
                 }
+
             }
         }
 

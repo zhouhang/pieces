@@ -38,6 +38,13 @@
         </div>
         <div class="main">
             <form action="member/save" id="memberForm" method="post">
+
+                <div style="position:absolute;top:0;left:-99em;">
+                    <input type="text">
+                    <input type="password">
+                    <#-- 防登录管家等浏览器插件自动填入账号密码信息 -->
+                </div>
+
                 <div class="title">
                     <h3><i class="fa fa-people"></i> <#if member??>${member.username}<#else>创建用户</#if></h3>
                     <div class="extra">
