@@ -95,4 +95,23 @@ public interface OrderFormService extends ICommonService<OrderForm>{
      */
     void exportOrderExcel(HttpServletResponse response, HttpServletRequest request, Integer id);
 
+
+    /**
+     *根据用户的id 获取用的订单列表多加一个status
+     * @param userId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    PageInfo<OrderFormVo> findOrderByUserId(Integer userId,Integer status, Integer pageNum, Integer pageSize);
+
+    /**
+     *根据代理商id 获取用户订单列表多加一个status
+     * @param agentId
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    PageInfo<OrderFormVo> findOrderByAgentId(Integer agentId, Integer status,Integer pageNum, Integer pageSize);
+
 }

@@ -319,7 +319,7 @@ body.noscroll{overflow:hidden;}
 .floors .pic{padding:20px 0 10px;border-top:1px solid #e7e7e7;}
 .floors-info{line-height:26px;margin-bottom:10px;padding:13px;background:#fff;}
 .floors-info em{color:#c3272b;}
-.floors-info .button{padding:13px 0 7px;}
+.floors-info .button{padding:13px 0 7px;overflow:hidden;}
 .floors-info .ubtn{display:inline-block;width:37%;height:40px;line-height:40px;font-size:1.6rem;}
 .floors-info .primary{float:right;width:57.5%;}
 

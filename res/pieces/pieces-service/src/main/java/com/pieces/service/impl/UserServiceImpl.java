@@ -103,7 +103,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
             createPwdAndSaltMd5(user);
         }
 
-        if(user.getType()==2){//代理商(默认认证通过)
+        if(user.getType()!=null&&user.getType()==2){//代理商(默认认证通过)
             user.setCertifyStatus(CertifyStatusEnum.CERTIFY_SUCESS.getValue());
         }
 
