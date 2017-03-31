@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-    <title>选择客户-boss-上工好药</title>
+    <title>新建询价-boss-上工好药</title>
 </head>
 
 <body>
@@ -114,11 +114,14 @@
 
                     // 单价
                     $myform.on({
-                        'keyup': function() {
+                        'keyup': function(e) {
                             var val = this.value;
                             if (!/^\d+\.?\d*$/.test(val)) {
                                 val = Math.abs(parseFloat(val));
                                 this.value = isNaN(val) ? '' : val;
+                            }
+                            if (e.keyCode === 13) {
+                                $(this).closest('tr').next().find('.price').focus();
                             }
                         },
                         'blur': function() {

@@ -599,30 +599,45 @@
                         $('#total').html(formatPrice(sum));
                     }
 
-                    $table.on('blur', '.price', function() {
-                        var val = this.value;
 
-                        if (!/^\d+\.?\d*$/.test(val)) {
-                            val = Math.abs(parseFloat(val));
-                            if (isNaN(val)) {
-                                val = '';
+                    // 单价
+                    $table.on({
+                        'keyup': function(e) {
+                            if (e.keyCode === 13) {
+                                $(this).closest('tr').find('.amount').focus();
                             }
-                            this.value = isNaN(val) ? '' : val;
+                        },
+                        'blur': function() {
+                            var val = this.value;
+                            if (!/^\d+\.?\d*$/.test(val)) {
+                                val = Math.abs(parseFloat(val));
+                                if (isNaN(val)) {
+                                    val = '';
+                                }
+                                this.value = isNaN(val) ? '' : val;
+                            }
+                            total();
                         }
-                        total();
-                    })
-                    $table.on('blur', '.amount', function() {
-                        var val = this.value;
-
-                        if (val) {
-                            val = (!isNaN(val = parseInt(val, 10)) && val) > 0 ? val : 1;
-                            this.value = Math.max(val, 1);
-                        } else {
-                            this.value = 1;
+                    }, '.price');
+                    
+                    $table.on({
+                        'keyup': function(e) {
+                            if (e.keyCode === 13) {
+                                $(this).closest('tr').next().find('.price').focus();
+                            }
+                        },
+                        'blur': function() {
+                            var val = this.value;
+                            if (val) {
+                                val = (!isNaN(val = parseInt(val, 10)) && val) > 0 ? val : 1;
+                                this.value = Math.max(val, 1);
+                            } else {
+                                this.value = 1;
+                            }
+                            total();
                         }
-                        total();
-                    })
-
+                    }, '.amount');
+                    
                     // 删除商品
                     $table.on('click', '.c-blue', function() {
                         var $tr = $(this).closest('tr'),
