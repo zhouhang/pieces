@@ -11,6 +11,7 @@ import com.pieces.dao.vo.ShippingAddressVo;
 import com.pieces.service.AbsCommonService;
 import com.pieces.service.AreaService;
 import com.pieces.service.ShippingAddressService;
+import com.pieces.service.utils.ValidUtils;
 import com.pieces.tools.utils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -109,6 +110,23 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 		vo.setProvinceId(area.getProvinceId());
 		vo.setCityId(area.getCityId());
 		return vo;
+	}
+
+	@Override
+	public ShippingAddressVo getAddressById(Integer addressId, Integer userId) {
+		ShippingAddressVo shippingAddress = null;
+		List<ShippingAddressVo>  shippingAddressList = findByUser(userId);
+		if(addressId!= null) {
+			for(ShippingAddressVo svo : shippingAddressList){
+				if(svo.getId().equals(addressId)){
+					shippingAddress =  svo;
+					break;
+				}
+			}
+		} else {
+			shippingAddress = ValidUtils.listNotBlank(shippingAddressList) ? shippingAddressList.get(0) : null;
+		}
+		return shippingAddress;
 	}
 
 	/**

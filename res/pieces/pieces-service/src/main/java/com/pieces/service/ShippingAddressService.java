@@ -31,4 +31,13 @@ public interface ShippingAddressService extends ICommonService<ShippingAddress>{
      * @return
      */
     public ShippingAddressVo findVoById(Integer id);
+
+    /**
+     * 根据id获取地址
+     * id 为null 时返回默认地址
+     * @param addressId
+     * @param userId
+     * @return
+     */
+    ShippingAddressVo getAddressById(Integer addressId,Integer userId);
 }
