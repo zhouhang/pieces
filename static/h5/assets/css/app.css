@@ -84,6 +84,11 @@ body .layui-m-layer .layui-m-layer-msg{width:auto;max-width:90%;margin:0 auto;bo
 .layer-custom .bd{line-height:20px;color:#666;}
 .layer-custom .bd p{margin-bottom:5px;text-align:left;}
 
+.layer-file{font-size:1.4rem;}
+.layer-file .layui-m-layercont{padding:0;}
+.layer-file p{padding:15px 20px;text-align:left;}
+.layer-file p:nth-child(n+2){border-top:1px solid #e7e7e7;}
+
 .layer-help{width:250px !important;}
 .layer-help .layui-m-layercont{line-height:1;padding:0;}
 .layer-help .hd{padding:20px 30px 7px;}
