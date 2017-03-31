@@ -131,6 +131,35 @@
                     sourceType: ['album'], // 可以指定来源是相册还是相机，默认二者都有
                     success: function (res) {
                         var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                        wx.uploadImage({
+                            localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
+                            isShowProgressTips: 1, // 默认为1，显示进度提示
+                            success: function (res) {
+                                if (number >= maxSize) {
+                                    $upfile.empty('').hide();
+                                } else if (result.status == '1') {
+                                    reset();
+                                    var model = [];
+                                    img['img_' + (idx++)] = result.url;
+                                    model.push('<span class="ui-file">');
+                                    model.push('<img src="' , localIds , '" data-src="' , localIds , '" />');
+                                    model.push('<i class="del" id="img_' , idx , '"></i>');
+                                    model.push('<span');
+                                    $upfile.before(model.join(''));
+                                    $picNumber.html((++ number) + '/' + maxSize);
+                                    number >= maxSize && $upfile.empty('').hide();
+                                } else {
+                                    popover('上传图片失败，请刷新页面重试！');
+                                }
+
+                                // res.serverId; // 返回图片的服务器端ID，图片有效期3天，需要下载到本地
+                            },
+                            fail: function (error) {
+                                picPath = '';
+                                localIds = '';
+                                alert(Json.stringify(error));
+                            }
+                        });
                     }
                 });
             })
