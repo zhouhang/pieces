@@ -348,6 +348,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .order-detail .info .row .express_box .date{float:left;width:200px;}
 .order-detail .info .row .express_box .trace{margin-left:200px;}
 .order-detail .table{font-size:14px;}
+.order-detail .table table{border:none;}
 .order-detail .table th{height:40px;background:#f5f5f5;text-align:left;}
 .order-detail .table td{padding:20px 0;border-top:1px solid #e7e7e7;}
 .order-detail .table em{font-size:12px;}
