@@ -37,9 +37,10 @@
 !(function($) {
     var _global = {
         init: function() {
-            this.pagesize = 0;
+            this.pagesize = 1;
             this.loadmore();
             this.loading();
+            this.changeStatus();
         },
         loading: function() {
             var that = this,
@@ -49,17 +50,26 @@
                 type: 'POST',
                 url: '/h5c/order/list',
                 dataType: 'json',
-                data: {pagesize: that.pagesize,status:${status}},
+                data: {pageNum: that.pagesize,status:${status}},
                 success: function(res){
                     var status=${status};
                     var data=res.data;
-                    if (!data.list) {
-                        if(that.pagesize==0&&status==1){
-                            $("#order_list").append('<div class="ui-empty"> <p>没有代付款的订单！</p> <div class="btm"> <a href="/h5/enquiry" class="ubtn ubtn-red"><i class="ico ico-camera"></i>拍照询价</a></div></div>')
+                    if (data.list.length==0) {
+                        if(that.pagesize==1){
+                            var tip="";
+                            if(status==1){
+                                tip="没有待付款的订单！";
+                            }else if(status==3){
+                                tip="没有待发货的订单！";
+                            }else{
+                                tip="没有待收货的订单！";
+                            }
+                            $("#order_list").append('<div class="ui-empty"> <p>'+tip+'</p> <div class="btm"> <a href="/h5/enquiry" class="ubtn ubtn-red"><i class="ico ico-camera"></i>拍照询价</a></div></div>')
                         }
                         return;
                     }
                     $ul.append(that.toHtml(data.list));
+                    _global.changeStatus();
                     if (data.pages==this.pagesize) {
                         $('body').append('<div class="nomore">没有更多了...</div>');
                         that.dragger.options.disableDragUp = true;
@@ -91,6 +101,9 @@
                 if(item.status==1){
                     model.push('<a href="/h5c/order/pay/', item.id, '" class="ubtn ubtn-red pay">去支付</a>');
                 }
+                if(item.status==4){
+                    model.push('<button  orderId="',item.id,'" class="ubtn ubtn-red pay config">确认收货</button>')
+                }
 
                 model.push('<a href="/h5c/order/detail/', item.id, '">');
                 model.push('<div class="hd">');
@@ -108,7 +121,21 @@
                 model.push('</li>');
             })
             return model.join('');
+         },
+         changeStatus:function(){
+             $('.config').on('click', function() {
+                 var orderId=$(this).attr("orderId");
+                 $.post("/center/order/status", {orderId: orderId, status: 5}, function (data) {
+                     if (data.status == "y") {
+                         window.location.reload();
+                     }
+                 }, "json")
+             })
+
+
+
          }
+
 
     }
 

@@ -79,7 +79,7 @@
                     <h3>处理结果</h3>
                     <div class="info">
                     <#if record??>
-                    ${record.result!} <#if vo.enquriyBillId??> <a href="/enquiry/${vo.enquriyBillId}">${vo.enquriyBillCode!} </a></#if>
+                    ${record.result!} <#if vo.enquriyBillId??> <a href="/enquiry/${vo.enquriyBillId}" target=”_blank">${vo.enquriyBillCode!} </a></#if>
                     </#if>
                     </div>
                 </div>

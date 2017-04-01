@@ -17,7 +17,7 @@
             <button type="button" id="cancel" class="ubtn ubtn-white">取消订单</button>
 
         <#elseif vo.status=4>
-            <button type="button" id="config" class="ubtn ubtn-red primary">确认收货</button>
+            <button type="button" id="config" class="ubtn ubtn-red wide">确认收货</button>
         </#if>
        </div>
     </div>
@@ -32,6 +32,7 @@
            <#list vo.commodities as commodity>
         <ul>
             <li>
+                <a href="/h5/commodity/${commodity.id}">
                 <div class="hd">${commodity.name}</div>
                 <div class="bd">${commodity.spec}${commodity.level}</div>
                 <div class="price">
@@ -43,6 +44,7 @@
                 <div class="pic rs-pic">
                     <img src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>" />
                 </div>
+                </a>
             </li>
         </ul>
         <div class="ft">
