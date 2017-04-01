@@ -12,6 +12,7 @@
     <form action="" id="myform">
         <div class="ui-form">
             <div class="item">
+                <input type="hidden" name="id" value="${address.id!}">
                 <input type="text" class="ui-ipt" name="consignee" id="name" placeholder="收货人" value="${address.consignee!}" autocomplete="off">
                 <span class="error"></span>
             </div>
@@ -87,7 +88,7 @@
                                     var address = {};
                                     address.id = result.data;
                                     _YYY.localstorage.set('address_${omd5!}', JSON.stringify(address)); // 保存收货地址ID
-                                    location.href ="/h5c/order/address;
+                                    location.href ="/h5c/order/address?omd5=${omd5!}";
                                 }
                             }
                         })
@@ -109,11 +110,11 @@
                                         var address = _YYY.localstorage.get('address_${omd5!}');
                                         if (address) {
                                             address = JSON.parse(address);
-                                            if (address.id == ${address.id!} ) {
+                                            if (address.id == "${address.id!}" ) {
                                                 _YYY.localstorage.remove('address_${omd5!}')
                                             }
                                         }
-                                        location.href ="/h5c/order/address";
+                                        location.href ="/h5c/order/address?omd5=${omd5!}";
                                     }
                                 },
                                 complete: function() {

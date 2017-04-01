@@ -66,11 +66,11 @@
         </div>
 
         <div class="summary">
-            <div class="money">
+            <div class="money" style="<#if user.type==1>display:none;</#if>">
                 <em class="fr" id="_max"></em>开票金额
             </div>
             <div class="li">
-                需支付保证金：<em id="_min"></em>
+<#if user.type==1>订单金额<#else >需支付保证金</#if>：<em id="_min"></em>
             </div>
         </div>
     </div>
@@ -137,6 +137,7 @@
                 _YYY.localstorage.remove('invoice_${omd5!}');
                 _YYY.localstorage.remove('agent_${omd5!}');
                 _YYY.localstorage.remove('address_${omd5!}');
+                _YYY.localstorage.remove('remark_${omd5!}');
             },
             noCustomer: function() {
                 layer.open({
