@@ -14,8 +14,7 @@ import javax.validation.Valid;
 import com.google.common.base.Strings;
 import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.enums.CertifyStatusEnum;
-import com.pieces.dao.model.Member;
-import com.pieces.dao.model.UserBind;
+import com.pieces.dao.model.*;
 import com.pieces.dao.vo.*;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
@@ -39,8 +38,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import com.github.pagehelper.PageInfo;
-import com.pieces.dao.model.Area;
-import com.pieces.dao.model.User;
 import com.pieces.service.constant.BasicConstants;
 
 @Controller
@@ -71,6 +68,10 @@ public class UserController extends  BaseController{
 
 	@Autowired
 	private RedisManager redisManager;
+
+	@Autowired
+    private UserFollowRecordService userFollowRecordService;
+
 	/**
 	 * 会员查询页面
 	 * @param request
@@ -392,5 +393,46 @@ public class UserController extends  BaseController{
 		userService.enable(id);
 		return new Result(true);
 	}
+
+
+
+	@RequiresPermissions(value = "customer:edit" )
+	@RequestMapping(value = "/trail/{id}")
+	@BizLog(type = LogConstant.user, desc = "会员跟进记录页面")
+	public String trailUser(HttpServletRequest request,
+						   HttpServletResponse response,
+						   @PathVariable("id") Integer id,
+							Integer pageNum,
+							Integer pageSize,
+						   ModelMap model){
+        UserVo userVo=userService.findVoById(id);
+		pageNum=pageNum==null?1:pageNum;
+		pageSize=pageSize==null?10:pageSize;
+
+		UserFollowRecordVo userFollowRecordVo=new UserFollowRecordVo();
+		userFollowRecordVo.setUserId(id);
+
+		PageInfo<UserFollowRecordVo> records=userFollowRecordService.findByParams(userFollowRecordVo,pageNum,pageSize);
+        model.put("user",userVo);
+        model.put("records",records);
+
+		return "user_trail";
+
+	}
+
+
+	@RequiresPermissions(value = "customer:edit")
+	@RequestMapping(value = "/trail" ,method= RequestMethod.POST)
+	@ResponseBody
+	@BizLog(type = LogConstant.user, desc = "会员跟进记录保存")
+	public Result saveTrail(UserFollowRecordVo userFollowRecordVo) {
+		Member mem = (Member)httpSession.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
+		userFollowRecordVo.setFollowId(mem.getId());
+		userFollowRecordVo.setCreateTime(new Date());
+		userFollowRecordService.create(userFollowRecordVo);
+		return new Result(true).info("创建成功");
+	}
+
+
 
 }

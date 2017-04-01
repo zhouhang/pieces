@@ -23,6 +23,7 @@
                 <#if user.type==1>
                     <a class="curr" href="/user/certify/${user.id}">企业资质</a>
                 </#if>
+                    <a href="/user/trail/${user.id}">跟进记录</a>
                 </dd>
             </dl>
         </div>

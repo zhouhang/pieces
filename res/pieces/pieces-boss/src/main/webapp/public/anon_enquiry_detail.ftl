@@ -15,7 +15,7 @@
                     <dt>新客询价</dt>
                     <dd>
                         <a class="curr" href="#!">询价信息</a>
-                        <a href="/anon/trail?anonId=${vo.id}">跟进记录</a>
+                        <!--<a href="/anon/trail?anonId=${vo.id}">跟进记录</a>-->
                     </dd>
                 </dl>
             </div>
@@ -24,7 +24,7 @@
                     <h3><i class="fa fa-chevron-right"></i>${vo.contacts} 的询价信息</h3>
                     <div class="extra">
                         <a href="/anon/enquiry" class="btn btn-gray">返回</a>
-                        <#if userId??>
+                        <#if userId??&&!vo.enquriyBillId?exists>
                         <a class="btn btn-red" href="/enquiry/create/${userId}?anonId=${vo.id}"><i class="fa fa-plus"></i>新建报价</a>
                         </#if>
                     </div>
@@ -72,6 +72,15 @@
                             </tr>
                             </tbody>
                         </table>
+                    </div>
+                </div>
+
+                <div class="user-info">
+                    <h3>处理结果</h3>
+                    <div class="info">
+                    <#if record??>
+                    ${record.result!} <#if vo.enquriyBillId??> <a href="/enquiry/${vo.enquriyBillId}">${vo.enquriyBillCode!} </a></#if>
+                    </#if>
                     </div>
                 </div>
 
