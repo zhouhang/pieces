@@ -52,7 +52,7 @@
                                 </tr>
                                 <tr>
                                     <td><em>应 付 金 额 ：</em>
-                                        &yen;  ${payRecordVo.deposit!}
+                                        &yen;  ${(payRecordVo.deposit?default(0))?string("0.00")}
                                     </td>
                                     <td><em>支付渠道：</em>线下打款</td>
                                 </tr>
@@ -76,7 +76,7 @@
                                 <tr>
                                     <td><em>收款账号：</em>${payRecordVo.receiveBankCard!}</td>
                                     <td><em>付款金额：</em>
-                                        &yen; ${payRecordVo.deposit!}
+                                        &yen; ${(payRecordVo.deposit?default(0))?string("0.00")}
                                     </td>
                                 </tr>
                             </table>

@@ -51,7 +51,7 @@
                                     <td><em>用药单位：</em>${payRecordVo.companyFullName!}</td>
                                 </tr>
                                 <tr>
-                                    <td><em>应 付 金 额 ：</em>&yen; ${payRecordVo.amountsPayable!}</td>
+                                    <td><em>应 付 金 额 ：</em>&yen; ${(payRecordVo.amountsPayable?default(0))?string("0.00")}</td>
                                     <td><em>支付渠道：</em>
                                        <#if payRecordVo.paymentId?exists>
                                            ${payRecordVo.payTypeName}
@@ -72,9 +72,9 @@
                                     <tr>
                                         <td><em>付款金额：</em>
                                             <#if payRecordVo.actualPayment?exists>
-                                            ${payRecordVo.actualPayment!}
+                                            ${(payRecordVo.actualPayment?default(0))?string("0.00")}
                                             <#else>
-                                            ${payRecordVo.amountsPayable!}
+                                            ${(payRecordVo.amountsPayable?default(0))?string("0.00")}
                                             </#if>
                                         </td>
                                         <td><em>支付时间：</em>${(payRecordVo.paymentTime?datetime)!}</td>
@@ -97,9 +97,9 @@
                                     <td><em>收款账号：</em>${payRecordVo.receiveBankCard!}</td>
                                     <td><em>付款金额：</em>
                                     <#if payRecordVo.actualPayment?exists>
-                                    ${payRecordVo.actualPayment!}
+                                    ${(payRecordVo.actualPayment?default(0))?string("0.00")}
                                     <#else>
-                                    ${payRecordVo.amountsPayable!}
+                                    ${(payRecordVo.amountsPayable?default(0))?string("0.00")}
                                     </#if>
                                     </td>
                                 </tr>

@@ -33,9 +33,9 @@
                             </tr>
                             <tr>
                                 <td class="tl nr">
-                                    <span>应付：<em>&yen;${accountBillVo.amountsPayable!}</em></span>
-                                    <span>已付：<em>&yen;${accountBillVo.alreadyPayable!}</em></span>
-                                    <span>未付：<em>&yen;${accountBillVo.unPayable!}</em></span>
+                                    <span>应付：<em>&yen;${(accountBillVo.amountsPayable?default(0))?string("0.00")}</em></span>
+                                    <span>已付：<em>&yen;${(accountBillVo.alreadyPayable?default(0))?string("0.00")}</em></span>
+                                    <span>未付：<em>&yen;${(accountBillVo.unPayable?default(0))?string("0.00")}</em></span>
                                 </td>
                                 <td class="tl nl nr">
                                     <span>&#12288;&#12288;立账时间：<em><#if accountBillVo.operateTime??>${accountBillVo.operateTime?string("yyyy-MM-dd")}</#if> </em></span>

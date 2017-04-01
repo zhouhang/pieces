@@ -40,8 +40,8 @@
                                     <tr>
                                         <td>${payRecord.payCode!}</td>
                                         <td>${payRecord.orderCode!} <span>${payRecord.commodityOverview!}</span></td>
-                                        <td>&yen;${payRecord.deposit!}</td>
-                                        <td>&yen;${payRecord.deposit!}</td>
+                                        <td>&yen;${(payRecord.deposit?default(0))?string("0.00")}</td>
+                                        <td>&yen;${(payRecord.deposit?default(0))?string("0.00")}</td>
                                         <td>${payRecord.paymentTime?string("yyyy-MM-dd")}</td>
                                         <td><em class="c-red">${payRecord.statusText!}</em></td>
                                         <td><a href="/center/pay/details/${payRecord.id!}" class="c-blue">查看详情</a></td>
