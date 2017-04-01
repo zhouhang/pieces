@@ -102,8 +102,8 @@
                                     <i>*</i>客户类型：
                                 </div>
                                 <div class="cnt cbxs" id="categorys">
-                                    <label><input type="radio" class="cbx" name="category" value="1">终端客户</label>
-                                    <label><input type="radio" class="cbx" name="category" value="2">代理商</label>
+                                    <label><input type="radio" class="cbx" name="category" id="cat1" value="1">终端客户</label>
+                                    <label><input type="radio" class="cbx" name="category" id="cat2" value="2">代理商</label>
                                 </div>
                             </div>
 
@@ -204,7 +204,7 @@
                         fields: {
                             username: '会员名: required',
                             linkMan: '联系人姓名: required',
-                            mobile: '联系人手机号码: required, mobile',
+                            mobile: '联系人手机号码: required(#cat1:checked), mobile',
                             pwd: '新密码: required'
                         },
                         valid: function(form) {
