@@ -155,7 +155,6 @@
             // 删除图片
             $('.ui-upload').on('click', '.del', function() {
                 var _url = $(this).data('url');
-
                 $.each(pic, function(i, url) {
                     if (url === _url) {
                         pic.splice(i, 1);
