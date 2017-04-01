@@ -371,7 +371,7 @@ public class UserController extends  BaseController{
 	 * @return
      */
 	@RequiresPermissions(value = "customer:edit")
-	@RequestMapping(value = "/disable" ,method= RequestMethod.POST)
+	@RequestMapping(value = "/disable" ,method= RequestMethod.GET)
 	@ResponseBody
 	@BizLog(type = LogConstant.user, desc = "禁用用户")
 	public Result disable(Integer id) {
@@ -386,7 +386,7 @@ public class UserController extends  BaseController{
 	 * @return
 	 */
 	@RequiresPermissions(value = "customer:edit")
-	@RequestMapping(value = "/enable" ,method= RequestMethod.POST)
+	@RequestMapping(value = "/enable" ,method= RequestMethod.GET)
 	@ResponseBody
 	@BizLog(type = LogConstant.user, desc = "禁用用户")
 	public Result enable(Integer id) {
