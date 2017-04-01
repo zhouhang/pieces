@@ -128,8 +128,7 @@
 	</div>
 
 	<#include "./inc/footer.ftl"/>
-
-
+    <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 	<script src="${urls.getForLookupPath('/js/laydate/laydate.js')}"></script>
 	<script>
     //定义根变量
@@ -156,18 +155,24 @@
                     })
 
                     $(".jenable").click(function(){
-						var url = "/user/enable?id=" +$(this).data("id");
-						$.post(url,function(){
-							window.location.reload();
-						})
+						var $that = $(this);
+                        layer.confirm('确认要启用该用户？', {icon: 3, title: '提示'}, function (index) {
+                            var url = "/user/enable?id=" + $that.data("id");
+                            $.post(url, function () {
+                                window.location.reload();
+                            })
+                        });
 						return false;
                     });
 
                     $(".jdisable").click(function(){
-                        var url = "/user/disable?id=" +$(this).data("id");
-                        $.post(url,function(){
-                            window.location.reload();
-                        })
+                        var $that = $(this);
+                        layer.confirm('确认要禁用该用户？', {icon: 3, title: '提示'}, function (index) {
+                            var url = "/user/disable?id=" + $that.data("id");
+                            $.post(url, function () {
+                                window.location.reload();
+                            })
+                        });
                         return false;
                     });
 
