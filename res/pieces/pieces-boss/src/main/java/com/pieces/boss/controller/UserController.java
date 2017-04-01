@@ -225,7 +225,10 @@ public class UserController extends  BaseController{
 				WebUtil.print(response,new Result(false).info(advices));
 				return;
 			}
-			if(!(oldUser.getContactMobile().equals(user.getContactMobile()))&&userService.ifExistMobile(user.getContactMobile())){
+			if (oldUser.getContactMobile() == null) {
+				oldUser.setContactMobile("");
+			}
+			if(!Strings.isNullOrEmpty(user.getContactMobile()) &&!(oldUser.getContactMobile().equals(user.getContactMobile()))&&userService.ifExistMobile(user.getContactMobile())){
 				advices="修改手机号存在";
 				WebUtil.print(response,new Result(false).info(advices));
 				return;
@@ -371,7 +374,7 @@ public class UserController extends  BaseController{
 	 * @return
      */
 	@RequiresPermissions(value = "customer:edit")
-	@RequestMapping(value = "/disable" ,method= RequestMethod.GET)
+	@RequestMapping(value = "/disable" ,method= RequestMethod.POST)
 	@ResponseBody
 	@BizLog(type = LogConstant.user, desc = "禁用用户")
 	public Result disable(Integer id) {
@@ -386,9 +389,9 @@ public class UserController extends  BaseController{
 	 * @return
 	 */
 	@RequiresPermissions(value = "customer:edit")
-	@RequestMapping(value = "/enable" ,method= RequestMethod.GET)
+	@RequestMapping(value = "/enable" ,method= RequestMethod.POST)
 	@ResponseBody
-	@BizLog(type = LogConstant.user, desc = "禁用用户")
+	@BizLog(type = LogConstant.user, desc = "启用用户")
 	public Result enable(Integer id) {
 		userService.enable(id);
 		return new Result(true);

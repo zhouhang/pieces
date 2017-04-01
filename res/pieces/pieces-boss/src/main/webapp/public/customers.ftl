@@ -112,9 +112,9 @@
 								<@shiro.hasPermission name="customer:edit">
                                     <a href="user/info/${user.id}">修改</a>
 									<#if !user.isDel>
-                                        <a href="user/disable?id=${user.id}">禁用</a>
+                                        <a class="jdisable" data-id="${user.id}" href="javascript:;">禁用</a>
 									<#else>
-                                        <a href="user/enable?id=${user.id}">启用</a>
+                                        <a class="jenable" data-id="${user.id}" href="javascript:;">启用</a>
 									</#if>
 								</@shiro.hasPermission>
 							</td>
@@ -154,6 +154,23 @@
                     $("#reset").click(function(){
                     	$('.tc :input').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
                     })
+
+                    $(".jenable").click(function(){
+						var url = "/user/enable?id=" +$(this).data("id");
+						$.post(url,function(){
+							window.location.reload();
+						})
+						return false;
+                    });
+
+                    $(".jdisable").click(function(){
+                        var url = "/user/disable?id=" +$(this).data("id");
+                        $.post(url,function(){
+                            window.location.reload();
+                        })
+                        return false;
+                    });
+
                 },
                 // 筛选
                 filter: function() {

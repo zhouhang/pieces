@@ -82,8 +82,8 @@
                                     <i>*</i>客户类型：
                                 </div>
                                 <div class="cnt cbxs">
-                                    <label><input type="radio" class="cbx" name="type" value="1" <#if userType =1>checked</#if>>终端客户</label>
-                                    <label><input type="radio" class="cbx" name="type" value="2" <#if userType =2>checked</#if>>代理商</label>
+                                    <label><input type="radio" class="cbx" name="type" value="1" <#if user.type =1>checked</#if>>终端客户</label>
+                                    <label><input id="agentU" type="radio" class="cbx" name="type" value="2" <#if user.type =2>checked</#if>>代理商</label>
                                 </div>
                             </div>
                         </#if>
@@ -178,7 +178,7 @@
                 $('#myform').validator({
                     fields: {
                         contactName: '会员名: required;nickName',
-                        contactMobile: '联系人姓名: required, mobile',
+                        contactMobile: '联系人姓名: required(#agentU:checked), mobile',
                     },
                     valid: function(form) {
                         if ( $(form).isValid() ) {

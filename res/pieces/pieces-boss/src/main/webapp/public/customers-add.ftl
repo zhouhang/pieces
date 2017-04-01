@@ -54,8 +54,8 @@
                                 <i>*</i>客户类型：
                             </div>
                             <div class="cnt cbxs" id="categorys">
-                                <label><input type="radio" class="cbx" name="type" value="1" <#if userType =1>checked</#if>>终端客户</label>
-                                <label><input type="radio" class="cbx" name="type" value="2" <#if userType =2>checked</#if>>代理商</label>
+                                <label><input id="terminalU" type="radio" class="cbx" name="type" value="1" <#if userType =1>checked</#if>>终端客户</label>
+                                <label><input id="agentU" type="radio" class="cbx" name="type" value="2" <#if userType =2>checked</#if>>代理商</label>
                             </div>
                         </div>
 
@@ -79,7 +79,7 @@
 
                         <div class="group">
                             <div class="txt">
-                                <i>*</i>联系人手机号码：
+                                <i></i>联系人手机号码：
                             </div>
                             <div class="cnt">
                                 <input type="text" class="ipt" value="" autocomplete="off" name="contactMobile" id="contactMobile" placeholder="">
@@ -166,7 +166,7 @@
                     fields: {
                         userName: '会员名: required;username;remote(/user/username/check)',
                         contactName: '联系人姓名: required;nickName',
-                        contactMobile: '联系人手机号码: required, mobile',
+                        contactMobile: '联系人手机号码: required(#agentU:checked), mobile',
                         password: '新密码: required;password'
                     },
                     valid: function(form) {
