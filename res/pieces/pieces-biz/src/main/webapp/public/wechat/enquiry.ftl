@@ -18,7 +18,6 @@
         </div>
         <div class="ui-upload thumb">
             <span class="ui-file" id="upfile">
-                <input type="file" name="file" accept="image/gif,image/jpeg,image/png" class="file" />
             </span>
         </div>
     </div>
@@ -53,18 +52,34 @@
         <button type="button" class="ubtn ubtn-red" id="submit">提交</button>
     </div>
 </section><!-- /ui-content -->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <#include "wechat/inc/footer_h5.ftl"/>
 <script src="/h5-static/js/lrz.bundle.js"></script>
 <script>
     !(function($) {
+
+        wx.config({
+            debug: false,
+            appId: '${signature.appid!}',
+            timestamp: ${signature.timestamp!},
+            nonceStr: '${signature.noncestr!}',
+            signature: '${signature.signature!}',
+            jsApiList: [
+                'chooseImage',
+                'previewImage',
+                'uploadImage'
+            ]
+        });
+
         var _global = {
             v:{
                 img:{}
             },
             init: function() {
                 this.help();
-                this.upfile();
+//                this.upfile();
                 this.bindEvent();
+                this.camera();
                 gallery(true); // 开启图片预览
             },
             help: function() {
@@ -281,6 +296,72 @@
                 // 删除图片
                 $('.ui-upload').on('click', '.del', function() {
                     delete _global.v.img['img_' + this.id];
+                    $picNumber.html((-- number) + '/' + maxSize);
+                    $(this).parent().remove();
+                    reset();
+                    return false;
+                })
+            },
+            camera: function() {
+                var that = this,
+                        $body = $('body'),
+                        $upfile = $('#upfile'),
+                        $picNumber = $('#picNumber'),
+                        idx = 0,
+                        number = 0, // 已上传图片数量
+                        maxSize = 9, // 最大上传图片数量
+                        img = {};
+
+                var reset = function() {
+                    $upfile.show().html('<input type="file" name="file" accept="image/gif,image/jpeg,image/png" class="file" />');
+                }
+                var showLader = function() {
+                    $upfile.html('<i class="loader">上传中...</i>');
+                }
+
+                $upfile.on('click', function() {
+                    wx.chooseImage({
+                        // count: 1, // 默认9
+                        // sizeType: 'compressed', // 可以指定是原图还是压缩图，默认二者都有
+                        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                        success: function (res) {
+                            var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                            wx.uploadImage({
+                                localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
+                                isShowProgressTips: 1, // 默认为1，显示进度提示
+                                success: function (result) {
+                                    if (number >= maxSize) {
+                                        $upfile.empty('').hide();
+                                    } else if (result.status == '1') {
+                                        reset();
+                                        var model = [];
+                                        img['img_' + (idx++)] = result.url;
+                                        model.push('<span class="ui-file">');
+                                        model.push('<img src="' , localIds , '" data-src="' , localIds , '" />');
+                                        model.push('<i class="del" id="img_' , idx , '"></i>');
+                                        model.push('<span');
+                                        $upfile.before(model.join(''));
+                                        $picNumber.html((++ number) + '/' + maxSize);
+                                        number >= maxSize && $upfile.empty('').hide();
+                                    } else {
+                                        popover('上传图片失败，请刷新页面重试！');
+                                    }
+
+                                    // res.serverId; // 返回图片的服务器端ID，图片有效期3天，需要下载到本地
+                                },
+                                fail: function (error) {
+                                    picPath = '';
+                                    localIds = '';
+                                    alert(Json.stringify(error));
+                                }
+                            });
+                        }
+                    });
+                })
+
+                // 删除图片
+                $('.ui-upload').on('click', '.del', function() {
+                    delete img['img_' + this.id];
                     $picNumber.html((-- number) + '/' + maxSize);
                     $(this).parent().remove();
                     reset();

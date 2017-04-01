@@ -76,9 +76,16 @@ public class WeChatController {
      * @return
      */
     @RequestMapping(value = "enquiry", method = RequestMethod.GET)
-    public String enquiry(ModelMap model) {
+    public String enquiry(ModelMap model,HttpServletRequest request) {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         model.put("user", user);
+        try {
+            WxJsapiSignature signature = wxService.createJsapiSignature(WebUtil.getFullUrl(request));
+            model.put("signature",signature);
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
+
         return "wechat/enquiry";
     }
 
