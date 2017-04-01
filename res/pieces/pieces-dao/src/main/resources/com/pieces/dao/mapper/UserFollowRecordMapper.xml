@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.UserFollowRecordDao">
+    <resultMap id="UserFollowRecordResultMap" type="com.pieces.dao.model.UserFollowRecord">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="follow_id"  property="followId" />
+            <result column="create_time"  property="createTime" />
+            <result column="result"  property="result" />
+        
+    </resultMap>
+
+    <resultMap id="UserFollowRecordResultMapVo" type="com.pieces.dao.vo.UserFollowRecordVo">
+            <id column="id"  property="id" />
+            <result column="user_id"  property="userId" />
+            <result column="follow_id"  property="followId" />
+            <result column="create_time"  property="createTime" />
+            <result column="result"  property="result" />
+           <result column="followerName"  property="followerName" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,follow_id,create_time,result
+    </sql>
+
+    <sql id="Base_Column_List_Alisa">
+        record.id as id,record.user_id as user_id,
+        record.follow_id as follow_id,record.create_time as create_time,record.result as result
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="UserFollowRecordResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_follow_record
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="UserFollowRecordResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user_follow_record
+    </select>
+
+    <select id="findByParams" resultMap="UserFollowRecordResultMapVo" parameterType="com.pieces.dao.vo.UserFollowRecordVo">
+        select
+        <include refid="Base_Column_List_Alisa" />,
+        mem.name as followerName
+        from user_follow_record record
+        LEFT JOIN member mem on record.follow_id = mem.id
+        <where>
+            <if test="id != null">
+                record.id = #{id}
+            </if>
+            <if test="userId != null">
+                AND record.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from user_follow_record
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.UserFollowRecord">
+        insert into
+        user_follow_record (user_id,follow_id,create_time,result)
+        values
+        (#{userId},#{followId},#{createTime},#{result})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.UserFollowRecord">
+        update user_follow_record
+        <set>
+                                                        
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+                                            
+            <if test="followId != null">
+                follow_id = #{followId},
+            </if>
+                                            
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+                                            
+            <if test="result != null">
+                result = #{result},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

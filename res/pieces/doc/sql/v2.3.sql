@@ -1,2 +1,11 @@
 ALTER TABLE `anon_enquiry`
-ADD COLUMN `enquriy_bill_id`  int NULL DEFAULT NULL COMMENT '生成的询价单id' AFTER `status`;
+ADD COLUMN `enquriy_bill_id`  int NULL DEFAULT NULL COMMENT '璇环鍗昳d' AFTER `status`;
+
+CREATE TABLE `user_follow_record` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL COMMENT '鐢ㄦ埛id',
+  `follow_id` int(11) DEFAULT NULL COMMENT '璺熻繘浜篿d',
+  `create_time` datetime DEFAULT NULL,
+  `result` text COMMENT '璺熻繘缁撴灉',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
