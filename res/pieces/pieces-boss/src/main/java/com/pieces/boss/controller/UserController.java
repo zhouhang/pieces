@@ -400,9 +400,17 @@ public class UserController extends  BaseController{
 	public String trailUser(HttpServletRequest request,
 						   HttpServletResponse response,
 						   @PathVariable("id") Integer id,
+							Integer pageNum,
+							Integer pageSize,
 						   ModelMap model){
         UserVo userVo=userService.findVoById(id);
-        List<UserFollowRecordVo> records=userFollowRecordService.findByUserId(id);
+		pageNum=pageNum==null?1:pageNum;
+		pageSize=pageSize==null?10:pageSize;
+
+		UserFollowRecordVo userFollowRecordVo=new UserFollowRecordVo();
+		userFollowRecordVo.setUserId(id);
+
+		PageInfo<UserFollowRecordVo> records=userFollowRecordService.findByParams(userFollowRecordVo,pageNum,pageSize);
         model.put("user",userVo);
         model.put("records",records);
 

@@ -34,6 +34,9 @@
 
                 <div class="chart-info">
                     <h3>跟进结果</h3>
+                    <div class="pagin">
+                    <@p.pager pageInfo=records pageUrl="/user/trail/${user.id}" params=""/>
+                    </div>
                     <div class="chart">
                         <table class="tc">
                             <thead>
@@ -44,7 +47,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <#list records as record >
+                            <#list records.list as record >
                             <tr>
                                 <td>${record.createTime?datetime}</td>
                                 <td class="tl">${record.result!}</td>
