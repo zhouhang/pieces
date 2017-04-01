@@ -35,6 +35,8 @@ public class BizAuthorizationFilter extends AuthorizationFilter {
 
 	private Pattern pattern = Pattern.compile("h5/enquiry",Pattern.CASE_INSENSITIVE);
 
+	private Pattern patternH5c = Pattern.compile("h5c/",Pattern.CASE_INSENSITIVE);
+
 	@Override
 	public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
 			throws IOException {
@@ -45,6 +47,12 @@ public class BizAuthorizationFilter extends AuthorizationFilter {
 			HttpServletRequest httpRequest = (HttpServletRequest) request;
 			String ua = httpRequest.getHeader("user-agent").toLowerCase();
 			String uri = httpRequest.getRequestURI() + "?" + httpRequest.getQueryString();
+
+			Matcher h5cMatcher = patternH5c.matcher(uri);
+			if (h5cMatcher.find()) {
+				uri = "/h5/enquiry";
+			}
+
 			Matcher matcher = pattern.matcher(uri);
 			if (matcher.find()) {
 				Session httpSession = subject.getSession();

@@ -58,18 +58,18 @@
 <script>
     !(function($) {
 
-        wx.config({
-            debug: false,
-            appId: '${signature.appid!}',
-            timestamp: ${signature.timestamp!},
-            nonceStr: '${signature.noncestr!}',
-            signature: '${signature.signature!}',
-            jsApiList: [
-                'chooseImage',
-                'previewImage',
-                'uploadImage'
-            ]
-        });
+        <#--wx.config({-->
+            <#--debug: false,-->
+            <#--appId: '${signature.appid!}',-->
+            <#--timestamp: ${signature.timestamp!},-->
+            <#--nonceStr: '${signature.noncestr!}',-->
+            <#--signature: '${signature.signature!}',-->
+            <#--jsApiList: [-->
+                <#--'chooseImage',-->
+                <#--'previewImage',-->
+                <#--'uploadImage'-->
+            <#--]-->
+        <#--});-->
 
         var _global = {
             v:{
@@ -77,9 +77,9 @@
             },
             init: function() {
                 this.help();
-//                this.upfile();
+                this.upfile();
                 this.bindEvent();
-                this.camera();
+//                this.camera();
                 gallery(true); // 开启图片预览
             },
             help: function() {
@@ -309,8 +309,7 @@
                         $picNumber = $('#picNumber'),
                         idx = 0,
                         number = 0, // 已上传图片数量
-                        maxSize = 9, // 最大上传图片数量
-                        img = {};
+                        maxSize = 9; // 最大上传图片数量
 
                 var reset = function() {
                     $upfile.show().html('<input type="file" name="file" accept="image/gif,image/jpeg,image/png" class="file" />');
@@ -332,10 +331,10 @@
                                 success: function (result) {
                                     if (number >= maxSize) {
                                         $upfile.empty('').hide();
-                                    } else if (result.status == '1') {
+                                    } else {
                                         reset();
                                         var model = [];
-                                        img['img_' + (idx++)] = result.url;
+                                        _global.v.img['img_' + (idx++)] = result.serverId;
                                         model.push('<span class="ui-file">');
                                         model.push('<img src="' , localIds , '" data-src="' , localIds , '" />');
                                         model.push('<i class="del" id="img_' , idx , '"></i>');
@@ -343,9 +342,10 @@
                                         $upfile.before(model.join(''));
                                         $picNumber.html((++ number) + '/' + maxSize);
                                         number >= maxSize && $upfile.empty('').hide();
-                                    } else {
-                                        popover('上传图片失败，请刷新页面重试！');
                                     }
+//                                    else {
+//                                        popover('上传图片失败，请刷新页面重试！');
+//                                    }
 
                                     // res.serverId; // 返回图片的服务器端ID，图片有效期3天，需要下载到本地
                                 },
@@ -361,7 +361,7 @@
 
                 // 删除图片
                 $('.ui-upload').on('click', '.del', function() {
-                    delete img['img_' + this.id];
+                    delete global.v.img['img_' + this.id];
                     $picNumber.html((-- number) + '/' + maxSize);
                     $(this).parent().remove();
                     reset();
