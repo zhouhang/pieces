@@ -43,7 +43,9 @@
     <#if user?exists && user.type == 2>
         <button type="button" class="ubtn ubtn-red" id="submit"><i class="ico ico-edit"></i> 修改开票价</button>
     </#if>
+        <#if user?exists>
         <button type="button" class="ubtn ubtn-red" id="createOrder"><i class="ico ico-edit"></i> 下单</button>
+        </#if>
         <button type="button" class="ubtn ubtn-white" id="share"><i class="ico ico-share2"></i> 分享报价</button>
     </div>
 </#if>

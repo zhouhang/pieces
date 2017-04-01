@@ -3,24 +3,22 @@ package com.pieces.biz.controller;
 import com.github.pagehelper.PageInfo;
 import com.google.common.base.Strings;
 import com.pieces.biz.shiro.BizToken;
-import com.pieces.dao.model.*;
+import com.pieces.dao.model.EnquiryCommoditys;
+import com.pieces.dao.model.User;
 import com.pieces.dao.vo.*;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
-import com.pieces.service.dto.UserValidate;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.redis.RedisManager;
 import com.pieces.service.vo.CropResult;
 import com.pieces.tools.bean.BASE64DecodedMultipartFile;
 import com.pieces.tools.exception.NotFoundException;
-import com.pieces.tools.utils.CommonUtils;
 import com.pieces.tools.utils.WebUtil;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
@@ -81,6 +79,7 @@ public class WeChatController {
         model.put("user", user);
         try {
             WxJsapiSignature signature = wxService.createJsapiSignature(WebUtil.getFullUrl(request));
+            //wxService.getAccessToken();
             model.put("signature",signature);
         } catch (WxErrorException e) {
             e.printStackTrace();
