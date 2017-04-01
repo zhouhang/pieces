@@ -24,7 +24,7 @@
                 </dl>
             </div>
             <div class="main">
-                <div class="title">
+                <div class="title title-btm">
                     <h3><i class="fa fa-chevron-right"></i>${user.contactName} 的跟进信息</h3>
                     <div class="extra">
                         <a href="/user/index" class="btn btn-gray">返回</a>
@@ -32,9 +32,10 @@
                     </div>
                 </div>
 
-                <div class="pagin">
+                <div class="pagin mb20">
                 <@p.pager pageInfo=records pageUrl="/user/trail/${user.id}" params=""/>
                 </div>
+
                 <div class="chart-info">
                     <h3>跟进记录</h3>
 
