@@ -30,6 +30,7 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .cf:after,.wrap:after{content:".";display:block;height:0;clear:both;visibility:hidden}
 .opacity{opacity:.7;-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";filter:alpha(opacity=70);}
 .cbx{margin:0 4px 0 0;vertical-align:-1px;}
+.mb20{margin-bottom:20px;}
 
 .nav, .header, .footer, .wrap{min-width:900px;}
 
