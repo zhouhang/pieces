@@ -269,7 +269,7 @@ body.noscroll{overflow:hidden;}
 /* olist */
 .olist li{position:relative;line-height:26px;margin-bottom:10px;padding:13px;background:#fff;}
 .olist .hd em{color:#c3272b;}
-.olist .hd span{display:inline-block;width:60px;color:#999;text-align:right;white-space:nowrap;}
+.olist .hd span{display:inline-block;color:#999;white-space:nowrap;}
 .olist .bd{margin-top:13px;padding-top:13px;border-top:1px solid #e7e7e7;}
 .olist .bd span{display:block;margin-bottom:-7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .olist .bd em{font-size:1.2rem;color:#999;}
