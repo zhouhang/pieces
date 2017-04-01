@@ -247,7 +247,7 @@
                 var showLader = function() {
                     $upfile.html('<i class="loader">上传中...</i>');
                 }
-
+                reset();
                 $upfile.on('change', '.file', function(ev) {
                     showLader();
                     lrz(this.files[0], {
