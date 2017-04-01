@@ -38,8 +38,11 @@
                 <div class="price">
                    <#if userType==2>
                     <span>销售价:<em><#if commodity.guidePrice??>${(commodity.guidePrice?default(0))?string .currency}</#if></em></span>
-                   </#if>
+
                     <span>开票价:<#if commodity.price??>${(commodity.price?default(0))?string .currency}</#if></span>
+                   <#else>
+                       <span>单价:<#if commodity.price??>${(commodity.price?default(0))?string .currency}</#if></span>
+                   </#if>
                 </div>
                 <div class="pic rs-pic">
                     <img src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>" />
@@ -55,12 +58,15 @@
 
     <div class="summary">
         <div class="money">
-            <em class="fr">¥${vo.amountsPayable}</em>开票金额
+            <em class="fr">¥${vo.amountsPayable}</em>
         </div>
         <#if userType==2>
+            开票金额
         <div class="li">
             需支付保证金：<em>¥${vo.deposit}</em>
         </div>
+        <#else >
+            订单金额
         </#if>
 
     </div>
