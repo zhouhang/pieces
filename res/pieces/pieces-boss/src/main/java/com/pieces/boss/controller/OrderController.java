@@ -232,7 +232,7 @@ public class OrderController extends BaseController{
     @RequestMapping(value = "/commodity/auto")
     @ResponseBody
     public Result inputCommodityAuto(String commodityName,Integer userId){
-       PageInfo<CommodityVo> pageInfo = commodityService.searchForOrder(userId,commodityName,1,10);
+       PageInfo<CommodityVo> pageInfo = commodityService.searchForOrder(userId,commodityName,1,20);
        return new Result(true).data(pageInfo);
     }
 
