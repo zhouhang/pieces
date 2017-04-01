@@ -375,7 +375,8 @@ public class UserController extends  BaseController{
 	@ResponseBody
 	@BizLog(type = LogConstant.user, desc = "禁用用户")
 	public Result disable(Integer id) {
-		return null;
+		userService.disable(id);
+		return new Result(true);
 	}
 
 
@@ -389,7 +390,8 @@ public class UserController extends  BaseController{
 	@ResponseBody
 	@BizLog(type = LogConstant.user, desc = "禁用用户")
 	public Result enable(Integer id) {
-		return null;
+		userService.enable(id);
+		return new Result(true);
 	}
 
 
