@@ -55,7 +55,7 @@
 
     <div class="summary">
         <div class="money">
-            <em class="fr">¥${vo.amountsPayable}</em>开票金额
+            <em class="fr">¥${vo.amountsPayable}</em><#if user.type==1>订单金额<#else >开票金额</#if>
         </div>
         <#if userType==2>
         <div class="li">
