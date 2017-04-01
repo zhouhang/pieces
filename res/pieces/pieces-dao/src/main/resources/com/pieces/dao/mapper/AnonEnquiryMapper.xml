@@ -10,6 +10,7 @@
             <result column="last_follow_time"  property="lastFollowTime" />
             <result column="last_follow_id"  property="lastFollowId" />
             <result column="status"  property="status" />
+            <result column="enquriy_bill_id"  property="enquriyBillId" />
         
     </resultMap>
 
@@ -18,12 +19,12 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,content,contacts,publish_time,phone,last_follow_time,last_follow_id,status
+        id,content,contacts,publish_time,phone,last_follow_time,last_follow_id,status,enquriy_bill_id
     </sql>
 
     <sql id="Base_Column_List_Alisa">
         anon.id as id,anon.content as content,anon.contacts as contacts,anon.publish_time as publish_time,anon.phone as phone,
-        anon.last_follow_time as last_follow_time,anon.last_follow_id as last_follow_id,anon.status as status
+        anon.last_follow_time as last_follow_time,anon.last_follow_id as last_follow_id,anon.status as status,anon.enquriy_bill_id as enquriy_bill_id
     </sql>
 
     <select id="findById" parameterType="java.lang.Integer" resultMap="AnonEnquiryResultMap">
@@ -84,11 +85,12 @@
         where id = #{id}
     </delete>
 
+
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.AnonEnquiry">
         insert into
-        anon_enquiry (content,contacts,publish_time,phone,last_follow_time,last_follow_id,status)
+        anon_enquiry (content,contacts,publish_time,phone,last_follow_time,last_follow_id,status,enquriy_bill_id)
         values
-        (#{content},#{contacts},#{publishTime},#{phone},#{lastFollowTime},#{lastFollowId},#{status})
+        (#{content},#{contacts},#{publishTime},#{phone},#{lastFollowTime},#{lastFollowId},#{status},#{enquriyBillId})
     </insert>
 
     <update id="update" parameterType="com.pieces.dao.model.AnonEnquiry">
@@ -121,6 +123,9 @@
                                             
             <if test="status != null">
                 status = #{status},
+            </if>
+            <if test="enquriyBillId != null">
+                enquriy_bill_id = #{enquriyBillId},
             </if>
                             
         </set>

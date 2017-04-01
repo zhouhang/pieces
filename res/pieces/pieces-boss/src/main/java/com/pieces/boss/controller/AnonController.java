@@ -2,14 +2,12 @@ package com.pieces.boss.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.boss.commons.LogConstant;
-import com.pieces.dao.model.AnonEnquiry;
-import com.pieces.dao.model.AnonFollowRecord;
-import com.pieces.dao.model.Member;
-import com.pieces.dao.model.User;
+import com.pieces.dao.model.*;
 import com.pieces.dao.vo.AnonEnquiryVo;
 import com.pieces.dao.vo.AnonFollowRecordVo;
 import com.pieces.service.AnonEnquiryService;
 import com.pieces.service.AnonFollowRecordService;
+import com.pieces.service.EnquiryBillsService;
 import com.pieces.service.UserService;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.AnonEnquiryEnum;
@@ -55,6 +53,9 @@ public class AnonController extends BaseController{
     @Autowired
     UserService userService;
 
+    @Autowired
+    EnquiryBillsService enquiryBillsService;
+
     /**
      * 新客询价
      * @param pageSize
@@ -90,7 +91,16 @@ public class AnonController extends BaseController{
     public String detail(Integer id, ModelMap model){
         AnonEnquiryVo vo = anonEnquiryService.findVoById(id);
         model.put("vo", vo);
+        if(vo.getEnquriyBillId()!=null){
+           EnquiryBills enquiryBills =enquiryBillsService.findById(vo.getEnquriyBillId());
+           vo.setEnquriyBillCode(enquiryBills.getCode());
+        }
         User u=userService.findByAccount(vo.getPhone());
+        List<AnonFollowRecordVo> list =  followRecordService.findByAnonId(id);
+        if(list.size()!=0){
+            model.put("record",list.get(list.size()-1));
+        }
+
         if(u!=null){
             model.put("userId",u.getId());
         }

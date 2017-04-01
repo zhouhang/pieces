@@ -32,6 +32,16 @@ public class AnonEnquiryVo extends AnonEnquiry {
     private Date lastFollowTimeEnd;
 
 
+    private String  enquriyBillCode;
+
+    public String getEnquriyBillCode() {
+        return enquriyBillCode;
+    }
+
+    public void setEnquriyBillCode(String enquriyBillCode) {
+        this.enquriyBillCode = enquriyBillCode;
+    }
+
     public AnonEnquiryDetail getDetail() {
         return detail;
     }

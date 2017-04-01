@@ -217,8 +217,8 @@
 		<profile>
 			<id>dev-ccx</id>
 			<properties>
-				<biz.base.url>http://127.0.0.1:8088</biz.base.url>
-				<biz.upload.url>http://127.0.0.1:8088/files/</biz.upload.url>
+				<biz.base.url>http://376161552.tunnel.2bdata.com</biz.base.url>
+				<biz.upload.url>http://376161552.tunnel.2bdata.com/files/</biz.upload.url>
 				<biz.upload.path>D:/apache-tomcat-8.5.11/webapps/files/</biz.upload.path>
 			</properties>
 		</profile>

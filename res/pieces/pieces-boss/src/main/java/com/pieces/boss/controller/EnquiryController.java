@@ -264,17 +264,18 @@ public class EnquiryController extends BaseController{
             record.setFollowerId(member.getId());
             record.setCreateTime(new Date());
             record.setAnonEnquiryId(annoId);
-            record.setResult("已报价，询价单号："+billsVo.getCode());
+            record.setResult("已报价，询价单号：");
             followRecordService.create(record);
             // 如果匿名询价状态未改变，修改为已处理状态
             AnonEnquiry anonEnquiry=anonEnquiryService.findById(annoId);
+            anonEnquiry.setEnquriyBillId(billsVo.getId());
             if(!(anonEnquiry.getStatus().equals(AnonEnquiryEnum.COMPLETE.getValue()))){
                 anonEnquiry.setId(record.getAnonEnquiryId());
                 anonEnquiry.setStatus(AnonEnquiryEnum.COMPLETE.getValue());
                 anonEnquiry.setLastFollowId(member.getId());
                 anonEnquiry.setLastFollowTime(new Date());
-                anonEnquiryService.update(anonEnquiry);
             }
+            anonEnquiryService.update(anonEnquiry);
 
             //跳转匿名询价详情
             return new Result(true).data("/anon/detail?id="+annoId);

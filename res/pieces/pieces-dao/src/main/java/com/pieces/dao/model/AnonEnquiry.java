@@ -38,6 +38,9 @@ public class AnonEnquiry  implements Serializable {
 	
 	//状态 1 未处理 2 已处理
 	private Integer status;
+
+	//生成的询价单id
+	private Integer enquriyBillId;
 	
 	public AnonEnquiry(){}
 	
@@ -104,5 +107,12 @@ public class AnonEnquiry  implements Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
-	
+
+	public Integer getEnquriyBillId() {
+		return enquriyBillId;
+	}
+
+	public void setEnquriyBillId(Integer enquriyBillId) {
+		this.enquriyBillId = enquriyBillId;
+	}
 }
