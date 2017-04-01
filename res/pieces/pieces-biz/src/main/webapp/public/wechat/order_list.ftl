@@ -64,7 +64,7 @@
                             }else{
                                 tip="没有待收货的订单！";
                             }
-                            $("#order_list").append('<div class="ui-empty"> <p>'+tip+'</p> <div class="btm"> <a href="/h5/enquiry" class="ubtn ubtn-red"><i class="ico ico-camera"></i>拍照询价</a></div></div>')
+                            // $("#order_list").append('<div class="ui-empty"> <p>'+tip+'</p> <div class="btm"> <a href="/h5/enquiry" class="ubtn ubtn-red"><i class="ico ico-camera"></i>拍照询价</a></div></div>')
                         }
                         return;
                     }
