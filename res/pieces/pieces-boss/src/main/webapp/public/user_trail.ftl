@@ -32,11 +32,12 @@
                     </div>
                 </div>
 
+                <div class="pagin">
+                <@p.pager pageInfo=records pageUrl="/user/trail/${user.id}" params=""/>
+                </div>
                 <div class="chart-info">
-                    <h3>跟进结果</h3>
-                    <div class="pagin">
-                    <@p.pager pageInfo=records pageUrl="/user/trail/${user.id}" params=""/>
-                    </div>
+                    <h3>跟进记录</h3>
+
                     <div class="chart">
                         <table class="tc">
                             <thead>
