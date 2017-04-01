@@ -16,6 +16,7 @@ import com.pieces.tools.utils.FileUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +47,14 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
     private OrderInvoiceService orderInvoiceService;
     @Autowired
     private SerialNumberService serialNumberService;
+    @Autowired
+    private ShippingAddressService shippingAddressService;
+    @Autowired
+    private AreaService areaService;
+    @Autowired
+    private EnquiryCommoditysService enquiryCommoditysService;
+    @Autowired
+    private EnquiryBillsService enquiryBillsService;
 
 
     @Override
@@ -263,5 +273,64 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
         vo.setAgentId(agentId);
         vo.setStatus(status);
         return findOrderByVo(vo,pageNum,pageSize);
+    }
+
+    @Override
+    @Transactional
+    public OrderFormVo h5Create(OrderFormVo orderFormVo, User user) {
+        if (orderFormVo.getAddrHistoryId() == null) {
+            throw new RuntimeException("收货地址不能为空");
+        }
+        // 根据地质ID 获取地址信息保存到历史表中
+        ShippingAddress sa = shippingAddressService.findById(orderFormVo.getAddrHistoryId());
+        ShippingAddressHistory sah = new ShippingAddressHistory();
+        BeanUtils.copyProperties(sa, sah);
+        sah.setId(null);
+        sah.setArea(areaService.getFullAdd(sa.getAreaId()));
+        sah.setAreaId(sa.getAreaId());
+        orderFormVo.setAddress(sah);
+
+        List<OrderCommodity> orderCommoditysList = new ArrayList<OrderCommodity>();
+        Double total = 0.0d;
+        Double deposit = 0.0D;
+        Integer billsId = null; // 询价单id
+        for(EnquiryCommoditys enquiryCommoditys:orderFormVo.getCommodityses()){
+            EnquiryCommoditys ec=enquiryCommoditysService.findById(enquiryCommoditys.getId());
+            OrderCommodity oc = new OrderCommodity();
+            oc.setName(ec.getCommodityName());
+            oc.setSpec(ec.getSpecs());
+            oc.setCommodityId(ec.getCommodityId());
+            oc.setLevel(ec.getLevel());
+            oc.setOriginOf(ec.getOrigin());
+            oc.setAmount(enquiryCommoditys.getAmount());
+            if (user.getType()==1) {
+                oc.setGuidePrice(ec.getMyPrice());
+                oc.setPrice(ec.getMyPrice());
+            } else {
+                oc.setGuidePrice(ec.getMyPrice());
+                oc.setPrice(ec.getPrice()); // 微信下单时合同价不可编辑
+            }
+            oc.setSubtotal(oc.getAmount()*oc.getPrice());
+            oc.setEnquiryCommodityId(ec.getId());
+            oc.setOrderId(null);
+//			oc.setGuidePrice(ec.getMyPrice());
+            orderCommoditysList.add(oc);
+            total = total + oc.getSubtotal();
+            deposit += oc.getGuidePrice()*oc.getAmount();
+            // 询价单id
+            billsId = ec.getBillsId();
+        }
+        // 设置订单过期时间
+        orderFormVo.setExpireDate(enquiryBillsService.findById(billsId).getExpireDate());
+        orderFormVo.setSum(total);
+        if (2== user.getType()) {
+            // 代理商才设置保证金
+            orderFormVo.setDeposit(deposit);
+        }
+        //total = total + orderFormVo.getShippingCosts();
+        orderFormVo.setAmountsPayable(total);
+        orderFormVo.setCommodities(orderCommoditysList);
+        save(orderFormVo, user);
+        return orderFormVo;
     }
 }

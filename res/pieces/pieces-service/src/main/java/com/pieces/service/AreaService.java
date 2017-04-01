@@ -18,4 +18,11 @@ public interface AreaService extends ICommonService<Area>{
 
     public Area findParentsById(Integer id);
 
+    /**
+     * 根据区域ID 获取地址全称
+     * @param areaId
+     * @return
+     */
+    String getFullAdd(Integer areaId);
+
 }

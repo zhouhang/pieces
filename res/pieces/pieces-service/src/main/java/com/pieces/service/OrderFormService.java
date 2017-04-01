@@ -114,4 +114,11 @@ public interface OrderFormService extends ICommonService<OrderForm>{
      */
     PageInfo<OrderFormVo> findOrderByAgentId(Integer agentId, Integer status,Integer pageNum, Integer pageSize);
 
+    /**
+     * h5 端创建订单
+     * @param orderFormVo
+     * @param user
+     * @return
+     */
+    OrderFormVo h5Create(OrderFormVo orderFormVo, User user);
 }

@@ -95,7 +95,7 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 		} else {
 			shippingAddressDao.update(address);
 		}
-		if (address.getIsDefault()) {
+		if (address.getIsDefault()!=null && address.getIsDefault()) {
 			// 如果更新时设置为默认地址
 			settingDefaultAddress(address.getId(), address.getUserId());
 		}
@@ -109,6 +109,7 @@ public class ShippingAddressServiceImpl  extends AbsCommonService<ShippingAddres
 		Area area = areaService.findParentsById(vo.getAreaId());
 		vo.setProvinceId(area.getProvinceId());
 		vo.setCityId(area.getCityId());
+		getFullAdd(vo);
 		return vo;
 	}
 

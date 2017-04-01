@@ -21,7 +21,7 @@
                 <div class="hd"><a href="/h5/commodity/${commodity.commodityId}">${commodity.commodityName!}</a></div>
                 <div class="bd">${commodity.specs!}${commodity.level!}</div>
                 <div class="price">
-                    <span>销售价:<em>${(commodity.myPrice?default(0))?string .currency}</em></span>
+                    <span>销售价:<em>${(commodity.myPrice?default(0))?string.currency}</em></span>
                     <#if user?exists && user.type == 2>
                     <span>开票价:${(commodity.price?default(commodity.myPrice?default(0)))?string .currency}</span>
                     </#if>
@@ -43,6 +43,7 @@
     <#if user?exists && user.type == 2>
         <button type="button" class="ubtn ubtn-red" id="submit"><i class="ico ico-edit"></i> 修改开票价</button>
     </#if>
+        <button type="button" class="ubtn ubtn-red" id="createOrder"><i class="ico ico-edit"></i> 下单</button>
         <button type="button" class="ubtn ubtn-white" id="share"><i class="ico ico-share2"></i> 分享报价</button>
     </div>
 </#if>
@@ -85,6 +86,21 @@
                         return false;
                     }
                     window.location.href = "/h5/enquiry/updatePrice?billId=${bill.id}&ids=" + commodityStr.join(',');
+                })
+
+                $("#createOrder").click(function(){
+                    var commodityStr = [];
+                    var $cbxs = $('.pdetail').find('.cbx input:not(:disabled)')
+
+                    $cbxs.each(function() {
+                        this.checked && commodityStr.push(this.value);
+                    })
+
+                    if (commodityStr.length === 0) {
+                        popover('请先选择商品');
+                        return false;
+                    }
+                    window.location.href = "/h5c/order/md5?commodityIds=" + commodityStr.join(',');
                 })
             },
             share: function () {
