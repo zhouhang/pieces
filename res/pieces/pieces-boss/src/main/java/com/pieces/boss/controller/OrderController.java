@@ -1,5 +1,6 @@
 package com.pieces.boss.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.elasticsearch.document.CommodityDoc;
@@ -13,6 +14,8 @@ import com.pieces.tools.annotation.SecurityToken;
 import com.pieces.tools.log.annotation.BizLog;
 import com.pieces.tools.utils.Reflection;
 import com.pieces.tools.utils.WebUtil;
+import com.pieces.tools.utils.httpclient.common.util.StringUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -28,8 +31,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Author: koabs
@@ -226,14 +228,48 @@ public class OrderController extends BaseController{
     }
 
     /**
-     * 自动联想 会带出商品的最近成交价格
+     * 自动联想 会带出商品的最近成交价格（先用es查询出品种，然后查询当前用户这些商品最近成交价格）
      * @param commodityName
      */
     @RequestMapping(value = "/commodity/auto")
     @ResponseBody
     public Result inputCommodityAuto(String commodityName,Integer userId){
-       PageInfo<CommodityVo> pageInfo = commodityService.searchForOrder(userId,commodityName,1,20);
-       return new Result(true).data(pageInfo);
+        List<CommodityDoc> commodityDocList = commoditySearchService.findByCommodityName(commodityName);
+        List<CommodityVo> commodityVos=new ArrayList<CommodityVo>();
+        List<Integer> idList=new ArrayList<Integer>();
+        String ids;
+        if(commodityDocList.size()!=0){
+            for (CommodityDoc commodityDoc:commodityDocList){
+                idList.add(commodityDoc.getId());
+                commodityVos.add(commoditySearchService.doc2Vo(commodityDoc));
+            }
+        }
+        if(idList.size()!=0){
+            ids=StringUtils.join(idList,",");
+        }else{
+            ids=null;
+        }
+        List<CommodityVo> pInfo=commodityService.searchOrderByIds(userId, ids);
+        if(pInfo.size()!=0){
+            Map<Integer,String> idPrice=new HashMap<Integer,String>();
+            for (CommodityVo commodityVo:pInfo){
+                idPrice.put(commodityVo.getId(),commodityVo.getOrderPrice());
+            }
+            for (CommodityVo commodityVo:commodityVos){
+                String price=idPrice.get(commodityVo.getId());
+                if(price!=null)
+                    commodityVo.setOrderPrice(price);
+                }
+        }
+
+
+
+        PageHelper.startPage(1, 20);
+        PageInfo pageInfo = new PageInfo(commodityVos);
+
+
+        //PageInfo<CommodityVo> pageInfo = commodityService.searchForOrder(userId,commodityName,1,20);
+        return new Result(true).data(pageInfo);
     }
 
     /**

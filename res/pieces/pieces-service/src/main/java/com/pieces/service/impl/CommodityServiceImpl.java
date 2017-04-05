@@ -363,4 +363,10 @@ public class CommodityServiceImpl  extends AbsCommonService<Commodity> implement
         PageInfo page = new PageInfo(list);
         return page;
     }
+
+    @Override
+    public List<CommodityVo> searchOrderByIds(Integer userId, String ids) {
+        List<CommodityVo> list = commodityDao.searchOrderByIds(userId, ids);
+        return list;
+    }
 }

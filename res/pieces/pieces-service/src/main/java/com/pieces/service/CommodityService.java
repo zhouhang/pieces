@@ -82,4 +82,7 @@ public interface CommodityService extends ICommonService<Commodity>{
     Integer batchUpdate(List<Commodity> list);
 
     PageInfo<CommodityVo> searchForOrder(Integer userId, String name,Integer pageNum, Integer pageSize);
+
+    List<CommodityVo> searchOrderByIds(Integer userId,String ids);
+
 }

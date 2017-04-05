@@ -328,4 +328,18 @@
         ORDER BY a.name, a.sort DESC
     </select>
 
+
+    <!--为新建订单时查询商品包含用户最近的成交价格-->
+    <select id="searchOrderByIds" resultMap="CommodityVOResultMap">
+        SELECT ec.commodity_id as id,oc.price as orderPrice
+        FROM order_commodity oc
+        left join enquiry_commoditys ec on oc.enquiry_commodity_id = ec.id
+        left join order_form of on oc.order_id = of.id
+        where ec.commodity_id is not null and of.user_id = #{userId}
+        <if test="ids != null">
+        and ec.commodity_id in (#{ids})
+        </if>
+        order by of.creater_time desc
+    </select>
+
 </mapper>

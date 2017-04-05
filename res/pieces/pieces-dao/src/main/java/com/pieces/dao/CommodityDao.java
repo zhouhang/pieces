@@ -47,4 +47,7 @@ public interface CommodityDao extends ICommonDao<Commodity>{
 	Integer batchUpdate(List<Commodity> list);
 
 	List<CommodityVo> searchForOrder(@Param("userId")Integer userId, @Param("name") String name);
+
+
+	List<CommodityVo> searchOrderByIds(@Param("userId")Integer userId, @Param("ids") String ids);
 }

@@ -208,6 +208,21 @@ public class CommoditySearchServiceImpl implements CommoditySearchService{
         commodityDoc.setSort(commodityVO.getSort());
         return commodityDoc;
     }
+    public CommodityVo doc2Vo(CommodityDoc commodityDoc){
+        CommodityVo commodityVo = new CommodityVo();
+        commodityVo.setId(commodityDoc.getId());
+        commodityVo.setName(commodityDoc.getName());
+        commodityVo.setTitle(commodityDoc.getTitle());
+        commodityVo.setExterior(commodityDoc.getExterior());
+        commodityVo.setOriginOf(commodityDoc.getOriginOf());
+        commodityVo.setLevel(commodityDoc.getLevel());
+        commodityVo.setExecutiveStandard(commodityDoc.getExecutiveStandard());
+        commodityVo.setPictureUrl(commodityDoc.getPictureUrl());
+        commodityVo.setSpec(commodityDoc.getSpec());
+        commodityVo.setCategoryName(commodityDoc.getCategoryName());
+        commodityVo.setSort(commodityDoc.getSort());
+        return commodityVo;
+    }
 
 
 

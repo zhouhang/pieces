@@ -2,6 +2,7 @@ package com.pieces.service;
 
 import com.pieces.dao.elasticsearch.document.CommodityDoc;
 import com.pieces.dao.model.Commodity;
+import com.pieces.dao.vo.CommodityVo;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -60,6 +61,9 @@ public interface CommoditySearchService {
      * @return
      */
     public Page<CommodityDoc> findByPinyinSearch(Integer pageNum, Integer pageSize,String pinyin);
+
+
+    public CommodityVo doc2Vo(CommodityDoc commodityDoc);
 
 
 }
