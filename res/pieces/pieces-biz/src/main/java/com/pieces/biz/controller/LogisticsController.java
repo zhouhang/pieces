@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import com.pieces.biz.controller.commons.LogConstant;
+import com.pieces.dao.model.*;
+import com.pieces.service.impl.KdApiService;
 import com.pieces.tools.log.annotation.BizLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.github.pagehelper.PageInfo;
-import com.pieces.dao.model.Logistical;
-import com.pieces.dao.model.LogisticalCommodity;
-import com.pieces.dao.model.ShippingAddressHistory;
-import com.pieces.dao.model.User;
 import com.pieces.dao.vo.LogisticalCommodityVo;
 import com.pieces.dao.vo.LogisticalVo;
 import com.pieces.dao.vo.OrderCommodityVo;
@@ -26,6 +24,7 @@ import com.pieces.service.LogisticalService;
 import com.pieces.service.OrderCommodityService;
 import com.pieces.service.ShippingAddressHistoryService;
 import com.pieces.service.enums.RedisEnum;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Author: ff 7/19/16. 商品信息
@@ -48,6 +47,9 @@ public class LogisticsController extends BaseController {
     
     @Autowired
     private OrderCommodityService orderCommodityService;
+
+    @Autowired
+    private KdApiService kdApiService;
 
 
     /**
@@ -124,4 +126,10 @@ public class LogisticsController extends BaseController {
         modelMap.put("pageInfo", pageInfo);
         return "user_logistics";
     }
+
+
+
+
+
+
 }

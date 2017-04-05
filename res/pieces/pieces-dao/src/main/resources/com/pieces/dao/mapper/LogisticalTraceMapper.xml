@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pieces.dao.LogisticalTraceDao">
+    <resultMap id="LogisticalTraceResultMap" type="com.pieces.dao.model.LogisticalTrace">
+            <id column="id"  property="id" />
+            <result column="logistic_code"  property="logisticCode" />
+            <result column="shipper_code"  property="shipperCode" />
+            <result column="accept_station"  property="acceptStation" />
+            <result column="accept_time"  property="acceptTime" />
+        
+    </resultMap>
+
+    <resultMap id="LogisticalTraceResultMapVo" type="com.pieces.dao.vo.LogisticalTraceVo">
+            <id column="id"  property="id" />
+            <result column="logistic_code"  property="logisticCode" />
+            <result column="shipper_code"  property="shipperCode" />
+            <result column="accept_station"  property="acceptStation" />
+            <result column="accept_time"  property="acceptTime" />
+        
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,logistic_code,shipper_code,accept_station,accept_time
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Integer" resultMap="LogisticalTraceResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from logistical_trace
+        where id = #{id}
+    </select>
+
+    <select id="findAll"  resultMap="LogisticalTraceResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from logistical_trace
+    </select>
+
+    <select id="findByParams" resultMap="LogisticalTraceResultMapVo" parameterType="com.pieces.dao.vo.LogisticalTraceVo">
+        select
+        <include refid="Base_Column_List" />
+        from logistical_trace
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        delete from logistical_trace
+        where id = #{id}
+    </delete>
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.LogisticalTrace">
+        insert into
+        logistical_trace (logistic_code,shipper_code,accept_station,accept_time)
+        values
+        (#{logisticCode},#{shipperCode},#{acceptStation},#{acceptTime})
+    </insert>
+
+    <update id="update" parameterType="com.pieces.dao.model.LogisticalTrace">
+        update logistical_trace
+        <set>
+                                                        
+            <if test="logisticCode != null">
+                logistic_code = #{logisticCode},
+            </if>
+                                            
+            <if test="shipperCode != null">
+                shipper_code = #{shipperCode},
+            </if>
+                                            
+            <if test="acceptStation != null">
+                accept_station = #{acceptStation},
+            </if>
+                                            
+            <if test="acceptTime != null">
+                accept_time = #{acceptTime},
+            </if>
+                            
+        </set>
+        where id = #{id}
+    </update>
+</mapper>
