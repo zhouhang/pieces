@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.pieces.dao.model.LogisticalTrace;
 import com.pieces.service.LogisticalTraceService;
 import com.pieces.tools.utils.GsonUtil;
+import com.pieces.tools.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -31,7 +32,7 @@ public class KdCallBackController {
     LogisticalTraceService logisticalTraceService;
 
     @RequestMapping(value = "notify" )
-    public String kdCallBack(HttpServletResponse response,
+    public void kdCallBack(HttpServletResponse response,
                              HttpServletRequest request
                              )throws Exception{
 
@@ -81,7 +82,7 @@ public class KdCallBackController {
         push.put("UpdateTimes",format.format(new Date()));
 
 
-        return GsonUtil.toJson(push);
+        WebUtil.print(response, push);
 
         }
 
