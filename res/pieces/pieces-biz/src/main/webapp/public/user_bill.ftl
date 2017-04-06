@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <#include "./inc/meta.ftl"/>
-        <title>支付记录-${baseSetting.title!}</title>
+        <title>账期账单-${baseSetting.title!}</title>
         <meta name="description" content="${baseSetting.intro!}" />
         <meta name="Keywords" content="${baseSetting.keyWord!}" />
 </head>
@@ -42,9 +42,9 @@
                                         <tr>
                                             <td>${bill.code!}</td>
                                             <td>${bill.orderCode!} <span>${bill.commodityOverview!}</span></td>
-                                            <td>&yen;${bill.amountsPayable!}</td>
-                                            <td>&yen;${bill.alreadyPayable!}</td>
-                                            <td>&yen;${bill.unPayable!}</td>
+                                            <td>&yen;${(bill.amountsPayable?default(0))?string("0.00")}</td>
+                                            <td>&yen;${(bill.alreadyPayable?default(0))?string("0.00")}</td>
+                                            <td>&yen;${(bill.unPayable?default(0))?string("0.00")}</td>
                                             <td><em class="c-red">${bill.statusText!}</em></td>
                                             <td>${bill.repayTime?string("yyyy-MM-dd")}</td>
                                             <td class="tc">

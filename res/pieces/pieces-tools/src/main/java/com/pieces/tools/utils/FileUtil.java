@@ -10,7 +10,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 文件操作工具类
@@ -126,6 +131,35 @@ public class FileUtil {
 
 
         return dest;
+    }
+
+    /**
+     * 从微信服务器保存图片到本地
+     * @param token
+     * @param mediaId    * @param direct
+     * @return
+     */
+    public static String saveFileFromWechat(String token,String mediaId, String direct) {
+        String desc = null;
+        Calendar now = Calendar.getInstance();
+        int year=now.get(Calendar.YEAR);
+        int month=now.get(Calendar.MONTH)+1;
+        StringBuffer sb = new StringBuffer();
+        sb.append(absolutePath).append(direct).append("/").append(year).append("/").append(month).append("/");
+        try {
+            String path = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token="+token+"&media_id="+mediaId;
+            URL url  = new URL(path);
+            URLConnection connection = url.openConnection();
+            String filleName = connection.getHeaderField("Content-disposition").split(";")[1].split("=")[1].replace("\"","");
+            InputStream ism=url.openStream();
+            FileUtil.save(ism ,sb.toString(),filleName);
+            desc = sb.append(filleName).toString();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return desc;
     }
 
 

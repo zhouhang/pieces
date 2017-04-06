@@ -40,11 +40,11 @@
                                     <tr>
                                         <td>${payRecord.payCode!}</td>
                                         <td>${payRecord.orderCode!} <span>${payRecord.commodityOverview!}</span></td>
-                                        <td>&yen;${payRecord.amountsPayable!}</td>
+                                        <td>&yen;${(payRecord.amountsPayable?default(0))?string("0.00")}</td>
                                         <#if payRecord.actualPayment?exists>
-                                        <td>&yen;${payRecord.actualPayment!}</td>
+                                        <td>&yen;${(payRecord.actualPayment?default(0))?string("0.00")}</td>
                                         <#else >
-                                            <td>&yen;${payRecord.amountsPayable!}</td>
+                                            <td>&yen;${(payRecord.amountsPayable?default(0))?string("0.00")}</td>
                                         </#if>
                                         <td>${payRecord.paymentTime?string("yyyy-MM-dd")}</td>
                                         <td><em class="c-red">${payRecord.statusText!}</em></td>
