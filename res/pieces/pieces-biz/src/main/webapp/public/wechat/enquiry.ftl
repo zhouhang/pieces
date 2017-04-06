@@ -58,28 +58,28 @@
 <script>
     !(function($) {
 
-        <#--wx.config({-->
-            <#--debug: false,-->
-            <#--appId: '${signature.appid!}',-->
-            <#--timestamp: ${signature.timestamp!},-->
-            <#--nonceStr: '${signature.noncestr!}',-->
-            <#--signature: '${signature.signature!}',-->
-            <#--jsApiList: [-->
-                <#--'chooseImage',-->
-                <#--'previewImage',-->
-                <#--'uploadImage'-->
-            <#--]-->
-        <#--});-->
+        wx.config({
+            debug: false,
+            appId: '${signature.appid!}',
+            timestamp: ${signature.timestamp!},
+            nonceStr: '${signature.noncestr!}',
+            signature: '${signature.signature!}',
+            jsApiList: [
+                'chooseImage',
+                'previewImage',
+                'uploadImage'
+            ]
+        });
 
         var _global = {
             v:{
-                img:{}
+                img:[]
             },
             init: function() {
                 this.help();
-                this.upfile();
+//                this.upfile();
                 this.bindEvent();
-//                this.camera();
+                this.camera();
                 gallery(true); // 开启图片预览
             },
             help: function() {
@@ -93,14 +93,49 @@
             bindEvent: function() {
                 var that = this;
                 $('#submit').on('click', function() {
-                    if (that.check()) {
+                    that.submit();
+                })
+
+                $('.ui-form').on('focus blur', '.ui-ipt', function() {
+                    $(this).next().hide();
+                })
+                that.SMSCodeEvent();
+            },
+            submit: function () {
+                if (_global.check()) {
+                    var serverIds = [];
+                    // 先上传微信本地图片到服务器
+                   function upload(ids){
+                       var localId = ids.pop();
+                       wx.uploadImage({
+                           localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
+                           isShowProgressTips: 1, // 默认为1，显示进度提示
+                           success: function (res) {
+
+                               serverIds.push(res.serverId);
+                               if(ids.length > 0){
+                                   upload(ids);
+                               } else {
+                                   submitEnquiry(serverIds);
+                               }
+                           },
+                           fail: function (error) {
+                               picPath = '';
+                               localIds = '';
+                               alert(Json.stringify(error));
+                           }
+                       });
+                   };
+
+                    // 图片上传完成后再提交订单
+                    function submitEnquiry(serverIds) {
                         var enquiry = {};
                         if ($('body').find("#name").length >0) {
                             enquiry['contacts'] = $("#name").val();
                             enquiry['phone'] = $("#mobile").val();
                         }
                         enquiry.files = new Array();
-                        $.each(_global.v.img, function(k,v){
+                        $.each(serverIds, function(k,v){
                             enquiry.files.push({"attachmentUrl": v})
                         })
 
@@ -129,13 +164,10 @@
                                 popover('网络连接超时，请您稍后重试！');
                             }
                         })
-                    }
-                })
+                    };
 
-                $('.ui-form').on('focus blur', '.ui-ipt', function() {
-                    $(this).next().hide();
-                })
-                that.SMSCodeEvent();
+                    upload(_global.v.img);
+                }
             },
             check: function() {
                 if ($('body').find("#name").length >0) {
@@ -311,60 +343,53 @@
                         number = 0, // 已上传图片数量
                         maxSize = 9; // 最大上传图片数量
 
-                var reset = function() {
-                    $upfile.show().html('<input type="file" name="file" accept="image/gif,image/jpeg,image/png" class="file" />');
+                var showPic = function(localIds) {
+                    var model = [];
+                    $.each(localIds, function(i, url) {
+                        model.push('<span class="ui-file">');
+                        model.push('<img src="' , url , '" data-src="' , url , '" />');
+                        model.push('<i class="del" data-url="', url, '" id="img_' , idx , '"></i>');
+                        model.push('</span>');
+                        _global.v.img.push(url);
+                        number ++;
+                    })
+
+                    $upfile.before(model.join(''));
+                    $picNumber.html((number) + '/' + maxSize);
+                    number >= maxSize && $upfile.empty('').hide();
                 }
-                var showLader = function() {
-                    $upfile.html('<i class="loader">上传中...</i>');
-                }
+
+                // 图片预览
+                $('.thumb').on('click', 'img', function() {
+                    wx.previewImage({
+                        current: this.src,
+                        urls: _global.v.img
+                    });
+                })
 
                 $upfile.on('click', function() {
                     wx.chooseImage({
-                        // count: 1, // 默认9
-                        // sizeType: 'compressed', // 可以指定是原图还是压缩图，默认二者都有
+                        count: (maxSize - number), // 最多9张
+                        sizeType: ['compressed'], // 可以指定是原图还是压缩图，默认二者都有
                         sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
                         success: function (res) {
                             var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-                            wx.uploadImage({
-                                localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
-                                isShowProgressTips: 1, // 默认为1，显示进度提示
-                                success: function (result) {
-                                    if (number >= maxSize) {
-                                        $upfile.empty('').hide();
-                                    } else {
-                                        reset();
-                                        var model = [];
-                                        _global.v.img['img_' + (idx++)] = result.serverId;
-                                        model.push('<span class="ui-file">');
-                                        model.push('<img src="' , localIds , '" data-src="' , localIds , '" />');
-                                        model.push('<i class="del" id="img_' , idx , '"></i>');
-                                        model.push('<span');
-                                        $upfile.before(model.join(''));
-                                        $picNumber.html((++ number) + '/' + maxSize);
-                                        number >= maxSize && $upfile.empty('').hide();
-                                    }
-//                                    else {
-//                                        popover('上传图片失败，请刷新页面重试！');
-//                                    }
-
-                                    // res.serverId; // 返回图片的服务器端ID，图片有效期3天，需要下载到本地
-                                },
-                                fail: function (error) {
-                                    picPath = '';
-                                    localIds = '';
-                                    alert(Json.stringify(error));
-                                }
-                            });
+                            showPic(localIds);
                         }
                     });
                 })
 
                 // 删除图片
                 $('.ui-upload').on('click', '.del', function() {
-                    delete global.v.img['img_' + this.id];
+                    var _url = $(this).data('url');
+                    $.each(_global.v.img, function(i, url) {
+                        if (url === _url) {
+                            _global.v.img.splice(i, 1);
+                            return false; // break
+                        }
+                    })
                     $picNumber.html((-- number) + '/' + maxSize);
                     $(this).parent().remove();
-                    reset();
                     return false;
                 })
             }

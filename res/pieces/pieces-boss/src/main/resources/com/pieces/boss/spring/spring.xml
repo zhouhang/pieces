@@ -53,6 +53,7 @@
 	<import resource="classpath*:com/pieces/boss/spring/spring-shiro-boss.xml"  />
 	<import resource="classpath*:com/pieces/service/spring/spring-elasticsearch.xml"  />
 	<import resource="classpath*:com/pieces/service/spring/spring-mail.xml"  />
+	<import resource="classpath*:com/pieces/service/spring/spring-wechat.xml"  />
 
 	<!-- 导入log 配置 -->
 	<import resource="classpath*:com/pieces/tools/log/config/spring-log.xml"/>

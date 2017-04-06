@@ -1,5 +1,6 @@
 package com.pieces.biz.shiro;
 
+import com.google.common.base.Strings;
 import com.pieces.dao.model.User;
 import com.pieces.service.UserService;
 import com.pieces.service.shiro.SerializableSimpleAuthenticationInfo;
@@ -52,6 +53,8 @@ public class BizRealm extends AuthorizingRealm {
 			AuthenticationToken authToken) throws AuthenticationException {
 		BizToken token = (BizToken) authToken;
 		User user = userService.findByAccount(token.getUsername());
+		if (user!= null && (user.getIsDel() || Strings.isNullOrEmpty(user.getContactMobile()))) user =null; // 当查询出的用户是被禁用时,禁止登入.
+
 		if(user == null){
 			throw new AuthenticationException();
 		}

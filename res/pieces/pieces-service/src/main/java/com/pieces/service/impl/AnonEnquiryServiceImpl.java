@@ -15,6 +15,8 @@ import com.pieces.service.enums.AnonEnquiryEnum;
 import com.pieces.service.enums.PathEnum;
 import com.pieces.tools.utils.BeanUtils;
 import com.pieces.tools.utils.FileUtil;
+import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +34,9 @@ public class AnonEnquiryServiceImpl  extends AbsCommonService<AnonEnquiry> imple
 
 	@Autowired
 	private AnonEnquiryDetailService detailService;
+
+	@Autowired
+	WxMpService wxService;
 
 
 
@@ -63,8 +68,13 @@ public class AnonEnquiryServiceImpl  extends AbsCommonService<AnonEnquiry> imple
 
 		if (enquiry.getFiles() != null && enquiry.getFiles().size() > 0) {
 			for (AnonEnquiryDetail detail: enquiry.getFiles()){
+
 				// 保存询价问价到对应文件夹
-				detail.setAttachmentUrl(FileUtil.saveFileFromTemp(detail.getAttachmentUrl(), PathEnum.ANON.getValue()));
+				try {
+					detail.setAttachmentUrl(FileUtil.saveFileFromWechat(wxService.getAccessToken(),detail.getAttachmentUrl(), PathEnum.ANON.getValue()));
+				} catch (WxErrorException e) {
+					e.printStackTrace();
+				}
 				detail.setType(1);
 				list.add(detail);
 			}
