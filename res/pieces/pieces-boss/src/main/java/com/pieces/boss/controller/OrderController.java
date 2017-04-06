@@ -68,6 +68,10 @@ public class OrderController extends BaseController{
     @Autowired
     private LogisticalService logisticalService;
 
+    @Autowired
+    private LogisticalTraceService logisticalTraceService;
+
+
 
     /**
      * 订单列表页面
@@ -95,9 +99,18 @@ public class OrderController extends BaseController{
     public String detail(@PathVariable("id") Integer id, ModelMap modelMap){
         OrderFormVo vo = orderFormService.findVoById(id);
         List<OrderRemarkVo> remarks = orderRemarkService.findByOrderId(id);
+        LogisticalVo logistic=logisticalService.findByOrderId(id);
+        //去查询物流信息
+        if(logistic!=null&&logistic.getType()==1){
+            LogisticalTraceVo trace =new LogisticalTraceVo();
+            trace.setShipperCode(logistic.getCompanyCode());
+            trace.setLogisticCode(logistic.getCode());
+            List<LogisticalTraceVo> logisticalTraceVos=logisticalTraceService.findByVo(trace);
+            modelMap.put("logisticalTraceVos",logisticalTraceVos);
+        }
         modelMap.put("vo", vo);
         modelMap.put("remarks", remarks);
-        modelMap.put("logistical",logisticalService.findByOrderId(id));
+        modelMap.put("logistical",logistic);
 
         return  "order_detail";
     }

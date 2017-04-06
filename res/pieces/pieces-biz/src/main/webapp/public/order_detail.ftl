@@ -211,6 +211,16 @@
                                         <em>快递公司：</em>
                                         <span>${logistical.companyCodeName!} </span>
                                     </dd>
+                                    <dd class="express_box">
+                                        <ul>
+                                            <#list logisticalTraceVos as trace>
+                                                <li>
+                                                    <div class="date">${trace.acceptTime?datetime}</div>
+                                                    <div class="trace">${trace.acceptStation}</div>
+                                                </li>
+                                            </#list>
+                                        </ul>
+                                    </dd>
                                 <#elseif logistical.type = 2>
                                     <dd>
                                         <em>配送方式：</em>

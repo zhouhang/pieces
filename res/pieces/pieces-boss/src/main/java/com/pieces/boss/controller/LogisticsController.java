@@ -6,10 +6,12 @@ import javax.servlet.http.HttpSession;
 
 import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.enums.OrderEnum;
-import com.pieces.dao.model.Member;
+import com.pieces.dao.model.*;
+import com.pieces.dao.vo.LogisticalTraceVo;
 import com.pieces.service.*;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
+import com.pieces.service.impl.KdApiService;
 import com.pieces.tools.log.annotation.BizLog;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.github.pagehelper.PageInfo;
-import com.pieces.dao.model.Logistical;
-import com.pieces.dao.model.LogisticalCommodity;
-import com.pieces.dao.model.ShippingAddressHistory;
 import com.pieces.dao.vo.LogisticalCommodityVo;
 import com.pieces.dao.vo.LogisticalVo;
 import com.pieces.dao.vo.OrderCommodityVo;
@@ -50,6 +49,11 @@ public class LogisticsController extends BaseController {
 
     @Autowired
     private OrderFormService orderFormService;
+
+    @Autowired
+    private KdApiService kdApiService;
+
+
     /**
      * 我的物流页面
      * @return
@@ -101,6 +105,14 @@ public class LogisticsController extends BaseController {
         logisticalService.save(logistic);
         // 保存物流信息同时改变订单状态为已发货
         orderFormService.changeOrderStatus(logistic.getOrderId(), OrderEnum.SHIPPED.getValue());
+        //订阅快递物流信息
+        if(logistic.getType()==1){
+            try {
+                boolean sub=kdApiService.orderTracesSub(logistic.getCompanyCode(),logistic.getCode());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         return  new Result(true);
     }
 }

@@ -105,15 +105,17 @@
                                     <p>快递公司：${logistical.companyCodeName!}</p>
                                     <p>快递单号：${logistical.code!} <a href="http://www.kuaidi100.com/" target="_blank" class="c-blue">[查询]</a></p>
 
-                                <#--<ul class="express_box">-->
-                                <#--<li class="company">-->
-                                <#--<em>百世快递</em> 电话：95311-->
-                                <#--</li>-->
-                                <#--<li>-->
-                                <#--<div class="date">2017.03.23 19:36 星期四</div>-->
-                                <#--<div class="trace">蚌埠市|到件|到蚌埠【蚌埠转运中心】</div>-->
-                                <#--</li>-->
-                                <#--</ul>-->
+                                <ul class="express_box">
+                                <li class="company">
+                                <em>${logisticalcompanyCodeName}</em>
+                                </li>
+                                    <#list logisticalTraceVos as trace>
+                                    <li>
+                                    <div class="date">${trace.acceptTime?datetime}</div>
+                                    <div class="trace">${trace.acceptStation}</div>
+                                    </li>
+                                    </#list>
+                                </ul>
                                 <#elseif logistical.type = 2>
                                     <p>配送方式：自提</p>
                                     <p>提货时间：${logistical.receivingDate?date} </p>

@@ -12,8 +12,7 @@ import javax.validation.Valid;
 
 import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.dao.model.*;
-import com.pieces.dao.vo.PayRecordVo;
-import com.pieces.dao.vo.UserVo;
+import com.pieces.dao.vo.*;
 import com.pieces.service.*;
 import com.pieces.service.dto.Password;
 import com.pieces.service.utils.EncryptUtil;
@@ -32,8 +31,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.enums.SessionEnum;
-import com.pieces.dao.vo.OrderFormVo;
-import com.pieces.dao.vo.ShippingAddressVo;
 import com.pieces.service.constant.bean.Result;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.service.utils.ValidUtils;
@@ -78,6 +75,9 @@ public class OrderController extends BaseController {
 
 	@Autowired
 	private LogisticalService logisticalService;
+
+	@Autowired
+	private LogisticalTraceService logisticalTraceService;
 
 	@RequestMapping(value = "/order/md5")
 	public String redictOrder(String commodityIds){
@@ -299,7 +299,15 @@ public class OrderController extends BaseController {
 		if(!user.getId().equals(vo.getUserId())){
 			return "redirect:error/404";
 		}
-
+		LogisticalVo logistic=logisticalService.findByOrderId(id);
+		//去查询物流信息
+		if(logistic!=null&&logistic.getType()==1){
+			LogisticalTraceVo trace =new LogisticalTraceVo();
+			trace.setShipperCode(logistic.getCompanyCode());
+			trace.setLogisticCode(logistic.getCode());
+			List<LogisticalTraceVo> logisticalTraceVos=logisticalTraceService.findByVo(trace);
+			modelMap.put("logisticalTraceVos",logisticalTraceVos);
+		}
 		// 查询用户该订单的付款记录
 		// 先查账单 再查付款记录确定用户支付类型
 		// 1. 判定用户类型
@@ -322,7 +330,7 @@ public class OrderController extends BaseController {
 			modelMap.put("payRecord",payRecord);
 		}
         modelMap.put("orderForm", vo);
-		modelMap.put("logistical",logisticalService.findByOrderId(id));
+		modelMap.put("logistical",logistic);
 
         return "order_detail";
     }
@@ -405,6 +413,16 @@ public class OrderController extends BaseController {
 		if(!user.getId().equals(vo.getAgentId())){
 			return "redirect:error/404";
 		}
+		LogisticalVo logistic=logisticalService.findByOrderId(id);
+		//去查询物流信息
+		if(logistic!=null&&logistic.getType()==1){
+			LogisticalTraceVo trace =new LogisticalTraceVo();
+			trace.setShipperCode(logistic.getCompanyCode());
+			trace.setLogisticCode(logistic.getCode());
+			List<LogisticalTraceVo> logisticalTraceVos=logisticalTraceService.findByVo(trace);
+			modelMap.put("logisticalTraceVos",logisticalTraceVos);
+		}
+
 
 		// 查询用户该订单的付款记录
 		// 先查账单 再查付款记录确定用户支付类型
@@ -427,7 +445,7 @@ public class OrderController extends BaseController {
 			}
 			modelMap.put("payRecord",payRecord);
 		}
-
+		modelMap.put("logistical",logistic);
 		return "order_detail";
 	}
 
