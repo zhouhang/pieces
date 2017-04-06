@@ -79,7 +79,7 @@
     <#include "./inc/footer.ftl"/>
     <!-- footer end -->
     <!-- 输入框联想 start -->
-    <div class="suggestions" id="suggestions">
+    <div class="suggestions" id="suggestions" style="width: 750px">
         <div class="hd">
             <div class="group">
                 <span class="w1">商品名称</span><span class="w2">片型</span><span class="w3">规格等级</span><span class="w4">产地</span><span class="w4">单价</span>

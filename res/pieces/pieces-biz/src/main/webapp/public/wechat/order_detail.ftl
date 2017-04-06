@@ -26,7 +26,27 @@
         <p><span>收货人：</span>${vo.address.consignee}  ${vo.address.tel}</p>
         <p><span>收货地址：</span>${vo.address.area}${vo.address.detail}</p>
          <#if vo.invoice?exists><p><span>发票信息：</span>${vo.invoice.typeText!}</p></#if>
+
     </div>
+    <#if vo.status=4&&logistical?exists>
+    <div class="floors-info">
+        <#if logistical.type = 1>
+            <p><span>配送方式：</span>快递</p>
+            <p><span>快递公司：</span>${logistical.companyCodeName!} <a href="/h5c/order/logistical?orderId=${vo.id?c}" class="c-blue">[查询]</a></p>
+            <p><span>快递单号：</span>${logistical.code!}</p>
+            <a href="/h5c/order/logistical?orderId=${vo.id?c}" class="arrow"></a>
+        <#elseif logistical.type = 2>
+            <p><span>配送方式：</span>自提</p>
+            <p><span>提货时间：</span>${logistical.receivingDate?date}</p>
+            <p><span>提货地点：</span>${logistical.pickUp}</p>
+        <#elseif logistical.type = 3>
+            <p><span>配送方式：</span>货运部发货</p>
+            <p><span>预计到货时间：</span>${logistical.receivingDate?date}</p>
+            <p><span>司机姓名：</span>${logistical.driverName!}</p>
+            <p><span>联系电话：</span>${logistical.driverTel!}</p>
+        </#if>
+    </div>
+    </#if>
 
     <div class="goods">
            <#list vo.commodities as commodity>

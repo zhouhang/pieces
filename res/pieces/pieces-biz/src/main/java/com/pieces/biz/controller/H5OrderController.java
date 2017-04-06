@@ -92,6 +92,9 @@ public class H5OrderController {
     @Autowired
     private LogisticalService logisticalService;
 
+    @Autowired
+    private LogisticalTraceService logisticalTraceService;
+
 
     @RequestMapping(value ="order/list",method = RequestMethod.GET)
     public String orderList(Integer status,ModelMap modelMap) {
@@ -129,8 +132,10 @@ public class H5OrderController {
     public String detail(@PathVariable("id")Integer id, ModelMap modelMap) {
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         OrderFormVo vo =  orderFormService.findVoById(id);
+        LogisticalVo logistic=logisticalService.findByOrderId(id);
         modelMap.put("userType",user.getType());
         modelMap.put("vo",vo);
+        modelMap.put("logistical",logistic);
         return "wechat/order_detail";
     }
 
@@ -365,5 +370,33 @@ public class H5OrderController {
         shippingAddressService.delete(user.getId(),id);
         return new Result(true);
     }
+    @RequestMapping(value = "/order/logistical", method = RequestMethod.GET)
+    public String orderLogistical(Integer orderId,ModelMap modelMap){
+        if(orderId==null){
+            return "redirect:error/404";
+        }
+
+        LogisticalVo logistic=logisticalService.findByOrderId(orderId);
+            //去查询物流信息
+        if(logistic!=null&&logistic.getType()==1){
+            LogisticalTraceVo trace =new LogisticalTraceVo();
+            trace.setShipperCode(logistic.getCompanyCode());
+            trace.setLogisticCode(logistic.getCode());
+            List<LogisticalTraceVo> logisticalTraceVos=logisticalTraceService.findByVo(trace);
+            modelMap.put("logisticalTraceVos",logisticalTraceVos);
+            modelMap.put("logistical",logistic);
+        }
+
+
+        return "wechat/express";
+
+
+
+    }
+
+
+
+
+
 
 }
