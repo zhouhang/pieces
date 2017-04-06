@@ -88,6 +88,7 @@ public class AnonController extends BaseController{
     @RequiresPermissions(value = "anon:detail")
     @BizLog(type = LogConstant.anon, desc = "新客询价详情")
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
+    @SecurityToken(generateToken = true)
     public String detail(Integer id, ModelMap model){
         AnonEnquiryVo vo = anonEnquiryService.findVoById(id);
         model.put("vo", vo);

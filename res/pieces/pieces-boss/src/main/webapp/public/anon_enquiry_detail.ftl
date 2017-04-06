@@ -24,9 +24,13 @@
                     <h3><i class="fa fa-chevron-right"></i>${vo.contacts} 的询价信息</h3>
                     <div class="extra">
                         <a href="/anon/enquiry" class="btn btn-gray">返回</a>
+                        <#if vo.status==1>
+                        <button class="btn btn-gray" id="abandon"><i class="fa"></i>作废</button>
+                        </#if>
                         <#if userId??&&!vo.enquriyBillId?exists>
                         <a class="btn btn-red" href="/enquiry/create/${userId}?anonId=${vo.id}"><i class="fa fa-plus"></i>新建报价</a>
                         </#if>
+
                     </div>
                 </div>
                 <div class="chart-info">
@@ -88,10 +92,11 @@
         </div><!-- fa-floor end -->
     </div>
     <#include "./inc/footer.ftl"/>
+    <script src="${urls.getForLookupPath('/js/layer/layer.js')}"></script>
 <script>
     var _global = {
         v:{
-            commodity:<#if vo.detail?exists>${vo.detail.content!}</#if>
+            commodity:<#if vo.detail?exists>${vo.detail.content!}<#else >[]</#if>
         },
         fn:{
             init: function() {
@@ -103,7 +108,25 @@
                    html.push('<tr><td>', v.val1, '</td><td>', v.val2, '</td><td>', v.val3, '</td></tr>');
                 })
                 $('#commodity_body').html(html.join(''));
+                $("#abandon").on("click",function(){
+                    layer.prompt({
+                        formType: 2,
+                        title: '填写作废理由',
+                        btn: ['确定', '取消']
+                    }, function (text, index) {
+                        $.ajax({
+                            url: "/anon/trail",
+                            data: {result: text, anonEnquiryId:${vo.id}},
+                            type: "POST",
+                            success: function (data) {
+                                window.location.reload();
+                            }
+                        })
+                        layer.close(index);
+                    });
+                })
             }
+
         }
     }
     $(function(){
