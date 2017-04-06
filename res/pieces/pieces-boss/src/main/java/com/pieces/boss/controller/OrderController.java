@@ -233,11 +233,40 @@ public class OrderController extends BaseController{
                           HttpServletResponse response,
                           String commodityName){
         List<CommodityDoc> commodityDocList = commoditySearchService.findByCommodityName(commodityName);
-        //附加当前品种的最近成交价格
-        //1. 查询当前用户所有成交品种的最近成交价格Map
+        //附加当前品种的指导价格
+        //1. 查询指导价格，idMap
         //2. 循环给查询结果赋值
+        List<CommodityVo> commodityVos=new ArrayList<CommodityVo>();
+        List<Integer> idList=new ArrayList<Integer>();
+        String ids;
 
-        WebUtil.print(response,new Result(true).data(commodityDocList));
+        if(commodityDocList.size()!=0){
+            for (CommodityDoc commodityDoc:commodityDocList){
+                idList.add(commodityDoc.getId());
+                commodityVos.add(commoditySearchService.doc2Vo(commodityDoc));
+            }
+        }
+        if(idList.size()!=0){
+            ids=StringUtils.join(idList,",");
+        }else{
+            ids=null;
+        }
+        List<CommodityVo> pInfo=commodityService.findVoByIds(ids);
+
+        if(pInfo.size()!=0){
+            Map<Integer,Double> idPrice=new HashMap<Integer,Double>();
+            for (CommodityVo commodityVo:pInfo){
+                idPrice.put(commodityVo.getId(),commodityVo.getGuidePrice());
+            }
+            for (CommodityVo commodityVo:commodityVos){
+                Double guidePrice=idPrice.get(commodityVo.getId());
+                if(guidePrice!=null)
+                    commodityVo.setGuidePrice(guidePrice);
+            }
+        }
+
+
+        WebUtil.print(response,new Result(true).data(commodityVos));
     }
 
     /**
