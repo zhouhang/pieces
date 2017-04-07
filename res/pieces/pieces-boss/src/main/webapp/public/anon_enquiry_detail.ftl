@@ -27,8 +27,8 @@
                         <#if vo.status==1>
                         <button class="btn btn-gray" id="abandon"><i class="fa"></i>作废</button>
                         </#if>
-                        <#if userId??&&!vo.enquriyBillId?exists>
-                        <a class="btn btn-red" href="/enquiry/create/${userId}?anonId=${vo.id}"><i class="fa fa-plus"></i>新建报价</a>
+                        <#if vo.status==1&&userId??&&!vo.enquriyBillId?exists>
+                            <a class="btn btn-red" href="/enquiry/create/${userId}?anonId=${vo.id}"><i class="fa fa-plus"></i>新建报价</a>
                         </#if>
 
                     </div>
