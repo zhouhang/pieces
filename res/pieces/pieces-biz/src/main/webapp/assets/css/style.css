@@ -336,10 +336,9 @@ address,cite,dfn,em,b,i,strong{font-style:normal;font-weight:400;}
 .order-detail .info dl{float:left;width:242px;height:120px;padding:25px 35px;line-height:22px;border:1px solid #e7e7e7;border-left:0;}
 .order-detail .info dt{margin-bottom:10px;font-size:14px;font-weight:700;}
 .order-detail .info dd{position:relative;padding-left:60px;}
-.order-detail .info em{position:absolute;left:0;top:0;width:60px;text-align:right;}
+.order-detail .info em{position:absolute;left:0;top:0;white-space:nowrap;}
+.order-detail .info .wide dd{padding-left:90px;}
 .order-detail .info .row{position:relative;clear:both;float:none;width:auto;border:0;border-bottom:1px solid #e7e7e7;}
-.order-detail .info .row dd{padding-left:90px;}
-.order-detail .info .row em{width:90px;}
 .order-detail .info .row .express_box{position:absolute;top:0;left:312px;height:100%;padding:0;border-left:1px solid #e7e7e7;overflow:hidden;overflow-y:auto;}
 .order-detail .info .row .express_box li{padding:9px 15px;}
 .order-detail .info .row .express_box li:nth-child(1){color:#c3272b;}
