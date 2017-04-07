@@ -80,7 +80,7 @@
 //                this.upfile();
                 this.bindEvent();
                 this.camera();
-                gallery(true); // 开启图片预览
+//                gallery(true); // 开启图片预览
             },
             help: function() {
                 $('.help').on('click', function() {
