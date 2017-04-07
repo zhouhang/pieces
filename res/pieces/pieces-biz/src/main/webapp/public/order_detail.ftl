@@ -196,7 +196,7 @@
                     </dl>
                 <#if logistical?exists>
                     <#--配送方式 1快递 2自提 3货运部发货-->
-                    <dl class="row">
+                    <dl class="row wide">
                         <dt>物流信息</dt>
                                 <#if logistical.type = 1>
                                     <dd>
@@ -205,7 +205,7 @@
                                     </dd>
                                     <dd>
                                         <em>快递单号：</em>
-                                        <span>${logistical.code!}<a href="http://www.kuaidi100.com/" target="_blank" class="c-blue">[查询]</a></span>
+                                        <span>${logistical.code!}</span>
                                     </dd>
                                     <dd>
                                         <em>快递公司：</em>
