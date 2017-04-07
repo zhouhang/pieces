@@ -103,7 +103,7 @@
                                 <#if logistical.type = 1>
                                     <p>配送方式：快递</p>
                                     <p>快递公司：${logistical.companyCodeName!}</p>
-                                    <p>快递单号：${logistical.code!} <a href="http://www.kuaidi100.com/" target="_blank" class="c-blue">[查询]</a></p>
+                                    <p>快递单号：${logistical.code!} </p>
 
                                 <ul class="express_box">
                                 <li class="company">
