@@ -1,5 +1,6 @@
 package com.pieces.service.utils;
 
+import com.pieces.dao.enums.OrderEnum;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.OrderCommodity;
 import com.pieces.dao.vo.EnquiryBillsVo;
@@ -540,6 +541,34 @@ public class ExcelParse {
                c = r.getCell(7);
                c.setCellValue(commodity.getPrice()); // 根据身份设置
            }
+       }
+
+       r = s.createRow(nextRow++);
+       setRowCellStyle(r, 1,7,p);
+
+       if(orderInfo.getStatus().equals(OrderEnum.COMPLETE.getValue())){
+           c = r.getCell(6);
+           c.setCellValue("订单总额：");
+           if (orderInfo.getAgentId()== null) {
+               c = r.getCell(7);
+               c.setCellValue(orderInfo.getAmountsPayable());
+
+           }
+           else{
+               c = r.getCell(7);
+               c.setCellValue(orderInfo.getDeposit());
+
+           }
+
+           r = s.createRow(nextRow++);
+           setRowCellStyle(r, 1,7,p);
+           c = r.getCell(6);
+           c.setCellValue("高开价总额：");
+           if (orderInfo.getAgentId()!= null) {
+               c = r.getCell(7);
+               c.setCellValue(orderInfo.getAmountsPayable());
+           }
+
        }
 
        r = s.createRow(nextRow++);
