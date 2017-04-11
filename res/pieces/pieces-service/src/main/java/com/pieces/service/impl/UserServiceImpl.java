@@ -358,7 +358,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
             user.setType(1); // 默认是终端用户
             user.setContactName(userName);
             user.setUserName("wx" + serialNumberService.getTensTimestamp() + SeqNoUtil.getRandomNum(2));
-            user.setPassword(user.getContactMobile().substring(5, 11)); // 默认密码
+            user.setPassword(phone.substring(5, 11)); // 默认密码
             user.setContactMobile(phone);
             user.setOpenId(wxMpUser.getOpenId());
             addUser(user);
