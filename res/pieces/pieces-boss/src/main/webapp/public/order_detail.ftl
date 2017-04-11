@@ -30,6 +30,8 @@
                     </@shiro.hasPermission>
                     <#if vo.status == 3 || vo.status == 8>
                         <a id="jexpress" type="button" class="btn btn-gray" href="javascript:;">配送</a>
+                    </#if>
+                    <#if vo.status == 3 || vo.status == 5>
                         <a id="exportOrder" type="button" class="btn btn-gray" href="/order/download/${vo.id}">导出订单</a>
                     </#if>
                     <#if vo.status == 4>
