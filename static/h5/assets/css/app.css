@@ -180,6 +180,7 @@ body.noscroll{overflow:hidden;}
 .ui-form .item .error{position:absolute;top:88%;left:0;z-index:2;padding:2px 10px;font-size:1.2rem;background:#c3272b;color:#fff;display:none;}
 .ui-form .item .error:before{content:"";position:absolute;top:-10px;left:10px;border:5px dashed transparent;border-bottom:5px solid #c3272b;}
 .ui-form .ico-arrow{right:0;}
+.ui-form .item-b{height:51px;border-bottom:1px solid #e7e7e7;}
 
 /* 气泡式弹出层组件 */
 .ui-popover{position:fixed;bottom:20px;left:0;z-index:2147483641;width:100%;text-align:center;opacity:0;-webkit-transition: all .3s;transition: .3s;}

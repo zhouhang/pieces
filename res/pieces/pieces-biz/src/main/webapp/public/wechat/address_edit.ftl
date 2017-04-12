@@ -4,7 +4,7 @@
     <#include "wechat/inc/meta.ftl"/>
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>下单-上工好药</title>
+    <title>收货地址-上工好药</title>
 </head>
 
 <body class="bg-gray">
@@ -40,6 +40,7 @@
         </div>
     </form>
 </section><!-- /ui-content -->
+
 <div class="pick-region">
     <div class="ui-header">
         <div class="title">地址选择</div>
@@ -55,15 +56,13 @@
 
     <div class="tabcont">
         <div class="cont">
-            <ul>
-            </ul>
-            <ul>
-            </ul>
-            <ul>
-            </ul>
+            <ul></ul>
+            <ul></ul>
+            <ul></ul>
         </div>
     </div>
 </div>
+
 <#include "wechat/inc/footer_h5.ftl"/>
 <script>
     !(function($) {
