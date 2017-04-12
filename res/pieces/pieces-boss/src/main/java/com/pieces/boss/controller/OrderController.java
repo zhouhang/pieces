@@ -291,6 +291,25 @@ public class OrderController extends BaseController{
         }else{
             ids=null;
         }
+        //去查指导价
+        List<CommodityVo> commodityVos1=commodityService.findVoByIds(ids);
+
+        if(commodityVos1.size()!=0){
+            Map<Integer,Double> guidePriceMap=new HashMap<Integer,Double>();
+            for (CommodityVo commodityVo:commodityVos1){
+                guidePriceMap.put(commodityVo.getId(),commodityVo.getGuidePrice());
+            }
+            for (CommodityVo commodityVo:commodityVos){
+                Double guidePrice=guidePriceMap.get(commodityVo.getId());
+                if(guidePrice!=null)
+                    commodityVo.setGuidePrice(guidePrice);
+            }
+        }
+
+
+
+        //上次成交价
+
         List<CommodityVo> pInfo=commodityService.searchOrderByIds(userId, ids);
         if(pInfo.size()!=0){
             Map<Integer,String> idPrice=new HashMap<Integer,String>();
