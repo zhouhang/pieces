@@ -52,7 +52,9 @@
            <#list vo.commodities as commodity>
         <ul>
             <li>
-                <a href="/h5/commodity/${commodity.id}">
+                <#if commodity.commodityId??>
+                <a href="/h5/commodity/${commodity.commodityId}">
+                </#if>
                 <div class="hd">${commodity.name}</div>
                 <div class="bd">${commodity.spec}${commodity.level}</div>
                 <div class="price">
