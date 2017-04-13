@@ -281,6 +281,10 @@ public class OrderFormServiceImpl extends AbsCommonService<com.pieces.dao.model.
         if (orderFormVo.getAddrHistoryId() == null) {
             throw new RuntimeException("收货地址不能为空");
         }
+        // 订单的userid 为前台传过来的代理用户Id
+        orderFormVo.setUserId(orderFormVo.getAgentId());
+
+
         // 根据地质ID 获取地址信息保存到历史表中
         ShippingAddress sa = shippingAddressService.findById(orderFormVo.getAddrHistoryId());
         ShippingAddressHistory sah = new ShippingAddressHistory();
