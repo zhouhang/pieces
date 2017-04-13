@@ -33,9 +33,11 @@ public class BizAuthorizationFilter extends AuthorizationFilter {
 	@Value("${biz.base.url}")
 	public String baseUrl;
 
-	private Pattern pattern = Pattern.compile("h5/enquiry",Pattern.CASE_INSENSITIVE);
+	private Pattern pattern = Pattern.compile("h5/",Pattern.CASE_INSENSITIVE);
 
 	private Pattern patternH5c = Pattern.compile("h5c/",Pattern.CASE_INSENSITIVE);
+
+	// h5/enquiry/success h5/enquiry
 
 	@Override
 	public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
@@ -48,9 +50,10 @@ public class BizAuthorizationFilter extends AuthorizationFilter {
 			String ua = httpRequest.getHeader("user-agent").toLowerCase();
 			String uri = httpRequest.getRequestURI() + "?" + httpRequest.getQueryString();
 
+			// enquiry/list enquiry/detail enquiry/update
 			Matcher h5cMatcher = patternH5c.matcher(uri);
-			if (h5cMatcher.find()) {
-				uri = "/h5/enquiry";
+			if (h5cMatcher.find()||uri.contains("h5/enquiry/list")||uri.contains("h5/enquiry/detail")||uri.contains("h5/enquiry/update")) {
+				uri = "/h5/bind?call="+uri;
 			}
 
 			Matcher matcher = pattern.matcher(uri);
@@ -66,7 +69,13 @@ public class BizAuthorizationFilter extends AuthorizationFilter {
 						return false;
 					}
 				} else {
-					return  true;
+					if (uri.contains("/h5/bind")) {
+						WebUtils.issueRedirect(request, response, baseUrl+uri);
+						return  false;
+					} else {
+						return  true;
+					}
+
 				}
 			}
 			WebUtils.issueRedirect(request, response, getLoginUrl());

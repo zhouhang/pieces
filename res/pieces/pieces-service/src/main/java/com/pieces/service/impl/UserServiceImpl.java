@@ -352,7 +352,7 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
             param2.setId(result.getId());
             param2.setOpenId(wxMpUser.getOpenId());
             update(param2);
-        } else {
+        } else if (!Strings.isNullOrEmpty(userName)){
             User user = new User();
             user.setSource(3); // 表明来至微信
             user.setType(1); // 默认是终端用户

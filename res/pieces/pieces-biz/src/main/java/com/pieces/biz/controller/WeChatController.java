@@ -291,4 +291,85 @@ public class WeChatController {
             return "redirect:/h5/enquiry/list";
         }
     }
+
+    /**
+     * 用户绑定页面
+     * @return
+     */
+    @RequestMapping(value = "bind", method = RequestMethod.GET)
+    public String bind(String call) {
+        // 设置callBackUri 到session 中
+        httpSession.setAttribute("h5bindCallUrl", call);
+        return "wechat/bind";
+    }
+
+    /**
+     * 绑定用户信息
+     * @param phone
+     * @param code
+     * @return
+     */
+    @RequestMapping(value = "bind", method = RequestMethod.POST)
+    @ResponseBody
+    public Result bindSave(String phone, String code) {
+        Result result = null;
+        String callUrl = (String)httpSession.getAttribute("h5bindCallUrl");
+        callUrl = Strings.isNullOrEmpty(callUrl)?"/h5/enquiry/list":callUrl;
+
+        String sessionCode  = redisManager.get(RedisEnum.KEY_MOBILE_EQUIRY_CAPTCHA.getValue()+phone);
+        if (Strings.isNullOrEmpty(sessionCode) || !code.equals(sessionCode)) {
+            // 验证码错误.
+            return new Result(false).info("验证码错误");
+            // 判断手机号存在时用户是否被禁用
+        } else if (!userService.ifAutoMobile(phone)) {
+            return new Result(false).info("该手机号已被禁用，如有疑问，请联系客服。");
+        } else {
+            User user = userService.findByAccount(phone);
+            if (user!=null) {
+                // 用户存在时绑定自动登入
+                WxMpUser wxUser = (WxMpUser) httpSession.getAttribute("wxMpUser");
+                user = userService.createWxUser(wxUser, null, phone);
+                Subject subject = SecurityUtils.getSubject();
+                BizToken token = new BizToken(user.getUserName(), user.getPassword(), false, null, "");
+                token.setWechat(true);
+                userService.login(subject, token);
+                httpSession.removeAttribute("h5bindCallUrl");
+                result = new Result(true).data(callUrl);
+            } else {
+                //设置phone 到 session 中.
+                httpSession.setAttribute("h5bindPhone", phone);
+                result = new Result(true).data("/h5/bindName");
+            }
+
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "bindName", method = RequestMethod.GET)
+    public String bindName() {
+        return "wechat/bind_name";
+    }
+
+    /**
+     * 绑定姓名
+     * @param name
+     * @return
+     */
+    @RequestMapping(value = "bindName", method = RequestMethod.POST)
+    @ResponseBody
+    public Result bindNameSave(String name) {
+        String phone = (String) httpSession.getAttribute("h5bindPhone");
+        String callUrl = (String)httpSession.getAttribute("h5bindCallUrl");
+        callUrl = Strings.isNullOrEmpty(callUrl)?"/h5/enquiry/list":callUrl;
+        // 用户存在时绑定自动登入
+        WxMpUser wxUser = (WxMpUser) httpSession.getAttribute("wxMpUser");
+        User user = userService.createWxUser(wxUser, name, phone);
+        Subject subject = SecurityUtils.getSubject();
+        BizToken token = new BizToken(user.getUserName(), user.getPassword(), false, null, "");
+        token.setWechat(true);
+        userService.login(subject, token);
+        httpSession.removeAttribute("h5bindCallUrl");
+        httpSession.removeAttribute("h5bindPhone");
+        return new Result(true).data(callUrl);
+    }
 }
