@@ -351,7 +351,7 @@
 		select
 		<include refid="Base_Column_List" />
 		from user
-		where user_name = #{accountName} or contact_mobile=#{accountName} AND is_del=0
+		where (user_name = #{accountName} or contact_mobile=#{accountName}) AND is_del=0
 	</select>
 
 </mapper>

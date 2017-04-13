@@ -4,7 +4,7 @@
     <#include "wechat/inc/meta.ftl"/>
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>商品详情-上工好药</title>
+    <title>${commodity.title!}-上工好药</title>
 </head>
 
 <body class="bg-gray">
@@ -14,7 +14,7 @@
             <img src="<#if commodity.pictureUrl=="" || !(commodity.pictureUrl?exists) >/images/blank.jpg<#else >${commodity.pictureUrl?default('/images/blank.jpg')}</#if>" />
         </div>
 
-        <h1>${title}</h1>
+        <h1>${commodity.title!}</h1>
     </div>
 
     <div class="goods-info">
