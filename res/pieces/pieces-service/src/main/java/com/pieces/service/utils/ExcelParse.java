@@ -101,15 +101,15 @@ public class ExcelParse {
         Cell c = null;
         String[] titles = null;
         wb.setSheetName(0, "报价表");
-        // 数据有效性约束
-        CellRangeAddressList addressList = new CellRangeAddressList(
-                0, 65535, 5, 5);
-        DVConstraint dvConstraint = DVConstraint.createNumericConstraint(
-                DVConstraint.ValidationType.INTEGER,
-                DVConstraint.OperatorType.BETWEEN, "0", "100000");
-        DataValidation dataValidation = new HSSFDataValidation
-                (addressList, dvConstraint);
-        s.addValidationData(dataValidation);
+//        // 数据有效性约束
+//        CellRangeAddressList addressList = new CellRangeAddressList(
+//                0, 65535, 5, 5);
+//        DVConstraint dvConstraint = DVConstraint.createNumericConstraint(
+//                DVConstraint.ValidationType.INTEGER,
+//                DVConstraint.OperatorType.BETWEEN, "0", "100000");
+//        DataValidation dataValidation = new HSSFDataValidation
+//                (addressList, dvConstraint);
+//        s.addValidationData(dataValidation);
 
         // 设置询价单信息 cell title
         titles = new String[]{"ID", "商品名称", "片型", "规格等级", "产地", "单价(元/公斤)"};
