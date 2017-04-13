@@ -109,6 +109,36 @@
                         var $text = $(this).parent().siblings('.ipt');
                         $text.val($text.val() + ' ' + $(this).html() + ' ');
                     })
+                    
+                    var val1 = '',
+                        val2 = '';
+
+                    var setValue = function() {
+                        var arr1 = val1.split('{');
+                        var arr2 = val2.split('{');
+                        for (var i = 0; i < arr1.length; i++) {
+                            if (!arr2[i]) {
+                                continue;
+                            } else if (arr1[i].indexOf('}') != arr2[i].indexOf('}')) {
+                                arr2[i] = arr1[i].split('}')[1];
+                            } else {
+                                if (arr1[i].indexOf('}') > -1) {
+                                    arr2[i] = '{' + arr2[i];
+                                }
+                            }
+                        }
+                        return arr2.join('');
+                    }
+
+                    $('.ipt-mul').on('keydown', function(e) {
+                        val1 = this.value;
+                    })
+                    .on('keyup', function(e) {
+                        val2 = this.value;
+                        if (e.keyCode === 8) {
+                            this.value = setValue();
+                        }
+                    })
                 },
                 formValidate: function() {
                     $("#myform").validator({
