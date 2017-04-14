@@ -275,7 +275,9 @@ public class WeChatController {
                     BizToken token = new BizToken(user.getUserName(), user.getPassword(), false,null, "");
                     token.setWechat(true);
                     userService.login(subject, token);
-
+                    if (!Strings.isNullOrEmpty(call)) {
+                        call = call.split("call=").length>1?call.split("call=")[1]:call;
+                    }
                 } else {
                     //保存微信信息到Session 里面
                     httpSession.setAttribute("wxMpUser",wxMpUser);
