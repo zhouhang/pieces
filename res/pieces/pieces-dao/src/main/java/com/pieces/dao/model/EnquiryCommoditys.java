@@ -52,6 +52,9 @@ public class EnquiryCommoditys  implements Serializable {
 	// 开票价
 	private Double price;
 
+	// 商品指导价
+	private Double guidePrice;
+
 	public String getPictureUrl() {
 		return pictureUrl;
 	}
@@ -166,5 +169,13 @@ public class EnquiryCommoditys  implements Serializable {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public Double getGuidePrice() {
+		return guidePrice;
+	}
+
+	public void setGuidePrice(Double guidePrice) {
+		this.guidePrice = guidePrice;
 	}
 }

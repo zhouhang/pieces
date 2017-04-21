@@ -77,7 +77,7 @@
                             <td>${commodity.origin}</td>
                             <td>
                                 <input type="hidden" name="id" value="${commodity.id}">
-                                <input type="text" name="myPrice" class="ipt ipt-price" value="${commodity.myPrice}" tabindex="1">
+                                <input type="text" name="myPrice" class="ipt ipt-price" value="<#if enquiryBills.status ==1>${commodity.myPrice!}<#else>${commodity.guidePrice!}</#if>" tabindex="1">
                             </td>
                             <#if commodity_index == 0>
                             <td rowspan="${enquiryBills.enquiryCommoditys?size}">

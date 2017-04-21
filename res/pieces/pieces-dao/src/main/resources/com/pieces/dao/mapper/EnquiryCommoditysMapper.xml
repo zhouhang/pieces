@@ -56,7 +56,7 @@
 
     <select id="findByBillId"  parameterType="java.lang.Integer" resultMap="EnquiryCommoditysResultMap">
         select
-        <include refid="Base_Column_List_Alisa" />,co.picture_url as pictureUrl
+        <include refid="Base_Column_List_Alisa" />,co.picture_url as pictureUrl,co.guide_price as guidePrice
         from enquiry_commoditys ec
         left join commodity co on co.id = ec.commodity_id
         <where>
