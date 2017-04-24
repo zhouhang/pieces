@@ -1,6 +1,7 @@
 package com.pieces.service.utils;
 
 import com.pieces.dao.enums.OrderEnum;
+import com.pieces.dao.model.Commodity;
 import com.pieces.dao.model.EnquiryCommoditys;
 import com.pieces.dao.model.OrderCommodity;
 import com.pieces.dao.vo.EnquiryBillsVo;
@@ -637,7 +638,54 @@ public class ExcelParse {
         }
     }
 
-    public static void main(String[] args) {
-        ExcelParse.exportOrderInfo(null);
+    public static void generatorCommodityPriceSql(String fileName) throws IOException, InvalidFormatException {
+    File file = new File(fileName);
+        FileInputStream fis = new FileInputStream(file);
+        Workbook wb = WorkbookFactory.create(fis);
+        Sheet sheet = wb.getSheetAt(0);
+
+        // Decide which rows to process
+        int rowStart = Math.max(sheet.getFirstRowNum(), 1);
+        int rowEnd = sheet.getLastRowNum();
+        for (int rowNum = rowStart; rowNum <= rowEnd; rowNum++) {
+            Row r = sheet.getRow(rowNum);
+            if (r == null) {
+                continue;
+            }
+            Commodity commodity = new Commodity();
+            for (int cn = 0; cn <= 10; cn++) {
+                //"0 ID", "1 商品名称", "2 切制规格", "3 规格等级", "4 产地", "5 单价(元/公斤)"
+                Cell c = r.getCell(cn, Row.RETURN_BLANK_AS_NULL);
+                if (c == null) {
+                    // The spreadsheet is empty in this cell
+                    continue;
+                } else {
+                    try {
+                        switch (cn) {
+                            case 0:
+                                commodity.setId(Integer.valueOf(getCellValue(c)));
+                                break;
+                            case 5:
+                                commodity.setGuidePrice(Double.valueOf(getCellValue(c)));
+                                break;
+                            default:
+                                break;
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        logger.info("generatorCommodityPriceSql:" + cn +":", e.getMessage());
+                    }
+                }
+            }
+
+            // 输出Sql
+            System.out.println("update commodity set guide_price="+commodity.getGuidePrice()+" where  id="+commodity.getId()+";");
+
+        }
+    }
+
+    public static void main(String[] args) throws IOException, InvalidFormatException {
+        ExcelParse.generatorCommodityPriceSql("/Users/kevin1/Downloads/commodity.xlsx");
     }
 }
