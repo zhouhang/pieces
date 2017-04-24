@@ -12,45 +12,35 @@
 
 //全局配置，如果采用默认均不需要改动
 var config =  {
-    path: '', //laydate所在路径
-    skin: 'default', //初始化皮肤
+    event: 'click', //触发事件
     format: 'YYYY-MM-DD', //日期格式
+    istime: false, //是否开启时间选择
+    isclear: true, //是否显示清空
+    istoday: true, //是否显示今天
+    issure: true, // 是否显示确认
+    festival: true, //是否显示节日
     min: '1900-01-01 00:00:00', //最小日期
     max: '2099-12-31 23:59:59', //最大日期
-    isv: false,
-    init: true
+    fixed: false, //是否固定在可视区域
+    zIndex: 99999999, //css z-index
+    choose: function(dates){}, //选择好日期的回调
+    init: false // 默认是否初始化
 };
 
-var Dates = {}, doc = document, creat = 'createElement', byid = 'getElementById', tags = 'getElementsByTagName';
-var as = ['laydate_box', 'laydate_void', 'laydate_click', 'LayDateSkin', 'skins/', '/laydate.css'];
-
+var Dates = {}, 
+    doc = document, 
+    creat = 'createElement', 
+    byid = 'getElementById', 
+    tags = 'getElementsByTagName',
+    as = ['laydate_box', 'laydate_void', 'laydate_click', 'LayDateSkin', 'skins/', '/laydate.css'];
 
 //主接口
 win.laydate = function(options){
-    options = options || {};
     try{
         as.event = win.event ? win.event : laydate.caller.arguments[0];
     } catch(e){};
-    Dates.run(options);
+    Dates.run(options || {});
     return laydate;
-};
-
-laydate.v = '1.1';
-
-//获取组件存放路径
-Dates.getPath = (function(){
-    var js = document.scripts, jsPath = js[js.length - 1].src;
-    return config.path ? config.path : jsPath.substring(0, jsPath.lastIndexOf("/") + 1);
-}());
-
-Dates.use = function(lib, id){
-    var link = doc[creat]('link');
-    link.type = 'text/css';
-    link.rel = 'stylesheet';
-    link.href = Dates.getPath + lib + as[5];
-    id && (link.id = id);
-    doc[tags]('head')[0].appendChild(link);
-    link = null;
 };
 
 Dates.trim = function(str){
@@ -192,8 +182,6 @@ Dates.run = function(options){
             });
         });
     }
-
-    chgSkin(options.skin || config.skin)
 };
 
 Dates.scroll = function(type){
@@ -504,9 +492,9 @@ Dates.iswrite = function(){
         time: S('#laydate_hms')
     };
     Dates.shde(log.time, !Dates.options.istime);
-    Dates.shde(as.oclear, !('isclear' in Dates.options ? Dates.options.isclear : 1));
-    Dates.shde(as.otoday, !('istoday' in Dates.options ? Dates.options.istoday : 1));
-    Dates.shde(as.ok, !('issure' in Dates.options ? Dates.options.issure : 1));
+    Dates.shde(as.oclear, Dates.options.isclear);
+    Dates.shde(as.otoday, Dates.options.istoday);
+    Dates.shde(as.ok, Dates.options.issure);
 };
 
 //方位辨别
@@ -572,7 +560,7 @@ Dates.view = function(elem, options){
     Dates.mm = log.mm = [Dates.options.min || config.min, Dates.options.max || config.max];
     Dates.mins = log.mm[0].match(/\d+/g);
     Dates.maxs = log.mm[1].match(/\d+/g);
-    
+
     if(!Dates.box){
         div = doc[creat]('div');
         div.id = as[0];
@@ -608,19 +596,18 @@ Dates.view = function(elem, options){
         + Dates.viewtb
         
         +'<div class="laydate_bottom">'
-          +'<ul id="laydate_hms">'
-            +'<li class="laydate_sj">时间</li>'
-            +'<li><input readonly>:</li>'
-            +'<li><input readonly>:</li>'
-            +'<li><input readonly></li>'
-          +'</ul>'
+          +'<div class="laydate_hms" id="laydate_hms">'
+            +'<span>时间</span>'
+            +'<input readonly>:'
+            +'<input readonly>:'
+            +'<input readonly>'
+          +'</div>'
           +'<div class="laydate_time" id="laydate_time"></div>'
           +'<div class="laydate_btn">'
             +'<a id="laydate_clear">清空</a>'
             +'<a id="laydate_today">今天</a>'
             +'<a id="laydate_ok">确认</a>'
           +'</div>'
-          +(config.isv ? '<a href="http://sentsin.com/layui/laydate/" class="laydate_v" target="_blank">laydate-v'+ laydate.v +'</a>' : '')
         +'</div>';
         doc.body.appendChild(div); 
         Dates.box = S('#'+as[0]);        
@@ -692,8 +679,6 @@ Dates.events = function(){
     var S = Dates.query, log = {
         box: '#'+as[0]
     };
-    
-    Dates.addClass(doc.body, 'laydate_body');
     
     as.tds = S('#laydate_table td');
     as.mms = S('#laydate_ms span');
@@ -799,7 +784,16 @@ Dates.events = function(){
         var now = new Date();
         // 2016-09-23 18:20:54 修复选中今天choose方法得不到数据
         // Dates.creation([now.getFullYear(), now.getMonth() + 1, now.getDate()]);
-        Dates.elem[as.elemv] = laydate.now(0,Dates.options.format);
+
+        // 2016-09-26 10:49:25 修复选中今天 如果YYYY-MM-DD hh:mm:ss格式，获取当前的时分秒
+        var hms = Dates.hmsin;
+        var date = new Date();
+        // 获取当前时间小时
+        hms[0].value = date.getHours();
+        // 获取当前时间分钟
+        hms[1].value = date.getMinutes();
+        // 获取当前时间秒
+        hms[2].value = date.getSeconds();
         Dates.creation([Dates.ymd[0], Dates.ymd[1]+1, Dates.ymd[2]]);
     });
     
@@ -885,11 +879,6 @@ Dates.events = function(){
     });
 };
 
-Dates.init = (function(){
-    Dates.use('need');
-    Dates.use(as[4] + config.skin, as[3]);
-    Dates.skinLink = Dates.query('#'+as[3]);
-}());
 
 //重置定位
 laydate.reset = function(){
@@ -906,14 +895,6 @@ laydate.now = function(timestamp, format){
         [De.getHours(), De.getMinutes(), De.getSeconds()],
         format
     );
-};
-
-//皮肤选择
-laydate.skin = chgSkin;
-
-//内部函数
-function chgSkin(lib) {
-    Dates.skinLink.href = Dates.getPath + as[4] + lib + as[5];
 };
 
 }(window);

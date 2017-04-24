@@ -9,138 +9,47 @@
 </head>
 
 <body>
-
-    <!-- header start -->
-    <div class="header">
-        <div class="wrap">
-            <div class="logo">
-                <a href="home.html">药优优电子商务管理系统</a>
-            </div>
-            <div class="user">
-                <span>登录用户 hehuan</span>
-                <i>|</i>
-                <span>2016年6月20日 星期三</span>
-                <i>|</i>
-                <a href="logout.html">退出</a>
-            </div>
-        </div>
-    </div><!-- header end -->
-
-
-    <!-- nav start -->
-    <div class="nav">
-        <div class="wrap">
-            <ul>
-                <li><a href="home.html">首页</a></li>
-                <li>
-                    <a class="curr" href="#!">销售</a>
-                    <div class="subnav">
-                        <a class="on" href="enquiry.html">询价管理</a>
-                        <a href="order.html">订单管理</a>
-                    </div>
-                </li>
-                <li>
-                    <a href="#!">目录</a>
-                    <div class="subnav">
-                        <a href="goods.html">商品管理</a>
-                        <a href="category.html">分类管理</a>
-                        <a href="breed.html">品种管理</a>
-                    </div>
-                </li>
-                <li>
-                    <a href="#!">客户</a>
-                    <div class="subnav">
-                        <a href="customers.html">客户管理</a>
-                    </div>
-                </li>
-                <li><a href="#!">促销</a></li>
-                <li><a href="#!">邮件列表</a></li>
-                <li><a href="#!">CMS</a></li>
-                <li><a href="#!">报表</a></li>
-                <li>
-                    <a href="#!">系统</a>
-                    <div class="subnav">
-                        <a href="user.html">用户管理</a>
-                        <a href="role.html">角色管理</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div><!-- nav end -->
-
-
     <!-- fa-floor start -->
-    <div class="create-order create-enquiry">
-        <div class="wrap">
-            <div class="title">
-                <h3><i class="fa fa-chevron-right"></i>为hehuan报价</h3>
-                <div class="extra">
-                    <button type="submit" class="btn btn-red" id="submit">报价</button>
-                </div>
-            </div>
-            
-            <div class="main">
-                <div class="chart-info">
-                    <form action="" id="myform" class="chart tc">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th width="150">商品名称</th>
-                                    <th width="150">片型</th>
-                                    <th>规格等级</th>
-                                    <th width="120">产地</th>
-                                    <th width="120">单价（元/公斤）</th>
-                                    <th width="120">操作</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <td colspan="6">
-                                        <a href="javascript:;" class="add">+ 添加一行</a>
-                                    </td>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <tr>
-                                    <td><div class="ipt-wrap pr"><input type="text" class="ipt ipt-name" name="name" autocomplete="off"></div><span class="error"></span></td>
-                                    <td><div class="ipt-wrap pr"><input type="text" class="ipt" name="spec" autocomplete="off"></div><span class="error"></span></td>
-                                    <td><div class="ipt-wrap pr"><input type="text" class="ipt" name="level" autocomplete="off"></div><span class="error"></span></td>
-                                    <td><div class="ipt-wrap pr"><input type="text" class="ipt" name="originof" autocomplete="off"></div><span class="error"></span></td>
-                                    <td><input type="text" class="ipt price" name="price" value="" autocomplete="off"><span class="error"></span></td>
-                                    <td><a href="javascript:;" class="remove c-red">删除</a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="ipt-tr">
-                            <span>报价有效期至：</span>
-                            <input type="text" class="ipt" autocomplete="off">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div><!-- fa-floor end -->
-    </div>
-
-
-    <!-- footer start -->
-    <div class="footer">
-        <div class="wrap">            
-            <div class="copyright">
-                <p>药优优电商管理系统 版本 1.0  版权所有 &copy; 2016 药优优</p>
-            </div>
+    <div class="create-enquiry2 chart">
+        <div class="thead">
+            <table>
+                <thead>
+                    <tr>
+                        <th width="150">商品名称</th>
+                        <th width="150">片型</th>
+                        <th>规格等级</th>
+                        <th width="120">产地</th>
+                        <th width="120">单价（元/公斤）</th>
+                        <th width="120">操作</th>
+                    </tr>
+                </thead>
+            </table>
         </div>
-    </div><!-- footer end -->
-
-    <div class="picture">
-        <div class="img">
-            <img width="530" src="images/blank.gif">
-        </div>
-        <div class="toolbar"></div>
+        <form action="" id="myform">
+            <table>
+                <thead class="hide">
+                    <tr>
+                        <th width="150">商品名称</th>
+                        <th width="150">片型</th>
+                        <th>规格等级</th>
+                        <th width="120">产地</th>
+                        <th width="120">单价（元/公斤）</th>
+                        <th width="120">操作</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody"></tbody>
+            </table>
+            <div class="tfoot">
+                <button type="submit" class="btn btn-red" id="submit">报价</button>
+                <span>报价有效期至：</span>
+                <input type="text" name="date" id="date" class="ipt" autocomplete="off">
+            </div>
+        </form>
     </div>
 
 
     <!-- 输入框联想 start -->
-    <div class="suggestions" id="suggestions" style="width:750px;">
+    <div class="suggestions" id="suggestions" style="width:860px;">
         <div class="hd">
             <div class="group">
                 <span class="w1">商品名称</span><span class="w2">片型</span><span class="w3">规格等级</span><span class="w4">产地</span><span class="w5">当前价格</span><span class="w6">上次成交价格</span>
@@ -151,19 +60,40 @@
 
     <script type="temp" id="jmodal">
         <tr>
-            <td><div class="ipt-wrap"><input type="text" class="ipt ipt-name" name="name" autocomplete="off"></div><span class="error"></span></td>
-            <td><div class="ipt-wrap"><input type="text" class="ipt" name="spec" autocomplete="off"></div><span class="error"></span></td>
-            <td><div class="ipt-wrap"><input type="text" class="ipt" name="level" autocomplete="off"></div><span class="error"></span></td>
-            <td><div class="ipt-wrap"><input type="text" class="ipt" name="originof" autocomplete="off"></div><span class="error"></span></td>
-            <td><input type="text" class="ipt price" name="price" value="" autocomplete="off"><span class="error"></span></td>
-            <td><a href="javascript:;" class="remove c-red">删除</a></td>
+            <td width="150">
+                <div class="inner pr">
+                    <input type="text" class="ipt name" name="title" autocomplete="off">
+                    <span class="error1"></span>
+                </div>
+            </td>
+            <td width="150">
+                <div class="inner pr">
+                    <input type="text" class="ipt" name="spec" autocomplete="off">
+                </div>
+            </td>
+            <td>
+                <div class="inner pr">
+                    <input type="text" class="ipt" name="level" autocomplete="off">
+                </div>
+            </td>
+            <td width="120">
+                <div class="inner pr">
+                    <input type="text" class="ipt" name="originof" autocomplete="off">
+                </div>
+            </td>
+            <td width="120">
+                <div class="inner pr">
+                    <input type="text" class="ipt price" name="price" value="" autocomplete="off">
+                </div>
+            </td>
+            <td width="120">
+                <a href="javascript:;" class="remove c-red">删除</a>
+            </td>
         </tr>
     </script>
-
     <script src="js/jquery.min.js"></script>
+    <script src="js/smartZoom.js"></script>
     <script src="js/laydate/laydate.js"></script>
-    <script src="js/layer/layer.js"></script>
-    <script src="js/validator/jquery.validator.min.js?local=zh-CN"></script>
     <script src="js/jquery.pagination.min.js"></script>
     <script src="js/common.js"></script>
     <script>
@@ -172,186 +102,125 @@
             fn: {
                 init: function() {
                     this.myformEvent();
-                    this.formValidate();
                     this.pic();
-                    // this.drag();
                 },
                 pic: function() {
-                    var $pic = $('.picture'),
-                        imgList = ['http://static.sghaoyao.com/anon/2017/3/d7685ba4-320e-4026-a7e3-cf2dd8f2bc5f.jpg','http://static.sghaoyao.com/anon/2017/3/d7685ba4-320e-4026-a7e3-cf2dd8f2bc5f.jpg','http://static.sghaoyao.com/anon/2017/3/d7685ba4-320e-4026-a7e3-cf2dd8f2bc5f.jpg'],
-                        imgObj = {},
-                        img = $pic.find('img')[0],
-                        width = 530,
-                        page = 0,
-                        pages = [];                
+                    var imgList = ['http://192.168.1.51/static/uploads/c.jpg','http://static.sghaoyao.com/anon/2017/3/d7685ba4-320e-4026-a7e3-cf2dd8f2bc5f.jpg','http://192.168.1.51/static/uploads/a.jpg','http://192.168.1.51/static/uploads/b.jpg','http://192.168.1.51/static/uploads/c.jpg','http://192.168.1.51/static/uploads/d.jpg','http://192.168.1.51/static/uploads/d.jpg','http://192.168.1.51/static/uploads/d.jpg','http://192.168.1.51/static/uploads/d.jpg'],
+                        templete = '<div class="pic"> \n <div class="img"><img src="images/blank.gif"></div> \n <div class="thumb"></div></div>',
+                        pages = [],
+                        $pic, img;
 
-                    $.each(imgList, function(i, item) {
-                        !(function(i) {
-                            var img = new Image();
-                            img.onload = function() {
-                                imgObj[i] = {
-                                    width: img.width,
-                                    height: img.height
-                                }
-                                img.onload = null;
-                            }
-                            img.src = item;
-                        })(i);
-                        imgObj[i] = {
-                           url: item 
-                        }
-                        pages.push('<span class="p">', (i + 1),'</span>');
-                    })
-                    pages.push('<span class="maxmize" title="展开"></span><span class="minimize" title="收起"></span><span class="small" title="缩小"></span><span class="big" title="放大"></span>');
-                    $pic.find('.toolbar').html(pages.join('')).find('span:eq(0)').addClass('curr');
+                    // 缩放图片
+                    var zoomImg = function() {
+                        $(img).smartZoom('destroy');
+                        $(img).smartZoom();
+                    }
 
+                    if (imgList.length === 0) {
+                        return this;
+                    }
+
+                    $('body').append(templete);
+                    $pic = $('.pic');
+                    img = $pic.find('.img img')[0];
+                    // 显示第一张图片
                     img.src = imgList[0];
-                    img.width = width;
+                    // 生成分页
+                    $.each(imgList, function(i, url) {
+                        pages.push('<span><img src="', url, '" /></span>');
+                    })
+                    $pic.find('.thumb').html(pages.join('')).find('span:eq(0)').addClass('curr');
 
-                    // 放大
-                    $pic.on('click', '.big', function() {
-                        width += 30;
-                        if (width < 1030) {
-                            img.width = width;
-                        } else {
-                            width = 1030;
-                        }
-                    })
-                    // 缩小
-                    $pic.on('click', '.small', function() {
-                        width -= 30;
-                        if (width >= 530) {
-                            img.width = width;
-                        } else {
-                            width = 530;
-                        }
-                    })
-                    // 最小化
-                    $pic.on('click', '.minimize', function() {
-                        $pic.addClass('pic-mini');
-                    })
-                    // 最小化
-                    $pic.on('click', '.maxmize', function() {
-                        $pic.removeClass('pic-mini');
-                    })
                     // 切换图片
-                    $pic.on('click', '.p', function() {
-                        width = 530;
-                        img.src = imgList[$(this).index()];
-                        img.width = width;
-                        $(this).addClass('curr').siblings().removeClass('curr');
+                    $pic.on('click', '.thumb img', function() {
+                        img.src = this.src;
+                        zoomImg();
+                        $(this).parent().addClass('curr').siblings().removeClass('curr');
                     })
 
-
-                    // $('.optiscroll').optiscroll({
-                    //     maxTrackSize: 175
-                    // })//.append('<div class="noselect"></div>')
-                },
-                drag: function() {
-                    var o = this,
-                        $pic = $('.picture');
-
-                    // pic drag to set width
-                    $pic.on('mousedown', function(t) {
-                        t.preventDefault();
-                        dict.resizeStart = true;
-                        dict.offset = [e.clientX, e.clientY];
-                        dict.area = [
-                            layero.outerWidth()
-                            ,layero.outerHeight()
-                        ];
-                        ready.moveElem.css('cursor', 'se-resize').show();
-                    })
-
-                    // img drag
-                    $pic.on({
-                        'mousedown touchstart': function(t) {
-                            t.preventDefault();
-                            var n = t.pageX,
-                                e = t.pageY,
-                                i = $(this).css("z-index"),
-                                r = $(this).outerHeight(),
-                                a = $(this).outerWidth(),
-                                s = $(this).offset().top + r - e,
-                                p = $(this).offset().left + a - n,
-                                objW = $pic.width(), 
-                                objH = $pic.height(),
-                                imgW = $(this).width(), 
-                                imgH = $(this).height();
-
-                            $(this).on("mousemove touchmove", function(t) {
-                                var n = t.pageY + s - r,
-                                    e = t.pageX + p - a;
-                                $(this).offset({
-                                    top: n,
-                                    left: e
-                                })
-
-
-                                if (objH < imgH) {
-                                    parseInt($(this).css("top")) > 0 && ($(this).css("top", 0));
-                                    var c = -(imgH - objH);
-                                    parseInt($(this).css("top")) < c && ($(this).css("top", c))
-                                } else {
-                                    parseInt($(this).css("top")) < 0 && ($(this).css("top", 0));
-                                    var c = objH - imgH;
-                                    parseInt($(this).css("top")) > c && ($(this).css("top", c))
-                                }
-                                if (objW < imgW) {
-                                    parseInt($(this).css("left")) > 0 && ($(this).css("left", 0));
-                                    var m = -(imgW - objW);
-                                    parseInt($(this).css("left")) < m && ($(this).css("left", m));
-                                } else {
-                                    parseInt($(this).css("left")) < 0 && ($(this).css("left", 0));
-                                    var m = objW - imgW;
-                                    parseInt($(this).css("left")) > m && ($(this).css("left", m));
-                                }
-                            })
-                        },
-                        'mouseup': function() {
-                            $(this).off("mousemove")
-                        },
-                        'mouseout': function() {
-                            $(this).off("mousemove")
-                        }
-                    }, 'img');
+                    zoomImg();
                 },
                 myformEvent: function() {
                     var $body        = $('body');
                     var $suggestions = $('#suggestions');
-                    var $myform      = $('#myform');
-                    var $tbody       = $myform.find('tbody');
+                    var $tbody       = $('#tbody');
                     var $ipt         = $tbody.find('.ipt:first');
-                    var modal        = $('#jmodal').html();
+                    var $date        = $('#date');
+                    var html         = $('#jmodal').html();
                     var self         = this;
+                    var count        = 13;
+                    var model        = [];
+
+                    while (count-- > 0) {
+                        model.push(html);
+                    }
+                    $tbody.append(model.join(''));
 
                     // 单价
-                    $myform.on({
-                        'keyup': function() {
-                            var val = this.value;
-                            if (!/^\d+\.?\d*$/.test(val)) {
-                                val = Math.abs(parseFloat(val));
-                                this.value = isNaN(val) ? '' : val;
-                            }
-                        },
-                        'blur': function() {
-                            self.calcPrice($tbody, $(this).closest('tr'));
+                    $tbody.on('keyup', '.price', function(e) {
+                        var val = this.value;
+                        if (!/^\d+\.?\d*$/.test(val)) {
+                            val = Math.abs(parseFloat(val));
+                            this.value = isNaN(val) ? '' : val;
                         }
-                    }, '.price');
+                        if (e.keyCode === 13) {
+                            $(this).closest('tr').next().find('.price').focus();
+                        }
+                    })
+
+                    var checked = function() {
+                        var pass = false;
+                        $tbody.find('.name').each(function() {
+                            if (this.value != '') {
+                                pass = true;
+                                return false;
+                            }
+                        })
+
+                        !pass && $.notify({
+                            title: '最少填写一条报价',
+                            type: 'error',
+                            delay: 2e3
+                        })
+
+                        return pass;
+                    }
+                    
+                    
+                    // 提交
+                    $('#submit').on('click', function() {
+                        var val = $date.val(),
+                            pass = checked();
+
+                        if (pass && !val) {
+                            $.notify({
+                                title: '请填写报价有效期',
+                                type: 'error',
+                                delay: 2e3
+                            })
+                            $date.focus();
+                            pass = false;
+                        } else {
+                            // 验证通过，准备提交
+                            console.log(9)
+                        }
+                        return false;
+                    })
 
                     // 商品名联想
-                    $myform.on({
+                    $tbody.on({
                         'click': function(event) {
                             event.stopPropagation();
                         },
                         'focus': function() {
+                            // $(this).siblings('.error1').hide();
                             $(this).after($suggestions);
                             $suggestions.find('.group').length > 1 && $suggestions.show();
                         },
                         'input': function() {
                             self.getKeywords(this.value);                           
                         }
-                    }, '.ipt-name');
+                    }, '.name');
 
                     // 关闭联想层
                     $body.on('click', function() {
@@ -367,24 +236,30 @@
                         $suggestions.prev().val(data[0])
                         .closest('td').next().find('.ipt').val(data[1]).trigger('focus').end()
                         .closest('td').next().find('.ipt').val(data[2]).trigger('focus').end()
-                        .closest('td').next().find('.ipt').val(data[3]).trigger('focus');
+                        .closest('td').next().find('.ipt').val(data[3]).trigger('focus').end()
+                        .closest('tr').find('.remove').show();
                         $suggestions.hide();
-                    })
 
-                    // 新增一行
-                    $myform.on('click', '.add', function() {
-                        $tbody.append(modal);
+                        var length = 0;
+                        $('.name').each(function() {
+                            length += this.value == '' ? 1 : 0;
+                        })
+                        if (length < 4) {
+                            $tbody.append(model.join(''));
+                        }
                     })
 
                     // 删除一行
-                    $myform.on('click', '.remove', function() {
-                        var $tr = $(this).closest('tr');
+                    $tbody.on('click', '.remove', function() {
+                        $(this).closest('tr').remove();
+                    })
 
-                        // 弹层确认删除
-                        // layer.confirm('确认删除行？', {icon: 3, title:'提示'}, function(index){
-                            $tr.remove();
-                            // layer.close(index);
-                        // });       
+                    // 有效期
+                    laydate({
+                        elem: '#date',
+                        istime: true,
+                        choose: function(datas){
+                        }
                     })
                 },
                 // ajax 查询关键词
@@ -451,32 +326,6 @@
                         }
                     })
                     $('.jq-page').prepend('<div class="p-size">总共' + item.length + '条记录</div>')
-                },
-                // 裸价
-                pirceInput: function() {
-                    $('#myform').on('keyup', '.ipt-price', function(e) {
-                        var val = this.value;
-                        if (!/^\d+\.?\d*$/.test(val)) {
-                            val = Math.abs(parseFloat(val));
-                            this.value = isNaN(val) ? '' : val;
-                        }
-                        if (e.keyCode === 13) {
-                            $(this).closest('tr').next().find('.ipt-price').focus();
-                        }
-                    });
-                },
-                formValidate: function () {
-                    $('#myform').validator({
-                        fields: {
-                            name: 'required'
-                        }
-                    })
-
-                    $('#submit').on('click', function() {
-                        if ($('#myform').isValid()) {
-                        } else {
-                        }
-                    })
                 }
             }
         }
