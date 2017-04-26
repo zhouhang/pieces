@@ -26,7 +26,7 @@ CREATE TABLE `logistical_trace` (
 UPDATE `pieces`.`home_weight` SET `value`='1065,310,694,687,1485,1498,1824,542' WHERE `id`='92'; -- 根茎类
 UPDATE `pieces`.`home_weight` SET `value`='267,710,886,1329,1380,1168,203,275' WHERE `id`='102'; -- 果实籽仁类
 UPDATE `pieces`.`home_weight` SET `value`='1169,1725,1807,444,1907,494,183,1258' WHERE `id`='112'; -- 全草花叶类
-UPDATE `pieces`.`home_weight` SET `value`='484,233,405,1546,1944,831,185,883' WHERE `id`='121'; -- 矿石动物类
+UPDATE `pieces`.`home_weight` SET `value`='1006,233,405,1546,1944,831,185,883' WHERE `id`='121'; -- 矿石动物类
 UPDATE `pieces`.`home_weight` SET `value`='126,431,646,699,1884,1471,553,1022' WHERE `id`='132'; -- 藤皮类
 UPDATE `pieces`.`home_weight` SET `value`='975,489,634,623,487,1873,492,249' WHERE `id`='142'; -- 树脂菌藻类
 

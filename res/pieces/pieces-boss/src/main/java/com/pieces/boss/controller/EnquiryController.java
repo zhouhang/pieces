@@ -3,6 +3,7 @@ package com.pieces.boss.controller;
 import com.github.pagehelper.PageInfo;
 import com.pieces.boss.commons.LogConstant;
 import com.pieces.dao.model.*;
+import com.pieces.dao.vo.AnonEnquiryVo;
 import com.pieces.dao.vo.CommodityVo;
 import com.pieces.dao.vo.EnquiryBillsVo;
 import com.pieces.dao.vo.UserVo;
@@ -35,6 +36,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -192,6 +194,7 @@ public class EnquiryController extends BaseController{
     @RequestMapping(value = "create/{id}")
     @BizLog(type = LogConstant.enquiry, desc = "新建询价单客户选择页面")
     public String createEnquiry(@PathVariable("id") Integer userId,Integer anonId, ModelMap modelMap){
+        String page = "enquiry-create";
         User user = userService.findById(userId);
         List<EnquiryCommoditys> commoditys = (List<EnquiryCommoditys>) session.getAttribute("enquiryCommodityName");
         if (commoditys!= null) {
@@ -200,6 +203,10 @@ public class EnquiryController extends BaseController{
         if(anonId!=null){
             //如果是匿名询价生成的报价，session加上匿名Id
             session.setAttribute("anonId",anonId);
+            // 根据匿名询价ID 查询图片!
+            AnonEnquiryVo anon = anonEnquiryService.findVoById(anonId);
+            modelMap.put("anon", anon);
+            page = "enquiry-create-anon";
         }
 
 
@@ -209,7 +216,7 @@ public class EnquiryController extends BaseController{
         modelMap.put("expireDate", date);
 
         modelMap.put("user", user);
-        return "enquiry-create";
+        return page;
     }
 
     /**
@@ -217,22 +224,29 @@ public class EnquiryController extends BaseController{
      * @return
      */
     @RequestMapping(value = "save")
-    @BizLog(type = LogConstant.enquiry, desc = "新建询价单客户选择页面")
+    @BizLog(type = LogConstant.enquiry, desc = "保存新建询价信息")
     @ResponseBody
     public Result saveEnquiry(@RequestBody List<EnquiryCommoditys> commoditys, Integer userId){
         Member member = (Member)session.getAttribute(RedisEnum.MEMBER_SESSION_BOSS.getValue());
         User user = userService.findById(userId);
-        for(EnquiryCommoditys commodity:commoditys){
-            Commodity data = commodityService.findById(commodity.getCommodityId());
-            commodity.setCommodityId(data.getId());
-            commodity.setLevel(data.getLevel());
-            commodity.setOrigin(data.getOriginOf());
-            commodity.setSpecs(data.getSpec());
-            commodity.setCommodityName(data.getName());
-        }
 
         if(commoditys == null || commoditys.size()==0) {
             throw new RuntimeException("必须提交询价商品才能询价成功");
+        }
+        // 删除无效的询价商品信息 商品ID 不存在.
+        Iterator<EnquiryCommoditys> iter = commoditys.iterator();
+        while(iter.hasNext()){
+            EnquiryCommoditys commodity = iter.next();
+            if(commodity.getCommodityId() == null){
+                iter.remove();
+            } else {
+                Commodity data = commodityService.findById(commodity.getCommodityId());
+                commodity.setCommodityId(data.getId());
+                commodity.setLevel(data.getLevel());
+                commodity.setOrigin(data.getOriginOf());
+                commodity.setSpecs(data.getSpec());
+                commodity.setCommodityName(data.getName());
+            }
         }
 
         Integer  billId = enquiryBillsService.create(commoditys, user);
