@@ -262,100 +262,27 @@
                     }
                 })
             },
-            upfile: function() {
-                var that = this,
-                        $upfile = $('#upfile'),
-                        $picNumber = $('#picNumber'),
-                        idx = 0,
-                        number = 0, // 已上传图片数量
-                        maxSize = 9; // 最大上传图片数量
-
-                $('body').append('<div id="upload" style="position:fixed;bottom:0;left:0;width:0;height:0;visibility:hidden;"></div>');
-
-                var reset = function() {
-                    $upfile.show().html('<input type="file" name="file" accept="image/gif,image/jpeg,image/png" class="file" />');
-                }
-                var showLader = function() {
-                    $upfile.html('<i class="loader">上传中...</i>');
-                }
-                reset();
-                $upfile.on('change', '.file', function(ev) {
-                    showLader();
-                    lrz(this.files[0], {
-                        width: 800
-                    }).then(function (rst) {
-                        var base64 = rst.base64;
-                        base64 = base64.substr(base64.indexOf(',') + 1);
-                        $.ajax({
-                            url: '/h5/upload',
-                            data: {
-                                img: base64,
-                                fileName: rst.origin.name
-                            },
-                            type: 'POST',
-                            dataType: 'json',
-                            success: function (result) {
-                                if (number >= maxSize) {
-                                    $upfile.empty('').hide();
-                                } else if (result.status == 'success') {
-                                    reset();
-                                    var model = [];
-                                    _global.v.img['img_' + (idx++)] = result.url;
-                                    model.push('<span class="ui-file">');
-                                    model.push('<img src="' , result.url , '" data-src="' , result.url , '" />');
-                                    model.push('<i class="del" id="img_' , idx , '"></i>');
-                                    model.push('<span');
-                                    $upfile.before(model.join(''));
-                                    $picNumber.html((++ number) + '/' + maxSize);
-                                    number >= maxSize && $upfile.empty('').hide();
-                                } else {
-                                    popover('上传图片失败，请刷新页面重试！');
-                                }
-                            },
-                            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                                popover('网络连接超时，请您稍后重试！');
-                            }
-                        })
-                    }).catch(function (err) {
-                        // 处理失败会执行
-                        reset();
-                    }).always(function () {
-                        // 不管是成功失败，都会执行
-                    });
-                });
-
-                // 删除图片
-                $('.ui-upload').on('click', '.del', function() {
-                    delete _global.v.img['img_' + this.id];
-                    $picNumber.html((-- number) + '/' + maxSize);
-                    $(this).parent().remove();
-                    reset();
-                    return false;
-                })
-            },
             camera: function() {
                 var that = this,
-                        $body = $('body'),
-                        $upfile = $('#upfile'),
-                        $picNumber = $('#picNumber'),
-                        idx = 0,
-                        number = 0, // 已上传图片数量
-                        maxSize = 9; // 最大上传图片数量
+                    $upfile = $('#upfile'),
+                    $picNumber = $('#picNumber'),
+                    number = 0, // 已上传图片数量
+                    maxSize = 9; // 最大上传图片数量
 
                 var showPic = function(localIds) {
                     var model = [];
                     $.each(localIds, function(i, url) {
-                        model.push('<span class="ui-file">');
-                        model.push('<img src="' , url , '" data-src="' , url , '" />');
-                        model.push('<i class="del" data-url="', url, '" id="img_' , idx , '"></i>');
-                        model.push('</span>');
+                        model.push('<em class="ui-file">');
+                        model.push('<img src="' , url , '"/>');
+                        model.push('<i class="del" data-url="', url, '"></i>');
+                        model.push('</em>');
                         _global.v.img.push(url);
                         number ++;
                     })
 
                     $upfile.before(model.join(''));
                     $picNumber.html((number) + '/' + maxSize);
-                    number >= maxSize && $upfile.empty('').hide();
+                    number >= maxSize ? $upfile.hide() : $upfile.show();
                 }
 
                 // 图片预览
@@ -389,6 +316,7 @@
                     })
                     $picNumber.html((-- number) + '/' + maxSize);
                     $(this).parent().remove();
+                    $upfile.show();
                     return false;
                 })
             }
