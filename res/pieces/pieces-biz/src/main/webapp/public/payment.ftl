@@ -30,9 +30,9 @@
 
                     <div class="paytype">
                         <strong class="h2">支付货款</strong>
-                        <label class="checked"><input type="radio" name="type" value="alipay" checked><img height="38" src="images/alipay.png" alt=""><i></i></label>
+                        <#--<label class="checked"><input type="radio" name="type" value="alipay" checked><img height="38" src="images/alipay.png" alt=""><i></i></label>-->
                         <!--<label><input type="radio" name="type" value="wxpay"><img height="38" src="images/wxpay.png" alt=""><i></i></label>-->
-                        <label><input type="radio" name="type" value="bank">银行转账<i></i></label>
+                        <label class="checked"><input type="radio" name="type" value="bank" checked>银行转账<i></i></label>
                     </div>
 
                     <div class="bank">
