@@ -26,4 +26,12 @@ public interface UserDao extends ICommonDao<User>{
 	List<UserVo> findUpdateUser(@Param("updateTime")Date updateTime);
 
 	User findByAccount(String accountName);
+
+	/**
+	 * 查询所有注册用户的openId
+	 * @return
+     */
+	List<String> findOpenIds();
+
+	Integer updateByWxInfo(List<User> list);
 }

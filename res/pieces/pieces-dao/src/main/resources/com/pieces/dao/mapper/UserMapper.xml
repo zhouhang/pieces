@@ -23,6 +23,8 @@
 		<result column="create_time"  property="createTime" />
 		<result column="update_time"  property="updateTime" />
 		<result column="open_id"  property="openId" />
+		<result column="wx_name"  property="wxName" />
+		<result column="wx_img"  property="wxImg" />
 	</resultMap>
 	
 	<resultMap id="Vo" type="com.pieces.dao.vo.UserVo" extends="BaseResultMap">
@@ -33,7 +35,7 @@
 
 	<sql id="Base_Column_List">
 		id,user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,
-		type,service_id,certify_status,certify_time,create_time,update_time,open_id
+		type,service_id,certify_status,certify_time,create_time,update_time,open_id,wx_name,wx_img
 	</sql>
 
 
@@ -57,9 +59,9 @@
 
 	<insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.pieces.dao.model.User">
 		insert into
-		user (user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,type,service_id,certify_status,certify_time,create_time,update_time,open_id)
+		user (user_name,password,salt,company_full_name,area_id,contact_name,contact_mobile,online_status,bind_erp,source,area_full,is_del,type,service_id,certify_status,certify_time,create_time,update_time,open_id,wx_name,wx_img)
 		values
-		(#{userName},#{password},#{salt},#{companyFullName},#{areaId},#{contactName},#{contactMobile},#{onlineStatus},#{bindErp},#{source},#{areaFull},#{isDel},#{type},#{serviceId},#{certifyStatus},#{certifyTime},#{createTime},#{updateTime},#{openId})
+		(#{userName},#{password},#{salt},#{companyFullName},#{areaId},#{contactName},#{contactMobile},#{onlineStatus},#{bindErp},#{source},#{areaFull},#{isDel},#{type},#{serviceId},#{certifyStatus},#{certifyTime},#{createTime},#{updateTime},#{openId},#{wxName},#{wxImg})
 	</insert>
 
 	<update id="update" parameterType="com.pieces.dao.model.User">
@@ -142,6 +144,13 @@
 				open_id = #{openId},
 			</if>
 
+			<if test="wxName != null">
+				wx_name = #{wxName},
+			</if>
+
+			<if test="wxImg != null">
+				wx_img = #{wxImg},
+			</if>
 		</set>
 		where id = #{id}
 	</update>
@@ -239,6 +248,13 @@
 			<if test="openId!= null" >
 				open_id = #{openId}
 			</if>
+			<if test="wxName != null">
+				wx_name = #{wxName},
+			</if>
+
+			<if test="wxImg != null">
+				wx_img = #{wxImg},
+			</if>
 	    </set>
         WHERE id = #{id,jdbcType=NUMERIC}
   </update>
@@ -289,6 +305,9 @@
 			</if>
 			<if test="isDel != null">
 				and b.is_del = #{isDel,jdbcType=INTEGER}
+			</if>
+			<if test="wxName != null and wxName != ''">
+				b.wx_name like "%"#{wxName}"%"
 			</if>
 		</where>
 		ORDER BY b.create_time desc
@@ -353,5 +372,31 @@
 		from user
 		where (user_name = #{accountName} or contact_mobile=#{accountName}) AND is_del=0
 	</select>
+
+	<select id="findOpenIds" resultType="java.lang.String">
+		select
+		open_id
+		from user
+		where open_id is not null and open_id != ''
+	</select>
+
+	<!-- 根据查询的微信信息批量更新用户信息 -->
+	<update id="updateByWxInfo" parameterType="java.util.List">
+		<if test="list != null">
+			<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+				update user
+				<set>
+					<if test="item.wxName != null">
+						wx_name = #{item.wxName},
+					</if>
+
+					<if test="item.wxImg != null">
+						wx_img = #{item.wxImg},
+					</if>
+				</set>
+				where open_id = #{item.openId}
+			</foreach>
+		</if>
+	</update>
 
 </mapper>

@@ -1,5 +1,6 @@
 package com.pieces.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,8 @@ import com.pieces.service.dto.UserValidate;
 import com.pieces.service.enums.RedisEnum;
 import com.pieces.tools.utils.CookieUtils;
 import com.pieces.tools.utils.SeqNoUtil;
+import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -62,6 +65,10 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
 
     @Autowired
     CertifyRecordService certifyRecordService;
+
+    @Autowired
+    WxMpService wxMpService;
+
     /**
      * 添加用户
      *
@@ -351,6 +358,8 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
             User param2 = new User();
             param2.setId(result.getId());
             param2.setOpenId(wxMpUser.getOpenId());
+            param2.setWxImg(wxMpUser.getHeadImgUrl());
+            param2.setWxName(wxMpUser.getNickname());
             update(param2);
         } else if (!Strings.isNullOrEmpty(userName)){
             User user = new User();
@@ -361,6 +370,8 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
             user.setPassword(phone.substring(5, 11)); // 默认密码
             user.setContactMobile(phone);
             user.setOpenId(wxMpUser.getOpenId());
+            user.setWxImg(wxMpUser.getHeadImgUrl());
+            user.setWxName(wxMpUser.getNickname());
             addUser(user);
             result = user;
         }
@@ -391,6 +402,40 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
         user.setId(userId);
         user.setIsDel(false);
         updateUser(user);
+    }
+
+    @Override
+    @Transactional
+    public void updateUserWxInfo() {
+        Boolean hasNext = true;
+        PageInfo<String> pageInfo =null;
+        while (hasNext) {
+            //根据openId 获取用户详情
+            pageInfo = findOpenIds(pageInfo==null?1:(pageInfo.getPageNum()+1));
+            hasNext = !pageInfo.isIsLastPage();
+            try {
+                List<User> list = new ArrayList<>();
+                List<WxMpUser> users = wxMpService.getUserService().userInfoList(pageInfo.getList());
+                // update user 信息
+                for (WxMpUser user : users) {
+                    User u = new User();
+                    u.setOpenId(user.getOpenId());
+                    u.setWxName(user.getNickname());
+                    u.setWxImg(user.getHeadImgUrl());
+                    list.add(u);
+                }
+                userDao.updateByWxInfo(list);
+            } catch (WxErrorException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private PageInfo<String> findOpenIds(Integer pageNum) {
+        PageHelper.startPage(pageNum, 100);
+        List<String> openIds = userDao.findOpenIds();
+        PageInfo<String> pageInfo = new PageInfo<>(openIds);
+        return pageInfo;
     }
 }
 

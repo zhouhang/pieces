@@ -130,4 +130,9 @@ public interface UserService extends ICommonService<User>{
      */
 	void enable(Integer userId);
 
+	/**
+	 * 更新所有用户的微信信息
+	 */
+	void updateUserWxInfo();
+
 }

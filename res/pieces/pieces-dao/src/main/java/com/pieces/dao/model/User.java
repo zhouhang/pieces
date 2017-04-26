@@ -82,7 +82,13 @@ public class User  implements Serializable {
 	private Date updateTime;
 
 	private String openId;
-	
+
+	// 微信名称
+	private String wxName;
+
+	// 微信图片
+	private String wxImg;
+
 	public User(){}
 
 	public Integer getServiceId() {
@@ -243,5 +249,21 @@ public class User  implements Serializable {
 
 	public void setOpenId(String openId) {
 		this.openId = openId;
+	}
+
+	public String getWxName() {
+		return wxName;
+	}
+
+	public void setWxName(String wxName) {
+		this.wxName = wxName;
+	}
+
+	public String getWxImg() {
+		return wxImg;
+	}
+
+	public void setWxImg(String wxImg) {
+		this.wxImg = wxImg;
 	}
 }

@@ -5,7 +5,7 @@ package com.pieces.service.enums;
  */
 public enum PathEnum {
 
-    COMMODITY("commodity/"),WOOL("wool/"),ANON("anon/");
+    COMMODITY("commodity/"),WOOL("wool/"),ANON("anon/"),PAY("pay/");
 
     private String value;
 

@@ -95,6 +95,9 @@ public class H5OrderController {
     @Autowired
     private LogisticalTraceService logisticalTraceService;
 
+    @Autowired
+    WxMpService wxService;
+
 
     @RequestMapping(value ="order/list",method = RequestMethod.GET)
     public String orderList(Integer status,ModelMap modelMap) {
@@ -154,7 +157,7 @@ public class H5OrderController {
     }
 
     @RequestMapping(value = "pay/bank/{id}", method = RequestMethod.GET)
-    public String payBank(@PathVariable("id")Integer id, ModelMap modelMap){
+    public String payBank(@PathVariable("id")Integer id, ModelMap modelMap,HttpServletRequest request){
         User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
         OrderFormVo vo =  orderFormService.findVoById(id);
 
@@ -162,6 +165,15 @@ public class H5OrderController {
         modelMap.put("payAccountList",payAccountList);
         modelMap.put("userType",user.getType());
         modelMap.put("vo",vo);
+
+        try {
+            WxJsapiSignature signature = wxService.createJsapiSignature(WebUtil.getFullUrl(request));
+            //wxService.getAccessToken();
+            modelMap.put("signature",signature);
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
+
         return "wechat/pay_bank";
     }
     @RequestMapping(value = "pay/bill/{id}", method = RequestMethod.GET)

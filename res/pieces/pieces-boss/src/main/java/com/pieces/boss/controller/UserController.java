@@ -84,9 +84,7 @@ public class UserController extends  BaseController{
 	@RequiresPermissions(value = "customer:view")
 	@RequestMapping(value = "/index")
 	@BizLog(type = LogConstant.user, desc = "会员查询页面")
-	public String userIndex(HttpServletRequest request,
-							HttpServletResponse response,
-							String  advices,
+	public String userIndex(String  advices,
 							Integer pageNum,
 							Integer pageSize,
 							UserVo userVo,
@@ -437,5 +435,13 @@ public class UserController extends  BaseController{
 	}
 
 
+	// 通过openId获取用户信息
+	@RequestMapping(value = "/syncWxInfo" ,method= RequestMethod.GET)
+	@ResponseBody
+	@BizLog(type = LogConstant.user, desc = "启用用户")
+	public Result syncWxInfo() {
+		userService.updateUserWxInfo();
+		return new Result(true);
+	}
 
 }

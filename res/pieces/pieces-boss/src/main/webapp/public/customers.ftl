@@ -41,6 +41,7 @@
 						<tr>
 							<th width="70">编号</th>
 							<th>会员名</th>
+                            <th>微信名</th>
 							<th>联系人</th>
 							<th>手机号</th>
 							<th width="200">注册日期</th>
@@ -56,6 +57,10 @@
 										<input name="userName" type="text" class="ipt"
 											value="${userVo.userName!}">
 									</div></td>
+                                <td><div class="ipt-wrap">
+                                    <input name="wxName" type="text" class="ipt"
+                                           value="${userVo.wxName!}">
+                                </div></td>
 								<td><div class="ipt-wrap">
 										<input name="contactName" type="text" class="ipt"
 											value="${userVo.contactName!}">
@@ -102,6 +107,7 @@
 						<tr>
 							<td>${user.id}</td>
 							<td>${user.userName}</td>
+                            <td>${user.wxName!}</td>
 							<td>${user.contactName}</td>
 							<td>${user.contactMobile}</td>
 							<td>${user.createTime?date}</td>

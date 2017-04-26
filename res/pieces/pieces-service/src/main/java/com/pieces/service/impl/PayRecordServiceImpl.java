@@ -18,6 +18,8 @@ import com.pieces.service.*;
 import com.pieces.service.enums.PathEnum;
 import com.pieces.tools.utils.FileUtil;
 import com.pieces.tools.utils.SeqNoUtil;
+import me.chanjar.weixin.common.exception.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +44,9 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 
 	@Autowired
 	private SmsService smsService;
+
+	@Autowired
+	WxMpService wxService;
 
 
 
@@ -342,7 +347,29 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 				PayDocument payDocument = new PayDocument();
 				payDocument.setPayRecordId(payRecordId);
 				payDocument.setCreateDate(new Date());
-				payDocument.setPath(FileUtil.saveFileFromTemp(img, PathEnum.COMMODITY.getValue()));
+				if (img.contains("/")) {
+					payDocument.setPath(FileUtil.saveFileFromTemp(img, PathEnum.PAY.getValue()));
+				} else {
+					try {
+						payDocument.setPath(FileUtil.saveFileFromWechat(wxService.getAccessToken(),img, PathEnum.PAY.getValue()));
+					} catch (WxErrorException e) {
+						e.printStackTrace();
+					}
+				}
+
+				payDocumentService.create(payDocument);
+			}
+		}
+	}
+
+	private void createPayDocumentForWechat(Integer payRecordId,String[] imgs){
+		//添加支付凭证
+		if(imgs!=null){
+			for(String img : imgs){
+				PayDocument payDocument = new PayDocument();
+				payDocument.setPayRecordId(payRecordId);
+				payDocument.setCreateDate(new Date());
+
 				payDocumentService.create(payDocument);
 			}
 		}
