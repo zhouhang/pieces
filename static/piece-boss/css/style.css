@@ -590,15 +590,15 @@ vertical-align:middle;
 .create-enquiry2 .tfoot{position:fixed;bottom:0;left:320px;right:10px;padding:10px;background:#fff;box-shadow:0 6px 15px -12px rgba(0, 0, 0, 0.5) inset;}
 .create-enquiry2 .tfoot .ipt{width:140px;padding:5px;vertical-align:middle;}
 .create-enquiry2 .tfoot .btn-red{float:right;min-width:84px;}
-.pic{position:fixed;z-index:8;top:10px;left:10px;bottom:10px;width:300px;padding:0 0 60px;background:#fff;border:1px solid #ccc;border-radius:3px;overflow:hidden;}
-.pic .move{cursor:move;}
-.pic .img{position:relative;width:100%;height:100%;overflow:hidden;}
-.pic .img img{position:absolute;top:0;left:0;}
-.pic .img i{position:absolute;top:0;left:0;right:0;bottom:0;background:#fff;opacity:0;filter:alpha(opacity=0);display:none;}
-.pic .thumb{position:absolute;bottom:20px;left:0;right:0;text-align:center;white-space:nowrap;}
-.pic .thumb span{display:inline-block;width:26px;height:26px;line-height:26px;margin:0 1px;padding:1px;font-size:12px;border:1px solid #ccc;vertical-align:top;}
-.pic .thumb .curr{padding:0;border:2px solid #c3272b;color:#c3272b;}
-.pic .thumb img{display:block;width:26px;height:26px;}
+.pic-fixed{position:fixed;z-index:8;top:10px;left:10px;bottom:10px;width:300px;padding:0 0 60px;background:#fff;border:1px solid #ccc;border-radius:3px;overflow:hidden;}
+.pic-fixed .move{cursor:move;}
+.pic-fixed .img{position:relative;width:100%;height:100%;overflow:hidden;}
+.pic-fixed .img img{position:absolute;top:0;left:0;}
+.pic-fixed .img i{position:absolute;top:0;left:0;right:0;bottom:0;background:#fff;opacity:0;filter:alpha(opacity=0);display:none;}
+.pic-fixed .thumb{position:absolute;bottom:20px;left:0;right:0;text-align:center;white-space:nowrap;}
+.pic-fixed .thumb span{display:inline-block;width:26px;height:26px;line-height:26px;margin:0 1px;padding:1px;font-size:12px;border:1px solid #ccc;vertical-align:top;}
+.pic-fixed .thumb .curr{padding:0;border:2px solid #c3272b;color:#c3272b;}
+.pic-fixed .thumb img{display:block;width:26px;height:26px;}
 
 
 /* laydate */
