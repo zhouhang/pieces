@@ -87,7 +87,7 @@
             },
             pic: function() {
                 var imgList = [],
-                        templete = '<div class="pic"> \n <div class="img"><img src="images/blank.gif"></div> \n <div class="thumb"></div></div>',
+                        templete = '<div class="pic-fixed"> \n <div class="img"><img src="images/blank.gif"></div> \n <div class="thumb"></div></div>',
                         pages = [],
                         $pic, img;
             <#if anon.files?exists && anon.files?size gt 0 >
