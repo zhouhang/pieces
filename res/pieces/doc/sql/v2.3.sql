@@ -36,3 +36,6 @@ UPDATE `pieces`.`home_weight` SET `value`='975,489,634,623,487,1873,492,249' WHE
 ALTER TABLE `pieces`.`user`
 ADD COLUMN `wx_name` VARCHAR(45) NULL COMMENT '用户微信昵称' AFTER `open_id`,
 ADD COLUMN `wx_img` VARCHAR(128) NULL COMMENT '用户的微信头像' AFTER `wx_name`;
+ALTER TABLE `pieces`.`user`
+CHANGE COLUMN `wx_img` `wx_img` VARCHAR(256) NULL DEFAULT NULL COMMENT '用户的微信头像' ;
+
