@@ -17,8 +17,7 @@
             <em id="picNumber">0/9</em>
         </div>
         <div class="ui-upload thumb">
-            <span class="ui-file" id="upfile">
-            </span>
+            <em class="ui-file" id="upfile"></em>
         </div>
     </div>
     <#if !(user?exists)>
