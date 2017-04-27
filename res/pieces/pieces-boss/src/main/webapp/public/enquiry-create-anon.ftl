@@ -75,6 +75,7 @@
 <script src="js/smartZoom.js"></script>
 <script src="js/laydate/laydate.js"></script>
 <script src="js/jquery.pagination.min.js"></script>
+<script src="js/layer/layer.js"></script>
 <script src="${urls.getForLookupPath('/js/common.js')}"></script>
 <script>
     var enquiryPage = {
@@ -209,7 +210,19 @@
                         });
                         $.post("/enquiry/save?userId=${user.id}", JSON.stringify(data), function (result) {
                             if(result.status == "y") {
-                                window.location.href=result.data;
+                                layer.open({
+                                    title: '提交成功',
+                                    content: '你的报价已提交成功,3秒后自动跳转',
+                                    btn: ['关闭'],
+                                    btn1: function(index) {
+                                        layer.close(index);
+                                        window.location.href=result.data;
+                                    }
+                                })
+                                setTimeout(function(){
+                                    window.location.href=result.data;
+                                },3000)
+                                // 报价成功后3秒跳转.
                             }
                         }, "json")
                     }
