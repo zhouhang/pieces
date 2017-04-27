@@ -1,5 +1,8 @@
 package com.pieces.service.impl;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -168,6 +171,15 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
     public PageInfo<UserVo> findVoByCondition(UserVo userVo, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
         List<UserVo> list = userDao.findVoByCondition(userVo);
+        for (UserVo user:list) {
+            if (!Strings.isNullOrEmpty(user.getWxName())) {
+                try {
+                    user.setWxName(URLDecoder.decode(user.getWxName(), "utf-8"));
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         PageInfo page = new PageInfo(list);
         return page;
     }
@@ -420,12 +432,14 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
                 for (WxMpUser user : users) {
                     User u = new User();
                     u.setOpenId(user.getOpenId());
-                    u.setWxName(user.getNickname());
+                    u.setWxName(URLEncoder.encode(user.getNickname(), "utf-8"));
                     u.setWxImg(user.getHeadImgUrl());
                     list.add(u);
                 }
                 userDao.updateByWxInfo(list);
             } catch (WxErrorException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         }

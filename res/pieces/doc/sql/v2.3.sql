@@ -40,4 +40,7 @@ ALTER TABLE `pieces`.`user`
 CHANGE COLUMN `wx_img` `wx_img` VARCHAR(256) NULL DEFAULT NULL COMMENT '用户的微信头像' ;
 ALTER TABLE `pieces`.`user`
 CHANGE COLUMN `wx_name` `wx_name` VARCHAR(45) CHARACTER SET 'utf8mb4' NULL DEFAULT NULL COMMENT '用户微信昵称' ;
+ALTER TABLE `pieces`.`user`
+CHANGE COLUMN `wx_name` `wx_name` VARCHAR(256) CHARACTER SET 'utf8mb4' NULL DEFAULT NULL COMMENT '用户微信昵称' ;
+
 
