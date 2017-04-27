@@ -33,7 +33,7 @@
     <div class="floors">
         <div class="hd"><em class="fr" id="picNumber">0/3</em>支付凭证</div>
         <div class="ui-upload thumb pic">
-            <span class="ui-file" id="upfile"></span>
+            <em class="ui-file" id="upfile"></em>
         </div>
     </div>
 

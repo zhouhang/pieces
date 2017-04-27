@@ -87,7 +87,7 @@
             },
             pic: function() {
                 var imgList = [],
-                        templete = '<div class="pic"> \n <div class="img"><img src="images/blank.gif"></div> \n <div class="thumb"></div></div>',
+                        templete = '<div class="pic-fixed"> \n <div class="img"><img src="images/blank.gif"></div> \n <div class="thumb"></div></div>',
                         pages = [],
                         $pic, img;
             <#if anon.files?exists && anon.files?size gt 0 >
@@ -108,7 +108,7 @@
                 }
 
                 $('body').append(templete);
-                $pic = $('.pic');
+                $pic = $('.pic-fixed');
                 img = $pic.find('.img img')[0];
                 // 显示第一张图片
                 img.src = imgList[0];
