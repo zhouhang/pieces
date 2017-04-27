@@ -94,6 +94,7 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/smartZoom.js"></script>
     <script src="js/laydate/laydate.js"></script>
+    <script src="js/layer/layer.js"></script>
     <script src="js/jquery.pagination.min.js"></script>
     <script src="js/common.js"></script>
     <script>
@@ -186,12 +187,24 @@
                         return pass;
                     }
                     
-                    
                     // 提交
                     $('#submit').on('click', function() {
                         var val = $date.val(),
                             pass = checked();
 
+                            layer.open({
+                                title: '提交成功',
+                                content: '你的报价已提交成功',
+                                time: 3e3,
+                                btn: ['关闭'],
+                                btn1: function(index) {
+                                    layer.close(index);
+                                    var params = getParams() || {};
+                                    if (params['url']) {
+                                        window.location.href = params['url'];
+                                    }
+                                }
+                            })
                         if (pass && !val) {
                             $.notify({
                                 title: '请填写报价有效期',

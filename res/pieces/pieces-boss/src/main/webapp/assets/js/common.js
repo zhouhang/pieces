@@ -100,6 +100,22 @@
     })
 })(jQuery);
 
+// 获取页面url参数
+function getParams() {
+    var ret = {},
+        params = window.location.search.replace(/^\?/,'').split('&'),
+        len = params.length, i = 0, s;
+
+    for (;i<len;i++) {
+        if (!params[i]) { 
+            continue; 
+        }
+        s = params[i].split('=');
+        ret[s[0]] = s[1];
+    }
+    return ret;
+}
+
 // 用户中心导航高亮
 function currNav() {
 	var $side = $('.nav'),
