@@ -434,9 +434,9 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
                     u.setOpenId(user.getOpenId());
                     if (!Strings.isNullOrEmpty(user.getNickname())) {
                         u.setWxName(URLEncoder.encode(user.getNickname(), "utf-8"));
+                        u.setWxImg(user.getHeadImgUrl());
+                        list.add(u);
                     }
-                    u.setWxImg(user.getHeadImgUrl());
-                    list.add(u);
                 }
                 userDao.updateByWxInfo(list);
             } catch (WxErrorException e) {
