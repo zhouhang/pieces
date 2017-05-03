@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>企业类型-上工好药</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="bg-gray">
+
+<section class="ui-content">
+    <div class="floors">
+        <div class="hd">企业类型</div>
+        <div class="bd">
+            <label>
+                <input name="company" value="1" type="radio" class="ico ico-rad mid cbx" />
+                <em>药店</em>
+            </label>
+        </div>
+        <div class="bd">
+            <label>
+                <input name="company" value="2" type="radio" class="ico ico-rad mid cbx" />
+                <em>医疗机构</em>
+            </label>
+        </div>
+        <div class="bd">
+            <label>
+                <input name="company" value="3" type="radio" class="ico ico-rad mid cbx" />
+                <em>制药企业</em>
+            </label>
+        </div>
+        <div class="bd">
+            <label>
+                <input name="company" value="4" type="radio" class="ico ico-rad mid cbx" />
+                <em>医药公司</em>
+            </label>
+        </div>
+    </div>
+</section><!-- /ui-content -->
+
+
+
+<script src="assets/js/jquery191.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+!(function($) {
+    var _global = {
+        init: function() {
+            this.bindEvent();
+        },
+        bindEvent: function() {
+            $('.cbx').on('click', function() {
+                window.location.href = 'certify.html?type=' + this.value;
+            })
+        }
+    }
+
+    _global.init();
+})(window.Zepto || window.jQuery);
+</script>
+</body>
+</html>

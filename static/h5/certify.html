@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>上工好药饮片采购平台</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="bg-gray">
+
+<section class="ui-content">
+    <div class="order">
+        <div class="item">
+            <input type="hidden" name="customerID" id="customerID" value="">
+            <span class="error"></span>
+            <strong class="t1">请选择企业类型</strong>
+            <a href="company.html?value=" class="arrow"></a>
+        </div>
+    </div>
+    <div class="floors">
+        <div class="hd">医疗机构许可证</div>
+        <div class="ui-upload thumb">
+            <em class="ui-file required" data-max="4" data-num="0"></em>
+            <span>请上传医疗机构许可证图片</span>
+        </div>
+    </div>
+    <div class="floors">
+        <div class="hd">营业执照副本</div>
+        <div class="ui-upload thumb">
+            <em class="ui-file" data-max="4" data-num="0"></em>
+            <span>请上传企业营业执照副本图片，如果是老版的营业执照，还需要上传组织机构代码证以及税务登记证图片</span>
+        </div>
+    </div>
+    <div class="floors">
+        <div class="hd">GSP证书</div>
+        <div class="ui-upload thumb">
+            <em class="ui-file" data-max="4" data-num="0"></em>
+            <span>请上传GSP证书图片</span>
+        </div>
+    </div>
+    <div class="floors">
+        <div class="hd">GMP证书</div>
+        <div class="ui-upload thumb">
+            <em class="ui-file required" data-max="4" data-num="0"></em>
+            <span>请上传GMP证书图片</span>
+        </div>
+    </div>
+    <div class="floors">
+        <div class="hd">药品经营许可证</div>
+        <div class="ui-upload thumb">
+            <em class="ui-file" data-max="4" data-num="0"></em>
+            <span>请上传药品经营许可证图片，如果做过资质变更，还需要上传资质变更记录表图片，变更记录表最多能传3张</span>
+        </div>
+    </div>
+    <div class="floors">
+        <div class="hd">药品生产许可证</div>
+        <div class="ui-upload thumb">
+            <em class="ui-file required" data-max="4" data-num="0"></em>
+            <span>请上传药品生产许可证图片，如果做过资质变更，还需要上传资质变更记录表图片，变更记录表最多能传3张</span>
+        </div>
+    </div>
+    <div class="floors">
+        <div class="hd">法人授权委托书<a href="#none" class="mid eg-img">示例图片</a></div>
+        <div class="ui-upload thumb">
+            <em class="ui-file required" data-max="4" data-num="0"></em>
+            <span>请上传采购人员的法人授权委托书图片，如果采购人员与收货人员不是同一个人，还需要上传收货人员授权委托书图片</span>
+        </div>
+    </div>
+    <div class="floors">
+        <div class="hd">印鉴章备案<a href="#none" class="mid eg-img">示例图片</a></div>
+        <div class="ui-upload thumb">
+            <em class="ui-file required" data-max="4" data-num="0"></em>
+            <span>请上传贵单位的印鉴章备案图片</span>
+        </div>
+    </div>
+
+    <div class="ui-button">
+        <button type="button" class="ubtn ubtn-red" id="submit">提交</button>
+    </div>
+
+</section><!-- /ui-content -->
+
+
+<script src="assets/js/zepto.min.js"></script>
+<script src="assets/js/layer.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+
+    var _global = {
+        fn: {
+            init: function() {
+                this.bindEvent();
+                this.chooseType();
+                this.formValidate();
+            },
+            bindEvent: function() {
+                var that = this,
+                    idx = 0,
+                    pic = [];
+
+                var showPic = function(localIds, $el) {
+                    var model = [];
+                    $.each(localIds, function(i, url) {
+                        model.push('<span class="ui-file">');
+                        model.push('<img src="' , url , '" data-src="' , url , '" />');
+                        model.push('<i class="del" data-url="', url, '" id="img_' , idx , '"></i>');
+                        model.push('</span>');
+                        pic.push(url);
+                        number ++;
+                    })
+                    
+                    $el.before(model.join(''));
+                    number >= maxSize && $el.empty('').hide();
+                }
+
+                // 图片预览
+                $('.thumb').on('click', 'img', function() {
+                    wx.previewImage({
+                        current: this.src,
+                        urls: pic
+                    });
+                })
+
+                // 上传图片
+                $('.ui-file').on('click', function() {
+                    var maxSize = $(this).data('max'),
+                        number = $(this).data('num'),
+                        $el = $(this);
+
+                    $(this).parent().find('.error').remove();
+
+                    wx.chooseImage({
+                        count: (maxSize - number), // 最多4张
+                        // sizeType: 'compressed', // 可以指定是原图还是压缩图，默认二者都有
+                        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+                        success: function (res) {
+                            var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+                            showPic(localIds, $el);
+                            wx.uploadImage({
+                                localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
+                                isShowProgressTips: 1, // 默认为1，显示进度提示
+                                success: function () {
+                                    // showPic(localIds);
+                                },
+                                fail: function (error) {
+                                    picPath = '';
+                                    localIds = '';
+                                    alert(Json.stringify(error));
+                                }
+                            });
+                        }
+                    });
+                })
+
+                // 删除图片
+                $('.ui-upload').on('click', '.del', function() {
+                    $(this).parent().remove();
+                    return false;
+                })
+
+                // 示例图片
+                $('.eg-img').on('click', function() {
+                    layer.open({
+                        className: 'layer-help',
+                        content: '<div class="hd">示例图片</div><div class="bd">您可以上传类似这样的法人授权委托书图片</div><div class="pic"><img style="width:250;height:382px;" src="assets/images/certify.jpg" /></div>'
+                    });
+                })
+            },
+            // 选择企业类型
+            chooseType: function() {
+                var $floor = $('.floors'),
+                    params = _YYY.getParams();
+
+                // 0.医疗机构许可证
+                // 1.营业执照副本
+                // 2.GSP证书
+                // 3.GMP证书
+                // 4.药品经营许可证
+                // 5.药品生产许可证
+                // 6.法人授权委托书
+                // 7.印鉴章备案
+                
+                $floor.hide();
+                if (!params.type) {
+                    return this;
+                } else if (params.type == 1) {
+                    // 药店
+                    $floor.eq(1).show();
+                    $floor.eq(6).show();
+                } else if (params.type == 2) {
+                    // 医疗机构
+                    $floor.eq(0).show();
+                    $floor.eq(1).show().find('.hd').append('<em>（盈利性医疗机构必填）</em>');
+                    $floor.eq(2).show().find('.hd').append('<em>（盈利性医疗机构必填）</em>');
+                    $floor.eq(4).show().find('.hd').append('<em>（盈利性医疗机构必填）</em>');
+                    $floor.eq(6).show();
+                    $floor.eq(7).show();
+
+                } else if (params.type == 3) {
+                    // 制药企业
+                    $floor.eq(1).show();
+                    $floor.eq(3).show();
+                    $floor.eq(5).show();
+                    $floor.eq(6).show();
+                    $floor.eq(7).show();
+
+                } else {
+                    // 医药公司
+                    $floor.eq(1).show();
+                    $floor.eq(2).show();
+                    $floor.eq(4).show();
+                    $floor.eq(6).show();
+                    $floor.eq(7).show();
+                }
+            },
+            // 提交表单
+            formValidate: function() {
+                var that = this;
+                $('#submit').on('click', function() {
+                    var pass = that.checkImg();
+                    if (!pass) {
+                        console.log('没通过')
+                    } else {
+                        console.log('通过')
+                    }
+                })
+            },
+            checkImg: function() {
+                var pass = true;
+                $('.floors').each(function() {
+                    if ($(this).css('display') != 'none') {
+                        if ($(this).find('.required').data('num') == 0) {
+                            pass = false;
+                            $(this).find('.ui-upload').append('<span class="error">请上传证件照片</span>');
+                        }
+                    }
+                })
+                return pass;
+            }
+        }
+    }
+
+    $(function(){
+        _global.fn.init();
+    });
+
+</script>
+</body>
+</html>
