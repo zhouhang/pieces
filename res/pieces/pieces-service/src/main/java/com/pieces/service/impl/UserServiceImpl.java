@@ -432,7 +432,9 @@ public class UserServiceImpl extends AbsCommonService<User> implements UserServi
                 for (WxMpUser user : users) {
                     User u = new User();
                     u.setOpenId(user.getOpenId());
-                    u.setWxName(URLEncoder.encode(user.getNickname(), "utf-8"));
+                    if (!Strings.isNullOrEmpty(user.getNickname())) {
+                        u.setWxName(URLEncoder.encode(user.getNickname(), "utf-8"));
+                    }
                     u.setWxImg(user.getHeadImgUrl());
                     list.add(u);
                 }
