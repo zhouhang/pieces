@@ -139,7 +139,8 @@ public class FileUtil {
      * @param mediaId    * @param direct
      * @return
      */
-    public static String saveFileFromWechat(String token,String mediaId, String direct) {
+    public static String saveFileFromWechat(File file,String mediaId, String direct) {
+
         String desc = null;
         Calendar now = Calendar.getInstance();
         int year=now.get(Calendar.YEAR);
@@ -147,13 +148,10 @@ public class FileUtil {
         StringBuffer sb = new StringBuffer();
         sb.append(absolutePath).append(direct).append("/").append(year).append("/").append(month).append("/");
         try {
-            String path = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token="+token+"&media_id="+mediaId;
-            URL url  = new URL(path);
-            URLConnection connection = url.openConnection();
-            String filleName = connection.getHeaderField("Content-disposition").split(";")[1].split("=")[1].replace("\"","");
-            InputStream ism=url.openStream();
-            FileUtil.save(ism ,sb.toString(),filleName);
-            desc = sb.append(filleName).toString();
+//            String path = "http://file.api.weixin.qq.com/cgi-bin/media/get?access_token="+token+"&media_id="+mediaId;
+            FileInputStream fis = new FileInputStream(file);
+            FileUtil.save(fis ,sb.toString(),file.getName());
+            desc = sb.append(file.getName()).toString();
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {

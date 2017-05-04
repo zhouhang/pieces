@@ -17,6 +17,8 @@ import com.pieces.tools.utils.BeanUtils;
 import com.pieces.tools.utils.FileUtil;
 import me.chanjar.weixin.common.exception.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +30,8 @@ import java.util.List;
 
 @Service
 public class AnonEnquiryServiceImpl  extends AbsCommonService<AnonEnquiry> implements AnonEnquiryService{
+
+	Logger logger = LoggerFactory.getLogger(AnonEnquiryService.class);
 
 	@Autowired
 	private AnonEnquiryDao anonEnquiryDao;
@@ -71,7 +75,8 @@ public class AnonEnquiryServiceImpl  extends AbsCommonService<AnonEnquiry> imple
 
 				// 保存询价问价到对应文件夹
 				try {
-					detail.setAttachmentUrl(FileUtil.saveFileFromWechat(wxService.getAccessToken(),detail.getAttachmentUrl(), PathEnum.ANON.getValue()));
+					logger.info("logger + 下载微信文件url ====  http://file.api.weixin.qq.com/cgi-bin/media/get?access_token="+wxService.getAccessToken()+"&media_id="+detail.getAttachmentUrl());
+					detail.setAttachmentUrl(FileUtil.saveFileFromWechat(wxService.getMaterialService().mediaDownload(detail.getAttachmentUrl()),detail.getAttachmentUrl(), PathEnum.ANON.getValue()));
 				} catch (WxErrorException e) {
 					e.printStackTrace();
 				}

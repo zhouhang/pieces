@@ -351,7 +351,7 @@ public class PayRecordServiceImpl  extends AbsCommonService<PayRecord> implement
 					payDocument.setPath(FileUtil.saveFileFromTemp(img, PathEnum.PAY.getValue()));
 				} else {
 					try {
-						payDocument.setPath(FileUtil.saveFileFromWechat(wxService.getAccessToken(),img, PathEnum.PAY.getValue()));
+						payDocument.setPath(FileUtil.saveFileFromWechat(wxService.getMaterialService().mediaDownload(img),img, PathEnum.PAY.getValue()));
 					} catch (WxErrorException e) {
 						e.printStackTrace();
 					}
