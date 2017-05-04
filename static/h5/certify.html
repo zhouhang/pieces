@@ -24,56 +24,56 @@
     <div class="floors">
         <div class="hd">医疗机构许可证</div>
         <div class="ui-upload thumb">
-            <em class="ui-file required" data-max="4" data-num="0"></em>
+            <em class="ui-file uppic required" data-name="a1" data-max="4" data-num="0"></em>
             <span>请上传医疗机构许可证图片</span>
         </div>
     </div>
     <div class="floors">
         <div class="hd">营业执照副本</div>
         <div class="ui-upload thumb">
-            <em class="ui-file" data-max="4" data-num="0"></em>
+            <em class="ui-file uppic" data-name="a2" data-max="4" data-num="0"></em>
             <span>请上传企业营业执照副本图片，如果是老版的营业执照，还需要上传组织机构代码证以及税务登记证图片</span>
         </div>
     </div>
     <div class="floors">
         <div class="hd">GSP证书</div>
         <div class="ui-upload thumb">
-            <em class="ui-file" data-max="4" data-num="0"></em>
+            <em class="ui-file uppic" data-name="a3" data-max="4" data-num="0"></em>
             <span>请上传GSP证书图片</span>
         </div>
     </div>
     <div class="floors">
         <div class="hd">GMP证书</div>
         <div class="ui-upload thumb">
-            <em class="ui-file required" data-max="4" data-num="0"></em>
+            <em class="ui-file uppic required" data-name="a4" data-max="4" data-num="0"></em>
             <span>请上传GMP证书图片</span>
         </div>
     </div>
     <div class="floors">
         <div class="hd">药品经营许可证</div>
         <div class="ui-upload thumb">
-            <em class="ui-file" data-max="4" data-num="0"></em>
+            <em class="ui-file uppic" data-name="a5" data-max="4" data-num="0"></em>
             <span>请上传药品经营许可证图片，如果做过资质变更，还需要上传资质变更记录表图片，变更记录表最多能传3张</span>
         </div>
     </div>
     <div class="floors">
         <div class="hd">药品生产许可证</div>
         <div class="ui-upload thumb">
-            <em class="ui-file required" data-max="4" data-num="0"></em>
+            <em class="ui-file uppic required" data-name="a6" data-max="4" data-num="0"></em>
             <span>请上传药品生产许可证图片，如果做过资质变更，还需要上传资质变更记录表图片，变更记录表最多能传3张</span>
         </div>
     </div>
     <div class="floors">
         <div class="hd">法人授权委托书<a href="#none" class="mid eg-img">示例图片</a></div>
         <div class="ui-upload thumb">
-            <em class="ui-file required" data-max="4" data-num="0"></em>
+            <em class="ui-file uppic required" data-name="a7" data-max="4" data-num="0"></em>
             <span>请上传采购人员的法人授权委托书图片，如果采购人员与收货人员不是同一个人，还需要上传收货人员授权委托书图片</span>
         </div>
     </div>
     <div class="floors">
         <div class="hd">印鉴章备案<a href="#none" class="mid eg-img">示例图片</a></div>
         <div class="ui-upload thumb">
-            <em class="ui-file required" data-max="4" data-num="0"></em>
+            <em class="ui-file uppic required" data-max="4" data-num="0"></em>
             <span>请上传贵单位的印鉴章备案图片</span>
         </div>
     </div>
@@ -88,8 +88,31 @@
 <script src="assets/js/zepto.min.js"></script>
 <script src="assets/js/layer.js"></script>
 <script src="assets/js/app.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
 
+    // url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx32d15620e33ede7c&secret=63fbb2d0ecbbb8c0694c79398a829d0a';
+    // {"access_token":"pdx4_OzdK101vREelDsiaKRZaIjVLhCaWxxIfYwYIZsTArhKSfG54hnTL3K21K1sPdoTT4qftMTT1DlDeK7_zy9c-51k9YSoOIqJXoRI3ty6TkMeA6jkGekUb1g3zT7rNMYaAIAAZL","expires_in":7200}
+    // 
+    // https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=KtueJzqEFFNme6hyDUuO2LWePJHzevZoG6Tb0LKYzjFMYQMl8h6rXYEo2ZyEUYNT656zap7hNr7MM-_dvXVKZpVRKkXTf6DN3FAF-o0NyD8YIVhAAAUER&type=jsapi
+    // 
+    // {"errcode":0,"errmsg":"ok","ticket":"kgt8ON7yVITDhtdwci0qecSHOV2WpgOm3UCRjv5mE9ywJ9TyI_ka80NTjfWIXLzWBUjd9OtBRAO_rJ8dSszYFw","expires_in":7200}
+    // 
+    // jsapi_ticket=kgt8ON7yVITDhtdwci0qecSHOV2WpgOm3UCRjv5mE9ywJ9TyI_ka80NTjfWIXLzWBUjd9OtBRAO_rJ8dSszYFw&noncestr=Wm3WZYTPz0wzccnW&timestamp=1490924849&url=http://192.168.1.44/yaocai/pieces/static/h5/enquiry.html
+        
+
+    wx.config({
+        debug: false,
+        appId: 'wx32d15620e33ede7c',
+        timestamp: '1490924849',
+        nonceStr: 'Wm3WZYTPz0wzccnW',
+        signature: '7306002d4c9484b23010529019231c8acf4138f6',
+        jsApiList: [
+            'chooseImage',
+            'previewImage',
+            'uploadImage'
+        ]   
+    });
     var _global = {
         fn: {
             init: function() {
@@ -101,17 +124,18 @@
                 var that = this,
                     idx = 0;
 
-                var showPic = function(localIds, $el, hide) {
-                    var model = [];
+                var showPic = function(localIds, $el, maxSize) {
+                    var model = [],
+                        number = localIds.length + $el.data('num');
                     $.each(localIds, function(i, url) {
                         model.push('<em class="ui-file">');
                         model.push('<img src="' , url , '" />');
                         model.push('<i class="del"></i>');
                         model.push('</em>');
                     })
-                    
                     $el.before(model.join(''));
-                    hide && $el.empty('').hide();
+                    $el.data('num', number);
+                    number >= maxSize && $el.empty('').hide();
                 }
 
                 // 图片预览
@@ -140,7 +164,7 @@
                         sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
                         success: function (res) {
                             var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-                            showPic(localIds, $el, maxSize - number === 0);
+                            showPic(localIds, $el, maxSize);
                             wx.uploadImage({
                                 localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
                                 isShowProgressTips: 1, // 默认为1，显示进度提示
@@ -159,6 +183,9 @@
 
                 // 删除图片
                 $('.ui-upload').on('click', '.del', function() {
+                    var $el = $(this).closest('.thumb').find('.uppic'),
+                        number = $el.data('num');
+                    $el.data('num', number - 1).show();
                     $(this).parent().remove();
                     return false;
                 })
@@ -185,37 +212,37 @@
                 // 6.法人授权委托书
                 // 7.印鉴章备案
                 
-                $floor.hide();
                 if (!params.type) {
-                    return this;
+                    $floor.remove();
+
                 } else if (params.type == 1) {
                     // 药店
-                    $floor.eq(1).show();
-                    $floor.eq(6).show();
+                    $floor.eq(7).remove();
+                    $floor.eq(5).remove();
+                    $floor.eq(4).remove();
+                    $floor.eq(3).remove();
+                    $floor.eq(2).remove();
+                    $floor.eq(0).remove();
+
                 } else if (params.type == 2) {
                     // 医疗机构
-                    $floor.eq(0).show();
-                    $floor.eq(1).show().find('.hd').append('<em>（盈利性医疗机构必填）</em>');
-                    $floor.eq(2).show().find('.hd').append('<em>（盈利性医疗机构必填）</em>');
-                    $floor.eq(4).show().find('.hd').append('<em>（盈利性医疗机构必填）</em>');
-                    $floor.eq(6).show();
-                    $floor.eq(7).show();
+                    $floor.eq(5).remove();
+                    $floor.eq(3).remove();
+                    $floor.eq(1).find('.hd').append('<em>（盈利性医疗机构必填）</em>');
+                    $floor.eq(2).find('.hd').append('<em>（盈利性医疗机构必填）</em>');
+                    $floor.eq(4).find('.hd').append('<em>（盈利性医疗机构必填）</em>');
 
                 } else if (params.type == 3) {
                     // 制药企业
-                    $floor.eq(1).show();
-                    $floor.eq(3).show();
-                    $floor.eq(5).show();
-                    $floor.eq(6).show();
-                    $floor.eq(7).show();
+                    $floor.eq(4).remove();
+                    $floor.eq(2).remove();
+                    $floor.eq(0).remove();
 
                 } else {
                     // 医药公司
-                    $floor.eq(1).show();
-                    $floor.eq(2).show();
-                    $floor.eq(4).show();
-                    $floor.eq(6).show();
-                    $floor.eq(7).show();
+                    $floor.eq(5).remove();
+                    $floor.eq(3).remove();
+                    $floor.eq(0).remove();
                 }
             },
             // 提交表单
@@ -224,22 +251,29 @@
                 $('#submit').on('click', function() {
                     var pass = that.checkImg();
                     if (!pass) {
-                        console.log('没通过')
+                        alert('没通过')
                     } else {
-                        console.log('通过')
+                        alert(JSON.stringify(that.imgs));
                     }
                 })
             },
             checkImg: function() {
                 var pass = true;
+                var imgs = {};
                 $('.floors').each(function() {
-                    if ($(this).css('display') != 'none') {
-                        if ($(this).find('.required').data('num') == 0) {
-                            pass = false;
-                            $(this).find('.ui-upload').append('<span class="error">请上传证件照片</span>');
-                        }
+                    var $el = $(this).find('.uppic'),
+                        key = $el.data('name');
+                    imgs[key] = [];
+                    if ($(this).find('.required').data('num') == 0) {
+                        pass = false;
+                        $(this).find('.ui-upload').append('<span class="error">请上传证件照片</span>');
+                    } else {
+                        $(this).find('img').each(function() {
+                            imgs[key].push(this.src);
+                        })
                     }
                 })
+                this.imgs = imgs;
                 return pass;
             }
         }
