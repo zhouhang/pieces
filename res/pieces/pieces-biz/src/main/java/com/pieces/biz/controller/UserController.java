@@ -624,7 +624,7 @@ public class UserController extends BaseController {
 	}
 
 	/**
-	 *
+	 * 资质审核新版
 	 * @param certifyDataVo
 	 * @return
 	 */

@@ -36,6 +36,7 @@ import java.util.List;
 
 /**
  * Created by xiao on 2016/11/16.
+ * @deprecated  全部废弃了,用新的资质审核
  */
 //用户认证
 @Controller

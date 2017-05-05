@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.base.Strings;
 import com.pieces.biz.controller.commons.LogConstant;
 import com.pieces.biz.shiro.BizToken;
+import com.pieces.dao.enums.CertifyRecordStatusEnum;
 import com.pieces.dao.enums.SessionEnum;
 import com.pieces.dao.model.*;
 import com.pieces.dao.vo.*;
@@ -97,6 +98,9 @@ public class H5OrderController {
 
     @Autowired
     WxMpService wxService;
+
+    @Autowired
+    CertifyRecordService certifyRecordService;
 
 
     @RequestMapping(value ="order/list",method = RequestMethod.GET)
@@ -382,6 +386,7 @@ public class H5OrderController {
         shippingAddressService.delete(user.getId(),id);
         return new Result(true);
     }
+
     @RequestMapping(value = "/order/logistical", method = RequestMethod.GET)
     public String orderLogistical(Integer orderId,ModelMap modelMap){
         if(orderId==null){
@@ -398,13 +403,62 @@ public class H5OrderController {
             modelMap.put("logisticalTraceVos",logisticalTraceVos);
             modelMap.put("logistical",logistic);
         }
-
-
         return "wechat/express";
-
-
-
     }
+
+
+    @RequestMapping(value = "/user/certificate", method = RequestMethod.GET)
+    @SecurityToken(generateToken = true)
+    public String userCertificate(Integer type, ModelMap model,HttpServletRequest request){
+        // 1.检查是否审核通过
+        // 2.普通图片和微信图片显示问题
+        User user = (User) SecurityUtils.getSubject().getSession().getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        CertifyRecordVo certifyRecordVo=certifyRecordService.getLatest(user.getId());
+        if(certifyRecordVo!=null){
+//            UserCertificationVo userCertification=new UserCertificationVo();
+//            userCertification.setRecordId(certifyRecordVo.getId());
+//            UserQualificationVo userQualification=new UserQualificationVo();
+//            userQualification.setRecordId(certifyRecordVo.getId());
+//
+//            model.put("userCertification",userCertificationService.findAll(userCertification));
+//            model.put("userQualification",userQualificationService.findAll(userQualification));
+        }
+
+        model.put("type",type);
+        try {
+            WxJsapiSignature signature = wxService.createJsapiSignature(WebUtil.getFullUrl(request));
+            //wxService.getAccessToken();
+            model.put("signature",signature);
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
+        return "wechat/user_certificate";
+    }
+
+    @RequestMapping(value = "/user/certificateSelect", method = RequestMethod.GET)
+    public String userCertificateSelect(Integer type, ModelMap model){
+        model.put("type",type);
+        return "wechat/user_certificate_select";
+    }
+
+    @RequestMapping(value = "/user/certificateSuccess", method = RequestMethod.GET)
+    public String userCertificateSuccess(Integer type, ModelMap model){
+        model.put("type",type);
+        return "wechat/user_certificate_select";
+    }
+
+    @RequestMapping(value = "/user/certificate", method = RequestMethod.POST)
+    @ResponseBody
+    @SecurityToken(validateToken=true)
+    public Result certificateSave(@RequestBody CertifyDataVo certifyDataVo){
+        User user = (User) httpSession.getAttribute(RedisEnum.USER_SESSION_BIZ.getValue());
+        certifyRecordService.saveCertify(certifyDataVo,user);
+        return new Result(true).info("提交成功");
+    }
+
+
+
+
 
 
 

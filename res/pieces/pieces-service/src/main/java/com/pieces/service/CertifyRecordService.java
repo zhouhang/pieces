@@ -2,6 +2,8 @@ package com.pieces.service;
 
 import com.github.pagehelper.PageInfo;
 import com.pieces.dao.model.CertifyRecord;
+import com.pieces.dao.model.User;
+import com.pieces.dao.vo.CertifyDataVo;
 import com.pieces.dao.vo.CertifyRecordVo;
 import com.pieces.dao.vo.UserCertificationVo;
 import com.pieces.dao.vo.UserQualificationVo;
@@ -10,17 +12,24 @@ import java.util.List;
 
 public interface CertifyRecordService extends ICommonService<CertifyRecord>{
 
-    public PageInfo<CertifyRecordVo> findByParams(CertifyRecordVo certifyRecordVo,Integer pageNum,Integer pageSize);
+    PageInfo<CertifyRecordVo> findByParams(CertifyRecordVo certifyRecordVo,Integer pageNum,Integer pageSize);
 
-    public void saveRecord(CertifyRecord certifyRecord,UserCertificationVo certificationVo,List<UserQualificationVo> userQualificationVos);
+    void saveRecord(CertifyRecord certifyRecord,UserCertificationVo certificationVo,List<UserQualificationVo> userQualificationVos);
 
-    public void passCertify(CertifyRecordVo certifyRecordVo);
+    void passCertify(CertifyRecordVo certifyRecordVo);
 
-    public CertifyRecordVo getLatest(Integer userId);
+    CertifyRecordVo getLatest(Integer userId);
 
-    public void saveCertify(UserCertificationVo certificationVo,List<UserQualificationVo> userQualificationVos);
+    void saveCertify(UserCertificationVo certificationVo,List<UserQualificationVo> userQualificationVos);
 
-    public Integer getNotHandleCount();
+    Integer getNotHandleCount();
 
-    public List<Integer> getNotHandleIds();
+    List<Integer> getNotHandleIds();
+
+    /**
+     * 微信端资质认证保存接口
+     * @param certifyDataVo
+     * @param user
+     */
+    void saveCertify(CertifyDataVo certifyDataVo, User user);
 }
