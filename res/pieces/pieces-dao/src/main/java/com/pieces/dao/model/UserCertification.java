@@ -3,7 +3,10 @@ package com.pieces.dao.model;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * 用户提交的认证信息
+ *
+ */
 public class UserCertification  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
