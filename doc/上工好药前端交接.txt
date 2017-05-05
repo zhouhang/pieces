@@ -1,0 +1,3 @@
+上工好药html、js、css等文件在 static 文件夹中，piece-biz是前台页面，piece-boss是后台管理页面，h5是微信端页面
+前台网址：http://www.sghaoyao.com
+后台网址：http://boss.sghaoyao.com
