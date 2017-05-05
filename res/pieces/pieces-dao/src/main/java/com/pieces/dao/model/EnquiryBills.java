@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-
+/**
+ * 询价单
+ */
 public class EnquiryBills  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

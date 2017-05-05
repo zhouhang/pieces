@@ -200,6 +200,12 @@
     </dependencies>
 
 	<profiles>
+		<!--配置注释-->
+		<!--<biz.base.url>biz 项目的baseUrl</biz.base.url>-->
+		<!--<boss.base.url>boss 项目的baseUrl</boss.base.url>-->
+		<!--<boss.upload.url>上传文件的baseUrl</boss.upload.url>-->
+		<!--<boss.upload.path>上传文件物理目录</boss.upload.path>-->
+		<!--<boss.logs.path>boss 日志文件保存目录</boss.logs.path>-->
 		<profile>
 			<id>dev-wb</id>
 			<properties>

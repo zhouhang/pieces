@@ -198,6 +198,10 @@
 
 
 	<profiles>
+		<!--配置注释-->
+		<!--<biz.base.url>项目页面basUurl</biz.base.url>-->
+		<!--<biz.upload.url>上传文件的baseUrl</biz.upload.url>-->
+		<!--<biz.upload.path>上传文件保存的物理目录</biz.upload.path>-->
 		<profile>
 			<id>dev-wb</id>
 			<properties>

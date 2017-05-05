@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+/**
+ * 广告管理表
+ */
 public class Ad  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

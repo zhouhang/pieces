@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+/**
+ * 订单表
+ */
 public class OrderForm  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

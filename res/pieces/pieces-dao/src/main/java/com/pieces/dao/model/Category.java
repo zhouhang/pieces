@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.util.Date;
 
-
+/**
+ * 品种表
+ */
 public class Category  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

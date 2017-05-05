@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 
-
+/**
+ * 常用枚举值的表
+ * 例如:商品规格,产地,等级,首页广告类型
+ */
 public class Code  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

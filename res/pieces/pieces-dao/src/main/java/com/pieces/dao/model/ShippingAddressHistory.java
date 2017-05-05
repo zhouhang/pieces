@@ -8,6 +8,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+/**
+ * 历史收货地址
+ * 生成订单时会把用户选择的地址保存在历史收货地址表中并与订单关联
+ */
 public class ShippingAddressHistory  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

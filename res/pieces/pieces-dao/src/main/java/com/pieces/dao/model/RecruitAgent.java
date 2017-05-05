@@ -3,7 +3,9 @@ package com.pieces.dao.model;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * 代理商招募活动
+ */
 public class RecruitAgent  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

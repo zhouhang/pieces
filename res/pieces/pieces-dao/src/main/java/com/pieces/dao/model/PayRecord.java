@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+/**
+ * 支付记录
+ */
 public class PayRecord  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

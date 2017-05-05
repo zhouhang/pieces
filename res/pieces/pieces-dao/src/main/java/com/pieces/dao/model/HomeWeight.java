@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 /**
  * 首页权重表
+ * 首页橱窗商品布局
  */
 public class HomeWeight  implements Serializable {
 

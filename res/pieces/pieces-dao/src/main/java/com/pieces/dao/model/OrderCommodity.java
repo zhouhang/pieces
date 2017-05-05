@@ -10,6 +10,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+/**
+ * 订单商品表
+ */
 public class OrderCommodity  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

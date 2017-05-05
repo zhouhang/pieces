@@ -3,7 +3,9 @@ package com.pieces.dao.model;
 import java.io.Serializable;
 
 
-
+/**
+ * 物流商品表
+ */
 public class LogisticalCommodity  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

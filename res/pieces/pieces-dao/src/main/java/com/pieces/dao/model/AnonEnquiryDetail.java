@@ -3,7 +3,10 @@ package com.pieces.dao.model;
 import java.io.Serializable;
 
 
-
+/**
+ * 新客询价的附件详情
+ * 目前只存有图片
+ */
 public class AnonEnquiryDetail  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

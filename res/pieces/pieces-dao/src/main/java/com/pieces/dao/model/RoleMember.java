@@ -2,6 +2,9 @@ package com.pieces.dao.model;
 
 import java.io.Serializable;
 
+/**
+ * shiro 角色与人员关联表
+ */
 public class RoleMember  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

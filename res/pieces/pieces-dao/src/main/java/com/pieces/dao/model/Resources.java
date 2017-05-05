@@ -3,7 +3,9 @@ package com.pieces.dao.model;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * shiro 的权限表
+ */
 public class Resources  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

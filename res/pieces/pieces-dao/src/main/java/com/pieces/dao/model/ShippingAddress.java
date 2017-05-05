@@ -11,7 +11,9 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * 用户的收货地址
+ */
 public class ShippingAddress  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

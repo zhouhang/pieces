@@ -3,7 +3,9 @@ package com.pieces.dao.model;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * 用户提交的证件信息
+ */
 public class UserQualification  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

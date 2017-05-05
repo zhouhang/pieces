@@ -7,6 +7,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+/**
+ * boss后台管理用户表
+ */
 public class Member  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

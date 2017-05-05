@@ -3,7 +3,9 @@ package com.pieces.dao.model;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * shiro 角色表
+ */
 public class Role  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

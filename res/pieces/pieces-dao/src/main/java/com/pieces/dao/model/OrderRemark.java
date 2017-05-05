@@ -6,7 +6,9 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * 订单的关联备注跟着表
+ */
 public class OrderRemark  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

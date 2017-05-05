@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+/**
+ * 物流信息表
+ */
 public class Logistical  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

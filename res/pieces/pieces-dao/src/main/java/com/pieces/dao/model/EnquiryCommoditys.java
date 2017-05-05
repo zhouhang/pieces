@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * 询价单关联的商品表
+ */
 public class EnquiryCommoditys  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

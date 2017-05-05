@@ -7,7 +7,10 @@ import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * 用户h5端提交图片询价时会把图片存在该表中
+ * 后台新客询价菜单中课查看
+ */
 public class AnonEnquiry  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -3,7 +3,9 @@ package com.pieces.dao.model;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * 物流跟踪信息用来存储快递鸟推送过来的信息
+ */
 public class LogisticalTrace  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

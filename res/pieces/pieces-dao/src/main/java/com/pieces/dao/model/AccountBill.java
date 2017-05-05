@@ -3,7 +3,9 @@ package com.pieces.dao.model;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * 账单详情表
+ */
 public class AccountBill  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

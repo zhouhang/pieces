@@ -3,7 +3,10 @@ package com.pieces.dao.model;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * 用来存储后台设置的seo策略信息
+ * 动态设置前台对应页面的title 关键字等
+ */
 public class SeoSetting  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

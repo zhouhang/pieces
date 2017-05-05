@@ -6,7 +6,9 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * 文章类别
+ */
 public class ArticleCategory  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

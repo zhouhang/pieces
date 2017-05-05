@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 
+/**
+ * 存储支付记录提交的图片信息
+ */
 public class PayDocument  implements Serializable {
 
 	private static final long serialVersionUID = 1L;

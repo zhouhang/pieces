@@ -2,6 +2,10 @@ package com.pieces.dao.model;
 
 import java.io.Serializable;
 
+/**
+ * 省市区域表
+ * 记录基础的省市区域信息
+ */
 public  class Area implements Serializable{
 
     private static final long serialVersionUID = 1L;

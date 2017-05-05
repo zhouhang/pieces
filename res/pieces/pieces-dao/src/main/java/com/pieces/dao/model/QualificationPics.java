@@ -3,7 +3,9 @@ package com.pieces.dao.model;
 import java.io.Serializable;
 
 
-
+/**
+ * 用户提交资质审核时用来存储资质审核的图片
+ */
 public class QualificationPics  implements Serializable {
 
 	private static final long serialVersionUID = 1L;
