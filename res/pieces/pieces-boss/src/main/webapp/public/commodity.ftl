@@ -35,6 +35,7 @@
                         <th width="100">片型</th>
                         <th width="100">原料产地</th>
                         <th>规格等级</th>
+                        <th>指导价格</th>
                         <th width="100">状态</th>
                         <th width="100">操作</th>
                     </tr>
@@ -59,12 +60,13 @@
                     <tbody>
                     <#list pageInfo.list as commodity>
                     <tr>
-                        <td>${commodity.id}</td>
-                        <td>${commodity.categoryName}</td>
-                        <td>${commodity.name}</td>
-                        <td>${commodity.spec}</td>
-                        <td>${commodity.originOf}</td>
-                        <td>${commodity.level}</td>
+                        <td>${commodity.id!}</td>
+                        <td>${commodity.categoryName!}</td>
+                        <td>${commodity.name!}</td>
+                        <td>${commodity.spec!}</td>
+                        <td>${commodity.originOf!}</td>
+                        <td>${commodity.level!}</td>
+                        <td>${(commodity.guidePrice?string('0.00'))!}</td>
                         <td><#if commodity.status ==1>激活<#else>禁用</#if></td>
                         <td>
                             <@shiro.hasPermission name="commodity:edit">
